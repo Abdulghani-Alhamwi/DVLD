@@ -268,6 +268,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             _SetDateConstraint();
 
             DataView dataview = clsCountries.GetAllCountries().DefaultView;
+
             dataview.Sort = "CountryName ASC";
             cbCountries.DataSource = dataview;
 

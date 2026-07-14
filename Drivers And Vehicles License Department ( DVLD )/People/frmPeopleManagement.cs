@@ -143,6 +143,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _AddNewPerson()
         {
+            if (dgvPeople.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Error connecting to database", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; 
+            }
+
+
             frmAddEditPersonInfo frm = new frmAddEditPersonInfo();
             frm.AddEditPersonData += _RefreshPeopleDataView;
 
