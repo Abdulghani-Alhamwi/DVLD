@@ -1,0 +1,127 @@
+Notes :
+
+1) The property DoubleBuffered for the form:
+When we re-paint on screen a flash will appear to the user , to remove that flash -> we set the DoubleBuffered property to true and by that all drawing happens in buffer and show all at once on the screen and it is not just to the redrawing operations it is also for the initial drawing .
+
+2) Change MdiForm Back Color :
+
+ MdiClient client = this.Controls.OfType<MdiClient>().FirstOrDefault();
+
+ if(client!=null)
+ {
+     client.BackColor = Color.FromArgb(10, 10, 10);
+ }
+
+3) To Remove the sunken which is the 3d border of the MDI form after it has drawn , we use the following code :
+
+/// <summary>
+/// Removes the default sunken which is the 3d border (WS_EX_CLIENTEDGE) that Windows draws around this
+/// form's MdiClient workspace. WinForms don not expose managed property for this, so the
+/// extended style is cleared directly via P/Invoke and the frame is forced to redraw.
+/// Call once — right after InitializeComponent() (if IsMdiContainer is set in the
+/// designer) .
+/// </summary>
+
+// --- Win32 interop (needs: using System.Runtime.InteropServices; using System.Linq;) ---
+
+// Reads a window's style value at the given index. Used here to read GWL_EXSTYLE (the
+// extended style) before changing it, so only the bit we care about gets touched.
+// Note: user32.dll exports "GetWindowLongA"/"GetWindowLongW" only — there is no plain
+// "GetWindowLong" export. Since CharSet/ExactSpelling aren't set on this attribute, the
+// CLR's P/Invoke marshaller probes for the name with an "A" suffix (the default CharSet)
+// and binds to GetWindowLongA automatically.
+[DllImport("user32.dll")]
+private static extern int GetWindowLong(IntPtr windowHandle, int index);
+
+// Writes a new style value back at the given index — the "write" half of the same pattern,
+// resolved to SetWindowLongA the same way.
+[DllImport("user32.dll")]
+private static extern int SetWindowLong(IntPtr windowHandle, int index, int newStyle);
+
+// Normally moves, resizes, and restacks a window in one call. Here it's used purely for its
+// SWP_FRAMECHANGED side effect: SetWindowLong only updates the stored style value, it never
+// repaints anything by itself. This call is what actually applies the change on screen and  if we do not call it -> the repaint may happen but it may be delayed because of an event so the repaint is not guranteed to happen immediatly or it may not happen, but we call it so if some environments (Environments like different windows versions) did not call a repaint or delay calling a repaint or even if it did'nt call the repaint or recalculate the frame at all , or even with out it the windows may not repaint or recalculate the frame ever , so best practice to use it -> the changes we made wont appear then .
+[DllImport("user32.dll")]
+private static extern bool SetWindowPos(IntPtr windowHandle, IntPtr insertAfterHandle,
+                      int x, int y, int width, int height, int flags);
+
+private const int ExtendedStyleIndex = -20;               // GWL_EXSTYLE — "give me the extended style" (GWL_STYLE, -16, would be the basic one)
+private const int ClientEdgeExtendedStyle = 0x00000200;   // WS_EX_CLIENTEDGE — the sunken 3D border bit , sunken and 3d border refers to the same visual effect which is the 3d border .
+private const int NoSizeFlag = 0x0001;                    // SWP_NOSIZE — ignore width/height, keep the current size
+private const int NoMoveFlag = 0x0002;                    // SWP_NOMOVE — ignore x/y, keep the current position
+private const int NoZOrderFlag = 0x0004;                  // SWP_NOZORDER — ignore insertAfterHandle, keep the current z-order , Keeps mthe current MdiClient at same order and do not changes whether it is under a child form or above a child form
+private const int FrameChangedFlag = 0x0020;              // SWP_FRAMECHANGED — recalculate + repaint the non-client frame; the flag actually doing the work
+
+private void _RemoveMdiClientBorder()
+{
+    // Setting IsMdiContainer = true makes WinForms silently add one MdiClient control to
+    // this.Controls — there's no designer access to it directly. A form can only ever have
+    // one, so FirstOrDefault is safe, and it returns null (instead of throwing an exception) if this form
+    // isn't an MDI container, or the MdiClient hasn't been created yet.
+    MdiClient mdiClient = this.Controls.OfType<MdiClient>().FirstOrDefault();
+    if (mdiClient == null)
+    {
+        return;
+    }
+
+    // 1) Read the CURRENT extended style...
+    int currentExtendedStyle = GetWindowLong(mdiClient.Handle, ExtendedStyleIndex);
+
+    // 2) ...clear only the client-edge bit. "~ClientEdgeExtendedStyle" inverts 0x200 into a
+    // mask that's all 1-bits except that one, and leaves
+    // every other extended style untouched. Overwriting with a hardcoded value instead of
+    // this read-modify-write would risk silently wiping out any other extended styles the
+    // window has.
+    int updatedExtendedStyle = currentExtendedStyle & ~ClientEdgeExtendedStyle;
+
+    // 3) ...and write it back. The style is now updated internally — nothing on screen has
+    // been redrawn yet.
+    SetWindowLong(mdiClient.Handle, ExtendedStyleIndex, updatedExtendedStyle);
+
+    // 4) Force the redraw. Position, size, and z-order are irrelevant here, so every "No*"
+    // flag tells SetWindowPos to ignore its matching parameter (hence the 0s and
+    // IntPtr.Zero) — FrameChangedFlag is the only one doing real work, and it's what makes
+    // the border actually disappear on screen.
+    SetWindowPos(mdiClient.Handle, IntPtr.Zero, 0, 0, 0, 0,
+                 NoSizeFlag | NoMoveFlag | NoZOrderFlag | FrameChangedFlag);
+}
+
+4) sunken and 3d border refers to the same visual effect which is the 3d border
+
+5) private _enMode _CurrentMode;// this variable is with in the class and not inside a method -> CLR will automatically gives it default value 0 which is AddNew while if we declare that inside a method -> CLR Will not give it the default value .
+
+6) adding ? after type name -> makes the variable nullable .
+
+7) In C# we cannot pass a property of get or set  or (get and set) or an auto implemented property (like public int ID { get ; set ;} for example ) as an argument for a method by reference .
+
+8)
+ // We used the DrawItem event to draw the item manually because we set the draw mode property to owner draw fixed and this property wont automatically draw items , we set the property to owner draw fixed to imrove the visual appearing of the combobox .
+private void cbFilterBy_DrawItem(object sender, DrawItemEventArgs e)
+{
+    // Check If the comboBox has Items .
+    if (e.Index < 0)
+        return;
+
+    // Draw Item BackGround .
+    e.DrawBackground();
+
+    string ItemText = ((ComboBox)sender).Items[e.Index].ToString();
+
+    // We used using clause to automatically dispose brush because the brush has unmanaged resource that can cause failures and crashes and memory leak when drawing with brushes multiple times .
+    using(SolidBrush brush = new SolidBrush(e.ForeColor))
+    {
+        // Draw Text .
+        e.Graphics.DrawString(ItemText, e.Font, brush, e.Bounds);
+    }
+    // Draw the rectangle around the item when we hover on it with mouse or we go to it using keyboard .
+    e.DrawFocusRectangle();
+
+}
+
+9) The combobox control , the DropDownStyle Property -> If we put it : Drop Down List -> the ComboBox will be readonly and will not allow user to write text in it .
+
+10) The ComboBox , if we set the property Draw Mode to OwnerDrawFixed -> we will have to handle drawing items manually , and we use these property if we want better appearance for the combobox .
+
+11) If we put in the constructor -> this.Close() -> the constructor will continue to execute even when we put this.Close() in it and it will continue till it execute everything inside it .
+
+12) As a trick -> we can use a timer and after the tick to make the form visible in order to avoid letting user see things and controls loading because a flash may appear when opening form but this is a bad practice because there is much easier way to handle redraw in buffer  and show form directly to user with out flash and this is a better practice and we can use it by enable the DoubleBuffered property of the form .

@@ -1,0 +1,12 @@
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\bin\Debug\DVLDDataAccessLayer.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\bin\Debug\DVLDDataAccessLayer.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.csproj.AssemblyReference.cache
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.csproj.CoreCompileInputs.cache
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.pdb
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\bin\Debug\DVLDDataAccessLayer.dll
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\bin\Debug\DVLDDataAccessLayer.pdb
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.dll
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.pdb

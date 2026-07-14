@@ -1,0 +1,18 @@
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Debug\DVLDBusinessLayer.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Debug\DVLDBusinessLayer.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.csproj.AssemblyReference.cache
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.csproj.CoreCompileInputs.cache
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Debug\DVLDDataAccessLayer.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Debug\DVLDDataAccessLayer.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusi.7D6D57CA.Up2Date
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\bin\Debug\DVLDBusinessLayer.dll
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\bin\Debug\DVLDBusinessLayer.pdb
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\bin\Debug\DVLDDataAccessLayer.dll
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\bin\Debug\DVLDDataAccessLayer.pdb
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.csproj.CopyComplete
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.dll
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.pdb
