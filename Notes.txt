@@ -124,4 +124,7 @@ private void cbFilterBy_DrawItem(object sender, DrawItemEventArgs e)
 
 11) If we put in the constructor -> this.Close() -> the constructor will continue to execute even when we put this.Close() in it and it will continue till it execute everything inside it .
 
-12) As a trick -> we can use a timer and after the tick to make the form visible in order to avoid letting user see things and controls loading because a flash may appear when opening form but this is a bad practice because there is much easier way to handle redraw in buffer  and show form directly to user with out flash and this is a better practice and we can use it by enable the DoubleBuffered property of the form .
+12) As a trick -> we can use a timer and after the tick to make the form visible in order to avoid letting user see things and controls loading because a flash may appear when opening form but this is a bad practice because there is much easier way to handle redraw in buffer  and show form directly to user with out flash and this is a better practice and we can use it 
+by enable the DoubleBuffered property of the form .
+
+13) git restore * : Disable all un-committed changes.

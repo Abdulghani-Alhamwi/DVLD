@@ -78,9 +78,9 @@
             this.lblPersonID.Location = new System.Drawing.Point(182, 69);
             this.lblPersonID.Margin = new System.Windows.Forms.Padding(0);
             this.lblPersonID.Name = "lblPersonID";
-            this.lblPersonID.Size = new System.Drawing.Size(42, 31);
+            this.lblPersonID.Size = new System.Drawing.Size(62, 31);
             this.lblPersonID.TabIndex = 74;
-            this.lblPersonID.Text = "ID";
+            this.lblPersonID.Text = "????";
             // 
             // lblPersonIDTitle
             // 
@@ -118,9 +118,9 @@
             this.lblCountry.Location = new System.Drawing.Point(769, 324);
             this.lblCountry.Margin = new System.Windows.Forms.Padding(0);
             this.lblCountry.Name = "lblCountry";
-            this.lblCountry.Size = new System.Drawing.Size(113, 31);
+            this.lblCountry.Size = new System.Drawing.Size(62, 31);
             this.lblCountry.TabIndex = 70;
-            this.lblCountry.Text = "Country ";
+            this.lblCountry.Text = "????";
             // 
             // lblPhone
             // 
@@ -131,9 +131,9 @@
             this.lblPhone.Location = new System.Drawing.Point(769, 260);
             this.lblPhone.Margin = new System.Windows.Forms.Padding(0);
             this.lblPhone.Name = "lblPhone";
-            this.lblPhone.Size = new System.Drawing.Size(94, 31);
+            this.lblPhone.Size = new System.Drawing.Size(62, 31);
             this.lblPhone.TabIndex = 69;
-            this.lblPhone.Text = "Phone ";
+            this.lblPhone.Text = "????";
             // 
             // lblDateOfBirth
             // 
@@ -144,9 +144,9 @@
             this.lblDateOfBirth.Location = new System.Drawing.Point(769, 196);
             this.lblDateOfBirth.Margin = new System.Windows.Forms.Padding(0);
             this.lblDateOfBirth.Name = "lblDateOfBirth";
-            this.lblDateOfBirth.Size = new System.Drawing.Size(173, 31);
+            this.lblDateOfBirth.Size = new System.Drawing.Size(62, 31);
             this.lblDateOfBirth.TabIndex = 68;
-            this.lblDateOfBirth.Text = "Date Of Birth ";
+            this.lblDateOfBirth.Text = "????";
             // 
             // lblAddress
             // 
@@ -157,9 +157,9 @@
             this.lblAddress.Location = new System.Drawing.Point(264, 388);
             this.lblAddress.Margin = new System.Windows.Forms.Padding(0);
             this.lblAddress.Name = "lblAddress";
-            this.lblAddress.Size = new System.Drawing.Size(113, 31);
+            this.lblAddress.Size = new System.Drawing.Size(62, 31);
             this.lblAddress.TabIndex = 67;
-            this.lblAddress.Text = "Address ";
+            this.lblAddress.Text = "????";
             // 
             // lblEmail
             // 
@@ -170,9 +170,9 @@
             this.lblEmail.Location = new System.Drawing.Point(264, 324);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(0);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(85, 31);
+            this.lblEmail.Size = new System.Drawing.Size(62, 31);
             this.lblEmail.TabIndex = 66;
-            this.lblEmail.Text = "Email ";
+            this.lblEmail.Text = "????";
             // 
             // lblGendor
             // 
@@ -183,9 +183,9 @@
             this.lblGendor.Location = new System.Drawing.Point(264, 260);
             this.lblGendor.Margin = new System.Windows.Forms.Padding(0);
             this.lblGendor.Name = "lblGendor";
-            this.lblGendor.Size = new System.Drawing.Size(105, 31);
+            this.lblGendor.Size = new System.Drawing.Size(62, 31);
             this.lblGendor.TabIndex = 65;
-            this.lblGendor.Text = "Gendor ";
+            this.lblGendor.Text = "????";
             // 
             // lblNationalNo
             // 
@@ -196,9 +196,9 @@
             this.lblNationalNo.Location = new System.Drawing.Point(264, 196);
             this.lblNationalNo.Margin = new System.Windows.Forms.Padding(0);
             this.lblNationalNo.Name = "lblNationalNo";
-            this.lblNationalNo.Size = new System.Drawing.Size(156, 31);
+            this.lblNationalNo.Size = new System.Drawing.Size(62, 31);
             this.lblNationalNo.TabIndex = 64;
-            this.lblNationalNo.Text = "National No ";
+            this.lblNationalNo.Text = "????";
             // 
             // lblName
             // 
@@ -209,9 +209,9 @@
             this.lblName.Location = new System.Drawing.Point(264, 132);
             this.lblName.Margin = new System.Windows.Forms.Padding(0);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(98, 31);
+            this.lblName.Size = new System.Drawing.Size(74, 31);
             this.lblName.TabIndex = 63;
-            this.lblName.Text = "Name ";
+            this.lblName.Text = "????";
             // 
             // lblCountryTitle
             // 
@@ -470,13 +470,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.gbPersonInformation);
             this.Font = new System.Drawing.Font("Tahoma", 16F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "ctrlPersonDetails";
-            this.Size = new System.Drawing.Size(1300, 473);
+            this.Size = new System.Drawing.Size(1302, 475);
             this.gbPersonInformation.ResumeLayout(false);
             this.gbPersonInformation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCountry)).EndInit();

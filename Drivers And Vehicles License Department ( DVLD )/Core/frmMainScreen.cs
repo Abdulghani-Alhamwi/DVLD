@@ -56,10 +56,21 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             _RemoveMdiClientBorder();
         }
 
+        private Size SetFormsSize(int width = 200 , int height = 300)
+        {
+            return new Size(this.Width - width, this.Height - height);
+        }
         private void peopleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmPeopleManagement frm = new frmPeopleManagement();
-            frm.Size = new Size(this.Width-200, this.Height-310);
+            frm.Size = SetFormsSize();
+            frm.ShowDialog();
+        }
+
+        private void usersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmUsersManagement frm = new frmUsersManagement();
+                
             frm.ShowDialog();
         }
     }

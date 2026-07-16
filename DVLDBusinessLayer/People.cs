@@ -7,7 +7,7 @@ using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
 {
-    public class clsPeople
+    public class clsPerson
     {
         public enum enMode { AddNew = 0 , Update = 1 }
         public enMode _CurrentMode;
@@ -28,7 +28,7 @@ namespace DVLDBusinessLayer
         public string CountryName { get; set; }
         public string ImagePath { get; set; }
 
-        public clsPeople()
+        public clsPerson()
         {
             ID = -1;
             NationalNo = "";
@@ -47,7 +47,7 @@ namespace DVLDBusinessLayer
             ImagePath = null;
         }
 
-        private clsPeople(int ID ,string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth,byte Gendor , string Address, string Phone, string Email,string CountryName,int NationalityCountryID , string ImagePath)
+        private clsPerson(int ID ,string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth,byte Gendor , string Address, string Phone, string Email,string CountryName,int NationalityCountryID , string ImagePath)
         {
             this.ID = ID;
             this.NationalNo = NationalNo;
@@ -67,7 +67,7 @@ namespace DVLDBusinessLayer
             this._CurrentMode = enMode.Update;
         }
 
-        public static clsPeople Find(int PersonID)
+        public static clsPerson Find(int PersonID)
         {
             byte Gendor = 0;
             string FirstName = "",SecondName = "",ThirdName = "",LastName = "",
@@ -82,12 +82,35 @@ namespace DVLDBusinessLayer
             {
                 CountryName = clsCountriesData.GetCountryName(NationalityCountryID);
 
-                return new clsPeople(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName,
+                return new clsPerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName,
                                      DateOfBirth, Gendor, Address, Phone, Email, CountryName, NationalityCountryID, ImagePath);
             }
             else
                 return null;
         }
+
+        public static clsPerson Find(string NationalNo)
+        {
+            int PersonID = -1;
+            byte Gendor = 0;
+            string FirstName = "", SecondName = "", ThirdName = "", LastName = "";
+            DateTime DateOfBirth = DateTime.Now;
+            int NationalityCountryID = -1;
+            string Address = "", Phone = "", Email = "", CountryName = "",
+            ImagePath = "";
+
+            if (clsPeopleData.Find(NationalNo,ref PersonID, ref FirstName, ref SecondName, ref ThirdName, ref LastName,
+               ref DateOfBirth, ref Gendor, ref Address, ref Phone, ref Email, ref NationalityCountryID, ref ImagePath))
+            {
+                CountryName = clsCountriesData.GetCountryName(NationalityCountryID);
+
+                return new clsPerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName,
+                                     DateOfBirth, Gendor, Address, Phone, Email, CountryName, NationalityCountryID, ImagePath);
+            }
+            else
+                return null;
+        }
+
         private byte _GetGendorNumericValue()
         {
             if (Gendor == null)

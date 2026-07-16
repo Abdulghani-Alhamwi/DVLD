@@ -2,8 +2,8 @@
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Windows.Forms;
+using MyLib; 
 using DVLDBusinessLayer;
 
 namespace Driver_And_Vehicle_Licenses_Department___DVLD__
@@ -29,13 +29,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void frmPeopleManagement_Load(object sender, EventArgs e)
         {
             dgvPeople.Font = new Font("Calibri", 16);
-            _dataview = clsPeople.GetAllPeopleBasicInfo().DefaultView;
+            _dataview = clsPerson.GetAllPeopleBasicInfo().DefaultView;
             dgvPeople.DataSource = _dataview;
             cbFilterBy.ForeColor = Color.FromArgb(15, 15, 15);
 
             object[] Items = new object[] { "None", "Person ID", "National No.", "First Name", "Second Name", "Third Name", "Last Name", "Nationality", "Gendor", "Phone", "Email" };
             _AddDropDownItems(Items);
-            cbFilterBy.SelectedItem = Items[0];
+            cbFilterBy.SelectedItem = 0;
 
             lblRecordsNumber.Text = dgvPeople.Rows.Count.ToString();
 
@@ -43,7 +43,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
         {
-            cbFilterBy.BackColor = Color.FromArgb(221, 232, 240);
+            if (cbFilterBy.SelectedItem.ToString() != "None")
+                cbFilterBy.BackColor = Color.FromArgb(221, 232, 240);
+            else
+                cbFilterBy.BackColor = Color.FromArgb(228, 228, 228);
         }
 
         private void cbFilterBy_DropDown(object sender, EventArgs e)
@@ -51,32 +54,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             cbFilterBy.BackColor = Color.FromArgb(245, 245, 245);
         }
         
-        internal static void DrawComboBoxItems(object sender , DrawItemEventArgs e,string ColumnName =null)
-        {
-            if (e.Index < 0)
-                return;
-
-            e.DrawBackground();
-
-            string ItemText;
-
-            if (ColumnName != null)
-            {
-                DataRowView RowView = (DataRowView)((ComboBox)sender).Items[e.Index];
-                ItemText = RowView[ColumnName].ToString();
-            }
-            else
-                ItemText = ((ComboBox)sender).Items[e.Index].ToString();
-
-                using (SolidBrush brush = new SolidBrush(e.ForeColor))
-                {
-                    e.Graphics.DrawString(ItemText, e.Font, brush, e.Bounds);
-                }
-            e.DrawFocusRectangle();
-        }
         private void cbFilterBy_DrawItem(object sender, DrawItemEventArgs e)
         {
-            DrawComboBoxItems(sender, e);
+            clsUtility.DrawComboBoxItems(sender, e);
         }
 
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
@@ -90,26 +70,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 txtFilter.Visible = false;
         }
 
-        private void _FilterDataView(string ColumnName, string FilterOnValue)
-        {
-            if (_dataview.Table.Rows.Count == 0)
-                return;
-
-            if(FilterOnValue.All(Char.IsLetter))
-            _dataview.RowFilter = $"[{ColumnName}] LIKE '{FilterOnValue}%'";
-            else
-            _dataview.RowFilter = $"[{ColumnName}] = '{FilterOnValue}'";
-        }
-    
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
-            if (txtFilter.Text == "")
-            {
-                _dataview.RowFilter = "";
-                return;
-            }
-
-            _FilterDataView(cbFilterBy.SelectedItem.ToString(), txtFilter.Text);
+            clsUtility._FilterDataView(_dataview,cbFilterBy.SelectedItem.ToString(), txtFilter.Text,e);
         }
 
         private void txtFilter_KeyDown(object sender, KeyEventArgs e)
@@ -137,19 +100,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void _RefreshPeopleDataView()
         {
             dgvPeople.DataSource = null;
-            _dataview = clsPeople.GetAllPeopleBasicInfo().DefaultView;
+            _dataview = clsPerson.GetAllPeopleBasicInfo().DefaultView;
             dgvPeople.DataSource = _dataview;
         }
 
-        private void _AddNewPerson()
+        private void _AddNewPersonScreen()
         {
-            if (dgvPeople.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Error connecting to database", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; 
-            }
-
-
             frmAddEditPersonInfo frm = new frmAddEditPersonInfo();
             frm.AddEditPersonData += _RefreshPeopleDataView;
 
@@ -157,22 +113,27 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
         private void btnAddNewPerson_Click(object sender, EventArgs e)
         {
-            _AddNewPerson();
+            _AddNewPersonScreen();
         }
 
         private void tsmiDelete_Click(object sender, EventArgs e)
         {
-            if(dgvPeople.SelectedRows.Count ==0)
+            if (dgvPeople.Rows.Count == 0)
             {
-                MessageBox.Show("No people selected to delete.\nPlease select the people you want to delete first", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("There are no users to delete!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            for (short i = 0; i < dgvPeople.SelectedRows.Count; i++)
+
+            if (dgvPeople.SelectedRows.Count > 0)
             {
-                clsPeople.DeletePerson(Convert.ToInt32(dgvPeople.SelectedRows[0].Cells["Person ID"].Value));
+                for (short i = 0; i < dgvPeople.SelectedRows.Count; i++)
+                {
+                clsPerson.DeletePerson(Convert.ToInt32(dgvPeople.SelectedRows[0].Cells["Person ID"].Value));
+                }
+                _RefreshPeopleDataView();   
             }
 
-            _RefreshPeopleDataView();
+            MessageBox.Show("No people selected to delete.\nPlease select the people you want to delete first", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void tsmiEdit_Click(object sender, EventArgs e)
@@ -183,7 +144,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 return;
                 }
 
-            clsPeople PersonInfo = clsPeople.Find((int) dgvPeople.SelectedRows[0].Cells["Person ID"].Value);
+            clsPerson PersonInfo = clsPerson.Find((int) dgvPeople.SelectedRows[0].Cells["Person ID"].Value);
 
             if (PersonInfo != null)
             {
@@ -197,7 +158,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void tsmiAddNewPerson_Click(object sender, EventArgs e)
         {
-            _AddNewPerson();
+            _AddNewPersonScreen();
         }
 
         private void tsmiSendEmail_Click(object sender, EventArgs e)
@@ -238,5 +199,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             this.Close();
         }
+
     }
 }

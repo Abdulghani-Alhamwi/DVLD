@@ -151,7 +151,7 @@ namespace DVLDDataAccessLayer
 
         public static DataTable GetAllPeopleData()
         {
-            DataTable dtPeople = new DataTable("People");
+            DataTable dtPeople = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
@@ -169,10 +169,11 @@ namespace DVLDDataAccessLayer
 
                 if (reader.HasRows)
                 {
+                    dtPeople = new DataTable();
                     dtPeople.Load(reader);
                 }
-                else
-                    return null;
+
+                    reader.Close();
             }
 
             catch { }
@@ -187,15 +188,15 @@ namespace DVLDDataAccessLayer
 
         public static DataTable GetAllPeopleBasicInfo()
         {
-            DataTable dtPeople = new DataTable("People");
+            DataTable dtPeople = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"SELECT PersonID AS [Person ID],NationalNo AS [National No.],
-                        FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
-                        Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-                        DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
-                        FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
+                             FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
+                             Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+                             DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
+                             FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
 
             SqlCommand command = new SqlCommand(query, connection);
 
@@ -206,10 +207,12 @@ namespace DVLDDataAccessLayer
 
                 if (reader.HasRows)
                 {
+                    dtPeople = new DataTable();
                     dtPeople.Load(reader);
                 }
-                else
-                    return null;
+
+                    reader.Close();
+                
             }
 
             catch { }
@@ -309,6 +312,63 @@ namespace DVLDDataAccessLayer
             }
             return false;
         }
+
+        public static bool Find(string NationalNo,ref int PersonID, ref string FirstName,
+                      ref string SecondName, ref string ThirdName, ref string LastName, ref DateTime DateOfBirth, ref byte Gendor, ref string Address, ref string Phone, ref string Email, ref int NationalityCountryID, ref string ImagePath)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT PersonID,FirstName, SecondName,
+                             ThirdName, LastName, Gendor, DateOfBirth,
+                             Address, Phone, Email , NationalityCountryID ,
+                             ImagePath FROM People
+                             WHERE NationalNo = @NationalNo";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@NationalNo", NationalNo);
+
+            try
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    PersonID = (int)reader["PersonID"];
+                    FirstName = (string)reader["FirstName"];
+                    SecondName = (string)reader["SecondName"];
+
+                    if (reader["ThirdName"] != DBNull.Value)
+                        ThirdName = (string)reader["ThirdName"];
+
+                    LastName = (string)reader["LastName"];
+                    DateOfBirth = (DateTime)reader["DateOfBirth"];
+                    Gendor = (byte)reader["Gendor"];
+                    Address = (string)reader["Address"];
+                    Phone = (string)reader["Phone"];
+
+                    if (reader["Email"] != DBNull.Value)
+                        Email = (string)reader["Email"];
+
+                    NationalityCountryID = (int)reader["NationalityCountryID"];
+
+                    if (reader["ImagePath"] != DBNull.Value)
+                        ImagePath = (string)reader["ImagePath"];
+
+                    return true;
+                }
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return false;
+        }
+
 
     }
 }

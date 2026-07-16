@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Driver_And_Vehicle_Licenses_Department___DVLD__.Properties;
+using MyLib;
 using DVLDBusinessLayer;
 
 namespace Driver_And_Vehicle_Licenses_Department___DVLD__
@@ -17,8 +18,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         internal event AddEditInfoEventHandler AddEditPersonData;
 
-        clsPeople _Person;
-        public frmAddEditPersonInfo(clsPeople PersonInfo = null)
+        internal delegate void AddedNewPersonEventHandler (int PersonID);
+        internal event AddedNewPersonEventHandler AddedNewPerson;
+
+        clsPerson _Person;
+        public frmAddEditPersonInfo(clsPerson PersonInfo = null)
         {
             InitializeComponent();
             this.ShowInTaskbar = false;
@@ -45,7 +49,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             txtNationalNo.Text = _Person.NationalNo;
             dtpDateOfBirth.Value = _Person.DateOfBirth;
 
-            if (_Person.Gendor == clsPeople.enGendor.Female)
+            if (_Person.Gendor == clsPerson.enGendor.Female)
                 rbFemale.Checked = true;
 
             txtPhone.Text = _Person.Phone;
@@ -63,7 +67,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 lnlblRemove.Visible = true;
             }
             else
-                pbPersonalImage.Image = (_Person.Gendor == clsPeople.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
+                pbPersonalImage.Image = (_Person.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
         }
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
         {
@@ -76,7 +80,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
         private void cbFilterBy_DrawItem(object sender, DrawItemEventArgs e)
         {
-            frmPeopleManagement.DrawComboBoxItems(sender, e,"CountryName");
+            clsUtility.DrawComboBoxItems(sender, e,"CountryName");
         }
         private void _EnabletxtBoxErrorProvider(TextBox txtBox, string ErrorMessage, CancelEventArgs e)
         {
@@ -145,7 +149,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 if (txtNationalNo.Text == _Person.NationalNo)
                     return true;
 
-                else if (clsPeople.SearchForNationalNo(txtNationalNo.Text))
+                else if (clsPerson.SearchForNationalNo(txtNationalNo.Text))
                 {
                     _EnabletxtBoxErrorProvider(txtNationalNo, $"National Number is used for another person!", e);
                     return false;
@@ -156,7 +160,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 return true;
             }
 
-            else if (clsPeople.SearchForNationalNo(txtNationalNo.Text))
+            else if (clsPerson.SearchForNationalNo(txtNationalNo.Text))
             {
                 _EnabletxtBoxErrorProvider(txtNationalNo, $"National Number is used for another person!", e);
                 return false;
@@ -343,9 +347,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            clsPeople Person;
+            clsPerson Person;
             if (_Person == null)
-                Person = new clsPeople();
+                Person = new clsPerson();
             else
                 Person = _Person;
 
@@ -367,7 +371,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 Person.ThirdName = txtThirdName.Text;
                 Person.LastName = txtLastName.Text;
                 Person.NationalNo = txtNationalNo.Text;
-                Person.Gendor = (rbMale.Checked) ? clsPeople.enGendor.Male : clsPeople.enGendor.Female;
+                Person.Gendor = (rbMale.Checked) ? clsPerson.enGendor.Male : clsPerson.enGendor.Female;
                 Person.DateOfBirth = dtpDateOfBirth.Value;
                 Person.Phone = txtPhone.Text;
 
@@ -401,8 +405,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     }    
 
                     MessageBox.Show("Added Successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    if (AddEditPersonData != null)
-                        AddEditPersonData.Invoke();
+
+                        AddEditPersonData?.Invoke();
+
+                        AddedNewPerson?.Invoke(Person.ID);
 
                     btnSave.Enabled = false;
                 }

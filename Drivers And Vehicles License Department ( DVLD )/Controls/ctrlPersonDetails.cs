@@ -13,11 +13,23 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             InitializeComponent();
         }
-        clsPeople _Person;
+        clsPerson _Person;
         public void LoadPersonDetails(int PersonID)
         {
 
-            _Person = clsPeople.Find(PersonID);
+            _Person = clsPerson.Find(PersonID);
+
+            if (_Person != null)
+            {
+                _ShowPersonDetails();
+            }
+            else
+                MessageBox.Show("Person is not found!", "Details", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+        }
+        public void LoadPersonDetails(string NationalNo)
+        {
+            _Person = clsPerson.Find(NationalNo);
 
             if (_Person != null)
             {
@@ -35,9 +47,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             lblNationalNo.Text = _Person.NationalNo;
             lblDateOfBirth.Text = _Person.DateOfBirth.ToShortDateString();
 
-            if (_Person.Gendor == clsPeople.enGendor.Female)
+            if (_Person.Gendor == clsPerson.enGendor.Female)
                 pbGendor.Image = Resources.Woman_32;
 
+            lblGendor.Text = (_Person.Gendor == clsPerson.enGendor.Male) ? "Male" : "Female";
 
             lblPhone.Text = _Person.Phone;
             lblEmail.Text = _Person.Email;
@@ -50,13 +63,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 pbPersonalImage.ImageLocation = _Person.ImagePath;
             }
             else
-                pbPersonalImage.Image = (_Person.Gendor == clsPeople.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
+                pbPersonalImage.Image = (_Person.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
         }
 
         private void _UpdatePersonData()
         {
             if (_Person != null)
-            _Person = clsPeople.Find(_Person.ID);
+            _Person = clsPerson.Find(_Person.ID);
 
             if (_Person != null)
                 _ShowPersonDetails();

@@ -8,7 +8,7 @@ namespace DVLDDataAccessLayer
     {
         public static DataTable GetAllCountries()
         {
-            DataTable dtCountries = new DataTable();
+            DataTable dtCountries = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = "SELECT CountryName FROM Countries";
@@ -21,7 +21,12 @@ namespace DVLDDataAccessLayer
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (reader.HasRows)
+                {
+                    dtCountries = new DataTable();
                     dtCountries.Load(reader);
+                }
+
+                    reader.Close();
             }
 
             catch { }
