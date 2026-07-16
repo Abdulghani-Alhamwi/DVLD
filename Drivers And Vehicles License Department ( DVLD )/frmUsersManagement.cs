@@ -24,8 +24,14 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         DataView _dataview;
         private void frmUsersManagement_Load(object sender, EventArgs e)
         {
-            _dataview = clsUser.GetAllUsers().DefaultView;
-            dgvUsers.DataSource = _dataview;
+            DataTable dtUsers = clsUser.GetAllUsers();
+
+            if (dtUsers != null)
+            {
+                _dataview = dtUsers.DefaultView;
+                dgvUsers.DataSource = _dataview;
+                dgvUsers.Font = new Font("Tahoma", 16);
+            }
             lblRecordsNumber.Text = dgvUsers.Rows.Count.ToString();
 
             object[] Items = new object[] { "None", "User ID", "UserName", "Person ID", "Full Name", "Is Active" };

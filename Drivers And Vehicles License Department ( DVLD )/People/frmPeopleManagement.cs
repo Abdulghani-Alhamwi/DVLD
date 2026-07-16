@@ -28,10 +28,14 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private DataView _dataview;
         private void frmPeopleManagement_Load(object sender, EventArgs e)
         {
-            dgvPeople.Font = new Font("Calibri", 16);
-            _dataview = clsPerson.GetAllPeopleBasicInfo().DefaultView;
-            dgvPeople.DataSource = _dataview;
-            cbFilterBy.ForeColor = Color.FromArgb(15, 15, 15);
+            DataTable dtPeople = clsPerson.GetAllPeopleBasicInfo();
+
+            if (dtPeople != null)
+            {
+                _dataview = dtPeople.DefaultView;
+                dgvPeople.Font = new Font("Tahoma", 16);
+                dgvPeople.DataSource = _dataview;
+            }
 
             object[] Items = new object[] { "None", "Person ID", "National No.", "First Name", "Second Name", "Third Name", "Last Name", "Nationality", "Gendor", "Phone", "Email" };
             _AddDropDownItems(Items);
