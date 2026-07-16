@@ -118,6 +118,7 @@
             this.tcAddNewUser.SelectedIndex = 0;
             this.tcAddNewUser.Size = new System.Drawing.Size(1133, 617);
             this.tcAddNewUser.TabIndex = 43;
+            this.tcAddNewUser.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcAddNewUser_Selecting);
             // 
             // tpPersonalInfo
             // 

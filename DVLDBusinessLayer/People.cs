@@ -120,7 +120,7 @@ namespace DVLDBusinessLayer
         }
         private bool _AddNewPerson()
         {
-            PersonID = clsPeopleData.AddNewPerson(NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath));
+            PersonID = clsPeopleData.AddNewPerson(NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath);
 
             return (PersonID != -1);
         }

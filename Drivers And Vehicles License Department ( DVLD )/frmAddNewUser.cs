@@ -32,5 +32,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             this.Close();
         }
+
+        private void tcAddNewUser_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (tcAddNewUser.SelectedTab == tpLoginInfo)
+                if (!uctrlpersonInfoByFilter.FindPerson())
+                    tcAddNewUser.SelectedTab = tpPersonalInfo;
+        }
     }
 }
