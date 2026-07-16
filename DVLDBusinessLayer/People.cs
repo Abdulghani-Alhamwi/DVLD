@@ -9,12 +9,12 @@ namespace DVLDBusinessLayer
 {
     public class clsPerson
     {
-        public enum enMode { AddNew = 0 , Update = 1 }
-        public enMode _CurrentMode;
+         enum _enMode { AddNew = 0 , Update = 1 }
+         _enMode _CurrentMode;
 
         public enum enGendor { Male = 0 , Female = 1 }
         public enGendor? Gendor;
-        public int ID { get; set; }
+        public int PersonID { get; set; }
         public string NationalNo { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
@@ -30,9 +30,9 @@ namespace DVLDBusinessLayer
 
         public clsPerson()
         {
-            ID = -1;
+            PersonID = -1;
             NationalNo = "";
-            _CurrentMode = enMode.AddNew;
+            _CurrentMode = _enMode.AddNew;
             FirstName = "";
             SecondName = "";
             ThirdName = "";
@@ -49,7 +49,7 @@ namespace DVLDBusinessLayer
 
         private clsPerson(int ID ,string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth,byte Gendor , string Address, string Phone, string Email,string CountryName,int NationalityCountryID , string ImagePath)
         {
-            this.ID = ID;
+            this.PersonID = ID;
             this.NationalNo = NationalNo;
             this.FirstName = FirstName;
             this.SecondName = SecondName;
@@ -64,7 +64,7 @@ namespace DVLDBusinessLayer
             this.NationalityCountryID = NationalityCountryID;
             this.ImagePath = ImagePath;
 
-            this._CurrentMode = enMode.Update;
+            this._CurrentMode = _enMode.Update;
         }
 
         public static clsPerson Find(int PersonID)
@@ -120,19 +120,13 @@ namespace DVLDBusinessLayer
         }
         private bool _AddNewPerson()
         {
-            int PersonID = -1;
+            PersonID = clsPeopleData.AddNewPerson(NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath));
 
-            if (clsPeopleData.AddNewPerson(ref PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath))
-            {
-                ID = PersonID;
-                return true;
-            }
-            else
-                return false;
+            return (PersonID != -1);
         }
         private bool _UpdatePerson()
         {
-            return clsPeopleData.UpdatePerson(ID, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath);
+            return clsPeopleData.UpdatePerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath);
         }
         public static DataTable GetAllPeopleData()
         {
@@ -147,16 +141,16 @@ namespace DVLDBusinessLayer
         {
             switch(_CurrentMode)
             {
-                case enMode.AddNew:
+                case _enMode.AddNew:
                     if (_AddNewPerson())
                     {
-                        _CurrentMode = enMode.Update;
+                        _CurrentMode = _enMode.Update;
                         return true;
                     }
                     else
                         return false;
 
-                case enMode.Update:
+                case _enMode.Update:
                     return _UpdatePerson();                        
             }
             return false;

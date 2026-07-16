@@ -41,6 +41,78 @@ namespace DVLDDataAccessLayer
 
         }
 
+        public static int AddNewUser(int PersonID , string UserName,string Password ,bool IsActive)
+        {
+            int UserID = -1;
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"INSERT INTO Users VALUES
+                             (@PersonID, @UserName, @Password, @IsActive) ;
+                             SELECT SCOPE_IDENTITY();";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@PersonID", PersonID);
+            command.Parameters.AddWithValue("@UserName", UserName);
+            command.Parameters.AddWithValue("@Password", Password);
+            command.Parameters.AddWithValue("@IsActive", IsActive);
+
+            try
+            {
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                if(result!=null)
+                {
+                    UserID = (int)result;
+                }
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return UserID;
+        }
+
+        public static bool UpdateUser(int UserID,int PersonID, string UserName, string Password, bool IsActive)
+        {
+            int AffectedRows = 0;
+
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"UPDATE USERS SET
+                             PersonID = @PersonID , UserName = @UserName
+                             Password = @Password , IsActive = @IsActive
+                             WHERE UserID = @UserID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@UserID", UserID);
+            command.Parameters.AddWithValue("@PersonID", PersonID);
+            command.Parameters.AddWithValue("@UserName", UserName);
+            command.Parameters.AddWithValue("@Password", Password);
+            command.Parameters.AddWithValue("@IsActive", IsActive);
+
+            try
+            {
+                connection.Open();
+                AffectedRows = command.ExecuteNonQuery();
+
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return (AffectedRows > 0);
+        }
+
         public static bool DeleteUser(int UserID)
         {
             int AffectedRows = 0;
@@ -67,7 +139,6 @@ namespace DVLDDataAccessLayer
             }
             return (AffectedRows > 0);
         }
-
         public static bool IsUserExists(int PersonID)
         {
             bool IsFound = false;
@@ -97,7 +168,6 @@ namespace DVLDDataAccessLayer
 
             return IsFound;
         }
-
         public static bool IsUserExists(string PersonNationalNo)
         {
             bool IsFound = false;

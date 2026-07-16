@@ -41,9 +41,15 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
         private void _ShowPersonDetails()
         {
-            lblPersonID.Text = _Person.ID.ToString();
-            lblName.Text = _Person.FirstName+ " "+ _Person.SecondName+ " "+
-                           _Person.ThirdName+" "+ _Person.LastName;
+            lblPersonID.Text = _Person.PersonID.ToString();
+
+            if (_Person.ThirdName != "")
+                lblName.Text = _Person.FirstName + " " + _Person.SecondName + " " +
+                               _Person.ThirdName + " " + _Person.LastName;
+            else
+                lblName.Text = _Person.FirstName + " " + _Person.SecondName
+                               + " " + _Person.LastName;
+
             lblNationalNo.Text = _Person.NationalNo;
             lblDateOfBirth.Text = _Person.DateOfBirth.ToShortDateString();
 
@@ -69,7 +75,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void _UpdatePersonData()
         {
             if (_Person != null)
-            _Person = clsPerson.Find(_Person.ID);
+            _Person = clsPerson.Find(_Person.PersonID);
 
             if (_Person != null)
                 _ShowPersonDetails();

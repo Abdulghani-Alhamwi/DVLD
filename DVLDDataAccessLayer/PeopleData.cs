@@ -6,14 +6,18 @@ namespace DVLDDataAccessLayer
 {
     public class clsPeopleData
     {
-        public static bool AddNewPerson(ref int PersonID, string NationalNo, string FirstName,
+        public static int AddNewPerson(string NationalNo, string FirstName,
                        string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
+            int PersonID = -1;
+
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
             string query = @"INSERT INTO People VALUES (@NationalNo , @FirstName ,
                              @SecondName , @ThirdName , @LastName , @DateOfBirth , @Gendor,
                              @Address , @Phone , @Email , @NationalityCountryID, @ImagePath);
                              SELECT SCOPE_IDENTITY()";
+
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@NationalNo", NationalNo);
             command.Parameters.AddWithValue("@FirstName", FirstName);
@@ -36,7 +40,7 @@ namespace DVLDDataAccessLayer
                 command.Parameters.AddWithValue("@Email", DBNull.Value);
 
             command.Parameters.AddWithValue("@NationalityCountryID", NationalityCountryID);
-
+            
             if (!String.IsNullOrEmpty(ImagePath))
                 command.Parameters.AddWithValue("@ImagePath", ImagePath);
             else
@@ -48,12 +52,8 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                {
-                    PersonID = Convert.ToInt32(result);
-                    return true;
-                }
-                else
-                    return false;
+                    PersonID = (int)result;
+                    
             }
 
             catch { }
@@ -62,7 +62,7 @@ namespace DVLDDataAccessLayer
             {
                 connection.Close();
             }
-            return false;
+            return PersonID;
         }
 
         public static bool UpdatePerson(int PersonID, string NationalNo, string FirstName,

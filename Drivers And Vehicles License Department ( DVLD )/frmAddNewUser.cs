@@ -22,15 +22,15 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             this.Close();
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void btnNext_Click(object sender, EventArgs e)
         {
             if(uctrlpersonInfoByFilter.FindPerson())
             tcAddNewUser.SelectedTab = tpLoginInfo;
+        }
+
+        private void btnClose_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

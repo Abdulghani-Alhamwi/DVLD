@@ -115,7 +115,7 @@
             this.tsmiPhoneCall});
             this.cmsPeopleMenu.Name = "cmsPeopleMenu";
             this.cmsPeopleMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPeopleMenu.Size = new System.Drawing.Size(245, 266);
+            this.cmsPeopleMenu.Size = new System.Drawing.Size(245, 244);
             // 
             // tsmiShowDetails
             // 
@@ -242,6 +242,7 @@
             // btnAddNewPerson
             // 
             this.btnAddNewPerson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddNewPerson.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnAddNewPerson.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.btnAddNewPerson.FlatAppearance.BorderSize = 2;
             this.btnAddNewPerson.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -358,6 +359,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1231, 796);
             this.ControlBox = false;
             this.Controls.Add(this.btnClose);

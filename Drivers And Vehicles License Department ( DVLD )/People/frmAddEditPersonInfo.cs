@@ -41,7 +41,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         string _SavedPersonalImagePath;
         private void _ShowPersonData(DataView dataview)
         {
-            lblPersonID.Text = _Person.ID.ToString();
+            lblPersonID.Text = _Person.PersonID.ToString();
             txtFirstName.Text = _Person.FirstName;
             txtSecondName.Text = _Person.SecondName;
             txtThirdName.Text = _Person.ThirdName;
@@ -392,7 +392,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                 if (Person.Save())
                 {
-                    lblPersonID.Text = Person.ID.ToString();
+                    lblPersonID.Text = Person.PersonID.ToString();
 
                     if (_SelectedImageNewPath != null)
                         File.Copy(ofdSelectImage.FileName, _SelectedImageNewPath);
@@ -408,7 +408,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                         AddEditPersonData?.Invoke();
 
-                        AddedNewPerson?.Invoke(Person.ID);
+                        AddedNewPerson?.Invoke(Person.PersonID);
 
                     btnSave.Enabled = false;
                 }

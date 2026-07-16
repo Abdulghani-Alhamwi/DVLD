@@ -68,7 +68,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1045, 20);
+            this.btnExit.Location = new System.Drawing.Point(1045, 12);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -123,7 +123,7 @@
             // 
             this.lblTitleFilterBy.AutoSize = true;
             this.lblTitleFilterBy.Font = new System.Drawing.Font("Tahoma", 22F, System.Drawing.FontStyle.Bold);
-            this.lblTitleFilterBy.Location = new System.Drawing.Point(48, 349);
+            this.lblTitleFilterBy.Location = new System.Drawing.Point(48, 346);
             this.lblTitleFilterBy.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTitleFilterBy.Name = "lblTitleFilterBy";
             this.lblTitleFilterBy.Size = new System.Drawing.Size(160, 36);
@@ -182,7 +182,7 @@
             this.tsmiPhoneCall});
             this.cmsUsersMenu.Name = "cmsPeopleMenu";
             this.cmsUsersMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsUsersMenu.Size = new System.Drawing.Size(223, 266);
+            this.cmsUsersMenu.Size = new System.Drawing.Size(223, 244);
             // 
             // tsmiShowDetails
             // 
@@ -270,7 +270,7 @@
             // 
             this.lblManageUsersTitle.AutoSize = true;
             this.lblManageUsersTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblManageUsersTitle.Location = new System.Drawing.Point(21, 20);
+            this.lblManageUsersTitle.Location = new System.Drawing.Point(21, 12);
             this.lblManageUsersTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblManageUsersTitle.Name = "lblManageUsersTitle";
             this.lblManageUsersTitle.Size = new System.Drawing.Size(165, 29);
