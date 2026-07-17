@@ -129,6 +129,7 @@
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.Name = "frmPersonDetails";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -13,7 +13,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         public frmPeopleManagement()
         {
             InitializeComponent();
-            this.ShowInTaskbar = false;
         }
 
         private void btnExit_Click(object sender, EventArgs e)

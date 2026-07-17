@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -9,6 +10,14 @@ namespace MyLib
 {
     internal class clsUtility
     {
+        public static void EnableErrorProvider(ErrorProvider erControl,Control control, string ErrorMessage, CancelEventArgs CancelEvent = null)
+        {
+            erControl.SetError(control, ErrorMessage);
+
+            if (CancelEvent != null)
+            CancelEvent.Cancel = true;
+        }
+
         internal static void DrawComboBoxItems(object sender, DrawItemEventArgs e, string ColumnName = null)
         {
             if (e.Index < 0)

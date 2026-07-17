@@ -25,7 +25,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         public frmAddEditPersonInfo(clsPerson PersonInfo = null)
         {
             InitializeComponent();
-            this.ShowInTaskbar = false;
 
             if (PersonInfo == null)
                 lblAddEditPersonInfoBigTitle.Text = "Add New Person";
@@ -82,33 +81,22 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             clsUtility.DrawComboBoxItems(sender, e,"CountryName");
         }
-        private void _EnabletxtBoxErrorProvider(TextBox txtBox, string ErrorMessage, CancelEventArgs e)
-        {
-            erTextBox.SetError(txtBox, ErrorMessage);
-            e.Cancel = true;
-        }
-
-        private void _DisableErrorProvider()
-        {
-            erTextBox.Dispose();
-        }
-
         private bool _ValidateName(object sender, CancelEventArgs e)
         {
             if ((((TextBox)sender).Text == "") && ((TextBox)sender).Tag.ToString() != "Third Name")
             {
-                _EnabletxtBoxErrorProvider((TextBox)sender, $"It is required to enter your {((TextBox)sender).Tag.ToString()}!", e);
+                clsUtility.EnableErrorProvider(erTextBox, (TextBox)sender, $"It is required to enter your {((TextBox)sender).Tag.ToString()}!", e);
                 return false;
             }
 
             else if (!(((TextBox)sender).Text.All(Char.IsLetter) || ((TextBox)sender).Text.Contains("-") || ((TextBox)sender).Text.Contains("_")))
             {
-                _EnabletxtBoxErrorProvider((TextBox)sender, $"{((TextBox)sender).Tag.ToString()} must contain only letters!", e);
+                clsUtility.EnableErrorProvider(erTextBox, (TextBox)sender, $"{((TextBox)sender).Tag.ToString()} must contain only letters!", e);
                 return false;
             }
 
             else
-                _DisableErrorProvider();
+                erTextBox.Dispose();
 
             return true;
         }
@@ -117,11 +105,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             if (txtAddress.Text == "")
             {
-                _EnabletxtBoxErrorProvider(txtAddress, $"It is required to enter your Address!", e);
+                clsUtility.EnableErrorProvider(erTextBox,txtAddress, $"It is required to enter your Address!", e);
                 return false;
             }
             else
-                _DisableErrorProvider();
+                erTextBox.Dispose();
 
             return true;
         }
@@ -139,7 +127,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             if (txtNationalNo.Text == "")
             {
-                _EnabletxtBoxErrorProvider(txtNationalNo, "It is required to enter your National No!", e);
+                clsUtility.EnableErrorProvider(erTextBox,txtNationalNo, "It is required to enter your National No!", e);
                 return false;
             }
 
@@ -151,23 +139,23 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                 else if (clsPerson.SearchForNationalNo(txtNationalNo.Text))
                 {
-                    _EnabletxtBoxErrorProvider(txtNationalNo, $"National Number is used for another person!", e);
+                    clsUtility.EnableErrorProvider(erTextBox,txtNationalNo, $"National Number is used for another person!", e);
                     return false;
                 }
                 else
-                    _DisableErrorProvider();
+                    erTextBox.Dispose();
 
                 return true;
             }
 
             else if (clsPerson.SearchForNationalNo(txtNationalNo.Text))
             {
-                _EnabletxtBoxErrorProvider(txtNationalNo, $"National Number is used for another person!", e);
+                clsUtility.EnableErrorProvider(erTextBox,txtNationalNo, $"National Number is used for another person!", e);
                 return false;
             }
 
             else
-                _DisableErrorProvider();
+                erTextBox.Dispose();
 
             return true;
         }
@@ -179,17 +167,17 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             if (txtPhone.Text == "")
             {
-                _EnabletxtBoxErrorProvider(txtPhone, "It is required to enter your Phone Number!", e);
+                clsUtility.EnableErrorProvider(erTextBox,txtPhone, "It is required to enter your Phone Number!", e);
                 return false;
             }
 
             else if (!txtPhone.Text.All(Char.IsDigit))
             {
-                _EnabletxtBoxErrorProvider(txtPhone, "Phone Number must contains only digits!", e);
+                clsUtility.EnableErrorProvider(erTextBox,txtPhone, "Phone Number must contains only digits!", e);
                 return false;
             }
             else
-                _DisableErrorProvider();
+                erTextBox.Dispose();
 
             return true;
         }
@@ -234,11 +222,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if ((txtEmail.Text.Contains(" ") && txtEmail.Text.Contains(",") && !(_ValidateEmailStart(Email)
             && _ValdiateEmailMiddle(Email) && _ValidateEmailEnd(Email))))
             {
-                _EnabletxtBoxErrorProvider(txtEmail, "Invalid Email Address Format!", e);
+                clsUtility.EnableErrorProvider(erTextBox,txtEmail, "Invalid Email Address Format!", e);
                 return false;
             }
             else
-                _DisableErrorProvider();
+                erTextBox.Dispose();
 
             return true;
 

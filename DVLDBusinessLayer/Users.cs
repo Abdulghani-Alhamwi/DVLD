@@ -74,5 +74,10 @@ namespace DVLDBusinessLayer
         {
             return clsUsersData.IsUserExists(PersonNationalNo);
         }
+
+        public static bool IsUserAlreadyExists(string UserName)
+        {
+            return clsUsersData.IsUserAlreadyExists(UserName);
+        }
     }
 }

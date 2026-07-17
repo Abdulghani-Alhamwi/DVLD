@@ -40,12 +40,12 @@
             this.chbIsActive = new System.Windows.Forms.CheckBox();
             this.pbUserID = new System.Windows.Forms.PictureBox();
             this.pbPassword = new System.Windows.Forms.PictureBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.txtPasswordConfirmation = new System.Windows.Forms.TextBox();
             this.lblUserID = new System.Windows.Forms.Label();
             this.pbPerson = new System.Windows.Forms.PictureBox();
             this.pbConfirmPassword = new System.Windows.Forms.PictureBox();
-            this.txtFirstName = new System.Windows.Forms.TextBox();
+            this.txtUserName = new System.Windows.Forms.TextBox();
             this.lblConfirmPasswordTitle = new System.Windows.Forms.Label();
             this.lblPasswordTitle = new System.Windows.Forms.Label();
             this.lblUserNameTitle = new System.Windows.Forms.Label();
@@ -166,12 +166,12 @@
             this.tpLoginInfo.Controls.Add(this.chbIsActive);
             this.tpLoginInfo.Controls.Add(this.pbUserID);
             this.tpLoginInfo.Controls.Add(this.pbPassword);
-            this.tpLoginInfo.Controls.Add(this.textBox2);
-            this.tpLoginInfo.Controls.Add(this.textBox1);
+            this.tpLoginInfo.Controls.Add(this.txtPassword);
+            this.tpLoginInfo.Controls.Add(this.txtPasswordConfirmation);
             this.tpLoginInfo.Controls.Add(this.lblUserID);
             this.tpLoginInfo.Controls.Add(this.pbPerson);
             this.tpLoginInfo.Controls.Add(this.pbConfirmPassword);
-            this.tpLoginInfo.Controls.Add(this.txtFirstName);
+            this.tpLoginInfo.Controls.Add(this.txtUserName);
             this.tpLoginInfo.Controls.Add(this.lblConfirmPasswordTitle);
             this.tpLoginInfo.Controls.Add(this.lblPasswordTitle);
             this.tpLoginInfo.Controls.Add(this.lblUserNameTitle);
@@ -192,7 +192,7 @@
             this.chbIsActive.Location = new System.Drawing.Point(380, 354);
             this.chbIsActive.Name = "chbIsActive";
             this.chbIsActive.Size = new System.Drawing.Size(131, 37);
-            this.chbIsActive.TabIndex = 54;
+            this.chbIsActive.TabIndex = 3;
             this.chbIsActive.Text = "Is Active";
             this.chbIsActive.UseVisualStyleBackColor = true;
             // 
@@ -218,31 +218,35 @@
             this.pbPassword.TabIndex = 52;
             this.pbPassword.TabStop = false;
             // 
-            // textBox2
+            // txtPassword
             // 
-            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.textBox2.Location = new System.Drawing.Point(380, 217);
-            this.textBox2.MaxLength = 20;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.textBox2.Size = new System.Drawing.Size(256, 40);
-            this.textBox2.TabIndex = 51;
-            this.textBox2.Tag = "First Name";
+            this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtPassword.Location = new System.Drawing.Point(380, 217);
+            this.txtPassword.MaxLength = 20;
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txtPassword.Size = new System.Drawing.Size(256, 40);
+            this.txtPassword.TabIndex = 1;
+            this.txtPassword.Tag = "First Name";
+            this.txtPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtPassword_Validating);
             // 
-            // textBox1
+            // txtPasswordConfirmation
             // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.textBox1.Location = new System.Drawing.Point(380, 289);
-            this.textBox1.MaxLength = 20;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.textBox1.Size = new System.Drawing.Size(256, 40);
-            this.textBox1.TabIndex = 50;
-            this.textBox1.Tag = "First Name";
+            this.txtPasswordConfirmation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.txtPasswordConfirmation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPasswordConfirmation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtPasswordConfirmation.Location = new System.Drawing.Point(380, 289);
+            this.txtPasswordConfirmation.MaxLength = 20;
+            this.txtPasswordConfirmation.Name = "txtPasswordConfirmation";
+            this.txtPasswordConfirmation.PasswordChar = '*';
+            this.txtPasswordConfirmation.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txtPasswordConfirmation.Size = new System.Drawing.Size(256, 40);
+            this.txtPasswordConfirmation.TabIndex = 2;
+            this.txtPasswordConfirmation.Tag = "First Name";
+            this.txtPasswordConfirmation.Validating += new System.ComponentModel.CancelEventHandler(this.txtPasswordConfirmation_Validating);
             // 
             // lblUserID
             // 
@@ -277,18 +281,19 @@
             this.pbConfirmPassword.TabIndex = 47;
             this.pbConfirmPassword.TabStop = false;
             // 
-            // txtFirstName
+            // txtUserName
             // 
-            this.txtFirstName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFirstName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtFirstName.Location = new System.Drawing.Point(380, 145);
-            this.txtFirstName.MaxLength = 20;
-            this.txtFirstName.Name = "txtFirstName";
-            this.txtFirstName.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txtFirstName.Size = new System.Drawing.Size(256, 40);
-            this.txtFirstName.TabIndex = 42;
-            this.txtFirstName.Tag = "First Name";
+            this.txtUserName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.txtUserName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtUserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtUserName.Location = new System.Drawing.Point(380, 145);
+            this.txtUserName.MaxLength = 20;
+            this.txtUserName.Name = "txtUserName";
+            this.txtUserName.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txtUserName.Size = new System.Drawing.Size(256, 40);
+            this.txtUserName.TabIndex = 0;
+            this.txtUserName.Tag = "First Name";
+            this.txtUserName.Validating += new System.ComponentModel.CancelEventHandler(this.txtUserName_Validating);
             // 
             // lblConfirmPasswordTitle
             // 
@@ -397,6 +402,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Load += new System.EventHandler(this.frmAddNewUser_Load);
             this.tcAddNewUser.ResumeLayout(false);
             this.tpPersonalInfo.ResumeLayout(false);
             this.tpLoginInfo.ResumeLayout(false);
@@ -424,15 +430,15 @@
         private System.Windows.Forms.Label lblUserID;
         private System.Windows.Forms.PictureBox pbPerson;
         private System.Windows.Forms.PictureBox pbConfirmPassword;
-        private System.Windows.Forms.TextBox txtFirstName;
+        private System.Windows.Forms.TextBox txtUserName;
         private System.Windows.Forms.Label lblConfirmPasswordTitle;
         private System.Windows.Forms.Label lblPasswordTitle;
         private System.Windows.Forms.Label lblUserNameTitle;
         private System.Windows.Forms.Label lblUserIDTitle;
         private System.Windows.Forms.PictureBox pbUserID;
         private System.Windows.Forms.PictureBox pbPassword;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.TextBox txtPasswordConfirmation;
         private System.Windows.Forms.CheckBox chbIsActive;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClose;

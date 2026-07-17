@@ -154,7 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Next 32.png" />
-    <None Include="Resources\Next 64.png" />
     <None Include="Resources\SearchPerson.png" />
     <None Include="Resources\Users 2 400.png" />
     <None Include="Resources\Users 2 64.png" />

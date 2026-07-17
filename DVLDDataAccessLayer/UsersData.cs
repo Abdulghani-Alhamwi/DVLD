@@ -141,7 +141,6 @@ namespace DVLDDataAccessLayer
         }
         public static bool IsUserExists(int PersonID)
         {
-            bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"SELECT Found = 1
@@ -156,7 +155,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    IsFound = true;
+                    return true;
             }
 
             catch { }
@@ -166,11 +165,10 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
 
-            return IsFound;
+            return false;
         }
         public static bool IsUserExists(string PersonNationalNo)
         {
-            bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"SELECT Found = 1 FROM
@@ -187,7 +185,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    IsFound = true;
+                    return true;
             }
 
             catch { }
@@ -197,7 +195,35 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
 
-            return IsFound;
+            return false;
+        }
+        public static bool IsUserAlreadyExists(string UserName)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT Found = 1 FROM Users 
+                             WHERE UserName = @UserName";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@UserName",UserName);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return true;
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return false;
         }
 
     }

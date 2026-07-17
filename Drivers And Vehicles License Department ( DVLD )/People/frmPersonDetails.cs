@@ -16,7 +16,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             InitializeComponent();
             UctrlPersonDetails.LoadPersonDetails(PersonID);
-            this.ShowInTaskbar = false;
         }
 
         private void btnExit_Click(object sender, EventArgs e)
