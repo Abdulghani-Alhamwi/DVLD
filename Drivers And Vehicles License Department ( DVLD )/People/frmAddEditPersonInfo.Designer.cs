@@ -679,6 +679,7 @@
             this.btnExit.TabIndex = 49;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // frmAddEditPersonInfo
             // 

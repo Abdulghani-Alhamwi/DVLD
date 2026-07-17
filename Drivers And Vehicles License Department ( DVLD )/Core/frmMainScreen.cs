@@ -64,7 +64,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             frmPeopleManagement frm = new frmPeopleManagement();
             frm.Size = SetFormsSize();
-            frm.ShowDialog();
+            frm.ShowDialog();            
         }
 
         private void usersToolStripMenuItem_Click(object sender, EventArgs e)
