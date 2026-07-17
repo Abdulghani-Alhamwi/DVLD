@@ -15,8 +15,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             InitializeComponent();
         }
-
-
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -30,7 +28,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 _dataview = dtUsers.DefaultView;
                 dgvUsers.DataSource = _dataview;
-                dgvUsers.Font = new Font("Tahoma", 16);
+                dgvUsers.Font = new Font("Tahoma", 16f);
             }
             lblRecordsNumber.Text = dgvUsers.Rows.Count.ToString();
 
@@ -143,7 +141,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             frmAddNewUser frm = new frmAddNewUser();
             frm.ShowDialog();
         }
-        private void btnAddNewUser_Click_1(object sender, EventArgs e)
+        private void btnAddNewUser_Click(object sender, EventArgs e)
         {
             _AddNewUserScreen();
         }

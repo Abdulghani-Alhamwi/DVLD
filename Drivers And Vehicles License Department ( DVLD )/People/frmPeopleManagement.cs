@@ -32,7 +32,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (dtPeople != null)
             {
                 _dataview = dtPeople.DefaultView;
-                dgvPeople.Font = new Font("Tahoma", 16);
+                dgvPeople.Font = new Font("Tahoma", 15.5f);
                 dgvPeople.DataSource = _dataview;
             }
 

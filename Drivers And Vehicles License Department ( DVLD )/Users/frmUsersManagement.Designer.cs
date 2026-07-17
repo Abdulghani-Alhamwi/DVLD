@@ -340,7 +340,7 @@
             this.btnAddNewUser.Size = new System.Drawing.Size(111, 70);
             this.btnAddNewUser.TabIndex = 40;
             this.btnAddNewUser.UseVisualStyleBackColor = true;
-            this.btnAddNewUser.Click += new System.EventHandler(this.btnAddNewUser_Click_1);
+            this.btnAddNewUser.Click += new System.EventHandler(this.btnAddNewUser_Click);
             // 
             // frmUsersManagement
             // 

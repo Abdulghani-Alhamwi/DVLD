@@ -73,5 +73,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 
             frm.ShowDialog();
         }
+
+        private void driversToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

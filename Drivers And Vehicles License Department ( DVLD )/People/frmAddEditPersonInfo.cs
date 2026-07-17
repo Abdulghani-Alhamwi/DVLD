@@ -33,7 +33,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 this._Person = PersonInfo;
                 lblAddEditPersonInfoBigTitle.Text = "Update Person";
             }
-            lblAddEditPersonInfoBigTitle.Location = new Point(((this.Width / 2) - (lblAddEditPersonInfoBigTitle.Width / 2)), lblAddEditPersonInfoBigTitle.Location.Y);
+            lblAddEditPersonInfoBigTitle.Location = new Point((this.Width / 2) - (lblAddEditPersonInfoBigTitle.Width / 2), lblAddEditPersonInfoBigTitle.Location.Y);
 
         }
 
@@ -237,10 +237,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 _CheckIsValidEmail(txtEmail.Text, e);
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
         private void _SetDateConstraint()
         {
             DateTime MaxdateOfBirth = DateTime.Now.AddYears(-18);
@@ -257,6 +253,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             btnExit.CausesValidation = false;
             btnClose.CausesValidation = false;
+            
             _SetDateConstraint();
 
             DataView dataview = clsCountries.GetAllCountries().DefaultView;
@@ -271,12 +268,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             else
                 cbCountries.SelectedIndex = dataview.Find("Jordan");
         }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void rbMale_CheckedChanged(object sender, EventArgs e)
         {
             if (rbMale.Checked && !_UploadedPersonalImage)
@@ -403,6 +394,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 else
                     MessageBox.Show("Save Failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

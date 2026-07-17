@@ -29,13 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.btnExit = new System.Windows.Forms.Button();
             this.lblAddEditPersonInfoTitle = new System.Windows.Forms.Label();
             this.lblAddEditPersonInfoBigTitle = new System.Windows.Forms.Label();
             this.lblPersonIDTitle = new System.Windows.Forms.Label();
             this.pnlResponsiveness = new System.Windows.Forms.Panel();
-            this.lnlblRemove = new System.Windows.Forms.LinkLabel();
             this.btnClose = new System.Windows.Forms.Button();
+            this.lnlblRemove = new System.Windows.Forms.LinkLabel();
             this.btnSave = new System.Windows.Forms.Button();
             this.lnlblSetImage = new System.Windows.Forms.LinkLabel();
             this.pbPersonalImage = new System.Windows.Forms.PictureBox();
@@ -75,6 +74,7 @@
             this.erTextBox = new System.Windows.Forms.ErrorProvider(this.components);
             this.lblPersonID = new System.Windows.Forms.Label();
             this.ofdSelectImage = new System.Windows.Forms.OpenFileDialog();
+            this.btnExit = new System.Windows.Forms.Button();
             this.pnlResponsiveness.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPersonalImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCountry)).BeginInit();
@@ -88,26 +88,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbAddress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.erTextBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnExit
-            // 
-            this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExit.BackColor = System.Drawing.Color.DarkRed;
-            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnExit.FlatAppearance.BorderSize = 0;
-            this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1092, 21);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(2);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 15;
-            this.btnExit.Text = "X";
-            this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // lblAddEditPersonInfoTitle
             // 
@@ -127,7 +107,7 @@
             this.lblAddEditPersonInfoBigTitle.AutoSize = true;
             this.lblAddEditPersonInfoBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
             this.lblAddEditPersonInfoBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblAddEditPersonInfoBigTitle.Location = new System.Drawing.Point(335, 73);
+            this.lblAddEditPersonInfoBigTitle.Location = new System.Drawing.Point(375, 73);
             this.lblAddEditPersonInfoBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblAddEditPersonInfoBigTitle.Name = "lblAddEditPersonInfoBigTitle";
             this.lblAddEditPersonInfoBigTitle.Size = new System.Drawing.Size(482, 52);
@@ -150,8 +130,8 @@
             this.pnlResponsiveness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlResponsiveness.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlResponsiveness.Controls.Add(this.lnlblRemove);
             this.pnlResponsiveness.Controls.Add(this.btnClose);
+            this.pnlResponsiveness.Controls.Add(this.lnlblRemove);
             this.pnlResponsiveness.Controls.Add(this.btnSave);
             this.pnlResponsiveness.Controls.Add(this.lnlblSetImage);
             this.pnlResponsiveness.Controls.Add(this.pbPersonalImage);
@@ -190,8 +170,24 @@
             this.pnlResponsiveness.Controls.Add(this.lblNameTitle);
             this.pnlResponsiveness.Location = new System.Drawing.Point(29, 205);
             this.pnlResponsiveness.Name = "pnlResponsiveness";
-            this.pnlResponsiveness.Size = new System.Drawing.Size(1102, 480);
+            this.pnlResponsiveness.Size = new System.Drawing.Size(1103, 480);
             this.pnlResponsiveness.TabIndex = 10;
+            // 
+            // btnClose
+            // 
+            this.btnClose.FlatAppearance.BorderSize = 2;
+            this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
+            this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
+            this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnClose.Location = new System.Drawing.Point(487, 397);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(166, 45);
+            this.btnClose.TabIndex = 50;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // lnlblRemove
             // 
@@ -207,23 +203,6 @@
             this.lnlblRemove.Visible = false;
             this.lnlblRemove.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblRemove_LinkClicked);
             // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.FlatAppearance.BorderSize = 2;
-            this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
-            this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
-            this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(496, 389);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 15;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -233,7 +212,7 @@
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(691, 389);
+            this.btnSave.Location = new System.Drawing.Point(686, 397);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(166, 45);
             this.btnSave.TabIndex = 14;
@@ -685,6 +664,22 @@
             // 
             this.ofdSelectImage.FileOk += new System.ComponentModel.CancelEventHandler(this.ofdSelectImage_FileOk);
             // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.DarkRed;
+            this.btnExit.FlatAppearance.BorderSize = 0;
+            this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
+            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
+            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.Location = new System.Drawing.Point(1093, 21);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(39, 36);
+            this.btnExit.TabIndex = 49;
+            this.btnExit.Text = "X";
+            this.btnExit.UseVisualStyleBackColor = false;
+            // 
             // frmAddEditPersonInfo
             // 
             this.AcceptButton = this.btnSave;
@@ -692,15 +687,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1157, 718);
             this.ControlBox = false;
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.pnlResponsiveness);
             this.Controls.Add(this.lblPersonID);
             this.Controls.Add(this.lblPersonIDTitle);
             this.Controls.Add(this.lblAddEditPersonInfoBigTitle);
             this.Controls.Add(this.lblAddEditPersonInfoTitle);
-            this.Controls.Add(this.btnExit);
             this.Font = new System.Drawing.Font("Tahoma", 16F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6);
@@ -727,8 +721,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label lblAddEditPersonInfoTitle;
         private System.Windows.Forms.Label lblAddEditPersonInfoBigTitle;
         private System.Windows.Forms.Label lblPersonIDTitle;
@@ -769,10 +761,11 @@
         private System.Windows.Forms.ComboBox cbCountries;
         private System.Windows.Forms.PictureBox pbPersonalImage;
         private System.Windows.Forms.LinkLabel lnlblSetImage;
-        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.ErrorProvider erTextBox;
         private System.Windows.Forms.OpenFileDialog ofdSelectImage;
         private System.Windows.Forms.LinkLabel lnlblRemove;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Button btnClose;
     }
 }
