@@ -56,17 +56,17 @@
     <Compile Include="Controls\ctrlPersonDetails.Designer.cs">
       <DependentUpon>ctrlPersonDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmAddNewUser.cs">
+    <Compile Include="Users\frmAddNewUser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAddNewUser.Designer.cs">
+    <Compile Include="Users\frmAddNewUser.Designer.cs">
       <DependentUpon>frmAddNewUser.cs</DependentUpon>
     </Compile>
     <Compile Include="MyLib\clsUtility.cs" />
-    <Compile Include="frmUsersManagement.cs">
+    <Compile Include="Users\frmUsersManagement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmUsersManagement.Designer.cs">
+    <Compile Include="Users\frmUsersManagement.Designer.cs">
       <DependentUpon>frmUsersManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="People\frmAddEditPersonInfo.cs">
@@ -93,10 +93,10 @@
     <Compile Include="People\frmPersonDetails.Designer.cs">
       <DependentUpon>frmPersonDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="ctrlPersonInformationByFilter.cs">
+    <Compile Include="Controls\ctrlPersonInformationByFilter.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ctrlPersonInformationByFilter.Designer.cs">
+    <Compile Include="Controls\ctrlPersonInformationByFilter.Designer.cs">
       <DependentUpon>ctrlPersonInformationByFilter.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -105,10 +105,10 @@
     <EmbeddedResource Include="Controls\ctrlPersonDetails.resx">
       <DependentUpon>ctrlPersonDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmAddNewUser.resx">
+    <EmbeddedResource Include="Users\frmAddNewUser.resx">
       <DependentUpon>frmAddNewUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmUsersManagement.resx">
+    <EmbeddedResource Include="Users\frmUsersManagement.resx">
       <DependentUpon>frmUsersManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\frmAddEditPersonInfo.resx">
@@ -123,7 +123,7 @@
     <EmbeddedResource Include="People\frmPersonDetails.resx">
       <DependentUpon>frmPersonDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ctrlPersonInformationByFilter.resx">
+    <EmbeddedResource Include="Controls\ctrlPersonInformationByFilter.resx">
       <DependentUpon>ctrlPersonInformationByFilter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -190,5 +190,6 @@
       <Name>DVLDBusinessLayer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
