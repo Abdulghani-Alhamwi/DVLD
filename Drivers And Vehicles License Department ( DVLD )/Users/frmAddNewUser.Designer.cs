@@ -35,7 +35,6 @@
             this.tcAddNewUser = new System.Windows.Forms.TabControl();
             this.tpPersonalInfo = new System.Windows.Forms.TabPage();
             this.btnNext = new System.Windows.Forms.Button();
-            this.uctrlpersonInfoByFilter = new Driver_And_Vehicle_Licenses_Department___DVLD__.PersonInformationByFilter();
             this.tpLoginInfo = new System.Windows.Forms.TabPage();
             this.chbIsActive = new System.Windows.Forms.CheckBox();
             this.pbUserID = new System.Windows.Forms.PictureBox();
@@ -53,6 +52,7 @@
             this.ertxtBox = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.uctrlpersonInfoByFilter = new Driver_And_Vehicle_Licenses_Department___DVLD__.PersonInformationByFilter();
             this.tcAddNewUser.SuspendLayout();
             this.tpPersonalInfo.SuspendLayout();
             this.tpLoginInfo.SuspendLayout();
@@ -150,15 +150,6 @@
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
-            // 
-            // uctrlpersonInfoByFilter
-            // 
-            this.uctrlpersonInfoByFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.uctrlpersonInfoByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.uctrlpersonInfoByFilter.Location = new System.Drawing.Point(18, 15);
-            this.uctrlpersonInfoByFilter.Name = "uctrlpersonInfoByFilter";
-            this.uctrlpersonInfoByFilter.Size = new System.Drawing.Size(1089, 487);
-            this.uctrlpersonInfoByFilter.TabIndex = 45;
             // 
             // tpLoginInfo
             // 
@@ -383,8 +374,19 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // uctrlpersonInfoByFilter
+            // 
+            this.uctrlpersonInfoByFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.uctrlpersonInfoByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlpersonInfoByFilter.Location = new System.Drawing.Point(18, 15);
+            this.uctrlpersonInfoByFilter.Name = "uctrlpersonInfoByFilter";
+            this.uctrlpersonInfoByFilter.Size = new System.Drawing.Size(1089, 487);
+            this.uctrlpersonInfoByFilter.TabIndex = 45;
+            this.uctrlpersonInfoByFilter.OnPersonSelected += new System.Action(this.uctrlpersonInfoByFilter_OnPersonSelected);
+            // 
             // frmAddNewUser
             // 
+            this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;

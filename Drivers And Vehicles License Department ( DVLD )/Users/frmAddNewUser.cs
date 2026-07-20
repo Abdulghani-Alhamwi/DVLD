@@ -26,6 +26,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             InitializeComponent();
         }
 
+        bool _CanMoveToNextTab;
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -33,7 +34,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if(uctrlpersonInfoByFilter.FindPerson())
+            if(_CanMoveToNextTab)
             tcAddNewUser.SelectedTab = tpLoginInfo;
         }
 
@@ -44,8 +45,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void tcAddNewUser_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if (tcAddNewUser.SelectedTab == tpLoginInfo)
-                if (!uctrlpersonInfoByFilter.FindPerson())
+            if (tcAddNewUser.SelectedTab == tpLoginInfo && _CanMoveToNextTab)
                     tcAddNewUser.SelectedTab = tpPersonalInfo;
         }
 
@@ -102,8 +102,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             User.UserName = clsUtility.EncryptUserName(txtUserName.Text);
 
-            byte[] Salt;
-            User.Password = clsUtility.HashWithSaltPassword(txtPassword.Text,out Salt);
+            byte[] Salt = null;
+            User.Password = clsUtility.HashWithSaltPassword(txtPassword.Text,Salt);
             User.Salt = Convert.ToBase64String(Salt);
 
             User.IsActive = chbIsActive.Checked;
@@ -135,6 +135,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 btnSave.Enabled = true;
             else
                 btnSave.Enabled = false;
+        }
+
+        private void uctrlpersonInfoByFilter_OnPersonSelected()
+        {
+            _CanMoveToNextTab = true;
         }
     }
 }

@@ -47,7 +47,7 @@
             this.txtFindBy.Location = new System.Drawing.Point(394, 47);
             this.txtFindBy.Name = "txtFindBy";
             this.txtFindBy.Size = new System.Drawing.Size(373, 35);
-            this.txtFindBy.TabIndex = 36;
+            this.txtFindBy.TabIndex = 0;
             this.txtFindBy.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFindBy_KeyDown);
             // 
             // cbFindBy

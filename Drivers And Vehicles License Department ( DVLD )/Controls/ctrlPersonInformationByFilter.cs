@@ -14,6 +14,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class PersonInformationByFilter : UserControl
     {
+        public event Action OnPersonSelected;
         public PersonInformationByFilter()
         {
             InitializeComponent();
@@ -29,7 +30,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             cbFindBy.SelectedIndex = 0;
 
         }
-
         private void cbFindBy_DropDown(object sender, EventArgs e)
         {
             cbFindBy.BackColor = Color.FromArgb(245,245,245);
@@ -73,16 +73,16 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
 
         string PreviouslyFoundText = null;
-        public bool FindPerson()
+        private void FindPerson()
         {
           if (string.IsNullOrEmpty(txtFindBy.Text))
             {
                 MessageBox.Show("Please select a person first by their National Number or ID.", "Select a Person", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return;
             }
                 
             if(PreviouslyFoundText == txtFindBy.Text)
-                return true;
+                return;
             
             else if (cbFindBy.SelectedItem.ToString() == "National No")
             {
@@ -90,8 +90,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 {
                     _NationalNo = txtFindBy.Text;
                     uctrlPersonDetails.LoadPersonDetails(_NationalNo);
+                    OnPersonSelected?.Invoke();
                     PreviouslyFoundText = txtFindBy.Text;
-                    return true;
+                    return;
                 }
             }
 
@@ -101,14 +102,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 {
                     _PersonID = Convert.ToInt32(txtFindBy.Text);
                     uctrlPersonDetails.LoadPersonDetails(_PersonID);
+                    OnPersonSelected?.Invoke();
                     PreviouslyFoundText = txtFindBy.Text;
-                    return true;
+                    return;
                 }
             }
 
             MessageBox.Show("The selected person already has a user. Choose another one.", "Select Another Person", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            return false;
         }
         private void btnFindUser_Click(object sender, EventArgs e)
         {

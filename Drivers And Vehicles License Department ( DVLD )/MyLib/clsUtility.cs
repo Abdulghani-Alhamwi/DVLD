@@ -14,14 +14,16 @@ namespace MyLib
     internal class clsUtility
     {
 
-        public static string HashWithSaltPassword(string Password, out byte[] Salt)
+        public static string HashWithSaltPassword(string Password,byte[] Salt)
         {
-            Salt = new byte[32];
+            if (Salt == null)
+            {
+                Salt = new byte[32];
 
-            RandomNumberGenerator rn = RandomNumberGenerator.Create();
-            rn.GetBytes(Salt);
-            rn.Dispose();
-
+                RandomNumberGenerator rn = RandomNumberGenerator.Create();
+                rn.GetBytes(Salt);
+                rn.Dispose();
+            }
             Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(Password, Salt, 10000);
             byte[] HashWithSalt = PBKDF2.GetBytes(32);
 
