@@ -168,9 +168,5 @@ namespace DVLDBusinessLayer
                 return clsPeopleData.SearchForNationalNo(NationalNo);
         }
 
-        public static int GetPersonIDByNationalNo(string NationalNo)
-        {
-            return clsPeopleData.GetPersonIDByNationalNo(NationalNo);
-        }
     }
 }

@@ -382,7 +382,7 @@
             this.uctrlpersonInfoByFilter.Name = "uctrlpersonInfoByFilter";
             this.uctrlpersonInfoByFilter.Size = new System.Drawing.Size(1089, 487);
             this.uctrlpersonInfoByFilter.TabIndex = 45;
-            this.uctrlpersonInfoByFilter.OnPersonSelected += new System.Action(this.uctrlpersonInfoByFilter_OnPersonSelected);
+            this.uctrlpersonInfoByFilter.OnPersonSelected += new Driver_And_Vehicle_Licenses_Department___DVLD__.PersonInformationByFilter.PersonSelectedEventHandler(this.uctrlpersonInfoByFilter_OnPersonSelected);
             // 
             // frmAddNewUser
             // 

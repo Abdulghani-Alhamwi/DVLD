@@ -1,15 +1,5 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using MyLib;
@@ -26,16 +16,32 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             InitializeComponent();
         }
 
-        bool _CanMoveToNextTab;
+        clsPerson _Person;
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+        private bool _MoveToNextTab()
+        {
+            if (_Person != null)
+            {
+                if (!clsUser.IsUserExists(_Person.PersonID))
+                {
+                    tcAddNewUser.SelectedTab = tpLoginInfo;
+                    return true;
+                }
 
+                else
+                    MessageBox.Show("The selected person already has a user. Choose another one.", "Select Another Person", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+                MessageBox.Show("Select a person or add new person first!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            return false;
+        }
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if(_CanMoveToNextTab)
-            tcAddNewUser.SelectedTab = tpLoginInfo;
+            _MoveToNextTab();
         }
 
         private void btnClose_Click_1(object sender, EventArgs e)
@@ -45,8 +51,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void tcAddNewUser_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if (tcAddNewUser.SelectedTab == tpLoginInfo && _CanMoveToNextTab)
+            if (tcAddNewUser.SelectedTab == tpLoginInfo)
+            {
+                if (!_MoveToNextTab())
                     tcAddNewUser.SelectedTab = tpPersonalInfo;
+            }
         }
 
         private void txtUserName_Validating(object sender,CancelEventArgs e)
@@ -94,11 +103,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             clsUser User = new clsUser();
 
-            if (uctrlpersonInfoByFilter.NationalNo != "")
-                User.PersonID = clsPerson.GetPersonIDByNationalNo(uctrlpersonInfoByFilter.NationalNo);
-
-            else
-                User.PersonID = uctrlpersonInfoByFilter.PersonID;
+            User.PersonID = _Person.PersonID;
 
             User.UserName = clsUtility.EncryptUserName(txtUserName.Text);
 
@@ -137,9 +142,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 btnSave.Enabled = false;
         }
 
-        private void uctrlpersonInfoByFilter_OnPersonSelected()
+        private void uctrlpersonInfoByFilter_OnPersonSelected(clsPerson Person)
         {
-            _CanMoveToNextTab = true;
+            _Person = Person;
         }
     }
 }

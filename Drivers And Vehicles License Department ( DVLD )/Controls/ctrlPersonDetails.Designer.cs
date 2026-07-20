@@ -99,6 +99,7 @@
             // 
             this.lnlblEditPersonInfo.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lnlblEditPersonInfo.AutoSize = true;
+            this.lnlblEditPersonInfo.Enabled = false;
             this.lnlblEditPersonInfo.Font = new System.Drawing.Font("Tahoma", 18F);
             this.lnlblEditPersonInfo.Location = new System.Drawing.Point(861, 100);
             this.lnlblEditPersonInfo.Margin = new System.Windows.Forms.Padding(0);

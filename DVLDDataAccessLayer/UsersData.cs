@@ -168,36 +168,6 @@ namespace DVLDDataAccessLayer
 
             return false;
         }
-        public static bool IsUserExists(string PersonNationalNo)
-        {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-
-            string query = @"SELECT Found = 1 FROM
-                             Users INNER JOIN People 
-                             ON Users.PersonID = People.PersonID
-                             WHERE People.NationalNo = @NationalNo";
-
-            SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@NationalNo", PersonNationalNo);
-
-            try
-            {
-                connection.Open();
-                object result = command.ExecuteScalar();
-
-                if (result != null)
-                    return true;
-            }
-
-            catch { }
-
-            finally
-            {
-                connection.Close();
-            }
-
-            return false;
-        }
         public static bool IsUserAlreadyExists(string UserName)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);

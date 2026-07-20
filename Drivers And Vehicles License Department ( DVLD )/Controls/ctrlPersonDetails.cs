@@ -14,30 +14,73 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             InitializeComponent();
         }
         clsPerson _Person;
-        public void LoadPersonDetails(int PersonID)
+        bool _ShownDefaultValues = false;
+        public clsPerson LoadPersonDetails(int PersonID)
         {
-
             _Person = clsPerson.Find(PersonID);
 
             if (_Person != null)
             {
                 _ShowPersonDetails();
+                lnlblEditPersonInfo.Enabled = true;
+                _ShownDefaultValues = false;
+                return _Person;
             }
             else
-                MessageBox.Show("Person is not found!", "Details", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            {
+                _ShowDefaultDetails();
+                MessageBox.Show($"No Person With Person ID = {PersonID}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ShownDefaultValues = true;
+                lnlblEditPersonInfo.Enabled = false;
+                return null;
+            }
 
         }
-        public void LoadPersonDetails(string NationalNo)
+        public clsPerson LoadPersonDetails(string NationalNo)
         {
             _Person = clsPerson.Find(NationalNo);
 
             if (_Person != null)
             {
                 _ShowPersonDetails();
+                lnlblEditPersonInfo.Enabled = true;
+                _ShownDefaultValues = false;
+                return _Person;
             }
             else
-                MessageBox.Show("Person is not found!", "Details", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            {
+                _ShowDefaultDetails();
+                MessageBox.Show($"No Person With National No. = {NationalNo}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ShownDefaultValues = true;
+                lnlblEditPersonInfo.Enabled = false;
+                return null;
+            }
 
+        }
+
+        private void _ShowDefaultDetails()
+        {
+            if (!_ShownDefaultValues)
+            {
+                lblPersonID.Text = "????";
+
+                lblName.Text = "????";
+
+                lblNationalNo.Text = "????";
+                lblDateOfBirth.Text = "????";
+
+                pbGendor.Image = Resources.Man_32;
+
+                lblGendor.Text = "????";
+
+                lblPhone.Text = "????";
+                lblEmail.Text = "????";
+
+                lblCountry.Text = "????";
+                lblAddress.Text = "????";
+
+                pbPersonalImage.Image = Resources.Male_512;
+            }
         }
         private void _ShowPersonDetails()
         {

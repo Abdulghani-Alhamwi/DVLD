@@ -14,15 +14,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class PersonInformationByFilter : UserControl
     {
-        public event Action OnPersonSelected;
+        public delegate void PersonSelectedEventHandler(clsPerson Person);
+
+        public event PersonSelectedEventHandler OnPersonSelected;
         public PersonInformationByFilter()
         {
             InitializeComponent();
         }
-        string _NationalNo = "";
-        int _PersonID = -1;
-        public string NationalNo { get { return _NationalNo; } }
-        public int PersonID { get { return _PersonID; } }
         private void PersonInformationByFilter_Load(object sender, EventArgs e)
         {
             object[] Items = new object[] { "National No", "Person ID" };
@@ -86,29 +84,19 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             
             else if (cbFindBy.SelectedItem.ToString() == "National No")
             {
-                if (!clsUser.IsUserExists(txtFindBy.Text))
-                {
-                    _NationalNo = txtFindBy.Text;
-                    uctrlPersonDetails.LoadPersonDetails(_NationalNo);
-                    OnPersonSelected?.Invoke();
+                    clsPerson Person = uctrlPersonDetails.LoadPersonDetails(txtFindBy.Text);
                     PreviouslyFoundText = txtFindBy.Text;
-                    return;
-                }
+                if(Person!=null)
+                    OnPersonSelected?.Invoke(Person); ;
             }
 
             else
             {
-                if (!clsUser.IsUserExists(Convert.ToInt32(txtFindBy.Text)))
-                {
-                    _PersonID = Convert.ToInt32(txtFindBy.Text);
-                    uctrlPersonDetails.LoadPersonDetails(_PersonID);
-                    OnPersonSelected?.Invoke();
+                    clsPerson Person = uctrlPersonDetails.LoadPersonDetails(Convert.ToInt32(txtFindBy.Text));
                     PreviouslyFoundText = txtFindBy.Text;
-                    return;
-                }
+                    OnPersonSelected?.Invoke(Person);
             }
-
-            MessageBox.Show("The selected person already has a user. Choose another one.", "Select Another Person", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            
         }
         private void btnFindUser_Click(object sender, EventArgs e)
         {
