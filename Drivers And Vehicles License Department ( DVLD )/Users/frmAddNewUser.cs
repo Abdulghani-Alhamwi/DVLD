@@ -1,9 +1,13 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,6 +18,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class frmAddNewUser : Form
     {
+       public delegate void AddedUserEventHandler();
+
+       public event AddedUserEventHandler AddedUser;
         public frmAddNewUser()
         {
             InitializeComponent();
@@ -53,13 +60,17 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             else
                 ertxtBox.Dispose();
         }
-
         private void txtPassword_Validating(object sender,CancelEventArgs e)
         {
             if (txtPassword.Text == "")
                 clsUtility.EnableErrorProvider(ertxtBox, txtPassword, "Password cannot be blank.", null);
+
+            else if (txtPassword.Text == txtPasswordConfirmation.Text)
+                ertxtBox.Dispose();
+            
             else
                 ertxtBox.Dispose();
+                
         }
         private void txtPasswordConfirmation_Validating(object sender,CancelEventArgs e)
         {
@@ -68,7 +79,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             else if (txtPasswordConfirmation.Text != txtPassword.Text)
                 clsUtility.EnableErrorProvider(ertxtBox, txtPasswordConfirmation, "Password confirmation does not match password!", null);
-
+            
             else
                 ertxtBox.Dispose();
         }
@@ -77,6 +88,53 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             btnClose.CausesValidation = false;
             btnExit.CausesValidation = false;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            clsUser User = new clsUser();
+
+            if (uctrlpersonInfoByFilter.NationalNo != "")
+                User.PersonID = clsPerson.GetPersonIDByNationalNo(uctrlpersonInfoByFilter.NationalNo);
+
+            else
+                User.PersonID = uctrlpersonInfoByFilter.PersonID;
+
+            User.UserName = clsUtility.EncryptUserName(txtUserName.Text);
+
+            byte[] Salt;
+            User.Password = clsUtility.HashWithSaltPassword(txtPassword.Text,out Salt);
+            User.Salt = Convert.ToBase64String(Salt);
+
+            User.IsActive = chbIsActive.Checked;
+
+            if(User.Save())
+            {                
+                lblUserID.Text = User.UserID.ToString();
+                MessageBox.Show("Saved successfully!", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnSave.Enabled = false;
+
+                AddedUser?.Invoke();
+            }
+            else
+                MessageBox.Show("Saving failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+        }
+
+        private void txtPassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (txtPassword.Text != "" && txtPassword.Text == txtPasswordConfirmation.Text)
+                btnSave.Enabled = true;
+            else
+                btnSave.Enabled = false;
+        }
+
+        private void txtPasswordConfirmation_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (txtPasswordConfirmation.Text != "" &&  txtPasswordConfirmation.Text == txtPassword.Text)
+                btnSave.Enabled = true;
+            else
+                btnSave.Enabled = false;
         }
     }
 }

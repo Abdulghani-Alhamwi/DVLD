@@ -20,12 +20,22 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             this.Close();
         }
         DataView _dataview;
+
+        private void _DecryptUsersNames(DataTable dtUsers)
+        {
+            if(dtUsers != null)
+            foreach (DataRow datarow in dtUsers.Rows)
+            {
+                datarow["UserName"] = clsUtility.DecryptUserName(datarow["UserName"].ToString());
+            }
+        }
         private void frmUsersManagement_Load(object sender, EventArgs e)
         {
             DataTable dtUsers = clsUser.GetAllUsers();
 
             if (dtUsers != null)
             {
+            _DecryptUsersNames(dtUsers);
                 _dataview = dtUsers.DefaultView;
                 dgvUsers.DataSource = _dataview;
                 dgvUsers.Font = new Font("Tahoma", 16f);
@@ -139,6 +149,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void _AddNewUserScreen()
         {
             frmAddNewUser frm = new frmAddNewUser();
+            frm.AddedUser += _RefreshUsersDataView;
             frm.ShowDialog();
         }
         private void btnAddNewUser_Click(object sender, EventArgs e)
@@ -152,8 +163,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _RefreshUsersDataView()
         {
-            dgvUsers.DataSource = null;
-            _dataview = clsUser.GetAllUsers().DefaultView;
+            _dataview = clsUser.GetAllUsers()?.DefaultView;
+            _DecryptUsersNames(_dataview?.Table);
             dgvUsers.DataSource = _dataview;
         }
 

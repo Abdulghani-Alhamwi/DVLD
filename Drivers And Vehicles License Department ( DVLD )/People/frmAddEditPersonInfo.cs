@@ -392,7 +392,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     btnSave.Enabled = false;
                 }
                 else
-                    MessageBox.Show("Save Failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Saving Failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

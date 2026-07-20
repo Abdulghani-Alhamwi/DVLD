@@ -181,7 +181,7 @@
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(487, 397);
+            this.btnClose.Location = new System.Drawing.Point(487, 400);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 50;
@@ -212,7 +212,7 @@
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(686, 397);
+            this.btnSave.Location = new System.Drawing.Point(686, 400);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(166, 45);
             this.btnSave.TabIndex = 14;

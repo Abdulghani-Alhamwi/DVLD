@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Data;
+using System.Net;
 
 namespace DVLDDataAccessLayer
 {
@@ -369,6 +370,33 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
+        public static int GetPersonIDByNationalNo(string NationalNo)
+        {
+            int PersonID = -1;
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
+            string query = @"SELECT PersonID FROM People
+                             WHERE NationalNo = @NationalNo";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@NationalNo", NationalNo);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    PersonID = (int)result;
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return PersonID;
+        }
     }
 }

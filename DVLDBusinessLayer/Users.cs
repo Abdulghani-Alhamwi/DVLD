@@ -12,6 +12,7 @@ namespace DVLDBusinessLayer
         public int PersonID { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
+        public string Salt { get; set; }
         public bool IsActive { get; set; }
 
         public clsUser()
@@ -20,6 +21,7 @@ namespace DVLDBusinessLayer
             PersonID = -1;
             UserName = "";
             Password = "";
+            Salt = "";
             IsActive = false;
             _CurrentMode = _enMode.AddNew;
         }
@@ -31,14 +33,14 @@ namespace DVLDBusinessLayer
 
         private bool _AddNewUser()
         {
-            UserID = clsUsersData.AddNewUser(PersonID, UserName, Password, IsActive);
+            UserID = clsUsersData.AddNewUser(PersonID, UserName, Password, Salt, IsActive);
 
             return (UserID != -1);
         }
 
         private bool _UpdateUser()
         {
-            return clsUsersData.UpdateUser(UserID, PersonID, UserName, Password, IsActive);
+            return clsUsersData.UpdateUser(UserID, PersonID, UserName, Password, Salt, IsActive);
         }
 
         public bool Save()

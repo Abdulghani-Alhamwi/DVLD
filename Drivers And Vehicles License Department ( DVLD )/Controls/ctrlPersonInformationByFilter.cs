@@ -18,7 +18,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             InitializeComponent();
         }
-
+        string _NationalNo = "";
+        int _PersonID = -1;
+        public string NationalNo { get { return _NationalNo; } }
+        public int PersonID { get { return _PersonID; } }
         private void PersonInformationByFilter_Load(object sender, EventArgs e)
         {
             object[] Items = new object[] { "National No", "Person ID" };
@@ -83,9 +86,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             
             else if (cbFindBy.SelectedItem.ToString() == "National No")
             {
-                if (!clsUser.IsUserExists(txtFindBy.Text)) // Gendor is not shawn !
+                if (!clsUser.IsUserExists(txtFindBy.Text))
                 {
-                    uctrlPersonDetails.LoadPersonDetails(txtFindBy.Text);
+                    _NationalNo = txtFindBy.Text;
+                    uctrlPersonDetails.LoadPersonDetails(_NationalNo);
                     PreviouslyFoundText = txtFindBy.Text;
                     return true;
                 }
@@ -95,7 +99,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 if (!clsUser.IsUserExists(Convert.ToInt32(txtFindBy.Text)))
                 {
-                    uctrlPersonDetails.LoadPersonDetails(Convert.ToInt32(txtFindBy.Text));
+                    _PersonID = Convert.ToInt32(txtFindBy.Text);
+                    uctrlPersonDetails.LoadPersonDetails(_PersonID);
                     PreviouslyFoundText = txtFindBy.Text;
                     return true;
                 }

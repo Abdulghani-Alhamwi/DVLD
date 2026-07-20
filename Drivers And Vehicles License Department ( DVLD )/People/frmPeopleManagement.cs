@@ -102,8 +102,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _RefreshPeopleDataView()
         {
-            dgvPeople.DataSource = null;
-            _dataview = clsPerson.GetAllPeopleBasicInfo().DefaultView;
+            _dataview = clsPerson.GetAllPeopleBasicInfo()?.DefaultView;
             dgvPeople.DataSource = _dataview;
         }
 

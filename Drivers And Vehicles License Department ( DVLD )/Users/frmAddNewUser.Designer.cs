@@ -231,6 +231,7 @@
             this.txtPassword.Size = new System.Drawing.Size(256, 40);
             this.txtPassword.TabIndex = 1;
             this.txtPassword.Tag = "First Name";
+            this.txtPassword.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyUp);
             this.txtPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtPassword_Validating);
             // 
             // txtPasswordConfirmation
@@ -246,6 +247,7 @@
             this.txtPasswordConfirmation.Size = new System.Drawing.Size(256, 40);
             this.txtPasswordConfirmation.TabIndex = 2;
             this.txtPasswordConfirmation.Tag = "First Name";
+            this.txtPasswordConfirmation.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPasswordConfirmation_KeyUp);
             this.txtPasswordConfirmation.Validating += new System.ComponentModel.CancelEventHandler(this.txtPasswordConfirmation_Validating);
             // 
             // lblUserID
@@ -379,6 +381,7 @@
             this.btnSave.TabIndex = 48;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // frmAddNewUser
             // 
