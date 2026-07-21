@@ -86,12 +86,12 @@ namespace DVLDDataAccessLayer
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"UPDATE USERS SET
-                             PersonID = @PersonID , UserName = @UserName
-                             Password = @Password ,Salt = @Salt IsActive = @IsActive
+                             PersonID = @PersonID , UserName = @UserName ,
+                             Password = @Password ,Salt = @Salt, IsActive = @IsActive
                              WHERE UserID = @UserID";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@UserID", UserID);
+            command.Parameters.AddWithValue("@UserID",UserID);
             command.Parameters.AddWithValue("@PersonID", PersonID);
             command.Parameters.AddWithValue("@UserName", UserName);
             command.Parameters.AddWithValue("@Password", Password);
@@ -197,5 +197,41 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
+        public static bool Find(int UserID ,ref int PersonID , ref string UserName,ref string Password,ref string Salt ,ref bool IsActive)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT * FROM Users 
+                             WHERE UserID = @UserID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@UserID", UserID);
+
+            try
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if(reader.Read())
+                {
+                    PersonID = (int) reader["PersonID"];
+                    UserName = (string)reader["UserName"];
+                    Password = (string)reader["Password"];
+                    Salt = (string)reader["Salt"];
+                    IsActive = (bool)reader["IsActive"];
+
+                    return true;
+                }    
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return false;
+        }
     }
 }

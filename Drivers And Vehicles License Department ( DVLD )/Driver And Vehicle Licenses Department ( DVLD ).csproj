@@ -56,11 +56,11 @@
     <Compile Include="Controls\ctrlPersonDetails.Designer.cs">
       <DependentUpon>ctrlPersonDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="Users\frmAddNewUser.cs">
+    <Compile Include="Users\frmAddEditUserInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Users\frmAddNewUser.Designer.cs">
-      <DependentUpon>frmAddNewUser.cs</DependentUpon>
+    <Compile Include="Users\frmAddEditUserInfo.Designer.cs">
+      <DependentUpon>frmAddEditUserInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="MyLib\clsUtility.cs" />
     <Compile Include="Users\frmUsersManagement.cs">
@@ -105,8 +105,8 @@
     <EmbeddedResource Include="Controls\ctrlPersonDetails.resx">
       <DependentUpon>ctrlPersonDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Users\frmAddNewUser.resx">
-      <DependentUpon>frmAddNewUser.cs</DependentUpon>
+    <EmbeddedResource Include="Users\frmAddEditUserInfo.resx">
+      <DependentUpon>frmAddEditUserInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Users\frmUsersManagement.resx">
       <DependentUpon>frmUsersManagement.cs</DependentUpon>

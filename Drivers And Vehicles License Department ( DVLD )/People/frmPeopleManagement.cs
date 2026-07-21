@@ -109,7 +109,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void _AddNewPersonScreen()
         {
             frmAddEditPersonInfo frm = new frmAddEditPersonInfo();
-            frm.AddEditPersonData += _RefreshPeopleDataView;
+            frm.RefreshView += _RefreshPeopleDataView;
 
             frm.ShowDialog();
         }
@@ -142,20 +142,26 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             if (dgvPeople.SelectedRows.Count == 0)
                 {
-                MessageBox.Show("No Selected Person To Edit", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("No selected person to edit", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
                 }
+
+            if(dgvPeople.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("Please select only one person to edit", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
             clsPerson PersonInfo = clsPerson.Find((int) dgvPeople.SelectedRows[0].Cells["Person ID"].Value);
 
             if (PersonInfo != null)
             {
                 frmAddEditPersonInfo frm = new frmAddEditPersonInfo(PersonInfo);
-                frm.AddEditPersonData += _RefreshPeopleDataView;
+                frm.RefreshView += _RefreshPeopleDataView;
                 frm.ShowDialog();
             }
             else
-                MessageBox.Show($"Person is not Found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Person is not Found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void tsmiAddNewPerson_Click(object sender, EventArgs e)

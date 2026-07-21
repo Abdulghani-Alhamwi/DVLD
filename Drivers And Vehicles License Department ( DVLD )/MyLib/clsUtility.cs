@@ -14,7 +14,7 @@ namespace MyLib
     internal class clsUtility
     {
 
-        public static string HashWithSaltPassword(string Password,byte[] Salt)
+        public static string HashWithSaltPassword(string Password,ref byte[] Salt)
         {
             if (Salt == null)
             {

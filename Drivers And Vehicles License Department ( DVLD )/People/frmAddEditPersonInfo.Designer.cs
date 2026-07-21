@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.lblAddEditPersonInfoTitle = new System.Windows.Forms.Label();
-            this.lblAddEditPersonInfoBigTitle = new System.Windows.Forms.Label();
+            this.lblAddEditPersonTitle = new System.Windows.Forms.Label();
+            this.lbAddEditPersonBigTitle = new System.Windows.Forms.Label();
             this.lblPersonIDTitle = new System.Windows.Forms.Label();
             this.pnlResponsiveness = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
@@ -89,30 +89,30 @@
             ((System.ComponentModel.ISupportInitialize)(this.erTextBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // lblAddEditPersonInfoTitle
+            // lblAddEditPersonTitle
             // 
-            this.lblAddEditPersonInfoTitle.AutoSize = true;
-            this.lblAddEditPersonInfoTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblAddEditPersonInfoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.lblAddEditPersonInfoTitle.Location = new System.Drawing.Point(38, 21);
-            this.lblAddEditPersonInfoTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblAddEditPersonInfoTitle.Name = "lblAddEditPersonInfoTitle";
-            this.lblAddEditPersonInfoTitle.Size = new System.Drawing.Size(248, 29);
-            this.lblAddEditPersonInfoTitle.TabIndex = 5;
-            this.lblAddEditPersonInfoTitle.Text = "Add / Edit Person Info";
+            this.lblAddEditPersonTitle.AutoSize = true;
+            this.lblAddEditPersonTitle.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.lblAddEditPersonTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.lblAddEditPersonTitle.Location = new System.Drawing.Point(38, 21);
+            this.lblAddEditPersonTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblAddEditPersonTitle.Name = "lblAddEditPersonTitle";
+            this.lblAddEditPersonTitle.Size = new System.Drawing.Size(248, 29);
+            this.lblAddEditPersonTitle.TabIndex = 5;
+            this.lblAddEditPersonTitle.Text = "Add / Edit Person Info";
             // 
-            // lblAddEditPersonInfoBigTitle
+            // lbAddEditPersonBigTitle
             // 
-            this.lblAddEditPersonInfoBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblAddEditPersonInfoBigTitle.AutoSize = true;
-            this.lblAddEditPersonInfoBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
-            this.lblAddEditPersonInfoBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblAddEditPersonInfoBigTitle.Location = new System.Drawing.Point(375, 73);
-            this.lblAddEditPersonInfoBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblAddEditPersonInfoBigTitle.Name = "lblAddEditPersonInfoBigTitle";
-            this.lblAddEditPersonInfoBigTitle.Size = new System.Drawing.Size(482, 52);
-            this.lblAddEditPersonInfoBigTitle.TabIndex = 6;
-            this.lblAddEditPersonInfoBigTitle.Text = "Add/Edit Person Info";
+            this.lbAddEditPersonBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lbAddEditPersonBigTitle.AutoSize = true;
+            this.lbAddEditPersonBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
+            this.lbAddEditPersonBigTitle.ForeColor = System.Drawing.Color.Firebrick;
+            this.lbAddEditPersonBigTitle.Location = new System.Drawing.Point(375, 73);
+            this.lbAddEditPersonBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbAddEditPersonBigTitle.Name = "lbAddEditPersonBigTitle";
+            this.lbAddEditPersonBigTitle.Size = new System.Drawing.Size(482, 52);
+            this.lbAddEditPersonBigTitle.TabIndex = 6;
+            this.lbAddEditPersonBigTitle.Text = "Add/Edit Person Info";
             // 
             // lblPersonIDTitle
             // 
@@ -694,8 +694,8 @@
             this.Controls.Add(this.pnlResponsiveness);
             this.Controls.Add(this.lblPersonID);
             this.Controls.Add(this.lblPersonIDTitle);
-            this.Controls.Add(this.lblAddEditPersonInfoBigTitle);
-            this.Controls.Add(this.lblAddEditPersonInfoTitle);
+            this.Controls.Add(this.lbAddEditPersonBigTitle);
+            this.Controls.Add(this.lblAddEditPersonTitle);
             this.Font = new System.Drawing.Font("Tahoma", 16F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6);
@@ -722,8 +722,8 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label lblAddEditPersonInfoTitle;
-        private System.Windows.Forms.Label lblAddEditPersonInfoBigTitle;
+        private System.Windows.Forms.Label lblAddEditPersonTitle;
+        private System.Windows.Forms.Label lbAddEditPersonBigTitle;
         private System.Windows.Forms.Label lblPersonIDTitle;
         private System.Windows.Forms.Label lblPersonID;
         private System.Windows.Forms.Panel pnlResponsiveness;

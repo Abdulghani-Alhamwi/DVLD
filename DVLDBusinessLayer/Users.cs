@@ -26,6 +26,16 @@ namespace DVLDBusinessLayer
             _CurrentMode = _enMode.AddNew;
         }
 
+        private clsUser(int UserID , int PersonID,string UserName ,string Password,string Salt,bool IsActive)
+        {
+            this.UserID = UserID;
+            this.PersonID = PersonID;
+            this.UserName = UserName;
+            this.Password = Password;
+            this.Salt = Salt;
+            this.IsActive = IsActive;
+            _CurrentMode = _enMode.Update;
+        }
         public static DataTable GetAllUsers()
         {
             return clsUsersData.GetAllUsers();
@@ -75,6 +85,20 @@ namespace DVLDBusinessLayer
         public static bool IsUserAlreadyExists(string UserName)
         {
             return clsUsersData.IsUserAlreadyExists(UserName);
+        }
+
+        public static clsUser Find(int UserID)
+        {
+            int PersonID = -1;
+            string UserName = "", Password = "" , Salt = "";
+            bool IsActive = false;
+
+            if (clsUsersData.Find(UserID, ref PersonID, ref UserName, ref Password,ref Salt, ref IsActive))
+            {
+                return new clsUser(UserID, PersonID, UserName, Password, Salt, IsActive);
+            }
+            else
+                return null;
         }
     }
 }

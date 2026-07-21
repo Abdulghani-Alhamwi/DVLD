@@ -29,8 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.cmsPeopleMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tsmiShowDetails = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPhoneCall = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -51,18 +50,19 @@
             this.lblRecordsNumber = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.pbPeople = new System.Windows.Forms.PictureBox();
+            this.cmsUsersMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiAddNewUser = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPeople)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPeople)).BeginInit();
+            this.cmsUsersMenu.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // cmsPeopleMenu
-            // 
-            this.cmsPeopleMenu.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.cmsPeopleMenu.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.cmsPeopleMenu.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.cmsPeopleMenu.Name = "cmsPeopleMenu";
-            this.cmsPeopleMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPeopleMenu.Size = new System.Drawing.Size(61, 4);
             // 
             // tsmiShowDetails
             // 
@@ -184,16 +184,15 @@
             this.dgvPeople.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPeople.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvPeople.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvPeople.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvPeople.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvPeople.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPeople.ContextMenuStrip = this.cmsPeopleMenu;
             this.dgvPeople.Location = new System.Drawing.Point(39, 417);
             this.dgvPeople.Margin = new System.Windows.Forms.Padding(2);
             this.dgvPeople.Name = "dgvPeople";
@@ -287,7 +286,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));            
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.FlatAppearance.BorderSize = 2;
             this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -315,6 +314,87 @@
             this.pbPeople.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPeople.TabIndex = 40;
             this.pbPeople.TabStop = false;
+            // 
+            // cmsUsersMenu
+            // 
+            this.cmsUsersMenu.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.cmsUsersMenu.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.cmsUsersMenu.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.cmsUsersMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripSeparator1,
+            this.tsmiAddNewUser,
+            this.tsmiEdit,
+            this.toolStripMenuItem2,
+            this.toolStripSeparator2,
+            this.toolStripMenuItem3,
+            this.toolStripMenuItem4});
+            this.cmsUsersMenu.Name = "cmsPeopleMenu";
+            this.cmsUsersMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.cmsUsersMenu.Size = new System.Drawing.Size(223, 266);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.toolStripMenuItem1.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.PersonDetails_32;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(222, 38);
+            this.toolStripMenuItem1.Text = "Show Details";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(219, 6);
+            // 
+            // tsmiAddNewUser
+            // 
+            this.tsmiAddNewUser.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.tsmiAddNewUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Add_Person_40;
+            this.tsmiAddNewUser.Name = "tsmiAddNewUser";
+            this.tsmiAddNewUser.Size = new System.Drawing.Size(222, 38);
+            this.tsmiAddNewUser.Text = "Add New User";
+            this.tsmiAddNewUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tsmiEdit
+            // 
+            this.tsmiEdit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.tsmiEdit.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_32;
+            this.tsmiEdit.Name = "tsmiEdit";
+            this.tsmiEdit.Size = new System.Drawing.Size(222, 38);
+            this.tsmiEdit.Text = "Edit";
+            this.tsmiEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.toolStripMenuItem2.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Delete_32;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(222, 38);
+            this.toolStripMenuItem2.Text = "Delete";
+            this.toolStripMenuItem2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(219, 6);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.toolStripMenuItem3.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.send_email_32;
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(222, 38);
+            this.toolStripMenuItem3.Text = "Send Email";
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.toolStripMenuItem4.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.call_32;
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(222, 38);
+            this.toolStripMenuItem4.Text = "Phone Call";
             // 
             // frmPeopleManagement
             // 
@@ -347,13 +427,13 @@
             this.Load += new System.EventHandler(this.frmPeopleManagement_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPeople)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPeople)).EndInit();
+            this.cmsUsersMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.ContextMenuStrip cmsPeopleMenu;
         private System.Windows.Forms.ToolStripMenuItem tsmiShowDetails;
         private System.Windows.Forms.ToolStripMenuItem tsmiPhoneCall;
         private System.Windows.Forms.ToolStripSeparator tsSeparator1;
@@ -374,5 +454,14 @@
         private System.Windows.Forms.Label lblRecordsNumber;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.PictureBox pbPeople;
+        private System.Windows.Forms.ContextMenuStrip cmsUsersMenu;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAddNewUser;
+        private System.Windows.Forms.ToolStripMenuItem tsmiEdit;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
     }
 }

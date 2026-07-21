@@ -138,6 +138,7 @@
             this.uctrlPersonDetails.Name = "uctrlPersonDetails";
             this.uctrlPersonDetails.Size = new System.Drawing.Size(1084, 364);
             this.uctrlPersonDetails.TabIndex = 0;
+            this.uctrlPersonDetails.AfterEditingPersonInfo += new System.Action(this.uctrlPersonDetails_AfterEditingPersonInfo);
             // 
             // PersonInformationByFilter
             // 

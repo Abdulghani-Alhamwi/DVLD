@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using Driver_And_Vehicle_Licenses_Department___DVLD__.Properties;
 using DVLDBusinessLayer;
@@ -8,7 +9,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class ctrlPersonDetails : UserControl
     {
-
+        public event Action AfterEditingPersonInfo;
         public ctrlPersonDetails()
         {
             InitializeComponent();
@@ -115,29 +116,24 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 pbPersonalImage.Image = (_Person.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
         }
 
-        private void _UpdatePersonData()
+        private void _RefreshView()
         {
-            if (_Person != null)
-            _Person = clsPerson.Find(_Person.PersonID);
-
-            if (_Person != null)
-                _ShowPersonDetails();
-            else
-                MessageBox.Show("Person is not found!", "Details", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            AfterEditingPersonInfo?.Invoke();
         }
+
         private void lnlblEditPersonInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (_Person != null)
             {
                 frmAddEditPersonInfo frm = new frmAddEditPersonInfo(_Person);
-                
+                frm.RefreshView += _RefreshView;
                 frm.ShowDialog();
-                _UpdatePersonData();
+                _ShowPersonDetails();
+
+                
             }
             else
-                MessageBox.Show("There is no person to edit their details!", "Problem Details", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-
+                MessageBox.Show("Person is not found!", "Details", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

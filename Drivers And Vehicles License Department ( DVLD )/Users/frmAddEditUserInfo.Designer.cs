@@ -1,6 +1,6 @@
 ﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
-    partial class frmAddNewUser
+    partial class frmAddEditUserInfo
     {
         /// <summary>
         /// Required designer variable.
@@ -30,11 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             this.btnExit = new System.Windows.Forms.Button();
-            this.lblAddNewUserBigTitle = new System.Windows.Forms.Label();
-            this.lblAddNewUserTitle = new System.Windows.Forms.Label();
+            this.lblAddEditUserBigTitle = new System.Windows.Forms.Label();
+            this.lblAddEditUserTitle = new System.Windows.Forms.Label();
             this.tcAddNewUser = new System.Windows.Forms.TabControl();
             this.tpPersonalInfo = new System.Windows.Forms.TabPage();
             this.btnNext = new System.Windows.Forms.Button();
+            this.uctrlpersonInfoByFilter = new Driver_And_Vehicle_Licenses_Department___DVLD__.PersonInformationByFilter();
             this.tpLoginInfo = new System.Windows.Forms.TabPage();
             this.chbIsActive = new System.Windows.Forms.CheckBox();
             this.pbUserID = new System.Windows.Forms.PictureBox();
@@ -52,7 +53,6 @@
             this.ertxtBox = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.uctrlpersonInfoByFilter = new Driver_And_Vehicle_Licenses_Department___DVLD__.PersonInformationByFilter();
             this.tcAddNewUser.SuspendLayout();
             this.tpPersonalInfo.SuspendLayout();
             this.tpLoginInfo.SuspendLayout();
@@ -83,29 +83,29 @@
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // lblAddNewUserBigTitle
+            // lblAddEditUserBigTitle
             // 
-            this.lblAddNewUserBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblAddNewUserBigTitle.AutoSize = true;
-            this.lblAddNewUserBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
-            this.lblAddNewUserBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblAddNewUserBigTitle.Location = new System.Drawing.Point(429, 42);
-            this.lblAddNewUserBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblAddNewUserBigTitle.Name = "lblAddNewUserBigTitle";
-            this.lblAddNewUserBigTitle.Size = new System.Drawing.Size(327, 52);
-            this.lblAddNewUserBigTitle.TabIndex = 41;
-            this.lblAddNewUserBigTitle.Text = "Add New User";
+            this.lblAddEditUserBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblAddEditUserBigTitle.AutoSize = true;
+            this.lblAddEditUserBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
+            this.lblAddEditUserBigTitle.ForeColor = System.Drawing.Color.Firebrick;
+            this.lblAddEditUserBigTitle.Location = new System.Drawing.Point(429, 42);
+            this.lblAddEditUserBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblAddEditUserBigTitle.Name = "lblAddEditUserBigTitle";
+            this.lblAddEditUserBigTitle.Size = new System.Drawing.Size(327, 52);
+            this.lblAddEditUserBigTitle.TabIndex = 41;
+            this.lblAddEditUserBigTitle.Text = "Add New User";
             // 
-            // lblAddNewUserTitle
+            // lblAddEditUserTitle
             // 
-            this.lblAddNewUserTitle.AutoSize = true;
-            this.lblAddNewUserTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblAddNewUserTitle.Location = new System.Drawing.Point(26, 8);
-            this.lblAddNewUserTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblAddNewUserTitle.Name = "lblAddNewUserTitle";
-            this.lblAddNewUserTitle.Size = new System.Drawing.Size(165, 29);
-            this.lblAddNewUserTitle.TabIndex = 42;
-            this.lblAddNewUserTitle.Text = "Add New User";
+            this.lblAddEditUserTitle.AutoSize = true;
+            this.lblAddEditUserTitle.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.lblAddEditUserTitle.Location = new System.Drawing.Point(26, 8);
+            this.lblAddEditUserTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblAddEditUserTitle.Name = "lblAddEditUserTitle";
+            this.lblAddEditUserTitle.Size = new System.Drawing.Size(165, 29);
+            this.lblAddEditUserTitle.TabIndex = 42;
+            this.lblAddEditUserTitle.Text = "Add New User";
             // 
             // tcAddNewUser
             // 
@@ -116,7 +116,7 @@
             this.tcAddNewUser.Name = "tcAddNewUser";
             this.tcAddNewUser.Padding = new System.Drawing.Point(20, 3);
             this.tcAddNewUser.SelectedIndex = 0;
-            this.tcAddNewUser.Size = new System.Drawing.Size(1133, 617);
+            this.tcAddNewUser.Size = new System.Drawing.Size(1133, 626);
             this.tcAddNewUser.TabIndex = 43;
             this.tcAddNewUser.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcAddNewUser_Selecting);
             // 
@@ -128,7 +128,7 @@
             this.tpPersonalInfo.Location = new System.Drawing.Point(4, 42);
             this.tpPersonalInfo.Name = "tpPersonalInfo";
             this.tpPersonalInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tpPersonalInfo.Size = new System.Drawing.Size(1125, 571);
+            this.tpPersonalInfo.Size = new System.Drawing.Size(1125, 580);
             this.tpPersonalInfo.TabIndex = 0;
             this.tpPersonalInfo.Text = "Personal Info";
             this.tpPersonalInfo.UseVisualStyleBackColor = true;
@@ -143,13 +143,24 @@
             this.btnNext.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnNext.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Next_32;
             this.btnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnNext.Location = new System.Drawing.Point(943, 512);
+            this.btnNext.Location = new System.Drawing.Point(943, 515);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(152, 42);
             this.btnNext.TabIndex = 46;
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // uctrlpersonInfoByFilter
+            // 
+            this.uctrlpersonInfoByFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.uctrlpersonInfoByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlpersonInfoByFilter.Location = new System.Drawing.Point(18, 15);
+            this.uctrlpersonInfoByFilter.Name = "uctrlpersonInfoByFilter";
+            this.uctrlpersonInfoByFilter.Size = new System.Drawing.Size(1089, 487);
+            this.uctrlpersonInfoByFilter.TabIndex = 45;
+            this.uctrlpersonInfoByFilter.OnPersonSelected += new Driver_And_Vehicle_Licenses_Department___DVLD__.PersonInformationByFilter.PersonSelectedEventHandler(this.uctrlpersonInfoByFilter_OnPersonSelected);
+            this.uctrlpersonInfoByFilter.AfterEditingPerson += new System.Action(this.uctrlpersonInfoByFilter_AfterEditingPerson);
             // 
             // tpLoginInfo
             // 
@@ -170,7 +181,7 @@
             this.tpLoginInfo.Location = new System.Drawing.Point(4, 42);
             this.tpLoginInfo.Name = "tpLoginInfo";
             this.tpLoginInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLoginInfo.Size = new System.Drawing.Size(1125, 571);
+            this.tpLoginInfo.Size = new System.Drawing.Size(1125, 580);
             this.tpLoginInfo.TabIndex = 1;
             this.tpLoginInfo.Text = "Login Info";
             this.tpLoginInfo.UseVisualStyleBackColor = true;
@@ -222,8 +233,9 @@
             this.txtPassword.Size = new System.Drawing.Size(256, 40);
             this.txtPassword.TabIndex = 1;
             this.txtPassword.Tag = "First Name";
-            this.txtPassword.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyUp);
-            this.txtPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtPassword_Validating);
+            this.txtPassword.Enter += new System.EventHandler(this.txtPasswordORtxtConfirmation_Enter);
+            this.txtPassword.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPasswordAndConfirmation_KeyUp);
+            this.txtPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtPasswordAndConfirmation_Validating);
             // 
             // txtPasswordConfirmation
             // 
@@ -238,8 +250,9 @@
             this.txtPasswordConfirmation.Size = new System.Drawing.Size(256, 40);
             this.txtPasswordConfirmation.TabIndex = 2;
             this.txtPasswordConfirmation.Tag = "First Name";
-            this.txtPasswordConfirmation.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPasswordConfirmation_KeyUp);
-            this.txtPasswordConfirmation.Validating += new System.ComponentModel.CancelEventHandler(this.txtPasswordConfirmation_Validating);
+            this.txtPasswordConfirmation.Enter += new System.EventHandler(this.txtPasswordORtxtConfirmation_Enter);
+            this.txtPasswordConfirmation.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPasswordAndConfirmation_KeyUp);
+            this.txtPasswordConfirmation.Validating += new System.ComponentModel.CancelEventHandler(this.txtPasswordAndConfirmation_Validating);
             // 
             // lblUserID
             // 
@@ -347,7 +360,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(790, 750);
+            this.btnClose.Location = new System.Drawing.Point(790, 754);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(152, 42);
             this.btnClose.TabIndex = 47;
@@ -366,7 +379,7 @@
             this.btnSave.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnSave.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(973, 750);
+            this.btnSave.Location = new System.Drawing.Point(973, 754);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 42);
             this.btnSave.TabIndex = 48;
@@ -374,17 +387,7 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // uctrlpersonInfoByFilter
-            // 
-            this.uctrlpersonInfoByFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.uctrlpersonInfoByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.uctrlpersonInfoByFilter.Location = new System.Drawing.Point(18, 15);
-            this.uctrlpersonInfoByFilter.Name = "uctrlpersonInfoByFilter";
-            this.uctrlpersonInfoByFilter.Size = new System.Drawing.Size(1089, 487);
-            this.uctrlpersonInfoByFilter.TabIndex = 45;
-            this.uctrlpersonInfoByFilter.OnPersonSelected += new Driver_And_Vehicle_Licenses_Department___DVLD__.PersonInformationByFilter.PersonSelectedEventHandler(this.uctrlpersonInfoByFilter_OnPersonSelected);
-            // 
-            // frmAddNewUser
+            // frmAddEditUserInfo
             // 
             this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -398,12 +401,12 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.tcAddNewUser);
             this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.lblAddNewUserBigTitle);
-            this.Controls.Add(this.lblAddNewUserTitle);
+            this.Controls.Add(this.lblAddEditUserBigTitle);
+            this.Controls.Add(this.lblAddEditUserTitle);
             this.Font = new System.Drawing.Font("Tahoma", 20F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(8);
-            this.Name = "frmAddNewUser";
+            this.Name = "frmAddEditUserInfo";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -424,8 +427,8 @@
 
         #endregion
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Label lblAddNewUserBigTitle;
-        private System.Windows.Forms.Label lblAddNewUserTitle;
+        private System.Windows.Forms.Label lblAddEditUserBigTitle;
+        private System.Windows.Forms.Label lblAddEditUserTitle;
         private System.Windows.Forms.TabControl tcAddNewUser;
         private System.Windows.Forms.TabPage tpPersonalInfo;
         private System.Windows.Forms.TabPage tpLoginInfo;

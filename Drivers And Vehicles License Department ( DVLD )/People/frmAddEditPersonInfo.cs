@@ -14,12 +14,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class frmAddEditPersonInfo : Form
     {
-        internal delegate void AddEditInfoEventHandler();
-
-        internal event AddEditInfoEventHandler AddEditPersonData;
-
         internal delegate void AddedNewPersonEventHandler (int PersonID);
-        internal event AddedNewPersonEventHandler AddedNewPerson;
+        internal event AddedNewPersonEventHandler AfterAddingNewPerson;
+
+        internal event Action RefreshView;
 
         clsPerson _Person;
         public frmAddEditPersonInfo(clsPerson PersonInfo = null)
@@ -27,17 +25,26 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             InitializeComponent();
 
             if (PersonInfo == null)
-                lblAddEditPersonInfoBigTitle.Text = "Add New Person";
+            {
+                lbAddEditPersonBigTitle.Text = "Add New Person";
+                lblAddEditPersonTitle.Text = "Add New Person";
+            }
             else
             {
                 this._Person = PersonInfo;
-                lblAddEditPersonInfoBigTitle.Text = "Update Person";
+                _SetTitlesWhenEdit();
             }
-            lblAddEditPersonInfoBigTitle.Location = new Point((this.Width / 2) - (lblAddEditPersonInfoBigTitle.Width / 2), lblAddEditPersonInfoBigTitle.Location.Y);
+            lbAddEditPersonBigTitle.Location = new Point((this.Width / 2) - (lbAddEditPersonBigTitle.Width / 2), lbAddEditPersonBigTitle.Location.Y);
 
         }
 
         string _SavedPersonalImagePath;
+
+        private void _SetTitlesWhenEdit()
+        {
+            lbAddEditPersonBigTitle.Text = "Update Person";
+            lblAddEditPersonTitle.Text = "Update Person";
+        }
         private void _ShowPersonData(DataView dataview)
         {
             lblPersonID.Text = _Person.PersonID.ToString();
@@ -383,13 +390,16 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                     }    
 
-                    MessageBox.Show("Added Successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Data Saved Successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        AddEditPersonData?.Invoke();
+                    AfterAddingNewPerson?.Invoke(Person.PersonID);
+                    RefreshView?.Invoke();
 
-                        AddedNewPerson?.Invoke(Person.PersonID);
-
-                    btnSave.Enabled = false;
+                    if(_Person == null)
+                    {
+                        _SetTitlesWhenEdit();
+                        _Person = Person;
+                    }
                 }
                 else
                     MessageBox.Show("Saving Failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);

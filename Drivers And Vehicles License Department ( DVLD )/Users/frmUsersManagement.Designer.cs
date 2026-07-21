@@ -42,7 +42,7 @@
             this.cmsUsersMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiShowDetails = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddNewUser = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiEdt = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSendEmail = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPhoneCall = new System.Windows.Forms.ToolStripMenuItem();
@@ -175,14 +175,14 @@
             this.tsmiShowDetails,
             this.tsSeparator1,
             this.tsmiAddNewUser,
-            this.tsmiEdt,
+            this.tsmiEdit,
             this.tsmiDelete,
             this.tsSeparator2,
             this.tsmiSendEmail,
             this.tsmiPhoneCall});
             this.cmsUsersMenu.Name = "cmsPeopleMenu";
             this.cmsUsersMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsUsersMenu.Size = new System.Drawing.Size(223, 244);
+            this.cmsUsersMenu.Size = new System.Drawing.Size(223, 266);
             // 
             // tsmiShowDetails
             // 
@@ -202,14 +202,15 @@
             this.tsmiAddNewUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsmiAddNewUser.Click += new System.EventHandler(this.tsmiAddNewUser_Click);
             // 
-            // tsmiEdt
+            // tsmiEdit
             // 
-            this.tsmiEdt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiEdt.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_32;
-            this.tsmiEdt.Name = "tsmiEdt";
-            this.tsmiEdt.Size = new System.Drawing.Size(222, 38);
-            this.tsmiEdt.Text = "Edit";
-            this.tsmiEdt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsmiEdit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.tsmiEdit.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_32;
+            this.tsmiEdit.Name = "tsmiEdit";
+            this.tsmiEdit.Size = new System.Drawing.Size(222, 38);
+            this.tsmiEdit.Text = "Edit";
+            this.tsmiEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsmiEdit.Click += new System.EventHandler(this.tsmiEdit_Click);
             // 
             // tsmiDelete
             // 
@@ -393,7 +394,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiPhoneCall;
         private System.Windows.Forms.ToolStripSeparator tsSeparator2;
         private System.Windows.Forms.ToolStripMenuItem tsmiDelete;
-        private System.Windows.Forms.ToolStripMenuItem tsmiEdt;
+        private System.Windows.Forms.ToolStripMenuItem tsmiEdit;
         private System.Windows.Forms.ToolStripMenuItem tsmiAddNewUser;
         private System.Windows.Forms.ToolStripSeparator tsSeparator1;
         private System.Windows.Forms.ToolStripMenuItem tsmiShowDetails;

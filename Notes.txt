@@ -201,3 +201,8 @@ public static string DecryptUserName(string UserName)
             dgvUsers.DataSource = _dataview;
         }
 
+
+
+16) Arrays in C# are reference types .
+
+17) Arrays in C# are passed by value by default not by reference.

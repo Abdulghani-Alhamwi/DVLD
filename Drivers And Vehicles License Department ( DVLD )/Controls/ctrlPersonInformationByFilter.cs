@@ -17,6 +17,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         public delegate void PersonSelectedEventHandler(clsPerson Person);
 
         public event PersonSelectedEventHandler OnPersonSelected;
+
+        public event Action AfterEditingPerson;
         public PersonInformationByFilter()
         {
             InitializeComponent();
@@ -66,7 +68,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void btnAddNewPerson_Click(object sender, EventArgs e)
         {
             frmAddEditPersonInfo frm = new frmAddEditPersonInfo();
-            frm.AddedNewPerson += _LoadNewPersonData;
+            frm.AfterAddingNewPerson += _LoadNewPersonData;
             frm.ShowDialog();
         }
 
@@ -110,6 +112,15 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 if (!txtFindBy.Text.All(char.IsDigit))
                     txtFindBy.Clear();
             }
+        }
+        public void LoadPersonDetails(int PersonID)
+        {
+          uctrlPersonDetails.LoadPersonDetails(PersonID);
+        }
+
+        private void uctrlPersonDetails_AfterEditingPersonInfo()
+        {
+            AfterEditingPerson?.Invoke();
         }
     }
 }

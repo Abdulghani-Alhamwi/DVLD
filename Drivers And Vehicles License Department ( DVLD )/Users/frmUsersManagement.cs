@@ -148,8 +148,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _AddNewUserScreen()
         {
-            frmAddNewUser frm = new frmAddNewUser();
-            frm.AddedUser += _RefreshUsersDataView;
+            frmAddEditUserInfo frm = new frmAddEditUserInfo();
+            frm.OnAddedOrEditedUser += _RefreshUsersDataView;
             frm.ShowDialog();
         }
         private void btnAddNewUser_Click(object sender, EventArgs e)
@@ -193,6 +193,32 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void tsmiAddNewUser_Click(object sender, EventArgs e)
         {
             _AddNewUserScreen();
+        }
+
+        private void tsmiEdit_Click(object sender, EventArgs e)
+        {
+            if (dgvUsers.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("No Selected User To Edit", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (dgvUsers.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("Please select only one user to edit", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            clsUser User = clsUser.Find((int)dgvUsers.SelectedRows[0].Cells["User ID"].Value);
+
+            if(User != null)
+            {
+                frmAddEditUserInfo frm = new frmAddEditUserInfo(User);
+                frm.OnAddedOrEditedUser += _RefreshUsersDataView;
+
+                frm.ShowDialog();
+            }
+            else
+                MessageBox.Show("User is not Found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
