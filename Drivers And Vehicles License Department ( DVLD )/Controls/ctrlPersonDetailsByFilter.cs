@@ -12,14 +12,14 @@ using MyLib;
 
 namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
-    public partial class PersonInformationByFilter : UserControl
+    public partial class ctrlPersonDetailsByFilter : UserControl
     {
         public delegate void PersonSelectedEventHandler(clsPerson Person);
 
         public event PersonSelectedEventHandler OnPersonSelected;
 
         public event Action AfterEditingPerson;
-        public PersonInformationByFilter()
+        public ctrlPersonDetailsByFilter()
         {
             InitializeComponent();
         }
@@ -86,7 +86,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             
             else if (cbFindBy.SelectedItem.ToString() == "National No")
             {
-                    clsPerson Person = uctrlPersonDetails.LoadPersonDetails(txtFindBy.Text);
+                    clsPerson Person = uctrlPersonDetails.LoadPersonDetails(-1,txtFindBy.Text);
                     PreviouslyFoundText = txtFindBy.Text;
                 if(Person!=null)
                     OnPersonSelected?.Invoke(Person); ;

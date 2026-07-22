@@ -180,15 +180,14 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             MessageBox.Show("This Feature Is Not Implemented Yet!", "Not Ready!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
-        public static void ShowPersonDetails(DataGridView dgv,int PersonID)
+        private void _ShowPersonDetails()
         {
-            if (dgv.SelectedRows.Count == 1)
+            if (dgvPeople.SelectedRows.Count == 1)
             {
-                frmPersonDetails frm = new frmPersonDetails(PersonID);
+                frmPersonDetails frm = new frmPersonDetails((int)dgvPeople.SelectedRows[0].Cells["Person ID"].Value);
                 frm.ShowDialog();
-                
             }
-            else if(dgv.SelectedRows.Count > 1)
+            else if(dgvPeople.SelectedRows.Count > 1)
                 MessageBox.Show("You must select a person first to show their details , and you can view only one person details!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
                 MessageBox.Show("There is'nt any person to show their details!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -196,12 +195,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
         private void tsmiShowDetails_Click(object sender, EventArgs e)
         {
-            ShowPersonDetails(dgvPeople, (int)dgvPeople.SelectedRows[0].Cells["Person ID"].Value);
+            _ShowPersonDetails();
         }
 
         private void dgvPeople_DoubleClick(object sender, EventArgs e)
         {
-            ShowPersonDetails(dgvPeople, (int)dgvPeople.SelectedRows[0].Cells["Person ID"].Value);
+            _ShowPersonDetails();
         }
 
         private void btnClose_Click(object sender, EventArgs e)

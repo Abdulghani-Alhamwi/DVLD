@@ -81,7 +81,7 @@
             // 
             this.lblRecordsNumber.AutoSize = true;
             this.lblRecordsNumber.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lblRecordsNumber.Location = new System.Drawing.Point(218, 706);
+            this.lblRecordsNumber.Location = new System.Drawing.Point(218, 757);
             this.lblRecordsNumber.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRecordsNumber.Name = "lblRecordsNumber";
             this.lblRecordsNumber.Size = new System.Drawing.Size(0, 31);
@@ -147,7 +147,7 @@
             // 
             this.lblRecordsTitle.AutoSize = true;
             this.lblRecordsTitle.Font = new System.Drawing.Font("Tahoma", 19F, System.Drawing.FontStyle.Bold);
-            this.lblRecordsTitle.Location = new System.Drawing.Point(48, 706);
+            this.lblRecordsTitle.Location = new System.Drawing.Point(48, 757);
             this.lblRecordsTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRecordsTitle.Name = "lblRecordsTitle";
             this.lblRecordsTitle.Size = new System.Drawing.Size(164, 31);
@@ -259,14 +259,14 @@
             this.dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUsers.ContextMenuStrip = this.cmsUsersMenu;
-            this.dgvUsers.Location = new System.Drawing.Point(54, 410);
+            this.dgvUsers.Location = new System.Drawing.Point(54, 416);
             this.dgvUsers.Margin = new System.Windows.Forms.Padding(2);
             this.dgvUsers.Name = "dgvUsers";
             this.dgvUsers.ReadOnly = true;
             this.dgvUsers.RowHeadersWidth = 72;
             this.dgvUsers.RowTemplate.Height = 32;
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsers.Size = new System.Drawing.Size(1008, 266);
+            this.dgvUsers.Size = new System.Drawing.Size(1008, 292);
             this.dgvUsers.StandardTab = true;
             this.dgvUsers.TabIndex = 27;
             this.dgvUsers.DoubleClick += new System.EventHandler(this.dgvUsers_DoubleClick);
@@ -306,7 +306,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(896, 706);
+            this.btnClose.Location = new System.Drawing.Point(896, 750);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 36;
@@ -354,7 +354,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1115, 780);
+            this.ClientSize = new System.Drawing.Size(1115, 817);
             this.ControlBox = false;
             this.Controls.Add(this.btnAddNewUser);
             this.Controls.Add(this.cbFilterOnIsActive);

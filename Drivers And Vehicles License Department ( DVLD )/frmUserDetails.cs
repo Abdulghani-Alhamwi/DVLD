@@ -10,22 +10,22 @@ using System.Windows.Forms;
 
 namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
-    public partial class frmPersonDetails : Form
+    public partial class frmUserDetails : Form
     {
-        public frmPersonDetails(int PersonID)
+        public frmUserDetails(int UserID)
         {
             InitializeComponent();
 
-            if (UctrlPersonDetails.LoadPersonDetails(PersonID) == null)
+            if (!uctrlUserDetails.LoadUserInformation(UserID))
                 this.Close();
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }

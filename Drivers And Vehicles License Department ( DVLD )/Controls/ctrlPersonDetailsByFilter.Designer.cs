@@ -1,6 +1,6 @@
 ﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
-    partial class PersonInformationByFilter
+    partial class ctrlPersonDetailsByFilter
     {
         /// <summary> 
         /// Required designer variable.
@@ -140,14 +140,14 @@
             this.uctrlPersonDetails.TabIndex = 0;
             this.uctrlPersonDetails.AfterEditingPersonInfo += new System.Action(this.uctrlPersonDetails_AfterEditingPersonInfo);
             // 
-            // PersonInformationByFilter
+            // ctrlPersonDetailsByFilter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.uctrlPersonDetails);
-            this.Name = "PersonInformationByFilter";
+            this.Name = "ctrlPersonDetailsByFilter";
             this.Size = new System.Drawing.Size(1080, 487);
             this.Load += new System.EventHandler(this.PersonInformationByFilter_Load);
             this.groupBox1.ResumeLayout(false);

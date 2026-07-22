@@ -231,14 +231,27 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             MessageBox.Show("This Feature Is Not Implemented Yet!", "Not Ready!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
+        private void _ShowUserDetails()
+        {
+            if (dgvUsers.SelectedRows.Count == 1)
+            {
+                frmUserDetails frm = new frmUserDetails((int)dgvUsers.SelectedRows[0].Cells["User ID"].Value);
+                frm.ShowDialog();
+            }
+            else if (dgvUsers.SelectedRows.Count > 1)
+                MessageBox.Show("You must select a user first to show their details , and you can view only one person details!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                MessageBox.Show("There is'nt any user to show their details!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
+        }
         private void tsmiShowDetails_Click(object sender, EventArgs e)
         {
-            frmPeopleManagement.ShowPersonDetails(dgvUsers, (int)dgvUsers.SelectedRows[0].Cells["Person ID"].Value);
+            _ShowUserDetails();
         }
 
         private void dgvUsers_DoubleClick(object sender, EventArgs e)
         {
-            frmPeopleManagement.ShowPersonDetails(dgvUsers, (int)dgvUsers.SelectedRows[0].Cells["Person ID"].Value);
+            _ShowUserDetails();
         }
     }
 }

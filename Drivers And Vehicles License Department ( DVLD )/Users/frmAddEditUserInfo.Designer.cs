@@ -35,7 +35,7 @@
             this.tcAddNewUser = new System.Windows.Forms.TabControl();
             this.tpPersonalInfo = new System.Windows.Forms.TabPage();
             this.btnNext = new System.Windows.Forms.Button();
-            this.uctrlpersonInfoByFilter = new Driver_And_Vehicle_Licenses_Department___DVLD__.PersonInformationByFilter();
+            this.uctrlpersonInfoByFilter = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetailsByFilter();
             this.tpLoginInfo = new System.Windows.Forms.TabPage();
             this.chbIsActive = new System.Windows.Forms.CheckBox();
             this.pbUserID = new System.Windows.Forms.PictureBox();
@@ -159,7 +159,7 @@
             this.uctrlpersonInfoByFilter.Name = "uctrlpersonInfoByFilter";
             this.uctrlpersonInfoByFilter.Size = new System.Drawing.Size(1089, 487);
             this.uctrlpersonInfoByFilter.TabIndex = 45;
-            this.uctrlpersonInfoByFilter.OnPersonSelected += new Driver_And_Vehicle_Licenses_Department___DVLD__.PersonInformationByFilter.PersonSelectedEventHandler(this.uctrlpersonInfoByFilter_OnPersonSelected);
+            this.uctrlpersonInfoByFilter.OnPersonSelected += new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetailsByFilter.PersonSelectedEventHandler(this.uctrlpersonInfoByFilter_OnPersonSelected);
             this.uctrlpersonInfoByFilter.AfterEditingPerson += new System.Action(this.uctrlpersonInfoByFilter_AfterEditingPerson);
             // 
             // tpLoginInfo
@@ -432,7 +432,7 @@
         private System.Windows.Forms.TabControl tcAddNewUser;
         private System.Windows.Forms.TabPage tpPersonalInfo;
         private System.Windows.Forms.TabPage tpLoginInfo;
-        private PersonInformationByFilter uctrlpersonInfoByFilter;
+        private ctrlPersonDetailsByFilter uctrlpersonInfoByFilter;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.ErrorProvider ertxtBox;
         private System.Windows.Forms.Label lblUserID;

@@ -1,6 +1,6 @@
 ﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
-    partial class frmPersonDetails
+    partial class frmUserDetails
     {
         /// <summary>
         /// Required designer variable.
@@ -30,9 +30,8 @@
         {
             this.btnClose = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
-            this.lblPersonDetailsBigTitle = new System.Windows.Forms.Label();
-            this.lblPersonDetailsTitle = new System.Windows.Forms.Label();
-            this.UctrlPersonDetails = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetails();
+            this.lblUserDetailsTitle = new System.Windows.Forms.Label();
+            this.uctrlUserDetails = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlUserDetails();
             this.SuspendLayout();
             // 
             // btnClose
@@ -44,10 +43,10 @@
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(961, 581);
+            this.btnClose.Location = new System.Drawing.Point(939, 547);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 1;
+            this.btnClose.TabIndex = 87;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -62,70 +61,56 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1088, 19);
+            this.btnExit.Location = new System.Drawing.Point(1066, 9);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 2;
+            this.btnExit.TabIndex = 88;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // lblPersonDetailsBigTitle
+            // lblUserDetailsTitle
             // 
-            this.lblPersonDetailsBigTitle.AutoSize = true;
-            this.lblPersonDetailsBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
-            this.lblPersonDetailsBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblPersonDetailsBigTitle.Location = new System.Drawing.Point(415, 75);
-            this.lblPersonDetailsBigTitle.Margin = new System.Windows.Forms.Padding(0);
-            this.lblPersonDetailsBigTitle.Name = "lblPersonDetailsBigTitle";
-            this.lblPersonDetailsBigTitle.Size = new System.Drawing.Size(336, 52);
-            this.lblPersonDetailsBigTitle.TabIndex = 87;
-            this.lblPersonDetailsBigTitle.Text = "Person Details";
+            this.lblUserDetailsTitle.AutoSize = true;
+            this.lblUserDetailsTitle.Font = new System.Drawing.Font("Tahoma", 20F);
+            this.lblUserDetailsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.lblUserDetailsTitle.Location = new System.Drawing.Point(25, 9);
+            this.lblUserDetailsTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblUserDetailsTitle.Name = "lblUserDetailsTitle";
+            this.lblUserDetailsTitle.Size = new System.Drawing.Size(156, 33);
+            this.lblUserDetailsTitle.TabIndex = 89;
+            this.lblUserDetailsTitle.Text = "User Details";
             // 
-            // lblPersonDetailsTitle
+            // uctrlUserDetails
             // 
-            this.lblPersonDetailsTitle.AutoSize = true;
-            this.lblPersonDetailsTitle.Font = new System.Drawing.Font("Tahoma", 22F);
-            this.lblPersonDetailsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.lblPersonDetailsTitle.Location = new System.Drawing.Point(25, 19);
-            this.lblPersonDetailsTitle.Margin = new System.Windows.Forms.Padding(0);
-            this.lblPersonDetailsTitle.Name = "lblPersonDetailsTitle";
-            this.lblPersonDetailsTitle.Size = new System.Drawing.Size(203, 36);
-            this.lblPersonDetailsTitle.TabIndex = 86;
-            this.lblPersonDetailsTitle.Text = "Person Details";
+            this.uctrlUserDetails.AutoScroll = true;
+            this.uctrlUserDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlUserDetails.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.uctrlUserDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.uctrlUserDetails.Location = new System.Drawing.Point(25, 70);
+            this.uctrlUserDetails.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.uctrlUserDetails.Name = "uctrlUserDetails";
+            this.uctrlUserDetails.Size = new System.Drawing.Size(1083, 464);
+            this.uctrlUserDetails.TabIndex = 0;
             // 
-            // UctrlPersonDetails
-            // 
-            this.UctrlPersonDetails.AllowDrop = true;
-            this.UctrlPersonDetails.AutoScroll = true;
-            this.UctrlPersonDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.UctrlPersonDetails.Font = new System.Drawing.Font("Tahoma", 16F);
-            this.UctrlPersonDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.UctrlPersonDetails.Location = new System.Drawing.Point(40, 182);
-            this.UctrlPersonDetails.Margin = new System.Windows.Forms.Padding(0);
-            this.UctrlPersonDetails.Name = "UctrlPersonDetails";
-            this.UctrlPersonDetails.Size = new System.Drawing.Size(1087, 367);
-            this.UctrlPersonDetails.TabIndex = 0;
-            // 
-            // frmPersonDetails
+            // frmUserDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1167, 657);
+            this.ClientSize = new System.Drawing.Size(1127, 611);
             this.ControlBox = false;
-            this.Controls.Add(this.UctrlPersonDetails);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.lblPersonDetailsBigTitle);
-            this.Controls.Add(this.lblPersonDetailsTitle);
-            this.DoubleBuffered = true;
+            this.Controls.Add(this.lblUserDetailsTitle);
+            this.Controls.Add(this.uctrlUserDetails);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.Name = "frmPersonDetails";
+            this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.Name = "frmUserDetails";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
@@ -135,10 +120,9 @@
 
         #endregion
 
+        private ctrlUserDetails uctrlUserDetails;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Label lblPersonDetailsBigTitle;
-        private System.Windows.Forms.Label lblPersonDetailsTitle;
-        private ctrlPersonDetails UctrlPersonDetails;
+        private System.Windows.Forms.Label lblUserDetailsTitle;
     }
 }

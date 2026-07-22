@@ -16,29 +16,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
         clsPerson _Person;
         bool _ShownDefaultValues = false;
-        public clsPerson LoadPersonDetails(int PersonID)
+        public clsPerson LoadPersonDetails (int PersonID,string NationalNo=null)
         {
+            if(NationalNo==null)
             _Person = clsPerson.Find(PersonID);
-
-            if (_Person != null)
-            {
-                _ShowPersonDetails();
-                lnlblEditPersonInfo.Enabled = true;
-                _ShownDefaultValues = false;
-                return _Person;
-            }
             else
-            {
-                _ShowDefaultDetails();
-                MessageBox.Show($"No Person With Person ID = {PersonID}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _ShownDefaultValues = true;
-                lnlblEditPersonInfo.Enabled = false;
-                return null;
-            }
-
-        }
-        public clsPerson LoadPersonDetails(string NationalNo)
-        {
             _Person = clsPerson.Find(NationalNo);
 
             if (_Person != null)
@@ -51,14 +33,17 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             else
             {
                 _ShowDefaultDetails();
-                MessageBox.Show($"No Person With National No. = {NationalNo}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 _ShownDefaultValues = true;
                 lnlblEditPersonInfo.Enabled = false;
+
+                if (NationalNo == null)
+                MessageBox.Show($"No Person With Person ID = {PersonID}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
+                    MessageBox.Show($"No Person With National No. = {NationalNo}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return null;
             }
-
         }
-
         private void _ShowDefaultDetails()
         {
             if (!_ShownDefaultValues)

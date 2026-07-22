@@ -50,8 +50,10 @@ C:\Users\User\Desktop\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\
 C:\Users\User\Desktop\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver And Vehicle Licenses Department ( DVLD ).exe
 C:\Users\User\Desktop\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver And Vehicle Licenses Department ( DVLD ).pdb
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver_And_Vehicle_Licenses_Department___DVLD__.frmUsersManagement.resources
-D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver_And_Vehicle_Licenses_Department___DVLD__.PersonInformationByFilter.resources
 C:\Users\User\Desktop\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver_And_Vehicle_Licenses_Department___DVLD__.frmAddNewUser.resources
 C:\Users\User\Desktop\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver_And_Vehicle_Licenses_Department___DVLD__.frmUsersManagement.resources
 C:\Users\User\Desktop\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver_And_Vehicle_Licenses_Department___DVLD__.PersonInformationByFilter.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver_And_Vehicle_Licenses_Department___DVLD__.frmAddEditUserInfo.resources
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlUserDetails.resources
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver_And_Vehicle_Licenses_Department___DVLD__.frmUserDetails.resources
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetailsByFilter.resources
