@@ -181,7 +181,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 for (short i = 0; i < dgvUsers.SelectedRows.Count; i++)
                 {
-                    clsUser.DeleteUser((int)dgvUsers.SelectedRows[0].Cells["User ID"].Value);
+                    if (!clsUser.DeleteUser((int)dgvUsers.SelectedRows[0].Cells["User ID"].Value))
+                    {
+                        MessageBox.Show($"User who has ID : {Convert.ToInt32(dgvUsers.SelectedRows[0].Cells["User ID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        if (dgvUsers.SelectedRows.Count == 1)
+                            return;
+                    }
                 }
                 _RefreshUsersDataView();
             }

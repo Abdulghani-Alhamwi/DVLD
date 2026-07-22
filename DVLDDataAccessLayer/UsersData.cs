@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net;
 
 namespace DVLDDataAccessLayer
 {
@@ -233,5 +234,7 @@ namespace DVLDDataAccessLayer
             }
             return false;
         }
+
+        public static 
     }
 }

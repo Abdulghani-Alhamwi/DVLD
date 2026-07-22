@@ -130,7 +130,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 for (short i = 0; i < dgvPeople.SelectedRows.Count; i++)
                 {
-                clsPerson.DeletePerson(Convert.ToInt32(dgvPeople.SelectedRows[0].Cells["Person ID"].Value));
+                    if (!clsPerson.DeletePerson(Convert.ToInt32(dgvPeople.SelectedRows[0].Cells["Person ID"].Value)))
+                    {
+                        MessageBox.Show($"Person who has ID : {Convert.ToInt32(dgvPeople.SelectedRows[0].Cells["Person ID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        if (dgvPeople.SelectedRows.Count == 1)
+                            return;
+                    }
                 }
                 _RefreshPeopleDataView();
                 return;

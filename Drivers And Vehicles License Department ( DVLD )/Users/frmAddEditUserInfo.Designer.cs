@@ -50,7 +50,7 @@
             this.lblPasswordTitle = new System.Windows.Forms.Label();
             this.lblUserNameTitle = new System.Windows.Forms.Label();
             this.lblUserIDTitle = new System.Windows.Forms.Label();
-            this.ertxtBox = new System.Windows.Forms.ErrorProvider(this.components);
+            this.erTextBox = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.tcAddNewUser.SuspendLayout();
@@ -60,7 +60,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPerson)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbConfirmPassword)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ertxtBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.erTextBox)).BeginInit();
             this.SuspendLayout();
             // 
             // btnExit
@@ -345,9 +345,9 @@
             this.lblUserIDTitle.TabIndex = 43;
             this.lblUserIDTitle.Text = "UserID :";
             // 
-            // ertxtBox
+            // erTextBox
             // 
-            this.ertxtBox.ContainerControl = this;
+            this.erTextBox.ContainerControl = this;
             // 
             // btnClose
             // 
@@ -419,7 +419,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbPassword)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPerson)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbConfirmPassword)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ertxtBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.erTextBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -434,7 +434,7 @@
         private System.Windows.Forms.TabPage tpLoginInfo;
         private ctrlPersonDetailsByFilter uctrlpersonInfoByFilter;
         private System.Windows.Forms.Button btnNext;
-        private System.Windows.Forms.ErrorProvider ertxtBox;
+        private System.Windows.Forms.ErrorProvider erTextBox;
         private System.Windows.Forms.Label lblUserID;
         private System.Windows.Forms.PictureBox pbPerson;
         private System.Windows.Forms.PictureBox pbConfirmPassword;

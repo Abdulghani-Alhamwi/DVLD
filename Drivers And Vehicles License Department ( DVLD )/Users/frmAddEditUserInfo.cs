@@ -105,13 +105,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             }
 
             if (txtUserName.Text == "")
-                clsUtility.EnableErrorProvider(ertxtBox, txtUserName, "Username cannot be blank.", e);
+                clsUtility.EnableErrorProvider(erTextBox, txtUserName, "Username cannot be blank.", e);
 
             else if (clsUser.IsUserAlreadyExists(txtUserName.Text))
-                clsUtility.EnableErrorProvider(ertxtBox, txtUserName, "Username is already taken by another user. Please choose another username.", e);
+                clsUtility.EnableErrorProvider(erTextBox, txtUserName, "Username is already taken by another user. Please choose another username.", e);
 
             else
-                ertxtBox.Dispose();
+                erTextBox.Dispose();
         }
         private void txtPasswordAndConfirmation_Validating(object sender,CancelEventArgs e)
         {
@@ -122,13 +122,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             }
 
             if (((TextBox)sender).Text == "")
-                clsUtility.EnableErrorProvider(ertxtBox, ((TextBox)sender), "Password confirmation cannot be blank.", null);
+                clsUtility.EnableErrorProvider(erTextBox, ((TextBox)sender), "Password confirmation cannot be blank.", null);
 
             else if (((TextBox)sender).Text != ((TextBox)sender).Text)
-                clsUtility.EnableErrorProvider(ertxtBox, ((TextBox)sender), "Password confirmation does not match password!", null);
+                clsUtility.EnableErrorProvider(erTextBox, ((TextBox)sender), "Password confirmation does not match password!", null);
             
             else
-                ertxtBox.Dispose();
+                erTextBox.Dispose();
         }
 
         private void frmAddNewUser_Load(object sender, EventArgs e)
