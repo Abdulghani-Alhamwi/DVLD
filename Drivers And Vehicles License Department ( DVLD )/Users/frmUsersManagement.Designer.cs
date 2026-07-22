@@ -182,7 +182,7 @@
             this.tsmiPhoneCall});
             this.cmsUsersMenu.Name = "cmsPeopleMenu";
             this.cmsUsersMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsUsersMenu.Size = new System.Drawing.Size(223, 266);
+            this.cmsUsersMenu.Size = new System.Drawing.Size(223, 244);
             // 
             // tsmiShowDetails
             // 
@@ -191,6 +191,7 @@
             this.tsmiShowDetails.Name = "tsmiShowDetails";
             this.tsmiShowDetails.Size = new System.Drawing.Size(222, 38);
             this.tsmiShowDetails.Text = "Show Details";
+            this.tsmiShowDetails.Click += new System.EventHandler(this.tsmiShowDetails_Click);
             // 
             // tsmiAddNewUser
             // 
@@ -229,6 +230,7 @@
             this.tsmiSendEmail.Name = "tsmiSendEmail";
             this.tsmiSendEmail.Size = new System.Drawing.Size(222, 38);
             this.tsmiSendEmail.Text = "Send Email";
+            this.tsmiSendEmail.Click += new System.EventHandler(this.tsmiSendEmail_Click);
             // 
             // tsmiPhoneCall
             // 
@@ -237,6 +239,7 @@
             this.tsmiPhoneCall.Name = "tsmiPhoneCall";
             this.tsmiPhoneCall.Size = new System.Drawing.Size(222, 38);
             this.tsmiPhoneCall.Text = "Phone Call";
+            this.tsmiPhoneCall.Click += new System.EventHandler(this.tsmiPhoneCall_Click);
             // 
             // dgvUsers
             // 
@@ -266,6 +269,7 @@
             this.dgvUsers.Size = new System.Drawing.Size(1008, 266);
             this.dgvUsers.StandardTab = true;
             this.dgvUsers.TabIndex = 27;
+            this.dgvUsers.DoubleClick += new System.EventHandler(this.dgvUsers_DoubleClick);
             // 
             // lblManageUsersTitle
             // 

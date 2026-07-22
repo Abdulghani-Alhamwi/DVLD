@@ -53,11 +53,11 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    PersonID = (int)result;
+                    PersonID = Convert.ToInt32(result);
                     
             }
 
-            catch { }
+            catch(Exception ex) { Console.Write(ex.Message); }
 
             finally
             {

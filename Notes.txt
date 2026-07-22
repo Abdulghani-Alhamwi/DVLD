@@ -206,3 +206,11 @@ public static string DecryptUserName(string UserName)
 16) Arrays in C# are reference types .
 
 17) Arrays in C# are passed by value by default not by reference.
+
+18)
+ALTER TABLE People 
+ADD CONSTRAINT CHK_DateOfBirth
+CHECK (DateOfBirth <= DATEADD(YEAR,-18,GetDate()))
+
+Print DATEADD(YEAR,-18,GETDATE());
+

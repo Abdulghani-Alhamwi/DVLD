@@ -220,5 +220,25 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             else
                 MessageBox.Show("User is not Found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        private void tsmiPhoneCall_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This Feature Is Not Implemented Yet!", "Not Ready!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        private void tsmiSendEmail_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This Feature Is Not Implemented Yet!", "Not Ready!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        private void tsmiShowDetails_Click(object sender, EventArgs e)
+        {
+            frmPeopleManagement.ShowPersonDetails(dgvUsers, (int)dgvUsers.SelectedRows[0].Cells["Person ID"].Value);
+        }
+
+        private void dgvUsers_DoubleClick(object sender, EventArgs e)
+        {
+            frmPeopleManagement.ShowPersonDetails(dgvUsers, (int)dgvUsers.SelectedRows[0].Cells["Person ID"].Value);
+        }
     }
 }

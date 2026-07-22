@@ -37,7 +37,6 @@
             // 
             // btnClose
             // 
-            this.btnClose.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.FlatAppearance.BorderSize = 2;
             this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
@@ -45,7 +44,7 @@
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(1185, 701);
+            this.btnClose.Location = new System.Drawing.Point(962, 581);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 1;
@@ -55,7 +54,6 @@
             // 
             // btnExit
             // 
-            this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
             this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
@@ -64,7 +62,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1344, 19);
+            this.btnExit.Location = new System.Drawing.Point(1089, 19);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -75,11 +73,10 @@
             // 
             // lblPersonDetailsBigTitle
             // 
-            this.lblPersonDetailsBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblPersonDetailsBigTitle.AutoSize = true;
             this.lblPersonDetailsBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
             this.lblPersonDetailsBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblPersonDetailsBigTitle.Location = new System.Drawing.Point(536, 82);
+            this.lblPersonDetailsBigTitle.Location = new System.Drawing.Point(416, 75);
             this.lblPersonDetailsBigTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblPersonDetailsBigTitle.Name = "lblPersonDetailsBigTitle";
             this.lblPersonDetailsBigTitle.Size = new System.Drawing.Size(336, 52);
@@ -101,15 +98,14 @@
             // UctrlPersonDetails
             // 
             this.UctrlPersonDetails.AllowDrop = true;
-            this.UctrlPersonDetails.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.UctrlPersonDetails.AutoScroll = true;
             this.UctrlPersonDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.UctrlPersonDetails.Font = new System.Drawing.Font("Tahoma", 16F);
             this.UctrlPersonDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.UctrlPersonDetails.Location = new System.Drawing.Point(51, 189);
+            this.UctrlPersonDetails.Location = new System.Drawing.Point(41, 182);
             this.UctrlPersonDetails.Margin = new System.Windows.Forms.Padding(0);
             this.UctrlPersonDetails.Name = "UctrlPersonDetails";
-            this.UctrlPersonDetails.Size = new System.Drawing.Size(1300, 480);
+            this.UctrlPersonDetails.Size = new System.Drawing.Size(1087, 367);
             this.UctrlPersonDetails.TabIndex = 0;
             // 
             // frmPersonDetails
@@ -119,13 +115,14 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1410, 779);
+            this.ClientSize = new System.Drawing.Size(1167, 657);
             this.ControlBox = false;
             this.Controls.Add(this.UctrlPersonDetails);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.lblPersonDetailsBigTitle);
             this.Controls.Add(this.lblPersonDetailsTitle);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.Name = "frmPersonDetails";
