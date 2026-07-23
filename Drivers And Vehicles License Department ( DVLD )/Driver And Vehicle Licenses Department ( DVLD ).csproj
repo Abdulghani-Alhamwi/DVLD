@@ -56,22 +56,33 @@
     <Compile Include="Controls\ctrlPersonDetails.Designer.cs">
       <DependentUpon>ctrlPersonDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="ctrlUserDetails.cs">
+    <Compile Include="Controls\ctrlUserDetails.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ctrlUserDetails.Designer.cs">
+    <Compile Include="Controls\ctrlUserDetails.Designer.cs">
       <DependentUpon>ctrlUserDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmChangePassword.cs">
+    <Compile Include="frmLoginScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmChangePassword.Designer.cs">
+    <Compile Include="frmLoginScreen.Designer.cs">
+      <DependentUpon>frmLoginScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Users\frmChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Users\frmChangePassword.Designer.cs">
       <DependentUpon>frmChangePassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmUserDetails.cs">
+    <Compile Include="Users\frmUserDetails.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmUserDetails.Designer.cs">
+    <Compile Include="Users\frmUserDetails.Designer.cs">
       <DependentUpon>frmUserDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="Users\frmAddEditUserInfo.cs">
@@ -119,17 +130,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="clsSettings.cs" />
     <EmbeddedResource Include="Controls\ctrlPersonDetails.resx">
       <DependentUpon>ctrlPersonDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ctrlUserDetails.resx">
+    <EmbeddedResource Include="Controls\ctrlUserDetails.resx">
       <DependentUpon>ctrlUserDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmChangePassword.resx">
+    <EmbeddedResource Include="frmLoginScreen.resx">
+      <DependentUpon>frmLoginScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Users\frmChangePassword.resx">
       <DependentUpon>frmChangePassword.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmUserDetails.resx">
+    <EmbeddedResource Include="Users\frmUserDetails.resx">
       <DependentUpon>frmUserDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Users\frmAddEditUserInfo.resx">
@@ -162,11 +176,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -180,6 +189,10 @@
     <None Include="Resources\DVLD1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\sign_in 32.png" />
+    <None Include="Resources\LoginImage.png" />
+    <None Include="Resources\sign_out 32 -2.png" />
+    <None Include="Resources\Password 32.png" />
     <None Include="Resources\Next 32.png" />
     <None Include="Resources\SearchPerson.png" />
     <None Include="Resources\Users 2 400.png" />
@@ -206,6 +219,8 @@
     <None Include="Resources\call 32.png" />
     <None Include="Resources\Add New User 72.png" />
     <None Include="Resources\AddPerson 32.png" />
+    <None Include="Resources\account_settings 64.png" />
+    <None Include="Resources\closeBlack32.png" />
     <Content Include="Resources\DVLD Logo.ico" />
     <None Include="Resources\People 400.png" />
     <None Include="Resources\People 64.png" />

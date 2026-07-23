@@ -16,7 +16,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMainScreen());
+            Application.Run(new frmLoginScreen());
         }
     }
 }

@@ -44,14 +44,15 @@
             this.tsmiAddNewUser = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiChangePassword = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSendEmail = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPhoneCall = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvUsers = new System.Windows.Forms.DataGridView();
             this.lblManageUsersTitle = new System.Windows.Forms.Label();
-            this.pbUser = new System.Windows.Forms.PictureBox();
-            this.btnClose = new System.Windows.Forms.Button();
             this.cbFilterOnIsActive = new System.Windows.Forms.ComboBox();
             this.btnAddNewUser = new System.Windows.Forms.Button();
+            this.pbUser = new System.Windows.Forms.PictureBox();
+            this.btnClose = new System.Windows.Forms.Button();
             this.cmsUsersMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbUser)).BeginInit();
@@ -158,13 +159,13 @@
             // 
             this.tsSeparator2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.tsSeparator2.Name = "tsSeparator2";
-            this.tsSeparator2.Size = new System.Drawing.Size(219, 6);
+            this.tsSeparator2.Size = new System.Drawing.Size(254, 6);
             // 
             // tsSeparator1
             // 
             this.tsSeparator1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.tsSeparator1.Name = "tsSeparator1";
-            this.tsSeparator1.Size = new System.Drawing.Size(219, 6);
+            this.tsSeparator1.Size = new System.Drawing.Size(254, 6);
             // 
             // cmsUsersMenu
             // 
@@ -177,19 +178,20 @@
             this.tsmiAddNewUser,
             this.tsmiEdit,
             this.tsmiDelete,
+            this.tsmiChangePassword,
             this.tsSeparator2,
             this.tsmiSendEmail,
             this.tsmiPhoneCall});
             this.cmsUsersMenu.Name = "cmsPeopleMenu";
             this.cmsUsersMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsUsersMenu.Size = new System.Drawing.Size(223, 244);
+            this.cmsUsersMenu.Size = new System.Drawing.Size(258, 304);
             // 
             // tsmiShowDetails
             // 
             this.tsmiShowDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tsmiShowDetails.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.PersonDetails_32;
             this.tsmiShowDetails.Name = "tsmiShowDetails";
-            this.tsmiShowDetails.Size = new System.Drawing.Size(222, 38);
+            this.tsmiShowDetails.Size = new System.Drawing.Size(257, 38);
             this.tsmiShowDetails.Text = "Show Details";
             this.tsmiShowDetails.Click += new System.EventHandler(this.tsmiShowDetails_Click);
             // 
@@ -198,7 +200,7 @@
             this.tsmiAddNewUser.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tsmiAddNewUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Add_Person_40;
             this.tsmiAddNewUser.Name = "tsmiAddNewUser";
-            this.tsmiAddNewUser.Size = new System.Drawing.Size(222, 38);
+            this.tsmiAddNewUser.Size = new System.Drawing.Size(257, 38);
             this.tsmiAddNewUser.Text = "Add New User";
             this.tsmiAddNewUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsmiAddNewUser.Click += new System.EventHandler(this.tsmiAddNewUser_Click);
@@ -208,7 +210,7 @@
             this.tsmiEdit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tsmiEdit.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_32;
             this.tsmiEdit.Name = "tsmiEdit";
-            this.tsmiEdit.Size = new System.Drawing.Size(222, 38);
+            this.tsmiEdit.Size = new System.Drawing.Size(257, 38);
             this.tsmiEdit.Text = "Edit";
             this.tsmiEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsmiEdit.Click += new System.EventHandler(this.tsmiEdit_Click);
@@ -218,17 +220,25 @@
             this.tsmiDelete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tsmiDelete.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Delete_32;
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(222, 38);
+            this.tsmiDelete.Size = new System.Drawing.Size(257, 38);
             this.tsmiDelete.Text = "Delete";
             this.tsmiDelete.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsmiDelete.Click += new System.EventHandler(this.tsmiDelete_Click);
+            // 
+            // tsmiChangePassword
+            // 
+            this.tsmiChangePassword.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Password_32;
+            this.tsmiChangePassword.Name = "tsmiChangePassword";
+            this.tsmiChangePassword.Size = new System.Drawing.Size(257, 38);
+            this.tsmiChangePassword.Text = "Change Password";
+            this.tsmiChangePassword.Click += new System.EventHandler(this.tsmiChangePassword_Click);
             // 
             // tsmiSendEmail
             // 
             this.tsmiSendEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tsmiSendEmail.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.send_email_32;
             this.tsmiSendEmail.Name = "tsmiSendEmail";
-            this.tsmiSendEmail.Size = new System.Drawing.Size(222, 38);
+            this.tsmiSendEmail.Size = new System.Drawing.Size(257, 38);
             this.tsmiSendEmail.Text = "Send Email";
             this.tsmiSendEmail.Click += new System.EventHandler(this.tsmiSendEmail_Click);
             // 
@@ -237,7 +247,7 @@
             this.tsmiPhoneCall.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tsmiPhoneCall.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.call_32;
             this.tsmiPhoneCall.Name = "tsmiPhoneCall";
-            this.tsmiPhoneCall.Size = new System.Drawing.Size(222, 38);
+            this.tsmiPhoneCall.Size = new System.Drawing.Size(257, 38);
             this.tsmiPhoneCall.Text = "Phone Call";
             this.tsmiPhoneCall.Click += new System.EventHandler(this.tsmiPhoneCall_Click);
             // 
@@ -282,38 +292,6 @@
             this.lblManageUsersTitle.TabIndex = 35;
             this.lblManageUsersTitle.Text = "Manage Users";
             // 
-            // pbUser
-            // 
-            this.pbUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Users_2_400;
-            this.pbUser.Location = new System.Drawing.Point(426, 56);
-            this.pbUser.Margin = new System.Windows.Forms.Padding(2);
-            this.pbUser.Name = "pbUser";
-            this.pbUser.Size = new System.Drawing.Size(265, 137);
-            this.pbUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbUser.TabIndex = 33;
-            this.pbUser.TabStop = false;
-            // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.FlatAppearance.BorderSize = 2;
-            this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
-            this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
-            this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(896, 750);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 36;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
             // cbFilterOnIsActive
             // 
             this.cbFilterOnIsActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(228)))));
@@ -346,6 +324,38 @@
             this.btnAddNewUser.TabIndex = 40;
             this.btnAddNewUser.UseVisualStyleBackColor = true;
             this.btnAddNewUser.Click += new System.EventHandler(this.btnAddNewUser_Click);
+            // 
+            // pbUser
+            // 
+            this.pbUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Users_2_400;
+            this.pbUser.Location = new System.Drawing.Point(426, 56);
+            this.pbUser.Margin = new System.Windows.Forms.Padding(2);
+            this.pbUser.Name = "pbUser";
+            this.pbUser.Size = new System.Drawing.Size(265, 137);
+            this.pbUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbUser.TabIndex = 33;
+            this.pbUser.TabStop = false;
+            // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.FlatAppearance.BorderSize = 2;
+            this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
+            this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
+            this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnClose.Location = new System.Drawing.Point(896, 750);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(166, 45);
+            this.btnClose.TabIndex = 36;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // frmUsersManagement
             // 
@@ -408,5 +418,6 @@
         private System.Windows.Forms.Label lblManageUsersTitle;
         private System.Windows.Forms.ComboBox cbFilterOnIsActive;
         private System.Windows.Forms.Button btnAddNewUser;
+        private System.Windows.Forms.ToolStripMenuItem tsmiChangePassword;
     }
 }

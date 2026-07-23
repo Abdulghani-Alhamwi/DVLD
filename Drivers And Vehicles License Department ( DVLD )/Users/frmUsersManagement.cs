@@ -259,5 +259,20 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             _ShowUserDetails();
         }
+
+        private void tsmiChangePassword_Click(object sender, EventArgs e)
+        {
+            if (dgvUsers.Rows.Count == 0)
+                MessageBox.Show("There is'nt any user", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            else if (dgvUsers.SelectedRows.Count > 1)
+                MessageBox.Show("Please choose one user to change their password!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            else
+            {
+                frmChangePassword frm = new frmChangePassword((int)dgvUsers.SelectedRows[0].Cells["User ID"].Value);
+                frm.ShowDialog();
+            }
+        }
     }
 }

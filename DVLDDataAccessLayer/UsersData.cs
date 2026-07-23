@@ -198,11 +198,11 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
-        public static bool Find(int UserID ,ref int PersonID , ref string UserName,ref string Password,ref string Salt ,ref bool IsActive)
+        public static bool Find(int UserID ,ref int PersonID , ref string UserName,ref bool IsActive)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT * FROM Users 
+            string query = @"SELECT UserID,PersonID,UserName,IsActive FROM Users 
                              WHERE UserID = @UserID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -218,8 +218,6 @@ namespace DVLDDataAccessLayer
                 {
                     PersonID = (int) reader["PersonID"];
                     UserName = (string)reader["UserName"];
-                    Password = (string)reader["Password"];
-                    Salt = (string)reader["Salt"];
                     IsActive = (bool)reader["IsActive"];
 
                     return true;
@@ -235,6 +233,97 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
-        public static 
+        public static void GetUserPasswordWithSalt(int UserID , ref string Password, ref byte[] Salt)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT Password , Salt FROM Users
+                             WHERE UserID = @UserID";
+
+            SqlCommand command = new SqlCommand(query,connection);
+            command.Parameters.AddWithValue("@UserID", UserID);
+
+            try
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if(reader.Read())
+                {
+                    Password = (string)reader["Password"];
+                    Salt = Convert.FromBase64String((string)reader["Salt"]);
+                }
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public static bool GetLoginInfo(string UserName,ref int UserID, ref string Password, ref byte[] Salt)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT UserID , Password , Salt FROM Users
+                             WHERE UserName = @UserName";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@UserName", UserName);
+
+            try
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    UserID = (int)reader["UserID"];
+                    Password = (string)reader["Password"];
+                    Salt = Convert.FromBase64String((string)reader["Salt"]);
+
+                    return true;
+                }
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return false;
+        }
+
+        public static bool ChangePassword(int UserID , string Password ,string Salt)
+        {
+            int AffectedRows = -1;
+
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"UPDATE Users SET Password = @Password , Salt = @Salt
+                             WHERE UserID = @UserID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@UserID", UserID);
+            command.Parameters.AddWithValue("@Password", Password);
+            command.Parameters.AddWithValue("@Salt",Salt);
+
+            try
+            {
+                connection.Open();
+                AffectedRows = command.ExecuteNonQuery();
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return (AffectedRows > 0);
+        }
     }
 }

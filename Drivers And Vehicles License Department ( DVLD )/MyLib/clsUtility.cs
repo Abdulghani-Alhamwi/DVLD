@@ -2,18 +2,17 @@
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace MyLib
 {
     internal class clsUtility
     {
-
         public static string HashWithSaltPassword(string Password,ref byte[] Salt)
         {
             if (Salt == null)
@@ -64,8 +63,6 @@ namespace MyLib
 
             return Encoding.UTF8.GetString(DecryptedUserName);
         }
-
-
         public static void EnableErrorProvider(ErrorProvider erControl,Control control, string ErrorMessage, CancelEventArgs CancelEvent = null)
         {
             erControl.SetError(control, ErrorMessage);
@@ -74,7 +71,7 @@ namespace MyLib
             CancelEvent.Cancel = true;
         }
 
-        internal static void DrawComboBoxItems(object sender, DrawItemEventArgs e, string ColumnName = null)
+        public static void DrawComboBoxItems(object sender, DrawItemEventArgs e, string ColumnName = null)
         {
             if (e.Index < 0)
                 return;
@@ -97,7 +94,7 @@ namespace MyLib
             }
             e.DrawFocusRectangle();
         }
-        internal static void _FilterDataView(DataView dataview, string ColumnName, string FilterOnValue , KeyEventArgs e)
+        public static void _FilterDataView(DataView dataview, string ColumnName, string FilterOnValue , KeyEventArgs e)
         {
             if (dataview.Table.Rows.Count == 0)
                 return;
@@ -122,6 +119,42 @@ namespace MyLib
             else
                 dataview.RowFilter = $"[{ColumnName}] = '{FilterOnValue}'";
 
+        }
+
+        public static void SaveDataToFile(string FileName,string UserName,string Password,string Separator = "#//#")
+        {
+            if (!File.Exists(FileName))
+                File.Create(FileName);
+
+            using(StreamWriter writer = new StreamWriter(FileName))
+            {
+                string DataLine = UserName + Separator + Password;
+                writer.WriteLine(DataLine + "\n");
+            }
+        }
+        internal struct stSavedUserInfo
+        {
+            public static string UserName;
+            public static string Password;
+        }
+        public static void LoadDataFromFile(string FileName,string Separator = "#//#")
+        {
+            if (File.Exists(FileName))
+            {
+            using (StreamReader reader = new StreamReader(FileName))
+            {
+               string [] Data = Regex.Split(reader.ReadLine(),Separator);
+               stSavedUserInfo.UserName = Data[0];
+               stSavedUserInfo.Password = Data[1];
+            }
+            }
+        }
+
+        public static void DeleteFile(string FileName)
+        {
+            File.Delete(FileName);
+            stSavedUserInfo.UserName = "";
+            stSavedUserInfo.Password = "";
         }
     }
 }

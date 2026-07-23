@@ -35,6 +35,10 @@
             this.driversToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.currentUserInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.signToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msOptions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,12 +46,6 @@
             // 
             this.msOptions.Font = new System.Drawing.Font("Tahoma", 15.85714F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.msOptions.ImageScalingSize = new System.Drawing.Size(35, 35);
-            this.msOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.applicationsToolStripMenuItem,
-            this.peopleToolStripMenuItem,
-            this.driversToolStripMenuItem,
-            this.usersToolStripMenuItem,
-            this.accountSettingsToolStripMenuItem});
             this.msOptions.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.msOptions.Location = new System.Drawing.Point(0, 0);
             this.msOptions.Name = "msOptions";
@@ -89,9 +87,42 @@
             // 
             // accountSettingsToolStripMenuItem
             // 
+            this.accountSettingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.currentUserInfoToolStripMenuItem,
+            this.changePasswordToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.signToolStripMenuItem});
+            this.accountSettingsToolStripMenuItem.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.account_settings_64;
+            this.accountSettingsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.accountSettingsToolStripMenuItem.Name = "accountSettingsToolStripMenuItem";
-            this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(211, 68);
+            this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(275, 68);
             this.accountSettingsToolStripMenuItem.Text = "Account Settings";
+            // 
+            // currentUserInfoToolStripMenuItem
+            // 
+            this.currentUserInfoToolStripMenuItem.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.PersonDetails_32;
+            this.currentUserInfoToolStripMenuItem.Name = "currentUserInfoToolStripMenuItem";
+            this.currentUserInfoToolStripMenuItem.Size = new System.Drawing.Size(299, 42);
+            this.currentUserInfoToolStripMenuItem.Text = "Current User Info";
+            // 
+            // changePasswordToolStripMenuItem
+            // 
+            this.changePasswordToolStripMenuItem.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Password_32;
+            this.changePasswordToolStripMenuItem.Name = "changePasswordToolStripMenuItem";
+            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(299, 42);
+            this.changePasswordToolStripMenuItem.Text = "Change Password";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(296, 6);
+            // 
+            // signToolStripMenuItem
+            // 
+            this.signToolStripMenuItem.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.sign_out_32__2;
+            this.signToolStripMenuItem.Name = "signToolStripMenuItem";
+            this.signToolStripMenuItem.Size = new System.Drawing.Size(299, 42);
+            this.signToolStripMenuItem.Text = "Sign Out";
             // 
             // frmMainScreen
             // 
@@ -110,8 +141,10 @@
             this.MainMenuStrip = this.msOptions;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmMainScreen";
+            this.ShowInTaskbar = false;
             this.Text = "Driver And Vehicle Licenses Department";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMainScreen_FormClosing);
             this.msOptions.ResumeLayout(false);
             this.msOptions.PerformLayout();
             this.ResumeLayout(false);
@@ -127,6 +160,10 @@
         private System.Windows.Forms.ToolStripMenuItem driversToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem usersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem accountSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem currentUserInfoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem signToolStripMenuItem;
     }
 }
 

@@ -50,7 +50,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         }
 
-        public frmMainScreen()
+        private frmLoginScreen _frm;
+        public frmMainScreen(frmLoginScreen frmLogin)
         {
             InitializeComponent();
             _RemoveMdiClientBorder();
@@ -77,6 +78,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void driversToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void frmMainScreen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _frm.Close();
         }
     }
 }

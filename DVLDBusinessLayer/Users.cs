@@ -26,13 +26,13 @@ namespace DVLDBusinessLayer
             _CurrentMode = _enMode.AddNew;
         }
 
-        private clsUser(int UserID , int PersonID,string UserName ,string Password,string Salt,bool IsActive)
+        private clsUser(int UserID , int PersonID,string UserName ,bool IsActive)
         {
             this.UserID = UserID;
             this.PersonID = PersonID;
             this.UserName = UserName;
-            this.Password = Password;
-            this.Salt = Salt;
+            this.Password = "";
+            this.Salt = "";
             this.IsActive = IsActive;
             _CurrentMode = _enMode.Update;
         }
@@ -90,15 +90,29 @@ namespace DVLDBusinessLayer
         public static clsUser Find(int UserID)
         {
             int PersonID = -1;
-            string UserName = "", Password = "" , Salt = "";
+            string UserName = "";
             bool IsActive = false;
 
-            if (clsUsersData.Find(UserID, ref PersonID, ref UserName, ref Password,ref Salt, ref IsActive))
+            if (clsUsersData.Find(UserID, ref PersonID, ref UserName,ref IsActive))
             {
-                return new clsUser(UserID, PersonID, UserName, Password, Salt, IsActive);
+                return new clsUser(UserID, PersonID, UserName,IsActive);
             }
             else
                 return null;
+        }
+
+        public static void GetUserPasswordWithSalt(int UserID,ref string Password,ref byte[] Salt)
+        {
+            clsUsersData.GetUserPasswordWithSalt(UserID, ref Password, ref Salt);
+        }
+        public static bool GetLoginInfo(string UserName,ref int UserID, ref string Password, ref byte[] Salt)
+        {
+            return clsUsersData.GetLoginInfo(UserName,ref UserID, ref Password, ref Salt);
+        }
+
+        public static bool ChangePassword(int UserID,string Password,string Salt)
+        {
+            return clsUsersData.ChangePassword(UserID, Password, Salt);
         }
     }
 }

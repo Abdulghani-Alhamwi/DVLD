@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.uctrlUserDetails = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlUserDetails();
             this.pbCurrentPassword = new System.Windows.Forms.PictureBox();
             this.txtNewPassword = new System.Windows.Forms.TextBox();
             this.txtPasswordConfirmation = new System.Windows.Forms.TextBox();
@@ -44,23 +43,12 @@
             this.lblManagePeopleTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.erTextBox = new System.Windows.Forms.ErrorProvider(this.components);
+            this.uctrlUserDetails = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlUserDetails();
             ((System.ComponentModel.ISupportInitialize)(this.pbCurrentPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbConfirmPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNewPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.erTextBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // uctrlUserDetails
-            // 
-            this.uctrlUserDetails.AutoScroll = true;
-            this.uctrlUserDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.uctrlUserDetails.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.uctrlUserDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.uctrlUserDetails.Location = new System.Drawing.Point(21, 81);
-            this.uctrlUserDetails.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.uctrlUserDetails.Name = "uctrlUserDetails";
-            this.uctrlUserDetails.Size = new System.Drawing.Size(1083, 461);
-            this.uctrlUserDetails.TabIndex = 0;
             // 
             // pbCurrentPassword
             // 
@@ -86,6 +74,7 @@
             this.txtNewPassword.Size = new System.Drawing.Size(256, 36);
             this.txtNewPassword.TabIndex = 54;
             this.txtNewPassword.Tag = "First Name";
+            this.txtNewPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtNewPassword_Validating);
             // 
             // txtPasswordConfirmation
             // 
@@ -100,6 +89,7 @@
             this.txtPasswordConfirmation.Size = new System.Drawing.Size(256, 36);
             this.txtPasswordConfirmation.TabIndex = 55;
             this.txtPasswordConfirmation.Tag = "First Name";
+            this.txtPasswordConfirmation.Validating += new System.ComponentModel.CancelEventHandler(this.txtPasswordConfirmation_Validating);
             // 
             // pbConfirmPassword
             // 
@@ -162,7 +152,6 @@
             // btnSave
             // 
             this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnSave.Enabled = false;
             this.btnSave.FlatAppearance.BorderSize = 2;
             this.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
             this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -176,6 +165,7 @@
             this.btnSave.TabIndex = 62;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnClose
             // 
@@ -242,12 +232,25 @@
             // 
             this.erTextBox.ContainerControl = this;
             // 
+            // uctrlUserDetails
+            // 
+            this.uctrlUserDetails.AutoScroll = true;
+            this.uctrlUserDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlUserDetails.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.uctrlUserDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.uctrlUserDetails.Location = new System.Drawing.Point(21, 81);
+            this.uctrlUserDetails.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.uctrlUserDetails.Name = "uctrlUserDetails";
+            this.uctrlUserDetails.Size = new System.Drawing.Size(1083, 461);
+            this.uctrlUserDetails.TabIndex = 0;
+            // 
             // frmChangePassword
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1121, 890);
             this.ControlBox = false;
             this.Controls.Add(this.lblManagePeopleTitle);
