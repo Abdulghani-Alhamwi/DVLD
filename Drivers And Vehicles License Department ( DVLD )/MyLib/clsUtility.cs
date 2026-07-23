@@ -120,42 +120,6 @@ namespace MyLib
                 dataview.RowFilter = $"[{ColumnName}] = '{FilterOnValue}'";
 
         }
-
-        public static void SaveDataToFile(string FileName,string UserName,string Password,string Separator = "#//#")
-        {
-            if (!File.Exists(FileName))
-                File.Create(FileName);
-
-            using(StreamWriter writer = new StreamWriter(FileName))
-            {
-                string DataLine = UserName + Separator + Password;
-                writer.WriteLine(DataLine + "\n");
-            }
-        }
-        internal struct stSavedUserInfo
-        {
-            public static string UserName;
-            public static string Password;
-        }
-        public static void LoadDataFromFile(string FileName,string Separator = "#//#")
-        {
-            if (File.Exists(FileName))
-            {
-            using (StreamReader reader = new StreamReader(FileName))
-            {
-               string [] Data = Regex.Split(reader.ReadLine(),Separator);
-               stSavedUserInfo.UserName = Data[0];
-               stSavedUserInfo.Password = Data[1];
-            }
-            }
-        }
-
-        public static void DeleteFile(string FileName)
-        {
-            File.Delete(FileName);
-            stSavedUserInfo.UserName = "";
-            stSavedUserInfo.Password = "";
-        }
     }
 }
 

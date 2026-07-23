@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Driver_And_Vehicle_Licenses_Department___DVLD__.Properties;
 
 namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
@@ -50,11 +51,14 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         }
 
-        private frmLoginScreen _frm;
+        private frmLoginScreen _frmLogin;
+        private bool _SignOut = false;
         public frmMainScreen(frmLoginScreen frmLogin)
         {
             InitializeComponent();
             _RemoveMdiClientBorder();
+
+            _frmLogin = frmLogin;
         }
 
         private Size SetFormsSize(int width = 200 , int height = 300)
@@ -67,7 +71,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             frm.Size = SetFormsSize();
             frm.ShowDialog();            
         }
-
         private void usersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmUsersManagement frm = new frmUsersManagement();
@@ -75,14 +78,30 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             frm.ShowDialog();
         }
 
-        private void driversToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void frmMainScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _frm.Close();
+            if (!_SignOut)
+                _frmLogin.Close();
+            else
+                _frmLogin.Show();
+        }
+
+        private void tsmiCurrentUserInfo_Click(object sender, EventArgs e)
+        {
+            frmUserDetails frm = new frmUserDetails(Settings.CurrentUserID);
+            frm.ShowDialog();
+        }
+
+        private void tsmiChangePassword_Click(object sender, EventArgs e)
+        {
+            frmChangePassword frm = new frmChangePassword(Settings.CurrentUserID);
+            frm.ShowDialog();
+        }
+
+        private void tsmiSignOut_Click(object sender, EventArgs e)
+        {
+            _SignOut = true;
+            this.Close();
         }
     }
 }

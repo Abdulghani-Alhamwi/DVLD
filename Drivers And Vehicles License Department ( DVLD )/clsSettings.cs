@@ -17,7 +17,7 @@
             //
         }
         
-        internal static int CurrentUserID;
+        internal static int CurrentUserID = -1;
         private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e) {
             // Add code to handle the SettingChangingEvent event here.
         }
