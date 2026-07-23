@@ -88,13 +88,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void tsmiCurrentUserInfo_Click(object sender, EventArgs e)
         {
-            frmUserDetails frm = new frmUserDetails(Settings.CurrentUserID);
+            frmUserDetails frm = new frmUserDetails(clsGlobalSettings.CurrentUserID);
             frm.ShowDialog();
         }
 
         private void tsmiChangePassword_Click(object sender, EventArgs e)
         {
-            frmChangePassword frm = new frmChangePassword(Settings.CurrentUserID);
+            frmChangePassword frm = new frmChangePassword(clsGlobalSettings.CurrentUserID);
             frm.ShowDialog();
         }
 

@@ -136,7 +136,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     _SaveLoginInfoInFile(UserPassword);
 
                     frmMainScreen frm = new frmMainScreen(this);
-                    Settings.CurrentUserID = UserID;
+                    clsGlobalSettings.CurrentUserID = UserID;
                     frm.Show();
                     this.Hide();
 

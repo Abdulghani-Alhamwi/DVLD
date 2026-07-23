@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\clsGlobalSettings.cs" />
     <Compile Include="Controls\ctrlPersonDetails.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -62,10 +63,10 @@
     <Compile Include="Controls\ctrlUserDetails.Designer.cs">
       <DependentUpon>ctrlUserDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmLoginScreen.cs">
+    <Compile Include="Users\frmLoginScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmLoginScreen.Designer.cs">
+    <Compile Include="Users\frmLoginScreen.Designer.cs">
       <DependentUpon>frmLoginScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -130,14 +131,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="clsSettings.cs" />
+    <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Controls\ctrlPersonDetails.resx">
       <DependentUpon>ctrlPersonDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrlUserDetails.resx">
       <DependentUpon>ctrlUserDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLoginScreen.resx">
+    <EmbeddedResource Include="Users\frmLoginScreen.resx">
       <DependentUpon>frmLoginScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Users\frmChangePassword.resx">
