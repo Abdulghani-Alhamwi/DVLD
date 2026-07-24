@@ -137,37 +137,70 @@ public static string HashWithSaltPassword(string Password, out byte[] Salt)
     Salt = new byte[32];
 
     RandomNumberGenerator rn = RandomNumberGenerator.Create();
-    rn.GetBytes(Salt);
-    rn.Dispose();
+    rn.GetBytes(Salt); // Fill the salt byte array with random byte values which is cryptographically secure which means the attacker wont be able to predict the values and each value is a random value from 0-255.
+
+    rn.Dispose();//Dispose rn to release the unmanaged resources immediately from memory.
+
+// PBKDF2 is a shortcut for : Password Based Key Derivation Function 2 , and it is version 2, and under the hood it uses the HMAC-SHA-256 which is the Pseudorandom Function (PRF) that is responsible for hashing .
+
+// PBKDF2 is for deriving a cryptographically secure key from a password and that key is the password hash .
+// DES is shortcut for Data Encryption Standard .
+// AES is shortcut for Advanced Encryption Standard.
+// AES and DES are used to Encrypt/Decrypt Data .
+// AES is more secure than DES.
 
     Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(Password, Salt, 10000);
-    byte[] HashWithSalt = PBKDF2.GetBytes(32);
+    byte[] HashWithSalt = PBKDF2.GetBytes(32); // These will return a byte array each item in it is a byte value of the password hash and the length of the array is 32.
+
+PBKDF2.Dispose();PBKDF2// We should dispose the PBKDF2 because it implements the IDisposable and by that to release the unmanaged resources .
+
+// Here we convert the byte array to base64 string in order to have a different textual representation that is printable , if we used the Encoding.UTF8.GetString() -> the string that we will have will contain unprintable symbols because each byte value when we convert to string -> the character may not be printable because it is not ascii value of a printable character.
+
+// The Base 64 String , the 64 is that it is : Characters from A-Z , a-z , 0-9 and + and the = is for padding and it is used used to have a string that its length is of the multiplication of 4 because the base64 string ouput is a string that its length is multiplication of 4  .
 
     return Convert.ToBase64String(HashWithSalt);
 }
 
+// when a class implements the IDisposable interface that means that the class owns unmanaged resources or it uses an object owns unmanaged resources and needs manual cleanup when using those unmanaged resources to immediately release them from memory instead of letting the GC (Garbage Collector) to release them which we do not know when because the GC is not predictable when it will release the unmanaged resources from memory .
 
-private static byte[] _Key = new byte[16];
-private static byte[] _IV = new byte[16];
+// The _Key is the Key that we will use to Encrypt and decrypt and the CLR cause there are in the class structure not inside a method Fills it by default with default value 0 for each item, we use it the same for decrypt otherwise if we used other key with other values or another key with another size like byte array of 16 and we used for decrypt byte array of 32 the decrypt won't give us same original value and an exception may occurs.
+private static byte[] _Key = new byte[16]; // _Key byte array size is 16.
+
+//The _IV is the Initializer Vector Which we use it because it is responsible for initializing the start state to start mathematical calculations for encryption/decryption algorithm and using it we can ensure that same text be encrypted to different cipher text if we used each time a different IV even if we used it with same key , BUT using Same IV with same Key will not give different cipher text for the same text each time , like if we have the word car , in each time we will have the same cipher text for it if we used the same IV and same Key , so as main thing IV responsible for is to Initializes the internal state to begin the mathematical calculations to encrypt or decrypt and to have different cipher text with the use of same key we must use different IV each time .
+
+private static byte[] _IV = new byte[16];// _IV Byte array size is 16 bytes and it must be 16 bytes otherwise the encryption/decryption won't happen successfully.
+
+// Filling the Key byte array and the _IV byte array with zeros is a bad security practice and we should to generate using random generator a cryptographically secure random values , but because we are encrypting username and it is not meant to be encrypted , but we encrypt it to put extra protection layer and we can in that case use same key and IV but it is a better practice to use random IV and store it along side username for security because having the same user name will lead to have same encrypted text with out random IV , we can prevent soring identical usernames by putting unique constraint in the database on the username field.
+
 public static string EncryptUserName(string UserName)
 {
+    // Here we take the bytes of the string username which means the byte b  array -> each item in it will have encoding value of a character from the string and UTF8 for English letters is same as the letter ascii value, example : Car then the byte array size will be 3 and the first item will have value 67 and second 97 ..
     byte[] UserNameInBytes = Encoding.UTF8.GetBytes(UserName);
 
+// Create aes object 
     Aes aes = Aes.Create();
+// set encryption key
     aes.Key = _Key;
+// set IV
     aes.IV = _IV;
 
+// we create here Encryptor object from the type Icryptotransfer to make the byte array we have to be encrypted
     ICryptoTransform Encryptor = aes.CreateEncryptor();
-    aes.Dispose();
-    byte[] EncryptedUserName = Encryptor.TransformFinalBlock(UserNameInBytes, 0, UserNameInBytes.Length);
-    Encryptor.Dispose();
+    aes.Dispose();// we dipose aes after we finished from it from creating encryptor to immediately release unmanaged memory.
 
+//here we use the tranformfinalblock method to encrypt the byte array and have encrypted by array and we provide arguments to it : usernamebyte array , start position to encrypt like we can start from half the byte array to encrypt by putting index of start position that encrypt will start from it , at last we provide the length of how many bytes we want to encrypt.
+
+    byte[] EncryptedUserName = Encryptor.TransformFinalBlock(UserNameInBytes, 0, UserNameInBytes.Length);
+    Encryptor.Dispose();//Dispose after finish from it to immediately release unmanaged resources.
+
+// To have a printable textual representation -> we use convert.ToBase64string to have different textual representation from the original because the original may have values when we convert it to string be unprintable .
     return Convert.ToBase64String(EncryptedUserName);
 
 }
 
 public static string DecryptUserName(string UserName)
 {
+    // Because of that the encrypted user name is converted to base 64 , so to have the encrypted byte array correctly -> we use convert.FromBase64();
     byte[] EncryptedUserName = Convert.FromBase64String(UserName);
 
     Aes aes = Aes.Create();
@@ -176,9 +209,11 @@ public static string DecryptUserName(string UserName)
 
     ICryptoTransform Decryptor = aes.CreateDecryptor();
     aes.Dispose();
+// Here we used the TransformFinalBlock method and provided it with the encrypted byte array and the position to start from it in decrypting and the length which is how many items to decrypted starting from the position we provide in index .
     byte[] DecryptedUserName = Decryptor.TransformFinalBlock(EncryptedUserName, 0, EncryptedUserName.Length);
     Decryptor.Dispose();
 
+// In order to have the original user name that the user enters -> we use the Encoding.UTF8.GetString instead of Convert.ToBase64String Because the Base64String converts the byte array into different textual representation and we use it when our goal is to have a printable string to avoid having characters that cannot be printed cause the value of the byte is not exists in the ASCII table or UTF8 encoding for character to have the string value and by that some characters will not be printable and we will have symbols like ? in a  circle.
     return Encoding.UTF8.GetString(DecryptedUserName);
 }
 
@@ -186,6 +221,7 @@ public static string DecryptUserName(string UserName)
 
         private void _DecryptUsersNames(DataTable dtUsers)
         {
+            //Here we are validating if dtUsers not null because if it is null -> null does not have something called Rows because it does not reference an instance of an object cause it is null which means something not exists and  and by that we will have NullReferenceException when we are trying to access dtUsers.Rows and the dtUsers is null 
             if(dtUsers != null)
             foreach (DataRow datarow in dtUsers.Rows)
             {
@@ -196,11 +232,11 @@ public static string DecryptUserName(string UserName)
 
         private void _RefreshUsersDataView()
         {
+	     // Here we are bringing the default view only if the table was not null , if the table was null and we didn't use ? to handle situation , an exception will happen because the null does not have default view because null does not reference an object instance and by that the _dataview cannot reference it cause it is not exists.
             _dataview = clsUser.GetAllUsers()?.DefaultView;
-            _DecryptUsersNames(_dataview?.Table);
+            _DecryptUsersNames(_dataview?.Table);// here also if the _dataview was not null we bring the table , we used ? because instead if _dataview was null -> we will have NullReferenceException because null does not have table because null does not reference an object instance.
             dgvUsers.DataSource = _dataview;
         }
-
 
 
 16) Arrays in C# are reference types .
@@ -210,14 +246,17 @@ public static string DecryptUserName(string UserName)
 18)
 ALTER TABLE People 
 ADD CONSTRAINT CHK_DateOfBirth
+-- DataAdd adds date by years here to a date we want and it returns the new datetime after addition and here we used it to subtract 18 years of a date. 
 CHECK (DateOfBirth <= DATEADD(YEAR,-18,GetDate()))
 
 Print DATEADD(YEAR,-18,GETDATE());
 
-19) I used for checking password form to check current password of user : by bring the hashed password with salt one time from database and when user enters current password i verify it by comparing it with the user password and the user may fail many times in entering the right current password and by that we want send a request for server to bring password each time user enters current password while the change password form is open , we bring password one time and even if user fail 10 times we by that have bringed password with Salt once from database by one request and by that we reduce network traffic and we reduce pressure on the server by reducing the number of requests and that will matter when the application is user by more than one user and each user sends requests to the server therefore reducing requests number at that case will show the real benefit in reducing pressure on the server and avoid users to wait more time if server had pressure from requests and especially if all services was linked to one server and not each service on a server , here we do not have application server , if we have an application server -> it is of-course would be better for security to not bring the hashed password with salt to the C# application code and to handle everything in the application server and by that we protect from having an attacker accesses the memory and gets the hashed password with salt .
+19) We may have an issue in WinForms when we open a form and then open from it another form using otherform.ShowDialog() (Show Dialog return Dialog Result and if we used close button and it has DialogResult.Cancel) -> when we close that other form -> the previous form is automatically will closed , that is because of the DialogResult.Cancel and we can remove the DialogResult.Cancel for a button or the control that opens the form from the designer code of the first form that opens the other form .
 
 20)
 File.Create(FilePath).Dispose() -> File.Create() returns FileStream and that we need to dispose in order to release the unmanaged resource which is the file handle to be able to open the file and write or read data from it otherwise the file won't be able to be open because it is not closed and an error message will appear which is the file is used by another process which is it is still open and not disposed yet cause we must manually handle the depose directly in order to be able to open it in another operation.
 
 21) We have created a clsGlobalSettings class instead of using the settings class that are built in and under properties section :
 because the settings class if meant for storing things after the application closes like theme and application configuration that needs to be exists after program closes while the clsglobalSettings is only for things that will be exists only during the application runtime .
+
+22) Sealed Method cannot be shadowed by a derived class doing method shadowing .

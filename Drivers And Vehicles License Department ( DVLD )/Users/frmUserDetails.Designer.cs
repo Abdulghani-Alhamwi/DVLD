@@ -43,7 +43,7 @@
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(939, 547);
+            this.btnClose.Location = new System.Drawing.Point(930, 547);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 87;
@@ -61,7 +61,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1066, 9);
+            this.btnExit.Location = new System.Drawing.Point(1057, 9);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -75,7 +75,7 @@
             this.lblUserDetailsTitle.AutoSize = true;
             this.lblUserDetailsTitle.Font = new System.Drawing.Font("Tahoma", 20F);
             this.lblUserDetailsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.lblUserDetailsTitle.Location = new System.Drawing.Point(25, 9);
+            this.lblUserDetailsTitle.Location = new System.Drawing.Point(26, 9);
             this.lblUserDetailsTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblUserDetailsTitle.Name = "lblUserDetailsTitle";
             this.lblUserDetailsTitle.Size = new System.Drawing.Size(156, 33);
@@ -88,7 +88,7 @@
             this.uctrlUserDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.uctrlUserDetails.Font = new System.Drawing.Font("Tahoma", 18F);
             this.uctrlUserDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.uctrlUserDetails.Location = new System.Drawing.Point(25, 70);
+            this.uctrlUserDetails.Location = new System.Drawing.Point(16, 70);
             this.uctrlUserDetails.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.uctrlUserDetails.Name = "uctrlUserDetails";
             this.uctrlUserDetails.Size = new System.Drawing.Size(1083, 464);
@@ -101,7 +101,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1127, 611);
+            this.ClientSize = new System.Drawing.Size(1119, 611);
             this.ControlBox = false;
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnExit);
@@ -110,6 +110,7 @@
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.MaximumSize = new System.Drawing.Size(1135, 627);
             this.Name = "frmUserDetails";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

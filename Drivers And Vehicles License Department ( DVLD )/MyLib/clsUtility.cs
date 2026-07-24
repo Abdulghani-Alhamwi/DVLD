@@ -2,11 +2,9 @@
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace MyLib
@@ -25,6 +23,7 @@ namespace MyLib
             }
             Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(Password, Salt, 10000);
             byte[] HashWithSalt = PBKDF2.GetBytes(32);
+            PBKDF2.Dispose();
 
             return Convert.ToBase64String(HashWithSalt);
         }
