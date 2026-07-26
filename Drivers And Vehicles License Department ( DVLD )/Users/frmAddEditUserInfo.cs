@@ -163,10 +163,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 _SetPasswordAndSalt(User);
             else
             {
-                if(txtPassword.Text != "" && txtPassword.Text!= _DefaultPasswordValue)
+                if(txtPassword.Text != _DefaultPasswordValue)
                     _SetPasswordAndSalt(User);
             }
-
+            
             User.IsActive = chbIsActive.Checked;
 
             if(User.Save())
@@ -181,6 +181,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 }
 
                 OnAddedOrEditedUser?.Invoke();
+
+                clsGlobalSettings.LoginInfoChanged = true;
             }
             else
                 MessageBox.Show("Saving failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);

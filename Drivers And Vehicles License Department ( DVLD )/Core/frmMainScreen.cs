@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Driver_And_Vehicle_Licenses_Department___DVLD__.Properties;
 
 namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class frmMainScreen : Form
-    {
-        
+    {  
         // Change Win32 style to remove the MDI client border -> to remove the mdi Client (sunken = 3d border) .
         [DllImport("user32.dll")]
         private static extern int GetWindowLong(IntPtr windowHandle, int index);
@@ -65,13 +58,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             return new Size(this.Width - width, this.Height - height);
         }
-        private void peopleToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tsmiPeople_Click(object sender, EventArgs e)
         {
             frmPeopleManagement frm = new frmPeopleManagement();
             frm.Size = SetFormsSize();
             frm.ShowDialog();            
         }
-        private void usersToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tsmiUsers_Click (object sender, EventArgs e)
         {
             frmUsersManagement frm = new frmUsersManagement();
                 
@@ -80,6 +73,14 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void frmMainScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (clsGlobalSettings.LoginInfoChanged)
+            {
+                _frmLogin.UpdateSavedUserInfo();
+                clsGlobalSettings.LoginInfoChanged = false;
+            }
+
+            clsGlobalSettings.CurrentUserID = -1;
+
             if (!_SignOut)
                 _frmLogin.Close();
             else

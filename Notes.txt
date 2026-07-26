@@ -170,7 +170,7 @@ private static byte[] _Key = new byte[16]; // _Key byte array size is 16.
 
 private static byte[] _IV = new byte[16];// _IV Byte array size is 16 bytes and it must be 16 bytes otherwise the encryption/decryption won't happen successfully.
 
-// Filling the Key byte array and the _IV byte array with zeros is a bad security practice and we should to generate using random generator a cryptographically secure random values , but because we are encrypting username and it is not meant to be encrypted , but we encrypt it to put extra protection layer and we can in that case use same key and IV but it is a better practice to use random IV and store it along side username for security because having the same user name will lead to have same encrypted text with out random IV , we can prevent soring identical usernames by putting unique constraint in the database on the username field.
+// Filling the Key byte array and the _IV byte array with zeros is a bad security practice and we should to generate using random generator a cryptographically secure random values and we store IV and Key to decrypt using them , but because we are encrypting username and it is not meant to be encrypted , but we encrypt it to put extra protection layer and we can in that case use same key and IV but it is a better practice to use random IV and store it along side username for security because having the same user name will lead to have same encrypted text with out random IV , we can prevent soring identical usernames by putting unique constraint in the database on the username field.
 
 public static string EncryptUserName(string UserName)
 {
@@ -188,7 +188,7 @@ public static string EncryptUserName(string UserName)
     ICryptoTransform Encryptor = aes.CreateEncryptor();
     aes.Dispose();// we dipose aes after we finished from it from creating encryptor to immediately release unmanaged memory.
 
-//here we use the tranformfinalblock method to encrypt the byte array and have encrypted by array and we provide arguments to it : usernamebyte array , start position to encrypt like we can start from half the byte array to encrypt by putting index of start position that encrypt will start from it , at last we provide the length of how many bytes we want to encrypt.
+//here we use the tranformfinalblock method to encrypt the byte array and have encrypted by array and we provide arguments to it : usernamebyte array , start position to encrypt like we can start from half the byte array to encrypt by putting index of start position that encrypt will start from it , at last we provide the length of how many bytes items of the byte array that we want to encrypt.
 
     byte[] EncryptedUserName = Encryptor.TransformFinalBlock(UserNameInBytes, 0, UserNameInBytes.Length);
     Encryptor.Dispose();//Dispose after finish from it to immediately release unmanaged resources.
@@ -221,7 +221,7 @@ public static string DecryptUserName(string UserName)
 
         private void _DecryptUsersNames(DataTable dtUsers)
         {
-            //Here we are validating if dtUsers not null because if it is null -> null does not have something called Rows because it does not reference an instance of an object cause it is null which means something not exists and  and by that we will have NullReferenceException when we are trying to access dtUsers.Rows and the dtUsers is null 
+            //Here we are validating if dtUsers not null because if it is null -> null does not have something called Rows because it does not reference an object instance cause it is null which means something not exists and and by that we will have NullReferenceException when we are trying to access dtUsers.Rows and the dtUsers is null 
             if(dtUsers != null)
             foreach (DataRow datarow in dtUsers.Rows)
             {
@@ -241,7 +241,7 @@ public static string DecryptUserName(string UserName)
 
 16) Arrays in C# are reference types .
 
-17) Arrays in C# are passed by value by default not by reference.
+17) Arrays in C# are passed as arguments by value by default not by reference , we can use word ref to pass them by ref after initializing them or word out to pass them by ref without initializing and at method it be mandatory we must initialize them .
 
 18)
 ALTER TABLE People 
@@ -251,12 +251,12 @@ CHECK (DateOfBirth <= DATEADD(YEAR,-18,GetDate()))
 
 Print DATEADD(YEAR,-18,GETDATE());
 
-19) We may have an issue in WinForms when we open a form and then open from it another form using otherform.ShowDialog() (Show Dialog return Dialog Result and if we used close button and it has DialogResult.Cancel) -> when we close that other form -> the previous form is automatically will closed , that is because of the DialogResult.Cancel and we can remove the DialogResult.Cancel for a button or the control that opens the form from the designer code of the first form that opens the other form .
+19) We may have an issue in WinForms when we open a form and then open from it another form using otherform.ShowDialog() (Show Dialog return Dialog Result and if we used close button and it has DialogResult.Cancel) -> when we close that other form -> the previous form is automatically will closed , that is because of the DialogResult.Cancel and we can remove the DialogResult.Cancel for a button or the control that closes the other form from designer code and if issue still we from the form that opens the  other from -> we remove from the designer code of the first form the DialogResult.Cancel for the button that opens the other form .
 
 20)
 File.Create(FilePath).Dispose() -> File.Create() returns FileStream and that we need to dispose in order to release the unmanaged resource which is the file handle to be able to open the file and write or read data from it otherwise the file won't be able to be open because it is not closed and an error message will appear which is the file is used by another process which is it is still open and not disposed yet cause we must manually handle the depose directly in order to be able to open it in another operation.
 
-21) We have created a clsGlobalSettings class instead of using the settings class that are built in and under properties section :
+21) For a better maintainability : We have created a clsGlobalSettings class instead of using the settings class that are built in and under properties section :
 because the settings class if meant for storing things after the application closes like theme and application configuration that needs to be exists after program closes while the clsglobalSettings is only for things that will be exists only during the application runtime .
 
-22) Sealed Method cannot be shadowed by a derived class doing method shadowing .
+22) Sealed Method cannot be shadowed by a derived class doing method shadowing using new keyword.

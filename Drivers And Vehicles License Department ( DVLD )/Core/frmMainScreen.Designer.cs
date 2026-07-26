@@ -143,7 +143,7 @@
             this.tsmiPeopleManagement.Name = "tsmiPeopleManagement";
             this.tsmiPeopleManagement.Size = new System.Drawing.Size(163, 68);
             this.tsmiPeopleManagement.Text = "People";
-            this.tsmiPeopleManagement.Click += new System.EventHandler(this.peopleToolStripMenuItem_Click);
+            this.tsmiPeopleManagement.Click += new System.EventHandler(this.tsmiPeople_Click);
             // 
             // toolStripMenuItem3
             // 
@@ -158,7 +158,7 @@
             this.tsmiUsersManagement.Name = "tsmiUsersManagement";
             this.tsmiUsersManagement.Size = new System.Drawing.Size(149, 68);
             this.tsmiUsersManagement.Text = "Users";
-            this.tsmiUsersManagement.Click += new System.EventHandler(this.usersToolStripMenuItem_Click);
+            this.tsmiUsersManagement.Click += new System.EventHandler(this.tsmiUsers_Click);
             // 
             // tsmiAccountSettings
             // 

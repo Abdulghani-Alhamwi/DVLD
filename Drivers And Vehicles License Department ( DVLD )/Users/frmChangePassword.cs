@@ -107,7 +107,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 string NewPassword = clsUtility.HashWithSaltPassword(txtNewPassword.Text, ref Salt);
 
                 if (clsUser.ChangePassword(_UserID, NewPassword, Convert.ToBase64String(Salt)))
+                {
                     MessageBox.Show("Password Changed Successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    clsGlobalSettings.LoginInfoChanged = true;
+                }
                 else
                     MessageBox.Show("Changing password failed.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

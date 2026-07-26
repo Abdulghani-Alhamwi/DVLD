@@ -198,11 +198,12 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
-        public static bool Find(int UserID ,ref int PersonID , ref string UserName,ref bool IsActive)
+        public static bool Find(int UserID, ref int PersonID, ref string UserName, ref string Password, ref string Salt, ref bool IsActive)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT UserID,PersonID,UserName,IsActive FROM Users 
+            string query = @"SELECT UserID,PersonID,UserName,Password,Salt
+                             ,IsActive FROM Users 
                              WHERE UserID = @UserID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -218,6 +219,8 @@ namespace DVLDDataAccessLayer
                 {
                     PersonID = (int) reader["PersonID"];
                     UserName = (string)reader["UserName"];
+                    Password = (string)reader["Password"];
+                    Salt = (string)reader["Salt"];
                     IsActive = (bool)reader["IsActive"];
 
                     return true;
@@ -263,12 +266,12 @@ namespace DVLDDataAccessLayer
             }
         }
 
-        public static bool GetLoginInfo(string UserName,ref int UserID, ref string Password, ref byte[] Salt)
+        public static bool GetLoginInfo(string UserName, ref int UserID, ref string Password, ref bool IsActive, ref byte[] Salt)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT UserID , Password , Salt FROM Users
-                             WHERE UserName = @UserName";
+            string query = @"SELECT UserID , Password , Salt , IsActive
+                             FROM Users WHERE UserName = @UserName";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserName", UserName);
@@ -283,6 +286,40 @@ namespace DVLDDataAccessLayer
                     UserID = (int)reader["UserID"];
                     Password = (string)reader["Password"];
                     Salt = Convert.FromBase64String((string)reader["Salt"]);
+                    IsActive = (bool)reader["IsActive"];
+
+                    return true;
+                }
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return false;
+        }
+
+        public static bool GetLoginInfo(int UserID, ref string UserName, ref string Password)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT UserName , Password FROM Users
+                             WHERE UserID = @UserID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@UserID", UserID);
+
+            try
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    UserName = (string)reader["UserName"];
+                    Password = (string)reader["Password"];
 
                     return true;
                 }

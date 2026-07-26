@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.Remoting.Messaging;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Driver_And_Vehicle_Licenses_Department___DVLD__.Properties;
 using DVLDBusinessLayer;
 using MyLib;
 
@@ -11,26 +9,23 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class frmLoginScreen : Form
     {
-        string _SavedInfoDirectoryPath;
-        string _SavedInfoFilePath;
-        bool _HasSavedInfo = false;
-        private struct _stSavedUserInfo
+        private static string _SavedInfoDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DVLD";
+        private static string _SavedInfoFilePath = _SavedInfoDirectoryPath + "\\" + "LoginInfo.txt";
+        private bool _HasSavedInfo = false;
+        internal struct stSavedUserInfo
         {
-            internal static string UserName;
-            internal static string Password;
+            internal static string UserName = "";
+            internal static string Password = "";
         }
         public frmLoginScreen()
         {
             InitializeComponent();
 
-            _SavedInfoDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DVLD";
-            _SavedInfoFilePath = _SavedInfoDirectoryPath + "\\" + "LoginInfo.txt";
-
             if (File.Exists(_SavedInfoFilePath))
             {
                 _LoadLoginDataFromFile(_SavedInfoFilePath);
-                txtUserName.Text = clsUtility.DecryptUserName(_stSavedUserInfo.UserName);
-                txtPassword.Text = _stSavedUserInfo.Password;
+                txtUserName.Text = clsUtility.DecryptUserName(stSavedUserInfo.UserName);
+                txtPassword.Text = stSavedUserInfo.Password;
                 chbRememberMe.Checked = true;
                 _HasSavedInfo = true;
             }
@@ -93,19 +88,20 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 using (StreamReader reader = new StreamReader(FilePath))
                 {
                     string[] Data = Regex.Split(reader.ReadLine(), Separator);
-                    _stSavedUserInfo.UserName = Data[0];
-                    _stSavedUserInfo.Password = Data[1];
+                    stSavedUserInfo.UserName = Data[0];
+                    stSavedUserInfo.Password = Data[1];
                 }
             }
         }
 
-        private void _DeleteLoginFile(string FilePath)
+        private void DeleteLoginFile(string FilePath)
         {
             if (File.Exists(FilePath))
             {
                 File.Delete(FilePath);
-                _stSavedUserInfo.UserName = "";
-                _stSavedUserInfo.Password = "";
+                stSavedUserInfo.UserName = "";
+                stSavedUserInfo.Password = "";
+                _HasSavedInfo = false;
             }
         }
         private void _SaveLoginInfoInFile(string UserPassword)
@@ -117,7 +113,42 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 _SaveLoginDataToFile(_SavedInfoDirectoryPath,_SavedInfoFilePath, clsUtility.EncryptUserName(txtUserName.Text), UserPassword);
 
             else if (!chbRememberMe.Checked)
-               _DeleteLoginFile(_SavedInfoFilePath);
+               DeleteLoginFile(_SavedInfoFilePath);
+        }
+
+        internal void UpdateSavedUserInfo()
+        {
+            if (_HasSavedInfo)
+            {
+                DeleteLoginFile(_SavedInfoFilePath);
+                clsUser.GetLoginInfo(clsGlobalSettings.CurrentUserID, ref stSavedUserInfo.UserName, ref stSavedUserInfo.Password);
+                _SaveLoginDataToFile(_SavedInfoDirectoryPath, _SavedInfoFilePath, stSavedUserInfo.UserName, stSavedUserInfo.Password);
+
+                txtUserName.Text = clsUtility.DecryptUserName(stSavedUserInfo.UserName);
+                txtPassword.Text = stSavedUserInfo.Password;
+            }
+        }
+
+        private void _Login(int UserID , string UserPassword)
+        {
+            _SaveLoginInfoInFile(UserPassword);
+
+            frmMainScreen frmMain = new frmMainScreen(this);
+            clsGlobalSettings.CurrentUserID = UserID;
+            frmMain.Show();
+            this.Hide();
+
+            if (!chbRememberMe.Checked)
+            {
+                txtUserName.Text = "";
+                txtPassword.Text = "";
+            }
+            else
+            {
+                txtPassword.Text = UserPassword;
+                _HasSavedInfo = true;
+            }
+
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -127,27 +158,20 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             int UserID = -1;
             string UserPassword = "";
+            bool IsActive = false;
             byte[] Salt = null;
 
-            if(clsUser.GetLoginInfo(clsUtility.EncryptUserName(txtUserName.Text),ref UserID,ref UserPassword , ref Salt))
+            if (clsUser.GetLoginInfo(clsUtility.EncryptUserName(txtUserName.Text), ref UserID, ref UserPassword, ref IsActive, ref Salt))
             {
                 if (_ValidateLoginPassword(UserPassword, txtPassword.Text, Salt))
                 {
-                    _SaveLoginInfoInFile(UserPassword);
-
-                    frmMainScreen frm = new frmMainScreen(this);
-                    clsGlobalSettings.CurrentUserID = UserID;
-                    frm.Show();
-                    this.Hide();
-
-                    if (!chbRememberMe.Checked)
+                    if (IsActive)
                     {
-                        txtUserName.Text = "";
-                        txtPassword.Text = "";
+                        _Login(UserID, UserPassword);
                     }
+                    
                     else
-                        txtPassword.Text = UserPassword;
-
+                        MessageBox.Show("User is not active! , contact your admin.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                     MessageBox.Show("Invalid Password!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
