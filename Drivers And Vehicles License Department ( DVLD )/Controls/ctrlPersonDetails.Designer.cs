@@ -105,7 +105,7 @@
             this.lnlblEditPersonInfo.Margin = new System.Windows.Forms.Padding(0);
             this.lnlblEditPersonInfo.Name = "lnlblEditPersonInfo";
             this.lnlblEditPersonInfo.Size = new System.Drawing.Size(183, 29);
-            this.lnlblEditPersonInfo.TabIndex = 0;
+            this.lnlblEditPersonInfo.TabIndex = 1;
             this.lnlblEditPersonInfo.TabStop = true;
             this.lnlblEditPersonInfo.Text = "Edit Person Info";
             this.lnlblEditPersonInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblEditPersonInfo_LinkClicked);

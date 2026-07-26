@@ -28,6 +28,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 txtPassword.Text = stSavedUserInfo.Password;
                 chbRememberMe.Checked = true;
                 _HasSavedInfo = true;
+                btnLogin.TabIndex = 0;
+                txtUserName.TabIndex = 1;
+                txtPassword.TabIndex = 2;
             }
         }
 
@@ -179,5 +182,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             else
                 MessageBox.Show("Invalid UserName!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
     }
 }

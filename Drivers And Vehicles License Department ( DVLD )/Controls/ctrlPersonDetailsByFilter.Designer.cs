@@ -47,7 +47,7 @@
             this.txtFindBy.Location = new System.Drawing.Point(394, 47);
             this.txtFindBy.Name = "txtFindBy";
             this.txtFindBy.Size = new System.Drawing.Size(373, 35);
-            this.txtFindBy.TabIndex = 0;
+            this.txtFindBy.TabIndex = 1;
             this.txtFindBy.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFindBy_KeyDown);
             // 
             // cbFindBy
@@ -61,7 +61,7 @@
             this.cbFindBy.Location = new System.Drawing.Point(148, 46);
             this.cbFindBy.Name = "cbFindBy";
             this.cbFindBy.Size = new System.Drawing.Size(226, 36);
-            this.cbFindBy.TabIndex = 35;
+            this.cbFindBy.TabIndex = 0;
             this.cbFindBy.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbFindBy_DrawItem);
             this.cbFindBy.DropDown += new System.EventHandler(this.cbFindBy_DropDown);
             this.cbFindBy.SelectedIndexChanged += new System.EventHandler(this.cbFindBy_SelectedIndexChanged);
@@ -105,7 +105,7 @@
             this.btnAddNewPerson.Location = new System.Drawing.Point(892, 39);
             this.btnAddNewPerson.Name = "btnAddNewPerson";
             this.btnAddNewPerson.Size = new System.Drawing.Size(74, 50);
-            this.btnAddNewPerson.TabIndex = 42;
+            this.btnAddNewPerson.TabIndex = 3;
             this.btnAddNewPerson.UseVisualStyleBackColor = true;
             this.btnAddNewPerson.Click += new System.EventHandler(this.btnAddNewPerson_Click);
             // 
@@ -121,7 +121,7 @@
             this.btnFindUser.Location = new System.Drawing.Point(794, 39);
             this.btnFindUser.Name = "btnFindUser";
             this.btnFindUser.Size = new System.Drawing.Size(74, 50);
-            this.btnFindUser.TabIndex = 41;
+            this.btnFindUser.TabIndex = 2;
             this.btnFindUser.UseVisualStyleBackColor = true;
             this.btnFindUser.Click += new System.EventHandler(this.btnFindUser_Click);
             // 
@@ -137,7 +137,7 @@
             this.uctrlPersonDetails.Margin = new System.Windows.Forms.Padding(0);
             this.uctrlPersonDetails.Name = "uctrlPersonDetails";
             this.uctrlPersonDetails.Size = new System.Drawing.Size(1084, 364);
-            this.uctrlPersonDetails.TabIndex = 0;
+            this.uctrlPersonDetails.TabIndex = 4;
             this.uctrlPersonDetails.AfterEditingPersonInfo += new System.Action(this.uctrlPersonDetails_AfterEditingPersonInfo);
             // 
             // ctrlPersonDetailsByFilter

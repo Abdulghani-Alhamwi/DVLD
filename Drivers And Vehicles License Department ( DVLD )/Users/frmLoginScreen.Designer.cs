@@ -48,7 +48,7 @@
             // 
             this.lblLoginTitle.AutoSize = true;
             this.lblLoginTitle.Font = new System.Drawing.Font("Tahoma", 27F, System.Drawing.FontStyle.Bold);
-            this.lblLoginTitle.Location = new System.Drawing.Point(618, 100);
+            this.lblLoginTitle.Location = new System.Drawing.Point(617, 100);
             this.lblLoginTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLoginTitle.Name = "lblLoginTitle";
             this.lblLoginTitle.Size = new System.Drawing.Size(414, 43);
@@ -60,10 +60,10 @@
             this.chbRememberMe.AutoSize = true;
             this.chbRememberMe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.chbRememberMe.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.chbRememberMe.Location = new System.Drawing.Point(771, 358);
+            this.chbRememberMe.Location = new System.Drawing.Point(760, 358);
             this.chbRememberMe.Name = "chbRememberMe";
             this.chbRememberMe.Size = new System.Drawing.Size(197, 35);
-            this.chbRememberMe.TabIndex = 55;
+            this.chbRememberMe.TabIndex = 2;
             this.chbRememberMe.Text = "Remember Me";
             this.chbRememberMe.UseVisualStyleBackColor = true;
             // 
@@ -71,34 +71,36 @@
             // 
             this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPassword.Font = new System.Drawing.Font("Tahoma", 19F);
             this.txtPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtPassword.Location = new System.Drawing.Point(771, 301);
+            this.txtPassword.Location = new System.Drawing.Point(760, 300);
             this.txtPassword.MaxLength = 20;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txtPassword.Size = new System.Drawing.Size(316, 36);
-            this.txtPassword.TabIndex = 54;
+            this.txtPassword.Size = new System.Drawing.Size(316, 38);
+            this.txtPassword.TabIndex = 1;
             this.txtPassword.Tag = "First Name";
             // 
             // txtUserName
             // 
             this.txtUserName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.txtUserName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtUserName.Font = new System.Drawing.Font("Tahoma", 19F);
             this.txtUserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtUserName.Location = new System.Drawing.Point(771, 229);
+            this.txtUserName.Location = new System.Drawing.Point(760, 228);
             this.txtUserName.MaxLength = 20;
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txtUserName.Size = new System.Drawing.Size(316, 36);
-            this.txtUserName.TabIndex = 53;
+            this.txtUserName.Size = new System.Drawing.Size(316, 38);
+            this.txtUserName.TabIndex = 0;
             this.txtUserName.Tag = "First Name";
             // 
             // lblPasswordTitle
             // 
             this.lblPasswordTitle.AutoSize = true;
             this.lblPasswordTitle.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Bold);
-            this.lblPasswordTitle.Location = new System.Drawing.Point(531, 303);
+            this.lblPasswordTitle.Location = new System.Drawing.Point(529, 303);
             this.lblPasswordTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPasswordTitle.Name = "lblPasswordTitle";
             this.lblPasswordTitle.Size = new System.Drawing.Size(165, 33);
@@ -109,7 +111,7 @@
             // 
             this.lblUserNameTitle.AutoSize = true;
             this.lblUserNameTitle.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Bold);
-            this.lblUserNameTitle.Location = new System.Drawing.Point(531, 231);
+            this.lblUserNameTitle.Location = new System.Drawing.Point(520, 231);
             this.lblUserNameTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblUserNameTitle.Name = "lblUserNameTitle";
             this.lblUserNameTitle.Size = new System.Drawing.Size(174, 33);
@@ -120,7 +122,7 @@
             // 
             this.pbPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbPassword.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
-            this.pbPassword.Location = new System.Drawing.Point(718, 303);
+            this.pbPassword.Location = new System.Drawing.Point(707, 303);
             this.pbPassword.Name = "pbPassword";
             this.pbPassword.Size = new System.Drawing.Size(32, 32);
             this.pbPassword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -131,7 +133,7 @@
             // 
             this.pbPerson.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbPerson.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Person_32;
-            this.pbPerson.Location = new System.Drawing.Point(718, 231);
+            this.pbPerson.Location = new System.Drawing.Point(707, 231);
             this.pbPerson.Name = "pbPerson";
             this.pbPerson.Size = new System.Drawing.Size(32, 32);
             this.pbPerson.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -148,10 +150,10 @@
             this.btnLogin.Font = new System.Drawing.Font("Tahoma", 19F);
             this.btnLogin.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.sign_in_32;
             this.btnLogin.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLogin.Location = new System.Drawing.Point(740, 454);
+            this.btnLogin.Location = new System.Drawing.Point(739, 454);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(170, 47);
-            this.btnLogin.TabIndex = 59;
+            this.btnLogin.TabIndex = 3;
             this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
@@ -161,10 +163,10 @@
             this.btnClose.FlatAppearance.BorderSize = 2;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.closeBlack32;
-            this.btnClose.Location = new System.Drawing.Point(1088, 12);
+            this.btnClose.Location = new System.Drawing.Point(1078, 12);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(49, 44);
-            this.btnClose.TabIndex = 1;
+            this.btnClose.Size = new System.Drawing.Size(48, 47);
+            this.btnClose.TabIndex = 4;
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 

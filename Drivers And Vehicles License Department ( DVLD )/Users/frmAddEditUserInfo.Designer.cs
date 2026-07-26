@@ -67,7 +67,6 @@
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
-            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
@@ -78,7 +77,7 @@
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 40;
+            this.btnExit.TabIndex = 5;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -117,7 +116,7 @@
             this.tcAddNewUser.Padding = new System.Drawing.Point(20, 3);
             this.tcAddNewUser.SelectedIndex = 0;
             this.tcAddNewUser.Size = new System.Drawing.Size(1133, 626);
-            this.tcAddNewUser.TabIndex = 43;
+            this.tcAddNewUser.TabIndex = 0;
             this.tcAddNewUser.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcAddNewUser_Selecting);
             // 
             // tpPersonalInfo
@@ -143,10 +142,10 @@
             this.btnNext.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnNext.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Next_32;
             this.btnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnNext.Location = new System.Drawing.Point(943, 515);
+            this.btnNext.Location = new System.Drawing.Point(943, 518);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(152, 42);
-            this.btnNext.TabIndex = 46;
+            this.btnNext.TabIndex = 1;
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
@@ -158,7 +157,7 @@
             this.uctrlpersonInfoByFilter.Location = new System.Drawing.Point(18, 15);
             this.uctrlpersonInfoByFilter.Name = "uctrlpersonInfoByFilter";
             this.uctrlpersonInfoByFilter.Size = new System.Drawing.Size(1089, 487);
-            this.uctrlpersonInfoByFilter.TabIndex = 45;
+            this.uctrlpersonInfoByFilter.TabIndex = 0;
             this.uctrlpersonInfoByFilter.OnPersonSelected += new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetailsByFilter.PersonSelectedEventHandler(this.uctrlpersonInfoByFilter_OnPersonSelected);
             this.uctrlpersonInfoByFilter.AfterEditingPerson += new System.Action(this.uctrlpersonInfoByFilter_AfterEditingPerson);
             // 
@@ -189,6 +188,8 @@
             // chbIsActive
             // 
             this.chbIsActive.AutoSize = true;
+            this.chbIsActive.Checked = true;
+            this.chbIsActive.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbIsActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.chbIsActive.Font = new System.Drawing.Font("Tahoma", 20F);
             this.chbIsActive.Location = new System.Drawing.Point(380, 354);
@@ -352,7 +353,6 @@
             // btnClose
             // 
             this.btnClose.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.FlatAppearance.BorderSize = 2;
             this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -363,7 +363,7 @@
             this.btnClose.Location = new System.Drawing.Point(790, 754);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(152, 42);
-            this.btnClose.TabIndex = 47;
+            this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click_1);
@@ -382,7 +382,7 @@
             this.btnSave.Location = new System.Drawing.Point(973, 754);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 42);
-            this.btnSave.TabIndex = 48;
+            this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);

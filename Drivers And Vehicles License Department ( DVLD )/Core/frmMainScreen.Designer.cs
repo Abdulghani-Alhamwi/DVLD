@@ -127,7 +127,7 @@
             this.msOptions.Name = "msOptions";
             this.msOptions.Padding = new System.Windows.Forms.Padding(6, 2, 0, 3);
             this.msOptions.Size = new System.Drawing.Size(1193, 73);
-            this.msOptions.TabIndex = 2;
+            this.msOptions.TabIndex = 0;
             this.msOptions.Text = "menuStrip1";
             // 
             // toolStripMenuItem1

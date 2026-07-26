@@ -72,7 +72,7 @@
             this.txtNewPassword.PasswordChar = '*';
             this.txtNewPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtNewPassword.Size = new System.Drawing.Size(256, 36);
-            this.txtNewPassword.TabIndex = 54;
+            this.txtNewPassword.TabIndex = 2;
             this.txtNewPassword.Tag = "First Name";
             this.txtNewPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtNewPassword_Validating);
             // 
@@ -87,7 +87,7 @@
             this.txtPasswordConfirmation.PasswordChar = '*';
             this.txtPasswordConfirmation.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtPasswordConfirmation.Size = new System.Drawing.Size(256, 36);
-            this.txtPasswordConfirmation.TabIndex = 55;
+            this.txtPasswordConfirmation.TabIndex = 3;
             this.txtPasswordConfirmation.Tag = "First Name";
             this.txtPasswordConfirmation.Validating += new System.ComponentModel.CancelEventHandler(this.txtPasswordConfirmation_Validating);
             // 
@@ -112,7 +112,7 @@
             this.txtCurrentPassword.Name = "txtCurrentPassword";
             this.txtCurrentPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtCurrentPassword.Size = new System.Drawing.Size(256, 36);
-            this.txtCurrentPassword.TabIndex = 53;
+            this.txtCurrentPassword.TabIndex = 1;
             this.txtCurrentPassword.Tag = "First Name";
             this.txtCurrentPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtCurrentPassword_Validating);
             // 
@@ -162,7 +162,7 @@
             this.btnSave.Location = new System.Drawing.Point(952, 824);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 42);
-            this.btnSave.TabIndex = 62;
+            this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -170,7 +170,6 @@
             // btnClose
             // 
             this.btnClose.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.FlatAppearance.BorderSize = 2;
             this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -181,7 +180,7 @@
             this.btnClose.Location = new System.Drawing.Point(770, 824);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(152, 42);
-            this.btnClose.TabIndex = 60;
+            this.btnClose.TabIndex = 5;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -212,7 +211,6 @@
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
-            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
@@ -223,7 +221,7 @@
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 66;
+            this.btnExit.TabIndex = 6;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -246,6 +244,7 @@
             // 
             // frmChangePassword
             // 
+            this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;

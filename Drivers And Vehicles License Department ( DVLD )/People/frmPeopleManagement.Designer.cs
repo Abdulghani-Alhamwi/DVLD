@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblManagePeopleBigTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblManagePeopleTitle = new System.Windows.Forms.Label();
@@ -62,7 +62,7 @@
             this.lblManagePeopleBigTitle.AutoSize = true;
             this.lblManagePeopleBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
             this.lblManagePeopleBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblManagePeopleBigTitle.Location = new System.Drawing.Point(433, 228);
+            this.lblManagePeopleBigTitle.Location = new System.Drawing.Point(440, 228);
             this.lblManagePeopleBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblManagePeopleBigTitle.Name = "lblManagePeopleBigTitle";
             this.lblManagePeopleBigTitle.Size = new System.Drawing.Size(353, 52);
@@ -80,11 +80,11 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1145, 21);
+            this.btnExit.Location = new System.Drawing.Point(1152, 21);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 44;
+            this.btnExit.TabIndex = 5;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -93,7 +93,7 @@
             // 
             this.lblManagePeopleTitle.AutoSize = true;
             this.lblManagePeopleTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblManagePeopleTitle.Location = new System.Drawing.Point(33, 21);
+            this.lblManagePeopleTitle.Location = new System.Drawing.Point(40, 21);
             this.lblManagePeopleTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblManagePeopleTitle.Name = "lblManagePeopleTitle";
             this.lblManagePeopleTitle.Size = new System.Drawing.Size(175, 29);
@@ -108,17 +108,17 @@
             this.dgvPeople.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPeople.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvPeople.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvPeople.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvPeople.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvPeople.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPeople.ContextMenuStrip = this.cmsPeopleMenu;
-            this.dgvPeople.Location = new System.Drawing.Point(33, 417);
+            this.dgvPeople.Location = new System.Drawing.Point(40, 417);
             this.dgvPeople.Margin = new System.Windows.Forms.Padding(2);
             this.dgvPeople.Name = "dgvPeople";
             this.dgvPeople.ReadOnly = true;
@@ -127,7 +127,7 @@
             this.dgvPeople.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPeople.Size = new System.Drawing.Size(1153, 266);
             this.dgvPeople.StandardTab = true;
-            this.dgvPeople.TabIndex = 33;
+            this.dgvPeople.TabIndex = 0;
             this.dgvPeople.DoubleClick += new System.EventHandler(this.dgvPeople_DoubleClick);
             // 
             // cmsPeopleMenu
@@ -221,7 +221,7 @@
             // 
             this.lblTitleFilterBy.AutoSize = true;
             this.lblTitleFilterBy.Font = new System.Drawing.Font("Tahoma", 22F, System.Drawing.FontStyle.Bold);
-            this.lblTitleFilterBy.Location = new System.Drawing.Point(33, 350);
+            this.lblTitleFilterBy.Location = new System.Drawing.Point(40, 350);
             this.lblTitleFilterBy.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTitleFilterBy.Name = "lblTitleFilterBy";
             this.lblTitleFilterBy.Size = new System.Drawing.Size(160, 36);
@@ -236,10 +236,10 @@
             this.cbFilterBy.Font = new System.Drawing.Font("Tahoma", 21F);
             this.cbFilterBy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.cbFilterBy.FormattingEnabled = true;
-            this.cbFilterBy.Location = new System.Drawing.Point(197, 347);
+            this.cbFilterBy.Location = new System.Drawing.Point(204, 347);
             this.cbFilterBy.Name = "cbFilterBy";
             this.cbFilterBy.Size = new System.Drawing.Size(226, 42);
-            this.cbFilterBy.TabIndex = 36;
+            this.cbFilterBy.TabIndex = 2;
             this.cbFilterBy.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbFilterBy_DrawItem);
             this.cbFilterBy.DropDown += new System.EventHandler(this.cbFilterBy_DropDown);
             this.cbFilterBy.SelectedIndexChanged += new System.EventHandler(this.cbFilterBy_SelectedIndexChanged);
@@ -251,10 +251,10 @@
             this.txtFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFilter.Font = new System.Drawing.Font("Tahoma", 21F);
             this.txtFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtFilter.Location = new System.Drawing.Point(442, 348);
+            this.txtFilter.Location = new System.Drawing.Point(449, 348);
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(344, 41);
-            this.txtFilter.TabIndex = 37;
+            this.txtFilter.TabIndex = 3;
             this.txtFilter.Visible = false;
             this.txtFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
             this.txtFilter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyUp);
@@ -268,10 +268,10 @@
             this.btnAddNewPerson.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnAddNewPerson.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddNewPerson.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Add_Person_40;
-            this.btnAddNewPerson.Location = new System.Drawing.Point(1073, 316);
+            this.btnAddNewPerson.Location = new System.Drawing.Point(1080, 316);
             this.btnAddNewPerson.Name = "btnAddNewPerson";
             this.btnAddNewPerson.Size = new System.Drawing.Size(111, 70);
-            this.btnAddNewPerson.TabIndex = 35;
+            this.btnAddNewPerson.TabIndex = 1;
             this.btnAddNewPerson.UseVisualStyleBackColor = true;
             this.btnAddNewPerson.Click += new System.EventHandler(this.btnAddNewPerson_Click);
             // 
@@ -279,7 +279,7 @@
             // 
             this.lblRecordsTitle.AutoSize = true;
             this.lblRecordsTitle.Font = new System.Drawing.Font("Tahoma", 19F, System.Drawing.FontStyle.Bold);
-            this.lblRecordsTitle.Location = new System.Drawing.Point(33, 722);
+            this.lblRecordsTitle.Location = new System.Drawing.Point(40, 722);
             this.lblRecordsTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRecordsTitle.Name = "lblRecordsTitle";
             this.lblRecordsTitle.Size = new System.Drawing.Size(164, 31);
@@ -290,7 +290,7 @@
             // 
             this.lblRecordsNumber.AutoSize = true;
             this.lblRecordsNumber.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lblRecordsNumber.Location = new System.Drawing.Point(203, 722);
+            this.lblRecordsNumber.Location = new System.Drawing.Point(210, 722);
             this.lblRecordsNumber.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRecordsNumber.Name = "lblRecordsNumber";
             this.lblRecordsNumber.Size = new System.Drawing.Size(0, 31);
@@ -307,10 +307,10 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(1018, 715);
+            this.btnClose.Location = new System.Drawing.Point(1025, 715);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 38;
+            this.btnClose.TabIndex = 4;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -320,7 +320,7 @@
             this.pbPeople.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbPeople.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbPeople.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.People_400;
-            this.pbPeople.Location = new System.Drawing.Point(477, 78);
+            this.pbPeople.Location = new System.Drawing.Point(484, 78);
             this.pbPeople.Margin = new System.Windows.Forms.Padding(2);
             this.pbPeople.Name = "pbPeople";
             this.pbPeople.Size = new System.Drawing.Size(265, 137);

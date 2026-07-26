@@ -62,18 +62,17 @@
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
-            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1045, 12);
+            this.btnExit.Location = new System.Drawing.Point(1046, 12);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 31;
+            this.btnExit.TabIndex = 5;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -98,7 +97,7 @@
             this.txtFilter.Location = new System.Drawing.Point(460, 344);
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(262, 41);
-            this.txtFilter.TabIndex = 30;
+            this.txtFilter.TabIndex = 3;
             this.txtFilter.Visible = false;
             this.txtFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
             this.txtFilter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyUp);
@@ -114,7 +113,7 @@
             this.cbFilterBy.Location = new System.Drawing.Point(211, 343);
             this.cbFilterBy.Name = "cbFilterBy";
             this.cbFilterBy.Size = new System.Drawing.Size(226, 42);
-            this.cbFilterBy.TabIndex = 29;
+            this.cbFilterBy.TabIndex = 2;
             this.cbFilterBy.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbFilterBy_DrawItem);
             this.cbFilterBy.DropDown += new System.EventHandler(this.cbFilterBy_DropDown);
             this.cbFilterBy.SelectedIndexChanged += new System.EventHandler(this.cbFilterBy_SelectedIndexChanged);
@@ -184,7 +183,7 @@
             this.tsmiPhoneCall});
             this.cmsUsersMenu.Name = "cmsPeopleMenu";
             this.cmsUsersMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsUsersMenu.Size = new System.Drawing.Size(258, 304);
+            this.cmsUsersMenu.Size = new System.Drawing.Size(258, 282);
             // 
             // tsmiShowDetails
             // 
@@ -278,14 +277,14 @@
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUsers.Size = new System.Drawing.Size(1008, 292);
             this.dgvUsers.StandardTab = true;
-            this.dgvUsers.TabIndex = 27;
+            this.dgvUsers.TabIndex = 0;
             this.dgvUsers.DoubleClick += new System.EventHandler(this.dgvUsers_DoubleClick);
             // 
             // lblManageUsersTitle
             // 
             this.lblManageUsersTitle.AutoSize = true;
             this.lblManageUsersTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblManageUsersTitle.Location = new System.Drawing.Point(21, 12);
+            this.lblManageUsersTitle.Location = new System.Drawing.Point(22, 12);
             this.lblManageUsersTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblManageUsersTitle.Name = "lblManageUsersTitle";
             this.lblManageUsersTitle.Size = new System.Drawing.Size(165, 29);
@@ -302,7 +301,7 @@
             this.cbFilterOnIsActive.Location = new System.Drawing.Point(460, 343);
             this.cbFilterOnIsActive.Name = "cbFilterOnIsActive";
             this.cbFilterOnIsActive.Size = new System.Drawing.Size(182, 42);
-            this.cbFilterOnIsActive.TabIndex = 39;
+            this.cbFilterOnIsActive.TabIndex = 3;
             this.cbFilterOnIsActive.Visible = false;
             this.cbFilterOnIsActive.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbFilterOnIsActive_DrawItem);
             this.cbFilterOnIsActive.DropDown += new System.EventHandler(this.cbFilterOnIsActive_DropDown);
@@ -321,7 +320,7 @@
             this.btnAddNewUser.Location = new System.Drawing.Point(951, 315);
             this.btnAddNewUser.Name = "btnAddNewUser";
             this.btnAddNewUser.Size = new System.Drawing.Size(111, 70);
-            this.btnAddNewUser.TabIndex = 40;
+            this.btnAddNewUser.TabIndex = 1;
             this.btnAddNewUser.UseVisualStyleBackColor = true;
             this.btnAddNewUser.Click += new System.EventHandler(this.btnAddNewUser_Click);
             // 
@@ -341,7 +340,6 @@
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.FlatAppearance.BorderSize = 2;
             this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -352,7 +350,7 @@
             this.btnClose.Location = new System.Drawing.Point(896, 750);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 36;
+            this.btnClose.TabIndex = 4;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
