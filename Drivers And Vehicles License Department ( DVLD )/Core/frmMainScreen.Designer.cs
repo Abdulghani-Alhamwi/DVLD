@@ -40,6 +40,13 @@
             this.signToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msOptions = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.drivingLicensesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.manageApplicationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.detainLicensesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageApplicationTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageTestTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPeopleManagement = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiUsersManagement = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,9 +139,69 @@
             // 
             // toolStripMenuItem1
             // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.drivingLicensesToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.manageApplicationsToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.detainLicensesToolStripMenuItem,
+            this.manageApplicationTypesToolStripMenuItem,
+            this.manageTestTypesToolStripMenuItem});
+            this.toolStripMenuItem1.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Applications_64;
+            this.toolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(161, 68);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(225, 68);
             this.toolStripMenuItem1.Text = "Applications";
+            // 
+            // drivingLicensesToolStripMenuItem
+            // 
+            this.drivingLicensesToolStripMenuItem.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Driver_License_48;
+            this.drivingLicensesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.drivingLicensesToolStripMenuItem.Name = "drivingLicensesToolStripMenuItem";
+            this.drivingLicensesToolStripMenuItem.Size = new System.Drawing.Size(422, 70);
+            this.drivingLicensesToolStripMenuItem.Text = "Driving Licenses Services";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(419, 6);
+            // 
+            // manageApplicationsToolStripMenuItem
+            // 
+            this.manageApplicationsToolStripMenuItem.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Manage_Applications_64;
+            this.manageApplicationsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.manageApplicationsToolStripMenuItem.Name = "manageApplicationsToolStripMenuItem";
+            this.manageApplicationsToolStripMenuItem.Size = new System.Drawing.Size(422, 70);
+            this.manageApplicationsToolStripMenuItem.Text = "Manage Applications";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(419, 6);
+            // 
+            // detainLicensesToolStripMenuItem
+            // 
+            this.detainLicensesToolStripMenuItem.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Detain_64;
+            this.detainLicensesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.detainLicensesToolStripMenuItem.Name = "detainLicensesToolStripMenuItem";
+            this.detainLicensesToolStripMenuItem.Size = new System.Drawing.Size(422, 70);
+            this.detainLicensesToolStripMenuItem.Text = "Detain Licenses";
+            // 
+            // manageApplicationTypesToolStripMenuItem
+            // 
+            this.manageApplicationTypesToolStripMenuItem.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Application_Types_64;
+            this.manageApplicationTypesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.manageApplicationTypesToolStripMenuItem.Name = "manageApplicationTypesToolStripMenuItem";
+            this.manageApplicationTypesToolStripMenuItem.Size = new System.Drawing.Size(422, 70);
+            this.manageApplicationTypesToolStripMenuItem.Text = "Manage Application Types";
+            // 
+            // manageTestTypesToolStripMenuItem
+            // 
+            this.manageTestTypesToolStripMenuItem.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Test_Type_64;
+            this.manageTestTypesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.manageTestTypesToolStripMenuItem.Name = "manageTestTypesToolStripMenuItem";
+            this.manageTestTypesToolStripMenuItem.Size = new System.Drawing.Size(422, 70);
+            this.manageTestTypesToolStripMenuItem.Text = "Manage Test Types";
             // 
             // tsmiPeopleManagement
             // 
@@ -259,6 +326,13 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiChangePassword;
         private System.Windows.Forms.ToolStripSeparator tsSeparator2;
         private System.Windows.Forms.ToolStripMenuItem tsmiSignOut;
+        private System.Windows.Forms.ToolStripMenuItem drivingLicensesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem manageApplicationsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem detainLicensesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageApplicationTypesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageTestTypesToolStripMenuItem;
     }
 }
 

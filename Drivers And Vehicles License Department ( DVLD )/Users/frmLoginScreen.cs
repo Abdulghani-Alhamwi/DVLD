@@ -31,6 +31,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 btnLogin.TabIndex = 0;
                 txtUserName.TabIndex = 1;
                 txtPassword.TabIndex = 2;
+                chbRememberMe.TabIndex = 3;
             }
         }
 

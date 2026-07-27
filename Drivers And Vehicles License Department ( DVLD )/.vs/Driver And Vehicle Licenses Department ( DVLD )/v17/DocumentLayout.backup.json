@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{52CBC0F2-70E4-4B09-A6D4-9DBAB805109E}|Driver And Vehicle Licenses Department ( DVLD ).csproj|d:\\office\\programming advices\\course 19 - full real project - dvld\\project dvld my solution\\dvld\\drivers and vehicles license department ( dvld )\\people\\frmpeoplemanagement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{52CBC0F2-70E4-4B09-A6D4-9DBAB805109E}|Driver And Vehicle Licenses Department ( DVLD ).csproj|solutionrelative:people\\frmpeoplemanagement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{52CBC0F2-70E4-4B09-A6D4-9DBAB805109E}|Driver And Vehicle Licenses Department ( DVLD ).csproj|d:\\office\\programming advices\\course 19 - full real project - dvld\\project dvld my solution\\dvld\\drivers and vehicles license department ( dvld )\\users\\frmloginscreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52CBC0F2-70E4-4B09-A6D4-9DBAB805109E}|Driver And Vehicle Licenses Department ( DVLD ).csproj|solutionrelative:users\\frmloginscreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52CBC0F2-70E4-4B09-A6D4-9DBAB805109E}|Driver And Vehicle Licenses Department ( DVLD ).csproj|d:\\office\\programming advices\\course 19 - full real project - dvld\\project dvld my solution\\dvld\\drivers and vehicles license department ( dvld )\\users\\frmloginscreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{52CBC0F2-70E4-4B09-A6D4-9DBAB805109E}|Driver And Vehicle Licenses Department ( DVLD ).csproj|solutionrelative:users\\frmloginscreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -43,13 +47,26 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "frmPeopleManagement.cs [Design]",
-              "DocumentMoniker": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\People\\frmPeopleManagement.cs",
-              "RelativeDocumentMoniker": "People\\frmPeopleManagement.cs",
-              "ToolTip": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\People\\frmPeopleManagement.cs [Design]*",
-              "RelativeToolTip": "People\\frmPeopleManagement.cs [Design]*",
+              "Title": "frmLoginScreen.cs",
+              "DocumentMoniker": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\Users\\frmLoginScreen.cs",
+              "RelativeDocumentMoniker": "Users\\frmLoginScreen.cs",
+              "ToolTip": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\Users\\frmLoginScreen.cs",
+              "RelativeToolTip": "Users\\frmLoginScreen.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowCEAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-26T18:13:23.719Z",
+              "WhenOpened": "2026-07-27T12:15:56.745Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "frmLoginScreen.cs [Design]",
+              "DocumentMoniker": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\Users\\frmLoginScreen.cs",
+              "RelativeDocumentMoniker": "Users\\frmLoginScreen.cs",
+              "ToolTip": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\Users\\frmLoginScreen.cs [Design]",
+              "RelativeToolTip": "Users\\frmLoginScreen.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-27T12:15:42.752Z",
               "EditorCaption": " [Design]"
             }
           ]

@@ -42,7 +42,7 @@ namespace MyLib
             aes.Dispose();
             byte[] EncryptedUserName = Encryptor.TransformFinalBlock(UserNameInBytes, 0, UserNameInBytes.Length);
             Encryptor.Dispose();
-
+            
             return Convert.ToBase64String(EncryptedUserName);
 
         }
