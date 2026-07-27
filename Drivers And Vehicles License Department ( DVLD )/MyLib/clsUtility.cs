@@ -21,7 +21,7 @@ namespace MyLib
                 rn.GetBytes(Salt);
                 rn.Dispose();
             }
-            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(Password, Salt, 10000);
+            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(Password, Salt, 10000,HashAlgorithmName.SHA256);
             byte[] HashWithSalt = PBKDF2.GetBytes(32);
             PBKDF2.Dispose();
 
