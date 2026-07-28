@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 
@@ -35,12 +29,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             dgvApplicationTypes.Font = new Font("Tahoma", 19);         
         }
 
-        private void _RefreshApplicationTypesView()
-        {
-            dgvApplicationTypes.DataSource = null;
-            dgvApplicationTypes.DataSource = clsApplicationTypes.GetApplicationTypes();
-        }
-
         private void tsmiEditApplicationType_Click(object sender, EventArgs e)
         {
             if (dgvApplicationTypes.Rows.Count == 0)
@@ -53,7 +41,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                 frm.ShowDialog();
 
-                _RefreshApplicationTypesView();
+                dgvApplicationTypes.DataSource = clsApplicationTypes.GetApplicationTypes();
             }
         }
     }

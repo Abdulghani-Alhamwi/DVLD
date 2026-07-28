@@ -3,9 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using MyLib;
 using DVLDBusinessLayer;
-using System.Linq;
 using System.Data;
-using System.Text;
 
 namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
@@ -167,7 +165,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             _DecryptUsersNames(_dataview?.Table);
             dgvUsers.DataSource = _dataview;
         }
-
 
         private void tsmiDelete_Click(object sender, EventArgs e)
         {

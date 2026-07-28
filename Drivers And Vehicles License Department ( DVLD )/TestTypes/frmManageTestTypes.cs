@@ -24,7 +24,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _RefreshTestTypesView()
         {
-            dgvTestTypes.DataSource = null;
             dgvTestTypes.DataSource = clsTestTypes.GetTestTypes();
             _SetDataViewColumnsWidth();
         }

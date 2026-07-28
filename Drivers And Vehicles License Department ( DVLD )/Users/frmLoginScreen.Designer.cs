@@ -161,9 +161,11 @@
             // btnClose
             // 
             this.btnClose.FlatAppearance.BorderSize = 2;
+            this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.closeBlack32;
-            this.btnClose.Location = new System.Drawing.Point(1078, 12);
+            this.btnClose.Location = new System.Drawing.Point(1082, 17);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(48, 47);
             this.btnClose.TabIndex = 4;

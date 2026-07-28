@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using DVLDBusinessLayer;
 
 namespace MyLib
 {
@@ -118,6 +119,15 @@ namespace MyLib
             else
                 dataview.RowFilter = $"[{ColumnName}] = '{FilterOnValue}'";
 
+        }
+        public static void RefreshDataView(DataGridView dgv , DataTable datatable)
+        {
+         dgv.DataSource = datatable;
+        }
+
+        public static void RefreshDataView(DataGridView dgv, DataView dataview)
+        {
+         dgv.DataSource = dataview;
         }
     }
 }
