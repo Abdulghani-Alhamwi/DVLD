@@ -63,16 +63,16 @@
     <Compile Include="Controls\ctrlUserDetails.Designer.cs">
       <DependentUpon>ctrlUserDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmManageApplicationTypes.cs">
+    <Compile Include="ApplicationTypes\frmManageApplicationTypes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmManageApplicationTypes.Designer.cs">
+    <Compile Include="ApplicationTypes\frmManageApplicationTypes.Designer.cs">
       <DependentUpon>frmManageApplicationTypes.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmUpdateApplicationType.cs">
+    <Compile Include="ApplicationTypes\frmUpdateApplicationType.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmUpdateApplicationType.Designer.cs">
+    <Compile Include="ApplicationTypes\frmUpdateApplicationType.Designer.cs">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
     </Compile>
     <Compile Include="Users\frmLoginScreen.cs">
@@ -150,10 +150,10 @@
     <EmbeddedResource Include="Controls\ctrlUserDetails.resx">
       <DependentUpon>ctrlUserDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmManageApplicationTypes.resx">
+    <EmbeddedResource Include="ApplicationTypes\frmManageApplicationTypes.resx">
       <DependentUpon>frmManageApplicationTypes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmUpdateApplicationType.resx">
+    <EmbeddedResource Include="ApplicationTypes\frmUpdateApplicationType.resx">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Users\frmLoginScreen.resx">
