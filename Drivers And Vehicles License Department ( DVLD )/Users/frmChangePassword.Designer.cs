@@ -40,7 +40,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.pbNewPassword = new System.Windows.Forms.PictureBox();
-            this.lblManagePeopleTitle = new System.Windows.Forms.Label();
+            this.lblChangePasswordTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.erTextBox = new System.Windows.Forms.ErrorProvider(this.components);
             this.uctrlUserDetails = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlUserDetails();
@@ -196,21 +196,23 @@
             this.pbNewPassword.TabIndex = 64;
             this.pbNewPassword.TabStop = false;
             // 
-            // lblManagePeopleTitle
+            // lblChangePasswordTitle
             // 
-            this.lblManagePeopleTitle.AutoSize = true;
-            this.lblManagePeopleTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblManagePeopleTitle.Location = new System.Drawing.Point(21, 11);
-            this.lblManagePeopleTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblManagePeopleTitle.Name = "lblManagePeopleTitle";
-            this.lblManagePeopleTitle.Size = new System.Drawing.Size(175, 29);
-            this.lblManagePeopleTitle.TabIndex = 65;
-            this.lblManagePeopleTitle.Text = "Manage People";
+            this.lblChangePasswordTitle.AutoSize = true;
+            this.lblChangePasswordTitle.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.lblChangePasswordTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lblChangePasswordTitle.Location = new System.Drawing.Point(21, 11);
+            this.lblChangePasswordTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblChangePasswordTitle.Name = "lblChangePasswordTitle";
+            this.lblChangePasswordTitle.Size = new System.Drawing.Size(201, 29);
+            this.lblChangePasswordTitle.TabIndex = 65;
+            this.lblChangePasswordTitle.Text = "Change Password";
             // 
             // btnExit
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
@@ -252,7 +254,7 @@
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1121, 890);
             this.ControlBox = false;
-            this.Controls.Add(this.lblManagePeopleTitle);
+            this.Controls.Add(this.lblChangePasswordTitle);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.pbNewPassword);
             this.Controls.Add(this.pbCurrentPassword);
@@ -294,7 +296,7 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.PictureBox pbNewPassword;
-        private System.Windows.Forms.Label lblManagePeopleTitle;
+        private System.Windows.Forms.Label lblChangePasswordTitle;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.ErrorProvider erTextBox;
     }

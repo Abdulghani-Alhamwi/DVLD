@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using MyLib;
@@ -57,7 +52,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             clsUtility.DrawComboBoxItems(sender, e);
         }
-
         private void _LoadNewPersonData(int PersonID)
         {
             txtFindBy.Text = PersonID.ToString();
@@ -75,7 +69,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         string PreviouslyFoundText = null;
         private void FindPerson()
         {
-          if (string.IsNullOrEmpty(txtFindBy.Text))
+          if (txtFindBy.Text == "" || string.IsNullOrWhiteSpace(txtFindBy.Text))
             {
                 MessageBox.Show("Please select a person first by their National Number or ID.", "Select a Person", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

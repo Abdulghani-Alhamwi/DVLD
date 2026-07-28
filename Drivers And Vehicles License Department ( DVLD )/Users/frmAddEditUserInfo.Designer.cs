@@ -67,6 +67,7 @@
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
@@ -236,7 +237,7 @@
             this.txtPassword.Tag = "First Name";
             this.txtPassword.Enter += new System.EventHandler(this.txtPasswordORtxtConfirmation_Enter);
             this.txtPassword.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPasswordAndConfirmation_KeyUp);
-            this.txtPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtPasswordAndConfirmation_Validating);
+            this.txtPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtPassword_Validating);
             // 
             // txtPasswordConfirmation
             // 
@@ -253,7 +254,7 @@
             this.txtPasswordConfirmation.Tag = "First Name";
             this.txtPasswordConfirmation.Enter += new System.EventHandler(this.txtPasswordORtxtConfirmation_Enter);
             this.txtPasswordConfirmation.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPasswordAndConfirmation_KeyUp);
-            this.txtPasswordConfirmation.Validating += new System.ComponentModel.CancelEventHandler(this.txtPasswordAndConfirmation_Validating);
+            this.txtPasswordConfirmation.Validating += new System.ComponentModel.CancelEventHandler(this.txtPasswordConfirmation_Validating);
             // 
             // lblUserID
             // 

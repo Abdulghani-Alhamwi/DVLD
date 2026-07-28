@@ -53,6 +53,7 @@
             // btnExit
             // 
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
@@ -72,7 +73,7 @@
             // 
             this.lblUserDetailsTitle.AutoSize = true;
             this.lblUserDetailsTitle.Font = new System.Drawing.Font("Tahoma", 20F);
-            this.lblUserDetailsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.lblUserDetailsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.lblUserDetailsTitle.Location = new System.Drawing.Point(26, 9);
             this.lblUserDetailsTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblUserDetailsTitle.Name = "lblUserDetailsTitle";

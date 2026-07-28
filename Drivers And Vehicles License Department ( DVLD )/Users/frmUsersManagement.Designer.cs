@@ -284,6 +284,7 @@
             // 
             this.lblManageUsersTitle.AutoSize = true;
             this.lblManageUsersTitle.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.lblManageUsersTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.lblManageUsersTitle.Location = new System.Drawing.Point(22, 12);
             this.lblManageUsersTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblManageUsersTitle.Name = "lblManageUsersTitle";

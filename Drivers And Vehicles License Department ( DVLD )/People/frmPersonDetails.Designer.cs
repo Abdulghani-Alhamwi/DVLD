@@ -87,7 +87,7 @@
             // 
             this.lblPersonDetailsTitle.AutoSize = true;
             this.lblPersonDetailsTitle.Font = new System.Drawing.Font("Tahoma", 22F);
-            this.lblPersonDetailsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.lblPersonDetailsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.lblPersonDetailsTitle.Location = new System.Drawing.Point(25, 19);
             this.lblPersonDetailsTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblPersonDetailsTitle.Name = "lblPersonDetailsTitle";

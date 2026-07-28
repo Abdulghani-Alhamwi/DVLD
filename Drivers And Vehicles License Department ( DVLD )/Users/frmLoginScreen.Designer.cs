@@ -73,8 +73,8 @@
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPassword.Font = new System.Drawing.Font("Tahoma", 19F);
             this.txtPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtPassword.Location = new System.Drawing.Point(760, 300);
-            this.txtPassword.MaxLength = 20;
+            this.txtPassword.Location = new System.Drawing.Point(757, 300);
+            this.txtPassword.MaxLength = 100;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
@@ -88,8 +88,8 @@
             this.txtUserName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUserName.Font = new System.Drawing.Font("Tahoma", 19F);
             this.txtUserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtUserName.Location = new System.Drawing.Point(760, 228);
-            this.txtUserName.MaxLength = 20;
+            this.txtUserName.Location = new System.Drawing.Point(757, 228);
+            this.txtUserName.MaxLength = 100;
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtUserName.Size = new System.Drawing.Size(316, 38);

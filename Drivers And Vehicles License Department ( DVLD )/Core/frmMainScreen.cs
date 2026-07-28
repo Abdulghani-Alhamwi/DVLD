@@ -104,5 +104,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             _SignOut = true;
             this.Close();
         }
+
+        private void tsmiManageApplicationTypes_Click(object sender, EventArgs e)
+        {
+            frmManageApplicationTypes frm = new frmManageApplicationTypes();
+
+            frm.ShowDialog();
+        }
     }
 }

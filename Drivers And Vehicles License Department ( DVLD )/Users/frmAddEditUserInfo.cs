@@ -104,7 +104,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     return;
             }
 
-            if (txtUserName.Text == "")
+            if (txtUserName.Text == "" || string.IsNullOrWhiteSpace(txtUserName.Text))
                 clsUtility.EnableErrorProvider(erTextBox, txtUserName, "Username cannot be blank.", e);
 
             else if (clsUser.IsUserAlreadyExists(txtUserName.Text))
@@ -113,20 +113,23 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             else
                 erTextBox.Dispose();
         }
-        private void txtPasswordAndConfirmation_Validating(object sender,CancelEventArgs e)
+        private void txtPasswordConfirmation_Validating(object sender,CancelEventArgs e)
         {
-            if (_User != null)
-            {
-                if (((TextBox)sender).Text == "")
-                    return;
-            }
+            if (txtPasswordConfirmation.Text == "" || string.IsNullOrWhiteSpace(txtPasswordConfirmation.Text)) 
+                clsUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation cannot be blank.", null);
 
-            if (((TextBox)sender).Text == "")
-                clsUtility.EnableErrorProvider(erTextBox, ((TextBox)sender), "Password confirmation cannot be blank.", null);
-
-            else if (((TextBox)sender).Text != ((TextBox)sender).Text)
-                clsUtility.EnableErrorProvider(erTextBox, ((TextBox)sender), "Password confirmation does not match password!", null);
+            else if (txtPasswordConfirmation.Text != txtPasswordConfirmation.Text)
+                clsUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation does not match password!", null);
             
+            else
+                erTextBox.Dispose();
+        }
+
+        private void txtPassword_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtPassword.Text == "" || string.IsNullOrWhiteSpace(txtPassword.Text))
+                clsUtility.EnableErrorProvider(erTextBox, ((TextBox)sender), "Password cannot be blank.", null);
+
             else
                 erTextBox.Dispose();
         }
@@ -143,6 +146,15 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             User.Password = clsUtility.HashWithSaltPassword(txtPassword.Text, ref Salt);
             User.Salt = Convert.ToBase64String(Salt);
         }
+
+        private bool _IsInfoUnchanged()
+        {
+            return (txtUserName.Text == clsUtility.DecryptUserName(_User.UserName)
+                 && txtPassword.Text == _DefaultPasswordValue
+                 && txtPasswordConfirmation.Text == _DefaultPasswordValue
+                 && chbIsActive.Checked == _User.IsActive);
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             clsUser User;
@@ -153,6 +165,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             }
             else
             {
+                if(_IsInfoUnchanged())
+                {
+                    MessageBox.Show("There are no changes", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }    
+
                 User = _User;
                 User.PersonID = _User.PersonID;
             }

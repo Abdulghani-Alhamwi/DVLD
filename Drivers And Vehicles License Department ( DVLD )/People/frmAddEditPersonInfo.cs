@@ -90,7 +90,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
         private bool _ValidateName(object sender, CancelEventArgs e)
         {
-            if ((((TextBox)sender).Text == "") && ((TextBox)sender).Tag.ToString() != "Third Name")
+            if ((((TextBox)sender).Text == "" || string.IsNullOrWhiteSpace(((TextBox)sender).Text)) && ((TextBox)sender).Tag.ToString() != "Third Name")
             {
                 clsUtility.EnableErrorProvider(erTextBox, (TextBox)sender, $"It is required to enter your {((TextBox)sender).Tag.ToString()}!", e);
                 return false;
@@ -110,7 +110,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private bool _ValidateAddress(CancelEventArgs e)
         {
-            if (txtAddress.Text == "")
+            if (txtAddress.Text == "" || string.IsNullOrWhiteSpace(txtAddress.Text))
             {
                 clsUtility.EnableErrorProvider(erTextBox,txtAddress, $"It is required to enter your Address!", e);
                 return false;
@@ -132,7 +132,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private bool _ValidateNationalNo(CancelEventArgs e)
         {
-            if (txtNationalNo.Text == "")
+            if (txtNationalNo.Text == "" || string.IsNullOrWhiteSpace(txtNationalNo.Text))
             {
                 clsUtility.EnableErrorProvider(erTextBox,txtNationalNo, "It is required to enter your National No!", e);
                 return false;
@@ -172,7 +172,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
         private bool _ValidatePhone(CancelEventArgs e)
         {
-            if (txtPhone.Text == "")
+            if (txtPhone.Text == "" || string.IsNullOrWhiteSpace(txtPhone.Text))
             {
                 clsUtility.EnableErrorProvider(erTextBox,txtPhone, "It is required to enter your Phone Number!", e);
                 return false;
@@ -331,13 +331,38 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             lnlblRemove.Visible = false;
         }
 
+        private bool _IsInfoUnchanged()
+        {
+            return (_Person.FirstName == txtFirstName.Text
+                 && _Person.SecondName == txtSecondName.Text
+                 && _Person.ThirdName == txtThirdName.Text
+                 && _Person.LastName == txtLastName.Text
+                 && _Person.NationalNo == txtNationalNo.Text
+                 && _Person.DateOfBirth == dtpDateOfBirth.Value
+                 && _Person.Gendor == (rbMale.Checked ? clsPerson.enGendor.Male : clsPerson.enGendor.Female)
+                 && _Person.Phone == txtPhone.Text
+                 && _Person.Email == txtEmail.Text
+                 && _Person.Address == txtAddress.Text
+                 && _Person.CountryName == ((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString()
+                 && _Person.ImagePath == (pbPersonalImage.ImageLocation == null ? _Person.ImagePath : pbPersonalImage.ImageLocation)
+                 );
+        }
         private void btnSave_Click(object sender, EventArgs e)
         {
             clsPerson Person;
+
             if (_Person == null)
                 Person = new clsPerson();
             else
+            {
+                if (_IsInfoUnchanged())
+                {
+                    MessageBox.Show("There are no changes", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 Person = _Person;
+            }
 
             CancelEventArgs CancelEvent = new CancelEventArgs();
 

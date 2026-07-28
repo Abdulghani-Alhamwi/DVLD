@@ -93,7 +93,7 @@
             // 
             this.lblAddEditPersonTitle.AutoSize = true;
             this.lblAddEditPersonTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblAddEditPersonTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.lblAddEditPersonTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.lblAddEditPersonTitle.Location = new System.Drawing.Point(38, 21);
             this.lblAddEditPersonTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblAddEditPersonTitle.Name = "lblAddEditPersonTitle";
@@ -667,6 +667,7 @@
             // btnExit
             // 
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;

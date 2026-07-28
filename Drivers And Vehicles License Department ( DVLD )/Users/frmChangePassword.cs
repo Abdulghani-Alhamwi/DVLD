@@ -36,22 +36,24 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private bool _ValidateCurrentPassword()
         {
-            
-                if (clsUtility.HashWithSaltPassword(txtCurrentPassword.Text, ref _Salt) == _Password)
-                {
-                    erTextBox.Dispose();
-                    return true;
-                }
+            if(txtCurrentPassword.Text == "" || string.IsNullOrWhiteSpace(txtPasswordConfirmation.Text))
+                clsUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password cannot be empty!", null);
 
-                else
-                    clsUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password is wrong!",null);
+            else if (clsUtility.HashWithSaltPassword(txtCurrentPassword.Text, ref _Salt) == _Password)
+            {
+                erTextBox.Dispose();
+                return true;
+            }
+
+            else
+                clsUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password is wrong!", null);
 
             return false;
         }
 
         private bool _ValidateNewPassword()
         {
-            if (txtNewPassword.Text == "")
+            if (txtNewPassword.Text == "" || string.IsNullOrWhiteSpace(txtNewPassword.Text))
             {
                 clsUtility.EnableErrorProvider(erTextBox, txtNewPassword, "New password cannot be empty!", null);
                 return false;
@@ -67,7 +69,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (txtNewPassword.Text == "")
                 return false;
 
-            if (txtPasswordConfirmation.Text == "")
+            if (txtPasswordConfirmation.Text == "" || string.IsNullOrWhiteSpace(txtPasswordConfirmation.Text))
             {
                 clsUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation cannot be empty!", null);
                 return false;
