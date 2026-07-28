@@ -39,17 +39,16 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             this.Close();
         }
 
-        private void txtFees_KeyDowm(object sender , KeyEventArgs key)
+        public static void ValidateFeesTextBox_KeyDown(ErrorProvider erControl, TextBox txtBox, KeyEventArgs e)
         {
-            if (key.KeyData == Keys.Back || char.IsDigit((char)key.KeyData))
-                txtFees.ReadOnly = false;
+            if (e.KeyData == Keys.Back || char.IsDigit((char)e.KeyData))
+                txtBox.ReadOnly = false;
             else
             {
-                txtFees.ReadOnly = true;
-                clsUtility.EnableErrorProvider(ertxtBox, txtFees, "You can enter only digits!", null);
+                txtBox.ReadOnly = true;
+                clsUtility.EnableErrorProvider(erControl, txtBox, "You can enter only digits!", null);
             }
         }
-
         private bool _ValidateData()
         {
             if (txtTitle.Text == "" || String.IsNullOrWhiteSpace(txtTitle.Text))
@@ -68,18 +67,29 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             return true;
         }
+
+        private bool _IsInfoUnchanged()
+        {
+            return (txtTitle.Text == _ApplicationTitle
+                 && txtFees.Text == _ApplicationFees);
+        }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (txtTitle.Text == _ApplicationTitle && txtFees.Text == _ApplicationFees)
+            if (_IsInfoUnchanged())
                 MessageBox.Show("There are no changes on the application type info", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             else if (_ValidateData())
             {
                 if (clsApplicationTypes.UpdateApplicationType(_ApplicationTypeID, txtTitle.Text, Convert.ToDouble(txtFees.Text)))
-                    MessageBox.Show("Application Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Application Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else
-                    MessageBox.Show("Failed to update application", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to update application type info!", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void txtFees_KeyDown(object sender, KeyEventArgs e)
+        {
+            ValidateFeesTextBox_KeyDown(ertxtBox, txtFees, e);
         }
     }
 }

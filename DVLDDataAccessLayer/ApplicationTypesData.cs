@@ -39,7 +39,7 @@ namespace DVLDDataAccessLayer
             return dtApplicationTypes;
         }
 
-        public static bool UpdateApplicationType(int ApplicationTypeID , string ApplicationTitle,double ApplicationFees)
+        public static bool UpdateApplicationType(int ApplicationTypeID , string ApplicationTypeTitle,double ApplicationTypeFees)
         {
             int AffectedRows = -1;
 
@@ -52,8 +52,8 @@ namespace DVLDDataAccessLayer
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ID", ApplicationTypeID);
-            command.Parameters.AddWithValue("@Title", ApplicationTitle);
-            command.Parameters.AddWithValue("@Fees", ApplicationFees);
+            command.Parameters.AddWithValue("@Title", ApplicationTypeTitle);
+            command.Parameters.AddWithValue("@Fees", ApplicationTypeFees);
 
             try
             {

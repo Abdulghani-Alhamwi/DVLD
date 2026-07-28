@@ -35,14 +35,14 @@
             this.lblApplicationTypesBigTitle = new System.Windows.Forms.Label();
             this.lblRecordsTitle = new System.Windows.Forms.Label();
             this.dgvApplicationTypes = new System.Windows.Forms.DataGridView();
-            this.lblApplicationTypesTitle = new System.Windows.Forms.Label();
             this.cmsApplicationTypes = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.pbApplicationType = new System.Windows.Forms.PictureBox();
-            this.btnClose = new System.Windows.Forms.Button();
             this.tsmiEditApplicationType = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblApplicationTypesTitle = new System.Windows.Forms.Label();
+            this.pbApplicationTypes = new System.Windows.Forms.PictureBox();
+            this.btnClose = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationTypes)).BeginInit();
             this.cmsApplicationTypes.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbApplicationType)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbApplicationTypes)).BeginInit();
             this.SuspendLayout();
             // 
             // btnExit
@@ -60,7 +60,7 @@
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 41;
+            this.btnExit.TabIndex = 2;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -120,6 +120,7 @@
             this.dgvApplicationTypes.ContextMenuStrip = this.cmsApplicationTypes;
             this.dgvApplicationTypes.Location = new System.Drawing.Point(30, 409);
             this.dgvApplicationTypes.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvApplicationTypes.MultiSelect = false;
             this.dgvApplicationTypes.Name = "dgvApplicationTypes";
             this.dgvApplicationTypes.ReadOnly = true;
             this.dgvApplicationTypes.RowHeadersWidth = 72;
@@ -127,7 +128,24 @@
             this.dgvApplicationTypes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvApplicationTypes.Size = new System.Drawing.Size(770, 350);
             this.dgvApplicationTypes.StandardTab = true;
-            this.dgvApplicationTypes.TabIndex = 39;
+            this.dgvApplicationTypes.TabIndex = 0;
+            // 
+            // cmsApplicationTypes
+            // 
+            this.cmsApplicationTypes.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
+            this.cmsApplicationTypes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiEditApplicationType});
+            this.cmsApplicationTypes.Name = "cmsApplicationTypes";
+            this.cmsApplicationTypes.Size = new System.Drawing.Size(356, 42);
+            // 
+            // tsmiEditApplicationType
+            // 
+            this.tsmiEditApplicationType.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_321;
+            this.tsmiEditApplicationType.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsmiEditApplicationType.Name = "tsmiEditApplicationType";
+            this.tsmiEditApplicationType.Size = new System.Drawing.Size(355, 38);
+            this.tsmiEditApplicationType.Text = "Edit Application Type";
+            this.tsmiEditApplicationType.Click += new System.EventHandler(this.tsmiEditApplicationType_Click);
             // 
             // lblApplicationTypesTitle
             // 
@@ -141,31 +159,22 @@
             this.lblApplicationTypesTitle.TabIndex = 44;
             this.lblApplicationTypesTitle.Text = "Manage Application Types";
             // 
-            // cmsApplicationTypes
+            // pbApplicationTypes
             // 
-            this.cmsApplicationTypes.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
-            this.cmsApplicationTypes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiEditApplicationType});
-            this.cmsApplicationTypes.Name = "cmsApplicationTypes";
-            this.cmsApplicationTypes.Size = new System.Drawing.Size(356, 42);
-            // 
-            // pbApplicationType
-            // 
-            this.pbApplicationType.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbApplicationType.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbApplicationType.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Application_Types_512;
-            this.pbApplicationType.Location = new System.Drawing.Point(283, 75);
-            this.pbApplicationType.Margin = new System.Windows.Forms.Padding(2);
-            this.pbApplicationType.Name = "pbApplicationType";
-            this.pbApplicationType.Size = new System.Drawing.Size(265, 221);
-            this.pbApplicationType.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbApplicationType.TabIndex = 43;
-            this.pbApplicationType.TabStop = false;
+            this.pbApplicationTypes.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbApplicationTypes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbApplicationTypes.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Application_Types_512;
+            this.pbApplicationTypes.Location = new System.Drawing.Point(283, 75);
+            this.pbApplicationTypes.Margin = new System.Windows.Forms.Padding(2);
+            this.pbApplicationTypes.Name = "pbApplicationTypes";
+            this.pbApplicationTypes.Size = new System.Drawing.Size(265, 221);
+            this.pbApplicationTypes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbApplicationTypes.TabIndex = 43;
+            this.pbApplicationTypes.TabStop = false;
             // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.FlatAppearance.BorderSize = 2;
             this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -176,19 +185,10 @@
             this.btnClose.Location = new System.Drawing.Point(634, 787);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 40;
+            this.btnClose.TabIndex = 1;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // tsmiEditApplicationType
-            // 
-            this.tsmiEditApplicationType.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_321;
-            this.tsmiEditApplicationType.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsmiEditApplicationType.Name = "tsmiEditApplicationType";
-            this.tsmiEditApplicationType.Size = new System.Drawing.Size(355, 38);
-            this.tsmiEditApplicationType.Text = "Edit Application Type";
-            this.tsmiEditApplicationType.Click += new System.EventHandler(this.tsmiEditApplicationType_Click);
             // 
             // frmManageApplicationTypes
             // 
@@ -201,7 +201,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.lblRecordsNumber);
-            this.Controls.Add(this.pbApplicationType);
+            this.Controls.Add(this.pbApplicationTypes);
             this.Controls.Add(this.lblApplicationTypesBigTitle);
             this.Controls.Add(this.lblRecordsTitle);
             this.Controls.Add(this.btnClose);
@@ -216,7 +216,7 @@
             this.Load += new System.EventHandler(this.frmManageApplicationTypes_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationTypes)).EndInit();
             this.cmsApplicationTypes.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbApplicationType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbApplicationTypes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -226,7 +226,7 @@
 
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label lblRecordsNumber;
-        private System.Windows.Forms.PictureBox pbApplicationType;
+        private System.Windows.Forms.PictureBox pbApplicationTypes;
         private System.Windows.Forms.Label lblApplicationTypesBigTitle;
         private System.Windows.Forms.Label lblRecordsTitle;
         private System.Windows.Forms.Button btnClose;

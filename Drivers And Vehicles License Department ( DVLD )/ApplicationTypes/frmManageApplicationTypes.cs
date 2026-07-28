@@ -44,10 +44,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void tsmiEditApplicationType_Click(object sender, EventArgs e)
         {
             if (dgvApplicationTypes.Rows.Count == 0)
-                MessageBox.Show("There is no application types!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            else if (dgvApplicationTypes.SelectedRows.Count > 1)
-                MessageBox.Show("Select one application type to edit!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("There is'nt any application type!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             else
             {

@@ -72,12 +72,12 @@
             this.lblUpdateApplicationTitle.AutoSize = true;
             this.lblUpdateApplicationTitle.Font = new System.Drawing.Font("Tahoma", 18F);
             this.lblUpdateApplicationTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblUpdateApplicationTitle.Location = new System.Drawing.Point(6, 9);
+            this.lblUpdateApplicationTitle.Location = new System.Drawing.Point(8, 9);
             this.lblUpdateApplicationTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblUpdateApplicationTitle.Name = "lblUpdateApplicationTitle";
-            this.lblUpdateApplicationTitle.Size = new System.Drawing.Size(281, 29);
+            this.lblUpdateApplicationTitle.Size = new System.Drawing.Size(270, 29);
             this.lblUpdateApplicationTitle.TabIndex = 46;
-            this.lblUpdateApplicationTitle.Text = "Update Application Types";
+            this.lblUpdateApplicationTitle.Text = "Update Application Type";
             // 
             // lblUpdateApplicationBigTitle
             // 
@@ -88,9 +88,9 @@
             this.lblUpdateApplicationBigTitle.Location = new System.Drawing.Point(28, 77);
             this.lblUpdateApplicationBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblUpdateApplicationBigTitle.Name = "lblUpdateApplicationBigTitle";
-            this.lblUpdateApplicationBigTitle.Size = new System.Drawing.Size(574, 52);
+            this.lblUpdateApplicationBigTitle.Size = new System.Drawing.Size(552, 52);
             this.lblUpdateApplicationBigTitle.TabIndex = 47;
-            this.lblUpdateApplicationBigTitle.Text = "Update Application Types";
+            this.lblUpdateApplicationBigTitle.Text = "Update Application Type";
             // 
             // txtTitle
             // 
@@ -117,7 +117,7 @@
             this.txtFees.Size = new System.Drawing.Size(423, 36);
             this.txtFees.TabIndex = 1;
             this.txtFees.Tag = "First Name";
-            this.txtFees.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFees_KeyDowm);
+            this.txtFees.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFees_KeyDown);
             // 
             // lblFees
             // 

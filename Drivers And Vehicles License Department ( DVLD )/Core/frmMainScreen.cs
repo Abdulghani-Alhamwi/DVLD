@@ -66,8 +66,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
         private void tsmiUsers_Click (object sender, EventArgs e)
         {
-            frmUsersManagement frm = new frmUsersManagement();
-                
+            frmUsersManagement frm = new frmUsersManagement();                
             frm.ShowDialog();
         }
 
@@ -108,7 +107,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void tsmiManageApplicationTypes_Click(object sender, EventArgs e)
         {
             frmManageApplicationTypes frm = new frmManageApplicationTypes();
+            frm.ShowDialog();
+        }
 
+        private void tsmiManageTestTypes_Click(object sender, EventArgs e)
+        {
+            frmManageTestTypes frm = new frmManageTestTypes();
             frm.ShowDialog();
         }
     }
