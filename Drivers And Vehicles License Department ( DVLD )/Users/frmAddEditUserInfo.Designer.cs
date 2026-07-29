@@ -74,7 +74,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1120, 8);
+            this.btnExit.Location = new System.Drawing.Point(1119, 8);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -89,7 +89,7 @@
             this.lblAddEditUserBigTitle.AutoSize = true;
             this.lblAddEditUserBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
             this.lblAddEditUserBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblAddEditUserBigTitle.Location = new System.Drawing.Point(429, 42);
+            this.lblAddEditUserBigTitle.Location = new System.Drawing.Point(428, 42);
             this.lblAddEditUserBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblAddEditUserBigTitle.Name = "lblAddEditUserBigTitle";
             this.lblAddEditUserBigTitle.Size = new System.Drawing.Size(327, 52);
@@ -100,7 +100,7 @@
             // 
             this.lblAddEditUserTitle.AutoSize = true;
             this.lblAddEditUserTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblAddEditUserTitle.Location = new System.Drawing.Point(26, 8);
+            this.lblAddEditUserTitle.Location = new System.Drawing.Point(25, 8);
             this.lblAddEditUserTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblAddEditUserTitle.Name = "lblAddEditUserTitle";
             this.lblAddEditUserTitle.Size = new System.Drawing.Size(165, 29);
@@ -112,7 +112,7 @@
             this.tcAddNewUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.tcAddNewUser.Controls.Add(this.tpPersonalInfo);
             this.tcAddNewUser.Controls.Add(this.tpLoginInfo);
-            this.tcAddNewUser.Location = new System.Drawing.Point(26, 109);
+            this.tcAddNewUser.Location = new System.Drawing.Point(25, 109);
             this.tcAddNewUser.Name = "tcAddNewUser";
             this.tcAddNewUser.Padding = new System.Drawing.Point(20, 3);
             this.tcAddNewUser.SelectedIndex = 0;
@@ -143,7 +143,7 @@
             this.btnNext.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnNext.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Next_32;
             this.btnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnNext.Location = new System.Drawing.Point(943, 518);
+            this.btnNext.Location = new System.Drawing.Point(942, 518);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(152, 42);
             this.btnNext.TabIndex = 1;
@@ -155,7 +155,7 @@
             // 
             this.uctrlpersonInfoByFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.uctrlpersonInfoByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.uctrlpersonInfoByFilter.Location = new System.Drawing.Point(18, 15);
+            this.uctrlpersonInfoByFilter.Location = new System.Drawing.Point(17, 15);
             this.uctrlpersonInfoByFilter.Name = "uctrlpersonInfoByFilter";
             this.uctrlpersonInfoByFilter.Size = new System.Drawing.Size(1089, 487);
             this.uctrlpersonInfoByFilter.TabIndex = 0;
@@ -193,7 +193,7 @@
             this.chbIsActive.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbIsActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.chbIsActive.Font = new System.Drawing.Font("Tahoma", 20F);
-            this.chbIsActive.Location = new System.Drawing.Point(380, 354);
+            this.chbIsActive.Location = new System.Drawing.Point(379, 354);
             this.chbIsActive.Name = "chbIsActive";
             this.chbIsActive.Size = new System.Drawing.Size(131, 37);
             this.chbIsActive.TabIndex = 3;
@@ -204,7 +204,7 @@
             // 
             this.pbUserID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbUserID.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
-            this.pbUserID.Location = new System.Drawing.Point(327, 77);
+            this.pbUserID.Location = new System.Drawing.Point(326, 77);
             this.pbUserID.Name = "pbUserID";
             this.pbUserID.Size = new System.Drawing.Size(32, 32);
             this.pbUserID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -215,7 +215,7 @@
             // 
             this.pbPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbPassword.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
-            this.pbPassword.Location = new System.Drawing.Point(327, 221);
+            this.pbPassword.Location = new System.Drawing.Point(326, 221);
             this.pbPassword.Name = "pbPassword";
             this.pbPassword.Size = new System.Drawing.Size(32, 32);
             this.pbPassword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -227,7 +227,7 @@
             this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtPassword.Location = new System.Drawing.Point(380, 217);
+            this.txtPassword.Location = new System.Drawing.Point(379, 217);
             this.txtPassword.MaxLength = 20;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
@@ -244,7 +244,7 @@
             this.txtPasswordConfirmation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.txtPasswordConfirmation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPasswordConfirmation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtPasswordConfirmation.Location = new System.Drawing.Point(380, 289);
+            this.txtPasswordConfirmation.Location = new System.Drawing.Point(379, 289);
             this.txtPasswordConfirmation.MaxLength = 20;
             this.txtPasswordConfirmation.Name = "txtPasswordConfirmation";
             this.txtPasswordConfirmation.PasswordChar = '*';
@@ -260,7 +260,7 @@
             // 
             this.lblUserID.AutoSize = true;
             this.lblUserID.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Bold);
-            this.lblUserID.Location = new System.Drawing.Point(380, 77);
+            this.lblUserID.Location = new System.Drawing.Point(379, 77);
             this.lblUserID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblUserID.Name = "lblUserID";
             this.lblUserID.Size = new System.Drawing.Size(60, 33);
@@ -271,7 +271,7 @@
             // 
             this.pbPerson.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbPerson.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Person_32;
-            this.pbPerson.Location = new System.Drawing.Point(327, 149);
+            this.pbPerson.Location = new System.Drawing.Point(326, 149);
             this.pbPerson.Name = "pbPerson";
             this.pbPerson.Size = new System.Drawing.Size(32, 32);
             this.pbPerson.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -282,7 +282,7 @@
             // 
             this.pbConfirmPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbConfirmPassword.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
-            this.pbConfirmPassword.Location = new System.Drawing.Point(327, 293);
+            this.pbConfirmPassword.Location = new System.Drawing.Point(326, 293);
             this.pbConfirmPassword.Name = "pbConfirmPassword";
             this.pbConfirmPassword.Size = new System.Drawing.Size(32, 32);
             this.pbConfirmPassword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -294,7 +294,7 @@
             this.txtUserName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.txtUserName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtUserName.Location = new System.Drawing.Point(380, 145);
+            this.txtUserName.Location = new System.Drawing.Point(379, 145);
             this.txtUserName.MaxLength = 20;
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
@@ -307,7 +307,7 @@
             // 
             this.lblConfirmPasswordTitle.AutoSize = true;
             this.lblConfirmPasswordTitle.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Bold);
-            this.lblConfirmPasswordTitle.Location = new System.Drawing.Point(28, 293);
+            this.lblConfirmPasswordTitle.Location = new System.Drawing.Point(27, 293);
             this.lblConfirmPasswordTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblConfirmPasswordTitle.Name = "lblConfirmPasswordTitle";
             this.lblConfirmPasswordTitle.Size = new System.Drawing.Size(281, 33);
@@ -318,7 +318,7 @@
             // 
             this.lblPasswordTitle.AutoSize = true;
             this.lblPasswordTitle.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Bold);
-            this.lblPasswordTitle.Location = new System.Drawing.Point(144, 221);
+            this.lblPasswordTitle.Location = new System.Drawing.Point(143, 221);
             this.lblPasswordTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPasswordTitle.Name = "lblPasswordTitle";
             this.lblPasswordTitle.Size = new System.Drawing.Size(165, 33);
@@ -329,7 +329,7 @@
             // 
             this.lblUserNameTitle.AutoSize = true;
             this.lblUserNameTitle.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Bold);
-            this.lblUserNameTitle.Location = new System.Drawing.Point(135, 149);
+            this.lblUserNameTitle.Location = new System.Drawing.Point(134, 149);
             this.lblUserNameTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblUserNameTitle.Name = "lblUserNameTitle";
             this.lblUserNameTitle.Size = new System.Drawing.Size(174, 33);
@@ -340,7 +340,7 @@
             // 
             this.lblUserIDTitle.AutoSize = true;
             this.lblUserIDTitle.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Bold);
-            this.lblUserIDTitle.Location = new System.Drawing.Point(181, 77);
+            this.lblUserIDTitle.Location = new System.Drawing.Point(180, 77);
             this.lblUserIDTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblUserIDTitle.Name = "lblUserIDTitle";
             this.lblUserIDTitle.Size = new System.Drawing.Size(128, 33);
@@ -361,7 +361,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(790, 754);
+            this.btnClose.Location = new System.Drawing.Point(826, 758);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(152, 42);
             this.btnClose.TabIndex = 2;
@@ -380,7 +380,7 @@
             this.btnSave.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnSave.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(973, 754);
+            this.btnSave.Location = new System.Drawing.Point(1006, 758);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 42);
             this.btnSave.TabIndex = 4;

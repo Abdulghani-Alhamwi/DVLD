@@ -9,7 +9,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class ctrlPersonDetailsByFilter : UserControl
     {
-        public delegate void PersonSelectedEventHandler(clsPerson Person);
+        public delegate void PersonSelectedEventHandler(int PersonID);
 
         public event PersonSelectedEventHandler OnPersonSelected;
 
@@ -66,7 +66,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             frm.ShowDialog();
         }
 
-        string PreviouslyFoundText = null;
+        string _PreviouslyFoundText = null;
         private void FindPerson()
         {
           if (txtFindBy.Text == "" || string.IsNullOrWhiteSpace(txtFindBy.Text))
@@ -75,22 +75,23 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 return;
             }
                 
-            if(PreviouslyFoundText == txtFindBy.Text)
+            if(_PreviouslyFoundText == txtFindBy.Text)
                 return;
             
             else if (cbFindBy.SelectedItem.ToString() == "National No")
             {
                     clsPerson Person = uctrlPersonDetails.LoadPersonDetails(-1,txtFindBy.Text);
-                    PreviouslyFoundText = txtFindBy.Text;
+                    _PreviouslyFoundText = txtFindBy.Text;
+
                 if(Person!=null)
-                    OnPersonSelected?.Invoke(Person); ;
+                    OnPersonSelected?.Invoke(Person.PersonID); ;
             }
 
             else
             {
                     clsPerson Person = uctrlPersonDetails.LoadPersonDetails(Convert.ToInt32(txtFindBy.Text));
-                    PreviouslyFoundText = txtFindBy.Text;
-                    OnPersonSelected?.Invoke(Person);
+                    _PreviouslyFoundText = txtFindBy.Text;
+                    OnPersonSelected?.Invoke(Person.PersonID);
             }
             
         }

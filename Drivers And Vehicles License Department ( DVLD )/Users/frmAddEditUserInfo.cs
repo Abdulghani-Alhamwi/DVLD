@@ -13,11 +13,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
        public event AddEditUserEventHandler OnAddedOrEditedUser;
 
-        clsPerson _Person;
-        clsUser _User;
-
-        string _DefaultPasswordValue = "Not Real Password";
-        bool _WantTochangePassword = true;
+        private int _PersonID = -1;
+        private clsUser _User;
+        private string _DefaultPasswordValue = "Not Real Password";
+        private bool _WantTochangePassword = true;
         public frmAddEditUserInfo(clsUser User = null)
         {
             InitializeComponent();
@@ -56,9 +55,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             if (_User == null)
             {
-                if (_Person != null)
+                if (_PersonID != -1)
                 {
-                    if (!clsUser.IsUserExists(_Person.PersonID))
+                    if (!clsUser.IsUserExists(_PersonID))
                     {
                         tcAddNewUser.SelectedTab = tpLoginInfo;
                         return true;
@@ -161,7 +160,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (_User == null)
             {
                 User = new clsUser();
-                User.PersonID = _Person.PersonID;
+                User.PersonID = _PersonID;
             }
             else
             {
@@ -218,9 +217,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
              btnSave.Enabled = false;
         }
 
-        private void uctrlpersonInfoByFilter_OnPersonSelected(clsPerson Person)
+        private void uctrlpersonInfoByFilter_OnPersonSelected(int PersonID)
         {
-            _Person = Person;
+            _PersonID = PersonID;
         }
 
         private void uctrlpersonInfoByFilter_AfterEditingPerson()

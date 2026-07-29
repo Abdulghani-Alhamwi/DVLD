@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Driver_And_Vehicle_Licenses_Department___DVLD__.Core;
 
 namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
@@ -113,6 +114,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void tsmiManageTestTypes_Click(object sender, EventArgs e)
         {
             frmManageTestTypes frm = new frmManageTestTypes();
+            frm.ShowDialog();
+        }
+
+        private void tsmiLocalLicense_Click(object sender, EventArgs e)
+        {
+            frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication();
             frm.ShowDialog();
         }
     }

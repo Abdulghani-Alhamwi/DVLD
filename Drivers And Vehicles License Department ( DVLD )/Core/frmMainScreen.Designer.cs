@@ -196,6 +196,7 @@
             this.tsmiLocalLicense.Name = "tsmiLocalLicense";
             this.tsmiLocalLicense.Size = new System.Drawing.Size(340, 42);
             this.tsmiLocalLicense.Text = "Local License";
+            this.tsmiLocalLicense.Click += new System.EventHandler(this.tsmiLocalLicense_Click);
             // 
             // tsmiInternationalLicense
             // 
