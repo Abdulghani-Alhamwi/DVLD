@@ -226,6 +226,11 @@
     <None Include="Resources\DVLD1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\International 32.png" />
+    <None Include="Resources\Local 32.png" />
+    <None Include="Resources\Retake Test 32.png" />
+    <None Include="Resources\Renew Driving License 32.png" />
+    <None Include="Resources\New Driving License 32.png" />
     <None Include="Resources\TestType 512.png" />
     <None Include="Resources\money 32.png" />
     <None Include="Resources\edit 321.png" />
@@ -269,6 +274,9 @@
     <None Include="Resources\Application Types 64.png" />
     <None Include="Resources\Application Types 512.png" />
     <None Include="Resources\ApplicationTitle.png" />
+    <None Include="Resources\Damaged Driving License 32.png" />
+    <None Include="Resources\Damaged Driving License 321.png" />
+    <None Include="Resources\Detained Driving License 32.png" />
     <Content Include="Resources\DVLD Logo.ico" />
     <None Include="Resources\People 400.png" />
     <None Include="Resources\People 64.png" />

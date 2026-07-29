@@ -275,4 +275,8 @@ because the settings class if meant for storing things after the application clo
 26) Reset Identity Field :
 DBCC CHECKIDENT ('TableName', RESEED, 6);// if we put for example value 6 -> it will give the next inserted row the value 7.
 
-27) It is better if there were no changes to the information and user pressed save , it is better for optimization to no open connection and execution for the command to update same info to database because by that we reduce network traffic and we avoid un necessary connections on the server because the server has specific number of how many connections can be opened together and therefore by reducing the unneccessary connection we reduce also the pressure of the server.
+27) It is better if there were no changes to the information and user pressed save , it is better for optimization to no open connection and execution for the command to update same info to database because by that we reduce network traffic and we avoid un necessary connections on the server because the server has specific number of how many connections can be opened together and therefore by reducing the unnecessary connection we reduce also the pressure of the server.
+
+28) To insert data from other table to a new table even if the other table was in different database :
+
+SELECT *(if we want all columns) INTO ThisDatabase.dbo.newtablename FROM DatabaseThatHasTheTableWeWantToCopy.dbo.tablename
