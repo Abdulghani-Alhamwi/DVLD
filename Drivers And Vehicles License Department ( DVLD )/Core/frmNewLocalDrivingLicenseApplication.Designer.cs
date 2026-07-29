@@ -34,25 +34,25 @@
             this.tcNewLocalDrivingLicenseApplication = new System.Windows.Forms.TabControl();
             this.tpPersonalInfo = new System.Windows.Forms.TabPage();
             this.uctrlPersonDetailsByFilter = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetailsByFilter();
+            this.btnNext = new System.Windows.Forms.Button();
             this.tpApplicationInfo = new System.Windows.Forms.TabPage();
-            this.lblCreatedByTitle = new System.Windows.Forms.Label();
-            this.lblApplciationFeesTitle = new System.Windows.Forms.Label();
-            this.lblLicenseClassTitle = new System.Windows.Forms.Label();
-            this.lblApplicationDateTitle = new System.Windows.Forms.Label();
-            this.lblDLApplicationIDTitle = new System.Windows.Forms.Label();
+            this.cbLicenseClass = new System.Windows.Forms.ComboBox();
             this.lblUserName = new System.Windows.Forms.Label();
             this.lblApplciationFees = new System.Windows.Forms.Label();
             this.lblApplicationDate = new System.Windows.Forms.Label();
             this.lblDLApplicationID = new System.Windows.Forms.Label();
-            this.cbLicenseClass = new System.Windows.Forms.ComboBox();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnNext = new System.Windows.Forms.Button();
             this.pbDLApplicationID = new System.Windows.Forms.PictureBox();
             this.pbApplicationDate = new System.Windows.Forms.PictureBox();
             this.pbLicenseClass = new System.Windows.Forms.PictureBox();
             this.pbApplciationFees = new System.Windows.Forms.PictureBox();
             this.pbUser = new System.Windows.Forms.PictureBox();
+            this.lblCreatedByTitle = new System.Windows.Forms.Label();
+            this.lblApplciationFeesTitle = new System.Windows.Forms.Label();
+            this.lblLicenseClassTitle = new System.Windows.Forms.Label();
+            this.lblApplicationDateTitle = new System.Windows.Forms.Label();
+            this.lblDLApplicationIDTitle = new System.Windows.Forms.Label();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.tcNewLocalDrivingLicenseApplication.SuspendLayout();
             this.tpPersonalInfo.SuspendLayout();
             this.tpApplicationInfo.SuspendLayout();
@@ -115,6 +115,7 @@
             this.tcNewLocalDrivingLicenseApplication.SelectedIndex = 0;
             this.tcNewLocalDrivingLicenseApplication.Size = new System.Drawing.Size(1103, 613);
             this.tcNewLocalDrivingLicenseApplication.TabIndex = 46;
+            this.tcNewLocalDrivingLicenseApplication.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcNewLocalDrivingLicenseApplication_Selecting);
             // 
             // tpPersonalInfo
             // 
@@ -135,6 +136,25 @@
             this.uctrlPersonDetailsByFilter.Name = "uctrlPersonDetailsByFilter";
             this.uctrlPersonDetailsByFilter.Size = new System.Drawing.Size(1080, 486);
             this.uctrlPersonDetailsByFilter.TabIndex = 0;
+            this.uctrlPersonDetailsByFilter.OnPersonSelected += new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetailsByFilter.PersonSelectedEventHandler(this.uctrlPersonDetailsByFilter_OnPersonSelected);
+            // 
+            // btnNext
+            // 
+            this.btnNext.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnNext.FlatAppearance.BorderSize = 2;
+            this.btnNext.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
+            this.btnNext.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNext.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.btnNext.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Next_32;
+            this.btnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnNext.Location = new System.Drawing.Point(930, 508);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(152, 42);
+            this.btnNext.TabIndex = 47;
+            this.btnNext.Text = "Next";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // tpApplicationInfo
             // 
@@ -160,6 +180,131 @@
             this.tpApplicationInfo.TabIndex = 1;
             this.tpApplicationInfo.Text = "Application Info";
             this.tpApplicationInfo.UseVisualStyleBackColor = true;
+            // 
+            // cbLicenseClass
+            // 
+            this.cbLicenseClass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(228)))));
+            this.cbLicenseClass.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbLicenseClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLicenseClass.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.cbLicenseClass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.cbLicenseClass.FormattingEnabled = true;
+            this.cbLicenseClass.Location = new System.Drawing.Point(358, 155);
+            this.cbLicenseClass.Name = "cbLicenseClass";
+            this.cbLicenseClass.Size = new System.Drawing.Size(346, 37);
+            this.cbLicenseClass.TabIndex = 94;
+            // 
+            // lblUserName
+            // 
+            this.lblUserName.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblUserName.AutoSize = true;
+            this.lblUserName.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblUserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lblUserName.Location = new System.Drawing.Point(353, 263);
+            this.lblUserName.Margin = new System.Windows.Forms.Padding(0);
+            this.lblUserName.Name = "lblUserName";
+            this.lblUserName.Size = new System.Drawing.Size(64, 28);
+            this.lblUserName.TabIndex = 93;
+            this.lblUserName.Text = "????";
+            // 
+            // lblApplciationFees
+            // 
+            this.lblApplciationFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblApplciationFees.AutoSize = true;
+            this.lblApplciationFees.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblApplciationFees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lblApplciationFees.Location = new System.Drawing.Point(353, 211);
+            this.lblApplciationFees.Margin = new System.Windows.Forms.Padding(0);
+            this.lblApplciationFees.Name = "lblApplciationFees";
+            this.lblApplciationFees.Size = new System.Drawing.Size(64, 28);
+            this.lblApplciationFees.TabIndex = 92;
+            this.lblApplciationFees.Text = "????";
+            // 
+            // lblApplicationDate
+            // 
+            this.lblApplicationDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblApplicationDate.AutoSize = true;
+            this.lblApplicationDate.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblApplicationDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lblApplicationDate.Location = new System.Drawing.Point(353, 107);
+            this.lblApplicationDate.Margin = new System.Windows.Forms.Padding(0);
+            this.lblApplicationDate.Name = "lblApplicationDate";
+            this.lblApplicationDate.Size = new System.Drawing.Size(64, 28);
+            this.lblApplicationDate.TabIndex = 91;
+            this.lblApplicationDate.Text = "????";
+            // 
+            // lblDLApplicationID
+            // 
+            this.lblDLApplicationID.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblDLApplicationID.AutoSize = true;
+            this.lblDLApplicationID.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblDLApplicationID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lblDLApplicationID.Location = new System.Drawing.Point(353, 55);
+            this.lblDLApplicationID.Margin = new System.Windows.Forms.Padding(0);
+            this.lblDLApplicationID.Name = "lblDLApplicationID";
+            this.lblDLApplicationID.Size = new System.Drawing.Size(71, 28);
+            this.lblDLApplicationID.TabIndex = 90;
+            this.lblDLApplicationID.Text = "[???]";
+            // 
+            // pbDLApplicationID
+            // 
+            this.pbDLApplicationID.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbDLApplicationID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbDLApplicationID.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
+            this.pbDLApplicationID.Location = new System.Drawing.Point(308, 53);
+            this.pbDLApplicationID.Name = "pbDLApplicationID";
+            this.pbDLApplicationID.Size = new System.Drawing.Size(32, 32);
+            this.pbDLApplicationID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbDLApplicationID.TabIndex = 89;
+            this.pbDLApplicationID.TabStop = false;
+            // 
+            // pbApplicationDate
+            // 
+            this.pbApplicationDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbApplicationDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbApplicationDate.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Calendar_32;
+            this.pbApplicationDate.Location = new System.Drawing.Point(308, 105);
+            this.pbApplicationDate.Name = "pbApplicationDate";
+            this.pbApplicationDate.Size = new System.Drawing.Size(32, 32);
+            this.pbApplicationDate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbApplicationDate.TabIndex = 88;
+            this.pbApplicationDate.TabStop = false;
+            // 
+            // pbLicenseClass
+            // 
+            this.pbLicenseClass.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbLicenseClass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbLicenseClass.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.License_Type_32;
+            this.pbLicenseClass.Location = new System.Drawing.Point(308, 157);
+            this.pbLicenseClass.Name = "pbLicenseClass";
+            this.pbLicenseClass.Size = new System.Drawing.Size(32, 32);
+            this.pbLicenseClass.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbLicenseClass.TabIndex = 87;
+            this.pbLicenseClass.TabStop = false;
+            // 
+            // pbApplciationFees
+            // 
+            this.pbApplciationFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbApplciationFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbApplciationFees.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.money_32;
+            this.pbApplciationFees.Location = new System.Drawing.Point(308, 209);
+            this.pbApplciationFees.Name = "pbApplciationFees";
+            this.pbApplciationFees.Size = new System.Drawing.Size(32, 32);
+            this.pbApplciationFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbApplciationFees.TabIndex = 86;
+            this.pbApplciationFees.TabStop = false;
+            // 
+            // pbUser
+            // 
+            this.pbUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.User_32__2;
+            this.pbUser.Location = new System.Drawing.Point(308, 261);
+            this.pbUser.Name = "pbUser";
+            this.pbUser.Size = new System.Drawing.Size(32, 32);
+            this.pbUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbUser.TabIndex = 85;
+            this.pbUser.TabStop = false;
             // 
             // lblCreatedByTitle
             // 
@@ -226,71 +371,6 @@
             this.lblDLApplicationIDTitle.TabIndex = 80;
             this.lblDLApplicationIDTitle.Text = "D.L.Application ID :";
             // 
-            // lblUserName
-            // 
-            this.lblUserName.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblUserName.AutoSize = true;
-            this.lblUserName.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
-            this.lblUserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblUserName.Location = new System.Drawing.Point(353, 263);
-            this.lblUserName.Margin = new System.Windows.Forms.Padding(0);
-            this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(64, 28);
-            this.lblUserName.TabIndex = 93;
-            this.lblUserName.Text = "????";
-            // 
-            // lblApplciationFees
-            // 
-            this.lblApplciationFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblApplciationFees.AutoSize = true;
-            this.lblApplciationFees.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
-            this.lblApplciationFees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblApplciationFees.Location = new System.Drawing.Point(353, 211);
-            this.lblApplciationFees.Margin = new System.Windows.Forms.Padding(0);
-            this.lblApplciationFees.Name = "lblApplciationFees";
-            this.lblApplciationFees.Size = new System.Drawing.Size(64, 28);
-            this.lblApplciationFees.TabIndex = 92;
-            this.lblApplciationFees.Text = "????";
-            // 
-            // lblApplicationDate
-            // 
-            this.lblApplicationDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblApplicationDate.AutoSize = true;
-            this.lblApplicationDate.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
-            this.lblApplicationDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblApplicationDate.Location = new System.Drawing.Point(353, 107);
-            this.lblApplicationDate.Margin = new System.Windows.Forms.Padding(0);
-            this.lblApplicationDate.Name = "lblApplicationDate";
-            this.lblApplicationDate.Size = new System.Drawing.Size(64, 28);
-            this.lblApplicationDate.TabIndex = 91;
-            this.lblApplicationDate.Text = "????";
-            // 
-            // lblDLApplicationID
-            // 
-            this.lblDLApplicationID.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblDLApplicationID.AutoSize = true;
-            this.lblDLApplicationID.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
-            this.lblDLApplicationID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblDLApplicationID.Location = new System.Drawing.Point(353, 55);
-            this.lblDLApplicationID.Margin = new System.Windows.Forms.Padding(0);
-            this.lblDLApplicationID.Name = "lblDLApplicationID";
-            this.lblDLApplicationID.Size = new System.Drawing.Size(71, 28);
-            this.lblDLApplicationID.TabIndex = 90;
-            this.lblDLApplicationID.Text = "[???]";
-            // 
-            // cbLicenseClass
-            // 
-            this.cbLicenseClass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(228)))));
-            this.cbLicenseClass.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cbLicenseClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbLicenseClass.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.cbLicenseClass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.cbLicenseClass.FormattingEnabled = true;
-            this.cbLicenseClass.Location = new System.Drawing.Point(358, 155);
-            this.cbLicenseClass.Name = "cbLicenseClass";
-            this.cbLicenseClass.Size = new System.Drawing.Size(346, 37);
-            this.cbLicenseClass.TabIndex = 94;
-            // 
             // btnSave
             // 
             this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -325,84 +405,6 @@
             this.btnClose.TabIndex = 48;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
-            // 
-            // btnNext
-            // 
-            this.btnNext.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnNext.FlatAppearance.BorderSize = 2;
-            this.btnNext.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
-            this.btnNext.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNext.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnNext.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Next_32;
-            this.btnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnNext.Location = new System.Drawing.Point(930, 508);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(152, 42);
-            this.btnNext.TabIndex = 47;
-            this.btnNext.Text = "Next";
-            this.btnNext.UseVisualStyleBackColor = true;
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
-            // 
-            // pbDLApplicationID
-            // 
-            this.pbDLApplicationID.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbDLApplicationID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbDLApplicationID.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
-            this.pbDLApplicationID.Location = new System.Drawing.Point(308, 53);
-            this.pbDLApplicationID.Name = "pbDLApplicationID";
-            this.pbDLApplicationID.Size = new System.Drawing.Size(32, 32);
-            this.pbDLApplicationID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbDLApplicationID.TabIndex = 89;
-            this.pbDLApplicationID.TabStop = false;
-            // 
-            // pbApplicationDate
-            // 
-            this.pbApplicationDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbApplicationDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbApplicationDate.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Calendar_32;
-            this.pbApplicationDate.Location = new System.Drawing.Point(308, 105);
-            this.pbApplicationDate.Name = "pbApplicationDate";
-            this.pbApplicationDate.Size = new System.Drawing.Size(32, 32);
-            this.pbApplicationDate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbApplicationDate.TabIndex = 88;
-            this.pbApplicationDate.TabStop = false;
-            // 
-            // pbLicenseClass
-            // 
-            this.pbLicenseClass.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbLicenseClass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbLicenseClass.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.License_Type_32;
-            this.pbLicenseClass.Location = new System.Drawing.Point(308, 157);
-            this.pbLicenseClass.Name = "pbLicenseClass";
-            this.pbLicenseClass.Size = new System.Drawing.Size(32, 32);
-            this.pbLicenseClass.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbLicenseClass.TabIndex = 87;
-            this.pbLicenseClass.TabStop = false;
-            // 
-            // pbApplciationFees
-            // 
-            this.pbApplciationFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbApplciationFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbApplciationFees.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.money_32;
-            this.pbApplciationFees.Location = new System.Drawing.Point(308, 209);
-            this.pbApplciationFees.Name = "pbApplciationFees";
-            this.pbApplciationFees.Size = new System.Drawing.Size(32, 32);
-            this.pbApplciationFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbApplciationFees.TabIndex = 86;
-            this.pbApplciationFees.TabStop = false;
-            // 
-            // pbUser
-            // 
-            this.pbUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.User_32__2;
-            this.pbUser.Location = new System.Drawing.Point(308, 261);
-            this.pbUser.Name = "pbUser";
-            this.pbUser.Size = new System.Drawing.Size(32, 32);
-            this.pbUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbUser.TabIndex = 85;
-            this.pbUser.TabStop = false;
             // 
             // frmNewLocalDrivingLicenseApplication
             // 
