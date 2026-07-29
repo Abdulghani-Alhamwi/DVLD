@@ -17,5 +17,10 @@ namespace DVLDBusinessLayer
         {
             return clsApplicationTypesData.UpdateApplicationType(ApplicationTypeID, ApplicationTypeTitle, ApplicationTypeFees);
         }
+
+        public static double GetApplicationTypeFees(int ApplicationTypeID)
+        {
+            return clsApplicationTypesData.GetApplicationTypeFees(ApplicationTypeID);
+        }
     }
 }

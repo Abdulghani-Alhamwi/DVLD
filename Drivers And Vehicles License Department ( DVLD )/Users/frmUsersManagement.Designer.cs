@@ -69,7 +69,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1045, 13);
+            this.btnExit.Location = new System.Drawing.Point(972, 13);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -137,7 +137,7 @@
             this.lblManageUsersBigTitle.AutoSize = true;
             this.lblManageUsersBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
             this.lblManageUsersBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblManageUsersBigTitle.Location = new System.Drawing.Point(394, 217);
+            this.lblManageUsersBigTitle.Location = new System.Drawing.Point(357, 217);
             this.lblManageUsersBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblManageUsersBigTitle.Name = "lblManageUsersBigTitle";
             this.lblManageUsersBigTitle.Size = new System.Drawing.Size(327, 52);
@@ -276,7 +276,7 @@
             this.dgvUsers.RowHeadersWidth = 72;
             this.dgvUsers.RowTemplate.Height = 32;
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsers.Size = new System.Drawing.Size(1008, 292);
+            this.dgvUsers.Size = new System.Drawing.Size(935, 292);
             this.dgvUsers.StandardTab = true;
             this.dgvUsers.TabIndex = 0;
             this.dgvUsers.DoubleClick += new System.EventHandler(this.dgvUsers_DoubleClick);
@@ -319,7 +319,7 @@
             this.btnAddNewUser.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnAddNewUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddNewUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Add_New_User_72;
-            this.btnAddNewUser.Location = new System.Drawing.Point(950, 316);
+            this.btnAddNewUser.Location = new System.Drawing.Point(877, 316);
             this.btnAddNewUser.Name = "btnAddNewUser";
             this.btnAddNewUser.Size = new System.Drawing.Size(111, 70);
             this.btnAddNewUser.TabIndex = 1;
@@ -331,7 +331,7 @@
             this.pbUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Users_2_400;
-            this.pbUser.Location = new System.Drawing.Point(425, 57);
+            this.pbUser.Location = new System.Drawing.Point(388, 57);
             this.pbUser.Margin = new System.Windows.Forms.Padding(2);
             this.pbUser.Name = "pbUser";
             this.pbUser.Size = new System.Drawing.Size(265, 137);
@@ -349,7 +349,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(895, 751);
+            this.btnClose.Location = new System.Drawing.Point(822, 751);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 4;
@@ -364,7 +364,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1115, 817);
+            this.ClientSize = new System.Drawing.Size(1042, 817);
             this.ControlBox = false;
             this.Controls.Add(this.btnAddNewUser);
             this.Controls.Add(this.cbFilterOnIsActive);

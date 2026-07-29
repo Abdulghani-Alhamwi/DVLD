@@ -139,6 +139,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             frmMainScreen frmMain = new frmMainScreen(this);
             clsGlobalSettings.CurrentUserID = UserID;
+            clsGlobalSettings.CurrentUserName = txtUserName.Text;
+
             frmMain.Show();
             this.Hide();
 

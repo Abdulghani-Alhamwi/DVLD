@@ -9,9 +9,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class frmAddEditUserInfo : Form
     {
-       public delegate void AddEditUserEventHandler();
-
-       public event AddEditUserEventHandler OnAddedOrEditedUser;
+        public delegate void AddEditUserEventHandler();
+        public event AddEditUserEventHandler OnAddedOrEditedUser;
 
         private int _PersonID = -1;
         private clsUser _User;

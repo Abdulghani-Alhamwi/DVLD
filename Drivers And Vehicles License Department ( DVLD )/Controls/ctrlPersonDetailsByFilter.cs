@@ -10,7 +10,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
     public partial class ctrlPersonDetailsByFilter : UserControl
     {
         public delegate void PersonSelectedEventHandler(int PersonID);
-
         public event PersonSelectedEventHandler OnPersonSelected;
 
         public event Action AfterEditingPerson;

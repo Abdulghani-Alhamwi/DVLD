@@ -70,5 +70,35 @@ namespace DVLDDataAccessLayer
 
             return (AffectedRows > 0);
         }
+
+        public static double GetApplicationTypeFees(int ApplicationTypeID)
+        {
+            double ApplicationTypeFees = -1;
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT ApplicationFees FROM ApplicationTypes
+                             WHERE ApplicationTypeID = @ApplicationTypeID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    ApplicationTypeFees = Convert.ToDouble(result);
+
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return ApplicationTypeFees;
+        }
     }
 }

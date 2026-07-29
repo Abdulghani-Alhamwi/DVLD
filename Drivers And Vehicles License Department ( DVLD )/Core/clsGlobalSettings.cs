@@ -6,6 +6,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
     {
         internal static int CurrentUserID = -1;
 
+        internal static string CurrentUserName = "";
+
         internal static bool LoginInfoChanged = false;
     }
 }
