@@ -321,10 +321,10 @@
             this.pbPeople.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbPeople.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbPeople.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.People_400;
-            this.pbPeople.Location = new System.Drawing.Point(484, 78);
+            this.pbPeople.Location = new System.Drawing.Point(484, 59);
             this.pbPeople.Margin = new System.Windows.Forms.Padding(2);
             this.pbPeople.Name = "pbPeople";
-            this.pbPeople.Size = new System.Drawing.Size(265, 137);
+            this.pbPeople.Size = new System.Drawing.Size(265, 156);
             this.pbPeople.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPeople.TabIndex = 40;
             this.pbPeople.TabStop = false;

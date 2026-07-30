@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
@@ -25,6 +26,11 @@ namespace DVLDBusinessLayer
             this.ApplicationID = ApplicationID;
             this.LicenseClassID = LicenseClassID;
             _CurrentMode = _enMode.Update;
+        }
+
+        public static DataTable GetLocalDrivingLicenseApplications()
+        {
+            return null;
         }
 
         public static clsLocalDrivingLicenseApplications Find(int LocalDrivingLicenseApplicationID)

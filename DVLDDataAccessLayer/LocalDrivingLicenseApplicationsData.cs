@@ -1,10 +1,34 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
+using System.Security.Policy;
 
 namespace DVLDDataAccessLayer
 {
     public class clsLocalDrivingLicenseApplicationsData
     {
+        public static DataTable GetLocalDrivingLicenseApplications()
+        {
+            DataTable dtLDLApplications = null;
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.LAppID] , LicenseClasses.ClassName AS [Driving Class] ,
+                             People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
+                             ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , ApplicationDate AS [Application Date] ,
+                             COUNT(Tests.TestResult) AS [Passed Tests] 
+                             FROM LocalDrivingLicenseApplications INNER JOIN LicenseClasses
+                             ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID 
+                             INNER JOIN Applications ON LocalDrivingLicenseApplications.ApplicationID = Applications.ApplicationID
+                             INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID
+                             INNER JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
+                             INNER JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID
+                             GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID , LicenseClasses.ClassName,
+                             People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
+                             ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END), ApplicationDate,
+                             Tests.TestResult";
+
+            return dtLDLApplications;
+        }
         public static int AddLocalDrivingLicenseApplication(int ApplicationID, int LicenseClassID)
         {
             int LocalDrivingLicenseApplicationID = -1;
