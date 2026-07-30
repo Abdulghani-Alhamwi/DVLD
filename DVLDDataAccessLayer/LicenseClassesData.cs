@@ -45,10 +45,10 @@ namespace DVLDDataAccessLayer
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"SELECT LicenseClassID FROM LicenseClasses
-                             WHERE LicenseClassName = @LicenseClassName";
+                             WHERE ClassName = @ClassName";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@LicenseClassName", LicenseClassName);
+            command.Parameters.AddWithValue("@ClassName", LicenseClassName);
 
             try
             {

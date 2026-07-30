@@ -110,6 +110,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
                     {
                         lblDLApplicationID.Text = LDLApplication.LocalDrivingLicenseApplicationID.ToString();
                         MessageBox.Show("Data Saved successfully", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        btnSave.Enabled = false;
                     }
                     else
                         MessageBox.Show("Saving failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -24,7 +24,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    LocalDrivingLicenseApplicationID = Convert.ToInt32(LocalDrivingLicenseApplicationID);
+                    LocalDrivingLicenseApplicationID = Convert.ToInt32(result);
             }
 
             catch { }

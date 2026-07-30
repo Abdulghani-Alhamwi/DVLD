@@ -17,8 +17,8 @@ namespace DVLDDataAccessLayer
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
-            command.Parameters.AddWithValue("@ApplicantionDate", ApplicationDate);
-            command.Parameters.AddWithValue("@ApplicantionTypeID", ApplicationTypeID);
+            command.Parameters.AddWithValue("@ApplicationDate", ApplicationDate);
+            command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
             command.Parameters.AddWithValue("@ApplicationStatus", ApplicationStatus);
             command.Parameters.AddWithValue("@LastStatusDate", LastStatusDate);
             command.Parameters.AddWithValue("@PaidApplicationFees", PaidApplicationFees);
@@ -55,8 +55,8 @@ namespace DVLDDataAccessLayer
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicationID",ApplicationID);
             command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
-            command.Parameters.AddWithValue("@ApplicantionDate", ApplicationDate);
-            command.Parameters.AddWithValue("@ApplicantionTypeID", ApplicationTypeID);
+            command.Parameters.AddWithValue("@ApplicationDate", ApplicationDate);
+            command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
             command.Parameters.AddWithValue("@ApplicationStatus", ApplicationStatus);
             command.Parameters.AddWithValue("@LastStatusDate", LastStatusDate);
             command.Parameters.AddWithValue("@PaidApplicationFees", PaidApplicationFees);
