@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Data;
+using Microsoft.SqlServer.Server;
 
 namespace DVLDDataAccessLayer
 {
@@ -37,6 +38,36 @@ namespace DVLDDataAccessLayer
 
             return dtLicenseClassesNames;
         }
+        
+        public static int GetLicenseClassID(string LicenseClassName)
+        {
+            int LicenseClassID = -1;
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
+            string query = @"SELECT LicenseClassID FROM LicenseClasses
+                             WHERE LicenseClassName = @LicenseClassName";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@LicenseClassName", LicenseClassName);
+
+            try
+            {
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    LicenseClassID = Convert.ToInt32(result);
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return LicenseClassID;
+        }
     }
 }

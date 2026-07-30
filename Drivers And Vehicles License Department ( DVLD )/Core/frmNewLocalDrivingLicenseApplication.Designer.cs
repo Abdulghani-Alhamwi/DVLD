@@ -38,7 +38,7 @@
             this.tpApplicationInfo = new System.Windows.Forms.TabPage();
             this.cbLicenseClass = new System.Windows.Forms.ComboBox();
             this.lblUserName = new System.Windows.Forms.Label();
-            this.lblApplciationFees = new System.Windows.Forms.Label();
+            this.lblApplicationFees = new System.Windows.Forms.Label();
             this.lblApplicationDate = new System.Windows.Forms.Label();
             this.lblDLApplicationID = new System.Windows.Forms.Label();
             this.pbDLApplicationID = new System.Windows.Forms.PictureBox();
@@ -47,7 +47,7 @@
             this.pbApplciationFees = new System.Windows.Forms.PictureBox();
             this.pbUser = new System.Windows.Forms.PictureBox();
             this.lblCreatedByTitle = new System.Windows.Forms.Label();
-            this.lblApplciationFeesTitle = new System.Windows.Forms.Label();
+            this.lblApplicationFeesTitle = new System.Windows.Forms.Label();
             this.lblLicenseClassTitle = new System.Windows.Forms.Label();
             this.lblApplicationDateTitle = new System.Windows.Forms.Label();
             this.lblDLApplicationIDTitle = new System.Windows.Forms.Label();
@@ -74,7 +74,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1094, 15);
+            this.btnExit.Location = new System.Drawing.Point(1096, 15);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -89,7 +89,7 @@
             this.lblNewLocalDrivingLicenseApplicationBigTitle.AutoSize = true;
             this.lblNewLocalDrivingLicenseApplicationBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
             this.lblNewLocalDrivingLicenseApplicationBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblNewLocalDrivingLicenseApplicationBigTitle.Location = new System.Drawing.Point(139, 88);
+            this.lblNewLocalDrivingLicenseApplicationBigTitle.Location = new System.Drawing.Point(141, 88);
             this.lblNewLocalDrivingLicenseApplicationBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblNewLocalDrivingLicenseApplicationBigTitle.Name = "lblNewLocalDrivingLicenseApplicationBigTitle";
             this.lblNewLocalDrivingLicenseApplicationBigTitle.Size = new System.Drawing.Size(850, 52);
@@ -100,7 +100,7 @@
             // 
             this.lblNewLocalDrivingLicenseApplicationTitle.AutoSize = true;
             this.lblNewLocalDrivingLicenseApplicationTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblNewLocalDrivingLicenseApplicationTitle.Location = new System.Drawing.Point(7, 15);
+            this.lblNewLocalDrivingLicenseApplicationTitle.Location = new System.Drawing.Point(9, 15);
             this.lblNewLocalDrivingLicenseApplicationTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblNewLocalDrivingLicenseApplicationTitle.Name = "lblNewLocalDrivingLicenseApplicationTitle";
             this.lblNewLocalDrivingLicenseApplicationTitle.Size = new System.Drawing.Size(410, 29);
@@ -111,7 +111,7 @@
             // 
             this.tcNewLocalDrivingLicenseApplication.Controls.Add(this.tpPersonalInfo);
             this.tcNewLocalDrivingLicenseApplication.Controls.Add(this.tpApplicationInfo);
-            this.tcNewLocalDrivingLicenseApplication.Location = new System.Drawing.Point(20, 173);
+            this.tcNewLocalDrivingLicenseApplication.Location = new System.Drawing.Point(22, 173);
             this.tcNewLocalDrivingLicenseApplication.Name = "tcNewLocalDrivingLicenseApplication";
             this.tcNewLocalDrivingLicenseApplication.Padding = new System.Drawing.Point(15, 3);
             this.tcNewLocalDrivingLicenseApplication.SelectedIndex = 0;
@@ -134,7 +134,7 @@
             // uctrlPersonDetailsByFilter
             // 
             this.uctrlPersonDetailsByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.uctrlPersonDetailsByFilter.Location = new System.Drawing.Point(2, 6);
+            this.uctrlPersonDetailsByFilter.Location = new System.Drawing.Point(4, 6);
             this.uctrlPersonDetailsByFilter.Name = "uctrlPersonDetailsByFilter";
             this.uctrlPersonDetailsByFilter.Size = new System.Drawing.Size(1080, 486);
             this.uctrlPersonDetailsByFilter.TabIndex = 0;
@@ -150,7 +150,7 @@
             this.btnNext.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnNext.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Next_32;
             this.btnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnNext.Location = new System.Drawing.Point(930, 505);
+            this.btnNext.Location = new System.Drawing.Point(932, 505);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(152, 42);
             this.btnNext.TabIndex = 47;
@@ -162,7 +162,7 @@
             // 
             this.tpApplicationInfo.Controls.Add(this.cbLicenseClass);
             this.tpApplicationInfo.Controls.Add(this.lblUserName);
-            this.tpApplicationInfo.Controls.Add(this.lblApplciationFees);
+            this.tpApplicationInfo.Controls.Add(this.lblApplicationFees);
             this.tpApplicationInfo.Controls.Add(this.lblApplicationDate);
             this.tpApplicationInfo.Controls.Add(this.lblDLApplicationID);
             this.tpApplicationInfo.Controls.Add(this.pbDLApplicationID);
@@ -171,14 +171,14 @@
             this.tpApplicationInfo.Controls.Add(this.pbApplciationFees);
             this.tpApplicationInfo.Controls.Add(this.pbUser);
             this.tpApplicationInfo.Controls.Add(this.lblCreatedByTitle);
-            this.tpApplicationInfo.Controls.Add(this.lblApplciationFeesTitle);
+            this.tpApplicationInfo.Controls.Add(this.lblApplicationFeesTitle);
             this.tpApplicationInfo.Controls.Add(this.lblLicenseClassTitle);
             this.tpApplicationInfo.Controls.Add(this.lblApplicationDateTitle);
             this.tpApplicationInfo.Controls.Add(this.lblDLApplicationIDTitle);
             this.tpApplicationInfo.Location = new System.Drawing.Point(4, 38);
             this.tpApplicationInfo.Name = "tpApplicationInfo";
             this.tpApplicationInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tpApplicationInfo.Size = new System.Drawing.Size(1095, 571);
+            this.tpApplicationInfo.Size = new System.Drawing.Size(1095, 564);
             this.tpApplicationInfo.TabIndex = 1;
             this.tpApplicationInfo.Text = "Application Info";
             this.tpApplicationInfo.UseVisualStyleBackColor = true;
@@ -191,7 +191,7 @@
             this.cbLicenseClass.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
             this.cbLicenseClass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(5)))), ((int)(((byte)(5)))));
             this.cbLicenseClass.FormattingEnabled = true;
-            this.cbLicenseClass.Location = new System.Drawing.Point(371, 155);
+            this.cbLicenseClass.Location = new System.Drawing.Point(373, 155);
             this.cbLicenseClass.Name = "cbLicenseClass";
             this.cbLicenseClass.Size = new System.Drawing.Size(457, 37);
             this.cbLicenseClass.TabIndex = 94;
@@ -205,25 +205,25 @@
             this.lblUserName.AutoSize = true;
             this.lblUserName.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
             this.lblUserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblUserName.Location = new System.Drawing.Point(365, 263);
+            this.lblUserName.Location = new System.Drawing.Point(367, 263);
             this.lblUserName.Margin = new System.Windows.Forms.Padding(0);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(69, 29);
             this.lblUserName.TabIndex = 93;
             this.lblUserName.Text = "????";
             // 
-            // lblApplciationFees
+            // lblApplicationFees
             // 
-            this.lblApplciationFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblApplciationFees.AutoSize = true;
-            this.lblApplciationFees.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
-            this.lblApplciationFees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblApplciationFees.Location = new System.Drawing.Point(365, 211);
-            this.lblApplciationFees.Margin = new System.Windows.Forms.Padding(0);
-            this.lblApplciationFees.Name = "lblApplciationFees";
-            this.lblApplciationFees.Size = new System.Drawing.Size(69, 29);
-            this.lblApplciationFees.TabIndex = 92;
-            this.lblApplciationFees.Text = "????";
+            this.lblApplicationFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblApplicationFees.AutoSize = true;
+            this.lblApplicationFees.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
+            this.lblApplicationFees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lblApplicationFees.Location = new System.Drawing.Point(367, 211);
+            this.lblApplicationFees.Margin = new System.Windows.Forms.Padding(0);
+            this.lblApplicationFees.Name = "lblApplicationFees";
+            this.lblApplicationFees.Size = new System.Drawing.Size(69, 29);
+            this.lblApplicationFees.TabIndex = 92;
+            this.lblApplicationFees.Text = "????";
             // 
             // lblApplicationDate
             // 
@@ -231,7 +231,7 @@
             this.lblApplicationDate.AutoSize = true;
             this.lblApplicationDate.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
             this.lblApplicationDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblApplicationDate.Location = new System.Drawing.Point(365, 107);
+            this.lblApplicationDate.Location = new System.Drawing.Point(367, 107);
             this.lblApplicationDate.Margin = new System.Windows.Forms.Padding(0);
             this.lblApplicationDate.Name = "lblApplicationDate";
             this.lblApplicationDate.Size = new System.Drawing.Size(69, 29);
@@ -244,7 +244,7 @@
             this.lblDLApplicationID.AutoSize = true;
             this.lblDLApplicationID.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
             this.lblDLApplicationID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblDLApplicationID.Location = new System.Drawing.Point(365, 55);
+            this.lblDLApplicationID.Location = new System.Drawing.Point(367, 55);
             this.lblDLApplicationID.Margin = new System.Windows.Forms.Padding(0);
             this.lblDLApplicationID.Name = "lblDLApplicationID";
             this.lblDLApplicationID.Size = new System.Drawing.Size(77, 29);
@@ -256,7 +256,7 @@
             this.pbDLApplicationID.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbDLApplicationID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbDLApplicationID.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
-            this.pbDLApplicationID.Location = new System.Drawing.Point(320, 53);
+            this.pbDLApplicationID.Location = new System.Drawing.Point(322, 53);
             this.pbDLApplicationID.Name = "pbDLApplicationID";
             this.pbDLApplicationID.Size = new System.Drawing.Size(32, 32);
             this.pbDLApplicationID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -268,7 +268,7 @@
             this.pbApplicationDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbApplicationDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbApplicationDate.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Calendar_32;
-            this.pbApplicationDate.Location = new System.Drawing.Point(320, 105);
+            this.pbApplicationDate.Location = new System.Drawing.Point(322, 105);
             this.pbApplicationDate.Name = "pbApplicationDate";
             this.pbApplicationDate.Size = new System.Drawing.Size(32, 32);
             this.pbApplicationDate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -280,7 +280,7 @@
             this.pbLicenseClass.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbLicenseClass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbLicenseClass.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.License_Type_32;
-            this.pbLicenseClass.Location = new System.Drawing.Point(320, 157);
+            this.pbLicenseClass.Location = new System.Drawing.Point(322, 157);
             this.pbLicenseClass.Name = "pbLicenseClass";
             this.pbLicenseClass.Size = new System.Drawing.Size(32, 32);
             this.pbLicenseClass.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -292,7 +292,7 @@
             this.pbApplciationFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbApplciationFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbApplciationFees.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.money_32;
-            this.pbApplciationFees.Location = new System.Drawing.Point(320, 209);
+            this.pbApplciationFees.Location = new System.Drawing.Point(322, 209);
             this.pbApplciationFees.Name = "pbApplciationFees";
             this.pbApplciationFees.Size = new System.Drawing.Size(32, 32);
             this.pbApplciationFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -304,7 +304,7 @@
             this.pbUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.User_32__2;
-            this.pbUser.Location = new System.Drawing.Point(320, 261);
+            this.pbUser.Location = new System.Drawing.Point(322, 261);
             this.pbUser.Name = "pbUser";
             this.pbUser.Size = new System.Drawing.Size(32, 32);
             this.pbUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -317,25 +317,25 @@
             this.lblCreatedByTitle.AutoSize = true;
             this.lblCreatedByTitle.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
             this.lblCreatedByTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblCreatedByTitle.Location = new System.Drawing.Point(67, 263);
+            this.lblCreatedByTitle.Location = new System.Drawing.Point(69, 263);
             this.lblCreatedByTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblCreatedByTitle.Name = "lblCreatedByTitle";
             this.lblCreatedByTitle.Size = new System.Drawing.Size(159, 29);
             this.lblCreatedByTitle.TabIndex = 84;
             this.lblCreatedByTitle.Text = "Created By :";
             // 
-            // lblApplciationFeesTitle
+            // lblApplicationFeesTitle
             // 
-            this.lblApplciationFeesTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblApplciationFeesTitle.AutoSize = true;
-            this.lblApplciationFeesTitle.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
-            this.lblApplciationFeesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblApplciationFeesTitle.Location = new System.Drawing.Point(67, 211);
-            this.lblApplciationFeesTitle.Margin = new System.Windows.Forms.Padding(0);
-            this.lblApplciationFeesTitle.Name = "lblApplciationFeesTitle";
-            this.lblApplciationFeesTitle.Size = new System.Drawing.Size(224, 29);
-            this.lblApplciationFeesTitle.TabIndex = 83;
-            this.lblApplciationFeesTitle.Text = "Application Fees :";
+            this.lblApplicationFeesTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblApplicationFeesTitle.AutoSize = true;
+            this.lblApplicationFeesTitle.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
+            this.lblApplicationFeesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lblApplicationFeesTitle.Location = new System.Drawing.Point(69, 211);
+            this.lblApplicationFeesTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblApplicationFeesTitle.Name = "lblApplicationFeesTitle";
+            this.lblApplicationFeesTitle.Size = new System.Drawing.Size(224, 29);
+            this.lblApplicationFeesTitle.TabIndex = 83;
+            this.lblApplicationFeesTitle.Text = "Application Fees :";
             // 
             // lblLicenseClassTitle
             // 
@@ -343,7 +343,7 @@
             this.lblLicenseClassTitle.AutoSize = true;
             this.lblLicenseClassTitle.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
             this.lblLicenseClassTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblLicenseClassTitle.Location = new System.Drawing.Point(67, 159);
+            this.lblLicenseClassTitle.Location = new System.Drawing.Point(69, 159);
             this.lblLicenseClassTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblLicenseClassTitle.Name = "lblLicenseClassTitle";
             this.lblLicenseClassTitle.Size = new System.Drawing.Size(186, 29);
@@ -356,7 +356,7 @@
             this.lblApplicationDateTitle.AutoSize = true;
             this.lblApplicationDateTitle.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
             this.lblApplicationDateTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblApplicationDateTitle.Location = new System.Drawing.Point(67, 107);
+            this.lblApplicationDateTitle.Location = new System.Drawing.Point(69, 107);
             this.lblApplicationDateTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblApplicationDateTitle.Name = "lblApplicationDateTitle";
             this.lblApplicationDateTitle.Size = new System.Drawing.Size(226, 29);
@@ -369,7 +369,7 @@
             this.lblDLApplicationIDTitle.AutoSize = true;
             this.lblDLApplicationIDTitle.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
             this.lblDLApplicationIDTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblDLApplicationIDTitle.Location = new System.Drawing.Point(67, 55);
+            this.lblDLApplicationIDTitle.Location = new System.Drawing.Point(69, 55);
             this.lblDLApplicationIDTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblDLApplicationIDTitle.Name = "lblDLApplicationIDTitle";
             this.lblDLApplicationIDTitle.Size = new System.Drawing.Size(248, 29);
@@ -386,12 +386,13 @@
             this.btnSave.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnSave.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(967, 802);
+            this.btnSave.Location = new System.Drawing.Point(969, 802);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 42);
             this.btnSave.TabIndex = 49;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnClose
             // 
@@ -403,7 +404,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(790, 802);
+            this.btnClose.Location = new System.Drawing.Point(792, 802);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(152, 42);
             this.btnClose.TabIndex = 48;
@@ -461,7 +462,7 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblUserName;
-        private System.Windows.Forms.Label lblApplciationFees;
+        private System.Windows.Forms.Label lblApplicationFees;
         private System.Windows.Forms.Label lblApplicationDate;
         private System.Windows.Forms.Label lblDLApplicationID;
         private System.Windows.Forms.PictureBox pbDLApplicationID;
@@ -470,7 +471,7 @@
         private System.Windows.Forms.PictureBox pbApplciationFees;
         private System.Windows.Forms.PictureBox pbUser;
         private System.Windows.Forms.Label lblCreatedByTitle;
-        private System.Windows.Forms.Label lblApplciationFeesTitle;
+        private System.Windows.Forms.Label lblApplicationFeesTitle;
         private System.Windows.Forms.Label lblLicenseClassTitle;
         private System.Windows.Forms.Label lblApplicationDateTitle;
         private System.Windows.Forms.Label lblDLApplicationIDTitle;

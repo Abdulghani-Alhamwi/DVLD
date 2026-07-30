@@ -42,9 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationsData.cs" />
     <Compile Include="ApplicationTypesData.cs" />
     <Compile Include="CountriesData.cs" />
     <Compile Include="LicenseClassesData.cs" />
+    <Compile Include="LocalDrivingLicenseApplicationsData.cs" />
     <Compile Include="PeopleData.cs" />
     <Compile Include="DataAccessSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

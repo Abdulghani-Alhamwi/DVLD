@@ -188,7 +188,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if(User.Save())
             {                
                 lblUserID.Text = User.UserID.ToString();
-                MessageBox.Show("Data Saved successfully!", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Data Saved successfully", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 if (_User == null)
                 {

@@ -415,7 +415,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                     }    
 
-                    MessageBox.Show("Data Saved Successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     AfterAddingNewPerson?.Invoke(Person.PersonID);
                     RefreshView?.Invoke();
