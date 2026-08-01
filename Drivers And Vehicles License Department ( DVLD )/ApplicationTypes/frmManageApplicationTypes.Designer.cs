@@ -140,7 +140,7 @@
             // 
             // tsmiEditApplicationType
             // 
-            this.tsmiEditApplicationType.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_321;
+            this.tsmiEditApplicationType.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_32;
             this.tsmiEditApplicationType.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsmiEditApplicationType.Name = "tsmiEditApplicationType";
             this.tsmiEditApplicationType.Size = new System.Drawing.Size(355, 38);

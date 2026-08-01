@@ -158,7 +158,7 @@
             // 
             // tsmiEditTestType
             // 
-            this.tsmiEditTestType.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_321;
+            this.tsmiEditTestType.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_32;
             this.tsmiEditTestType.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsmiEditTestType.Name = "tsmiEditTestType";
             this.tsmiEditTestType.Size = new System.Drawing.Size(272, 38);

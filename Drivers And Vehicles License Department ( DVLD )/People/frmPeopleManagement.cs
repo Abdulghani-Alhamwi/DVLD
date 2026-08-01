@@ -75,7 +75,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
-            clsUtility._FilterDataView(_dataview,cbFilterBy.SelectedItem.ToString(), txtFilter.Text,e);
+            clsUtility.FilterDataView(_dataview,cbFilterBy.SelectedItem.ToString(), txtFilter.Text,e);
         }
 
         private void txtFilter_KeyDown(object sender, KeyEventArgs e)

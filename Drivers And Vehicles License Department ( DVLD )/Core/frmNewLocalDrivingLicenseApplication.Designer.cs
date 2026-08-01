@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.btnExit = new System.Windows.Forms.Button();
-            this.lblNewLocalDrivingLicenseApplicationBigTitle = new System.Windows.Forms.Label();
-            this.lblNewLocalDrivingLicenseApplicationTitle = new System.Windows.Forms.Label();
+            this.lblFormBigTitle = new System.Windows.Forms.Label();
+            this.lblFormTitle = new System.Windows.Forms.Label();
             this.tcNewLocalDrivingLicenseApplication = new System.Windows.Forms.TabControl();
             this.tpPersonalInfo = new System.Windows.Forms.TabPage();
             this.uctrlPersonDetailsByFilter = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetailsByFilter();
@@ -83,29 +83,29 @@
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // lblNewLocalDrivingLicenseApplicationBigTitle
+            // lblFormBigTitle
             // 
-            this.lblNewLocalDrivingLicenseApplicationBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblNewLocalDrivingLicenseApplicationBigTitle.AutoSize = true;
-            this.lblNewLocalDrivingLicenseApplicationBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
-            this.lblNewLocalDrivingLicenseApplicationBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblNewLocalDrivingLicenseApplicationBigTitle.Location = new System.Drawing.Point(141, 88);
-            this.lblNewLocalDrivingLicenseApplicationBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblNewLocalDrivingLicenseApplicationBigTitle.Name = "lblNewLocalDrivingLicenseApplicationBigTitle";
-            this.lblNewLocalDrivingLicenseApplicationBigTitle.Size = new System.Drawing.Size(850, 52);
-            this.lblNewLocalDrivingLicenseApplicationBigTitle.TabIndex = 44;
-            this.lblNewLocalDrivingLicenseApplicationBigTitle.Text = "New Local Driving License Application";
+            this.lblFormBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblFormBigTitle.AutoSize = true;
+            this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
+            this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
+            this.lblFormBigTitle.Location = new System.Drawing.Point(134, 88);
+            this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblFormBigTitle.Name = "lblFormBigTitle";
+            this.lblFormBigTitle.Size = new System.Drawing.Size(933, 52);
+            this.lblFormBigTitle.TabIndex = 44;
+            this.lblFormBigTitle.Text = "Add Edit Local Driving License Application";
             // 
-            // lblNewLocalDrivingLicenseApplicationTitle
+            // lblFormTitle
             // 
-            this.lblNewLocalDrivingLicenseApplicationTitle.AutoSize = true;
-            this.lblNewLocalDrivingLicenseApplicationTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblNewLocalDrivingLicenseApplicationTitle.Location = new System.Drawing.Point(9, 15);
-            this.lblNewLocalDrivingLicenseApplicationTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblNewLocalDrivingLicenseApplicationTitle.Name = "lblNewLocalDrivingLicenseApplicationTitle";
-            this.lblNewLocalDrivingLicenseApplicationTitle.Size = new System.Drawing.Size(410, 29);
-            this.lblNewLocalDrivingLicenseApplicationTitle.TabIndex = 45;
-            this.lblNewLocalDrivingLicenseApplicationTitle.Text = "New Local Driving License Application";
+            this.lblFormTitle.AutoSize = true;
+            this.lblFormTitle.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.lblFormTitle.Location = new System.Drawing.Point(9, 15);
+            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblFormTitle.Name = "lblFormTitle";
+            this.lblFormTitle.Size = new System.Drawing.Size(450, 29);
+            this.lblFormTitle.TabIndex = 45;
+            this.lblFormTitle.Text = "Add Edit Local Driving License Application";
             // 
             // tcNewLocalDrivingLicenseApplication
             // 
@@ -426,8 +426,8 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.tcNewLocalDrivingLicenseApplication);
             this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.lblNewLocalDrivingLicenseApplicationBigTitle);
-            this.Controls.Add(this.lblNewLocalDrivingLicenseApplicationTitle);
+            this.Controls.Add(this.lblFormBigTitle);
+            this.Controls.Add(this.lblFormTitle);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
@@ -452,8 +452,8 @@
         #endregion
 
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Label lblNewLocalDrivingLicenseApplicationBigTitle;
-        private System.Windows.Forms.Label lblNewLocalDrivingLicenseApplicationTitle;
+        private System.Windows.Forms.Label lblFormBigTitle;
+        private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.TabControl tcNewLocalDrivingLicenseApplication;
         private System.Windows.Forms.TabPage tpPersonalInfo;
         private ctrlPersonDetailsByFilter uctrlPersonDetailsByFilter;

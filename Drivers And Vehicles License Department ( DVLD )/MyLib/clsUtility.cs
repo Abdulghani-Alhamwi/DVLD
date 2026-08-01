@@ -94,7 +94,7 @@ namespace MyLib
             }
             e.DrawFocusRectangle();
         }
-        public static void _FilterDataView(DataView dataview, string ColumnName, string FilterOnValue , KeyEventArgs e)
+        public static void FilterDataView(DataView dataview, string ColumnName, string FilterOnValue , KeyEventArgs e)
         {
             if (dataview.Table.Rows.Count == 0)
                 return;
@@ -102,15 +102,6 @@ namespace MyLib
             if (FilterOnValue == "")
             {
                 dataview.RowFilter = null;
-                return;
-            }
-
-
-            if (FilterOnValue.Length > 9)
-            {
-                if (e.KeyData != Keys.Back)
-                    MessageBox.Show("Invalid Input !", "Details", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-
                 return;
             }
 

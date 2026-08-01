@@ -187,7 +187,8 @@
             this.tsmiInternationalLicense});
             this.tsmiNewDrivingLicense.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.New_Driving_License_32;
             this.tsmiNewDrivingLicense.Name = "tsmiNewDrivingLicense";
-            this.tsmiNewDrivingLicense.Size = new System.Drawing.Size(569, 42);
+            this.tsmiNewDrivingLicense.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.tsmiNewDrivingLicense.Size = new System.Drawing.Size(569, 45);
             this.tsmiNewDrivingLicense.Text = "New Driving License";
             // 
             // tsmiLocalLicense
@@ -209,46 +210,47 @@
             // 
             this.tsmiRenewDrivingLicense.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Renew_Driving_License_32;
             this.tsmiRenewDrivingLicense.Name = "tsmiRenewDrivingLicense";
-            this.tsmiRenewDrivingLicense.Size = new System.Drawing.Size(569, 42);
+            this.tsmiRenewDrivingLicense.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.tsmiRenewDrivingLicense.Size = new System.Drawing.Size(569, 45);
             this.tsmiRenewDrivingLicense.Text = "Renew Driving License";
             // 
             // tsSeparator4
             // 
             this.tsSeparator4.Name = "tsSeparator4";
-            this.tsSeparator4.Padding = new System.Windows.Forms.Padding(0, 15, 0, 15);
             this.tsSeparator4.Size = new System.Drawing.Size(566, 6);
             // 
             // tsmiReplacementForLostOrDamagedLicense
             // 
             this.tsmiReplacementForLostOrDamagedLicense.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Damaged_Driving_License_321;
             this.tsmiReplacementForLostOrDamagedLicense.Name = "tsmiReplacementForLostOrDamagedLicense";
-            this.tsmiReplacementForLostOrDamagedLicense.Size = new System.Drawing.Size(569, 42);
+            this.tsmiReplacementForLostOrDamagedLicense.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.tsmiReplacementForLostOrDamagedLicense.Size = new System.Drawing.Size(569, 45);
             this.tsmiReplacementForLostOrDamagedLicense.Text = "Replacement for Lost or Damaged License";
             // 
             // tsSeparator5
             // 
             this.tsSeparator5.Name = "tsSeparator5";
-            this.tsSeparator5.Padding = new System.Windows.Forms.Padding(0, 15, 0, 15);
             this.tsSeparator5.Size = new System.Drawing.Size(566, 6);
             // 
             // tsmiReleaseDetainedDrivingLicense
             // 
             this.tsmiReleaseDetainedDrivingLicense.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Detained_Driving_License_32;
             this.tsmiReleaseDetainedDrivingLicense.Name = "tsmiReleaseDetainedDrivingLicense";
-            this.tsmiReleaseDetainedDrivingLicense.Size = new System.Drawing.Size(569, 42);
+            this.tsmiReleaseDetainedDrivingLicense.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.tsmiReleaseDetainedDrivingLicense.Size = new System.Drawing.Size(569, 45);
             this.tsmiReleaseDetainedDrivingLicense.Text = "Release Detained Driving License";
             // 
             // tsmiRetakeTest
             // 
             this.tsmiRetakeTest.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Retake_Test_32;
             this.tsmiRetakeTest.Name = "tsmiRetakeTest";
-            this.tsmiRetakeTest.Size = new System.Drawing.Size(569, 42);
+            this.tsmiRetakeTest.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.tsmiRetakeTest.Size = new System.Drawing.Size(569, 45);
             this.tsmiRetakeTest.Text = "Retake Test";
             // 
             // tsSeparator2
             // 
             this.tsSeparator2.Name = "tsSeparator2";
-            this.tsSeparator2.Padding = new System.Windows.Forms.Padding(0, 15, 0, 15);
             this.tsSeparator2.Size = new System.Drawing.Size(419, 6);
             // 
             // tsmiManageApplications
@@ -280,7 +282,6 @@
             // tsSeparator3
             // 
             this.tsSeparator3.Name = "tsSeparator3";
-            this.tsSeparator3.Padding = new System.Windows.Forms.Padding(0, 15, 0, 15);
             this.tsSeparator3.Size = new System.Drawing.Size(419, 6);
             // 
             // tsmiDetainLicenses
@@ -353,7 +354,8 @@
             this.tsmiCurrentUserInfo.Image = ((System.Drawing.Image)(resources.GetObject("tsmiCurrentUserInfo.Image")));
             this.tsmiCurrentUserInfo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsmiCurrentUserInfo.Name = "tsmiCurrentUserInfo";
-            this.tsmiCurrentUserInfo.Size = new System.Drawing.Size(267, 38);
+            this.tsmiCurrentUserInfo.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.tsmiCurrentUserInfo.Size = new System.Drawing.Size(267, 41);
             this.tsmiCurrentUserInfo.Text = "Current User Info";
             this.tsmiCurrentUserInfo.Click += new System.EventHandler(this.tsmiCurrentUserInfo_Click);
             // 
@@ -364,14 +366,14 @@
             this.tsmiChangePassword.Image = ((System.Drawing.Image)(resources.GetObject("tsmiChangePassword.Image")));
             this.tsmiChangePassword.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsmiChangePassword.Name = "tsmiChangePassword";
-            this.tsmiChangePassword.Size = new System.Drawing.Size(267, 38);
+            this.tsmiChangePassword.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.tsmiChangePassword.Size = new System.Drawing.Size(267, 41);
             this.tsmiChangePassword.Text = "Change Password";
             this.tsmiChangePassword.Click += new System.EventHandler(this.tsmiChangePassword_Click);
             // 
             // tsSeparator1
             // 
             this.tsSeparator1.Name = "tsSeparator1";
-            this.tsSeparator1.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.tsSeparator1.Size = new System.Drawing.Size(264, 6);
             // 
             // tsmiSignOut

@@ -104,7 +104,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
-            clsUtility._FilterDataView(_dataview, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, e);            
+            clsUtility.FilterDataView(_dataview, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, e);            
         }
 
         private void cbFilterOnIsActive_DrawItem(object sender, DrawItemEventArgs e)
@@ -207,21 +207,17 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             }
 
             if (dgvUsers.SelectedRows.Count > 1)
-            {
                 MessageBox.Show("Please select only one user to edit", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            clsUser User = clsUser.Find((int)dgvUsers.SelectedRows[0].Cells["User ID"].Value);
-
-            if(User != null)
+            
+            else
             {
+                clsUser User = clsUser.Find((int)dgvUsers.SelectedRows[0].Cells["User ID"].Value);
+
                 frmAddEditUserInfo frm = new frmAddEditUserInfo(User);
                 frm.OnAddedOrEditedUser += _RefreshUsersDataView;
 
                 frm.ShowDialog();
             }
-            else
-                MessageBox.Show("User is not Found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void tsmiPhoneCall_Click(object sender, EventArgs e)

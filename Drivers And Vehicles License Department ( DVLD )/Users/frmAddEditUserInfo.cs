@@ -20,21 +20,32 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             InitializeComponent();
 
-            if(User != null)
+            if(User == null)
+                _SetTitles(clsUser.enMode.AddNew);
+
+            else
             {
-                _SetTitlesWhenEdit();
                 _User = User;
+                _SetTitles(clsUser.enMode.Update);
                 _ShowUserDetails();
                 btnSave.Enabled = true;
             }
             
-            lblAddEditUserBigTitle.Location = new Point((this.Width / 2) - (lblAddEditUserBigTitle.Width / 2), lblAddEditUserBigTitle.Location.Y);
+            lblFormBigTitle.Location = new Point((this.Width / 2) - (lblFormBigTitle.Width / 2), lblFormBigTitle.Location.Y);
         }
 
-        private void _SetTitlesWhenEdit()
+        private void _SetTitles(clsUser.enMode Mode)
         {
-            lblAddEditUserTitle.Text = "Update User";
-            lblAddEditUserBigTitle.Text = "Update User";
+            if (Mode == clsUser.enMode.AddNew)
+            {
+                lblFormTitle.Text = "Add New User";
+                lblFormBigTitle.Text = "Add New User";
+            }
+            else
+            {
+                lblFormTitle.Text = "Update User";
+                lblFormBigTitle.Text = "Update User";
+            }
         }
         private void _ShowUserDetails()
         {
@@ -192,7 +203,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                 if (_User == null)
                 {
-                    _SetTitlesWhenEdit();
+                    _SetTitles(clsUser.enMode.Update);
                     _User = User;
                 }
 

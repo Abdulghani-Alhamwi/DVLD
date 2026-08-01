@@ -125,7 +125,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void tsmiLocalDrivingLicenseApplications_Click(object sender, EventArgs e)
         {
-
+            frmLocalDrivingLicenseApplications frm = new frmLocalDrivingLicenseApplications();
+            frm.ShowDialog();
         }
     }
 }

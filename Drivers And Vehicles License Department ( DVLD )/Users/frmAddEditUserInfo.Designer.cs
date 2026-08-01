@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.btnExit = new System.Windows.Forms.Button();
-            this.lblAddEditUserBigTitle = new System.Windows.Forms.Label();
-            this.lblAddEditUserTitle = new System.Windows.Forms.Label();
+            this.lblFormBigTitle = new System.Windows.Forms.Label();
+            this.lblFormTitle = new System.Windows.Forms.Label();
             this.tcAddNewUser = new System.Windows.Forms.TabControl();
             this.tpPersonalInfo = new System.Windows.Forms.TabPage();
             this.btnNext = new System.Windows.Forms.Button();
@@ -83,29 +83,29 @@
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // lblAddEditUserBigTitle
+            // lblFormBigTitle
             // 
-            this.lblAddEditUserBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblAddEditUserBigTitle.AutoSize = true;
-            this.lblAddEditUserBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
-            this.lblAddEditUserBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblAddEditUserBigTitle.Location = new System.Drawing.Point(428, 42);
-            this.lblAddEditUserBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblAddEditUserBigTitle.Name = "lblAddEditUserBigTitle";
-            this.lblAddEditUserBigTitle.Size = new System.Drawing.Size(327, 52);
-            this.lblAddEditUserBigTitle.TabIndex = 41;
-            this.lblAddEditUserBigTitle.Text = "Add New User";
+            this.lblFormBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblFormBigTitle.AutoSize = true;
+            this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
+            this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
+            this.lblFormBigTitle.Location = new System.Drawing.Point(428, 42);
+            this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblFormBigTitle.Name = "lblFormBigTitle";
+            this.lblFormBigTitle.Size = new System.Drawing.Size(424, 52);
+            this.lblFormBigTitle.TabIndex = 41;
+            this.lblFormBigTitle.Text = "Add Edit New User";
             // 
-            // lblAddEditUserTitle
+            // lblFormTitle
             // 
-            this.lblAddEditUserTitle.AutoSize = true;
-            this.lblAddEditUserTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblAddEditUserTitle.Location = new System.Drawing.Point(25, 8);
-            this.lblAddEditUserTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblAddEditUserTitle.Name = "lblAddEditUserTitle";
-            this.lblAddEditUserTitle.Size = new System.Drawing.Size(165, 29);
-            this.lblAddEditUserTitle.TabIndex = 42;
-            this.lblAddEditUserTitle.Text = "Add New User";
+            this.lblFormTitle.AutoSize = true;
+            this.lblFormTitle.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.lblFormTitle.Location = new System.Drawing.Point(25, 8);
+            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblFormTitle.Name = "lblFormTitle";
+            this.lblFormTitle.Size = new System.Drawing.Size(212, 29);
+            this.lblFormTitle.TabIndex = 42;
+            this.lblFormTitle.Text = "Add Edit New User";
             // 
             // tcAddNewUser
             // 
@@ -402,8 +402,8 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.tcAddNewUser);
             this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.lblAddEditUserBigTitle);
-            this.Controls.Add(this.lblAddEditUserTitle);
+            this.Controls.Add(this.lblFormBigTitle);
+            this.Controls.Add(this.lblFormTitle);
             this.Font = new System.Drawing.Font("Tahoma", 20F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(8);
@@ -428,8 +428,8 @@
 
         #endregion
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Label lblAddEditUserBigTitle;
-        private System.Windows.Forms.Label lblAddEditUserTitle;
+        private System.Windows.Forms.Label lblFormBigTitle;
+        private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.TabControl tcAddNewUser;
         private System.Windows.Forms.TabPage tpPersonalInfo;
         private System.Windows.Forms.TabPage tpLoginInfo;

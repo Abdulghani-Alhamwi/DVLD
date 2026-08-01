@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -19,31 +18,36 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         internal event Action RefreshView;
 
+        string _SavedPersonalImagePath;
         clsPerson _Person;
         public frmAddEditPersonInfo(clsPerson PersonInfo = null)
         {
             InitializeComponent();
 
             if (PersonInfo == null)
-            {
-                lbAddEditPersonBigTitle.Text = "Add New Person";
-                lblAddEditPersonTitle.Text = "Add New Person";
-            }
+                _SetTitles(clsPerson.enMode.AddNew);
+            
             else
             {
                 this._Person = PersonInfo;
-                _SetTitlesWhenEdit();
+                _SetTitles(clsPerson.enMode.Update);
             }
-            lbAddEditPersonBigTitle.Location = new Point((this.Width / 2) - (lbAddEditPersonBigTitle.Width / 2), lbAddEditPersonBigTitle.Location.Y);
+            lblFormBigTitle.Location = new Point((this.Width / 2) - (lblFormBigTitle.Width / 2), lblFormBigTitle.Location.Y);
 
         }
 
-        string _SavedPersonalImagePath;
-
-        private void _SetTitlesWhenEdit()
+        private void _SetTitles(clsPerson.enMode Mode)
         {
-            lbAddEditPersonBigTitle.Text = "Update Person";
-            lblAddEditPersonTitle.Text = "Update Person";
+            if (Mode == clsPerson.enMode.AddNew)
+            {
+                lblFormTitle.Text = "Add New Person";
+                lblFormBigTitle.Text = "Add New Person";
+            }
+            else
+            {
+                lblFormTitle.Text = "Update Person";
+                lblFormBigTitle.Text = "Update Person";
+            }
         }
         private void _ShowPersonData(DataView dataview)
         {
@@ -422,7 +426,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                     if(_Person == null)
                     {
-                        _SetTitlesWhenEdit();
+                        _SetTitles(clsPerson.enMode.Update);
                         _Person = Person;
                     }
                 }
