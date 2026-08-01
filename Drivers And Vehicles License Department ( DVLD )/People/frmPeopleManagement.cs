@@ -33,8 +33,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 _dataview = dtPeople.DefaultView;
                 dgvPeople.Font = new Font("Tahoma", 15.5f);
-                dgvPeople.DataSource = _dataview;
-            }
+                dgvPeople.DataSource = _dataview;    }
 
             object[] Items = new object[] { "None", "Person ID", "National No.", "First Name", "Second Name", "Third Name", "Last Name", "Nationality", "Gendor", "Phone", "Email" };
             _AddDropDownItems(Items);
@@ -102,7 +101,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _RefreshPeopleDataView()
         {
-            _dataview = clsPerson.GetAllPeopleBasicInfo()?.DefaultView;
+            //_datavie= clsPerson.GetAllPeopleBasicInfo()?.DefaultView;
             dgvPeople.DataSource = _dataview;
         }
 

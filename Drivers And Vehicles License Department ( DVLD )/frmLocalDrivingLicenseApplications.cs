@@ -81,6 +81,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void btnAddLDLApplication_Click(object sender, EventArgs e)
         {
             frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication();
+
             frm.ShowDialog();
         }
 
