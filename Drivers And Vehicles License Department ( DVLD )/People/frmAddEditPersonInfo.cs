@@ -361,8 +361,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 if (_IsInfoUnchanged())
                 {
-                    MessageBox.Show("There are no changes", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
+                    MessageBox.Show("There is'nt any change on the information", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
                 }
 
                 Person = _Person;

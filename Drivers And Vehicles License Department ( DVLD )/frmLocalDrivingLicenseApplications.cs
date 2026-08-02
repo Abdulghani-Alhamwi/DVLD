@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Drawing;
 using System.Windows.Forms;
 using Driver_And_Vehicle_Licenses_Department___DVLD__.Core;
 using DVLDBusinessLayer;
@@ -80,7 +79,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _RefreshLDLApplicationsView()
         {
-            clsUtility.RefreshInformationView(dgvLDLApplications,clsLocalDrivingLicenseApplications.GetLDLApplications());
+            clsUtility.RefreshInformationView(dgvLDLApplications,clsLocalDrivingLicenseApplications.GetLDLApplications().DefaultView);
         }
         private void btnAddLDLApplication_Click(object sender, EventArgs e)
         {

@@ -12,7 +12,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
         private int _PersonID = -1;
         private const int _NewLocalDrivingLicenseApplicationTypeID = 1;
         clsLocalDrivingLicenseApplications _LDLApplication;
-        clsApplications _Application;
+        //clsApplications _Application;
 
         public event Action AfterAddOrUpdate ;
         public frmNewLocalDrivingLicenseApplication(clsLocalDrivingLicenseApplications LDLApplication = null)
@@ -26,8 +26,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
             {
                 _LDLApplication = LDLApplication;
                 _SetTitles(clsLocalDrivingLicenseApplications.enMode.Update);
-                _Application = clsApplications.Find(_LDLApplication.ApplicationID);
-                _PersonID = _Application.ApplicantPersonID;
+                _PersonID = _LDLApplication.ApplicantPersonID;
                 _ShowDetailsForUpdateMode();
             }
             lblFormBigTitle.Location = new Point(this.Width/2 - lblFormBigTitle.Width/2, lblFormBigTitle.Location.Y);
@@ -49,12 +48,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
 
         private void _ShowDetailsForUpdateMode()
         {
-            uctrlPersonDetailsByFilter.LoadPersonDetails(_Application.ApplicantPersonID);
+            uctrlPersonDetailsByFilter.LoadPersonDetails(_LDLApplication.ApplicantPersonID);
             lblDLApplicationID.Text = _LDLApplication.ApplicationID.ToString();
             cbLicenseClass.SelectedItem = clsLicenseClasses.GetLicenseClassName(_LDLApplication.LicenseClassID);
-            lblApplicationDate.Text = _Application.ApplicationDate.ToShortDateString();
-            lblApplicationFees.Text = _Application.PaidApplicationFees.ToString();
-            lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(_Application.CreatedByUserID));
+            lblApplicationDate.Text = _LDLApplication.ApplicationDate.ToShortDateString();
+            lblApplicationFees.Text = _LDLApplication.PaidApplicationFees.ToString();
+            lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(_LDLApplication.CreatedByUserID));
         }
         private bool _MoveToNextTab()
         {
@@ -128,37 +127,23 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
 
         private bool _IsInfoUnchanged()
         {
-            return (_Application.ApplicantPersonID == _PersonID && cbLicenseClass.SelectedItem.ToString() == clsLicenseClasses.GetLicenseClassName(_LDLApplication.LicenseClassID));
+            return (_LDLApplication.ApplicantPersonID == _PersonID && ((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString() == clsLicenseClasses.GetLicenseClassName(_LDLApplication.LicenseClassID));
         }
-
-        private bool _SaveApplication(out clsApplications Application)
-        {
-            if (_Application != null)
-                Application = _Application;
-
-            else
-                Application = new clsApplications();
-
-            Application.ApplicantPersonID = _PersonID;
-            Application.ApplicationDate = DateTime.Now;
-            Application.ApplicationTypeID = _NewLocalDrivingLicenseApplicationTypeID;
-            Application.ApplicationStatus = clsApplications.enApplicationStatus.New;
-            Application.LastStatusDate = DateTime.Now;
-            Application.PaidApplicationFees = Convert.ToDouble(lblApplicationFees.Text);
-            Application.CreatedByUserID = clsGlobalSettings.CurrentUserID;
-            
-            return Application.Save();
-        }
-
-        private bool _SaveLDLApplication(out clsLocalDrivingLicenseApplications LDLApplication,clsApplications Application)
+        private bool _SaveLDLApplication(out clsLocalDrivingLicenseApplications LDLApplication)
         {
             if (_LDLApplication != null)
                 LDLApplication = _LDLApplication;
             else
                 LDLApplication = new clsLocalDrivingLicenseApplications();
 
-            LDLApplication.ApplicationID = Application.ApplicationID;
             LDLApplication.LicenseClassID = clsLicenseClasses.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
+            LDLApplication.ApplicantPersonID = _PersonID;
+            LDLApplication.ApplicationDate = DateTime.Now;
+            LDLApplication.ApplicationTypeID = _NewLocalDrivingLicenseApplicationTypeID;
+            LDLApplication.ApplicationStatus = clsApplications.enApplicationStatus.New;
+            LDLApplication.LastStatusDate = DateTime.Now;
+            LDLApplication.PaidApplicationFees = Convert.ToDouble(lblApplicationFees.Text);
+            LDLApplication.CreatedByUserID = clsGlobalSettings.CurrentUserID;
 
             return LDLApplication.Save();
         }
@@ -166,21 +151,16 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
         {
             if (_PersonID != -1)
             {
-
-            if(_LDLApplication!=null)
+            if(_LDLApplication != null)
             {
                 if(_IsInfoUnchanged())
                 {
-                    MessageBox.Show("There are no changes", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("There is'nt any change on the information", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
             }
-                clsApplications Application;
-                if (_SaveApplication(out Application))
-                {
                     clsLocalDrivingLicenseApplications LDLApplication;
-
-                    if (_SaveLDLApplication(out LDLApplication,Application))
+                    if (_SaveLDLApplication(out LDLApplication))
                     {
                         lblDLApplicationID.Text = LDLApplication.LocalDrivingLicenseApplicationID.ToString();
                         MessageBox.Show("Data Saved successfully", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -194,11 +174,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
                     }
                     else
                         MessageBox.Show("Saving failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                    MessageBox.Show("Failed to create application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
             else
                 MessageBox.Show("Select a person or add new person first!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
