@@ -27,7 +27,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             _dataview = clsLocalDrivingLicenseApplications.GetLDLApplications()?.DefaultView;
             dgvLDLApplications.DataSource = _dataview;
-            
+
             lblRecordsNumber.Text = dgvLDLApplications.Rows.Count.ToString();
             _PrepareComboBoxWithFilterItems();
         }
@@ -78,10 +78,14 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             }
         }
 
+        private void _RefreshLDLApplicationsView()
+        {
+            clsUtility.RefreshInformationView(dgvLDLApplications,clsLocalDrivingLicenseApplications.GetLDLApplications());
+        }
         private void btnAddLDLApplication_Click(object sender, EventArgs e)
         {
             frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication();
-
+            frm.AfterAddOrUpdate += _RefreshLDLApplicationsView;
             frm.ShowDialog();
         }
 
@@ -104,5 +108,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 cmsLDLApplications.Close();
 
         }
+
     }
 }

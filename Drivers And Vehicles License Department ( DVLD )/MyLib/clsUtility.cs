@@ -111,12 +111,12 @@ namespace MyLib
                 dataview.RowFilter = $"[{ColumnName}] = '{FilterOnValue}'";
 
         }
-        public static void RefreshDataView(DataGridView dgv , DataTable datatable)
+        public static void RefreshInformationView(DataGridView dgv , DataTable datatable)
         {
          dgv.DataSource = datatable;
         }
 
-        public static void RefreshDataView(DataGridView dgv, DataView dataview)
+        public static void RefreshInformationView(DataGridView dgv, DataView dataview)
         {
          dgv.DataSource = dataview;
         }

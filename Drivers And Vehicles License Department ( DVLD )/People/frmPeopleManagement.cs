@@ -37,7 +37,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             object[] Items = new object[] { "None", "Person ID", "National No.", "First Name", "Second Name", "Third Name", "Last Name", "Nationality", "Gendor", "Phone", "Email" };
             _AddDropDownItems(Items);
-            cbFilterBy.SelectedItem = 0;
+            cbFilterBy.SelectedItem = "None";
 
             lblRecordsNumber.Text = dgvPeople.Rows.Count.ToString();
 
@@ -101,7 +101,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _RefreshPeopleDataView()
         {
-            //_datavie= clsPerson.GetAllPeopleBasicInfo()?.DefaultView;
+            _dataview= clsPerson.GetAllPeopleBasicInfo()?.DefaultView;
             dgvPeople.DataSource = _dataview;
         }
 

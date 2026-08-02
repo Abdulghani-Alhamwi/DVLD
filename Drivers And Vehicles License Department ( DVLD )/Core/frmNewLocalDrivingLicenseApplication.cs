@@ -13,6 +13,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
         private const int _NewLocalDrivingLicenseApplicationTypeID = 1;
         clsLocalDrivingLicenseApplications _LDLApplication;
         clsApplications _Application;
+
+        public event Action AfterAddOrUpdate ;
         public frmNewLocalDrivingLicenseApplication(clsLocalDrivingLicenseApplications LDLApplication = null)
         {
             InitializeComponent();
@@ -188,7 +190,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
                             _LDLApplication = LDLApplication;
                             _SetTitles(clsLocalDrivingLicenseApplications.enMode.Update);
                         }
-
+                        AfterAddOrUpdate?.Invoke();
                     }
                     else
                         MessageBox.Show("Saving failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);

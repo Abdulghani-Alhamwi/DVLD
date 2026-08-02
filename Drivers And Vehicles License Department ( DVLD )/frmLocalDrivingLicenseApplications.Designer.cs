@@ -280,7 +280,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvLDLApplications.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvLDLApplications.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvLDLApplications.ColumnHeadersHeight = 40;
             this.dgvLDLApplications.ContextMenuStrip = this.cmsLDLApplications;
             this.dgvLDLApplications.Location = new System.Drawing.Point(30, 437);
             this.dgvLDLApplications.Margin = new System.Windows.Forms.Padding(2);
@@ -289,7 +289,7 @@
             this.dgvLDLApplications.RowHeadersWidth = 72;
             this.dgvLDLApplications.RowTemplate.Height = 32;
             this.dgvLDLApplications.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvLDLApplications.Size = new System.Drawing.Size(1574, 296);
+            this.dgvLDLApplications.Size = new System.Drawing.Size(1698, 296);
             this.dgvLDLApplications.StandardTab = true;
             this.dgvLDLApplications.TabIndex = 44;
             // 
@@ -316,7 +316,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1577, 11);
+            this.btnExit.Location = new System.Drawing.Point(1701, 11);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -331,7 +331,7 @@
             this.lblLDLApplicationsBigTitle.AutoSize = true;
             this.lblLDLApplicationsBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
             this.lblLDLApplicationsBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblLDLApplicationsBigTitle.Location = new System.Drawing.Point(436, 259);
+            this.lblLDLApplicationsBigTitle.Location = new System.Drawing.Point(498, 259);
             this.lblLDLApplicationsBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLDLApplicationsBigTitle.Name = "lblLDLApplicationsBigTitle";
             this.lblLDLApplicationsBigTitle.Size = new System.Drawing.Size(762, 52);
@@ -349,7 +349,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(1438, 759);
+            this.btnClose.Location = new System.Drawing.Point(1562, 759);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 48;
@@ -360,14 +360,13 @@
             // btnAddLDLApplication
             // 
             this.btnAddLDLApplication.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddLDLApplication.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnAddLDLApplication.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.btnAddLDLApplication.FlatAppearance.BorderSize = 2;
             this.btnAddLDLApplication.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnAddLDLApplication.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnAddLDLApplication.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddLDLApplication.Image = ((System.Drawing.Image)(resources.GetObject("btnAddLDLApplication.Image")));
-            this.btnAddLDLApplication.Location = new System.Drawing.Point(1493, 345);
+            this.btnAddLDLApplication.Location = new System.Drawing.Point(1617, 345);
             this.btnAddLDLApplication.Name = "btnAddLDLApplication";
             this.btnAddLDLApplication.Size = new System.Drawing.Size(111, 70);
             this.btnAddLDLApplication.TabIndex = 45;
@@ -380,7 +379,7 @@
             this.pbManageLDLApplications.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pbManageLDLApplications.Image = ((System.Drawing.Image)(resources.GetObject("pbManageLDLApplications.Image")));
             this.pbManageLDLApplications.ImageLocation = "";
-            this.pbManageLDLApplications.Location = new System.Drawing.Point(685, 70);
+            this.pbManageLDLApplications.Location = new System.Drawing.Point(747, 70);
             this.pbManageLDLApplications.Margin = new System.Windows.Forms.Padding(2);
             this.pbManageLDLApplications.Name = "pbManageLDLApplications";
             this.pbManageLDLApplications.Size = new System.Drawing.Size(265, 169);
@@ -394,7 +393,7 @@
             this.pbLocalLicense.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pbLocalLicense.Image = ((System.Drawing.Image)(resources.GetObject("pbLocalLicense.Image")));
             this.pbLocalLicense.ImageLocation = "";
-            this.pbLocalLicense.Location = new System.Drawing.Point(892, 110);
+            this.pbLocalLicense.Location = new System.Drawing.Point(954, 110);
             this.pbLocalLicense.Margin = new System.Windows.Forms.Padding(2);
             this.pbLocalLicense.Name = "pbLocalLicense";
             this.pbLocalLicense.Size = new System.Drawing.Size(58, 55);
@@ -409,7 +408,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1636, 822);
+            this.ClientSize = new System.Drawing.Size(1760, 822);
             this.ControlBox = false;
             this.Controls.Add(this.pbLocalLicense);
             this.Controls.Add(this.lblRecordsNumber);
