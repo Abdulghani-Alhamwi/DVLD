@@ -169,27 +169,33 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void tsmiDelete_Click(object sender, EventArgs e)
         {
             if (dgvUsers.Rows.Count == 0)
-            {
                 MessageBox.Show("There are no users to delete!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
 
-            if(dgvUsers.SelectedRows.Count > 0)
-            {
-                for (short i = 0; i < dgvUsers.SelectedRows.Count; i++)
-                {
-                    if (!clsUser.DeleteUser((int)dgvUsers.SelectedRows[0].Cells["User ID"].Value))
-                    {
-                        MessageBox.Show($"User who has ID : {Convert.ToInt32(dgvUsers.SelectedRows[0].Cells["User ID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        if (dgvUsers.SelectedRows.Count == 1)
-                            return;
-                    }
-                }
-                _RefreshUsersDataView();
-            }
             else
-                MessageBox.Show("No selected users to delete!", "Select a User", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            {
+                if (dgvUsers.SelectedRows.Count > 5)
+                {
+                    MessageBox.Show("You Can Delete Maximum 5 Users In One Time!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                DialogResult result;
+                if (dgvUsers.SelectedRows.Count == 1)
+                    result = MessageBox.Show("Are you sure you want to delete this user?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                else
+                    result = MessageBox.Show("Are you sure you want to delete those users?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+                if (result == DialogResult.OK)
+                {
+                    for (short i = 0; i < dgvUsers.SelectedRows.Count; i++)
+                    {
+                        if (!clsUser.DeleteUser((int)dgvUsers.SelectedRows[i].Cells["User ID"].Value))
+                            MessageBox.Show($"User who has ID : {Convert.ToInt32(dgvUsers.SelectedRows[i].Cells["User ID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    }
+                    _RefreshUsersDataView();
+                }
+            }
 
         }
 

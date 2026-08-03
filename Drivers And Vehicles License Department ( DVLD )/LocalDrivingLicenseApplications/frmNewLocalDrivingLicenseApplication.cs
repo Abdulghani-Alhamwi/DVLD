@@ -57,7 +57,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
         }
         private bool _MoveToNextTab()
         {
-            if (_PersonID != -1 || _LDLApplication != null)
+            if (_PersonID != -1)
             {
                 tcNewLocalDrivingLicenseApplication.SelectedTab = tpApplicationInfo;
                 return true;
@@ -140,12 +140,32 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
             LDLApplication.ApplicantPersonID = _PersonID;
             LDLApplication.ApplicationDate = DateTime.Now;
             LDLApplication.ApplicationTypeID = _NewLocalDrivingLicenseApplicationTypeID;
-            LDLApplication.ApplicationStatus = clsApplications.enApplicationStatus.New;
+            LDLApplication.ApplicationStatus = clsApplication.enApplicationStatus.New;
             LDLApplication.LastStatusDate = DateTime.Now;
             LDLApplication.PaidApplicationFees = Convert.ToDouble(lblApplicationFees.Text);
             LDLApplication.CreatedByUserID = clsGlobalSettings.CurrentUserID;
 
             return LDLApplication.Save();
+        }
+
+        private bool _CanPersonApply()
+        {
+            int LicenseClassID = clsLicenseClasses.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
+            clsApplication.enApplicationStatus? PersonApplicationStatus;
+
+            if (clsLocalDrivingLicenseApplications.CanPersonApply(_PersonID, LicenseClassID, out PersonApplicationStatus))
+                return true;
+
+            else
+            {
+                if (PersonApplicationStatus == clsApplication.enApplicationStatus.New)
+                    MessageBox.Show($"Choose another license class,the selected person already an active application for the selected class with ID : {clsLocalDrivingLicenseApplications.GetLDLApplicationID(_PersonID)}","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+
+                else if (PersonApplicationStatus == clsApplication.enApplicationStatus.Completed)
+                    MessageBox.Show("Choose another license class,the selected person already has an active license of this selected class", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return false;
+            }
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -159,13 +179,16 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
                     return;
                 }
             }
+
+                if (_CanPersonApply())
+                {
                     clsLocalDrivingLicenseApplications LDLApplication;
                     if (_SaveLDLApplication(out LDLApplication))
                     {
                         lblDLApplicationID.Text = LDLApplication.LocalDrivingLicenseApplicationID.ToString();
                         MessageBox.Show("Data Saved successfully", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        
-                        if(_LDLApplication == null)
+
+                        if (_LDLApplication == null)
                         {
                             _LDLApplication = LDLApplication;
                             _SetTitles(clsLocalDrivingLicenseApplications.enMode.Update);
@@ -174,6 +197,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
                     }
                     else
                         MessageBox.Show("Saving failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
                 MessageBox.Show("Select a person or add new person first!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);

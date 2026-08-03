@@ -163,7 +163,7 @@
             this.tsmiShowPersonLicenseHistory});
             this.cmsLDLApplications.Name = "cmsPeopleMenu";
             this.cmsLDLApplications.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsLDLApplications.Size = new System.Drawing.Size(408, 408);
+            this.cmsLDLApplications.Size = new System.Drawing.Size(408, 430);
             this.cmsLDLApplications.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsLDLApplications_Paint);
             // 
             // tsmiShowApplicationDetails
@@ -195,6 +195,7 @@
             this.tsmiDelete.Size = new System.Drawing.Size(407, 46);
             this.tsmiDelete.Text = "Delete Application";
             this.tsmiDelete.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsmiDelete.Click += new System.EventHandler(this.tsmiDelete_Click);
             // 
             // tsmiCancelApplication
             // 
@@ -204,6 +205,7 @@
             this.tsmiCancelApplication.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.tsmiCancelApplication.Size = new System.Drawing.Size(407, 46);
             this.tsmiCancelApplication.Text = "Cancel Application";
+            this.tsmiCancelApplication.Click += new System.EventHandler(this.tsmiCancelApplication_Click);
             // 
             // tsSeparator3
             // 

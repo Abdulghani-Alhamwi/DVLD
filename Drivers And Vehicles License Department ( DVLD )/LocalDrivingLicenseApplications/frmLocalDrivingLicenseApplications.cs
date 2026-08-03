@@ -108,5 +108,70 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         }
 
+        private void tsmiDelete_Click(object sender, EventArgs e)
+        {
+            if (dgvLDLApplications.Rows.Count == 0)
+                MessageBox.Show("There are no local driving license applications to delete!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+            {
+                if (dgvLDLApplications.SelectedRows.Count > 5)
+                {
+                    MessageBox.Show("You Can Delete Maximum 5 Local Driving License Applications In One Time!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                DialogResult result;
+                if(dgvLDLApplications.SelectedRows.Count == 1)
+                result = MessageBox.Show("Are you sure you want to delete this application?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                else
+                result = MessageBox.Show("Are you sure you want to delete those applications?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+                if (result == DialogResult.OK)
+                {
+                    for (short i = 0; i < dgvLDLApplications.SelectedRows.Count; i++)
+                    {
+                        int ApplicationID = clsLocalDrivingLicenseApplications.GetApplicationID((int)dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value);
+                        if (dgvLDLApplications.SelectedRows[i].Cells["Status"].Value.ToString() == "Completed")
+                        {
+                            MessageBox.Show($"Local license application who has ID : {Convert.ToInt32(dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value)} is not deleted because it is completed.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            continue;
+                        }
+
+                        if (!clsLocalDrivingLicenseApplications.DeleteLDLApplication((int)dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value, ApplicationID))
+                        {
+                            MessageBox.Show($"Local license application who has ID : {Convert.ToInt32(dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+                    }
+                    _RefreshLDLApplicationsView();
+                }
+            }
+        }
+
+        private void tsmiCancelApplication_Click(object sender, EventArgs e)
+        {
+            if (dgvLDLApplications.Rows.Count == 0)
+                MessageBox.Show("There are no local driving license applications to delete!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            else if (dgvLDLApplications.SelectedRows.Count > 1)
+                MessageBox.Show("You can select only one local driving license application to cancel!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            else
+            {
+                DialogResult result = MessageBox.Show("Are you sure you want to cancel this application?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+                if (result == DialogResult.OK)
+                {
+                    int ApplicationID = clsLocalDrivingLicenseApplications.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
+
+                    if (clsApplication.ChangeApplicationStatus(ApplicationID, clsApplication.enApplicationStatus.Canceled))
+                        _RefreshLDLApplicationsView();
+                    else
+                        MessageBox.Show("Failed To Cancel Application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+
+        }
     }
 }

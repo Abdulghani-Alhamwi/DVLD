@@ -75,16 +75,16 @@
     <Compile Include="ApplicationTypes\frmUpdateApplicationType.Designer.cs">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\frmNewLocalDrivingLicenseApplication.cs">
+    <Compile Include="LocalDrivingLicenseApplications\frmNewLocalDrivingLicenseApplication.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Core\frmNewLocalDrivingLicenseApplication.Designer.cs">
+    <Compile Include="LocalDrivingLicenseApplications\frmNewLocalDrivingLicenseApplication.Designer.cs">
       <DependentUpon>frmNewLocalDrivingLicenseApplication.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmLocalDrivingLicenseApplications.cs">
+    <Compile Include="LocalDrivingLicenseApplications\frmLocalDrivingLicenseApplications.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmLocalDrivingLicenseApplications.Designer.cs">
+    <Compile Include="LocalDrivingLicenseApplications\frmLocalDrivingLicenseApplications.Designer.cs">
       <DependentUpon>frmLocalDrivingLicenseApplications.cs</DependentUpon>
     </Compile>
     <Compile Include="TestTypes\frmManageTestTypes.cs">
@@ -180,10 +180,10 @@
     <EmbeddedResource Include="ApplicationTypes\frmUpdateApplicationType.resx">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Core\frmNewLocalDrivingLicenseApplication.resx">
+    <EmbeddedResource Include="LocalDrivingLicenseApplications\frmNewLocalDrivingLicenseApplication.resx">
       <DependentUpon>frmNewLocalDrivingLicenseApplication.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLocalDrivingLicenseApplications.resx">
+    <EmbeddedResource Include="LocalDrivingLicenseApplications\frmLocalDrivingLicenseApplications.resx">
       <DependentUpon>frmLocalDrivingLicenseApplications.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TestTypes\frmManageTestTypes.resx">

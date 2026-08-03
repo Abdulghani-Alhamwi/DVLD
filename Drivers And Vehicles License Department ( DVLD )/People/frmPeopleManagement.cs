@@ -120,28 +120,34 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void tsmiDelete_Click(object sender, EventArgs e)
         {
             if (dgvPeople.Rows.Count == 0)
-            {
-                MessageBox.Show("There are no users to delete!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+                MessageBox.Show("There is'nt any person to delete!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            if (dgvPeople.SelectedRows.Count > 0)
+            else
             {
-                for (short i = 0; i < dgvPeople.SelectedRows.Count; i++)
+                if (dgvPeople.SelectedRows.Count > 5)
                 {
-                    if (!clsPerson.DeletePerson(Convert.ToInt32(dgvPeople.SelectedRows[0].Cells["Person ID"].Value)))
-                    {
-                        MessageBox.Show($"Person who has ID : {Convert.ToInt32(dgvPeople.SelectedRows[0].Cells["Person ID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        if (dgvPeople.SelectedRows.Count == 1)
-                            return;
-                    }
+                    MessageBox.Show("You Can Delete Maximum 5 People In One Time!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
-                _RefreshPeopleDataView();
-                return;
-            }
 
-            MessageBox.Show("No people selected to delete.\nPlease select the people you want to delete first", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult result;
+                if (dgvPeople.SelectedRows.Count == 1)
+                    result = MessageBox.Show("Are you sure you want to delete this person?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                else
+                    result = MessageBox.Show("Are you sure you want to delete those people?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+                if (result == DialogResult.OK)
+                {
+                    for (short i = 0; i < dgvPeople.SelectedRows.Count; i++)
+                    {
+                        if (!clsPerson.DeletePerson(Convert.ToInt32(dgvPeople.SelectedRows[i].Cells["Person ID"].Value)))
+                        {
+                            MessageBox.Show($"Person who has ID : {Convert.ToInt32(dgvPeople.SelectedRows[i].Cells["Person ID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    _RefreshPeopleDataView();
+                }
+                }
         }
 
         private void tsmiEdit_Click(object sender, EventArgs e)
