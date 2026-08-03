@@ -213,7 +213,6 @@ namespace DVLDDataAccessLayer
                 }
 
                     reader.Close();
-                
             }
 
             catch { }

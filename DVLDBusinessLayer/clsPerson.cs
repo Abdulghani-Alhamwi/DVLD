@@ -6,8 +6,8 @@ namespace DVLDBusinessLayer
 {
     public class clsPerson
     {
-         enum _enMode { AddNew = 0 , Update = 1 }
-         _enMode _CurrentMode;
+         public enum enMode { AddNew = 0 , Update = 1 }
+         enMode _CurrentMode;
 
         public enum enGendor { Male = 0 , Female = 1 }
         public enGendor? Gendor;
@@ -29,7 +29,7 @@ namespace DVLDBusinessLayer
         {
             PersonID = -1;
             NationalNo = "";
-            _CurrentMode = _enMode.AddNew;
+            _CurrentMode = enMode.AddNew;
             FirstName = "";
             SecondName = "";
             ThirdName = "";
@@ -61,7 +61,7 @@ namespace DVLDBusinessLayer
             this.NationalityCountryID = NationalityCountryID;
             this.ImagePath = ImagePath;
 
-            this._CurrentMode = _enMode.Update;
+            this._CurrentMode = enMode.Update;
         }
 
         public static clsPerson Find(int PersonID)
@@ -129,7 +129,6 @@ namespace DVLDBusinessLayer
         {
             return clsPeopleData.GetAllPeopleData();
         }
-
         public static DataTable GetAllPeopleBasicInfo()
         {
             return clsPeopleData.GetAllPeopleBasicInfo();
@@ -138,16 +137,16 @@ namespace DVLDBusinessLayer
         {
             switch(_CurrentMode)
             {
-                case _enMode.AddNew:
+                case enMode.AddNew:
                     if (_AddNewPerson())
                     {
-                        _CurrentMode = _enMode.Update;
+                        _CurrentMode = enMode.Update;
                         return true;
                     }
                     else
                         return false;
 
-                case _enMode.Update:
+                case enMode.Update:
                     return _UpdatePerson();                        
             }
             return false;

@@ -280,3 +280,37 @@ DBCC CHECKIDENT ('TableName', RESEED, 6);// if we put for example value 6 -> it 
 28) To insert data from other table to a new table even if the other table was in different database :
 
 SELECT *(if we want all columns) INTO ThisDatabase.dbo.newtablename FROM DatabaseThatHasTheTableWeWantToCopy.dbo.tablename
+
+29) It is allowed to not include the column that is in the aggregate function in the select statement in the GROUP BY Clause, and by that like in our example if we put the column the is in the aggregate function > the column has to values 0 or 1 and by that Database engine will create to groups of data each associated with a value and by that if we sum the column result it will not sum all the column but it will sum that column values in 2 groups , one group with the value 0 and by that it will sum all zeros in the column and the other group the column value is 1 and by that it will sum all the 1 values and we will have 2 records instead of 1 for each row because there is here in our case two groups separated based on the Test Result column value and therefore to avoid that we do not put the column that is in the aggregate function with in the GROUP BY Clause :
+
+SELECT LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.LAppID] , LicenseClasses.ClassName AS [Driving Class] ,
+People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
+ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , ApplicationDate AS [Application Date] ,
+SUM(CAST(TestResult AS INT))AS [Passed Tests]
+FROM LocalDrivingLicenseApplications INNER JOIN LicenseClasses
+ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID 
+INNER JOIN Applications ON LocalDrivingLicenseApplications.ApplicationID = Applications.ApplicationID
+INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID
+INNER JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
+INNER JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID
+GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, LicenseClasses.ClassName,
+People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
+ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END), ApplicationDate
+
+-> When we want a single aggregate value for each record which means when we want column values to be grouped by single aggregate value -> we do not put the column that is in the aggregate function with in the GROUP BY Clause to avoid having separated groups for each value at that column that is with in aggregate function and by that we avoid having the column values grouped by many aggregate values and by that in the result we will have column values repeated with a different aggregate value because when we put the column that is with in aggregate function -> data which is column values will be separated into groups and each groups has the same column values with a value associated with it from the column that is with in the aggregate function and for that in the result set will have the same column values but with different aggregate value in each record we will have.
+
+30) 
+SELECT LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
+People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
+ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , ApplicationDate AS [Application Date] ,
+(CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests] ,
+(CASE WHEN Applications.ApplicationStatus = 0 THEN 'New' WHEN Applications.ApplicationStatus = 1 THEN 'Canceled' ELSE 'Completed' END) AS Status
+FROM LocalDrivingLicenseApplications INNER JOIN LicenseClasses
+ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID 
+INNER JOIN Applications ON LocalDrivingLicenseApplications.ApplicationID = Applications.ApplicationID
+INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID
+LEFT JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
+LEFT JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID
+GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, LicenseClasses.ClassName,
+People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
+ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END), ApplicationDate , (CASE WHEN Applications.ApplicationStatus = 0 THEN 'New' WHEN Applications.ApplicationStatus = 1 THEN 'Canceled' ELSE 'Completed' END) 

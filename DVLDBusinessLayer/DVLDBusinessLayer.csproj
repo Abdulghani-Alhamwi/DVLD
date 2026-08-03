@@ -42,14 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Applications.cs" />
-    <Compile Include="ApplicationTypes.cs" />
-    <Compile Include="LicenseClasses.cs" />
-    <Compile Include="LocalDrivingLicenseApplications.cs" />
-    <Compile Include="TestTypes.cs" />
-    <Compile Include="UsersManagement.cs" />
-    <Compile Include="Countries.cs" />
-    <Compile Include="PeopleManagement.cs" />
+    <Compile Include="clsApplication.cs" />
+    <Compile Include="clsApplicationTypes.cs" />
+    <Compile Include="clsLicenseClasses.cs" />
+    <Compile Include="clsLocalDrivingLicenseApplication.cs" />
+    <Compile Include="clsTestTypes.cs" />
+    <Compile Include="clsUser.cs" />
+    <Compile Include="clsCountries.cs" />
+    <Compile Include="clsPerson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

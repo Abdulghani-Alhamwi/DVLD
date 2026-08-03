@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Data;
 using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
 {
-    public class clsApplications
+    public class clsApplication
     {
-        public enum enApplicationStatus {New = 0 , Canceled = 1 , Completed = 2};
+        public enum enApplicationStatus : byte { New = 0 , Canceled = 1 , Completed = 2};
 
-        private enum _enMode {AddNew = 0 , Update = 1}
+        private enum _enMode : byte { AddNew = 0 , Update = 1}
         private _enMode _CurrentMode;
 
         public int ApplicationID { get; set;}
@@ -20,8 +19,9 @@ namespace DVLDBusinessLayer
         public double PaidApplicationFees { get; set; }
         public int CreatedByUserID { get; set; }
 
-        public clsApplications()
+        public clsApplication()
         {
+            ApplicationID = -1;
             ApplicantPersonID = -1;
             ApplicationDate = DateTime.Now;
             ApplicationTypeID = -1;
@@ -32,7 +32,7 @@ namespace DVLDBusinessLayer
             _CurrentMode = _enMode.AddNew;
         }
 
-        private clsApplications(int ApplicationID,int ApplicantPersonID,DateTime ApplicationDate,int ApplicationTypeID,enApplicationStatus ApplicationStatus,DateTime LastStatusDate,double PaidApplicationFees,int CreatedByUserID)
+        protected clsApplication(int ApplicationID,int ApplicantPersonID,DateTime ApplicationDate,int ApplicationTypeID,enApplicationStatus ApplicationStatus,DateTime LastStatusDate,double PaidApplicationFees,int CreatedByUserID)
         {
             this.ApplicationID = ApplicationID;
             this.ApplicantPersonID = ApplicantPersonID;
@@ -45,33 +45,33 @@ namespace DVLDBusinessLayer
             _CurrentMode = _enMode.Update;
         }
 
-        private static short _GetApplicationStatus(enApplicationStatus Status)
+        private static byte _GetApplicationStatus(enApplicationStatus Status)
         {
             switch(Status)
             {
                 case enApplicationStatus.New:
-                    return 0;
-
-                case enApplicationStatus.Canceled:
                     return 1;
 
-                case enApplicationStatus.Completed:
+                case enApplicationStatus.Canceled:
                     return 2;
+
+                case enApplicationStatus.Completed:
+                    return 3;
             }
-            return -1;
+            return 0;
         }
 
-        private static enApplicationStatus _GetApplicationStatus(short ApplicationStatus)
+        protected static enApplicationStatus _GetApplicationStatus(byte ApplicationStatus)
         {
             switch(ApplicationStatus)
             {
-                case 0:
+                case 1:
                     return enApplicationStatus.New;
 
-                case 1:
+                case 2:
                     return enApplicationStatus.Canceled;
 
-                case 2:
+                case 3:
                     return enApplicationStatus.Completed;
 
                 default:
@@ -92,21 +92,25 @@ namespace DVLDBusinessLayer
             return clsApplicationsData.UpdateApplication(ApplicationID, ApplicantPersonID, ApplicationDate, ApplicationTypeID, _GetApplicationStatus(ApplicationStatus), LastStatusDate, PaidApplicationFees, CreatedByUserID);
         }
 
-        public static clsApplications Find(int ApplicationID)
+        public static clsApplication Find(int ApplicationID)
         {
             int ApplicantPersonID = -1, ApplicationTypeID = -1, CreatedByUserID = -1;
             DateTime ApplicationDate = DateTime.Now, LastStatusDate = DateTime.Now;
-            short ApplicationStatus = -1;
+            byte ApplicationStatus = 0;
             double PaidApplicationFees = -1;
 
             if (clsApplicationsData.Find(ApplicationID, ref ApplicantPersonID, ref ApplicationDate, ref ApplicationTypeID, ref ApplicationStatus, ref LastStatusDate, ref PaidApplicationFees, ref CreatedByUserID))
             {
-                return new clsApplications(ApplicationID, ApplicantPersonID, ApplicationDate, ApplicationTypeID, _GetApplicationStatus(ApplicationStatus), LastStatusDate, PaidApplicationFees, CreatedByUserID);
+                return new clsApplication(ApplicationID, ApplicantPersonID, ApplicationDate, ApplicationTypeID, _GetApplicationStatus(ApplicationStatus), LastStatusDate, PaidApplicationFees, CreatedByUserID);
             }
             else
                 return null;
         }
 
+       public static bool DeleteApplication(int ApplicationID)
+        {
+            return clsApplicationsData.DeleteApplication(ApplicationID);
+        }
         public bool Save()
         {
             switch(_CurrentMode)
@@ -124,6 +128,11 @@ namespace DVLDBusinessLayer
                     return _UpdateApplication();
             }
             return false;
+        }
+
+        public static bool ChangeApplicationStatus(int ApplicationID ,enApplicationStatus TheNewStatus)
+        {
+            return clsApplicationsData.ChangeApplicationStatus(ApplicationID, _GetApplicationStatus(TheNewStatus));
         }
     }
 }

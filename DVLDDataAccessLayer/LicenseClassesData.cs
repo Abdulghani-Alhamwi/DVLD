@@ -69,5 +69,34 @@ namespace DVLDDataAccessLayer
 
             return LicenseClassID;
         }
+        public static string GetLicenseClassName(int LicenseClassID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT ClassName FROM LicenseClasses
+                             WHERE LicenseClassID = @LicenseClassID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+            try
+            {
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return result.ToString();
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return null;
+        }
     }
 }

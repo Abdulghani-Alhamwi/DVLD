@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Net;
+using Microsoft.SqlServer.Server;
 
 namespace DVLDDataAccessLayer
 {
@@ -361,6 +362,35 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return (AffectedRows > 0);
+        }
+
+        public static string GetUserName(int UserID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = "SELECT UserName FROM Users WHERE UserID = @UserID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@UserID", UserID);
+
+            try
+            {
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return result.ToString();
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return null;
         }
     }
 }

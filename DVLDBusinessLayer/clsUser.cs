@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Data;
+using System.Net;
 using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
 {
     public class clsUser
     {
-        enum _enMode {AddNew = 0 , Update = 1}
-        _enMode _CurrentMode;
+        public enum enMode {AddNew = 0 , Update = 1}
+        enMode _CurrentMode;
         public int UserID { get; set; }
         public int PersonID { get; set; }
         public string UserName { get; set; }
@@ -23,7 +24,7 @@ namespace DVLDBusinessLayer
             Password = "";
             Salt = "";
             IsActive = false;
-            _CurrentMode = _enMode.AddNew;
+            _CurrentMode = enMode.AddNew;
         }
 
         private clsUser(int UserID , int PersonID,string UserName ,string Password,string Salt , bool IsActive)
@@ -34,7 +35,7 @@ namespace DVLDBusinessLayer
             this.Password = Password;
             this.Salt = Salt;
             this.IsActive = IsActive;
-            _CurrentMode = _enMode.Update;
+            _CurrentMode = enMode.Update;
         }
         public static DataTable GetAllUsers()
         {
@@ -57,16 +58,16 @@ namespace DVLDBusinessLayer
         {
             switch(_CurrentMode)
             {
-                case _enMode.AddNew:
+                case enMode.AddNew:
                     if (_AddNewUser())
                     {
-                        _CurrentMode = _enMode.Update;
+                        _CurrentMode = enMode.Update;
                         return true;
                     }
                     else
                         return false;
 
-                case _enMode.Update:
+                case enMode.Update:
                     return _UpdateUser();
             }
             return false;
@@ -118,6 +119,11 @@ namespace DVLDBusinessLayer
         public static bool ChangePassword(int UserID,string Password,string Salt)
         {
             return clsUsersData.ChangePassword(UserID, Password, Salt);
+        }
+
+        public static string GetUserName(int UserID)
+        {
+            return clsUsersData.GetUserName(UserID);
         }
     }
 }
