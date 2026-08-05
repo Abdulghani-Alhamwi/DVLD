@@ -121,7 +121,7 @@ namespace MyLib
         }
 
     /// <summary>
-    /// Add New Rows To Data Grid View.
+    /// Add new rows to data grid view.
     /// </summary>
         public static void AddNewRowsToDGV(DataGridView dgv, DataTable CurrentDataSource, DataRow[] NewDataRows, string[] ColumnsNamesInOrder)
         {
@@ -138,7 +138,7 @@ namespace MyLib
         }
 
         /// <summary>
-        /// Return's A String Array Filled With The Data Grid View Columns Names In Order.
+        /// Return's a string array filled with the data grid view columns names in order.
         /// </summary>
         public static string[] GetdgvColumnsNames(DataGridView dgv)
         {
@@ -150,6 +150,43 @@ namespace MyLib
             }
 
             return dgvColumnsNames;
+        }
+
+
+        /// <summary>
+        /// Remove rows from data grid view that its index in the provided array , if the record cannot be deleted from then the record index in the provided array must be -1.
+        /// </summary>
+        public static void DeleteSelectedRowsFromView(DataGridView dgv, int[] SelectedRowsIndex)
+        {
+            for (short i = 0; i < SelectedRowsIndex.Length; i++)
+            {
+                if (SelectedRowsIndex[i] != -1)
+                    dgv.Rows.RemoveAt(SelectedRowsIndex[i]);
+            }
+        }
+
+        /// <summary>
+        /// Add new row to data grid view , the new values array length must match the number of data grid view columns and the dgv first column name is to sort that column in order to display the new row as first row when the dgv has a lot of records in order to avoid user to scroll down to reach the new row.
+        /// </summary>
+        public static void AddNewRowToDGV(DataGridView dgv, DataTable DataSource,ref object[] NewValues, string dgvFirstColumnName)
+        {
+            DataSource.Rows.Add(NewValues);
+
+            if (!(dgv.Rows[dgv.Rows.GetLastRow(DataGridViewElementStates.None)].Displayed))
+                dgv.Sort(dgv.Columns[dgvFirstColumnName], ListSortDirection.Descending);
+
+        }
+
+        /// <summary>
+        /// Edit row in data grid view , new values array length must match the number of data grid view columns and row index is the index of the row that the user want to edit. 
+        /// </summary>
+        public static void EditDataRowInDGV(DataGridView dgv, DataTable DataSource,ref object[] NewValues, int RowIndex)
+        {
+            for (short i = 0; i < dgv.Columns.Count; i++)
+            {
+                DataSource.Columns[i].ReadOnly = false;
+                DataSource.Rows[RowIndex].SetField<object>(dgv.Columns[i].HeaderText, NewValues[i]);
+            }
         }
     }
 }

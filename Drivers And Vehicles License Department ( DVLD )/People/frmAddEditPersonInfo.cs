@@ -17,8 +17,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         internal event AddedNewPersonEventHandler AfterAddingNewPerson;
         internal event Action AfterEditingPersonInfo;
 
-        internal event Action<object[]> SendDataAfterSavingNewPersonInfo;
-        internal event Action<object[],int> SendDataAfterSavingEditedPersonInfo;
+        internal delegate void AfterSavingNewInfo(ref object[] NewValues);
+        internal delegate void AfterSavingEditedInfo(ref object[] NewValues,int RowIndex);
+        internal event AfterSavingNewInfo AfterSavingNewPersonInfo;
+        internal event AfterSavingEditedInfo AfterSavingEditedPersonInfo;
 
         string _SavedPersonalImagePath;
         clsPerson _Person;
@@ -367,14 +369,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
         private object[] _GetCurrentValuesInArray()
         {
-            object[] Values = new object[] { txtFirstName.Text , txtSecondName.Text , txtThirdName.Text ,
-            txtLastName.Text,txtNationalNo.Text,(rbMale.Checked) ? "Male":"Female",dtpDateOfBirth.Value.ToShortDateString(),
-            txtPhone.Text,txtEmail.Text,((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString(),txtAddress.Text,
-            (_SelectedImageNewPath != null)?_SelectedImageNewPath:((_SelectedImageNewPath == null && !_RemoveSavedImage)? _SavedPersonalImagePath:"")};
-            
+            object[] Values = new object[] {lblPersonID.Text,txtNationalNo.Text, txtFirstName.Text , txtSecondName.Text , txtThirdName.Text ,
+            txtLastName.Text,(rbMale.Checked) ? "Male":"Female",dtpDateOfBirth.Value.ToShortDateString(),
+            ((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString(),txtPhone.Text,txtEmail.Text };            
+
             return Values;
         }
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             clsPerson Person;
@@ -446,8 +446,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                     AfterAddingNewPerson?.Invoke(Person.PersonID);                    
                     AfterEditingPersonInfo?.Invoke();
-                    SendDataAfterSavingNewPersonInfo?.Invoke(_GetCurrentValuesInArray());
-                    SendDataAfterSavingEditedPersonInfo?.Invoke(_GetCurrentValuesInArray(), _IndexOfWantedDataRowToEdit);
+
+                    object[] NewValues = _GetCurrentValuesInArray();
+                    AfterSavingNewPersonInfo?.Invoke(ref NewValues);
+                    AfterSavingEditedPersonInfo?.Invoke(ref NewValues, _IndexOfWantedDataRowToEdit);
 
                     if (_Person == null)
                     {

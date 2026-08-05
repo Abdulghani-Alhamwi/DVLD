@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
-using System.Net;
-using System.Security.Policy;
 
 namespace DVLDDataAccessLayer
 {
@@ -197,11 +196,11 @@ namespace DVLDDataAccessLayer
 
             if (LastLowestbroughtPersonID == -1)
                 query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
-                             FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
-                             Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-                             DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
-                             FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
-                             ORDER BY PersonID DESC";
+                          FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
+                          Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+                          DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
+                          FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
+                          ORDER BY PersonID DESC";
 
             else
                 query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
@@ -413,5 +412,74 @@ namespace DVLDDataAccessLayer
             }
             return 0;
         }
+
+        public static DataTable GetFilteredData(short WantedNumberOfRecords,string ColumnNameToFilter,string ValueToFilterBy,char? WildChar = null)
+        {
+            DataTable dtFilteredData = null;
+
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query;
+
+            if(ValueToFilterBy == null)
+                query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
+                          FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
+                          Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+                          DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
+                          FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
+                          ORDER BY PersonID DESC";
+
+            else if (ValueToFilterBy != null && WildChar == null)
+                query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
+                          FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
+                          Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+                          DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
+                          FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
+                          WHERE @ColumnName = '@Value'";
+
+            else
+                query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
+                          FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
+                          Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+                          DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
+                          FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
+                          WHERE @ColumnName Like '@Value' + @WildChar";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            if (ValueToFilterBy != null)
+            {
+                command.Parameters.AddWithValue("@ColumnName", ColumnNameToFilter);
+                command.Parameters.AddWithValue("@Value", ValueToFilterBy);
+
+                if(WildChar != null)
+                command.Parameters.AddWithValue("@WildChar", WildChar);
+            }
+
+            try
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    dtFilteredData = new DataTable();
+                    dtFilteredData.Load(reader);
+                }
+
+                reader.Close();
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+                
+                return dtFilteredData;
+        }
+
     }
 }

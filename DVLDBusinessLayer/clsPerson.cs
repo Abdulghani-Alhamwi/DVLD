@@ -169,5 +169,10 @@ namespace DVLDBusinessLayer
             return clsPeopleData.GetTotalNumbersOfPeople();
         }
 
+        public static DataTable GetFilteredData(short WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
+        {
+            return clsPeopleData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar);
+        }
+
     }
 }
