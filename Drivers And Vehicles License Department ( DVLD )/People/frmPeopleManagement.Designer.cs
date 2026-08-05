@@ -129,7 +129,6 @@
             this.dgvPeople.Size = new System.Drawing.Size(1153, 266);
             this.dgvPeople.StandardTab = true;
             this.dgvPeople.TabIndex = 0;
-            this.dgvPeople.VirtualMode = true;
             this.dgvPeople.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvPeople_Scroll);
             this.dgvPeople.DoubleClick += new System.EventHandler(this.dgvPeople_DoubleClick);
             this.dgvPeople.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvPeople_KeyDown);

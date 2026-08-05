@@ -17,9 +17,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         internal event AddedNewPersonEventHandler AfterAddingNewPerson;
         internal event Action AfterEditingPersonInfo;
 
-        internal event Action<object[]> AfterSavingNewPersonInfo
-            ;
-        internal event Action<object[],int> AfterSavingEditedPersonInfo;
+        internal event Action<object[]> SendDataAfterSavingNewPersonInfo;
+        internal event Action<object[],int> SendDataAfterSavingEditedPersonInfo;
 
         string _SavedPersonalImagePath;
         clsPerson _Person;
@@ -446,8 +445,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     AfterAddingNewPerson?.Invoke(Person.PersonID);                    
-                    AfterSavingNewPersonInfo?.Invoke(_GetCurrentValuesInArray());
-                    AfterEditingPersonInfo?.Invoke(_GetCurrentValuesInArray(), _IndexOfWantedDataRowToEdit);
+                    AfterEditingPersonInfo?.Invoke();
+                    SendDataAfterSavingNewPersonInfo?.Invoke(_GetCurrentValuesInArray());
+                    SendDataAfterSavingEditedPersonInfo?.Invoke(_GetCurrentValuesInArray(), _IndexOfWantedDataRowToEdit);
 
                     if (_Person == null)
                     {

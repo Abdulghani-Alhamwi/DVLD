@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Drawing;
-using System.Linq;
+using System.ComponentModel;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using MyLib; 
@@ -107,13 +107,16 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _AddNewRowToDGV(object[] NewValues)
         {
-            dgvPeople.Rows.Add(NewValues);
+            _dataview.Table.Rows.Add(NewValues);
+
+            if(dgvPeople.SortOrder == SortOrder.Ascending && !(dgvPeople.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.None)].Displayed))
+            dgvPeople.Sort(dgvPeople.Columns["Person ID"],ListSortDirection.Descending);
         }
 
         private void _AddNewPersonScreen()
         {
             frmAddEditPersonInfo frm = new frmAddEditPersonInfo();
-            frm.AfterSavingNewPersonInfo += _AddNewRowToDGV;
+            frm.SendDataAfterSavingNewPersonInfo += _AddNewRowToDGV;
 
             frm.ShowDialog();
         }
@@ -180,7 +183,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (PersonInfo != null)
             {
                 frmAddEditPersonInfo frm = new frmAddEditPersonInfo(PersonInfo);
-                frm.AfterEditingPersonInfo += _EditDataRowInDGV;
+                frm.SendDataAfterSavingEditedPersonInfo += _EditDataRowInDGV;
                 frm.ShowDialog();
             }
             else
