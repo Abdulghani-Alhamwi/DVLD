@@ -133,13 +133,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                         int ApplicationID = clsLocalDrivingLicenseApplications.GetApplicationID((int)dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value);
                         if (dgvLDLApplications.SelectedRows[i].Cells["Status"].Value.ToString() == "Completed")
                         {
-                            MessageBox.Show($"Local license application who has ID : {Convert.ToInt32(dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value)} is not deleted because it is completed.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show($"Local driving license application who has ID : {Convert.ToInt32(dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value)} cannot be deleted because it is completed.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             continue;
                         }
 
                         if (!clsLocalDrivingLicenseApplications.DeleteLDLApplication((int)dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value, ApplicationID))
                         {
-                            MessageBox.Show($"Local license application who has ID : {Convert.ToInt32(dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show($"Local driving license application who has ID : {Convert.ToInt32(dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             return;
                         }
                     }

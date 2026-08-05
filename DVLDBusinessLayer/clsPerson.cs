@@ -129,9 +129,9 @@ namespace DVLDBusinessLayer
         {
             return clsPeopleData.GetAllPeopleData();
         }
-        public static DataTable GetAllPeopleBasicInfo()
+        public static DataTable GetAllPeopleBasicInfo(byte WantedNumberOfRecords, int LastLowestbroughtPersonID = -1)
         {
-            return clsPeopleData.GetAllPeopleBasicInfo();
+            return clsPeopleData.GetAllPeopleBasicInfo(WantedNumberOfRecords,LastLowestbroughtPersonID);
         }
         public bool Save()
         {
@@ -162,6 +162,11 @@ namespace DVLDBusinessLayer
                 return false;
 
                 return clsPeopleData.SearchForNationalNo(NationalNo);
+        }
+
+        public static uint GetTotalNumbersOfPeople()
+        {
+            return clsPeopleData.GetTotalNumbersOfPeople();
         }
 
     }

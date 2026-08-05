@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 using System.Net;
+using System.Security.Policy;
 
 namespace DVLDDataAccessLayer
 {
@@ -187,19 +188,35 @@ namespace DVLDDataAccessLayer
             return dtPeople;
         }
 
-        public static DataTable GetAllPeopleBasicInfo()
+        public static DataTable GetAllPeopleBasicInfo(byte WantedNumberOfRecords,int LastLowestbroughtPersonID)
         {
             DataTable dtPeople = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            string query;
 
-            string query = @"SELECT PersonID AS [Person ID],NationalNo AS [National No.],
+            if (LastLowestbroughtPersonID == -1)
+                query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
                              FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
                              Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
                              DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
-                             FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
+                             FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
+                             ORDER BY PersonID DESC";
+
+            else
+                query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
+                             FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
+                             Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+                             DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
+                             FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
+                             WHERE PersonID < @LastLowestbroughtPersonID
+                             ORDER BY PersonID DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+
+            if(LastLowestbroughtPersonID != -1)
+                command.Parameters.AddWithValue("@LastLowestbroughtPersonID", LastLowestbroughtPersonID);
 
             try
             {
@@ -369,5 +386,32 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
+        public static uint GetTotalNumbersOfPeople()
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT Count(PersonID) FROM People";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return Convert.ToUInt32(result);
+             
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return 0;
+        }
     }
 }

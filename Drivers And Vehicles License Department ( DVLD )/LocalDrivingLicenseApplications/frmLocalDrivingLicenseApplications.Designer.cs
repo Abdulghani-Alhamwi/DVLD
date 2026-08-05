@@ -163,7 +163,7 @@
             this.tsmiShowPersonLicenseHistory});
             this.cmsLDLApplications.Name = "cmsPeopleMenu";
             this.cmsLDLApplications.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsLDLApplications.Size = new System.Drawing.Size(408, 430);
+            this.cmsLDLApplications.Size = new System.Drawing.Size(408, 408);
             this.cmsLDLApplications.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsLDLApplications_Paint);
             // 
             // tsmiShowApplicationDetails

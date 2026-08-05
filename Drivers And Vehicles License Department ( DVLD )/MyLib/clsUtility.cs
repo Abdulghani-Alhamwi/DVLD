@@ -6,13 +6,12 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
-using DVLDBusinessLayer;
 
 namespace MyLib
 {
     internal class clsUtility
     {
-        public static string HashWithSaltPassword(string Password,ref byte[] Salt)
+        public static string HashWithSaltPassword(string Password, ref byte[] Salt)
         {
             if (Salt == null)
             {
@@ -22,7 +21,7 @@ namespace MyLib
                 rn.GetBytes(Salt);
                 rn.Dispose();
             }
-            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(Password, Salt, 10000,HashAlgorithmName.SHA256);
+            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(Password, Salt, 10000, HashAlgorithmName.SHA256);
             byte[] HashWithSalt = PBKDF2.GetBytes(32);
             PBKDF2.Dispose();
 
@@ -43,7 +42,7 @@ namespace MyLib
             aes.Dispose();
             byte[] EncryptedUserName = Encryptor.TransformFinalBlock(UserNameInBytes, 0, UserNameInBytes.Length);
             Encryptor.Dispose();
-            
+
             return Convert.ToBase64String(EncryptedUserName);
 
         }
@@ -63,12 +62,12 @@ namespace MyLib
 
             return Encoding.UTF8.GetString(DecryptedUserName);
         }
-        public static void EnableErrorProvider(ErrorProvider erControl,Control control, string ErrorMessage, CancelEventArgs CancelEvent = null)
+        public static void EnableErrorProvider(ErrorProvider erControl, Control control, string ErrorMessage, CancelEventArgs CancelEvent = null)
         {
             erControl.SetError(control, ErrorMessage);
 
             if (CancelEvent != null)
-            CancelEvent.Cancel = true;
+                CancelEvent.Cancel = true;
         }
 
         public static void DrawComboBoxItems(object sender, DrawItemEventArgs e, string ColumnName = null)
@@ -94,7 +93,7 @@ namespace MyLib
             }
             e.DrawFocusRectangle();
         }
-        public static void FilterDataView(DataView dataview, string ColumnName, string FilterOnValue , KeyEventArgs e)
+        public static void FilterDataView(DataView dataview, string ColumnName, string FilterOnValue, KeyEventArgs e)
         {
             if (dataview.Table.Rows.Count == 0)
                 return;
@@ -111,14 +110,46 @@ namespace MyLib
                 dataview.RowFilter = $"[{ColumnName}] = '{FilterOnValue}'";
 
         }
-        public static void RefreshInformationView(DataGridView dgv , DataTable datatable)
+        public static void RefreshInformationView(DataGridView dgv, DataTable datatable)
         {
-         dgv.DataSource = datatable;
+            dgv.DataSource = datatable;
         }
 
         public static void RefreshInformationView(DataGridView dgv, DataView dataview)
         {
-         dgv.DataSource = dataview;
+            dgv.DataSource = dataview;
+        }
+
+    /// <summary>
+    /// Add New Rows To Data Grid View.
+    /// </summary>
+        public static void AddNewRowsToDGV(DataGridView dgv, DataTable CurrentDataSource, DataRow[] NewDataRows, string[] ColumnsNamesInOrder)
+        {
+                object[] RowsValues;
+                for (short i = 0; i < NewDataRows.Length; i++)
+                {
+                    RowsValues = new object[ColumnsNamesInOrder.Length];
+                    for (short j = 0; j < ColumnsNamesInOrder.Length; j++)
+                    {
+                        RowsValues[j] = NewDataRows[i][ColumnsNamesInOrder[j]];
+                    }
+                    CurrentDataSource.Rows.Add(RowsValues);
+                }
+        }
+
+        /// <summary>
+        /// Return's A String Array Filled With The Data Grid View Columns Names In Order.
+        /// </summary>
+        public static string[] GetdgvColumnsNames(DataGridView dgv)
+        {
+            string[] dgvColumnsNames = new string[dgv.Columns.Count];
+
+            for (short i = 0; i < dgv.Columns.Count; i++)
+            {
+                dgvColumnsNames[i] = dgv.Columns[i].HeaderText;
+            }
+
+            return dgvColumnsNames;
         }
     }
 }

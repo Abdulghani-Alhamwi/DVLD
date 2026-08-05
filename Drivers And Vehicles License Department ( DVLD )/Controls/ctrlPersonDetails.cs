@@ -111,7 +111,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (_Person != null)
             {
                 frmAddEditPersonInfo frm = new frmAddEditPersonInfo(_Person);
-                frm.RefreshView += _RefreshView;
+                frm.AfterEditingPersonInfo += _RefreshView;
                 frm.ShowDialog();
                 _ShowPersonDetails();
 

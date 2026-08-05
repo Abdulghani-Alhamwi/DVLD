@@ -15,25 +15,40 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
     {
         internal delegate void AddedNewPersonEventHandler (int PersonID);
         internal event AddedNewPersonEventHandler AfterAddingNewPerson;
+        internal event Action AfterEditingPersonInfo;
 
-        internal event Action RefreshView;
+        internal event Action<object[]> AfterSavingNewPersonInfo
+            ;
+        internal event Action<object[],int> AfterSavingEditedPersonInfo;
 
         string _SavedPersonalImagePath;
         clsPerson _Person;
+        int _IndexOfWantedDataRowToEdit = -1;
+
         public frmAddEditPersonInfo(clsPerson PersonInfo = null)
+        {
+            _InitializeForm(PersonInfo);
+        }
+
+        public frmAddEditPersonInfo(clsPerson PersonInfo,int IndexOfWantedRowToEdit)
+        {
+            _InitializeForm(PersonInfo);
+            _IndexOfWantedDataRowToEdit = IndexOfWantedRowToEdit;
+        }
+
+        private void _InitializeForm(clsPerson PersonInfo)
         {
             InitializeComponent();
 
             if (PersonInfo == null)
                 _SetTitles(clsPerson.enMode.AddNew);
-            
+
             else
             {
                 this._Person = PersonInfo;
                 _SetTitles(clsPerson.enMode.Update);
             }
             lblFormBigTitle.Location = new Point((this.Width / 2) - (lblFormBigTitle.Width / 2), lblFormBigTitle.Location.Y);
-
         }
 
         private void _SetTitles(clsPerson.enMode Mode)
@@ -351,6 +366,16 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                  && _Person.ImagePath == (pbPersonalImage.ImageLocation == null ? _Person.ImagePath : pbPersonalImage.ImageLocation)
                  );
         }
+        private object[] _GetCurrentValuesInArray()
+        {
+            object[] Values = new object[] { txtFirstName.Text , txtSecondName.Text , txtThirdName.Text ,
+            txtLastName.Text,txtNationalNo.Text,(rbMale.Checked) ? "Male":"Female",dtpDateOfBirth.Value.ToShortDateString(),
+            txtPhone.Text,txtEmail.Text,((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString(),txtAddress.Text,
+            (_SelectedImageNewPath != null)?_SelectedImageNewPath:((_SelectedImageNewPath == null && !_RemoveSavedImage)? _SavedPersonalImagePath:"")};
+            
+            return Values;
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             clsPerson Person;
@@ -420,10 +445,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                     MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    AfterAddingNewPerson?.Invoke(Person.PersonID);
-                    RefreshView?.Invoke();
+                    AfterAddingNewPerson?.Invoke(Person.PersonID);                    
+                    AfterSavingNewPersonInfo?.Invoke(_GetCurrentValuesInArray());
+                    AfterEditingPersonInfo?.Invoke(_GetCurrentValuesInArray(), _IndexOfWantedDataRowToEdit);
 
-                    if(_Person == null)
+                    if (_Person == null)
                     {
                         _SetTitles(clsPerson.enMode.Update);
                         _Person = Person;
