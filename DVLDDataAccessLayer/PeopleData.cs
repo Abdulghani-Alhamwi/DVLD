@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
 
 namespace DVLDDataAccessLayer
@@ -149,44 +148,6 @@ namespace DVLDDataAccessLayer
             }
             return (AffectedRows > 0);
         }
-
-        public static DataTable GetAllPeopleData()
-        {
-            DataTable dtPeople = null;
-
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-
-            string query = @"SELECT PersonID,NationalNo,
-                        FirstName, SecondName, ThirdName, LastName, DateOfBirth,
-                        Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-                        Address, Phone, Email, NationalityCountryID, ImagePath FROM People";
-
-            SqlCommand command = new SqlCommand(query, connection);
-
-            try
-            {
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    dtPeople = new DataTable();
-                    dtPeople.Load(reader);
-                }
-
-                    reader.Close();
-            }
-
-            catch { }
-
-            finally
-            {
-                connection.Close();
-            }
-
-            return dtPeople;
-        }
-
         public static DataTable GetAllPeopleBasicInfo(byte WantedNumberOfRecords,int LastLowestbroughtPersonID)
         {
             DataTable dtPeople = null;
@@ -194,22 +155,18 @@ namespace DVLDDataAccessLayer
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query;
 
+            query = @"SELECT TOP (@WantedNumberOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
+                      FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
+                      Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+                      DateOfBirth AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
+                      FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID ";
+
             if (LastLowestbroughtPersonID == -1)
-                query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
-                          FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
-                          Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-                          DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
-                          FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
-                          ORDER BY PersonID DESC";
+                query += "ORDER BY PersonID DESC";
 
             else
-                query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
-                             FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
-                             Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-                             DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
-                             FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
-                             WHERE PersonID < @LastLowestbroughtPersonID
-                             ORDER BY PersonID DESC";
+                query += @"WHERE PersonID < @LastLowestbroughtPersonID
+                           ORDER BY PersonID DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
@@ -413,48 +370,75 @@ namespace DVLDDataAccessLayer
             return 0;
         }
 
-        public static DataTable GetFilteredData(short WantedNumberOfRecords,string ColumnNameToFilter,string ValueToFilterBy,char? WildChar = null)
+        private static string _PrepareDataFilteringQuery(short WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
+        {
+            string query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
+                      FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
+                      Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+                      DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
+                      FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
+
+            if (ColumnNameToFilter == "Nationality")
+                ColumnNameToFilter = "CountryName";
+
+            if (ValueToFilterBy != null)
+            {
+                switch (ColumnNameToFilter)
+                {
+                    case "Gendor":
+                        if (WildChar == null)
+                            query = "SELECT * FROM (" + query + ") R1 WHERE Gendor LIKE @Value";
+                        else
+                            query = "SELECT * FROM (" + query + ") R1 WHERE Gendor LIKE @Value + @WildChar";
+
+                        break;
+
+                    default:
+                        if (WildChar == null)
+                            query += $" WHERE {ColumnNameToFilter} = @Value";
+                        else
+                            query += $" WHERE {ColumnNameToFilter} Like @Value + @WildChar";
+
+                        break;
+                }
+            }
+
+            if (ColumnNameToFilter == "Gendor")
+            {
+                if (LastLowestbroughtPersonID == -1)
+                    query += " ORDER BY [Person ID] DESC";
+
+                else
+                    query += @" AND [Person ID] < @LastLowestbroughtPersonID
+                           ORDER BY [Person ID] DESC";
+            }
+            else
+            {
+                if (LastLowestbroughtPersonID == -1)
+                    query += " ORDER BY PersonID DESC";
+
+                else
+                    query += @" AND PersonID < @LastLowestbroughtPersonID
+                           ORDER BY PersonID DESC";
+            }
+            return query;
+        }
+
+        public static DataTable GetFilteredData(short WantedNumberOfRecords,string ColumnNameToFilter,string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query;
-
-            if(ValueToFilterBy == null)
-                query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
-                          FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
-                          Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-                          DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
-                          FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
-                          ORDER BY PersonID DESC";
-
-            else if (ValueToFilterBy != null && WildChar == null)
-                query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
-                          FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
-                          Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-                          DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
-                          FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
-                          WHERE @ColumnName = '@Value'";
-
-            else
-                query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
-                          FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
-                          Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-                          DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
-                          FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
-                          WHERE @ColumnName Like '@Value' + @WildChar";
+            string query = _PrepareDataFilteringQuery(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,WildChar,LastLowestbroughtPersonID);
 
             SqlCommand command = new SqlCommand(query, connection);
+             command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
 
-            if (ValueToFilterBy != null)
-            {
-                command.Parameters.AddWithValue("@ColumnName", ColumnNameToFilter);
-                command.Parameters.AddWithValue("@Value", ValueToFilterBy);
+             command.Parameters.AddWithValue("@Value", ValueToFilterBy);
 
                 if(WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
-            }
 
             try
             {
@@ -471,7 +455,7 @@ namespace DVLDDataAccessLayer
                 reader.Close();
             }
 
-            catch { }
+            catch(Exception ex) { Console.Write(ex.Message); }
 
             finally
             {
@@ -480,6 +464,5 @@ namespace DVLDDataAccessLayer
                 
                 return dtFilteredData;
         }
-
     }
 }

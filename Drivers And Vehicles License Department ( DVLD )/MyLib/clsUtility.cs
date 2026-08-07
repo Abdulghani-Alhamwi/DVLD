@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -146,10 +147,25 @@ namespace MyLib
 
             for (short i = 0; i < dgv.Columns.Count; i++)
             {
-                dgvColumnsNames[i] = dgv.Columns[i].HeaderText;
+                dgvColumnsNames[i] = dgv.Columns[i].Name;
+            }
+            
+            return dgvColumnsNames;
+        }
+
+        public static List<string> GetdgvColumnsNames(DataGridView dgv,string UnWantedColumnName)
+        {
+            List<string> ldgvColumnsNames = new List<string>();
+
+            for (short i = 0; i < dgv.Columns.Count; i++)
+            {
+                ldgvColumnsNames.Add(dgv.Columns[i].Name);
             }
 
-            return dgvColumnsNames;
+            if (UnWantedColumnName != null)
+                ldgvColumnsNames.Remove(UnWantedColumnName);
+
+            return ldgvColumnsNames;
         }
 
 

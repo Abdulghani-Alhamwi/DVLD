@@ -314,3 +314,106 @@ LEFT JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID
 GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, LicenseClasses.ClassName,
 People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
 ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END), ApplicationDate , (CASE WHEN Applications.ApplicationStatus = 0 THEN 'New' WHEN Applications.ApplicationStatus = 1 THEN 'Canceled' ELSE 'Completed' END) 
+
+
+31)
+
+ public static DataTable GetFilteredData(short WantedNumberOfRecords,string ColumnNameToFilter,string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
+ {
+     DataTable dtFilteredData = null;
+
+     SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+     string query;
+
+     query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
+               FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
+               Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+               DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
+               FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
+
+     if (ColumnNameToFilter == "Nationality")
+         ColumnNameToFilter = "CountryName";
+
+     if(ValueToFilterBy != null)
+     {
+       switch(ColumnNameToFilter)
+         {
+             case "Gendor":
+               if(WildChar == null)
+                   query = "SELECT * FROM (" + query + ") R1 WHERE Gendor LIKE @Value";
+               else
+                   query = "SELECT * FROM (" + query + ") R1 WHERE Gendor LIKE @Value + @WildChar";
+
+               break;
+
+             case "PersonID":
+                     query += " WHERE PersonID = @Value";
+
+                 break;
+
+             default:
+                 if (WildChar == null)
+                     query += $" WHERE {ColumnNameToFilter} = @Value";
+                 else
+                     query += $" WHERE {ColumnNameToFilter} Like @Value + @WildChar";
+
+                 break;
+         }            
+     }
+
+     if (ColumnNameToFilter == "Gendor")
+     {
+         if (LastLowestbroughtPersonID == -1)
+             query += " ORDER BY [Person ID] DESC";
+
+         else
+             query += @" AND [Person ID] < @LastLowestbroughtPersonID
+                    ORDER BY [Person ID] DESC";
+     }
+     else
+     {
+         if (LastLowestbroughtPersonID == -1)
+             query += " ORDER BY PersonID DESC";
+
+         else
+             query += @" AND PersonID < @LastLowestbroughtPersonID
+                    ORDER BY PersonID DESC";
+     }
+
+     SqlCommand command = new SqlCommand(query, connection);
+      command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+
+     if (ValueToFilterBy != null)
+     {
+         command.Parameters.AddWithValue("@Value", ValueToFilterBy);
+
+         if(WildChar != null)
+         command.Parameters.AddWithValue("@WildChar", WildChar);
+
+     }
+
+     try
+     {
+         connection.Open();
+
+         SqlDataReader reader = command.ExecuteReader();
+
+         if (reader.HasRows)
+         {
+             dtFilteredData = new DataTable();
+             dtFilteredData.Load(reader);
+         }
+
+         reader.Close();
+     }
+
+     catch(Exception ex) { Console.Write(ex.Message); }
+
+     finally
+     {
+         connection.Close();
+     }
+         
+         return dtFilteredData;
+ }

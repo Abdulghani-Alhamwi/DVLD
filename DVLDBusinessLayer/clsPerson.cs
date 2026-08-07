@@ -125,10 +125,6 @@ namespace DVLDBusinessLayer
         {
             return clsPeopleData.UpdatePerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath);
         }
-        public static DataTable GetAllPeopleData()
-        {
-            return clsPeopleData.GetAllPeopleData();
-        }
         public static DataTable GetAllPeopleBasicInfo(byte WantedNumberOfRecords, int LastLowestbroughtPersonID = -1)
         {
             return clsPeopleData.GetAllPeopleBasicInfo(WantedNumberOfRecords,LastLowestbroughtPersonID);
@@ -169,7 +165,7 @@ namespace DVLDBusinessLayer
             return clsPeopleData.GetTotalNumbersOfPeople();
         }
 
-        public static DataTable GetFilteredData(short WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
+        public static DataTable GetFilteredData(short WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
         {
             return clsPeopleData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar);
         }
