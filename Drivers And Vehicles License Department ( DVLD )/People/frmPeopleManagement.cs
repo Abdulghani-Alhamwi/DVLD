@@ -22,7 +22,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             List<string> ldgvColumnsNames = clsUtility.GetdgvColumnsNames(dgvPeople,"Date Of Birth");
 
-            for (short i = 0; i < ldgvColumnsNames.Count; i++)
+            for (byte i = 0; i < ldgvColumnsNames.Count; i++)
             {
                 Items[i + 1] = ldgvColumnsNames[i];
             }
@@ -37,7 +37,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void frmPeopleManagement_Load(object sender, EventArgs e)
         {
-            DataTable dtPeople = clsPerson.GetAllPeopleBasicInfo(100);
+            DataTable dtPeople = clsPerson.GetAllPeopleInfo(100);
             
             if (dtPeople != null)
             {
@@ -46,7 +46,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 dgvPeople.DataSource = _dataview;
             }
                 _AddDropDownItems();
-            lblRecordsNumber.Text = clsPerson.GetTotalNumbersOfPeople().ToString();
+            lblRecordsNumber.Text = clsPerson.GetTotalNumberOfPeople().ToString();
         }
 
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
@@ -77,7 +77,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             else
             {
                 txtFilter.Visible = false;
-                dgvPeople.DataSource = clsPerson.GetAllPeopleBasicInfo(100);
+                dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(100);
             }
         }
 
@@ -113,9 +113,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             return null;
         }
 
-        private void _AddFilteredData(DataTable EmptyDataTable , bool ScrollCase = false)
+        private void _AddFilteredData(DataTable EmptyDataTable, bool ScrollCase = false)
         {
-            if(!ScrollCase)
+            if (!ScrollCase)
             {
                 if (cbFilterBy.SelectedItem.ToString() == "Person ID" || cbFilterBy.SelectedItem.ToString() == "Phone")
                     dgvPeople.DataSource = clsPerson.GetFilteredData(100, _GetColumnNameToFilter(), txtFilter.Text, null);
@@ -142,7 +142,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (txtFilter.Text != "")
                 _AddFilteredData(null);
             else
-                dgvPeople.DataSource = clsPerson.GetAllPeopleBasicInfo(100);
+                dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(100);
         }
 
         private void txtFilter_KeyDown(object sender, KeyEventArgs e)
@@ -205,7 +205,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 if (result == DialogResult.OK)
                 {
                     int[] SelectedRowsIndex = new int[dgvPeople.SelectedRows.Count];
-                    for (short i = 0; i < dgvPeople.SelectedRows.Count; i++)
+                    for (byte i = 0; i < dgvPeople.SelectedRows.Count; i++)
                     {
                         if (!clsPerson.DeletePerson(Convert.ToInt32(dgvPeople.SelectedRows[i].Cells["Person ID"].Value)))
                         {
@@ -216,7 +216,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                             SelectedRowsIndex[i] = dgvPeople.SelectedRows[i].Index;
                     }
                     clsUtility.DeleteSelectedRowsFromView(dgvPeople,SelectedRowsIndex);
-                    lblRecordsNumber.Text = clsPerson.GetTotalNumbersOfPeople().ToString();
+                    lblRecordsNumber.Text = clsPerson.GetTotalNumberOfPeople().ToString();
                 }
             }
         }
@@ -316,7 +316,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                 else
                 {
-                    DataRow[] NewRows = clsPerson.GetAllPeopleBasicInfo(100, (int)dgvPeople.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value).Select();
+                    DataRow[] NewRows = clsPerson.GetAllPeopleInfo(100, (int)dgvPeople.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value).Select();
 
                     if (NewRows != null)
                         clsUtility.AddNewRowsToDGV(dgvPeople, _dataview.Table, NewRows, clsUtility.GetdgvColumnsNames(dgvPeople));

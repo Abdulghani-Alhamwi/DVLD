@@ -37,9 +37,9 @@ namespace DVLDBusinessLayer
             this.IsActive = IsActive;
             _CurrentMode = enMode.Update;
         }
-        public static DataTable GetAllUsers()
+        public static DataTable GetAllUsersInfo(byte WantedNumberOfRecords, int LastLowestBroughtUserID = -1)
         {
-            return clsUsersData.GetAllUsers();
+            return clsUsersData.GetAllUsersInfo(WantedNumberOfRecords,LastLowestBroughtUserID);
         }
 
         private bool _AddNewUser()
@@ -125,5 +125,16 @@ namespace DVLDBusinessLayer
         {
             return clsUsersData.GetUserName(UserID);
         }
+
+        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
+        {
+            return clsUsersData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar, LastLowestbroughtUserID);
+        }
+
+        public static uint GetTotalNumberOfUsers()
+        {
+            return clsUsersData.GetTotalNumberOfUsers();
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
@@ -12,15 +13,33 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         public delegate void AddEditUserEventHandler();
         public event AddEditUserEventHandler OnAddedOrEditedUser;
 
+        internal delegate void AfterSavingNewInfo(ref object[] NewValues);
+        internal delegate void AfterSavingEditedInfo(ref object[] NewValues, int RowIndex);
+        internal event AfterSavingNewInfo AfterSavingNewUserInfo;
+        internal event AfterSavingEditedInfo AfterSavingEditedUserInfo;
+
         private int _PersonID = -1;
         private clsUser _User;
         private string _DefaultPasswordValue = "Not Real Password";
         private bool _WantTochangePassword = true;
+        int _IndexOfWantedDataRowToEdit = -1;
+
         public frmAddEditUserInfo(clsUser User = null)
+        {
+            _InitializeForm(User);
+        }
+
+        public frmAddEditUserInfo(clsUser User, int IndexOfWantedDataRowToEdit = -1)
+        {
+            _InitializeForm(User);
+            _IndexOfWantedDataRowToEdit = IndexOfWantedDataRowToEdit;
+        }
+
+        private void _InitializeForm(clsUser User)
         {
             InitializeComponent();
 
-            if(User == null)
+            if (User == null)
                 _SetTitles(clsUser.enMode.AddNew);
 
             else
@@ -30,7 +49,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 _ShowUserDetails();
                 btnSave.Enabled = true;
             }
-            
+
             lblFormBigTitle.Location = new Point((this.Width / 2) - (lblFormBigTitle.Width / 2), lblFormBigTitle.Location.Y);
         }
 
@@ -55,7 +74,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             txtUserName.Text = clsUtility.DecryptUserName(_User.UserName);
             txtPassword.Text = _DefaultPasswordValue;
             txtPasswordConfirmation.Text = _DefaultPasswordValue;
-            chbIsActive.Checked = _User.IsActive;
+            chkIsActive.Checked = _User.IsActive;
         }
         private void btnExit_Click(object sender, EventArgs e)
         {
@@ -149,6 +168,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             btnExit.CausesValidation = false;
         }
 
+        private object[] _GetCurrentValuesInArray()
+        {
+            object[] Values = new object[] {lblUserID.Text,_PersonID, clsPerson.GetFullName(_PersonID),txtUserName.Text,chkIsActive};
+
+            return Values;
+        }
+
         private void _SetPasswordAndSalt(clsUser User)
         {
             byte[] Salt = null;
@@ -161,7 +187,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             return (txtUserName.Text == clsUtility.DecryptUserName(_User.UserName)
                  && txtPassword.Text == _DefaultPasswordValue
                  && txtPasswordConfirmation.Text == _DefaultPasswordValue
-                 && chbIsActive.Checked == _User.IsActive);
+                 && chkIsActive.Checked == _User.IsActive);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -193,7 +219,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     _SetPasswordAndSalt(User);
             }
             
-            User.IsActive = chbIsActive.Checked;
+            User.IsActive = chkIsActive.Checked;
 
             if(User.Save())
             {                
@@ -207,6 +233,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 }
 
                 OnAddedOrEditedUser?.Invoke();
+
+                object[] NewValues = _GetCurrentValuesInArray();
+                AfterSavingNewUserInfo?.Invoke(ref NewValues);
+                AfterSavingEditedUserInfo?.Invoke(ref NewValues,_IndexOfWantedDataRowToEdit);
 
                 clsGlobalSettings.LoginInfoChanged = true;
             }

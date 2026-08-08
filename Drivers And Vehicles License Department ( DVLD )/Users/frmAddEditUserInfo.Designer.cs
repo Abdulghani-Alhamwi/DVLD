@@ -37,7 +37,7 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.uctrlpersonInfoByFilter = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetailsByFilter();
             this.tpLoginInfo = new System.Windows.Forms.TabPage();
-            this.chbIsActive = new System.Windows.Forms.CheckBox();
+            this.chkIsActive = new System.Windows.Forms.CheckBox();
             this.pbUserID = new System.Windows.Forms.PictureBox();
             this.pbPassword = new System.Windows.Forms.PictureBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
@@ -165,7 +165,7 @@
             // tpLoginInfo
             // 
             this.tpLoginInfo.AutoScroll = true;
-            this.tpLoginInfo.Controls.Add(this.chbIsActive);
+            this.tpLoginInfo.Controls.Add(this.chkIsActive);
             this.tpLoginInfo.Controls.Add(this.pbUserID);
             this.tpLoginInfo.Controls.Add(this.pbPassword);
             this.tpLoginInfo.Controls.Add(this.txtPassword);
@@ -186,19 +186,19 @@
             this.tpLoginInfo.Text = "Login Info";
             this.tpLoginInfo.UseVisualStyleBackColor = true;
             // 
-            // chbIsActive
+            // chkIsActive
             // 
-            this.chbIsActive.AutoSize = true;
-            this.chbIsActive.Checked = true;
-            this.chbIsActive.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbIsActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chbIsActive.Font = new System.Drawing.Font("Tahoma", 20F);
-            this.chbIsActive.Location = new System.Drawing.Point(379, 354);
-            this.chbIsActive.Name = "chbIsActive";
-            this.chbIsActive.Size = new System.Drawing.Size(131, 37);
-            this.chbIsActive.TabIndex = 3;
-            this.chbIsActive.Text = "Is Active";
-            this.chbIsActive.UseVisualStyleBackColor = true;
+            this.chkIsActive.AutoSize = true;
+            this.chkIsActive.Checked = true;
+            this.chkIsActive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkIsActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkIsActive.Font = new System.Drawing.Font("Tahoma", 20F);
+            this.chkIsActive.Location = new System.Drawing.Point(379, 354);
+            this.chkIsActive.Name = "chkIsActive";
+            this.chkIsActive.Size = new System.Drawing.Size(131, 37);
+            this.chkIsActive.TabIndex = 3;
+            this.chkIsActive.Text = "Is Active";
+            this.chkIsActive.UseVisualStyleBackColor = true;
             // 
             // pbUserID
             // 
@@ -448,7 +448,7 @@
         private System.Windows.Forms.PictureBox pbPassword;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.TextBox txtPasswordConfirmation;
-        private System.Windows.Forms.CheckBox chbIsActive;
+        private System.Windows.Forms.CheckBox chkIsActive;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClose;
     }

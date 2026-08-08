@@ -148,7 +148,7 @@ namespace DVLDDataAccessLayer
             }
             return (AffectedRows > 0);
         }
-        public static DataTable GetAllPeopleBasicInfo(byte WantedNumberOfRecords,int LastLowestbroughtPersonID)
+        public static DataTable GetAllPeopleInfo(byte WantedNumberOfRecords,int LastLowestbroughtPersonID = -1)
         {
             DataTable dtPeople = null;
 
@@ -159,14 +159,12 @@ namespace DVLDDataAccessLayer
                       FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
                       Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
                       DateOfBirth AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
-                      FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID ";
+                      FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
 
-            if (LastLowestbroughtPersonID == -1)
-                query += "ORDER BY PersonID DESC";
+            if (LastLowestbroughtPersonID != -1)
+                query += @" WHERE PersonID < @LastLowestbroughtPersonID";
 
-            else
-                query += @"WHERE PersonID < @LastLowestbroughtPersonID
-                           ORDER BY PersonID DESC";
+                query += " ORDER BY PersonID DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
@@ -342,7 +340,7 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
-        public static uint GetTotalNumbersOfPeople()
+        public static uint GetTotalNumberOfPeople()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
@@ -370,7 +368,7 @@ namespace DVLDDataAccessLayer
             return 0;
         }
 
-        private static string _PrepareDataFilteringQuery(short WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
+        private static string _PrepareDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
         {
             string query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
                       FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
@@ -381,8 +379,6 @@ namespace DVLDDataAccessLayer
             if (ColumnNameToFilter == "Nationality")
                 ColumnNameToFilter = "CountryName";
 
-            if (ValueToFilterBy != null)
-            {
                 switch (ColumnNameToFilter)
                 {
                     case "Gendor":
@@ -401,7 +397,6 @@ namespace DVLDDataAccessLayer
 
                         break;
                 }
-            }
 
             if (ColumnNameToFilter == "Gendor")
             {
@@ -424,7 +419,7 @@ namespace DVLDDataAccessLayer
             return query;
         }
 
-        public static DataTable GetFilteredData(short WantedNumberOfRecords,string ColumnNameToFilter,string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
+        public static DataTable GetFilteredData(byte WantedNumberOfRecords,string ColumnNameToFilter,string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
         {
             DataTable dtFilteredData = null;
 
@@ -455,7 +450,7 @@ namespace DVLDDataAccessLayer
                 reader.Close();
             }
 
-            catch(Exception ex) { Console.Write(ex.Message); }
+            catch { }
 
             finally
             {
@@ -464,5 +459,36 @@ namespace DVLDDataAccessLayer
                 
                 return dtFilteredData;
         }
+
+        public static string GetFullName(int PersonID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT FirstName + ' ' + SecondName + ' ' + 
+                            CASE WHEN ThirdName IS NULL THEN LastName ELSE ThirdName + ' ' + LastName END
+                            FROM People WHERE PersonID = @PersonID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@PersonID", PersonID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return result.ToString();
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return null;
+        }
+
     }
 }

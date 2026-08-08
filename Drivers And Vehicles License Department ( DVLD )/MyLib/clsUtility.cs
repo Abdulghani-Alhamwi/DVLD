@@ -145,7 +145,7 @@ namespace MyLib
         {
             string[] dgvColumnsNames = new string[dgv.Columns.Count];
 
-            for (short i = 0; i < dgv.Columns.Count; i++)
+            for (byte i = 0; i < dgv.Columns.Count; i++)
             {
                 dgvColumnsNames[i] = dgv.Columns[i].Name;
             }
@@ -157,7 +157,7 @@ namespace MyLib
         {
             List<string> ldgvColumnsNames = new List<string>();
 
-            for (short i = 0; i < dgv.Columns.Count; i++)
+            for (byte i = 0; i < dgv.Columns.Count; i++)
             {
                 ldgvColumnsNames.Add(dgv.Columns[i].Name);
             }

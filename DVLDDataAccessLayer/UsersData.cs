@@ -1,23 +1,30 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Net;
-using Microsoft.SqlServer.Server;
 
 namespace DVLDDataAccessLayer
 {
     public class clsUsersData
     {
-        public static DataTable GetAllUsers()
+        public static DataTable GetAllUsersInfo(byte WantedNumberOfRecords, int LastLowestBroughtUserID = -1)
         {
             DataTable dtUsers = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = @"SELECT UserID AS [User ID] , Users.PersonID AS [Person ID] ,
+            string query = @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
                               People.FirstName + ' ' + People.SecondName
                              + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name] , UserName,IsActive AS [Is Active]
-                             From Users INNER JOIN People ON Users.PersonID = People.PersonID";
+                              From Users INNER JOIN People ON Users.PersonID = People.PersonID";
+
+            if (LastLowestBroughtUserID != -1)
+                query += " WHERE UserID < @LastLowestBroughtUserID";
+                            
+                query += " ORDER BY UserID DESC";
+
             SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+            command.Parameters.AddWithValue("@LastLowestBroughtUserID", LastLowestBroughtUserID);
+
 
             try
             {
@@ -40,7 +47,6 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return dtUsers;
-
         }
 
         public static int AddNewUser(int PersonID , string UserName,string Password ,string Salt,bool IsActive)
@@ -392,5 +398,128 @@ namespace DVLDDataAccessLayer
 
             return null;
         }
+
+        private static string _PrepareDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
+        {
+            string query = @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
+                              People.FirstName + ' ' + People.SecondName
+                             + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name] , UserName,IsActive AS [Is Active]
+                              From Users INNER JOIN People ON Users.PersonID = People.PersonID";
+
+                switch (ColumnNameToFilter)
+                {
+                case "IsActive":
+                    if (ValueToFilterBy == "All")
+                        return query;
+
+                    else
+                        ValueToFilterBy = (ValueToFilterBy == "Yes") ? "1" : "0";
+                        break;
+
+                    case "Full Name":
+                        if (WildChar == null)
+                            query = "SELECT * FROM (" + query + ") R1 WHERE [Full Name] LIKE @Value";
+                        else
+                            query = "SELECT * FROM (" + query + ") R1 WHERE [Full Name] LIKE @Value + @WildChar";
+
+                        break;
+                }
+
+            if (WildChar == null)
+                query += $" WHERE {ColumnNameToFilter} = @Value";
+            else
+                query += $" WHERE {ColumnNameToFilter} Like @Value + @WildChar";
+
+
+            if (ColumnNameToFilter == "Full Name")
+            {
+                if (LastLowestbroughtPersonID == -1)
+                    query += " ORDER BY [User ID] DESC";
+
+                else
+                    query += @" AND [User ID] < @LastLowestbroughtPersonID
+                           ORDER BY [User ID] DESC";
+            }
+            else
+            {
+                if (LastLowestbroughtPersonID == -1)
+                    query += " ORDER BY UserID DESC";
+
+                else
+                    query += @" AND UserID < @LastLowestbroughtPersonID
+                           ORDER BY UserID DESC";
+            }
+            return query;
+        }
+
+        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
+        {
+            DataTable dtFilteredData = null;
+
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = _PrepareDataFilteringQuery(WantedNumberOfRecords, ColumnNameToFilter,ref ValueToFilterBy, WildChar, LastLowestbroughtUserID);
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+
+            command.Parameters.AddWithValue("@Value", ValueToFilterBy);
+
+            if (WildChar != null)
+                command.Parameters.AddWithValue("@WildChar", WildChar);
+
+            try
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    dtFilteredData = new DataTable();
+                    dtFilteredData.Load(reader);
+                }
+
+                reader.Close();
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return dtFilteredData;
+        }
+
+        public static uint GetTotalNumberOfUsers()
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT Count(UserID) FROM Users";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return Convert.ToUInt32(result);
+
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return 0;
+        }
+
     }
 }
