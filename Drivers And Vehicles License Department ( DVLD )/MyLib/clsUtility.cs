@@ -196,13 +196,22 @@ namespace MyLib
         /// <summary>
         /// Edit row in data grid view , new values array length must match the number of data grid view columns and row index is the index of the row that the user want to edit. 
         /// </summary>
-        public static void EditDataRowInDGV(DataGridView dgv, DataTable DataSource,ref object[] NewValues, int RowIndex)
+        public static void EditFullDataRowInDGV(DataGridView dgv, DataTable DataSource,ref object[] NewValues, int RowIndex)
         {
             for (short i = 0; i < dgv.Columns.Count; i++)
             {
                 DataSource.Columns[i].ReadOnly = false;
                 DataSource.Rows[RowIndex].SetField<object>(dgv.Columns[i].HeaderText, NewValues[i]);
             }
+        }
+
+        /// <summary>
+        /// Edit one column value in a row in data grid view .
+        /// </summary>
+        public static void EditOneDataRowColumnValueInDGV(DataGridView dgv, DataTable DataSource, string ColumnName,string NewValue,int RowIndex)
+        {
+          DataSource.Columns[ColumnName].ReadOnly = false;
+          DataSource.Rows[RowIndex].SetField<object>(dgv.Columns[ColumnName].HeaderText, NewValue);   
         }
     }
 }

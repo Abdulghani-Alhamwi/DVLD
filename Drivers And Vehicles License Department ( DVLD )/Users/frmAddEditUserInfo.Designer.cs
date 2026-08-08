@@ -411,6 +411,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAddEditUserInfo_FormClosing);
             this.Load += new System.EventHandler(this.frmAddNewUser_Load);
             this.tcAddNewUser.ResumeLayout(false);
             this.tpPersonalInfo.ResumeLayout(false);

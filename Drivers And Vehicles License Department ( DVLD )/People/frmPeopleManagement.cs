@@ -227,7 +227,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _EditDataRowInDGV(ref object[] NewValues, int RowIndex)
         {
-            clsUtility.EditDataRowInDGV(dgvPeople, (DataTable)dgvPeople.DataSource,ref NewValues, RowIndex);
+            clsUtility.EditFullDataRowInDGV(dgvPeople, (DataTable)dgvPeople.DataSource,ref NewValues, RowIndex);
         }
 
         private void tsmiEdit_Click(object sender, EventArgs e)

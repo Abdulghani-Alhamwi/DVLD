@@ -61,7 +61,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 txtFilter.Text = "";
                 txtFilter.Visible = false;
                 cbIsActive.Visible = false;
-                dgvUsers.DataSource = clsPerson.GetAllPeopleInfo(100);
+                dgvUsers.DataSource = clsUser.GetAllUsersInfo(100);
+                 
+                if(dgvUsers.DataSource != null)
                 _DecryptUsersNames((DataTable)dgvUsers.DataSource);
             }
             else if (cbFilterBy.SelectedItem.ToString() != "Is Active")
@@ -191,9 +193,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             _AddNewUserScreen();
         }
 
-        private void _EditDataRowInDGV(ref object[] NewValues, int RowIndex)
+        private void _EditDataRowInDGV(ref object[] NewValues, int RowIndex, string NewFullName = null)
         {
-            clsUtility.EditDataRowInDGV(dgvUsers, (DataTable)dgvUsers.DataSource, ref NewValues, RowIndex);
+            if (NewFullName != null)
+                clsUtility.EditOneDataRowColumnValueInDGV(dgvUsers, (DataTable)dgvUsers.DataSource, "Full Name", NewFullName, RowIndex);
+
+            else
+                clsUtility.EditFullDataRowInDGV(dgvUsers, (DataTable)dgvUsers.DataSource, ref NewValues, RowIndex);
         }
         private void tsmiEdit_Click(object sender, EventArgs e)
         {
@@ -210,7 +216,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 clsUser User = clsUser.Find((int)dgvUsers.SelectedRows[0].Cells["User ID"].Value);
 
-                frmAddEditUserInfo frm = new frmAddEditUserInfo(User, dgvUsers.SelectedRows[0].Index);
+                frmAddEditUserInfo frm = new frmAddEditUserInfo(User, dgvUsers.SelectedRows[0].Index, dgvUsers.SelectedRows[0].Cells["Full Name"].Value.ToString());
                 frm.AfterSavingEditedUserInfo += _EditDataRowInDGV;
 
                 frm.ShowDialog();

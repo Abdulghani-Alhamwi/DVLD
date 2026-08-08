@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Dynamic;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using MyLib;
@@ -11,10 +12,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
     public partial class frmAddEditUserInfo : Form
     {
         public delegate void AddEditUserEventHandler();
-        public event AddEditUserEventHandler OnAddedOrEditedUser;
+        public event AddEditUserEventHandler OnAddedOrEditedUserInfo;
 
         internal delegate void AfterSavingNewInfo(ref object[] NewValues);
-        internal delegate void AfterSavingEditedInfo(ref object[] NewValues, int RowIndex);
+        internal delegate void AfterSavingEditedInfo(ref object[] NewValues, int RowIndex,string NewUserFullName);
         internal event AfterSavingNewInfo AfterSavingNewUserInfo;
         internal event AfterSavingEditedInfo AfterSavingEditedUserInfo;
 
@@ -23,16 +24,18 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private string _DefaultPasswordValue = "Not Real Password";
         private bool _WantTochangePassword = true;
         int _IndexOfWantedDataRowToEdit = -1;
+        string _CurrentUserFullName;
 
         public frmAddEditUserInfo()
         {
             _InitializeForm(null);
         }
 
-        public frmAddEditUserInfo(clsUser User, int IndexOfWantedDataRowToEdit)
+        public frmAddEditUserInfo(clsUser User, int IndexOfWantedDataRowToEdit,string CurrentUserFullName)
         {
             _InitializeForm(User);
             _IndexOfWantedDataRowToEdit = IndexOfWantedDataRowToEdit;
+            _CurrentUserFullName = CurrentUserFullName;
         }
 
         private void _InitializeForm(clsUser User)
@@ -188,7 +191,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             return (txtUserName.Text == clsUtility.DecryptUserName(_User.UserName)
                  && txtPassword.Text == _DefaultPasswordValue
                  && txtPasswordConfirmation.Text == _DefaultPasswordValue
-                 && chkIsActive.Checked == _User.IsActive);
+                 && chkIsActive.Checked == _User.IsActive
+                 && _CurrentUserFullName == clsPerson.GetFullName(_PersonID));
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -203,7 +207,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 if(_IsInfoUnchanged())
                 {
-                    MessageBox.Show("There is'nt any change on the information", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+                    MessageBox.Show("There is'nt any change on user information", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
                 }    
 
                 User = _User;
@@ -233,11 +237,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     _User = User;
                 }
 
-                OnAddedOrEditedUser?.Invoke();
+                _CurrentUserFullName = clsPerson.GetFullName(_PersonID);
+
+                OnAddedOrEditedUserInfo?.Invoke();
 
                 object[] NewValues = _GetCurrentValuesInArray();
                 AfterSavingNewUserInfo?.Invoke(ref NewValues);
-                AfterSavingEditedUserInfo?.Invoke(ref NewValues,_IndexOfWantedDataRowToEdit);
+                AfterSavingEditedUserInfo?.Invoke(ref NewValues,_IndexOfWantedDataRowToEdit,null);
 
                 clsGlobalSettings.LoginInfoChanged = true;
             }
@@ -265,7 +271,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void uctrlpersonInfoByFilter_AfterEditingPerson()
         {
             if(_User != null)
-            OnAddedOrEditedUser?.Invoke();
+            OnAddedOrEditedUserInfo?.Invoke();
         }
 
         private void txtPasswordORtxtConfirmation_Enter(object sender, EventArgs e)
@@ -277,6 +283,16 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 _WantTochangePassword = false;
                 btnSave.Enabled = true;
             }          
+        }
+
+        private void frmAddEditUserInfo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            string UserFullName = clsPerson.GetFullName(_PersonID);
+            if (_CurrentUserFullName != UserFullName && _CurrentUserFullName != null)
+            {
+                object[] Values = null;
+                AfterSavingEditedUserInfo?.Invoke(ref Values, _IndexOfWantedDataRowToEdit,UserFullName);
+            }
         }
     }
 }
