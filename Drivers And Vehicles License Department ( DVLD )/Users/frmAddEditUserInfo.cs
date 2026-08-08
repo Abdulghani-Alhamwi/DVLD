@@ -24,12 +24,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private bool _WantTochangePassword = true;
         int _IndexOfWantedDataRowToEdit = -1;
 
-        public frmAddEditUserInfo(clsUser User = null)
+        public frmAddEditUserInfo()
         {
-            _InitializeForm(User);
+            _InitializeForm(null);
         }
 
-        public frmAddEditUserInfo(clsUser User, int IndexOfWantedDataRowToEdit = -1)
+        public frmAddEditUserInfo(clsUser User, int IndexOfWantedDataRowToEdit)
         {
             _InitializeForm(User);
             _IndexOfWantedDataRowToEdit = IndexOfWantedDataRowToEdit;
@@ -45,6 +45,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             else
             {
                 _User = User;
+                _PersonID = User.PersonID;
                 _SetTitles(clsUser.enMode.Update);
                 _ShowUserDetails();
                 btnSave.Enabled = true;
@@ -170,7 +171,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private object[] _GetCurrentValuesInArray()
         {
-            object[] Values = new object[] {lblUserID.Text,_PersonID, clsPerson.GetFullName(_PersonID),txtUserName.Text,chkIsActive};
+            object[] Values = new object[] {lblUserID.Text,_PersonID, clsPerson.GetFullName(_PersonID),txtUserName.Text,chkIsActive.Checked};
 
             return Values;
         }

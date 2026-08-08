@@ -416,7 +416,8 @@ namespace DVLDDataAccessLayer
                     query += @" AND PersonID < @LastLowestbroughtPersonID
                            ORDER BY PersonID DESC";
             }
-            return query;
+
+                return query;
         }
 
         public static DataTable GetFilteredData(byte WantedNumberOfRecords,string ColumnNameToFilter,string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)

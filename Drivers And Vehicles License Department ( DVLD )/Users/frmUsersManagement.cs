@@ -17,7 +17,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             this.Close();
         }
-        DataView _dataview;
 
         private void _DecryptUsersNames(DataTable dtUsers)
         {
@@ -30,16 +29,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void frmUsersManagement_Load(object sender, EventArgs e)
         {
-            DataTable dtUsers = clsUser.GetAllUsersInfo(100);
-
-            if (dtUsers != null)
-            {
-            _DecryptUsersNames(dtUsers);
-                _dataview = dtUsers.DefaultView;
-                dgvUsers.DataSource = _dataview;
-                dgvUsers.Font = new Font("Tahoma", 16f);
-            }
-
             object[] Items = new object[] { "None", "User ID", "UserName", "Person ID", "Full Name", "Is Active" };
             cbFilterBy.Items.AddRange(Items);
             cbFilterBy.SelectedItem = "None";
@@ -69,23 +58,26 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             if (cbFilterBy.SelectedItem.ToString() == "None")
             {
+                txtFilter.Text = "";
                 txtFilter.Visible = false;
-                cbFilterOnIsActive.Visible = false;
+                cbIsActive.Visible = false;
+                dgvUsers.DataSource = clsPerson.GetAllPeopleInfo(100);
+                _DecryptUsersNames((DataTable)dgvUsers.DataSource);
             }
             else if (cbFilterBy.SelectedItem.ToString() != "Is Active")
             {
                 txtFilter.Visible = true;
-                cbFilterOnIsActive.Visible = false;
+                cbIsActive.Visible = false;
                 txtFilter.Focus();
             }
             else
             {
                 txtFilter.Visible = false;
-                cbFilterOnIsActive.Visible = true;
+                cbIsActive.Visible = true;
 
                 object[] Items = new object[] { "All", "Yes", "No" };
-                cbFilterOnIsActive.Items.AddRange(Items);
-                cbFilterOnIsActive.SelectedIndex = 0;
+                cbIsActive.Items.AddRange(Items);
+                cbIsActive.SelectedIndex = 0;
             }
 
         }
@@ -109,7 +101,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (txtFilter.Text != "")
                 _AddFilteredData(null);
             else
-                dgvUsers.DataSource = clsUser.GetAllUsersInfo(100);
+            {
+                DataTable dtUsersInfo = clsUser.GetAllUsersInfo(100);
+                _DecryptUsersNames(dtUsersInfo);
+                dgvUsers.DataSource = dtUsersInfo;
+            }
         }
 
         private void cbFilterOnIsActive_DrawItem(object sender, DrawItemEventArgs e)
@@ -119,38 +115,21 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void cbFilterOnIsActive_DropDown(object sender, EventArgs e)
         {
-            cbFilterOnIsActive.BackColor = Color.FromArgb(240, 240, 240);
+            cbIsActive.BackColor = Color.FromArgb(240, 240, 240);
         }
 
         private void cbFilterOnIsActive_DropDownClosed(object sender, EventArgs e)
         {
-            if(cbFilterOnIsActive.SelectedItem.ToString() == "All")
-                cbFilterOnIsActive.BackColor = Color.FromArgb(228,228,228);
+            if(cbIsActive.SelectedItem.ToString() == "All")
+                cbIsActive.BackColor = Color.FromArgb(228,228,228);
             else
-                cbFilterOnIsActive.BackColor = Color.FromArgb(221, 232, 240);
+                cbIsActive.BackColor = Color.FromArgb(221, 232, 240);
 
         }
 
-        private void cbFilterOnIsActive_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch(cbFilterOnIsActive.SelectedItem.ToString())
-            {
-                case "All":
-                _dataview.RowFilter = null;
-                    break;
-
-                case "Yes":
-                _dataview.RowFilter = "[Is Active] = 'true'";
-                    break;
-
-                case "No":
-                _dataview.RowFilter = "[Is Active] = 'false'";
-                    break;
-            }
-        }
         private void _AddNewRowToDGV(ref object[] NewValues)
         {
-            clsUtility.AddNewRowToDGV(dgvUsers, _dataview.Table, ref NewValues, "User ID");
+            clsUtility.AddNewRowToDGV(dgvUsers, (DataTable)dgvUsers.DataSource, ref NewValues, "User ID");
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
 
@@ -214,7 +193,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _EditDataRowInDGV(ref object[] NewValues, int RowIndex)
         {
-            clsUtility.EditDataRowInDGV(dgvUsers, _dataview.Table, ref NewValues, RowIndex);
+            clsUtility.EditDataRowInDGV(dgvUsers, (DataTable)dgvUsers.DataSource, ref NewValues, RowIndex);
         }
         private void tsmiEdit_Click(object sender, EventArgs e)
         {
@@ -231,7 +210,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 clsUser User = clsUser.Find((int)dgvUsers.SelectedRows[0].Cells["User ID"].Value);
 
-                frmAddEditUserInfo frm = new frmAddEditUserInfo(User);
+                frmAddEditUserInfo frm = new frmAddEditUserInfo(User, dgvUsers.SelectedRows[0].Index);
                 frm.AfterSavingEditedUserInfo += _EditDataRowInDGV;
 
                 frm.ShowDialog();
@@ -289,7 +268,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         
         private string _GetColumnNameToFilter()
         {
-            if (cbFilterBy.SelectedItem.ToString() == "UserName" || cbFilterBy.SelectedItem.ToString() == "Full Name")
+            if (cbFilterBy.SelectedItem.ToString() == "UserName" || cbFilterBy.SelectedItem.ToString() == "Full Name"
+             || cbFilterBy.SelectedItem.ToString() == "Person ID")
                 return cbFilterBy.SelectedItem.ToString();
 
             else
@@ -299,9 +279,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     case "User ID":
                         return "UserID";
 
-                    case "Person ID":
-                        return "PersonID";
-
                     case "Is Active":
                         return "IsActive";
                 }
@@ -309,25 +286,48 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             return null;
         }
 
+        private DataTable _FilterOnIsActive()
+        {
+            DataTable dtFilteredData = clsUser.GetFilteredData(100, _GetColumnNameToFilter(), cbIsActive.SelectedItem.ToString(), null);
+
+            return dtFilteredData;
+        }
+
         private void _AddFilteredData(DataTable EmptyDataTable, bool ScrollCase = false)
         {
+            DataTable dtUsersInfo;
             if (!ScrollCase)
             {
                 if (cbFilterBy.SelectedItem.ToString() == "User ID" || cbFilterBy.SelectedItem.ToString() == "Person ID")
-                    dgvUsers.DataSource = clsUser.GetFilteredData(100, _GetColumnNameToFilter(), txtFilter.Text, null);
+                    dtUsersInfo = clsUser.GetFilteredData(100, _GetColumnNameToFilter(), txtFilter.Text, null);
+
+                else if (cbFilterBy.SelectedItem.ToString() == "UserName")
+                    dtUsersInfo = clsUser.GetFilteredData(100, _GetColumnNameToFilter(), clsUtility.EncryptUserName(txtFilter.Text));
+
+                else if (cbFilterBy.SelectedItem.ToString() == "Is Active")
+                    dtUsersInfo = _FilterOnIsActive();
 
                 else
-                    dgvUsers.DataSource = clsUser.GetFilteredData(100, _GetColumnNameToFilter(), txtFilter.Text, '%');
+                    dtUsersInfo = clsUser.GetFilteredData(100, _GetColumnNameToFilter(), txtFilter.Text, '%');
             }
 
             else
             {
                 if (cbFilterBy.SelectedItem.ToString() == "User ID" || cbFilterBy.SelectedItem.ToString() == "Person ID")
-                    dgvUsers.DataSource = clsUser.GetFilteredData(100, _GetColumnNameToFilter(), txtFilter.Text, null, (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value);
+                    dtUsersInfo = clsUser.GetFilteredData(100, _GetColumnNameToFilter(), txtFilter.Text, null, (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value);
+
+                else if (cbFilterBy.SelectedItem.ToString() == "UserName")
+                    dtUsersInfo = clsUser.GetFilteredData(100, _GetColumnNameToFilter(), clsUtility.EncryptUserName(txtFilter.Text));
+
+                else if (cbFilterBy.SelectedItem.ToString() == "Is Active")
+                    dtUsersInfo = _FilterOnIsActive();
 
                 else
-                    dgvUsers.DataSource = clsUser.GetFilteredData(100, _GetColumnNameToFilter(), txtFilter.Text, '%', (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value);
+                    dtUsersInfo = clsUser.GetFilteredData(100, _GetColumnNameToFilter(), txtFilter.Text, '%', (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value);
             }
+
+            _DecryptUsersNames(dtUsersInfo);
+            dgvUsers.DataSource = dtUsersInfo;
 
             if (EmptyDataTable != null && ScrollCase)
                 EmptyDataTable = (DataTable)dgvUsers.DataSource;
@@ -341,34 +341,54 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             NewRows = dtFilteredData.Select();
 
             if (NewRows != null)
-                clsUtility.AddNewRowsToDGV(dgvUsers, _dataview.Table, NewRows, clsUtility.GetdgvColumnsNames(dgvUsers));
+                clsUtility.AddNewRowsToDGV(dgvUsers, (DataTable)dgvUsers.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvUsers));
         }
 
-        private void _AppendPartOfRemainingDataAfterReachingLastRow()
+        private void _AppendRemainingData()
         {
-            if (dgvUsers.Rows.GetLastRow(DataGridViewElementStates.None) == dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed))
+            if (cbFilterBy.SelectedItem.ToString() != "None")
+                _AppendRemainingDataForFilterCase();
+
+            else
             {
-                if (cbFilterBy.SelectedItem.ToString() != "None")
-                    _AppendRemainingDataForFilterCase();
+                DataRow[] NewRows = clsUser.GetAllUsersInfo(100, (int)dgvUsers.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value)?.Select();
 
-                else
-                {
-                    DataRow[] NewRows = clsUser.GetAllUsersInfo(100, (int)dgvUsers.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value).Select();
-
-                    if (NewRows != null)
-                        clsUtility.AddNewRowsToDGV(dgvUsers, _dataview.Table, NewRows, clsUtility.GetdgvColumnsNames(dgvUsers));
-                }
+                if (NewRows != null)
+                    clsUtility.AddNewRowsToDGV(dgvUsers, (DataTable)dgvUsers.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvUsers));
             }
         }
+        private void _AppendPartOfRemainingDataAfterReachingLastRow(bool ScrollCase)
+        {
+            if (ScrollCase)
+            {
+                if (dgvUsers.Rows.GetLastRow(DataGridViewElementStates.None) == dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed))
+                {
+                    _AppendRemainingData();
+                }
+            }
+            else
+            {
+                if (dgvUsers.Rows.GetLastRow(DataGridViewElementStates.None) == dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Selected))
+                {
+                    _AppendRemainingData();
+                }
+            }
 
+        }
         private void dgvUsers_Scroll(object sender, ScrollEventArgs e)
         {
-            _AppendPartOfRemainingDataAfterReachingLastRow();
+            _AppendPartOfRemainingDataAfterReachingLastRow(true);
         }
 
         private void dgvUsers_KeyDown(object sender, KeyEventArgs e)
         {
-            _AppendPartOfRemainingDataAfterReachingLastRow();
+            _AppendPartOfRemainingDataAfterReachingLastRow(false);
+        }
+
+        private void cbIsActive_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dgvUsers.DataSource = _FilterOnIsActive();
+            _DecryptUsersNames((DataTable)dgvUsers.DataSource);
         }
     }
 }

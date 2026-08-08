@@ -14,7 +14,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             InitializeComponent();
         }
-        private DataView _dataview;
         private void _AddDropDownItems()
         {
             object[] Items = new object[dgvPeople.Columns.Count];
@@ -34,18 +33,20 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             this.Close();
         }
-
+        bool PreventLoadingDataAgain = false;
         private void frmPeopleManagement_Load(object sender, EventArgs e)
         {
             DataTable dtPeople = clsPerson.GetAllPeopleInfo(100);
             
             if (dtPeople != null)
             {
-                _dataview = dtPeople.DefaultView;
                 dgvPeople.Font = new Font("Tahoma", 15.5f);
-                dgvPeople.DataSource = _dataview;
+                dgvPeople.DataSource = dtPeople;
+                PreventLoadingDataAgain = true;
             }
-                _AddDropDownItems();
+             _AddDropDownItems();
+            PreventLoadingDataAgain = false;
+
             lblRecordsNumber.Text = clsPerson.GetTotalNumberOfPeople().ToString();
         }
 
@@ -77,6 +78,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             else
             {
                 txtFilter.Visible = false;
+                txtFilter.Text = "";
+
+                if(!PreventLoadingDataAgain)
                 dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(100);
             }
         }
@@ -168,7 +172,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
         private void _AddNewRowToDGV(ref object[] NewValues)
         {
-            clsUtility.AddNewRowToDGV(dgvPeople,_dataview.Table,ref NewValues,"Person ID");
+            clsUtility.AddNewRowToDGV(dgvPeople,(DataTable)dgvPeople.DataSource,ref NewValues,"Person ID");
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
         private void _AddNewPersonScreen()
@@ -223,7 +227,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _EditDataRowInDGV(ref object[] NewValues, int RowIndex)
         {
-            clsUtility.EditDataRowInDGV(dgvPeople, _dataview.Table,ref NewValues, RowIndex);
+            clsUtility.EditDataRowInDGV(dgvPeople, (DataTable)dgvPeople.DataSource,ref NewValues, RowIndex);
         }
 
         private void tsmiEdit_Click(object sender, EventArgs e)
@@ -304,32 +308,47 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             NewRows = dtFilteredData.Select();
 
             if (NewRows != null)
-                clsUtility.AddNewRowsToDGV(dgvPeople, _dataview.Table, NewRows, clsUtility.GetdgvColumnsNames(dgvPeople));
+                clsUtility.AddNewRowsToDGV(dgvPeople, (DataTable)dgvPeople.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvPeople));
         }
 
-        private void _AppendPartOfRemainingDataAfterReachingLastRow()
+        private void _AppendRemainingData()
         {
-            if (dgvPeople.Rows.GetLastRow(DataGridViewElementStates.None) == dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed))
-            {
-                if (cbFilterBy.SelectedItem.ToString() != "None")
+            if (cbFilterBy.SelectedItem.ToString() != "None")
                 _AppendRemainingDataForFilterCase();
 
-                else
-                {
-                    DataRow[] NewRows = clsPerson.GetAllPeopleInfo(100, (int)dgvPeople.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value).Select();
+            else
+            {
+                DataRow[] NewRows = clsPerson.GetAllPeopleInfo(100, (int)dgvPeople.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value)?.Select();
 
-                    if (NewRows != null)
-                        clsUtility.AddNewRowsToDGV(dgvPeople, _dataview.Table, NewRows, clsUtility.GetdgvColumnsNames(dgvPeople));
+                if (NewRows != null)
+                    clsUtility.AddNewRowsToDGV(dgvPeople, (DataTable)dgvPeople.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvPeople));
+            }
+        }
+
+        private void _AppendPartOfRemainingDataAfterReachingLastRow(bool ScrollCase)
+        {
+            if (ScrollCase)
+            {
+                if (dgvPeople.Rows.GetLastRow(DataGridViewElementStates.None) == dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed))
+                {
+                    _AppendRemainingData();
+                }
+            }
+            else
+            {
+                if (dgvPeople.Rows.GetLastRow(DataGridViewElementStates.None) == dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Selected))
+                {
+                    _AppendRemainingData();
                 }
             }
         }
         private void dgvPeople_Scroll(object sender, ScrollEventArgs e)
         {
-            _AppendPartOfRemainingDataAfterReachingLastRow();
+            _AppendPartOfRemainingDataAfterReachingLastRow(true);
         }
         private void dgvPeople_KeyDown(object sender, KeyEventArgs e)
         {
-            _AppendPartOfRemainingDataAfterReachingLastRow();
+            _AppendPartOfRemainingDataAfterReachingLastRow(false);
         }
     }
 }

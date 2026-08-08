@@ -399,7 +399,7 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        private static string _PrepareDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
+        private static string _PrepareDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
         {
             string query = @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
                               People.FirstName + ' ' + People.SecondName
@@ -410,7 +410,10 @@ namespace DVLDDataAccessLayer
                 {
                 case "IsActive":
                     if (ValueToFilterBy == "All")
+                    {
+                        query += " ORDER BY UserID DESC";
                         return query;
+                    }
 
                     else
                         ValueToFilterBy = (ValueToFilterBy == "Yes") ? "1" : "0";
@@ -423,33 +426,41 @@ namespace DVLDDataAccessLayer
                             query = "SELECT * FROM (" + query + ") R1 WHERE [Full Name] LIKE @Value + @WildChar";
 
                         break;
+
+                case "Person ID":
+                    ColumnNameToFilter = "Users.PersonID";
+                    break;
                 }
 
-            if (WildChar == null)
-                query += $" WHERE {ColumnNameToFilter} = @Value";
-            else
-                query += $" WHERE {ColumnNameToFilter} Like @Value + @WildChar";
-
+            if (ColumnNameToFilter != "Full Name")
+            {
+                if (WildChar == null)
+                    query += $" WHERE {ColumnNameToFilter} = @Value";
+                else
+                    query += $" WHERE {ColumnNameToFilter} Like @Value + @WildChar";
+            }
 
             if (ColumnNameToFilter == "Full Name")
             {
-                if (LastLowestbroughtPersonID == -1)
+                if (LastLowestbroughtUserID == -1)
                     query += " ORDER BY [User ID] DESC";
 
                 else
-                    query += @" AND [User ID] < @LastLowestbroughtPersonID
+                    query += @" AND [User ID] < @LastLowestbroughtUserID
                            ORDER BY [User ID] DESC";
             }
             else
             {
-                if (LastLowestbroughtPersonID == -1)
+                if (LastLowestbroughtUserID == -1)
                     query += " ORDER BY UserID DESC";
 
                 else
-                    query += @" AND UserID < @LastLowestbroughtPersonID
+                    query += @" AND UserID < @LastLowestbroughtUserID
                            ORDER BY UserID DESC";
             }
-            return query;
+
+
+                return query;
         }
 
         public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
@@ -483,7 +494,7 @@ namespace DVLDDataAccessLayer
                 reader.Close();
             }
 
-            catch { }
+            catch  { }
 
             finally
             {

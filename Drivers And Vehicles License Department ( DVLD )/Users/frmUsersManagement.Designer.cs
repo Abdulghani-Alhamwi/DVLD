@@ -49,7 +49,7 @@
             this.tsmiPhoneCall = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvUsers = new System.Windows.Forms.DataGridView();
             this.lblManageUsersTitle = new System.Windows.Forms.Label();
-            this.cbFilterOnIsActive = new System.Windows.Forms.ComboBox();
+            this.cbIsActive = new System.Windows.Forms.ComboBox();
             this.btnAddNewUser = new System.Windows.Forms.Button();
             this.pbUser = new System.Windows.Forms.PictureBox();
             this.btnClose = new System.Windows.Forms.Button();
@@ -295,22 +295,22 @@
             this.lblManageUsersTitle.TabIndex = 35;
             this.lblManageUsersTitle.Text = "Manage Users";
             // 
-            // cbFilterOnIsActive
+            // cbIsActive
             // 
-            this.cbFilterOnIsActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(228)))));
-            this.cbFilterOnIsActive.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cbFilterOnIsActive.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbFilterOnIsActive.Font = new System.Drawing.Font("Tahoma", 21F);
-            this.cbFilterOnIsActive.FormattingEnabled = true;
-            this.cbFilterOnIsActive.Location = new System.Drawing.Point(458, 344);
-            this.cbFilterOnIsActive.Name = "cbFilterOnIsActive";
-            this.cbFilterOnIsActive.Size = new System.Drawing.Size(182, 42);
-            this.cbFilterOnIsActive.TabIndex = 3;
-            this.cbFilterOnIsActive.Visible = false;
-            this.cbFilterOnIsActive.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbFilterOnIsActive_DrawItem);
-            this.cbFilterOnIsActive.DropDown += new System.EventHandler(this.cbFilterOnIsActive_DropDown);
-            this.cbFilterOnIsActive.SelectedIndexChanged += new System.EventHandler(this.cbFilterOnIsActive_SelectedIndexChanged);
-            this.cbFilterOnIsActive.DropDownClosed += new System.EventHandler(this.cbFilterOnIsActive_DropDownClosed);
+            this.cbIsActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(228)))));
+            this.cbIsActive.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbIsActive.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbIsActive.Font = new System.Drawing.Font("Tahoma", 21F);
+            this.cbIsActive.FormattingEnabled = true;
+            this.cbIsActive.Location = new System.Drawing.Point(458, 344);
+            this.cbIsActive.Name = "cbIsActive";
+            this.cbIsActive.Size = new System.Drawing.Size(182, 42);
+            this.cbIsActive.TabIndex = 3;
+            this.cbIsActive.Visible = false;
+            this.cbIsActive.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbFilterOnIsActive_DrawItem);
+            this.cbIsActive.DropDown += new System.EventHandler(this.cbFilterOnIsActive_DropDown);
+            this.cbIsActive.SelectedIndexChanged += new System.EventHandler(this.cbIsActive_SelectedIndexChanged);
+            this.cbIsActive.DropDownClosed += new System.EventHandler(this.cbFilterOnIsActive_DropDownClosed);
             // 
             // btnAddNewUser
             // 
@@ -369,7 +369,7 @@
             this.ClientSize = new System.Drawing.Size(1042, 817);
             this.ControlBox = false;
             this.Controls.Add(this.btnAddNewUser);
-            this.Controls.Add(this.cbFilterOnIsActive);
+            this.Controls.Add(this.cbIsActive);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.lblRecordsNumber);
             this.Controls.Add(this.txtFilter);
@@ -418,7 +418,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiSendEmail;
         private System.Windows.Forms.DataGridView dgvUsers;
         private System.Windows.Forms.Label lblManageUsersTitle;
-        private System.Windows.Forms.ComboBox cbFilterOnIsActive;
+        private System.Windows.Forms.ComboBox cbIsActive;
         private System.Windows.Forms.Button btnAddNewUser;
         private System.Windows.Forms.ToolStripMenuItem tsmiChangePassword;
     }

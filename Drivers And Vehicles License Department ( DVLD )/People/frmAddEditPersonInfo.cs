@@ -26,12 +26,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         clsPerson _Person;
         int _IndexOfWantedDataRowToEdit = -1;
 
-        public frmAddEditPersonInfo(clsPerson PersonInfo = null)
+        public frmAddEditPersonInfo()
         {
-            _InitializeForm(PersonInfo);
+            _InitializeForm(null);
         }
 
-        public frmAddEditPersonInfo(clsPerson PersonInfo,int IndexOfWantedRowToEdit)
+        public frmAddEditPersonInfo(clsPerson PersonInfo,int IndexOfWantedRowToEdit = -1)
         {
             _InitializeForm(PersonInfo);
             _IndexOfWantedDataRowToEdit = IndexOfWantedRowToEdit;
