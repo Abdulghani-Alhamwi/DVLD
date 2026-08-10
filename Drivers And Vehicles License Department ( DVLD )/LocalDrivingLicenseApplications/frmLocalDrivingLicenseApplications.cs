@@ -13,8 +13,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             InitializeComponent();
         }
-
-        DataView _dataview;
         private void _PrepareComboBoxWithFilterItems()
         {
             object[] ComboBoxItems = { "None", "L.D.L.AppID", "National No.", "Full Name", "Status" };
@@ -23,9 +21,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
         private void frmLocalDrivingLicenseApplications_Load(object sender, EventArgs e)
         {
-            _dataview = clsLocalDrivingLicenseApplication.GetLDLApplications(100)?.DefaultView;
-            dgvLDLApplications.DataSource = _dataview;
-
             lblRecordsNumber.Text = clsLocalDrivingLicenseApplication.GetTotalLDLApplicationsCount().ToString();
             _PrepareComboBoxWithFilterItems();
         }
@@ -40,22 +35,47 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             this.Close();
         }
 
-        private void cbFilterBy_DrawItem(object sender, DrawItemEventArgs e)
+        private void DrawComboBoxItems(object sender, DrawItemEventArgs e)
         {
-            clsUtility.DrawComboBoxItems(cbFilterBy, e);
+            clsUtility.DrawComboBoxItems((ComboBox)sender, e);
         }
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
-            clsUtility.FilterDataView(_dataview, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, e);
+            if(txtFilter.Text != "")
+            _AddFilteredData(null);
+
+            else
+                dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetLDLApplications(100);
+
         }
 
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbFilterBy.SelectedItem.ToString() != "None")
+            if (cbFilterBy.SelectedItem.ToString() != "None" && cbFilterBy.SelectedItem.ToString() != "Status")
+            {
                 txtFilter.Visible = true;
-            else
+                cbStatus.Visible = false;
+            }
+
+            else if (cbFilterBy.SelectedItem.ToString() != "None" && cbFilterBy.SelectedItem.ToString() == "Status")
+            {
                 txtFilter.Visible = false;
+
+                object[] Items = new object[] { "All", "New", "Canceled", "Completed" };
+                cbStatus.Items.AddRange(Items);
+                cbStatus.SelectedItem = "All";
+
+                cbStatus.Visible = true;
+            }
+
+            else
+            {
+                txtFilter.Visible = false;
+                cbStatus.Visible = false;
+                dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetLDLApplications(100);
+            }
+            txtFilter.Text = "";
         }
 
         private void txtFilter_KeyDown(object sender, KeyEventArgs e)
@@ -170,11 +190,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             }
     }        
         private void _AddFilteredData(DataTable EmptyDataTable, bool ScrollCase = false)
-        {   object[] ComboBoxItems = { "None", "L.D.L.AppID", "National No.", "Full Name", "Status" };
+        {
             if (!ScrollCase)
             {
-                if (cbFilterBy.SelectedItem.ToString() == "L.D.L.AppID" || cbFilterBy.SelectedItem.ToString() == "Status")
-                    dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);
+                if (cbFilterBy.SelectedItem.ToString() == "L.D.L.AppID")
+                    dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);                    
 
                 else
                     dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
@@ -183,10 +203,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             else
             {
                 if (cbFilterBy.SelectedItem.ToString() == "L.D.L.AppID" || cbFilterBy.SelectedItem.ToString() == "Status")
-                    dgvLDLApplications.DataSource = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null, (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
+                    dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null, (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
+
+                else if (cbFilterBy.SelectedItem.ToString() == "Status")
+                    dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(),cbStatus.SelectedItem.ToString(), null, (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
 
                 else
-                    dgvLDLApplications.DataSource = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
+                    dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
             }
 
             if (EmptyDataTable != null && ScrollCase)
@@ -226,6 +249,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             if (dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.None) == dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Selected))
                 _AppendPartOfRemainingData();
+        }
+
+        private void cbStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), cbStatus.SelectedItem.ToString(), null);
         }
     }
     }
