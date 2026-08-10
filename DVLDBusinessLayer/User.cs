@@ -131,9 +131,9 @@ namespace DVLDBusinessLayer
             return clsUsersData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar, LastLowestbroughtUserID);
         }
 
-        public static uint GetTotalNumberOfUsers()
+        public static uint GetTotalUsersCount()
         {
-            return clsUsersData.GetTotalNumberOfUsers();
+            return clsUsersData.GetTotalUsersCount();
         }
 
     }

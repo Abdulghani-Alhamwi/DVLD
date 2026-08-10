@@ -340,7 +340,7 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
-        public static uint GetTotalNumberOfPeople()
+        public static uint GetTotalPeopleCount()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
@@ -368,54 +368,26 @@ namespace DVLDDataAccessLayer
             return 0;
         }
 
-        private static string _PrepareDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
+        private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
         {
-            string query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
+            string query = @"SELECT * FROM (SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
                       FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
                       Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
                       DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
-                      FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
+                      FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID) R1";
 
-            if (ColumnNameToFilter == "Nationality")
-                ColumnNameToFilter = "CountryName";
-
-                switch (ColumnNameToFilter)
-                {
-                    case "Gendor":
                         if (WildChar == null)
-                            query = "SELECT * FROM (" + query + ") R1 WHERE Gendor LIKE @Value";
+                            query += $" WHERE [{ColumnNameToFilter}] = @Value";
                         else
-                            query = "SELECT * FROM (" + query + ") R1 WHERE Gendor LIKE @Value + @WildChar";
+                            query += $" WHERE [{ColumnNameToFilter}] Like @Value + @WildChar";
 
-                        break;
-
-                    default:
-                        if (WildChar == null)
-                            query += $" WHERE {ColumnNameToFilter} = @Value";
-                        else
-                            query += $" WHERE {ColumnNameToFilter} Like @Value + @WildChar";
-
-                        break;
-                }
-
-            if (ColumnNameToFilter == "Gendor")
-            {
+            
                 if (LastLowestbroughtPersonID == -1)
                     query += " ORDER BY [Person ID] DESC";
 
                 else
                     query += @" AND [Person ID] < @LastLowestbroughtPersonID
                            ORDER BY [Person ID] DESC";
-            }
-            else
-            {
-                if (LastLowestbroughtPersonID == -1)
-                    query += " ORDER BY PersonID DESC";
-
-                else
-                    query += @" AND PersonID < @LastLowestbroughtPersonID
-                           ORDER BY PersonID DESC";
-            }
 
                 return query;
         }
@@ -426,7 +398,7 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _PrepareDataFilteringQuery(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,WildChar,LastLowestbroughtPersonID);
+            string query = _GetDataFilteringQuery(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,WildChar,LastLowestbroughtPersonID);
 
             SqlCommand command = new SqlCommand(query, connection);
              command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);

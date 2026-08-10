@@ -399,66 +399,37 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        private static string _PrepareDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
+        private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
         {
-            string query = @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
+            string query = @"SELECT * FROM (SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
                               People.FirstName + ' ' + People.SecondName
                              + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name] , UserName,IsActive AS [Is Active]
-                              From Users INNER JOIN People ON Users.PersonID = People.PersonID";
+                              From Users INNER JOIN People ON Users.PersonID = People.PersonID) R1";
 
-                switch (ColumnNameToFilter)
+            if (ColumnNameToFilter == "Is Active")
+            {
+                if (ValueToFilterBy == "All")
                 {
-                case "IsActive":
-                    if (ValueToFilterBy == "All")
-                    {
-                        query += " ORDER BY UserID DESC";
-                        return query;
-                    }
-
-                    else
-                        ValueToFilterBy = (ValueToFilterBy == "Yes") ? "1" : "0";
-                        break;
-
-                    case "Full Name":
-                        if (WildChar == null)
-                            query = "SELECT * FROM (" + query + ") R1 WHERE [Full Name] LIKE @Value";
-                        else
-                            query = "SELECT * FROM (" + query + ") R1 WHERE [Full Name] LIKE @Value + @WildChar";
-
-                        break;
-
-                case "Person ID":
-                    ColumnNameToFilter = "Users.PersonID";
-                    break;
+                    query += " ORDER BY [User ID] DESC";
+                    return query;
                 }
 
-            if (ColumnNameToFilter != "Full Name")
-            {
-                if (WildChar == null)
-                    query += $" WHERE {ColumnNameToFilter} = @Value";
                 else
-                    query += $" WHERE {ColumnNameToFilter} Like @Value + @WildChar";
+                    ValueToFilterBy = (ValueToFilterBy == "Yes") ? "1" : "0";
             }
 
-            if (ColumnNameToFilter == "Full Name")
-            {
+                if (WildChar == null)
+                    query += $" WHERE [{ColumnNameToFilter}] = @Value";
+                else
+                    query += $" WHERE [{ColumnNameToFilter}] Like @Value + @WildChar";
+            
+
                 if (LastLowestbroughtUserID == -1)
                     query += " ORDER BY [User ID] DESC";
 
                 else
                     query += @" AND [User ID] < @LastLowestbroughtUserID
                            ORDER BY [User ID] DESC";
-            }
-            else
-            {
-                if (LastLowestbroughtUserID == -1)
-                    query += " ORDER BY UserID DESC";
-
-                else
-                    query += @" AND UserID < @LastLowestbroughtUserID
-                           ORDER BY UserID DESC";
-            }
-
 
                 return query;
         }
@@ -469,7 +440,7 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _PrepareDataFilteringQuery(WantedNumberOfRecords, ColumnNameToFilter,ref ValueToFilterBy, WildChar, LastLowestbroughtUserID);
+            string query = _GetDataFilteringQuery(WantedNumberOfRecords, ColumnNameToFilter,ref ValueToFilterBy, WildChar, LastLowestbroughtUserID);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
@@ -504,7 +475,7 @@ namespace DVLDDataAccessLayer
             return dtFilteredData;
         }
 
-        public static uint GetTotalNumberOfUsers()
+        public static uint GetTotalUsersCount()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 

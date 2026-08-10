@@ -4,21 +4,21 @@ using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
 {
-    public class clsLocalDrivingLicenseApplications:clsApplication
+    public class clsLocalDrivingLicenseApplication:clsApplication
     {
         public enum enMode { AddNew = 0 , Update = 1};
         private enMode _CurrentMode;
         public int LocalDrivingLicenseApplicationID { get; set; }
         public int LicenseClassID { get; set; }
 
-        public clsLocalDrivingLicenseApplications()
+        public clsLocalDrivingLicenseApplication()
         {
             LocalDrivingLicenseApplicationID = -1;
             LicenseClassID = -1;
             _CurrentMode = enMode.AddNew;
         }
 
-        private clsLocalDrivingLicenseApplications(int LocalDrivingLicenseApplicationID,int ApplicationID,int LicenseClassID,int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, double PaidApplicationFees, int CreatedByUserID)
+        private clsLocalDrivingLicenseApplication(int LocalDrivingLicenseApplicationID,int ApplicationID,int LicenseClassID,int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, double PaidApplicationFees, int CreatedByUserID)
               :base(ApplicationID,ApplicantPersonID,ApplicationDate,ApplicationTypeID, ApplicationStatus,LastStatusDate,PaidApplicationFees,CreatedByUserID)            
         {
             this.LocalDrivingLicenseApplicationID = LocalDrivingLicenseApplicationID;
@@ -28,12 +28,17 @@ namespace DVLDBusinessLayer
             
         }
 
-        public static DataTable GetLDLApplications()
+        public static DataTable GetLDLApplications(byte WantedNumberOfRecords, int LastLowestBroughtLDLApplicationID = -1)
         {
-            return clsLocalDrivingLicenseApplicationsData.GetLDLApplications();
+            return clsLocalDrivingLicenseApplicationsData.GetLDLApplications(WantedNumberOfRecords,LastLowestBroughtLDLApplicationID);
         }
 
-        public static new clsLocalDrivingLicenseApplications Find(int LocalDrivingLicenseApplicationID)
+        public static uint GetTotalLDLApplicationsCount()
+        {
+            return clsLocalDrivingLicenseApplicationsData.GetTotalLDLApplicationsCount();
+        }
+
+        public static new clsLocalDrivingLicenseApplication Find(int LocalDrivingLicenseApplicationID)
         {
             int ApplicationID = -1,LicenseClassID = -1;
 
@@ -43,7 +48,7 @@ namespace DVLDBusinessLayer
 
                 if(Application!=null)
                 { 
-                    return new clsLocalDrivingLicenseApplications(LocalDrivingLicenseApplicationID, Application.ApplicationID, LicenseClassID, Application.ApplicantPersonID, Application.ApplicationDate, Application.ApplicationTypeID, Application.ApplicationStatus, Application.LastStatusDate, Application.PaidApplicationFees, Application.CreatedByUserID);
+                    return new clsLocalDrivingLicenseApplication(LocalDrivingLicenseApplicationID, Application.ApplicationID, LicenseClassID, Application.ApplicantPersonID, Application.ApplicationDate, Application.ApplicationTypeID, Application.ApplicationStatus, Application.LastStatusDate, Application.PaidApplicationFees, Application.CreatedByUserID);
                 }
             }
 
@@ -111,5 +116,10 @@ namespace DVLDBusinessLayer
     {
             return clsLocalDrivingLicenseApplicationsData.GetLDLApplicationID(ApplicantPersonID);
     }
+
+        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtLDLAppID = -1)
+        {
+            return clsLocalDrivingLicenseApplicationsData.GetFilteredData(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,WildChar,LastLowestBroughtLDLAppID);
+        }
 }
 }

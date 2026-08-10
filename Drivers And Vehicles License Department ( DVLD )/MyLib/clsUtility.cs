@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using DVLDBusinessLayer;
 
 namespace MyLib
 {
@@ -208,10 +209,10 @@ namespace MyLib
         /// <summary>
         /// Edit one column value in a row in data grid view .
         /// </summary>
-        public static void EditOneDataRowColumnValueInDGV(DataGridView dgv, DataTable DataSource, string ColumnName,string NewValue,int RowIndex)
+        public static void EditOneDataRowColumnValueInDGV(DataGridView dgv, DataTable DataSource, string ColumnName, string NewValue, int RowIndex)
         {
-          DataSource.Columns[ColumnName].ReadOnly = false;
-          DataSource.Rows[RowIndex].SetField<object>(dgv.Columns[ColumnName].HeaderText, NewValue);   
+            DataSource.Columns[ColumnName].ReadOnly = false;
+            DataSource.Rows[RowIndex].SetField<object>(dgv.Columns[ColumnName].HeaderText, NewValue);
         }
     }
 }

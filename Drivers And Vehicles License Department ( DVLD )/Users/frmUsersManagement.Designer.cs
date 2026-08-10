@@ -116,7 +116,7 @@
             this.cbFilterBy.Size = new System.Drawing.Size(226, 42);
             this.cbFilterBy.TabIndex = 2;
             this.cbFilterBy.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbFilterBy_DrawItem);
-            this.cbFilterBy.DropDown += new System.EventHandler(this.cbFilterBy_DropDown);
+            this.cbFilterBy.DropDown += new System.EventHandler(this.ComboBoxes_DropDown);
             this.cbFilterBy.SelectedIndexChanged += new System.EventHandler(this.cbFilterBy_SelectedIndexChanged);
             this.cbFilterBy.DropDownClosed += new System.EventHandler(this.cbFilterBy_DropDownClosed);
             // 
@@ -297,7 +297,7 @@
             // 
             // cbIsActive
             // 
-            this.cbIsActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(228)))));
+            this.cbIsActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.cbIsActive.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbIsActive.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbIsActive.Font = new System.Drawing.Font("Tahoma", 21F);
@@ -307,10 +307,10 @@
             this.cbIsActive.Size = new System.Drawing.Size(182, 42);
             this.cbIsActive.TabIndex = 3;
             this.cbIsActive.Visible = false;
-            this.cbIsActive.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbFilterOnIsActive_DrawItem);
-            this.cbIsActive.DropDown += new System.EventHandler(this.cbFilterOnIsActive_DropDown);
+            this.cbIsActive.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbIsActive_DrawItem);
+            this.cbIsActive.DropDown += new System.EventHandler(this.ComboBoxes_DropDown);
             this.cbIsActive.SelectedIndexChanged += new System.EventHandler(this.cbIsActive_SelectedIndexChanged);
-            this.cbIsActive.DropDownClosed += new System.EventHandler(this.cbFilterOnIsActive_DropDownClosed);
+            this.cbIsActive.DropDownClosed += new System.EventHandler(this.cbIsActive_DropDownClosed);
             // 
             // btnAddNewUser
             // 

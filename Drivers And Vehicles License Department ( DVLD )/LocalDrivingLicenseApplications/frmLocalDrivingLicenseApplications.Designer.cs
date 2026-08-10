@@ -59,6 +59,7 @@
             this.btnAddLDLApplication = new System.Windows.Forms.Button();
             this.pbManageLDLApplications = new System.Windows.Forms.PictureBox();
             this.pbLocalLicense = new System.Windows.Forms.PictureBox();
+            this.cbStatus = new System.Windows.Forms.ComboBox();
             this.cmsLDLApplications.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLDLApplications)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbManageLDLApplications)).BeginInit();
@@ -107,7 +108,7 @@
             this.cbFilterBy.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbFilterBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbFilterBy.Font = new System.Drawing.Font("Tahoma", 21F);
-            this.cbFilterBy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.cbFilterBy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.cbFilterBy.FormattingEnabled = true;
             this.cbFilterBy.Location = new System.Drawing.Point(199, 373);
             this.cbFilterBy.Name = "cbFilterBy";
@@ -294,6 +295,8 @@
             this.dgvLDLApplications.Size = new System.Drawing.Size(1733, 296);
             this.dgvLDLApplications.StandardTab = true;
             this.dgvLDLApplications.TabIndex = 44;
+            this.dgvLDLApplications.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvLDLApplications_Scroll);
+            this.dgvLDLApplications.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvLDLApplications_KeyDown);
             // 
             // lblLDLApplicationsTitle
             // 
@@ -403,6 +406,20 @@
             this.pbLocalLicense.TabIndex = 56;
             this.pbLocalLicense.TabStop = false;
             // 
+            // cbStatus
+            // 
+            this.cbStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.cbStatus.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbStatus.Font = new System.Drawing.Font("Tahoma", 21F);
+            this.cbStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.cbStatus.FormattingEnabled = true;
+            this.cbStatus.Location = new System.Drawing.Point(444, 373);
+            this.cbStatus.Name = "cbStatus";
+            this.cbStatus.Size = new System.Drawing.Size(182, 42);
+            this.cbStatus.TabIndex = 57;
+            this.cbStatus.Visible = false;
+            // 
             // frmLocalDrivingLicenseApplications
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -412,6 +429,7 @@
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1795, 822);
             this.ControlBox = false;
+            this.Controls.Add(this.cbStatus);
             this.Controls.Add(this.pbLocalLicense);
             this.Controls.Add(this.lblRecordsNumber);
             this.Controls.Add(this.lblRecordsTitle);
@@ -472,5 +490,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiShowLicense;
         private System.Windows.Forms.ToolStripSeparator tsSeparator6;
         private System.Windows.Forms.ToolStripMenuItem tsmiShowPersonLicenseHistory;
+        private System.Windows.Forms.ComboBox cbStatus;
     }
 }
