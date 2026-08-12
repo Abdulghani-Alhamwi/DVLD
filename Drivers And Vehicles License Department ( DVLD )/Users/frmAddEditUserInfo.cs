@@ -139,7 +139,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (txtUserName.Text == "" || string.IsNullOrWhiteSpace(txtUserName.Text))
                 clsUtility.EnableErrorProvider(erTextBox, txtUserName, "Username cannot be blank.", e);
 
-            else if (clsUser.IsUserAlreadyExists(txtUserName.Text))
+            else if (clsUser.IsUserAlreadyExists(clsUtility.EncryptUserName(txtUserName.Text)))
                 clsUtility.EnableErrorProvider(erTextBox, txtUserName, "Username is already taken by another user. Please choose another username.", e);
 
             else
