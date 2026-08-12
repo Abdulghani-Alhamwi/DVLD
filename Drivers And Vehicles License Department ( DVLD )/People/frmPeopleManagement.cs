@@ -51,16 +51,16 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
         {
             if (cbFilterBy.SelectedItem.ToString() != "None")
-               cbFilterBy.BackColor = Color.FromArgb(221, 232, 240);
+                cbFilterBy.BackColor = clsUtility.ComboBoxHighlightedBackColor;
             else
-                cbFilterBy.BackColor = Color.FromArgb(228, 228, 228);
+                cbFilterBy.BackColor = clsUtility.ComboBoxBackColor;
         }
 
         private void cbFilterBy_DropDown(object sender, EventArgs e)
         {
-            cbFilterBy.BackColor = Color.FromArgb(245, 245, 245);
+            cbFilterBy.BackColor = clsUtility.ComboBoxItemsBackColor;
         }
-        
+
         private void cbFilterBy_DrawItem(object sender, DrawItemEventArgs e)
         {
             clsUtility.DrawComboBoxItems(sender, e);

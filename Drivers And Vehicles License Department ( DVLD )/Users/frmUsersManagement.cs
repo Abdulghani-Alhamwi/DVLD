@@ -42,22 +42,18 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             clsUtility.DrawComboBoxItems(sender, e);
         }
-        private void _SetComboBoxItemBackColor(ComboBox cb)
-        {
-          cb.BackColor = Color.FromArgb(221, 232, 240);
-        }
-
+    
         private void ComboBoxes_DropDown(object sender, EventArgs e)
         {
-            ((ComboBox)sender).BackColor = Color.FromArgb(240, 240, 240);
+            ((ComboBox)sender).BackColor = clsUtility.ComboBoxItemsBackColor;
         }
 
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
         {
             if (cbFilterBy.SelectedItem.ToString() != "None")
-                _SetComboBoxItemBackColor(cbFilterBy);
+                cbFilterBy.BackColor = clsUtility.ComboBoxHighlightedBackColor;
             else
-                cbFilterBy.BackColor = Color.FromArgb(228, 228, 228);
+                cbFilterBy.BackColor = clsUtility.ComboBoxBackColor;
         }
 
 
@@ -140,7 +136,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void cbIsActive_DropDownClosed(object sender, EventArgs e)
         {
-              _SetComboBoxItemBackColor(cbIsActive);
+            cbIsActive.BackColor = clsUtility.ComboBoxHighlightedBackColor;
         }
 
         private void _AddNewRowToDGV(ref object[] NewValues)

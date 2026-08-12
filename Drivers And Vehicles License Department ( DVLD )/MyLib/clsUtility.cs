@@ -12,6 +12,10 @@ namespace MyLib
 {
     internal class clsUtility
     {
+        public static Color ComboBoxBackColor = Color.FromArgb(228,228,228);
+        public static Color ComboBoxItemsBackColor = Color.FromArgb(245,245,245);
+        public static Color ComboBoxHighlightedBackColor = Color.FromArgb(221, 232, 240);
+
         public static string HashWithSaltPassword(string Password, ref byte[] Salt)
         {
             if (Salt == null)
