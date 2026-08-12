@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLDDataAccessLayer
 {
@@ -300,9 +303,30 @@ namespace DVLDDataAccessLayer
             return 0;
         }
 
-        private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtLDLAppID = -1)
+        private static string _GetOriginalColumnName(string SendedColumnName)
         {
-            string query = @"SELECT * FROM (SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
+            switch(SendedColumnName)
+            {
+                case "L.D.L.AppID":
+                    return "LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID";
+
+                case "Full Name":
+                    return "CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName\r\n                             ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END";
+
+                case "National No.":
+                    return "People.NationalNo";
+
+                case "Status":
+                        return "Applications.ApplicationStatus";
+
+                default:
+                    return null;
+            }
+        }
+
+        private static string _GetDataFilteringQuery(byte WantedNumberOfRecords,ref string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtLDLAppID = -1)
+        {
+            string query = @"SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
                              People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
                              ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , ApplicationDate AS [Application Date] ,
                              (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests] ,
@@ -312,49 +336,66 @@ namespace DVLDDataAccessLayer
                              INNER JOIN Applications ON LocalDrivingLicenseApplications.ApplicationID = Applications.ApplicationID
                              INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID
                              LEFT JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
-                             LEFT JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID
-                             GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, LicenseClasses.ClassName,
-                             People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
-                             ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END), ApplicationDate , (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) ) R1 ";
+                             LEFT JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID";
 
-            if(ColumnNameToFilter == "Status")
+            if (!string.IsNullOrEmpty(ValueToFilterBy))
             {
-                if (ValueToFilterBy == "All")
+                if (ColumnNameToFilter != "None")
                 {
-                    query += " ORDER BY [L.D.L.AppID] DESC";
-                    return query;
-                }
+                    ColumnNameToFilter = _GetOriginalColumnName(ColumnNameToFilter);
 
-                else
+                    if (ColumnNameToFilter == "Applications.ApplicationStatus")
                     {
-                    switch(ValueToFilterBy)
-                    {
-                        case "New":
-                            ValueToFilterBy = "0";
-                            break;
+                        if (ValueToFilterBy != "All")
+                        {
+                            switch (ValueToFilterBy)
+                            {
+                                case "New":
+                                    ValueToFilterBy = "1";
+                                    break;
 
-                        case "Canceled":
-                            ValueToFilterBy = "1";
-                            break;
+                                case "Canceled":
+                                    ValueToFilterBy = "2";
+                                    break;
 
-                        case "Completed":
-                            ValueToFilterBy = "2";
-                            break;
-                    }
+                                case "Completed":
+                                    ValueToFilterBy = "3";
+                                    break;
+                            }
                         }
+                     }
+
+                    if (ValueToFilterBy != "All")
+                    {
+                        if (WildChar == null)
+                            query += $" WHERE {ColumnNameToFilter} = @Value";
+                        else
+                            query += $" WHERE {ColumnNameToFilter} LIKE @Value + @WildChar";
+                    }
+                }
             }
 
-            if (WildChar == null)
-                query += $" WHERE [{ColumnNameToFilter}] = @Value";
-            else
-                query += $" WHERE [{ColumnNameToFilter}] Like @Value + @WildChar";
-
-
             if (LastLowestBroughtLDLAppID == -1)
-                query += " ORDER BY [L.D.L.AppID] DESC";
+            {
+                query += @" GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, LicenseClasses.ClassName,
+                             People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName + ' ' + People.SecondName + ' ' + People.ThirdName + ' ' + People.LastName
+                             ELSE People.FirstName + ' ' + People.SecondName + ' ' + People.LastName END), ApplicationDate , (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) 
+                             ORDER BY [L.D.L.AppID] DESC";
+            }
+
             else
-                query += @" WHERE [L.D.L.AppID] < @LastLowestBroughtLDLApplicationID 
-                           ORDER BY [L.D.L.AppID] DESC";
+            {
+                if (string.IsNullOrEmpty(ValueToFilterBy) || ColumnNameToFilter == "None" || ValueToFilterBy == "All")
+                    query += " WHERE";
+                else
+                    query += " AND";
+
+                query += @" LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID < @LastLowestBroughtLDLAppID
+                            GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, LicenseClasses.ClassName,
+                            People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName + ' ' + People.SecondName + ' ' + People.ThirdName + ' ' + People.LastName
+                            ELSE People.FirstName + ' ' + People.SecondName + ' ' + People.LastName END), ApplicationDate , (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) 
+                            ORDER BY [L.D.L.AppID] DESC";
+            }
 
             return query;
         }
@@ -365,15 +406,23 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetDataFilteringQuery(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar,LastLowestBroughtLDLAppID);
+            string query = _GetDataFilteringQuery(WantedNumberOfRecords,ref ColumnNameToFilter,ref ValueToFilterBy, WildChar,LastLowestBroughtLDLAppID);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
 
-            command.Parameters.AddWithValue("@Value", ValueToFilterBy);
+             if(ColumnNameToFilter == "Applications.ApplicationStatus" && ValueToFilterBy != "All")
+                command.Parameters.AddWithValue("@Value", Convert.ToByte(ValueToFilterBy));
+
+            else if (!(string.IsNullOrEmpty(ValueToFilterBy) || ColumnNameToFilter == "None" || ValueToFilterBy == "All"))
+                command.Parameters.AddWithValue("@Value", ValueToFilterBy);
+
 
             if (WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
+
+            if(LastLowestBroughtLDLAppID != -1)
+                command.Parameters.AddWithValue("@LastLowestBroughtLDLAppID", LastLowestBroughtLDLAppID);
 
             try
             {

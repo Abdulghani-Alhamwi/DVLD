@@ -417,3 +417,51 @@ ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END), Applic
          
          return dtFilteredData;
  }
+
+
+31)
+
+            string query = @"SELECT * FROM (SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
+                              People.FirstName + ' ' + People.SecondName
+                             + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name] , UserName,IsActive AS [Is Active]
+                              From Users INNER JOIN People ON Users.PersonID = People.PersonID) R1";
+
+            if (string.IsNullOrEmpty(ValueToFilterBy))
+            {
+                query += " ORDER BY [User ID] DESC";
+                return query;
+            }
+
+            if (ColumnNameToFilter == "Is Active")
+            {
+                if (ValueToFilterBy == "All")
+                {
+
+                    if (LastLowestbroughtUserID != -1)
+                        query += @" WHERE [User ID] < @LastLowestbroughtUserID
+                                    ORDER BY [User ID] DESC";
+                    
+                    else 
+                        query += " ORDER BY [User ID] DESC";
+
+                    return query;
+                }
+
+                else
+                    ValueToFilterBy = (ValueToFilterBy == "Yes") ? "1" : "0";
+            }
+
+                if (WildChar == null)
+                    query += $" WHERE [{ColumnNameToFilter}] = @Value";
+                else
+                    query += $" WHERE [{ColumnNameToFilter}] Like @Value + @WildChar";
+            
+
+                if (LastLowestbroughtUserID == -1)
+                    query += " ORDER BY [User ID] DESC";
+
+                else
+                    query += @" AND [User ID] < @LastLowestbroughtUserID
+                           ORDER BY [User ID] DESC";
+
+                return query;

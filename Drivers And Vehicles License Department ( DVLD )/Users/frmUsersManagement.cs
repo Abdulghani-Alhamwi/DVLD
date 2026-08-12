@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using MyLib;
 using DVLDBusinessLayer;
 using System.Data;
+using System.Threading;
 
 namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
@@ -27,6 +28,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             }
         }
 
+        bool _AllowDataLoading;
         private void frmUsersManagement_Load(object sender, EventArgs e)
         {
             object[] Items = new object[] { "None", "User ID", "UserName", "Person ID", "Full Name", "Is Active" };
@@ -58,6 +60,19 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 cbFilterBy.BackColor = Color.FromArgb(228, 228, 228);
         }
 
+
+        private void _LoadDataAfterFirstTimeLoad(ref bool _AllowDataLoading)
+        {
+            if (_AllowDataLoading)
+            {
+                dgvUsers.DataSource = clsUser.GetAllUsersInfo(100);
+                _DecryptUsersNames((DataTable)dgvUsers.DataSource);
+
+            }
+            else
+                _AllowDataLoading = true;
+        }
+
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbFilterBy.SelectedItem.ToString() == "None")
@@ -65,27 +80,30 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 txtFilter.Visible = false;
                 cbIsActive.Visible = false;
                 dgvUsers.DataSource = clsUser.GetAllUsersInfo(100);
-                 
-                if(dgvUsers.DataSource != null)
                 _DecryptUsersNames((DataTable)dgvUsers.DataSource);
+                _AllowDataLoading = false;
             }
             else if (cbFilterBy.SelectedItem.ToString() != "Is Active")
             {
                 txtFilter.Visible = true;
                 cbIsActive.Visible = false;
                 txtFilter.Focus();
+
+                _LoadDataAfterFirstTimeLoad(ref _AllowDataLoading);
             }
             else
             {
                 txtFilter.Visible = false;
                 cbIsActive.Visible = true;
 
-                if(cbIsActive.Items.Count==0)
+                if(cbIsActive.Items.Count == 0)
                 {
                     object[] Items = new object[] { "All", "Yes", "No" };
                     cbIsActive.Items.AddRange(Items);
                 }
                 cbIsActive.SelectedIndex = 0;
+
+                _LoadDataAfterFirstTimeLoad(ref _AllowDataLoading);
             }
             txtFilter.Text = "";
         }
@@ -306,11 +324,14 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     dtUsersInfo = clsUser.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value);
             }
 
-            _DecryptUsersNames(dtUsersInfo);
-            dgvUsers.DataSource = dtUsersInfo;
+                dgvUsers.DataSource = dtUsersInfo;
+            if (dtUsersInfo != null)
+            {
+                _DecryptUsersNames(dtUsersInfo);
 
-            if (EmptyDataTable != null && ScrollCase)
-                EmptyDataTable = (DataTable)dgvUsers.DataSource;
+                if (EmptyDataTable != null && ScrollCase)
+                    EmptyDataTable = (DataTable)dgvUsers.DataSource;
+            }
         }
         private void _AppendPartOfRemainingData()
         {

@@ -399,18 +399,55 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
+        private static string _GetOriginalColumnName(string SendedColumnName)
+        {
+            switch(SendedColumnName)
+            {
+                case "User ID":
+                    return "UserID";
+
+                case "Person ID":
+                    return "Users.PersonID";
+
+                case "Full Name":
+                    return "People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName";
+
+                case "Is Active":
+                    return "IsActive";
+
+                default:
+                    return "";
+            }
+        }
+
         private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
         {
-            string query = @"SELECT * FROM (SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
+            string query = @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
                               People.FirstName + ' ' + People.SecondName
                              + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name] , UserName,IsActive AS [Is Active]
-                              From Users INNER JOIN People ON Users.PersonID = People.PersonID) R1";
+                              From Users INNER JOIN People ON Users.PersonID = People.PersonID";
 
-            if (ColumnNameToFilter == "Is Active")
+            if (string.IsNullOrEmpty(ValueToFilterBy))
+            {
+                query += " ORDER BY UserID DESC";
+                return query;
+            }
+
+            if (ColumnNameToFilter != "UserName")
+                ColumnNameToFilter = _GetOriginalColumnName(ColumnNameToFilter);
+
+            if (ColumnNameToFilter == "IsActive")
             {
                 if (ValueToFilterBy == "All")
                 {
-                    query += " ORDER BY [User ID] DESC";
+
+                    if (LastLowestbroughtUserID != -1)
+                        query += @" WHERE UserID < @LastLowestbroughtUserID
+                                    ORDER BY UserID DESC";
+                    
+                    else 
+                        query += " ORDER BY UserID DESC";
+
                     return query;
                 }
 
@@ -419,17 +456,17 @@ namespace DVLDDataAccessLayer
             }
 
                 if (WildChar == null)
-                    query += $" WHERE [{ColumnNameToFilter}] = @Value";
+                    query += $" WHERE {ColumnNameToFilter} = @Value";
                 else
-                    query += $" WHERE [{ColumnNameToFilter}] Like @Value + @WildChar";
+                    query += $" WHERE {ColumnNameToFilter} Like @Value + @WildChar";
             
 
                 if (LastLowestbroughtUserID == -1)
-                    query += " ORDER BY [User ID] DESC";
+                    query += " ORDER BY UserID DESC";
 
                 else
-                    query += @" AND [User ID] < @LastLowestbroughtUserID
-                           ORDER BY [User ID] DESC";
+                    query += @" AND UserID < @LastLowestbroughtUserID
+                           ORDER BY UserID DESC";
 
                 return query;
         }

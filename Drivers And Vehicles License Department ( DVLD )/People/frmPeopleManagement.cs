@@ -33,7 +33,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             this.Close();
         }
-        bool PreventLoadingDataAgain = false;
+        bool _AllowDataLoading;
         private void frmPeopleManagement_Load(object sender, EventArgs e)
         {
             DataTable dtPeople = clsPerson.GetAllPeopleInfo(100);
@@ -42,10 +42,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 dgvPeople.Font = new Font("Tahoma", 15.5f);
                 dgvPeople.DataSource = dtPeople;
-                PreventLoadingDataAgain = true;
             }
              _AddDropDownItems();
-            PreventLoadingDataAgain = false;
 
             lblRecordsNumber.Text = clsPerson.GetTotalPeopleCount().ToString();
         }
@@ -53,7 +51,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
         {
             if (cbFilterBy.SelectedItem.ToString() != "None")
-                cbFilterBy.BackColor = Color.FromArgb(221, 232, 240);
+               cbFilterBy.BackColor = Color.FromArgb(221, 232, 240);
             else
                 cbFilterBy.BackColor = Color.FromArgb(228, 228, 228);
         }
@@ -74,39 +72,50 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 txtFilter.Visible = true;
                 txtFilter.Focus();
+
+                if (_AllowDataLoading)
+                    dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(100);
+                else
+                    _AllowDataLoading = true;
             }
             else
             {
                 txtFilter.Visible = false;
 
-                if(!PreventLoadingDataAgain)
                 dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(100);
+                _AllowDataLoading = false;
             }
                 txtFilter.Text = "";
         }
 
         private void _AddFilteredData(DataTable EmptyDataTable, bool ScrollCase = false)
         {
+            DataTable dtPeopleInfo;
             if (!ScrollCase)
             {
                 if (cbFilterBy.SelectedItem.ToString() == "Person ID" || cbFilterBy.SelectedItem.ToString() == "Phone")
-                    dgvPeople.DataSource = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);
+                    dtPeopleInfo = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);
 
                 else
-                    dgvPeople.DataSource = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
+                    dtPeopleInfo = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
             }
 
             else
             {
                 if (cbFilterBy.SelectedItem.ToString() == "Person ID" || cbFilterBy.SelectedItem.ToString() == "Phone")
-                    dgvPeople.DataSource = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null, (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value);
+                    dtPeopleInfo = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null, (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value);
 
                 else
-                    dgvPeople.DataSource = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value);
+                    dtPeopleInfo = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value);
             }
 
-            if (EmptyDataTable != null && ScrollCase)
-                EmptyDataTable = (DataTable)dgvPeople.DataSource;
+                dgvPeople.DataSource = dtPeopleInfo;
+
+            if (dtPeopleInfo != null)
+            {
+                if (EmptyDataTable != null && ScrollCase)
+                    EmptyDataTable = (DataTable)dgvPeople.DataSource;
+            }
         }
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)

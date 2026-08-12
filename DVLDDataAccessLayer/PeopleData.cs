@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Xml.Linq;
 
 namespace DVLDDataAccessLayer
 {
@@ -368,26 +369,92 @@ namespace DVLDDataAccessLayer
             return 0;
         }
 
+        private static string _GetOriginalColumnName(string SendedColumnName)
+        {
+            switch(SendedColumnName)
+            {
+                case "Person ID":
+                    return "PersonID";
+
+                case "National No.":
+                    return "NationalNo";
+
+                case "First Name":
+                    return "FirstName";
+
+                case "Second Name":
+                    return "SecondName";
+
+                case "Third Name":
+                    return "ThirdName";
+
+                case "Last Name":
+                    return "LastName";
+
+                case "Date Of Birth":
+                    return "DateOfBirth";
+
+                case "Nationality":
+                    return "Countries.CountryName";
+
+                default:
+                    return "";
+            }
+        }
+
         private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
         {
-            string query = @"SELECT * FROM (SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
+            string query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
                       FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
                       Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
                       DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
-                      FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID) R1";
+                      FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
 
-                        if (WildChar == null)
-                            query += $" WHERE [{ColumnNameToFilter}] = @Value";
-                        else
-                            query += $" WHERE [{ColumnNameToFilter}] Like @Value + @WildChar";
 
-            
+            if (string.IsNullOrEmpty(ValueToFilterBy))
+            {
+                if (LastLowestbroughtPersonID != -1)
+                query += @" WHERE PersonID < @LastLowestbroughtPersonID
+                           ORDER BY PersonID DESC";
+                else
+                    query += " ORDER BY PersonID DESC";
+                return query;
+            }
+
+            if (ColumnNameToFilter != "Gendor" && ColumnNameToFilter != "Phone" && ColumnNameToFilter != "Email")
+                ColumnNameToFilter = _GetOriginalColumnName(ColumnNameToFilter);
+            else
+            {
+                if (ColumnNameToFilter == "Gendor")
+                {
+                    query = "SELECT * FROM (" + query + ") R1";
+                }
+            }
+
+                if (WildChar == null)
+                    query += $" WHERE {ColumnNameToFilter} = @Value";
+                else
+                    query += $" WHERE {ColumnNameToFilter} LIKE @Value + @WildChar";
+
+            if (ColumnNameToFilter == "Gendor")
+            {
                 if (LastLowestbroughtPersonID == -1)
                     query += " ORDER BY [Person ID] DESC";
 
                 else
                     query += @" AND [Person ID] < @LastLowestbroughtPersonID
                            ORDER BY [Person ID] DESC";
+            }
+
+            else
+            {
+                if (LastLowestbroughtPersonID == -1)
+                    query += " ORDER BY PersonID DESC";
+
+                else
+                    query += @" AND PersonID < @LastLowestbroughtPersonID
+                           ORDER BY PersonID DESC";
+            }
 
                 return query;
         }
@@ -403,7 +470,8 @@ namespace DVLDDataAccessLayer
             SqlCommand command = new SqlCommand(query, connection);
              command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
 
-             command.Parameters.AddWithValue("@Value", ValueToFilterBy);
+            if (!string.IsNullOrEmpty(ValueToFilterBy))
+                command.Parameters.AddWithValue("@Value", ValueToFilterBy);
 
                 if(WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
