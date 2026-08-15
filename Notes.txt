@@ -281,7 +281,7 @@ DBCC CHECKIDENT ('TableName', RESEED, 6);// if we put for example value 6 -> it 
 
 SELECT *(if we want all columns) INTO ThisDatabase.dbo.newtablename FROM DatabaseThatHasTheTableWeWantToCopy.dbo.tablename
 
-29) It is allowed to not include the column that is in the aggregate function in the select statement in the GROUP BY Clause, and by that like in our example if we put the column the is in the aggregate function > the column has to values 0 or 1 and by that Database engine will create to groups of data each associated with a value and by that if we sum the column result it will not sum all the column but it will sum that column values in 2 groups , one group with the value 0 and by that it will sum all zeros in the column and the other group the column value is 1 and by that it will sum all the 1 values and we will have 2 records instead of 1 for each row because there is here in our case two groups separated based on the Test Result column value and therefore to avoid that we do not put the column that is in the aggregate function with in the GROUP BY Clause :
+29) It is allowed to not include the column that is in the aggregate function which is in the select statement in the GROUP BY Clause, and by that like in our example if we put the column the is in the aggregate function in the group by clause > the column values are 0 or 1 and by that Database engine will create 2 groups of data each associated with a value and by that if we sum the column result it will not sum all the column values but it will sum that column values in 2 groups , one group with the value 0 and by that it will sum all zeros in the column and the other group the column value is 1 and by that it will sum all the 1 values and we will have 2 records instead of 1 for each row because there is here in our case two groups separated based on the Test Result column value and therefore to avoid that we do not put the column that is in the aggregate function with in the GROUP BY Clause in order to have Single Aggregate value from the aggregate function for the whole column instead of multiple aggregate values for the column values :
 
 SELECT LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.LAppID] , LicenseClasses.ClassName AS [Driving Class] ,
 People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
@@ -297,7 +297,7 @@ GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, Licen
 People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
 ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END), ApplicationDate
 
--> When we want a single aggregate value for each record which means when we want column values to be grouped by single aggregate value -> we do not put the column that is in the aggregate function with in the GROUP BY Clause to avoid having separated groups for each value at that column that is with in aggregate function and by that we avoid having the column values grouped by many aggregate values and by that in the result we will have column values repeated with a different aggregate value because when we put the column that is with in aggregate function -> data which is column values will be separated into groups and each groups has the same column values with a value associated with it from the column that is with in the aggregate function and for that in the result set will have the same column values but with different aggregate value in each record we will have.
+-> When we want a single aggregate value for each record which means when we want column values to be grouped by single aggregate value -> we do not put the column that is in the aggregate function with in the GROUP BY Clause to avoid having separated groups for each value at that column that is with in the aggregate function and by that we avoid having the column/s values grouped by many aggregate values and by that in the result we will have column values repeated with a different aggregate value because when we put the column that is with in the aggregate function -> data which is column values will be separated into groups and each group has the same column values with the aggregate value associated with it and for that in the result set we will have the same column values but with different aggregate value in each record we will have.
 
 30) 
 SELECT LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
@@ -315,111 +315,17 @@ GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, Licen
 People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
 ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END), ApplicationDate , (CASE WHEN Applications.ApplicationStatus = 0 THEN 'New' WHEN Applications.ApplicationStatus = 1 THEN 'Canceled' ELSE 'Completed' END) 
 
+-> We cannot use Aggregate Functions Nor the Alias Names in Where because Where Get Executed Before The Aggregations and Also the Aggregate functions Nor Alias Names Cannot Be Used In group By Clause and we must instead to use the column name or the Whole Expression .
 
-31)
+-> We can use Alias Name Or The Column Name in The Order By Clause .
 
- public static DataTable GetFilteredData(short WantedNumberOfRecords,string ColumnNameToFilter,string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
- {
-     DataTable dtFilteredData = null;
-
-     SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-
-     string query;
-
-     query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
-               FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
-               Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-               DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
-               FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
-
-     if (ColumnNameToFilter == "Nationality")
-         ColumnNameToFilter = "CountryName";
-
-     if(ValueToFilterBy != null)
-     {
-       switch(ColumnNameToFilter)
-         {
-             case "Gendor":
-               if(WildChar == null)
-                   query = "SELECT * FROM (" + query + ") R1 WHERE Gendor LIKE @Value";
-               else
-                   query = "SELECT * FROM (" + query + ") R1 WHERE Gendor LIKE @Value + @WildChar";
-
-               break;
-
-             case "PersonID":
-                     query += " WHERE PersonID = @Value";
-
-                 break;
-
-             default:
-                 if (WildChar == null)
-                     query += $" WHERE {ColumnNameToFilter} = @Value";
-                 else
-                     query += $" WHERE {ColumnNameToFilter} Like @Value + @WildChar";
-
-                 break;
-         }            
-     }
-
-     if (ColumnNameToFilter == "Gendor")
-     {
-         if (LastLowestbroughtPersonID == -1)
-             query += " ORDER BY [Person ID] DESC";
-
-         else
-             query += @" AND [Person ID] < @LastLowestbroughtPersonID
-                    ORDER BY [Person ID] DESC";
-     }
-     else
-     {
-         if (LastLowestbroughtPersonID == -1)
-             query += " ORDER BY PersonID DESC";
-
-         else
-             query += @" AND PersonID < @LastLowestbroughtPersonID
-                    ORDER BY PersonID DESC";
-     }
-
-     SqlCommand command = new SqlCommand(query, connection);
-      command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
-
-     if (ValueToFilterBy != null)
-     {
-         command.Parameters.AddWithValue("@Value", ValueToFilterBy);
-
-         if(WildChar != null)
-         command.Parameters.AddWithValue("@WildChar", WildChar);
-
-     }
-
-     try
-     {
-         connection.Open();
-
-         SqlDataReader reader = command.ExecuteReader();
-
-         if (reader.HasRows)
-         {
-             dtFilteredData = new DataTable();
-             dtFilteredData.Load(reader);
-         }
-
-         reader.Close();
-     }
-
-     catch(Exception ex) { Console.Write(ex.Message); }
-
-     finally
-     {
-         connection.Close();
-     }
-         
-         return dtFilteredData;
- }
+-> We can User Aggregate Functions In Having And The Aggregate Function/s Is Not Necessary To Be Exist In Select Statement In Order To User It In The Having Clause and We cannot User Alias Names In Having Clause .
 
 
 31)
+The Following Query Will Bring The Top Number Of Wanted Records Then It Will Filter and by that The Filtering Results will be based on the Wanted Number Of Records That We Want To Bring Only And NOT Based On The Whole Data In The Table Or Tables And By That If We Want 100 Record And We Have Million Record -> Filtering Will Be On the 100 Record Not On The Million Record And This Is Not Valid Because We Should Filter On Full Data And In Order To Filter Based On Full Data We Put The Where Clause With The Subquery In Our Example and We Can To Remove Outer Query And Keep The Subquery As The Full Main Query.
+
+//Wrong Solution :
 
             string query = @"SELECT * FROM (SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
                               People.FirstName + ' ' + People.SecondName
@@ -465,3 +371,107 @@ ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END), Applic
                            ORDER BY [User ID] DESC";
 
                 return query;
+
+// Right Solution :
+  private static string _GetOriginalColumnName(string SendedColumnName)
+  {
+      switch(SendedColumnName)
+      {
+          case "User ID":
+              return "UserID";
+
+          case "Person ID":
+              return "Users.PersonID";
+
+          case "Full Name":
+              return "People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName";
+
+          case "Is Active":
+              return "IsActive";
+
+          default:
+              return "";
+      }
+  }
+
+  private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
+  {
+      string query = @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
+                        People.FirstName + ' ' + People.SecondName
+                       + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name] , UserName,IsActive AS [Is Active]
+                        From Users INNER JOIN People ON Users.PersonID = People.PersonID";
+
+      if (string.IsNullOrEmpty(ValueToFilterBy))
+      {
+          query += " ORDER BY UserID DESC";
+          return query;
+      }
+
+      if (ColumnNameToFilter != "UserName")
+          ColumnNameToFilter = _GetOriginalColumnName(ColumnNameToFilter);
+
+      if (ColumnNameToFilter == "IsActive")
+      {
+          if (ValueToFilterBy == "All")
+          {
+
+              if (LastLowestbroughtUserID != -1)
+                  query += @" WHERE UserID < @LastLowestbroughtUserID
+                              ORDER BY UserID DESC";
+              
+              else 
+                  query += " ORDER BY UserID DESC";
+
+              return query;
+          }
+
+          else
+              ValueToFilterBy = (ValueToFilterBy == "Yes") ? "1" : "0";
+      }
+
+          if (WildChar == null)
+              query += $" WHERE {ColumnNameToFilter} = @Value";
+          else
+              query += $" WHERE {ColumnNameToFilter} Like @Value + @WildChar";
+      
+
+          if (LastLowestbroughtUserID == -1)
+              query += " ORDER BY UserID DESC";
+
+          else
+              query += @" AND UserID < @LastLowestbroughtUserID
+                     ORDER BY UserID DESC";
+
+          return query;
+  }
+
+
+32) 
+
+// The following query1 we used in INNER JOIN : here what happens is the following : the Inner join joins the matched data based on common column from both tables and after that the where clause get executed and here IF the LDLApplicationID was 210 for example and that id does not has a test appointement and by that e want be in the result set because result set only contains joined data and by that because of that the test result for that id will be null and ehre we will have value 0 because there is not test appointment for that LDLApplicationID , 
+
+For query 2 : We used Left Join and here the join operations executes first and here we will have all data from the left table with the matched data from the right table for each left join and by that the ID 210 will be included in the result set but the test result for it will be also null and here we will have the value 0 , as a better practice here to use inner join cause we do not want to do anything with the data from the left which is data that does not match based on common column between both tables and by that we use inner join and even if the LDLApplicationID has no test appointment -> it will not be in the result set and after filtering -> that id wont have test result and the test result for it will be null and here we brought instead null the 0 .
+
+public static sbyte GetPassedTests(int LDLApplicationID)
+{
+    SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+    string query1 = @"SELECT (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests]
+                     FROM LocalDrivingLicenseApplications
+                     INNER JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
+                     INNER JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID
+                     WHERE LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = @LDLApplicationID";
+
+    string query2 = @"SELECT (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests]
+                     FROM LocalDrivingLicenseApplications
+                     LEFT JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
+                     LEFT JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID
+                     WHERE LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = @LDLApplicationID";
+
+
+33) In Query : The From executes First and after that The Join Operations With On Clause executes and after that the where clause and after that the group by clause and after that the having clause and after that the select statement .
+
+
+34) git add -A stages all changes in the staging area from working directory whether the changes on the working directory was new file/s , modified file/s Or delete file/s , after that we commit in order to have the changes in the Local repository and after that push to have them in the remote repository .
+
+34)  : pull if there was any updates on remote repo and after that it push to remote repo .

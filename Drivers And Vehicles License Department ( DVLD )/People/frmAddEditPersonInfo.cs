@@ -246,8 +246,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private bool _CheckIsValidEmail(string Email, CancelEventArgs e)
         {
-            if ((txtEmail.Text.Contains(" ") && txtEmail.Text.Contains(",") && !(_ValidateEmailStart(Email)
-            && _ValdiateEmailMiddle(Email) && _ValidateEmailEnd(Email))))
+            if (txtEmail.Text.Contains(" ") || txtEmail.Text.Contains(",") || !(_ValidateEmailStart(Email)
+            && _ValdiateEmailMiddle(Email) && _ValidateEmailEnd(Email)))
             {
                 clsUtility.EnableErrorProvider(erTextBox,txtEmail, "Invalid Email Address Format!", e);
                 return false;

@@ -75,3 +75,4 @@ C:\Users\User\Desktop\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\
 C:\Users\User\Desktop\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetailsByFilter.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver_And_Vehicle_Licenses_Department___DVLD__.frmLocalDrivingLicenseApplications.resources
 C:\Users\User\Desktop\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver_And_Vehicle_Licenses_Department___DVLD__.frmLocalDrivingLicenseApplications.resources
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlDLApplicationInfo.resources

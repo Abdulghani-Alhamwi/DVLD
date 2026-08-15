@@ -6,6 +6,10 @@ namespace DVLDBusinessLayer
 {
     public class clsLicenseClasses
     {
+        public int ID { get; set; }
+        public string ClassName { get; set; }
+
+
         public static DataTable GetLicenseClassesNames()
         {
             return clsLicenseClassesData.GetLicenseClassesNames();
@@ -16,9 +20,5 @@ namespace DVLDBusinessLayer
             return clsLicenseClassesData.GetLicenseClassID(LicenseClassName);
         }
 
-        public static string GetLicenseClassName(int LicenseClassID)
-        {
-            return clsLicenseClassesData.GetLicenseClassName(LicenseClassID);
-        }
     }
 }

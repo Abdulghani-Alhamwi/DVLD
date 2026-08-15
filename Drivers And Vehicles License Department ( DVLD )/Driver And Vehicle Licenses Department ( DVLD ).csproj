@@ -75,6 +75,12 @@
     <Compile Include="ApplicationTypes\frmUpdateApplicationType.Designer.cs">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
     </Compile>
+    <Compile Include="ctrlDLApplicationInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlDLApplicationInfo.Designer.cs">
+      <DependentUpon>ctrlDLApplicationInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="LocalDrivingLicenseApplications\frmNewLocalDrivingLicenseApplication.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -180,6 +186,9 @@
     <EmbeddedResource Include="ApplicationTypes\frmUpdateApplicationType.resx">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ctrlDLApplicationInfo.resx">
+      <DependentUpon>ctrlDLApplicationInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LocalDrivingLicenseApplications\frmNewLocalDrivingLicenseApplication.resx">
       <DependentUpon>frmNewLocalDrivingLicenseApplication.cs</DependentUpon>
     </EmbeddedResource>
@@ -244,6 +253,10 @@
     <None Include="Resources\DVLD1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\PassedTests 32.png" />
+    <None Include="Resources\Street Test 32.png" />
+    <None Include="Resources\Written Test 32.png" />
+    <None Include="Resources\Vision Test 32.png" />
     <None Include="Resources\PersonLicenseHistory 32.png" />
     <None Include="Resources\License View 32.png" />
     <None Include="Resources\IssueDrivingLicense 32.png" />
@@ -303,6 +316,7 @@
     <None Include="Resources\Damaged Driving License 321.png" />
     <None Include="Resources\Detained Driving License 32.png" />
     <None Include="Resources\Delete 32 2.png" />
+    <None Include="Resources\ApplicationType.png" />
     <Content Include="Resources\DVLD Logo.ico" />
     <None Include="Resources\People 400.png" />
     <None Include="Resources\People 64.png" />

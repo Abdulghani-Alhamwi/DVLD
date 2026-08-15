@@ -61,6 +61,22 @@ namespace DVLDBusinessLayer
             return 0;
         }
 
+        public string GetApplicationStatus()
+        {
+            switch (ApplicationStatus)
+            {
+                case enApplicationStatus.New:
+                    return "New";
+
+                case enApplicationStatus.Canceled:
+                    return "Canceled";
+
+                case enApplicationStatus.Completed:
+                    return "Completed";
+            }
+            return "";
+        }
+
         protected static enApplicationStatus _GetApplicationStatus(byte ApplicationStatus)
         {
             switch(ApplicationStatus)
@@ -134,5 +150,6 @@ namespace DVLDBusinessLayer
         {
             return clsApplicationsData.ChangeApplicationStatus(ApplicationID, _GetApplicationStatus(TheNewStatus));
         }
+
     }
 }

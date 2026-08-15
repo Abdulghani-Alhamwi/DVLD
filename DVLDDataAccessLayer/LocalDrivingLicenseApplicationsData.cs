@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLDDataAccessLayer
 {
@@ -124,11 +121,12 @@ namespace DVLDDataAccessLayer
             return (AffectedRows > 0);
         }
 
-        public static bool Find(int LocalDrivingLicenseApplicationID, ref int ApplicationID, ref int LicenseClassID)
+        public static bool Find(int LocalDrivingLicenseApplicationID, ref int ApplicationID, ref int LicenseClassID , ref string LicenseClassName)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = @"SELECT * FROM LocalDrivingLicenseApplications
+            string query = @"SELECT LocalDrivingLicenseApplications.* , LicenseClasses.ClassName FROM LocalDrivingLicenseApplications
+                             INNER JOIN LicenseClasses ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID
                              WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -144,6 +142,7 @@ namespace DVLDDataAccessLayer
                 {
                     ApplicationID = (int)reader["ApplicationID"];
                     LicenseClassID = (int)reader["LicenseClassID"];
+                    LicenseClassName = (string)reader["ClassName"];
 
                     IsFound = true;
                 }
@@ -447,6 +446,39 @@ namespace DVLDDataAccessLayer
             }
 
             return dtFilteredData;
+        }
+
+        public static sbyte GetPassedTests(int LDLApplicationID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests]
+                             FROM LocalDrivingLicenseApplications
+                             INNER JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
+                             INNER JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID
+                             WHERE LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = @LDLApplicationID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@LDLApplicationID", LDLApplicationID);
+
+            try
+            {
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return Convert.ToSByte(result);
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return -1;
         }
     }
 }

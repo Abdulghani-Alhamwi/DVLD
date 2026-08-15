@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Drawing;
 using System.Windows.Forms;
 using Driver_And_Vehicle_Licenses_Department___DVLD__.Core;
 using DVLDBusinessLayer;
@@ -292,6 +291,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 cbFilterBy.BackColor = clsUtility.ComboBoxHighlightedBackColor;
             else
                 cbFilterBy.BackColor = clsUtility.ComboBoxBackColor;
+        }
+
+        private void tsmiScheduleVisionTest_Click(object sender, EventArgs e)
+        {
+
         }
     }
     }

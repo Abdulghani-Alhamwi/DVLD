@@ -50,7 +50,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
         {
             uctrlPersonDetailsByFilter.LoadPersonDetails(_LDLApplication.ApplicantPersonID);
             lblDLApplicationID.Text = _LDLApplication.ApplicationID.ToString();
-            cbLicenseClass.SelectedItem = clsLicenseClasses.GetLicenseClassName(_LDLApplication.LicenseClassID);
+            cbLicenseClass.SelectedItem = _LDLApplication.LicenseClass.ClassName;
             lblApplicationDate.Text = _LDLApplication.ApplicationDate.ToShortDateString();
             lblApplicationFees.Text = _LDLApplication.PaidApplicationFees.ToString();
             lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(_LDLApplication.CreatedByUserID));
@@ -127,7 +127,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
 
         private bool _IsInfoUnchanged()
         {
-            return (_LDLApplication.ApplicantPersonID == _PersonID && ((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString() == clsLicenseClasses.GetLicenseClassName(_LDLApplication.LicenseClassID));
+            return (_LDLApplication.ApplicantPersonID == _PersonID && ((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString() == _LDLApplication.LicenseClass.ClassName);
         }
         private bool _SaveLDLApplication(out clsLocalDrivingLicenseApplication LDLApplication)
         {
@@ -136,7 +136,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
             else
                 LDLApplication = new clsLocalDrivingLicenseApplication();
 
-            LDLApplication.LicenseClassID = clsLicenseClasses.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
+            LDLApplication.LicenseClass.ID = clsLicenseClasses.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
             LDLApplication.ApplicantPersonID = _PersonID;
             LDLApplication.ApplicationDate = DateTime.Now;
             LDLApplication.ApplicationTypeID = _NewLocalDrivingLicenseApplicationTypeID;
@@ -185,7 +185,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
                     clsLocalDrivingLicenseApplication LDLApplication;
                     if (_SaveLDLApplication(out LDLApplication))
                     {
-                        lblDLApplicationID.Text = LDLApplication.LocalDrivingLicenseApplicationID.ToString();
+                        lblDLApplicationID.Text = LDLApplication.LDLApplicationID.ToString();
                         MessageBox.Show("Data Saved successfully", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         if (_LDLApplication == null)
