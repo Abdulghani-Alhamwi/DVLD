@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.lblManagePeopleBigTitle = new System.Windows.Forms.Label();
+            this.lblFormBigTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
-            this.lblManagePeopleTitle = new System.Windows.Forms.Label();
+            this.lblFormTitle = new System.Windows.Forms.Label();
             this.dgvPeople = new System.Windows.Forms.DataGridView();
             this.cmsPeopleMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiShowDetails = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,18 +56,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbPeople)).BeginInit();
             this.SuspendLayout();
             // 
-            // lblManagePeopleBigTitle
+            // lblFormBigTitle
             // 
-            this.lblManagePeopleBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblManagePeopleBigTitle.AutoSize = true;
-            this.lblManagePeopleBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
-            this.lblManagePeopleBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblManagePeopleBigTitle.Location = new System.Drawing.Point(438, 228);
-            this.lblManagePeopleBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblManagePeopleBigTitle.Name = "lblManagePeopleBigTitle";
-            this.lblManagePeopleBigTitle.Size = new System.Drawing.Size(353, 52);
-            this.lblManagePeopleBigTitle.TabIndex = 39;
-            this.lblManagePeopleBigTitle.Text = "Manage People";
+            this.lblFormBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblFormBigTitle.AutoSize = true;
+            this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
+            this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
+            this.lblFormBigTitle.Location = new System.Drawing.Point(438, 228);
+            this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblFormBigTitle.Name = "lblFormBigTitle";
+            this.lblFormBigTitle.Size = new System.Drawing.Size(353, 52);
+            this.lblFormBigTitle.TabIndex = 39;
+            this.lblFormBigTitle.Text = "Manage People";
             // 
             // btnExit
             // 
@@ -89,17 +89,17 @@
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // lblManagePeopleTitle
+            // lblFormTitle
             // 
-            this.lblManagePeopleTitle.AutoSize = true;
-            this.lblManagePeopleTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblManagePeopleTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblManagePeopleTitle.Location = new System.Drawing.Point(24, 21);
-            this.lblManagePeopleTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblManagePeopleTitle.Name = "lblManagePeopleTitle";
-            this.lblManagePeopleTitle.Size = new System.Drawing.Size(175, 29);
-            this.lblManagePeopleTitle.TabIndex = 34;
-            this.lblManagePeopleTitle.Text = "Manage People";
+            this.lblFormTitle.AutoSize = true;
+            this.lblFormTitle.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lblFormTitle.Location = new System.Drawing.Point(24, 21);
+            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblFormTitle.Name = "lblFormTitle";
+            this.lblFormTitle.Size = new System.Drawing.Size(175, 29);
+            this.lblFormTitle.TabIndex = 34;
+            this.lblFormTitle.Text = "Manage People";
             // 
             // dgvPeople
             // 
@@ -149,7 +149,8 @@
             this.tsmiPhoneCall});
             this.cmsPeopleMenu.Name = "cmsPeopleMenu";
             this.cmsPeopleMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPeopleMenu.Size = new System.Drawing.Size(223, 244);
+            this.cmsPeopleMenu.Size = new System.Drawing.Size(223, 266);
+            this.cmsPeopleMenu.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsPeopleMenu_Paint);
             // 
             // tsmiShowDetails
             // 
@@ -349,10 +350,10 @@
             this.Controls.Add(this.cbFilterBy);
             this.Controls.Add(this.lblTitleFilterBy);
             this.Controls.Add(this.dgvPeople);
-            this.Controls.Add(this.lblManagePeopleTitle);
+            this.Controls.Add(this.lblFormTitle);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.pbPeople);
-            this.Controls.Add(this.lblManagePeopleBigTitle);
+            this.Controls.Add(this.lblFormBigTitle);
             this.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -371,9 +372,9 @@
 
         #endregion
         
-        private System.Windows.Forms.Label lblManagePeopleBigTitle;
+        private System.Windows.Forms.Label lblFormBigTitle;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Label lblManagePeopleTitle;
+        private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.DataGridView dgvPeople;
         private System.Windows.Forms.Label lblTitleFilterBy;
         private System.Windows.Forms.ComboBox cbFilterBy;

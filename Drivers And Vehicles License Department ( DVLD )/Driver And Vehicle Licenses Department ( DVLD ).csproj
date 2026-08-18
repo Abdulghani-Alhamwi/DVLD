@@ -81,6 +81,24 @@
     <Compile Include="ctrlDLApplicationInfo.Designer.cs">
       <DependentUpon>ctrlDLApplicationInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmScheduleTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmScheduleTest.Designer.cs">
+      <DependentUpon>frmScheduleTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTakeTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTakeTest.Designer.cs">
+      <DependentUpon>frmTakeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVisionTestAppointments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVisionTestAppointments.Designer.cs">
+      <DependentUpon>frmVisionTestAppointments.cs</DependentUpon>
+    </Compile>
     <Compile Include="LocalDrivingLicenseApplications\frmNewLocalDrivingLicenseApplication.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -189,6 +207,15 @@
     <EmbeddedResource Include="ctrlDLApplicationInfo.resx">
       <DependentUpon>ctrlDLApplicationInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmScheduleTest.resx">
+      <DependentUpon>frmScheduleTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTakeTest.resx">
+      <DependentUpon>frmTakeTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVisionTestAppointments.resx">
+      <DependentUpon>frmVisionTestAppointments.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LocalDrivingLicenseApplications\frmNewLocalDrivingLicenseApplication.resx">
       <DependentUpon>frmNewLocalDrivingLicenseApplication.cs</DependentUpon>
     </EmbeddedResource>
@@ -253,6 +280,11 @@
     <None Include="Resources\DVLD1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Notes 32.png" />
+    <None Include="Resources\Test 32.png" />
+    <None Include="Resources\Written Test 512.png" />
+    <None Include="Resources\TrialCount32.png" />
+    <None Include="Resources\Vision 512.png" />
     <None Include="Resources\PassedTests 32.png" />
     <None Include="Resources\Street Test 32.png" />
     <None Include="Resources\Written Test 32.png" />
@@ -317,6 +349,8 @@
     <None Include="Resources\Detained Driving License 32.png" />
     <None Include="Resources\Delete 32 2.png" />
     <None Include="Resources\ApplicationType.png" />
+    <None Include="Resources\AddAppointment 32.png" />
+    <None Include="Resources\driving-test 512.png" />
     <Content Include="Resources\DVLD Logo.ico" />
     <None Include="Resources\People 400.png" />
     <None Include="Resources\People 64.png" />

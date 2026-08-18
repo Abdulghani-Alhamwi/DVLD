@@ -100,5 +100,33 @@ namespace DVLDDataAccessLayer
             }
             return ApplicationTypeFees;
         }
+
+        public static string GetApplicationTypeTitle(int ApplicationTypeID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT ApplicationTypeTitle FROM ApplicationTypes
+                             WHERE ApplicationTypeID = @ApplicationTypeID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return result.ToString();
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return null;
+        }
     }
 }

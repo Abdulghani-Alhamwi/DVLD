@@ -474,4 +474,17 @@ public static sbyte GetPassedTests(int LDLApplicationID)
 
 34) git add -A stages all changes in the staging area from working directory whether the changes on the working directory was new file/s , modified file/s Or delete file/s , after that we commit in order to have the changes in the Local repository and after that push to have them in the remote repository .
 
-34)  : pull if there was any updates on remote repo and after that it push to remote repo .
+34) git push -u origin main : (It Ensures Safe Push For Our Commits To Remote Repo) This command check if there was any updates on the remote repo and if there was updates , it prevent us from pushing until pull the changes from remote repo , so it force us to pull first and prevent pushing if there was updates on remote repo and if there wasn't any updates -> it push our commits to remote repo . 
+
+35) We can do in command line for pull then push : git pull && git push origin main .
+
+36) When We Use Approximate Data Types Float Or Double If The Number its Denominator was From The Power Of 2 Or If the Number It Self Was From The Power Of 2 -> It will Not Be Stored As Binary Floating Point And It Stored Exactly As It And It Will Be Safe To Use Like If We Have 9.50 and then compared it with 9.50 == 9.50 -> it will be true , while float or double type stored value 9.99 == 9.99 -> it will be false because the stored value is approximated.
+
+37) 
+If in data grid view control -> the column header text was not beside it self and each word was above the other word like :
+Appointment
+ID
+Instead Of Appointment ID in same line.
+-> To Solve that : From Data Grid View Control Properties -> We Make : ColumnHeadersHeightSizeMode To EnableResizing and then we set the ColumnHeadersHeight property to proper height like 40.
+
+38) SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM , If We Enter A Date That Is Not With In That Range -> we will have exception when execution the query .

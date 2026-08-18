@@ -41,7 +41,7 @@ namespace DVLDDataAccessLayer
             return dtTestTypes;
         }
 
-        public static bool UpdateTestType(int TestTypeID,string TestTypeTitle,string TestTypeDescription,double TestTypeFees)
+        public static bool UpdateTestType(int TestTypeID,string TestTypeTitle,string TestTypeDescription,decimal TestTypeFees)
         {
             int AffectedRows = -1;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -74,6 +74,36 @@ namespace DVLDDataAccessLayer
 
             return (AffectedRows > 0);
 
+        }
+
+        public static float GetTestTypeFees(byte TestTypeID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT TestTypeFees FROM TestTypes
+                             WHERE TestTypeID = @TestTypeId";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
+
+            try
+            {
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return Convert.ToSingle(result);
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return -1;
         }
 
     }

@@ -20,7 +20,7 @@ namespace DVLDBusinessLayer
             _CurrentMode = enMode.AddNew;
         }
 
-        private clsLocalDrivingLicenseApplication(int LDLApplicationID,int ApplicationID,clsLicenseClasses LicenseClass, int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, double PaidApplicationFees, int CreatedByUserID)
+        private clsLocalDrivingLicenseApplication(int LDLApplicationID,int ApplicationID,clsLicenseClasses LicenseClass, int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
               :base(ApplicationID,ApplicantPersonID,ApplicationDate,ApplicationTypeID, ApplicationStatus,LastStatusDate,PaidApplicationFees,CreatedByUserID)            
         {
             this.LDLApplicationID = LDLApplicationID;

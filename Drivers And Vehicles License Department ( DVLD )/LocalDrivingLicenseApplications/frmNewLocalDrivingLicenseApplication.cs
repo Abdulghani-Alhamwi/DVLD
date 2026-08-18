@@ -142,7 +142,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
             LDLApplication.ApplicationTypeID = _NewLocalDrivingLicenseApplicationTypeID;
             LDLApplication.ApplicationStatus = clsApplication.enApplicationStatus.New;
             LDLApplication.LastStatusDate = DateTime.Now;
-            LDLApplication.PaidApplicationFees = Convert.ToDouble(lblApplicationFees.Text);
+            LDLApplication.PaidApplicationFees = Convert.ToDecimal(lblApplicationFees.Text);
             LDLApplication.CreatedByUserID = clsGlobalSettings.CurrentUserID;
 
             return LDLApplication.Save();

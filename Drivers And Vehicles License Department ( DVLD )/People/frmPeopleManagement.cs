@@ -166,40 +166,34 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void tsmiDelete_Click(object sender, EventArgs e)
         {
-            if (dgvPeople.Rows.Count == 0)
-                MessageBox.Show("There is'nt any person to delete!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+             if (dgvPeople.SelectedRows.Count > 5)
+             {
+                 MessageBox.Show("You Can Delete Maximum 5 People In One Time!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                 return;
+             }
 
-            else
-            {
-                if (dgvPeople.SelectedRows.Count > 5)
-                {
-                    MessageBox.Show("You Can Delete Maximum 5 People In One Time!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
+             DialogResult result;
+             if (dgvPeople.SelectedRows.Count == 1)
+                 result = MessageBox.Show("Are you sure you want to delete this person?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+             else
+                 result = MessageBox.Show("Are you sure you want to delete those people?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
-                DialogResult result;
-                if (dgvPeople.SelectedRows.Count == 1)
-                    result = MessageBox.Show("Are you sure you want to delete this person?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-                else
-                    result = MessageBox.Show("Are you sure you want to delete those people?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-
-                if (result == DialogResult.OK)
-                {
-                    int[] SelectedRowsIndex = new int[dgvPeople.SelectedRows.Count];
-                    for (byte i = 0; i < dgvPeople.SelectedRows.Count; i++)
-                    {
-                        if (!clsPerson.DeletePerson(Convert.ToInt32(dgvPeople.SelectedRows[i].Cells["Person ID"].Value)))
-                        {
-                            MessageBox.Show($"Person who has ID : {Convert.ToInt32(dgvPeople.SelectedRows[i].Cells["Person ID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            SelectedRowsIndex[i] = -1;
-                        }
-                        else
-                            SelectedRowsIndex[i] = dgvPeople.SelectedRows[i].Index;
-                    }
-                    clsUtility.DeleteSelectedRowsFromView(dgvPeople,SelectedRowsIndex);
-                    lblRecordsNumber.Text = clsPerson.GetTotalPeopleCount().ToString();
-                }
-            }
+             if (result == DialogResult.OK)
+             {
+                 int[] SelectedRowsIndex = new int[dgvPeople.SelectedRows.Count];
+                 for (byte i = 0; i < dgvPeople.SelectedRows.Count; i++)
+                 {
+                     if (!clsPerson.DeletePerson(Convert.ToInt32(dgvPeople.SelectedRows[i].Cells["Person ID"].Value)))
+                     {
+                         MessageBox.Show($"Person who has ID : {Convert.ToInt32(dgvPeople.SelectedRows[i].Cells["Person ID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                         SelectedRowsIndex[i] = -1;
+                     }
+                     else
+                         SelectedRowsIndex[i] = dgvPeople.SelectedRows[i].Index;
+                 }
+                 clsUtility.DeleteSelectedRowsFromView(dgvPeople,SelectedRowsIndex);
+                 lblRecordsNumber.Text = clsPerson.GetTotalPeopleCount().ToString();
+             }
         }
 
         private void _EditDataRowInDGV(ref object[] NewValues, int RowIndex)
@@ -209,12 +203,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void tsmiEdit_Click(object sender, EventArgs e)
         {
-            if (dgvPeople.SelectedRows.Count == 0)
-                {
-                MessageBox.Show("No selected person to edit", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-                }
-
             if(dgvPeople.SelectedRows.Count > 1)
             {
                 MessageBox.Show("Please select only one person to edit", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -255,11 +243,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 frmPersonDetails frm = new frmPersonDetails((int)dgvPeople.SelectedRows[0].Cells[0].Value);
                 frm.ShowDialog();
             }
-            else if(dgvPeople.SelectedRows.Count > 1)
-                MessageBox.Show("You must select a person first to show their details , and you can view only one person details!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
-                MessageBox.Show("There is'nt any person to show their details!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                MessageBox.Show("You must select a person first to show their details , and you can view only one person details!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void tsmiShowDetails_Click(object sender, EventArgs e)
         {
@@ -308,6 +293,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             if (dgvPeople.Rows.GetLastRow(DataGridViewElementStates.None) == dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Selected))
                 _AppendPartOfRemainingData();
+        }
+
+        private void cmsPeopleMenu_Paint(object sender, PaintEventArgs e)
+        {
+            if (dgvPeople.SelectedRows.Count == 0)
+                cmsPeopleMenu.Close();
         }
     }
 }

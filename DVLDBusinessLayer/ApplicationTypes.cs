@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Data;
 using System.Runtime.Remoting.Messaging;
 using DVLDDataAccessLayer;
@@ -21,6 +22,10 @@ namespace DVLDBusinessLayer
         public static double GetApplicationTypeFees(int ApplicationTypeID)
         {
             return clsApplicationTypesData.GetApplicationTypeFees(ApplicationTypeID);
+        }
+        public static string GetApplicationTypeTitle(int ApplicationTypeID)
+        {
+            return clsApplicationTypesData.GetApplicationTypeTitle(ApplicationTypeID);
         }
     }
 }

@@ -87,7 +87,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 _AllowDataLoading = false;
                 txtFilter.Text = "";
             }
-            
         }
 
         private void txtFilter_KeyDown(object sender, KeyEventArgs e)
@@ -295,7 +294,75 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void tsmiScheduleVisionTest_Click(object sender, EventArgs e)
         {
-
+            frmVisionTestAppointments frm = new frmVisionTestAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
+            frm.ShowDialog();
         }
-    }
+
+        private void _DisableSpecificMenuOptions(clsLocalDrivingLicenseApplication.enApplicationStatus Status = clsApplication.enApplicationStatus.Canceled)
+        {
+            tsmiCancelApplication.Enabled = false;
+            tsmiDelete.Enabled = false;
+            tsmiEditApplication.Enabled = false;
+            if (Status == clsApplication.enApplicationStatus.Canceled)
+            {
+                tsmiShowLicense.Enabled = false;
+            }
+            tsmiScheduleTests.Enabled = false;
+        }
+
+        private void _EnableSpecificMenuOptions()
+        {
+            tsmiCancelApplication.Enabled = true;
+            tsmiEditApplication.Enabled = true;
+            tsmiDelete.Enabled = true;
+            tsmiScheduleTests.Enabled = true;
+            tsmiScheduleVisionTest.Enabled = true;
+        }
+
+        private void _SetTestSchedulingLogic()
+        {
+            switch (Convert.ToByte(dgvLDLApplications.SelectedRows[0].Cells["Passed Tests"].Value))
+            {
+                case 1:
+                    tsmiScheduleVisionTest.Enabled = false;
+                    tsmiScheduleWrittenTest.Enabled = true;
+                    break;
+                case 2:
+                    tsmiScheduleWrittenTest.Enabled = false;
+                    tsmiScheduleStreetTest.Enabled = true;
+                    break;
+                case 3:
+                    tsmiScheduleStreetTest.Enabled = false;
+                    tsmiShowLicense.Enabled = true;
+                    break;
+            }
+        }
+
+        private void cmsLDLApplications_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (dgvLDLApplications.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("you can select only one local driving licnse application to schedule test to it", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cmsLDLApplications.Close();
+                return;
+            }
+
+            switch((string)dgvLDLApplications.SelectedRows[0].Cells["Status"].Value)
+            {
+                case "New":
+                    _EnableSpecificMenuOptions();
+                    _SetTestSchedulingLogic();
+                    break;
+
+                case "Completed":
+                    _DisableSpecificMenuOptions(clsApplication.enApplicationStatus.Completed);
+                    tsmiShowLicense.Enabled = true;
+                    break;
+
+                case "Canceled":
+                    _DisableSpecificMenuOptions();
+                    break;
+            }
+        }
+        }
     }

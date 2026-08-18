@@ -44,12 +44,14 @@
   <ItemGroup>
     <Compile Include="ApplicationsData.cs" />
     <Compile Include="ApplicationTypesData.cs" />
+    <Compile Include="TestsData.cs" />
     <Compile Include="CountriesData.cs" />
     <Compile Include="LicenseClassesData.cs" />
     <Compile Include="LocalDrivingLicenseApplicationsData.cs" />
     <Compile Include="PeopleData.cs" />
     <Compile Include="DataAccessSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestAppointmentsData.cs" />
     <Compile Include="TestTypesData.cs" />
     <Compile Include="UsersData.cs" />
   </ItemGroup>

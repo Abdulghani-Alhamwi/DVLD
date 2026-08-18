@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 using MyLib;
 using DVLDBusinessLayer;
 using System.Data;
-using System.Threading;
 
 namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
@@ -161,11 +159,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
         private void tsmiDelete_Click(object sender, EventArgs e)
         {
-            if (dgvUsers.Rows.Count == 0)
-                MessageBox.Show("There are no users to delete!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            else
-            {
                 if (dgvUsers.SelectedRows.Count > 5)
                 {
                     MessageBox.Show("You Can Delete Maximum 5 Users In One Time!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -196,7 +189,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     lblRecordsNumber.Text = clsUser.GetTotalUsersCount().ToString();
                 }
             }
-        }
 
         private void tsmiAddNewUser_Click(object sender, EventArgs e)
         {
@@ -213,12 +205,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
         private void tsmiEdit_Click(object sender, EventArgs e)
         {
-            if (dgvUsers.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("No Selected User To Edit", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
             if (dgvUsers.SelectedRows.Count > 1)
                 MessageBox.Show("Please select only one user to edit", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             
@@ -250,10 +236,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 frmUserDetails frm = new frmUserDetails((int)dgvUsers.SelectedRows[0].Cells["User ID"].Value);
                 frm.ShowDialog();
             }
-            else if (dgvUsers.SelectedRows.Count > 1)
-                MessageBox.Show("You must select a user first to show their details , and you can view only one person details!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
-                MessageBox.Show("There is'nt any user to show their details!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You must select a user first to show their details , and you can view only one person details!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             
         }
         private void tsmiShowDetails_Click(object sender, EventArgs e)
@@ -268,10 +252,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void tsmiChangePassword_Click(object sender, EventArgs e)
         {
-            if (dgvUsers.Rows.Count == 0)
-                MessageBox.Show("There is'nt any user", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            else if (dgvUsers.SelectedRows.Count > 1)
+            if (dgvUsers.SelectedRows.Count > 1)
                 MessageBox.Show("Please choose one user to change their password!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             else
@@ -368,6 +349,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             dgvUsers.DataSource = _FilterOnIsActive();
             _DecryptUsersNames((DataTable)dgvUsers.DataSource);
+        }
+
+        private void cmsUsersMenu_Paint(object sender, PaintEventArgs e)
+        {
+            if (dgvUsers.SelectedRows.Count == 0)
+                cmsUsersMenu.Close();
         }
     }
 }

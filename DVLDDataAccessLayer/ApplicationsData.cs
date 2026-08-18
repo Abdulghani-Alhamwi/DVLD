@@ -7,7 +7,7 @@ namespace DVLDDataAccessLayer
 {
     public class clsApplicationsData
     {
-        public static int AddApplication(int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, short ApplicationStatus, DateTime LastStatusDate, double PaidApplicationFees, int CreatedByUserID)
+        public static int AddApplication(int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, short ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
         {
             int ApplicationID = -1;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -44,7 +44,7 @@ namespace DVLDDataAccessLayer
             return ApplicationID;
         }
 
-        public static bool UpdateApplication(int ApplicationID, int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, short ApplicationStatus, DateTime LastStatusDate, double PaidApplicationFees, int CreatedByUserID)
+        public static bool UpdateApplication(int ApplicationID, int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, short ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
         {
             int AffectedRows = -1;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -79,7 +79,7 @@ namespace DVLDDataAccessLayer
             return (AffectedRows > 0);
         }
 
-        public static bool Find(int ApplicationID , ref int ApplicantPersonID,ref DateTime ApplicationDate, ref int ApplicationTypeID,ref byte ApplicationStatus ,ref DateTime LastStatusDate,ref double PaidApplicationFees,ref int CreatedByUserID)
+        public static bool Find(int ApplicationID , ref int ApplicantPersonID,ref DateTime ApplicationDate, ref int ApplicationTypeID,ref byte ApplicationStatus ,ref DateTime LastStatusDate,ref decimal PaidApplicationFees,ref int CreatedByUserID)
         {
             bool IsFound = false;
 
@@ -103,7 +103,7 @@ namespace DVLDDataAccessLayer
                     ApplicationTypeID = (int)reader["ApplicationTypeID"];
                     ApplicationStatus = (byte)reader["ApplicationStatus"];
                     LastStatusDate = (DateTime)reader["LastStatusDate"];
-                    PaidApplicationFees = Convert.ToDouble(reader["PaidFees"]);
+                    PaidApplicationFees = (Decimal)(reader["PaidFees"]);
                     CreatedByUserID = (int)reader["CreatedByUserID"];
 
                     IsFound = true;

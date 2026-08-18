@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Data;
-using Microsoft.SqlServer.Server;
 
 namespace DVLDDataAccessLayer
 {

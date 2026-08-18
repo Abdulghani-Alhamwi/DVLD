@@ -6,16 +6,19 @@ namespace DVLDBusinessLayer
 {
     public class clsTestTypes
     {
-
         public static DataTable GetTestTypes()
         {
             return clsTestTypesData.GetTestTypes();
         }
 
-        public static bool UpdateTestType(int TestTypeID,string TestTypeTitle,string TestTypeDescription,double TestTypeFees)
+        public static bool UpdateTestType(int TestTypeID, string TestTypeTitle, string TestTypeDescription, decimal TestTypeFees)
         {
             return clsTestTypesData.UpdateTestType(TestTypeID, TestTypeTitle, TestTypeDescription, TestTypeFees);
         }
 
+        public static float GetTestTypeFees(byte TestTypeID)
+        {
+            return clsTestTypesData.GetTestTypeFees(TestTypeID);
+        }
     }
 }

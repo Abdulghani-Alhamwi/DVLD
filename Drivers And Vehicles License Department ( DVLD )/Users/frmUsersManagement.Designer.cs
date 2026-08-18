@@ -35,11 +35,17 @@
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
             this.lblTitleFilterBy = new System.Windows.Forms.Label();
-            this.lblManageUsersBigTitle = new System.Windows.Forms.Label();
+            this.lblFormBigTitle = new System.Windows.Forms.Label();
             this.lblRecordsTitle = new System.Windows.Forms.Label();
             this.tsSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsUsersMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.dgvUsers = new System.Windows.Forms.DataGridView();
+            this.lblFormTitle = new System.Windows.Forms.Label();
+            this.cbIsActive = new System.Windows.Forms.ComboBox();
+            this.btnAddNewUser = new System.Windows.Forms.Button();
+            this.pbUser = new System.Windows.Forms.PictureBox();
+            this.btnClose = new System.Windows.Forms.Button();
             this.tsmiShowDetails = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddNewUser = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,12 +53,6 @@
             this.tsmiChangePassword = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSendEmail = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPhoneCall = new System.Windows.Forms.ToolStripMenuItem();
-            this.dgvUsers = new System.Windows.Forms.DataGridView();
-            this.lblManageUsersTitle = new System.Windows.Forms.Label();
-            this.cbIsActive = new System.Windows.Forms.ComboBox();
-            this.btnAddNewUser = new System.Windows.Forms.Button();
-            this.pbUser = new System.Windows.Forms.PictureBox();
-            this.btnClose = new System.Windows.Forms.Button();
             this.cmsUsersMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbUser)).BeginInit();
@@ -131,18 +131,18 @@
             this.lblTitleFilterBy.TabIndex = 34;
             this.lblTitleFilterBy.Text = "Filter By :";
             // 
-            // lblManageUsersBigTitle
+            // lblFormBigTitle
             // 
-            this.lblManageUsersBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblManageUsersBigTitle.AutoSize = true;
-            this.lblManageUsersBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
-            this.lblManageUsersBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblManageUsersBigTitle.Location = new System.Drawing.Point(356, 217);
-            this.lblManageUsersBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblManageUsersBigTitle.Name = "lblManageUsersBigTitle";
-            this.lblManageUsersBigTitle.Size = new System.Drawing.Size(327, 52);
-            this.lblManageUsersBigTitle.TabIndex = 32;
-            this.lblManageUsersBigTitle.Text = "Manage Users";
+            this.lblFormBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblFormBigTitle.AutoSize = true;
+            this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
+            this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
+            this.lblFormBigTitle.Location = new System.Drawing.Point(356, 217);
+            this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblFormBigTitle.Name = "lblFormBigTitle";
+            this.lblFormBigTitle.Size = new System.Drawing.Size(327, 52);
+            this.lblFormBigTitle.TabIndex = 32;
+            this.lblFormBigTitle.Text = "Manage Users";
             // 
             // lblRecordsTitle
             // 
@@ -184,7 +184,116 @@
             this.tsmiPhoneCall});
             this.cmsUsersMenu.Name = "cmsPeopleMenu";
             this.cmsUsersMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsUsersMenu.Size = new System.Drawing.Size(258, 282);
+            this.cmsUsersMenu.Size = new System.Drawing.Size(258, 304);
+            this.cmsUsersMenu.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsUsersMenu_Paint);
+            // 
+            // dgvUsers
+            // 
+            this.dgvUsers.AllowUserToAddRows = false;
+            this.dgvUsers.AllowUserToDeleteRows = false;
+            this.dgvUsers.AllowUserToOrderColumns = true;
+            this.dgvUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvUsers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 16F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUsers.ContextMenuStrip = this.cmsUsersMenu;
+            this.dgvUsers.Location = new System.Drawing.Point(52, 417);
+            this.dgvUsers.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvUsers.Name = "dgvUsers";
+            this.dgvUsers.ReadOnly = true;
+            this.dgvUsers.RowHeadersWidth = 72;
+            this.dgvUsers.RowTemplate.Height = 32;
+            this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvUsers.Size = new System.Drawing.Size(935, 292);
+            this.dgvUsers.StandardTab = true;
+            this.dgvUsers.TabIndex = 0;
+            this.dgvUsers.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvUsers_Scroll);
+            this.dgvUsers.DoubleClick += new System.EventHandler(this.dgvUsers_DoubleClick);
+            this.dgvUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvUsers_KeyDown);
+            // 
+            // lblFormTitle
+            // 
+            this.lblFormTitle.AutoSize = true;
+            this.lblFormTitle.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lblFormTitle.Location = new System.Drawing.Point(20, 13);
+            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblFormTitle.Name = "lblFormTitle";
+            this.lblFormTitle.Size = new System.Drawing.Size(165, 29);
+            this.lblFormTitle.TabIndex = 35;
+            this.lblFormTitle.Text = "Manage Users";
+            // 
+            // cbIsActive
+            // 
+            this.cbIsActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.cbIsActive.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbIsActive.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbIsActive.Font = new System.Drawing.Font("Tahoma", 21F);
+            this.cbIsActive.FormattingEnabled = true;
+            this.cbIsActive.Location = new System.Drawing.Point(458, 344);
+            this.cbIsActive.Name = "cbIsActive";
+            this.cbIsActive.Size = new System.Drawing.Size(182, 42);
+            this.cbIsActive.TabIndex = 3;
+            this.cbIsActive.Visible = false;
+            this.cbIsActive.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbIsActive_DrawItem);
+            this.cbIsActive.DropDown += new System.EventHandler(this.ComboBoxes_DropDown);
+            this.cbIsActive.SelectedIndexChanged += new System.EventHandler(this.cbIsActive_SelectedIndexChanged);
+            this.cbIsActive.DropDownClosed += new System.EventHandler(this.cbIsActive_DropDownClosed);
+            // 
+            // btnAddNewUser
+            // 
+            this.btnAddNewUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddNewUser.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnAddNewUser.FlatAppearance.BorderSize = 2;
+            this.btnAddNewUser.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnAddNewUser.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnAddNewUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddNewUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Add_New_User_72;
+            this.btnAddNewUser.Location = new System.Drawing.Point(876, 316);
+            this.btnAddNewUser.Name = "btnAddNewUser";
+            this.btnAddNewUser.Size = new System.Drawing.Size(111, 70);
+            this.btnAddNewUser.TabIndex = 1;
+            this.btnAddNewUser.UseVisualStyleBackColor = true;
+            this.btnAddNewUser.Click += new System.EventHandler(this.btnAddNewUser_Click);
+            // 
+            // pbUser
+            // 
+            this.pbUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Users_2_400;
+            this.pbUser.Location = new System.Drawing.Point(387, 57);
+            this.pbUser.Margin = new System.Windows.Forms.Padding(2);
+            this.pbUser.Name = "pbUser";
+            this.pbUser.Size = new System.Drawing.Size(265, 137);
+            this.pbUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbUser.TabIndex = 33;
+            this.pbUser.TabStop = false;
+            // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.FlatAppearance.BorderSize = 2;
+            this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
+            this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
+            this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnClose.Location = new System.Drawing.Point(821, 751);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(166, 45);
+            this.btnClose.TabIndex = 4;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // tsmiShowDetails
             // 
@@ -251,114 +360,6 @@
             this.tsmiPhoneCall.Text = "Phone Call";
             this.tsmiPhoneCall.Click += new System.EventHandler(this.tsmiPhoneCall_Click);
             // 
-            // dgvUsers
-            // 
-            this.dgvUsers.AllowUserToAddRows = false;
-            this.dgvUsers.AllowUserToDeleteRows = false;
-            this.dgvUsers.AllowUserToOrderColumns = true;
-            this.dgvUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvUsers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 16F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUsers.ContextMenuStrip = this.cmsUsersMenu;
-            this.dgvUsers.Location = new System.Drawing.Point(52, 417);
-            this.dgvUsers.Margin = new System.Windows.Forms.Padding(2);
-            this.dgvUsers.Name = "dgvUsers";
-            this.dgvUsers.ReadOnly = true;
-            this.dgvUsers.RowHeadersWidth = 72;
-            this.dgvUsers.RowTemplate.Height = 32;
-            this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsers.Size = new System.Drawing.Size(935, 292);
-            this.dgvUsers.StandardTab = true;
-            this.dgvUsers.TabIndex = 0;
-            this.dgvUsers.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvUsers_Scroll);
-            this.dgvUsers.DoubleClick += new System.EventHandler(this.dgvUsers_DoubleClick);
-            this.dgvUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvUsers_KeyDown);
-            // 
-            // lblManageUsersTitle
-            // 
-            this.lblManageUsersTitle.AutoSize = true;
-            this.lblManageUsersTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblManageUsersTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblManageUsersTitle.Location = new System.Drawing.Point(20, 13);
-            this.lblManageUsersTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblManageUsersTitle.Name = "lblManageUsersTitle";
-            this.lblManageUsersTitle.Size = new System.Drawing.Size(165, 29);
-            this.lblManageUsersTitle.TabIndex = 35;
-            this.lblManageUsersTitle.Text = "Manage Users";
-            // 
-            // cbIsActive
-            // 
-            this.cbIsActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.cbIsActive.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cbIsActive.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbIsActive.Font = new System.Drawing.Font("Tahoma", 21F);
-            this.cbIsActive.FormattingEnabled = true;
-            this.cbIsActive.Location = new System.Drawing.Point(458, 344);
-            this.cbIsActive.Name = "cbIsActive";
-            this.cbIsActive.Size = new System.Drawing.Size(182, 42);
-            this.cbIsActive.TabIndex = 3;
-            this.cbIsActive.Visible = false;
-            this.cbIsActive.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbIsActive_DrawItem);
-            this.cbIsActive.DropDown += new System.EventHandler(this.ComboBoxes_DropDown);
-            this.cbIsActive.SelectedIndexChanged += new System.EventHandler(this.cbIsActive_SelectedIndexChanged);
-            this.cbIsActive.DropDownClosed += new System.EventHandler(this.cbIsActive_DropDownClosed);
-            // 
-            // btnAddNewUser
-            // 
-            this.btnAddNewUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddNewUser.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.btnAddNewUser.FlatAppearance.BorderSize = 2;
-            this.btnAddNewUser.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnAddNewUser.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnAddNewUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddNewUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Add_New_User_72;
-            this.btnAddNewUser.Location = new System.Drawing.Point(876, 316);
-            this.btnAddNewUser.Name = "btnAddNewUser";
-            this.btnAddNewUser.Size = new System.Drawing.Size(111, 70);
-            this.btnAddNewUser.TabIndex = 1;
-            this.btnAddNewUser.UseVisualStyleBackColor = true;
-            this.btnAddNewUser.Click += new System.EventHandler(this.btnAddNewUser_Click);
-            // 
-            // pbUser
-            // 
-            this.pbUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Users_2_400;
-            this.pbUser.Location = new System.Drawing.Point(387, 57);
-            this.pbUser.Margin = new System.Windows.Forms.Padding(2);
-            this.pbUser.Name = "pbUser";
-            this.pbUser.Size = new System.Drawing.Size(265, 137);
-            this.pbUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbUser.TabIndex = 33;
-            this.pbUser.TabStop = false;
-            // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.FlatAppearance.BorderSize = 2;
-            this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
-            this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
-            this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(821, 751);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 4;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
             // frmUsersManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -376,11 +377,11 @@
             this.Controls.Add(this.cbFilterBy);
             this.Controls.Add(this.lblTitleFilterBy);
             this.Controls.Add(this.pbUser);
-            this.Controls.Add(this.lblManageUsersBigTitle);
+            this.Controls.Add(this.lblFormBigTitle);
             this.Controls.Add(this.lblRecordsTitle);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.dgvUsers);
-            this.Controls.Add(this.lblManageUsersTitle);
+            this.Controls.Add(this.lblFormTitle);
             this.Font = new System.Drawing.Font("Tahoma", 16F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.Margin = new System.Windows.Forms.Padding(6);
@@ -404,7 +405,7 @@
         private System.Windows.Forms.ComboBox cbFilterBy;
         private System.Windows.Forms.Label lblTitleFilterBy;
         private System.Windows.Forms.PictureBox pbUser;
-        private System.Windows.Forms.Label lblManageUsersBigTitle;
+        private System.Windows.Forms.Label lblFormBigTitle;
         private System.Windows.Forms.Label lblRecordsTitle;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.ToolStripMenuItem tsmiPhoneCall;
@@ -417,7 +418,7 @@
         private System.Windows.Forms.ContextMenuStrip cmsUsersMenu;
         private System.Windows.Forms.ToolStripMenuItem tsmiSendEmail;
         private System.Windows.Forms.DataGridView dgvUsers;
-        private System.Windows.Forms.Label lblManageUsersTitle;
+        private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.ComboBox cbIsActive;
         private System.Windows.Forms.Button btnAddNewUser;
         private System.Windows.Forms.ToolStripMenuItem tsmiChangePassword;
