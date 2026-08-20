@@ -6,25 +6,28 @@ namespace DVLDDataAccessLayer
 {
     public class clsLocalDrivingLicenseApplicationsData
     {
+        private static string ColumnNamesQuery = 
+         @"SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
+           People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
+           ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , ApplicationDate AS [Application Date] ,
+           (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests] ,
+           (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) AS Status
+           FROM LocalDrivingLicenseApplications INNER JOIN LicenseClasses
+           ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID 
+           INNER JOIN Applications ON LocalDrivingLicenseApplications.ApplicationID = Applications.ApplicationID
+           INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID
+           LEFT JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
+           LEFT JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID
+           GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, LicenseClasses.ClassName,
+           People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
+           ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END), ApplicationDate , (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END)";
+
         public static DataTable GetLDLApplications(byte WantedNumberOfRecords, int LastLowestBroughtLDLAppID = -1)
         {
             DataTable dtLDLApplications = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
-                             People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
-                             ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , ApplicationDate AS [Application Date] ,
-                             (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests] ,
-                             (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) AS Status
-                             FROM LocalDrivingLicenseApplications INNER JOIN LicenseClasses
-                             ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID 
-                             INNER JOIN Applications ON LocalDrivingLicenseApplications.ApplicationID = Applications.ApplicationID
-                             INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID
-                             LEFT JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
-                             LEFT JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID
-                             GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, LicenseClasses.ClassName,
-                             People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
-                             ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END), ApplicationDate , (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) ";
+            string query = ColumnNamesQuery;
 
             if (LastLowestBroughtLDLAppID == -1)
                 query += " ORDER BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID DESC";
@@ -59,6 +62,37 @@ namespace DVLDDataAccessLayer
             }
 
             return dtLDLApplications;
+        }
+
+        public static DataTable GetColumnsNamesForView()
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = ColumnNamesQuery;
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@WantedNumberOfRecords", 0);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                
+                DataTable dtLDLApplications = new DataTable();
+                dtLDLApplications.Load(reader);
+                reader.Close();
+
+                return dtLDLApplications;
+            }
+
+            catch (Exception ex) { Console.Write(ex.Message); }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return null;
         }
         public static int AddLDLApplication(int ApplicationID, int LicenseClassID)
         {

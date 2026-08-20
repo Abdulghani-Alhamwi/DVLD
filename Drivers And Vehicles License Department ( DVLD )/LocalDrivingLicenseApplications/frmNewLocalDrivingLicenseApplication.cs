@@ -12,24 +12,32 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
         private int _PersonID = -1;
         private const int _NewLocalDrivingLicenseApplicationTypeID = 1;
         clsLocalDrivingLicenseApplication _LDLApplication;
-        //clsApplications _Application;
 
-        public event Action AfterAddOrUpdate ;
-        public frmNewLocalDrivingLicenseApplication(clsLocalDrivingLicenseApplication LDLApplication = null)
+        internal delegate void AddedLDLApplication(ref object[] NewValues);
+        internal event AddedLDLApplication OnAddedLDLApplication;
+
+        internal delegate void EditedLDLApplication(ref object[] NewValues,int DGVRowIndex);
+        internal event EditedLDLApplication OnEditedLDLApplication;
+
+        int _DGVRowIndex = -1;
+        public frmNewLocalDrivingLicenseApplication()
         {
             InitializeComponent();
 
-            if(LDLApplication == null)
-                _SetTitles(clsLocalDrivingLicenseApplication.enMode.AddNew);
+            _SetTitles(clsLocalDrivingLicenseApplication.enMode.AddNew);
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+        }
 
-            else
-            {
-                _LDLApplication = LDLApplication;
-                _SetTitles(clsLocalDrivingLicenseApplication.enMode.Update);
-                _PersonID = _LDLApplication.ApplicantPersonID;
-                _ShowDetailsForUpdateMode();
-            }
-            lblFormBigTitle.Location = new Point(this.Width/2 - lblFormBigTitle.Width/2, lblFormBigTitle.Location.Y);
+        public frmNewLocalDrivingLicenseApplication(clsLocalDrivingLicenseApplication LDLApplication ,int DGVRowIndex)
+        {
+            InitializeComponent();
+
+            _LDLApplication = LDLApplication;
+            _SetTitles(clsLocalDrivingLicenseApplication.enMode.Update);
+            _PersonID = _LDLApplication.ApplicantPersonID;
+            _ShowDetailsForUpdateMode();
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            _DGVRowIndex = DGVRowIndex;
         }
 
         private void _SetTitles(clsLocalDrivingLicenseApplication.enMode Mode)
@@ -137,6 +145,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
                 LDLApplication = new clsLocalDrivingLicenseApplication();
 
             LDLApplication.LicenseClass.ID = clsLicenseClasses.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
+            LDLApplication.LicenseClass.ClassName = ((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString();
             LDLApplication.ApplicantPersonID = _PersonID;
             LDLApplication.ApplicationDate = DateTime.Now;
             LDLApplication.ApplicationTypeID = _NewLocalDrivingLicenseApplicationTypeID;
@@ -193,7 +202,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
                             _LDLApplication = LDLApplication;
                             _SetTitles(clsLocalDrivingLicenseApplication.enMode.Update);
                         }
-                        AfterAddOrUpdate?.Invoke();
+
+                        object[] NewValues = new object[] { LDLApplication.LDLApplicationID, LDLApplication.LicenseClass.ClassName,
+                            clsPerson.GetNationalNumber(LDLApplication.ApplicantPersonID), clsPerson.GetFullName(LDLApplication.ApplicantPersonID),
+                        LDLApplication.ApplicationDate,clsTest.GetTotalPassedTestsCount(LDLApplication.LDLApplicationID),LDLApplication.GetApplicationStatus()};
+                        
+                        OnAddedLDLApplication?.Invoke(ref NewValues);
+                        OnEditedLDLApplication?.Invoke(ref NewValues, _DGVRowIndex);
                     }
                     else
                         MessageBox.Show("Saving failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);

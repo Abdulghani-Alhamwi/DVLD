@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Xml.Linq;
 
 namespace DVLDDataAccessLayer
 {
     public class clsPeopleData
     {
+        private static string ColumnNamesQuery = @"SELECT TOP (@WantedNumberOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
+                                                   FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
+                                                   Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+                                                   DateOfBirth AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
+                                                   FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
+
         public static int AddNewPerson(string NationalNo, string FirstName,
                        string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
@@ -154,14 +159,9 @@ namespace DVLDDataAccessLayer
             DataTable dtPeople = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query;
 
-            query = @"SELECT TOP (@WantedNumberOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
-                      FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
-                      Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-                      DateOfBirth AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
-                      FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
-
+            string query = ColumnNamesQuery;
+            
             if (LastLowestbroughtPersonID != -1)
                 query += @" WHERE PersonID < @LastLowestbroughtPersonID";
 
@@ -195,6 +195,37 @@ namespace DVLDDataAccessLayer
             }
 
             return dtPeople;
+        }
+
+        public static DataTable GetColumnsNamesForView()
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = ColumnNamesQuery;
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@WantedNumberOfRecords", 0);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                DataTable dtPeople = new DataTable();
+                dtPeople.Load(reader);
+                reader.Close();
+
+                return dtPeople;
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return null;
         }
 
         public static bool SearchForNationalNo(string NationalNo)
@@ -404,12 +435,7 @@ namespace DVLDDataAccessLayer
 
         private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
         {
-            string query = @"SELECT TOP (@WantedNumberOfRecords) PersonID AS [Person ID],NationalNo AS [National No.],
-                      FirstName AS [First Name], SecondName AS [Second Name], ThirdName AS [Third Name], LastName AS [Last Name],
-                      Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-                      DateOfBirth AS [Date Of Birth],Countries.CountryName As Nationality , Phone, Email
-                      FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
-
+            string query = ColumnNamesQuery;
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
@@ -531,5 +557,32 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
+        public static string GetNationalNumber(int PersonID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = "SELECT NationalNo FROM People WHERE PersonID = @PersonID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@PersonID", PersonID);
+
+            try
+            {
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return result.ToString();
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return null;
+        }
     }
 }

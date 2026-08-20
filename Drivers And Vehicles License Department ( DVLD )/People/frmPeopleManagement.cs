@@ -36,7 +36,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         bool _AllowDataLoading;
         private void frmPeopleManagement_Load(object sender, EventArgs e)
         {
-            DataTable dtPeople = clsPerson.GetAllPeopleInfo(100);
+            DataTable dtPeople = clsPerson.GetAllPeopleInfo(50);
             
             if (dtPeople != null)
             {
@@ -74,7 +74,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 txtFilter.Focus();
 
                 if (_AllowDataLoading)
-                    dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(100);
+                    dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(50);
                 else
                     _AllowDataLoading = true;
             }
@@ -82,7 +82,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 txtFilter.Visible = false;
 
-                dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(100);
+                dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(50);
                 _AllowDataLoading = false;
             }
                 txtFilter.Text = "";
@@ -94,19 +94,19 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (!ScrollCase)
             {
                 if (cbFilterBy.SelectedItem.ToString() == "Person ID" || cbFilterBy.SelectedItem.ToString() == "Phone")
-                    dtPeopleInfo = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);
+                    dtPeopleInfo = clsPerson.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);
 
                 else
-                    dtPeopleInfo = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
+                    dtPeopleInfo = clsPerson.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
             }
 
             else
             {
                 if (cbFilterBy.SelectedItem.ToString() == "Person ID" || cbFilterBy.SelectedItem.ToString() == "Phone")
-                    dtPeopleInfo = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null, (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value);
+                    dtPeopleInfo = clsPerson.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null, (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value);
 
                 else
-                    dtPeopleInfo = clsPerson.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value);
+                    dtPeopleInfo = clsPerson.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value);
             }
 
                 dgvPeople.DataSource = dtPeopleInfo;
@@ -117,15 +117,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     EmptyDataTable = (DataTable)dgvPeople.DataSource;
             }
         }
-
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
             if (txtFilter.Text != "")
                 _AddFilteredData(null);
             else
-                dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(100);
+                dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(50);
         }
-
         private void txtFilter_KeyDown(object sender, KeyEventArgs e)
         {
             if (cbFilterBy.SelectedItem.ToString() == "Person ID" || cbFilterBy.SelectedItem.ToString() == "Phone")
@@ -146,16 +144,19 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             }
             else
                 txtFilter.ReadOnly = false;
-        }
+        }                     
         private void _AddNewRowToDGV(ref object[] NewValues)
         {
+            if (dgvPeople.DataSource == null)
+                dgvPeople.DataSource = clsPerson.GetColumnsNamesForView();
+
             clsUtility.AddNewRowToDGV(dgvPeople,(DataTable)dgvPeople.DataSource,ref NewValues,"Person ID");
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
         private void _AddNewPersonScreen()
         {
             frmAddEditPersonInfo frm = new frmAddEditPersonInfo();
-            frm.AfterSavingNewPersonInfo += _AddNewRowToDGV;
+            frm.AfterSavingNewInfo += _AddNewRowToDGV;
 
             frm.ShowDialog();
         }
@@ -213,8 +214,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             if (PersonInfo != null)
             {
-                frmAddEditPersonInfo frm = new frmAddEditPersonInfo(PersonInfo,dgvPeople.SelectedRows[0].Index);
-                frm.AfterSavingEditedPersonInfo += _EditDataRowInDGV;
+                frmAddEditPersonInfo frm = new frmAddEditPersonInfo(PersonInfo,Convert.ToInt16(dgvPeople.SelectedRows[0].Index));
+                frm.AfterSavingEditedInfo += _EditDataRowInDGV;
                 frm.ShowDialog();
             }
             else
@@ -277,7 +278,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             else
             {
-                 NewRows = clsPerson.GetAllPeopleInfo(100, (int)dgvPeople.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value)?.Select();
+                 NewRows = clsPerson.GetAllPeopleInfo(50, (int)dgvPeople.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value)?.Select();
 
                 if (NewRows != null)
                     clsUtility.AddNewRowsToDGV(dgvPeople, (DataTable)dgvPeople.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvPeople));

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Dynamic;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using MyLib;
@@ -11,37 +8,37 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class frmAddEditUserInfo : Form
     {
-        public delegate void AddEditUserEventHandler();
-        public event AddEditUserEventHandler OnAddedOrEditedUserInfo;
+        internal delegate void AddEditUserEventHandler();
+        internal event AddEditUserEventHandler OnAddedOrEditedUserInfo;
 
-        internal delegate void AfterSavingNewInfo(ref object[] NewValues);
-        internal delegate void AfterSavingEditedInfo(ref object[] NewValues, int RowIndex,string NewUserFullName);
-        internal event AfterSavingNewInfo AfterSavingNewUserInfo;
-        internal event AfterSavingEditedInfo AfterSavingEditedUserInfo;
+        internal delegate void SavedNewInfo(ref object[] NewValues);
+        internal delegate void SavedEditedInfo(ref object[] NewValues, int RowIndex,string NewUserFullName);
+        internal event SavedNewInfo AfterSavingNewInfo;
+        internal event SavedEditedInfo AfterSavingEditedInfo;
 
         private int _PersonID = -1;
         private clsUser _User;
         private string _DefaultPasswordValue = "Not Real Password";
         private bool _WantTochangePassword = true;
-        int _IndexOfWantedDataRowToEdit = -1;
+        int _DGVRowIndex = -1;
         string _CurrentUserFullName;
 
         public frmAddEditUserInfo()
         {
-            _InitializeForm(null);
+            InitializeComponent();
+            _InitializeInfo(null);
         }
 
-        public frmAddEditUserInfo(clsUser User, int IndexOfWantedDataRowToEdit,string CurrentUserFullName)
+        public frmAddEditUserInfo(clsUser User, int DGVRowIndex,string CurrentUserFullName)
         {
-            _InitializeForm(User);
-            _IndexOfWantedDataRowToEdit = IndexOfWantedDataRowToEdit;
+            InitializeComponent();
+            _InitializeInfo(User);
+            _DGVRowIndex = DGVRowIndex;
             _CurrentUserFullName = CurrentUserFullName;
         }
 
-        private void _InitializeForm(clsUser User)
+        private void _InitializeInfo(clsUser User)
         {
-            InitializeComponent();
-
             if (User == null)
                 _SetTitles(clsUser.enMode.AddNew);
 
@@ -54,7 +51,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 btnSave.Enabled = true;
             }
 
-            lblFormBigTitle.Location = new Point((this.Width / 2) - (lblFormBigTitle.Width / 2), lblFormBigTitle.Location.Y);
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private void _SetTitles(clsUser.enMode Mode)
@@ -242,8 +239,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 OnAddedOrEditedUserInfo?.Invoke();
 
                 object[] NewValues = _GetCurrentValuesInArray();
-                AfterSavingNewUserInfo?.Invoke(ref NewValues);
-                AfterSavingEditedUserInfo?.Invoke(ref NewValues,_IndexOfWantedDataRowToEdit,null);
+                AfterSavingNewInfo?.Invoke(ref NewValues);
+                AfterSavingEditedInfo?.Invoke(ref NewValues,_DGVRowIndex,null);
 
                 clsGlobalSettings.LoginInfoChanged = true;
             }
@@ -291,7 +288,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (_CurrentUserFullName != UserFullName && _CurrentUserFullName != null)
             {
                 object[] Values = null;
-                AfterSavingEditedUserInfo?.Invoke(ref Values, _IndexOfWantedDataRowToEdit,UserFullName);
+                AfterSavingEditedInfo?.Invoke(ref Values, _DGVRowIndex,UserFullName);
             }
         }
     }

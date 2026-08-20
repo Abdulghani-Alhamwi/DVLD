@@ -76,7 +76,7 @@ namespace DVLDDataAccessLayer
 
         }
 
-        public static float GetTestTypeFees(byte TestTypeID)
+        public static decimal GetTestTypeFees(byte TestTypeID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
@@ -93,7 +93,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    return Convert.ToSingle(result);
+                    return Convert.ToDecimal(result);
             }
 
             catch { }

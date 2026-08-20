@@ -136,5 +136,9 @@ namespace DVLDBusinessLayer
             return clsUsersData.GetTotalUsersCount();
         }
 
+        public static DataTable GetColumnsNamesForView()
+        {
+            return clsUsersData.GetColumnsNamesForView();
+        }
     }
 }

@@ -90,15 +90,13 @@ namespace DVLDBusinessLayer
             return clsTestAppointmentsData.GetTotalAppointmentsCount(LDLApplicationID, TestTypeID);
         }
 
-        public static bool HasScheduledAppointment(int LocalDrivingLicenseAppID, byte TestTypeID)
+        public static bool IsAppointmentSchedulingAvailable(int LocalDrivingLicenseAppID, byte TestTypeID)
         {
-            return clsTestAppointmentsData.HasScheduledAppointment(LocalDrivingLicenseAppID, TestTypeID);
+            return clsTestAppointmentsData.IsAppointmentSchedulingAvailable(LocalDrivingLicenseAppID, TestTypeID);
         }
-
-        public static bool IsAppointmentSchedulingAvailable(int LDLApplicationID, int TestTypeID)
+        public static DataTable GetColumnsNamesForView()
         {
-            return clsTestAppointmentsData.IsAppointmentSchedulingAvailable(LDLApplicationID, TestTypeID);
+            return clsTestAppointmentsData.GetColumnsNamesForView();
         }
-
     }
 }

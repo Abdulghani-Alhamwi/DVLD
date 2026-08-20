@@ -167,7 +167,7 @@
             this.tsmiShowPersonLicenseHistory});
             this.cmsLDLApplications.Name = "cmsPeopleMenu";
             this.cmsLDLApplications.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsLDLApplications.Size = new System.Drawing.Size(361, 350);
+            this.cmsLDLApplications.Size = new System.Drawing.Size(361, 328);
             this.cmsLDLApplications.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLDLApplications_Opening);
             this.cmsLDLApplications.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsLDLApplications_Paint);
             // 
@@ -252,6 +252,7 @@
             this.tsmiScheduleWrittenTest.Name = "tsmiScheduleWrittenTest";
             this.tsmiScheduleWrittenTest.Size = new System.Drawing.Size(269, 38);
             this.tsmiScheduleWrittenTest.Text = "Schedule Written Test";
+            this.tsmiScheduleWrittenTest.Click += new System.EventHandler(this.tsmiScheduleWrittenTest_Click);
             // 
             // tsmiScheduleStreetTest
             // 
@@ -261,6 +262,7 @@
             this.tsmiScheduleStreetTest.Name = "tsmiScheduleStreetTest";
             this.tsmiScheduleStreetTest.Size = new System.Drawing.Size(269, 38);
             this.tsmiScheduleStreetTest.Text = "Schedule Street Test";
+            this.tsmiScheduleStreetTest.Click += new System.EventHandler(this.tsmiScheduleStreetTest_Click);
             // 
             // tsSeparator4
             // 

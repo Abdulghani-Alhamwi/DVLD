@@ -175,5 +175,14 @@ namespace DVLDBusinessLayer
             return clsPeopleData.GetFullName(PersonID);
         }
 
+        public static string GetNationalNumber(int PersonID)
+        {
+            return clsPeopleData.GetNationalNumber(PersonID);
+        }
+
+        public static DataTable GetColumnsNamesForView()
+        {
+            return clsPeopleData.GetColumnsNamesForView();
+        }
     }
 }

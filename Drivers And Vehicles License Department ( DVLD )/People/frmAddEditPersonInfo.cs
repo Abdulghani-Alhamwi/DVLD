@@ -17,30 +17,30 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         internal event AddedNewPersonEventHandler AfterAddingNewPerson;
         internal event Action AfterEditingPersonInfo;
 
-        internal delegate void AfterSavingNewInfo(ref object[] NewValues);
-        internal delegate void AfterSavingEditedInfo(ref object[] NewValues,int RowIndex);
-        internal event AfterSavingNewInfo AfterSavingNewPersonInfo;
-        internal event AfterSavingEditedInfo AfterSavingEditedPersonInfo;
+        internal delegate void SavedNewInfo(ref object[] NewValues);
+        internal delegate void SavedEditedInfo(ref object[] NewValues,int RowIndex);
+        internal event SavedNewInfo AfterSavingNewInfo;
+        internal event SavedEditedInfo AfterSavingEditedInfo;
 
         string _SavedPersonalImagePath;
         clsPerson _Person;
-        int _IndexOfWantedDataRowToEdit = -1;
+        int _DGVRowIndex = -1;
 
         public frmAddEditPersonInfo()
         {
+            InitializeComponent();
             _InitializeForm(null);
         }
 
-        public frmAddEditPersonInfo(clsPerson PersonInfo,int IndexOfWantedRowToEdit = -1)
+        public frmAddEditPersonInfo(clsPerson PersonInfo,int DGVRowIndex = -1)
         {
+            InitializeComponent();
             _InitializeForm(PersonInfo);
-            _IndexOfWantedDataRowToEdit = IndexOfWantedRowToEdit;
+            _DGVRowIndex = DGVRowIndex;
         }
 
         private void _InitializeForm(clsPerson PersonInfo)
         {
-            InitializeComponent();
-
             if (PersonInfo == null)
                 _SetTitles(clsPerson.enMode.AddNew);
 
@@ -49,7 +49,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 this._Person = PersonInfo;
                 _SetTitles(clsPerson.enMode.Update);
             }
-            lblFormBigTitle.Location = new Point((this.Width / 2) - (lblFormBigTitle.Width / 2), lblFormBigTitle.Location.Y);
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private void _SetTitles(clsPerson.enMode Mode)
@@ -448,8 +448,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     AfterEditingPersonInfo?.Invoke();
 
                     object[] NewValues = _GetCurrentValuesInArray();
-                    AfterSavingNewPersonInfo?.Invoke(ref NewValues);
-                    AfterSavingEditedPersonInfo?.Invoke(ref NewValues, _IndexOfWantedDataRowToEdit);
+                    AfterSavingNewInfo?.Invoke(ref NewValues);
+                    AfterSavingEditedInfo?.Invoke(ref NewValues, _DGVRowIndex);
 
                     if (_Person == null)
                     {

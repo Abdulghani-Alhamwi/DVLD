@@ -33,16 +33,16 @@
             this.lblRecordsNumber = new System.Windows.Forms.Label();
             this.lblRecordsTitle = new System.Windows.Forms.Label();
             this.dgvVisionTestAppointments = new System.Windows.Forms.DataGridView();
+            this.cmsAppointment = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiTakeTest = new System.Windows.Forms.ToolStripMenuItem();
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblFormBigTitle = new System.Windows.Forms.Label();
             this.lblAppointmentsTitle = new System.Windows.Forms.Label();
-            this.cmsAppointment = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnClose = new System.Windows.Forms.Button();
             this.btnScheduleTest = new System.Windows.Forms.Button();
             this.pbTestType = new System.Windows.Forms.PictureBox();
-            this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiTakeTest = new System.Windows.Forms.ToolStripMenuItem();
             this.uctrlDLApplicationInfo = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlDLApplicationInfo();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVisionTestAppointments)).BeginInit();
             this.cmsAppointment.SuspendLayout();
@@ -102,6 +102,37 @@
             this.dgvVisionTestAppointments.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvVisionTestAppointments_Scroll);
             this.dgvVisionTestAppointments.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvVisionTestAppointments_KeyDown);
             // 
+            // cmsAppointment
+            // 
+            this.cmsAppointment.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.cmsAppointment.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.cmsAppointment.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.cmsAppointment.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiEdit,
+            this.tsmiTakeTest});
+            this.cmsAppointment.Name = "cmsPeopleMenu";
+            this.cmsAppointment.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.cmsAppointment.Size = new System.Drawing.Size(197, 102);
+            this.cmsAppointment.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsAppointment_Paint);
+            // 
+            // tsmiEdit
+            // 
+            this.tsmiEdit.Font = new System.Drawing.Font("Tahoma", 19F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiEdit.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_32;
+            this.tsmiEdit.Name = "tsmiEdit";
+            this.tsmiEdit.Size = new System.Drawing.Size(196, 38);
+            this.tsmiEdit.Text = "Edit";
+            this.tsmiEdit.Click += new System.EventHandler(this.tsmiEdit_Click);
+            // 
+            // tsmiTakeTest
+            // 
+            this.tsmiTakeTest.Font = new System.Drawing.Font("Tahoma", 19F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiTakeTest.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Test_32;
+            this.tsmiTakeTest.Name = "tsmiTakeTest";
+            this.tsmiTakeTest.Size = new System.Drawing.Size(196, 38);
+            this.tsmiTakeTest.Text = "Take Test";
+            this.tsmiTakeTest.Click += new System.EventHandler(this.tsmiTakeTest_Click);
+            // 
             // lblFormTitle
             // 
             this.lblFormTitle.AutoSize = true;
@@ -159,19 +190,6 @@
             this.lblAppointmentsTitle.TabIndex = 54;
             this.lblAppointmentsTitle.Text = "Appointments :";
             // 
-            // cmsAppointment
-            // 
-            this.cmsAppointment.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.cmsAppointment.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.cmsAppointment.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.cmsAppointment.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiEdit,
-            this.tsmiTakeTest});
-            this.cmsAppointment.Name = "cmsPeopleMenu";
-            this.cmsAppointment.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsAppointment.Size = new System.Drawing.Size(197, 102);
-            this.cmsAppointment.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsAppointment_Paint);
-            // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -218,23 +236,6 @@
             this.pbTestType.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbTestType.TabIndex = 50;
             this.pbTestType.TabStop = false;
-            // 
-            // tsmiEdit
-            // 
-            this.tsmiEdit.Font = new System.Drawing.Font("Tahoma", 19F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiEdit.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_32;
-            this.tsmiEdit.Name = "tsmiEdit";
-            this.tsmiEdit.Size = new System.Drawing.Size(196, 38);
-            this.tsmiEdit.Text = "Edit";
-            this.tsmiEdit.Click += new System.EventHandler(this.tsmiEdit_Click);
-            // 
-            // tsmiTakeTest
-            // 
-            this.tsmiTakeTest.Font = new System.Drawing.Font("Tahoma", 19F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiTakeTest.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Test_32;
-            this.tsmiTakeTest.Name = "tsmiTakeTest";
-            this.tsmiTakeTest.Size = new System.Drawing.Size(196, 38);
-            this.tsmiTakeTest.Text = "Take Test";
             // 
             // uctrlDLApplicationInfo
             // 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 using Driver_And_Vehicle_Licenses_Department___DVLD__.Properties;
 using DVLDBusinessLayer;
@@ -9,9 +8,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class frmScheduleTest : Form
     {
-        public Action<object[]> OnSchedulingAppointment;
-        public Action<object[],short> OnEditingScheduledAppointment;
-        public enum enTestTrial {FirstTime = 0 , ReTake = 1}
+        internal delegate void ScheduledAppointment(ref object[] NewValues);
+        internal event ScheduledAppointment OnSchedulingAppointment;
+
+        internal delegate void EditedScheduledAppointment(ref object[] NewValues,short DGVRowIndex);
+        internal event EditedScheduledAppointment OnEditingScheduledAppointment;
+        public enum enTestTrial {FirstTime = 0 , ReTake = 1, Taken = 2}
         public enum enTestType {VisionTest = 0 , WrittenTest = 1 , StreetTest = 2}
 
         public static short Trial;
@@ -20,40 +22,76 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private clsTestAppointment _Appointment;
 
-        enTestType _TestType;
+        private enTestType _TestType;
 
-        short _RowIndex;
-        public frmScheduleTest(int LDLAppID , enTestType TestType , enTestTrial TestTrial)
+        private short _DGVRowIndex = -1;
+
+        private bool _IsLockedMode;
+        public frmScheduleTest(int LDLAppID, enTestType TestType, enTestTrial TestTrial)
         {
-            InitializeComponent();
             _InitializeFormData(LDLAppID, TestType, TestTrial);
         }
 
-        public frmScheduleTest(int LDLAppID, enTestType TestType, enTestTrial TestTrial, clsTestAppointment Appointment , short RowIndex)
+        public frmScheduleTest(int LDLAppID , enTestType TestType , enTestTrial TestTrial, clsTestAppointment Appointment)
         {
-            InitializeComponent();
+            _IsLockedMode = true;
             _InitializeFormData(LDLAppID, TestType, TestTrial,Appointment);
-            _RowIndex = RowIndex;
+        }
+
+        public frmScheduleTest(int LDLAppID, enTestType TestType, enTestTrial TestTrial, clsTestAppointment Appointment , short DGVRowIndex)
+        {
+            _InitializeFormData(LDLAppID, TestType, TestTrial,Appointment);
+            _DGVRowIndex = DGVRowIndex;
+        }
+        public void _SetControlsForLockedAppointment(bool IsPassedTest)
+        {
+            if (!IsPassedTest)
+            {
+                lblFormBigTitle.Text = "Schedule Retake Test";
+                lblNote.Text = "Person already sat for the test , appointment locked.";
+                gbReTakeTestInfo.Enabled = true;
+            }
+            else
+            {
+                lblFormBigTitle.Text = "Test Have Been Taken";
+                lblNote.Text = "Person already has taken the test , appointment locked.";
+                gbReTakeTestInfo.Enabled = false;
+            }
+            lblNote.Visible = true;
+
+            clsUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
+            clsUtility.CenterControlHorizontally(gbTestAppointment, lblNote);
+
+            btnSave.Enabled = false;
+            dtpTestAppointmentDate.Enabled = false;
+            mtxtAppointmentTime.Enabled = false;
         }
 
         private void _InitializeFormData(int LDLAppID, enTestType TestType, enTestTrial TestTrial, clsTestAppointment Appointment = null)
         {
+            InitializeComponent();
+
             _TestType = TestType;
             clsLocalDrivingLicenseApplication LDLApp = clsLocalDrivingLicenseApplication.Find(LDLAppID);
 
-            if (Appointment != null)
-                _Appointment = Appointment;
+            if(Appointment != null)
+            _Appointment = Appointment;
 
-                _LDLApp = LDLApp;
-                _LoadInfo(_LDLApp, TestType, TestTrial);
+            _LDLApp = LDLApp;
+            _LoadInfo(_LDLApp, TestType, TestTrial);
 
-            dtpTestAppointmentDate.MinDate = DateTime.Now;
-            dtpTestAppointmentDate.MaxDate = dtpTestAppointmentDate.MinDate.AddMonths(3);
+            if (!_IsLockedMode)
+            {
+                dtpTestAppointmentDate.MinDate = DateTime.Now;
+                dtpTestAppointmentDate.MaxDate = dtpTestAppointmentDate.MinDate.AddMonths(3);
+            }
         }
 
         private void _LoadInfo(clsLocalDrivingLicenseApplication LDLApp, enTestType TestType,enTestTrial TestTrial)
         {
             _ShowInfoByTestType(gbTestAppointment,pbTestType,lblTestFees,TestType);
+
+            clsUtility.CenterControlHorizontally(gbTestAppointment, pbTestType);
 
             lblLDLApplicationID.Text = LDLApp.LDLApplicationID.ToString();
 
@@ -94,19 +132,19 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 case enTestType.VisionTest:
                     gbContentContainer.Text = "Vision Test";
                     pbTestType.Image = Resources.Vision_512;
-                    lblFees.Text = clsTestTypes.GetTestTypeFees(1).ToString();
+                    lblFees.Text = Convert.ToSingle(clsTestTypes.GetTestTypeFees(1)).ToString();
                     break;
 
                 case enTestType.WrittenTest:
                     gbContentContainer.Text = "Written Test";
                     pbTestType.Image =Resources.Written_Test_512;
-                    lblFees.Text = clsTestTypes.GetTestTypeFees(2).ToString();
+                    lblFees.Text = Convert.ToSingle(clsTestTypes.GetTestTypeFees(2)).ToString();
                     break;
 
                 case enTestType.StreetTest:
                     gbContentContainer.Text = "Street Test";
                     pbTestType.Image = Resources.driving_test_512;
-                    lblFees.Text = clsTestTypes.GetTestTypeFees(3).ToString();
+                    lblFees.Text = Convert.ToSingle(clsTestTypes.GetTestTypeFees(3)).ToString();
                     break;
             }
         }
@@ -206,7 +244,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 Appointment = new clsTestAppointment();
                 Appointment.TestTypeID = _GetTestTypeID(_TestType);
                 Appointment.LDLApplicationID = _LDLApp.LDLApplicationID;
-                Appointment.PaidFees = Convert.ToDecimal(lblTestFees.Text);
+                Appointment.PaidFees = clsTestTypes.GetTestTypeFees(1);
                 Appointment.CreatedByUserID = clsGlobalSettings.CurrentUserID;
                 Appointment.IsLocked = false;
             }
@@ -225,11 +263,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                 object[] NewValues = new object[] {_Appointment.TestAppointmentID,_Appointment.AppointmentDate,_Appointment.PaidFees , _Appointment.IsLocked};
 
-                OnSchedulingAppointment?.Invoke(NewValues);
-                OnEditingScheduledAppointment?.Invoke(NewValues, _RowIndex);
+                OnSchedulingAppointment?.Invoke(ref NewValues);
+                OnEditingScheduledAppointment?.Invoke(ref NewValues, _DGVRowIndex);
                 }
                 else
-                    MessageBox.Show("Failed To Save Data", "Fail", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Failed To Save Data", "Fail", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
         }
 

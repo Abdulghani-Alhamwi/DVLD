@@ -46,39 +46,40 @@
             this.lblLDLApplicationID = new System.Windows.Forms.Label();
             this.lblLDLApplicationIDTitle = new System.Windows.Forms.Label();
             this.gbReTakeTestInfo = new System.Windows.Forms.GroupBox();
+            this.pbTotalFees = new System.Windows.Forms.PictureBox();
+            this.pbRAppFees = new System.Windows.Forms.PictureBox();
+            this.pbReTestAppID = new System.Windows.Forms.PictureBox();
             this.lblApplicantFullName = new System.Windows.Forms.Label();
             this.lblTestFees = new System.Windows.Forms.Label();
             this.lblNameTitle = new System.Windows.Forms.Label();
             this.lblTrialTitla = new System.Windows.Forms.Label();
             this.lblTestFeesTitle = new System.Windows.Forms.Label();
             this.gbTestAppointment = new System.Windows.Forms.GroupBox();
+            this.lblNote = new System.Windows.Forms.Label();
             this.mtxtAppointmentTime = new System.Windows.Forms.MaskedTextBox();
-            this.erTime = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnSave = new System.Windows.Forms.Button();
             this.pbTrial = new System.Windows.Forms.PictureBox();
             this.pbLicenseClass = new System.Windows.Forms.PictureBox();
             this.pbApplicant = new System.Windows.Forms.PictureBox();
-            this.pbTotalFees = new System.Windows.Forms.PictureBox();
-            this.pbRAppFees = new System.Windows.Forms.PictureBox();
-            this.pbReTestAppID = new System.Windows.Forms.PictureBox();
             this.pbLDAppID = new System.Windows.Forms.PictureBox();
             this.pbDate = new System.Windows.Forms.PictureBox();
             this.pbFees = new System.Windows.Forms.PictureBox();
             this.pbTestType = new System.Windows.Forms.PictureBox();
+            this.erTime = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnClose = new System.Windows.Forms.Button();
             this.gbReTakeTestInfo.SuspendLayout();
-            this.gbTestAppointment.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.erTime)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbTrial)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLicenseClass)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbApplicant)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbTotalFees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRAppFees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbReTestAppID)).BeginInit();
+            this.gbTestAppointment.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbTrial)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLicenseClass)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbApplicant)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLDAppID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbTestType)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.erTime)).BeginInit();
             this.SuspendLayout();
             // 
             // lblFormTitle
@@ -86,7 +87,7 @@
             this.lblFormTitle.AutoSize = true;
             this.lblFormTitle.Font = new System.Drawing.Font("Tahoma", 18F);
             this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblFormTitle.Location = new System.Drawing.Point(8, 8);
+            this.lblFormTitle.Location = new System.Drawing.Point(12, 8);
             this.lblFormTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormTitle.Name = "lblFormTitle";
             this.lblFormTitle.Size = new System.Drawing.Size(161, 29);
@@ -104,7 +105,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(639, 8);
+            this.btnExit.Location = new System.Drawing.Point(695, 8);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -119,7 +120,7 @@
             this.lblFormBigTitle.AutoSize = true;
             this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 28F, System.Drawing.FontStyle.Bold);
             this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblFormBigTitle.Location = new System.Drawing.Point(172, 213);
+            this.lblFormBigTitle.Location = new System.Drawing.Point(195, 199);
             this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormBigTitle.Name = "lblFormBigTitle";
             this.lblFormBigTitle.Size = new System.Drawing.Size(286, 46);
@@ -132,7 +133,7 @@
             this.lblRAppFees.AutoSize = true;
             this.lblRAppFees.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblRAppFees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblRAppFees.Location = new System.Drawing.Point(211, 48);
+            this.lblRAppFees.Location = new System.Drawing.Point(234, 48);
             this.lblRAppFees.Margin = new System.Windows.Forms.Padding(0);
             this.lblRAppFees.Name = "lblRAppFees";
             this.lblRAppFees.Size = new System.Drawing.Size(64, 28);
@@ -145,7 +146,7 @@
             this.lblReTestAppID.AutoSize = true;
             this.lblReTestAppID.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblReTestAppID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblReTestAppID.Location = new System.Drawing.Point(243, 102);
+            this.lblReTestAppID.Location = new System.Drawing.Point(266, 102);
             this.lblReTestAppID.Margin = new System.Windows.Forms.Padding(0);
             this.lblReTestAppID.Name = "lblReTestAppID";
             this.lblReTestAppID.Size = new System.Drawing.Size(51, 28);
@@ -158,7 +159,7 @@
             this.lblReTestAppIDTitle.AutoSize = true;
             this.lblReTestAppIDTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblReTestAppIDTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblReTestAppIDTitle.Location = new System.Drawing.Point(13, 102);
+            this.lblReTestAppIDTitle.Location = new System.Drawing.Point(36, 102);
             this.lblReTestAppIDTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblReTestAppIDTitle.Name = "lblReTestAppIDTitle";
             this.lblReTestAppIDTitle.Size = new System.Drawing.Size(187, 28);
@@ -172,11 +173,11 @@
             this.dtpTestAppointmentDate.CalendarTitleBackColor = System.Drawing.Color.DodgerBlue;
             this.dtpTestAppointmentDate.CalendarTitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.dtpTestAppointmentDate.CalendarTrailingForeColor = System.Drawing.Color.Gray;
-            this.dtpTestAppointmentDate.CustomFormat = "";
+            this.dtpTestAppointmentDate.CustomFormat = "dd/mm/yyyy";
             this.dtpTestAppointmentDate.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
             this.dtpTestAppointmentDate.Font = new System.Drawing.Font("Tahoma", 16F);
-            this.dtpTestAppointmentDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpTestAppointmentDate.Location = new System.Drawing.Point(237, 495);
+            this.dtpTestAppointmentDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpTestAppointmentDate.Location = new System.Drawing.Point(237, 504);
             this.dtpTestAppointmentDate.Name = "dtpTestAppointmentDate";
             this.dtpTestAppointmentDate.Size = new System.Drawing.Size(173, 33);
             this.dtpTestAppointmentDate.TabIndex = 159;
@@ -188,7 +189,7 @@
             this.lblReTestFeesTitle.AutoSize = true;
             this.lblReTestFeesTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblReTestFeesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblReTestFeesTitle.Location = new System.Drawing.Point(14, 48);
+            this.lblReTestFeesTitle.Location = new System.Drawing.Point(37, 48);
             this.lblReTestFeesTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblReTestFeesTitle.Name = "lblReTestFeesTitle";
             this.lblReTestFeesTitle.Size = new System.Drawing.Size(155, 28);
@@ -201,7 +202,7 @@
             this.lblTrialNumber.AutoSize = true;
             this.lblTrialNumber.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblTrialNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblTrialNumber.Location = new System.Drawing.Point(233, 445);
+            this.lblTrialNumber.Location = new System.Drawing.Point(237, 454);
             this.lblTrialNumber.Margin = new System.Windows.Forms.Padding(0);
             this.lblTrialNumber.Name = "lblTrialNumber";
             this.lblTrialNumber.Size = new System.Drawing.Size(64, 28);
@@ -214,7 +215,7 @@
             this.lblTotalFees.AutoSize = true;
             this.lblTotalFees.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblTotalFees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblTotalFees.Location = new System.Drawing.Point(541, 48);
+            this.lblTotalFees.Location = new System.Drawing.Point(564, 48);
             this.lblTotalFees.Margin = new System.Windows.Forms.Padding(0);
             this.lblTotalFees.Name = "lblTotalFees";
             this.lblTotalFees.Size = new System.Drawing.Size(64, 28);
@@ -227,7 +228,7 @@
             this.lblTotalFeesTitle.AutoSize = true;
             this.lblTotalFeesTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblTotalFeesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblTotalFeesTitle.Location = new System.Drawing.Point(355, 48);
+            this.lblTotalFeesTitle.Location = new System.Drawing.Point(378, 48);
             this.lblTotalFeesTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblTotalFeesTitle.Name = "lblTotalFeesTitle";
             this.lblTotalFeesTitle.Size = new System.Drawing.Size(146, 28);
@@ -240,7 +241,7 @@
             this.lblDateTitle.AutoSize = true;
             this.lblDateTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblDateTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblDateTitle.Location = new System.Drawing.Point(103, 499);
+            this.lblDateTitle.Location = new System.Drawing.Point(107, 508);
             this.lblDateTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblDateTitle.Name = "lblDateTitle";
             this.lblDateTitle.Size = new System.Drawing.Size(82, 28);
@@ -253,7 +254,7 @@
             this.lblLicenseClassName.AutoSize = true;
             this.lblLicenseClassName.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblLicenseClassName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblLicenseClassName.Location = new System.Drawing.Point(233, 345);
+            this.lblLicenseClassName.Location = new System.Drawing.Point(237, 354);
             this.lblLicenseClassName.Margin = new System.Windows.Forms.Padding(0);
             this.lblLicenseClassName.Name = "lblLicenseClassName";
             this.lblLicenseClassName.Size = new System.Drawing.Size(64, 28);
@@ -266,7 +267,7 @@
             this.lblDLClassTitle.AutoSize = true;
             this.lblDLClassTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblDLClassTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblDLClassTitle.Location = new System.Drawing.Point(54, 346);
+            this.lblDLClassTitle.Location = new System.Drawing.Point(58, 355);
             this.lblDLClassTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblDLClassTitle.Name = "lblDLClassTitle";
             this.lblDLClassTitle.Size = new System.Drawing.Size(131, 28);
@@ -279,7 +280,7 @@
             this.lblLDLApplicationID.AutoSize = true;
             this.lblLDLApplicationID.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblLDLApplicationID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblLDLApplicationID.Location = new System.Drawing.Point(233, 295);
+            this.lblLDLApplicationID.Location = new System.Drawing.Point(237, 304);
             this.lblLDLApplicationID.Margin = new System.Windows.Forms.Padding(0);
             this.lblLDLApplicationID.Name = "lblLDLApplicationID";
             this.lblLDLApplicationID.Size = new System.Drawing.Size(51, 28);
@@ -292,7 +293,7 @@
             this.lblLDLApplicationIDTitle.AutoSize = true;
             this.lblLDLApplicationIDTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblLDLApplicationIDTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblLDLApplicationIDTitle.Location = new System.Drawing.Point(15, 295);
+            this.lblLDLApplicationIDTitle.Location = new System.Drawing.Point(19, 304);
             this.lblLDLApplicationIDTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblLDLApplicationIDTitle.Name = "lblLDLApplicationIDTitle";
             this.lblLDLApplicationIDTitle.Size = new System.Drawing.Size(170, 28);
@@ -311,12 +312,48 @@
             this.gbReTakeTestInfo.Controls.Add(this.lblReTestAppID);
             this.gbReTakeTestInfo.Controls.Add(this.lblReTestAppIDTitle);
             this.gbReTakeTestInfo.Enabled = false;
-            this.gbReTakeTestInfo.Location = new System.Drawing.Point(15, 610);
+            this.gbReTakeTestInfo.Location = new System.Drawing.Point(18, 611);
             this.gbReTakeTestInfo.Name = "gbReTakeTestInfo";
-            this.gbReTakeTestInfo.Size = new System.Drawing.Size(626, 154);
+            this.gbReTakeTestInfo.Size = new System.Drawing.Size(672, 154);
             this.gbReTakeTestInfo.TabIndex = 161;
             this.gbReTakeTestInfo.TabStop = false;
             this.gbReTakeTestInfo.Text = "ReTake Test Info";
+            // 
+            // pbTotalFees
+            // 
+            this.pbTotalFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbTotalFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbTotalFees.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.money_32;
+            this.pbTotalFees.Location = new System.Drawing.Point(526, 46);
+            this.pbTotalFees.Name = "pbTotalFees";
+            this.pbTotalFees.Size = new System.Drawing.Size(32, 32);
+            this.pbTotalFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbTotalFees.TabIndex = 138;
+            this.pbTotalFees.TabStop = false;
+            // 
+            // pbRAppFees
+            // 
+            this.pbRAppFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbRAppFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbRAppFees.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.money_32;
+            this.pbRAppFees.Location = new System.Drawing.Point(196, 46);
+            this.pbRAppFees.Name = "pbRAppFees";
+            this.pbRAppFees.Size = new System.Drawing.Size(32, 32);
+            this.pbRAppFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbRAppFees.TabIndex = 135;
+            this.pbRAppFees.TabStop = false;
+            // 
+            // pbReTestAppID
+            // 
+            this.pbReTestAppID.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbReTestAppID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbReTestAppID.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
+            this.pbReTestAppID.Location = new System.Drawing.Point(228, 100);
+            this.pbReTestAppID.Name = "pbReTestAppID";
+            this.pbReTestAppID.Size = new System.Drawing.Size(32, 32);
+            this.pbReTestAppID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbReTestAppID.TabIndex = 132;
+            this.pbReTestAppID.TabStop = false;
             // 
             // lblApplicantFullName
             // 
@@ -324,7 +361,7 @@
             this.lblApplicantFullName.AutoSize = true;
             this.lblApplicantFullName.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblApplicantFullName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblApplicantFullName.Location = new System.Drawing.Point(233, 395);
+            this.lblApplicantFullName.Location = new System.Drawing.Point(237, 404);
             this.lblApplicantFullName.Margin = new System.Windows.Forms.Padding(0);
             this.lblApplicantFullName.Name = "lblApplicantFullName";
             this.lblApplicantFullName.Size = new System.Drawing.Size(64, 28);
@@ -337,7 +374,7 @@
             this.lblTestFees.AutoSize = true;
             this.lblTestFees.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblTestFees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblTestFees.Location = new System.Drawing.Point(233, 550);
+            this.lblTestFees.Location = new System.Drawing.Point(237, 559);
             this.lblTestFees.Margin = new System.Windows.Forms.Padding(0);
             this.lblTestFees.Name = "lblTestFees";
             this.lblTestFees.Size = new System.Drawing.Size(64, 28);
@@ -350,7 +387,7 @@
             this.lblNameTitle.AutoSize = true;
             this.lblNameTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblNameTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblNameTitle.Location = new System.Drawing.Point(90, 397);
+            this.lblNameTitle.Location = new System.Drawing.Point(94, 406);
             this.lblNameTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblNameTitle.Name = "lblNameTitle";
             this.lblNameTitle.Size = new System.Drawing.Size(95, 28);
@@ -363,7 +400,7 @@
             this.lblTrialTitla.AutoSize = true;
             this.lblTrialTitla.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblTrialTitla.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblTrialTitla.Location = new System.Drawing.Point(106, 448);
+            this.lblTrialTitla.Location = new System.Drawing.Point(110, 457);
             this.lblTrialTitla.Margin = new System.Windows.Forms.Padding(0);
             this.lblTrialTitla.Name = "lblTrialTitla";
             this.lblTrialTitla.Size = new System.Drawing.Size(79, 28);
@@ -376,7 +413,7 @@
             this.lblTestFeesTitle.AutoSize = true;
             this.lblTestFeesTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblTestFeesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblTestFeesTitle.Location = new System.Drawing.Point(105, 550);
+            this.lblTestFeesTitle.Location = new System.Drawing.Point(109, 559);
             this.lblTestFeesTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblTestFeesTitle.Name = "lblTestFeesTitle";
             this.lblTestFeesTitle.Size = new System.Drawing.Size(80, 28);
@@ -385,6 +422,7 @@
             // 
             // gbTestAppointment
             // 
+            this.gbTestAppointment.Controls.Add(this.lblNote);
             this.gbTestAppointment.Controls.Add(this.mtxtAppointmentTime);
             this.gbTestAppointment.Controls.Add(this.btnSave);
             this.gbTestAppointment.Controls.Add(this.dtpTestAppointmentDate);
@@ -408,12 +446,26 @@
             this.gbTestAppointment.Controls.Add(this.lblTestFeesTitle);
             this.gbTestAppointment.Controls.Add(this.lblFormBigTitle);
             this.gbTestAppointment.Controls.Add(this.pbTestType);
-            this.gbTestAppointment.Location = new System.Drawing.Point(12, 64);
+            this.gbTestAppointment.Location = new System.Drawing.Point(16, 64);
             this.gbTestAppointment.Name = "gbTestAppointment";
-            this.gbTestAppointment.Size = new System.Drawing.Size(664, 839);
+            this.gbTestAppointment.Size = new System.Drawing.Size(711, 839);
             this.gbTestAppointment.TabIndex = 162;
             this.gbTestAppointment.TabStop = false;
             this.gbTestAppointment.Text = "Test Title";
+            // 
+            // lblNote
+            // 
+            this.lblNote.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblNote.AutoSize = true;
+            this.lblNote.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblNote.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.lblNote.Location = new System.Drawing.Point(19, 257);
+            this.lblNote.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblNote.Name = "lblNote";
+            this.lblNote.Size = new System.Drawing.Size(175, 28);
+            this.lblNote.TabIndex = 164;
+            this.lblNote.Text = "Schedule Test";
+            this.lblNote.Visible = false;
             // 
             // mtxtAppointmentTime
             // 
@@ -421,7 +473,7 @@
             this.mtxtAppointmentTime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.mtxtAppointmentTime.Font = new System.Drawing.Font("Tahoma", 16F);
             this.mtxtAppointmentTime.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.mtxtAppointmentTime.Location = new System.Drawing.Point(428, 495);
+            this.mtxtAppointmentTime.Location = new System.Drawing.Point(432, 504);
             this.mtxtAppointmentTime.Mask = "09:00 AM";
             this.mtxtAppointmentTime.Name = "mtxtAppointmentTime";
             this.mtxtAppointmentTime.RejectInputOnFirstFailure = true;
@@ -434,10 +486,6 @@
             this.mtxtAppointmentTime.Click += new System.EventHandler(this.mtxtAppointmentTime_Click);
             this.mtxtAppointmentTime.Validating += new System.ComponentModel.CancelEventHandler(this.mtxtAppointmentTime_Validating);
             // 
-            // erTime
-            // 
-            this.erTime.ContainerControl = this;
-            // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -447,7 +495,7 @@
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(475, 779);
+            this.btnSave.Location = new System.Drawing.Point(524, 777);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(166, 45);
             this.btnSave.TabIndex = 160;
@@ -460,7 +508,7 @@
             this.pbTrial.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbTrial.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbTrial.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.TrialCount32;
-            this.pbTrial.Location = new System.Drawing.Point(191, 446);
+            this.pbTrial.Location = new System.Drawing.Point(195, 455);
             this.pbTrial.Name = "pbTrial";
             this.pbTrial.Size = new System.Drawing.Size(32, 32);
             this.pbTrial.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -472,7 +520,7 @@
             this.pbLicenseClass.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbLicenseClass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbLicenseClass.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.License_Type_32;
-            this.pbLicenseClass.Location = new System.Drawing.Point(191, 344);
+            this.pbLicenseClass.Location = new System.Drawing.Point(195, 353);
             this.pbLicenseClass.Name = "pbLicenseClass";
             this.pbLicenseClass.Size = new System.Drawing.Size(32, 32);
             this.pbLicenseClass.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -484,55 +532,19 @@
             this.pbApplicant.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbApplicant.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbApplicant.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Person_32;
-            this.pbApplicant.Location = new System.Drawing.Point(191, 395);
+            this.pbApplicant.Location = new System.Drawing.Point(195, 404);
             this.pbApplicant.Name = "pbApplicant";
             this.pbApplicant.Size = new System.Drawing.Size(32, 32);
             this.pbApplicant.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbApplicant.TabIndex = 155;
             this.pbApplicant.TabStop = false;
             // 
-            // pbTotalFees
-            // 
-            this.pbTotalFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbTotalFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbTotalFees.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.money_32;
-            this.pbTotalFees.Location = new System.Drawing.Point(503, 46);
-            this.pbTotalFees.Name = "pbTotalFees";
-            this.pbTotalFees.Size = new System.Drawing.Size(32, 32);
-            this.pbTotalFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbTotalFees.TabIndex = 138;
-            this.pbTotalFees.TabStop = false;
-            // 
-            // pbRAppFees
-            // 
-            this.pbRAppFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbRAppFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbRAppFees.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.money_32;
-            this.pbRAppFees.Location = new System.Drawing.Point(173, 46);
-            this.pbRAppFees.Name = "pbRAppFees";
-            this.pbRAppFees.Size = new System.Drawing.Size(32, 32);
-            this.pbRAppFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbRAppFees.TabIndex = 135;
-            this.pbRAppFees.TabStop = false;
-            // 
-            // pbReTestAppID
-            // 
-            this.pbReTestAppID.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbReTestAppID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbReTestAppID.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
-            this.pbReTestAppID.Location = new System.Drawing.Point(205, 100);
-            this.pbReTestAppID.Name = "pbReTestAppID";
-            this.pbReTestAppID.Size = new System.Drawing.Size(32, 32);
-            this.pbReTestAppID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbReTestAppID.TabIndex = 132;
-            this.pbReTestAppID.TabStop = false;
-            // 
             // pbLDAppID
             // 
             this.pbLDAppID.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbLDAppID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbLDAppID.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
-            this.pbLDAppID.Location = new System.Drawing.Point(191, 293);
+            this.pbLDAppID.Location = new System.Drawing.Point(195, 302);
             this.pbLDAppID.Name = "pbLDAppID";
             this.pbLDAppID.Size = new System.Drawing.Size(32, 32);
             this.pbLDAppID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -544,7 +556,7 @@
             this.pbDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbDate.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Calendar_32;
-            this.pbDate.Location = new System.Drawing.Point(192, 497);
+            this.pbDate.Location = new System.Drawing.Point(196, 506);
             this.pbDate.Name = "pbDate";
             this.pbDate.Size = new System.Drawing.Size(32, 32);
             this.pbDate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -556,7 +568,7 @@
             this.pbFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbFees.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.money_32;
-            this.pbFees.Location = new System.Drawing.Point(192, 548);
+            this.pbFees.Location = new System.Drawing.Point(196, 557);
             this.pbFees.Name = "pbFees";
             this.pbFees.Size = new System.Drawing.Size(32, 32);
             this.pbFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -567,13 +579,17 @@
             // 
             this.pbTestType.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbTestType.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbTestType.Location = new System.Drawing.Point(202, 38);
+            this.pbTestType.Location = new System.Drawing.Point(225, 30);
             this.pbTestType.Margin = new System.Windows.Forms.Padding(2);
             this.pbTestType.Name = "pbTestType";
             this.pbTestType.Size = new System.Drawing.Size(226, 171);
             this.pbTestType.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbTestType.TabIndex = 51;
             this.pbTestType.TabStop = false;
+            // 
+            // erTime
+            // 
+            this.erTime.ContainerControl = this;
             // 
             // btnClose
             // 
@@ -586,7 +602,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(232, 918);
+            this.btnClose.Location = new System.Drawing.Point(260, 918);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 140;
@@ -601,7 +617,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(690, 969);
+            this.ClientSize = new System.Drawing.Size(746, 969);
             this.ControlBox = false;
             this.Controls.Add(this.gbTestAppointment);
             this.Controls.Add(this.btnClose);
@@ -616,19 +632,19 @@
             this.Load += new System.EventHandler(this.frmScheduleTest_Load);
             this.gbReTakeTestInfo.ResumeLayout(false);
             this.gbReTakeTestInfo.PerformLayout();
-            this.gbTestAppointment.ResumeLayout(false);
-            this.gbTestAppointment.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.erTime)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbTrial)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLicenseClass)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbApplicant)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbTotalFees)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRAppFees)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbReTestAppID)).EndInit();
+            this.gbTestAppointment.ResumeLayout(false);
+            this.gbTestAppointment.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbTrial)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLicenseClass)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbApplicant)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLDAppID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFees)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbTestType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.erTime)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -673,5 +689,6 @@
         private System.Windows.Forms.GroupBox gbTestAppointment;
         private System.Windows.Forms.MaskedTextBox mtxtAppointmentTime;
         private System.Windows.Forms.ErrorProvider erTime;
+        private System.Windows.Forms.Label lblNote;
     }
 }

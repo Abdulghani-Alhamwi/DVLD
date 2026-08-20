@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLDDataAccessLayer
 {

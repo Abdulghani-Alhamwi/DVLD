@@ -25,7 +25,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                 lblApplicationID.Text = LDLApplication.ApplicationID.ToString();
                 lblStatus.Text = LDLApplication.GetApplicationStatus();
-                lblPaidFees.Text = LDLApplication.PaidApplicationFees.ToString();
+                lblPaidFees.Text = Convert.ToSingle(LDLApplication.PaidApplicationFees).ToString();
                 lblApplicationType.Text = clsApplicationTypes.GetApplicationTypeTitle(LDLApplication.ApplicationTypeID);
                 lblApplicantFullName.Text = clsPerson.GetFullName(LDLApplication.ApplicantPersonID);
                 lblApplicationDate.Text = LDLApplication.ApplicationDate.ToShortDateString();

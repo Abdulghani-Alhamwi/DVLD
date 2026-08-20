@@ -115,16 +115,6 @@ namespace MyLib
                 dataview.RowFilter = $"[{ColumnName}] = '{FilterOnValue}'";
 
         }
-        public static void RefreshInformationView(DataGridView dgv, DataTable datatable)
-        {
-            dgv.DataSource = datatable;
-        }
-
-        public static void RefreshInformationView(DataGridView dgv, DataView dataview)
-        {
-            dgv.DataSource = dataview;
-        }
-
     /// <summary>
     /// Add new rows to data grid view.
     /// </summary>
@@ -192,9 +182,7 @@ namespace MyLib
         {
             DataSource.Rows.Add(NewValues);
 
-            if (!(dgv.Rows[dgv.Rows.GetLastRow(DataGridViewElementStates.None)].Displayed))
-                dgv.Sort(dgv.Columns[dgvFirstColumnName], ListSortDirection.Descending);
-
+            dgv.Sort(dgv.Columns[dgvFirstColumnName], ListSortDirection.Descending);
         }
 
         /// <summary>
@@ -212,10 +200,15 @@ namespace MyLib
         /// <summary>
         /// Edit one column value in a row in data grid view .
         /// </summary>
-        public static void EditOneDataRowColumnValueInDGV(DataGridView dgv, DataTable DataSource, string ColumnName, string NewValue, int RowIndex)
+        public static void EditOneColumnValueInDGV(DataGridView dgv, DataTable DataSource, string ColumnName, object NewValue, int RowIndex)
         {
             DataSource.Columns[ColumnName].ReadOnly = false;
             DataSource.Rows[RowIndex].SetField<object>(dgv.Columns[ColumnName].HeaderText, NewValue);
+        }
+
+        public static void CenterControlHorizontally(Control ContainerControl , Control control)
+        {
+            control.Location = new Point(ContainerControl.Width / 2 - control.Width / 2, control.Location.Y);
         }
     }
 }

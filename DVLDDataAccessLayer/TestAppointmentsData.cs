@@ -6,18 +6,23 @@ namespace DVLDDataAccessLayer
 {
     public class clsTestAppointmentsData
     {
-    public static DataTable GetTestAppointments(byte WantedNumberOfRecords , byte TestTypeID,int LocalDrivingLicenseAppID, int LowestBroughtAppointmentID = -1)
+
+        private static string ColumnNamesQuery = @"SELECT TOP (@WantedNumberOfRecords) TestAppointmentID AS [Appointment ID] , AppointmentDate AS [Appointment Date] ,
+                             PaidFees AS [Paid Fees] , IsLocked  AS [Is Locked] FROM TestAppointments";
+
+        public static DataTable GetTestAppointments(byte WantedNumberOfRecords , byte TestTypeID,int LocalDrivingLicenseAppID, int LowestBroughtAppointmentID = -1)
     {
             DataTable dtTestAppointments = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT TOP (@WantedNumberOfRecords) TestAppointmentID AS [Appointment ID] , AppointmentDate AS [Appointment Date] ,
-                             PaidFees AS [Paid Fees] , IsLocked  AS [Is Locked] FROM TestAppointments";
+            string query = ColumnNamesQuery;
 
             if (LowestBroughtAppointmentID != -1)
-                query += " WHERE TestAppointmentID < @LowestBroughtAppointmentID AND TestTypeID = @TestTypeID AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID";
+                query += @" WHERE TestAppointmentID < @LowestBroughtAppointmentID AND TestTypeID = @TestTypeID AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID
+                            ORDER BY TestAppointmentID DESC";
             else
-                query += " WHERE TestTypeID = @TestTypeID AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID";
+                query += @" WHERE TestTypeID = @TestTypeID AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID
+                            ORDER BY TestAppointmentID DESC";
 
 
                 SqlCommand command = new SqlCommand(query, connection);
@@ -52,6 +57,34 @@ namespace DVLDDataAccessLayer
 
             return dtTestAppointments;
     }
+        public static DataTable GetColumnsNamesForView()
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            SqlCommand command = new SqlCommand(ColumnNamesQuery, connection);
+            command.Parameters.AddWithValue("@WantedNumberOfRecords", 0);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                DataTable dtTestAppointments = new DataTable();
+                dtTestAppointments.Load(reader);
+                reader.Close();
+
+                return dtTestAppointments;
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return null;
+        }
 
         public static int AddNewAppointment(int TestTypeID , int LocalDrivingLicenseAppID, DateTime AppointmentDate , decimal PaidFees , int CreatedByUserID , bool IsLocked)
         {
@@ -194,11 +227,11 @@ namespace DVLDDataAccessLayer
             return -1;
         }
 
-        public static bool HasScheduledAppointment(int LocalDrivingLicenseAppID, byte TestTypeID)
+        public static bool IsAppointmentSchedulingAvailable(int LocalDrivingLicenseAppID, byte TestTypeID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query = @"SELECT Found = 1 FROM TestAppointments
-                             WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID AND TestTypeID = @TestTypeID";
+                             WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID AND TestTypeID = @TestTypeID AND IsLocked = 0";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LocalDrivingLicenseAppID", LocalDrivingLicenseAppID);
@@ -222,37 +255,6 @@ namespace DVLDDataAccessLayer
             }
 
             return false;
-        }
-
-        public static bool IsAppointmentSchedulingAvailable(int LDLApplicationID,int TestTypeID)
-        {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-
-            string query = @"SELECT PassedTest = 1 FROM TestAppointments INNER JOIN Tests
-                             ON TestAppointments.TestAppointmentID = Tests.TestAppointment
-                             WHERE LocalDrivingLicenseApplicationID = @LDLApplicationID AND TestTypeID = @TestTypeID AND TestResult = 1";
-
-            SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@LDLApplicationID", LDLApplicationID);
-            command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
-
-            try
-            {
-                connection.Open();
-                object result = command.ExecuteScalar();
-
-                if (result != null)
-                    return false;
-            }
-
-            catch { }
-
-            finally
-            {
-                connection.Close();
-            }
-
-            return true;
         }
             
     }

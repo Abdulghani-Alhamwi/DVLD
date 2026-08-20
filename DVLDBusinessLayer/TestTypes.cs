@@ -16,7 +16,7 @@ namespace DVLDBusinessLayer
             return clsTestTypesData.UpdateTestType(TestTypeID, TestTypeTitle, TestTypeDescription, TestTypeFees);
         }
 
-        public static float GetTestTypeFees(byte TestTypeID)
+        public static decimal GetTestTypeFees(byte TestTypeID)
         {
             return clsTestTypesData.GetTestTypeFees(TestTypeID);
         }

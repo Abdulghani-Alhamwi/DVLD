@@ -6,6 +6,11 @@ namespace DVLDDataAccessLayer
 {
     public class clsUsersData
     {
+        private static string ColumnNamesQuery = @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
+                                                   People.FirstName + ' ' + People.SecondName
+                                                  + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name] , UserName,IsActive AS [Is Active]
+                                                   From Users INNER JOIN People ON Users.PersonID = People.PersonID";
+
         public static DataTable GetAllUsersInfo(byte WantedNumberOfRecords, int LastLowestBroughtUserID = -1)
         {
             DataTable dtUsers = null;
@@ -47,6 +52,36 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return dtUsers;
+        }
+
+        public static DataTable GetColumnsNamesForView()
+        {
+
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            string query = ColumnNamesQuery;
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@WantedNumberOfRecords", 0);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                DataTable dtUsers = new DataTable();
+                dtUsers.Load(reader);
+                reader.Close();
+
+                return dtUsers;
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return null;
         }
 
         public static int AddNewUser(int PersonID , string UserName,string Password ,string Salt,bool IsActive)
@@ -422,10 +457,7 @@ namespace DVLDDataAccessLayer
 
         private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
         {
-            string query = @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
-                              People.FirstName + ' ' + People.SecondName
-                             + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name] , UserName,IsActive AS [Is Active]
-                              From Users INNER JOIN People ON Users.PersonID = People.PersonID";
+            string query = ColumnNamesQuery;
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {

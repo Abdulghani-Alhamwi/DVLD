@@ -130,5 +130,9 @@ namespace DVLDBusinessLayer
     {
             return clsLocalDrivingLicenseApplicationsData.GetPassedTests(LDLApplicationID);
     }
-}
+    public static DataTable GetColumnsNamesForView()
+    {
+        return clsLocalDrivingLicenseApplicationsData.GetColumnsNamesForView();
+    }
+    }
 }
