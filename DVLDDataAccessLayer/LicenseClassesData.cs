@@ -38,9 +38,9 @@ namespace DVLDDataAccessLayer
             return dtLicenseClassesNames;
         }
         
-        public static int GetLicenseClassID(string LicenseClassName)
+        public static byte GetLicenseClassID(string LicenseClassName)
         {
-            int LicenseClassID = -1;
+            byte LicenseClassID = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"SELECT LicenseClassID FROM LicenseClasses
@@ -56,7 +56,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    LicenseClassID = Convert.ToInt32(result);
+                    LicenseClassID = Convert.ToByte(result);
             }
 
             catch { }

@@ -36,7 +36,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             else
             {
-                frmUpdateApplicationType frm = new frmUpdateApplicationType((int)dgvApplicationTypes.SelectedRows[0].Cells["ID"].Value ,
+                frmUpdateApplicationType frm = new frmUpdateApplicationType((byte)dgvApplicationTypes.SelectedRows[0].Cells["ID"].Value ,
                 (string)dgvApplicationTypes.SelectedRows[0].Cells["Title"].Value,Convert.ToString(dgvApplicationTypes.SelectedRows[0].Cells["Fees"].Value));
 
                 frm.ShowDialog();

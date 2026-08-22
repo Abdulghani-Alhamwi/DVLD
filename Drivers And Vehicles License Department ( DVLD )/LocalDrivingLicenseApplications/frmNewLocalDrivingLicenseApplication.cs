@@ -11,7 +11,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
     {
         private int _PersonID = -1;
         private const int _NewLocalDrivingLicenseApplicationTypeID = 1;
-        clsLocalDrivingLicenseApplication _LDLApplication;
+        clsLDLApplication _LDLApplication;
 
         internal delegate void AddedLDLApplication(ref object[] NewValues);
         internal event AddedLDLApplication OnAddedLDLApplication;
@@ -24,25 +24,25 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
         {
             InitializeComponent();
 
-            _SetTitles(clsLocalDrivingLicenseApplication.enMode.AddNew);
+            _SetTitles(clsLDLApplication.enMode.AddNew);
             clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
-        public frmNewLocalDrivingLicenseApplication(clsLocalDrivingLicenseApplication LDLApplication ,int DGVRowIndex)
+        public frmNewLocalDrivingLicenseApplication(clsLDLApplication LDLApplication ,int DGVRowIndex)
         {
             InitializeComponent();
 
             _LDLApplication = LDLApplication;
-            _SetTitles(clsLocalDrivingLicenseApplication.enMode.Update);
+            _SetTitles(clsLDLApplication.enMode.Update);
             _PersonID = _LDLApplication.ApplicantPersonID;
             _ShowDetailsForUpdateMode();
             clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
             _DGVRowIndex = DGVRowIndex;
         }
 
-        private void _SetTitles(clsLocalDrivingLicenseApplication.enMode Mode)
+        private void _SetTitles(clsLDLApplication.enMode Mode)
         {
-            if (Mode == clsLocalDrivingLicenseApplication.enMode.AddNew)
+            if (Mode == clsLDLApplication.enMode.AddNew)
             {
                 lblFormTitle.Text = "Add New Local Driving License Application";
                 lblFormBigTitle.Text = "Add New Local Driving License Application";
@@ -137,12 +137,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
         {
             return (_LDLApplication.ApplicantPersonID == _PersonID && ((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString() == _LDLApplication.LicenseClass.ClassName);
         }
-        private bool _SaveLDLApplication(out clsLocalDrivingLicenseApplication LDLApplication)
+        private bool _SaveLDLApplication(out clsLDLApplication LDLApplication)
         {
             if (_LDLApplication != null)
                 LDLApplication = _LDLApplication;
             else
-                LDLApplication = new clsLocalDrivingLicenseApplication();
+                LDLApplication = new clsLDLApplication();
 
             LDLApplication.LicenseClass.ID = clsLicenseClasses.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
             LDLApplication.LicenseClass.ClassName = ((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString();
@@ -162,13 +162,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
             int LicenseClassID = clsLicenseClasses.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
             clsApplication.enApplicationStatus? PersonApplicationStatus;
 
-            if (clsLocalDrivingLicenseApplication.CanPersonApply(_PersonID, LicenseClassID, out PersonApplicationStatus))
+            if (clsLDLApplication.CanPersonApply(_PersonID, LicenseClassID, out PersonApplicationStatus))
                 return true;
 
             else
             {
                 if (PersonApplicationStatus == clsApplication.enApplicationStatus.New)
-                    MessageBox.Show($"Choose another license class,the selected person already an active application for the selected class with ID : {clsLocalDrivingLicenseApplication.GetLDLApplicationID(_PersonID)}","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    MessageBox.Show($"Choose another license class,the selected person already an active application for the selected class with ID : {clsLDLApplication.GetLDLApplicationID(_PersonID)}","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
 
                 else if (PersonApplicationStatus == clsApplication.enApplicationStatus.Completed)
                     MessageBox.Show("Choose another license class,the selected person already has an active license of this selected class", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -191,7 +191,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
 
                 if (_CanPersonApply())
                 {
-                    clsLocalDrivingLicenseApplication LDLApplication;
+                    clsLDLApplication LDLApplication;
                     if (_SaveLDLApplication(out LDLApplication))
                     {
                         lblDLApplicationID.Text = LDLApplication.LDLApplicationID.ToString();
@@ -200,7 +200,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
                         if (_LDLApplication == null)
                         {
                             _LDLApplication = LDLApplication;
-                            _SetTitles(clsLocalDrivingLicenseApplication.enMode.Update);
+                            _SetTitles(clsLDLApplication.enMode.Update);
                         }
 
                         object[] NewValues = new object[] { LDLApplication.LDLApplicationID, LDLApplication.LicenseClass.ClassName,

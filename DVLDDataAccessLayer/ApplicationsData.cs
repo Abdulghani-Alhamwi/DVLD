@@ -77,7 +77,7 @@ namespace DVLDDataAccessLayer
             return (AffectedRows > 0);
         }
 
-        public static bool Find(int ApplicationID , ref int ApplicantPersonID,ref DateTime ApplicationDate, ref int ApplicationTypeID,ref byte ApplicationStatus ,ref DateTime LastStatusDate,ref decimal PaidApplicationFees,ref int CreatedByUserID)
+        public static bool Find(int ApplicationID , ref int ApplicantPersonID,ref DateTime ApplicationDate, ref byte ApplicationTypeID,ref byte ApplicationStatus ,ref DateTime LastStatusDate,ref decimal PaidApplicationFees,ref int CreatedByUserID)
         {
             bool IsFound = false;
 
@@ -98,8 +98,8 @@ namespace DVLDDataAccessLayer
                 {
                     ApplicantPersonID = (int)reader["ApplicantPersonID"];
                     ApplicationDate = (DateTime)reader["ApplicationDate"];
-                    ApplicationTypeID = (int)reader["ApplicationTypeID"];
-                    ApplicationStatus = (byte)reader["ApplicationStatus"];
+                    ApplicationTypeID = Convert.ToByte(reader["ApplicationTypeID"]);
+                    ApplicationStatus = Convert.ToByte(reader["ApplicationStatus"]);
                     LastStatusDate = (DateTime)reader["LastStatusDate"];
                     PaidApplicationFees = (Decimal)(reader["PaidFees"]);
                     CreatedByUserID = (int)reader["CreatedByUserID"];

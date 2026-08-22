@@ -85,7 +85,7 @@ namespace DVLDBusinessLayer
 
         }
 
-        public static short GetTotalAppointmentsCount(int LDLApplicationID, byte TestTypeID)
+        public static ushort GetTotalAppointmentsCount(int LDLApplicationID, byte TestTypeID)
         {
             return clsTestAppointmentsData.GetTotalAppointmentsCount(LDLApplicationID, TestTypeID);
         }

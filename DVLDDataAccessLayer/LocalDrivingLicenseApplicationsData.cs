@@ -9,7 +9,7 @@ namespace DVLDDataAccessLayer
         private static string ColumnNamesQuery = 
          @"SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
            People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
-           ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , ApplicationDate AS [Application Date] ,
+           ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , FORMAT(ApplicationDate , 'dd/MM/yyyy') AS [Application Date] ,
            (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests] ,
            (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) AS Status
            FROM LocalDrivingLicenseApplications INNER JOIN LicenseClasses
@@ -155,7 +155,7 @@ namespace DVLDDataAccessLayer
             return (AffectedRows > 0);
         }
 
-        public static bool Find(int LocalDrivingLicenseApplicationID, ref int ApplicationID, ref int LicenseClassID , ref string LicenseClassName)
+        public static bool Find(int LocalDrivingLicenseApplicationID, ref byte ApplicationID, ref byte LicenseClassID , ref string LicenseClassName)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -174,8 +174,8 @@ namespace DVLDDataAccessLayer
 
                 if (reader.Read())
                 {
-                    ApplicationID = (int)reader["ApplicationID"];
-                    LicenseClassID = (int)reader["LicenseClassID"];
+                    ApplicationID = Convert.ToByte(reader["ApplicationID"]);
+                    LicenseClassID = Convert.ToByte(reader["LicenseClassID"]);
                     LicenseClassName = (string)reader["ClassName"];
 
                     IsFound = true;
@@ -361,7 +361,7 @@ namespace DVLDDataAccessLayer
         {
             string query = @"SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
                              People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
-                             ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , ApplicationDate AS [Application Date] ,
+                             ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , FORMAT(ApplicationDate , 'dd/MM/yyyy') AS [Application Date] ,
                              (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests] ,
                              (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) AS Status
                              FROM LocalDrivingLicenseApplications INNER JOIN LicenseClasses

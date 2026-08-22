@@ -13,7 +13,7 @@ namespace DVLDBusinessLayer
         public int ApplicationID { get; set;}
         public int ApplicantPersonID { get; set; }
         public DateTime ApplicationDate { get; set; }
-        public int ApplicationTypeID { get; set; }
+        public byte ApplicationTypeID { get; set; }
         public enApplicationStatus ApplicationStatus { get; set; }
         public DateTime LastStatusDate { get; set; }
         public decimal PaidApplicationFees { get; set; }
@@ -24,7 +24,6 @@ namespace DVLDBusinessLayer
             ApplicationID = -1;
             ApplicantPersonID = -1;
             ApplicationDate = DateTime.Now;
-            ApplicationTypeID = -1;
             ApplicationStatus = enApplicationStatus.New;
             LastStatusDate = DateTime.Now;
             PaidApplicationFees = -1;
@@ -32,7 +31,7 @@ namespace DVLDBusinessLayer
             _CurrentMode = _enMode.AddNew;
         }
 
-        protected clsApplication(int ApplicationID,int ApplicantPersonID,DateTime ApplicationDate,int ApplicationTypeID,enApplicationStatus ApplicationStatus,DateTime LastStatusDate, decimal PaidApplicationFees,int CreatedByUserID)
+        protected clsApplication(int ApplicationID,int ApplicantPersonID,DateTime ApplicationDate,byte ApplicationTypeID,enApplicationStatus ApplicationStatus,DateTime LastStatusDate, decimal PaidApplicationFees,int CreatedByUserID)
         {
             this.ApplicationID = ApplicationID;
             this.ApplicantPersonID = ApplicantPersonID;
@@ -110,7 +109,8 @@ namespace DVLDBusinessLayer
 
         public static clsApplication Find(int ApplicationID)
         {
-            int ApplicantPersonID = -1, ApplicationTypeID = -1, CreatedByUserID = -1;
+            int ApplicantPersonID = -1, CreatedByUserID = -1;
+            byte ApplicationTypeID = 0;
             DateTime ApplicationDate = DateTime.Now, LastStatusDate = DateTime.Now;
             byte ApplicationStatus = 0;
             decimal PaidApplicationFees = -1;

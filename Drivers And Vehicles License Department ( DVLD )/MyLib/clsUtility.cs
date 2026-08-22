@@ -16,6 +16,9 @@ namespace MyLib
         public static Color ComboBoxItemsBackColor = Color.FromArgb(245,245,245);
         public static Color ComboBoxHighlightedBackColor = Color.FromArgb(221, 232, 240);
 
+        public static string DateCustomFormat = "dd/MM/yyyy";
+
+        public static byte WantedNumOfRowsFromDB = 10;
         public static string HashWithSaltPassword(string Password, ref byte[] Salt)
         {
             if (Salt == null)

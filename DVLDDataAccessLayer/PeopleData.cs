@@ -9,7 +9,7 @@ namespace DVLDDataAccessLayer
         private static string ColumnNamesQuery = @"SELECT TOP (@WantedNumberOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
                                                    FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
                                                    Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-                                                   DateOfBirth AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
+                                                   FORMAT(DateOfBirth , 'dd/MM/yyyy') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
                                                    FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
 
         public static int AddNewPerson(string NationalNo, string FirstName,

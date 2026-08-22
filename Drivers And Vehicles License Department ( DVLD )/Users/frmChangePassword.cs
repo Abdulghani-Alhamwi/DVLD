@@ -8,13 +8,16 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class frmChangePassword : Form
     {
-        int _UserID = -1;
-        string _Password = "";
-        byte[] _Salt = null;
+        private int _UserID = -1;
+        private string _Password = "";
+        private byte[] _Salt = null;
         public frmChangePassword(int UserID)
         {
-            InitializeComponent();
-
+             InitializeComponent();
+            _LoadInfo(UserID);
+        }
+        private void _LoadInfo(int UserID)
+        {
             if (!uctrlUserDetails.LoadUserInformation(UserID))
                 this.Close();
             else

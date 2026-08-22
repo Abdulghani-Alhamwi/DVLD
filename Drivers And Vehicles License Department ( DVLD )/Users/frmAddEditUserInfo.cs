@@ -20,7 +20,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private clsUser _User;
         private string _DefaultPasswordValue = "Not Real Password";
         private bool _WantTochangePassword = true;
-        int _DGVRowIndex = -1;
+        int _UsersDGVRowIndex = -1;
         string _CurrentUserFullName;
 
         public frmAddEditUserInfo()
@@ -29,11 +29,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             _InitializeInfo(null);
         }
 
-        public frmAddEditUserInfo(clsUser User, int DGVRowIndex,string CurrentUserFullName)
+        public frmAddEditUserInfo(clsUser User, int UsersDGVRowIndex,string CurrentUserFullName)
         {
             InitializeComponent();
             _InitializeInfo(User);
-            _DGVRowIndex = DGVRowIndex;
+            _UsersDGVRowIndex = UsersDGVRowIndex;
             _CurrentUserFullName = CurrentUserFullName;
         }
 
@@ -240,7 +240,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                 object[] NewValues = _GetCurrentValuesInArray();
                 AfterSavingNewInfo?.Invoke(ref NewValues);
-                AfterSavingEditedInfo?.Invoke(ref NewValues,_DGVRowIndex,null);
+                AfterSavingEditedInfo?.Invoke(ref NewValues,_UsersDGVRowIndex,null);
 
                 clsGlobalSettings.LoginInfoChanged = true;
             }
@@ -288,7 +288,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (_CurrentUserFullName != UserFullName && _CurrentUserFullName != null)
             {
                 object[] Values = null;
-                AfterSavingEditedInfo?.Invoke(ref Values, _DGVRowIndex,UserFullName);
+                AfterSavingEditedInfo?.Invoke(ref Values, _UsersDGVRowIndex,UserFullName);
             }
         }
     }

@@ -15,21 +15,21 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         int _PersonID = -1;
         public void LoadInfo(int LDLApplicationID)
         {
-            clsLocalDrivingLicenseApplication LDLApplication = clsLocalDrivingLicenseApplication.Find(LDLApplicationID);
+            clsLDLApplication LDLApplication = clsLDLApplication.Find(LDLApplicationID);
 
             if (LDLApplication != null)
             {
                 lblLDLApplicationID.Text = LDLApplication.LDLApplicationID.ToString();
                 lblLicenseClassName.Text = LDLApplication.LicenseClass.ClassName;
-                lblPassedTests.Text = clsLocalDrivingLicenseApplication.GetPassedTests(LDLApplication.LDLApplicationID).ToString();
+                lblPassedTests.Text = clsLDLApplication.GetPassedTests(LDLApplication.LDLApplicationID).ToString();
 
                 lblApplicationID.Text = LDLApplication.ApplicationID.ToString();
                 lblStatus.Text = LDLApplication.GetApplicationStatus();
                 lblPaidFees.Text = Convert.ToSingle(LDLApplication.PaidApplicationFees).ToString();
                 lblApplicationType.Text = clsApplicationTypes.GetApplicationTypeTitle(LDLApplication.ApplicationTypeID);
                 lblApplicantFullName.Text = clsPerson.GetFullName(LDLApplication.ApplicantPersonID);
-                lblApplicationDate.Text = LDLApplication.ApplicationDate.ToShortDateString();
-                lblLastStatusDate.Text = LDLApplication.LastStatusDate.ToShortDateString();
+                lblApplicationDate.Text = LDLApplication.ApplicationDate.ToString("d/MMM/yyyy");
+                lblLastStatusDate.Text = LDLApplication.LastStatusDate.ToString("d/MMM/yyyy");
                 lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(LDLApplication.CreatedByUserID));
                 _PersonID = LDLApplication.ApplicantPersonID;
             }

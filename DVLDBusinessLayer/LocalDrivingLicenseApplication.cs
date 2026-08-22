@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Data;
-using System.Diagnostics.Contracts;
 using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
 {
-    public class clsLocalDrivingLicenseApplication:clsApplication
+    public class clsLDLApplication:clsApplication
     {
         public enum enMode { AddNew = 0 , Update = 1};
         private enMode _CurrentMode;
@@ -13,14 +12,14 @@ namespace DVLDBusinessLayer
 
         public clsLicenseClasses LicenseClass;
 
-        public clsLocalDrivingLicenseApplication()
+        public clsLDLApplication()
         {
             LDLApplicationID = -1;
             LicenseClass = new clsLicenseClasses();
             _CurrentMode = enMode.AddNew;
         }
 
-        private clsLocalDrivingLicenseApplication(int LDLApplicationID,int ApplicationID,clsLicenseClasses LicenseClass, int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
+        private clsLDLApplication(int LDLApplicationID,int ApplicationID,clsLicenseClasses LicenseClass, int ApplicantPersonID, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
               :base(ApplicationID,ApplicantPersonID,ApplicationDate,ApplicationTypeID, ApplicationStatus,LastStatusDate,PaidApplicationFees,CreatedByUserID)            
         {
             this.LDLApplicationID = LDLApplicationID;
@@ -40,9 +39,9 @@ namespace DVLDBusinessLayer
             return clsLocalDrivingLicenseApplicationsData.GetTotalLDLApplicationsCount();
         }
 
-        public static new clsLocalDrivingLicenseApplication Find(int LDLApplicationID)
+        public static new clsLDLApplication Find(int LDLApplicationID)
         {
-            int ApplicationID = -1,LicenseClassID = -1;
+            byte ApplicationID = 0,LicenseClassID = 0;
             string LicenseClassName = "";
 
             if (clsLocalDrivingLicenseApplicationsData.Find(LDLApplicationID, ref ApplicationID, ref LicenseClassID, ref LicenseClassName))
@@ -52,7 +51,7 @@ namespace DVLDBusinessLayer
                 if(Application!=null)
                 {
                     clsLicenseClasses LicenseClass = new clsLicenseClasses() { ID = LicenseClassID, ClassName =  LicenseClassName};
-                    return new clsLocalDrivingLicenseApplication(LDLApplicationID, Application.ApplicationID,LicenseClass, Application.ApplicantPersonID, Application.ApplicationDate, Application.ApplicationTypeID, Application.ApplicationStatus, Application.LastStatusDate, Application.PaidApplicationFees, Application.CreatedByUserID);
+                    return new clsLDLApplication(LDLApplicationID, Application.ApplicationID,LicenseClass, Application.ApplicantPersonID, Application.ApplicationDate, Application.ApplicationTypeID, Application.ApplicationStatus, Application.LastStatusDate, Application.PaidApplicationFees, Application.CreatedByUserID);
                 }
             }
 

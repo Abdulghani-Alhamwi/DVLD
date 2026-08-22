@@ -59,7 +59,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             if (_AllowDataLoading)
             {
-                dgvUsers.DataSource = clsUser.GetAllUsersInfo(50);
+                dgvUsers.DataSource = clsUser.GetAllUsersInfo(clsUtility.WantedNumOfRowsFromDB);
                 _DecryptUsersNames((DataTable)dgvUsers.DataSource);
 
             }
@@ -73,7 +73,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 txtFilter.Visible = false;
                 cbIsActive.Visible = false;
-                dgvUsers.DataSource = clsUser.GetAllUsersInfo(50);
+                dgvUsers.DataSource = clsUser.GetAllUsersInfo(clsUtility.WantedNumOfRowsFromDB);
                 _DecryptUsersNames((DataTable)dgvUsers.DataSource);
                 _AllowDataLoading = false;
             }
@@ -121,7 +121,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 _AddFilteredData(null);
             else
             {
-                DataTable dtUsersInfo = clsUser.GetAllUsersInfo(50);
+                DataTable dtUsersInfo = clsUser.GetAllUsersInfo(clsUtility.WantedNumOfRowsFromDB);
                 _DecryptUsersNames(dtUsersInfo);
                 dgvUsers.DataSource = dtUsersInfo;
             }
@@ -251,7 +251,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             _ShowUserDetails();
         }
-
         private void tsmiChangePassword_Click(object sender, EventArgs e)
         {
             if (dgvUsers.SelectedRows.Count > 1)
@@ -259,13 +258,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             else
             {
-                frmChangePassword frm = new frmChangePassword((int)dgvUsers.SelectedRows[0].Cells["User ID"].Value);
+                frmChangePassword frm = new frmChangePassword((short)dgvUsers.SelectedRows[0].Cells["User ID"].Value);
                 frm.ShowDialog();
             }
         }
         private DataTable _FilterOnIsActive()
         {
-            DataTable dtFilteredData = clsUser.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), cbIsActive.SelectedItem.ToString(), null);
+            DataTable dtFilteredData = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbIsActive.SelectedItem.ToString(), null);
 
             return dtFilteredData;
         }
@@ -276,31 +275,31 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (!ScrollCase)
             {
                 if (cbFilterBy.SelectedItem.ToString() == "User ID" || cbFilterBy.SelectedItem.ToString() == "Person ID")
-                    dtUsersInfo = clsUser.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);
+                    dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "UserName")
-                    dtUsersInfo = clsUser.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), clsUtility.EncryptUserName(txtFilter.Text));
+                    dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), clsUtility.EncryptUserName(txtFilter.Text));
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Is Active")
                     dtUsersInfo = _FilterOnIsActive();
 
                 else
-                    dtUsersInfo = clsUser.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
+                    dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
             }
 
             else
             {
                 if (cbFilterBy.SelectedItem.ToString() == "User ID" || cbFilterBy.SelectedItem.ToString() == "Person ID")
-                    dtUsersInfo = clsUser.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null, (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value);
+                    dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null, (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "UserName")
-                    dtUsersInfo = clsUser.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), clsUtility.EncryptUserName(txtFilter.Text));
+                    dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), clsUtility.EncryptUserName(txtFilter.Text));
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Is Active")
                     dtUsersInfo = _FilterOnIsActive();
 
                 else
-                    dtUsersInfo = clsUser.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value);
+                    dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value);
             }
 
                 dgvUsers.DataSource = dtUsersInfo;
@@ -329,7 +328,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             else
             {
-                NewRows = clsUser.GetAllUsersInfo(50, (int)dgvUsers.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value)?.Select();
+                NewRows = clsUser.GetAllUsersInfo(clsUtility.WantedNumOfRowsFromDB, (int)dgvUsers.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value)?.Select();
 
                 if (NewRows != null)
                     clsUtility.AddNewRowsToDGV(dgvUsers, (DataTable)dgvUsers.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvUsers));

@@ -24,17 +24,15 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             cbStatus.DataSource = cbStatusItems;
             cbStatus.SelectedItem = "All";
         }
-
         private void frmLocalDrivingLicenseApplications_Load(object sender, EventArgs e)
         {
-            lblRecordsNumber.Text = clsLocalDrivingLicenseApplication.GetTotalLDLApplicationsCount().ToString();
+            lblRecordsNumber.Text = clsLDLApplication.GetTotalLDLApplicationsCount().ToString();
             _AddComboBoxesFilterItems();
         }
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -49,12 +47,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             _AddFilteredData(null);
 
             else
-                dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetLDLApplications(50);
+                dgvLDLApplications.DataSource = clsLDLApplication.GetLDLApplications(clsUtility.WantedNumOfRowsFromDB);
         }
         private void _LoadDataAfterFirstTimeLoad(ref bool _AllowDataLoading)
         {
             if (_AllowDataLoading)
-                dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetLDLApplications(50);
+                dgvLDLApplications.DataSource = clsLDLApplication.GetLDLApplications(clsUtility.WantedNumOfRowsFromDB);
             else
                 _AllowDataLoading = true;
         }
@@ -79,12 +77,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 txtFilter.Visible = false;
                 cbStatus.Visible = false;
                
-                dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetLDLApplications(50);
+                dgvLDLApplications.DataSource = clsLDLApplication.GetLDLApplications(clsUtility.WantedNumOfRowsFromDB);
                 _AllowDataLoading = false;
                 txtFilter.Text = "";
             }
         }
-
         private void txtFilter_KeyDown(object sender, KeyEventArgs e)
         {
             if(cbFilterBy.SelectedItem.ToString() == "L.D.L.AppID")
@@ -105,7 +102,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void _AddNewValuesToDGV(ref object[] NewValues)
         {
             if (dgvLDLApplications.DataSource == null)
-                dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetColumnsNamesForView();
+                dgvLDLApplications.DataSource = clsLDLApplication.GetColumnsNamesForView();
 
             clsUtility.AddNewRowToDGV(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource,ref NewValues, dgvLDLApplications.Columns[0].HeaderText);
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
@@ -130,7 +127,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             
             else
             {
-                clsLocalDrivingLicenseApplication LDLApplication = clsLocalDrivingLicenseApplication.Find((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
+                clsLDLApplication LDLApplication = clsLDLApplication.Find((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
 
                 frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication(LDLApplication,dgvLDLApplications.SelectedRows[0].Index);
                 frm.OnEditedLDLApplication += _EditDataRowInDGV;
@@ -142,7 +139,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (dgvLDLApplications.Rows.Count == 0)
                 cmsLDLApplications.Close();
         }
-
         private void tsmiDelete_Click(object sender, EventArgs e)
         {            
                 if (dgvLDLApplications.SelectedRows.Count > 5)
@@ -163,9 +159,9 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                 for (short i = 0; i < dgvLDLApplications.SelectedRows.Count; i++)
                     {
-                    int ApplicationID = clsLocalDrivingLicenseApplication.GetApplicationID((int)dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value);
+                    int ApplicationID = clsLDLApplication.GetApplicationID((int)dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value);
 
-                    if (!clsLocalDrivingLicenseApplication.DeleteLDLApplication((int)dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value, ApplicationID))
+                    if (!clsLDLApplication.DeleteLDLApplication((int)dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value, ApplicationID))
                     {
                       MessageBox.Show($"Local driving license application who has ID : {Convert.ToInt32(dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                       SelectedRowsIndex[i] = -1;
@@ -177,13 +173,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     }
                     else
                         SelectedRowsIndex[i] = dgvLDLApplications.SelectedRows[i].Index;
-
                     }
                     clsUtility.DeleteSelectedRowsFromView(dgvLDLApplications, SelectedRowsIndex);
-                    lblRecordsNumber.Text = clsLocalDrivingLicenseApplication.GetTotalLDLApplicationsCount().ToString();
+                    lblRecordsNumber.Text = clsLDLApplication.GetTotalLDLApplicationsCount().ToString();
                 }
         }
-
         private void tsmiCancelApplication_Click(object sender, EventArgs e)
         {
             if (dgvLDLApplications.SelectedRows.Count > 1)
@@ -195,7 +189,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                 if (result == DialogResult.OK)
                 {
-                    int ApplicationID = clsLocalDrivingLicenseApplication.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
+                    int ApplicationID = clsLDLApplication.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
 
                     if (clsApplication.ChangeApplicationStatus(ApplicationID, clsApplication.enApplicationStatus.Canceled))
                         clsUtility.EditOneColumnValueInDGV(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource,"Status", "Canceled", dgvLDLApplications.SelectedRows[0].Index);
@@ -210,22 +204,22 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             if (!ScrollCase)
             {
                 if (cbFilterBy.SelectedItem.ToString() == "L.D.L.AppID")
-                    dtLDLApplicationsInfo = clsLocalDrivingLicenseApplication.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);                    
+                    dtLDLApplicationsInfo = clsLDLApplication.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);                    
 
                 else
-                    dtLDLApplicationsInfo = clsLocalDrivingLicenseApplication.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
+                    dtLDLApplicationsInfo = clsLDLApplication.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
             }
 
             else
             {
                 if (cbFilterBy.SelectedItem.ToString() == "L.D.L.AppID")
-                    dtLDLApplicationsInfo = clsLocalDrivingLicenseApplication.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null, (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
+                    dtLDLApplicationsInfo = clsLDLApplication.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null, (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Status")
-                    dtLDLApplicationsInfo = clsLocalDrivingLicenseApplication.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(),cbStatus.SelectedItem.ToString(), null, (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
+                    dtLDLApplicationsInfo = clsLDLApplication.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(),cbStatus.SelectedItem.ToString(), null, (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
 
                 else
-                    dtLDLApplicationsInfo = clsLocalDrivingLicenseApplication.GetFilteredData(50, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
+                    dtLDLApplicationsInfo = clsLDLApplication.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
             }
 
                 dgvLDLApplications.DataSource = dtLDLApplicationsInfo;
@@ -253,41 +247,35 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             else
             {
-                NewRows = clsLocalDrivingLicenseApplication.GetLDLApplications(50, (int)dgvLDLApplications.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value)?.Select();
+                NewRows = clsLDLApplication.GetLDLApplications(clsUtility.WantedNumOfRowsFromDB, (int)dgvLDLApplications.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value)?.Select();
 
                 if (NewRows != null)
                     clsUtility.AddNewRowsToDGV(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvLDLApplications));
             }
         }
-
         private void dgvLDLApplications_Scroll(object sender, ScrollEventArgs e)
         {
             if (dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.None) == dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed))
                 _AppendPartOfRemainingData();
         }
-
         private void dgvLDLApplications_KeyDown(object sender, KeyEventArgs e)
         {
             if (dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.None) == dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Selected))
                 _AppendPartOfRemainingData();
         }
-
         private void cbStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(cbFilterBy.SelectedItem.ToString() == "Status")
-            dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetFilteredData(100, cbFilterBy.SelectedItem.ToString(), cbStatus.SelectedItem.ToString(), null);
+            dgvLDLApplications.DataSource = clsLDLApplication.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbStatus.SelectedItem.ToString(), null);
         }
-
         private void ComboBoxes_DropDown(object sender, EventArgs e)
         {
             ((ComboBox)sender).BackColor = clsUtility.ComboBoxItemsBackColor;
         }
-
         private void cbStatus_DropDownClosed(object sender, EventArgs e)
         {
             cbStatus.BackColor = clsUtility.ComboBoxHighlightedBackColor;
         }
-
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
         {
             if(cbFilterBy.SelectedItem.ToString() != "None")
@@ -295,17 +283,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             else
                 cbFilterBy.BackColor = clsUtility.ComboBoxBackColor;
         }
-
-        private void tsmiScheduleVisionTest_Click(object sender, EventArgs e)
-        {
-            if (_CanScheduleTest())
-            {
-                frmVisionTestAppointments frm = new frmVisionTestAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
-                frm.ShowDialog();
-            }
-        }
-
-        private void _DisableSpecificMenuOptions(clsLocalDrivingLicenseApplication.enApplicationStatus Status = clsApplication.enApplicationStatus.Canceled)
+        private void _DisableSpecificMenuOptions(clsLDLApplication.enApplicationStatus Status = clsApplication.enApplicationStatus.Canceled)
         {
             tsmiCancelApplication.Enabled = false;
             tsmiDelete.Enabled = false;
@@ -316,16 +294,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             }
             tsmiScheduleTests.Enabled = false;
         }
-
         private void _EnableSpecificMenuOptions()
         {
             tsmiCancelApplication.Enabled = true;
             tsmiEditApplication.Enabled = true;
             tsmiDelete.Enabled = true;
             tsmiScheduleTests.Enabled = true;
-            tsmiScheduleVisionTest.Enabled = true;
         }
-
         private void _SetTestSchedulingLogic()
         {
             switch (Convert.ToByte(dgvLDLApplications.SelectedRows[0].Cells["Passed Tests"].Value))
@@ -334,22 +309,32 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     tsmiScheduleVisionTest.Enabled = true;
                     tsmiScheduleWrittenTest.Enabled = false;
                     tsmiScheduleStreetTest.Enabled = false;
+                    tsmiIssueDLFirstTime.Enabled = false;
+                    tsmiScheduleTests.Enabled = true;
                     break;
+
                 case 1:
                     tsmiScheduleVisionTest.Enabled = false;
                     tsmiScheduleWrittenTest.Enabled = true;
+                    tsmiScheduleStreetTest.Enabled = false;
+                    tsmiIssueDLFirstTime.Enabled = false;
+                    tsmiScheduleTests.Enabled = true;
                     break;
+
                 case 2:
+                    tsmiScheduleVisionTest.Enabled = false;
                     tsmiScheduleWrittenTest.Enabled = false;
                     tsmiScheduleStreetTest.Enabled = true;
+                    tsmiIssueDLFirstTime.Enabled = false;
+                    tsmiScheduleTests.Enabled = true;
                     break;
+
                 case 3:
-                    tsmiScheduleStreetTest.Enabled = false;
-                    tsmiShowLicense.Enabled = true;
+                    tsmiScheduleTests.Enabled = false;
+                    tsmiIssueDLFirstTime.Enabled = true;
                     break;
             }
         }
-
         private bool _CanScheduleTest()
         {
             if (dgvLDLApplications.SelectedRows.Count > 1)
@@ -361,10 +346,8 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             else
                 return true;
         }
-
         private void cmsLDLApplications_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
             switch ((string)dgvLDLApplications.SelectedRows[0].Cells["Status"].Value)
             {
                 case "New":
@@ -382,21 +365,41 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                     break;
             }
         }
-
+        private void _EditRowForPassedTest(int RowIndex)
+        {
+            byte PassedTests = Convert.ToByte(dgvLDLApplications.Rows[RowIndex].Cells["Passed Tests"].Value);
+            clsUtility.EditOneColumnValueInDGV(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource, "Passed Tests", PassedTests + 1, RowIndex);
+        }
+        private void tsmiScheduleVisionTest_Click(object sender, EventArgs e)
+        {
+            if (_CanScheduleTest())
+            {
+                frmTestsAppointments frm = new frmTestsAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index, clsTestTypes.enTestType.VisionTest);
+                frm.AfterPassingTest += _EditRowForPassedTest;
+                frm.ShowDialog();
+            }
+        }
         private void tsmiScheduleWrittenTest_Click(object sender, EventArgs e)
         {
             if(_CanScheduleTest())
             {
-
+                frmTestsAppointments frm = new frmTestsAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index, clsTestTypes.enTestType.WrittenTest);
+                frm.AfterPassingTest += _EditRowForPassedTest;
+                frm.ShowDialog();
             }
         }
-
         private void tsmiScheduleStreetTest_Click(object sender, EventArgs e)
         {
             if(_CanScheduleTest())
             {
-
+                frmTestsAppointments frm = new frmTestsAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index, clsTestTypes.enTestType.StreetTest);
+                frm.AfterPassingTest += _EditRowForPassedTest;
+                frm.ShowDialog();
             }
+        }
+        private void tsmiIssueDLFirstTime_Click(object sender, EventArgs e)
+        {
+
         }
     }
     }

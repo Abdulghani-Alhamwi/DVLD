@@ -24,19 +24,18 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         string _SavedPersonalImagePath;
         clsPerson _Person;
-        int _DGVRowIndex = -1;
-
+        int _PeopleDGVRowIndex = -1;
         public frmAddEditPersonInfo()
         {
             InitializeComponent();
             _InitializeForm(null);
         }
 
-        public frmAddEditPersonInfo(clsPerson PersonInfo,int DGVRowIndex = -1)
+        public frmAddEditPersonInfo(clsPerson PersonInfo,int PeopleDGVRowIndex = -1)
         {
             InitializeComponent();
             _InitializeForm(PersonInfo);
-            _DGVRowIndex = DGVRowIndex;
+            _PeopleDGVRowIndex = PeopleDGVRowIndex;
         }
 
         private void _InitializeForm(clsPerson PersonInfo)
@@ -269,7 +268,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             DateTime MaxdateOfBirth = DateTime.Now.AddYears(-18);
 
             dtpDateOfBirth.Format = DateTimePickerFormat.Custom;
-            dtpDateOfBirth.CustomFormat = "dd/MM/yyyy";
+            dtpDateOfBirth.CustomFormat = clsUtility.DateCustomFormat;
             dtpDateOfBirth.Value = MaxdateOfBirth;
             dtpDateOfBirth.MaxDate = MaxdateOfBirth;
             dtpDateOfBirth.MinDate = new DateTime(1935, 1, 1);
@@ -449,7 +448,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                     object[] NewValues = _GetCurrentValuesInArray();
                     AfterSavingNewInfo?.Invoke(ref NewValues);
-                    AfterSavingEditedInfo?.Invoke(ref NewValues, _DGVRowIndex);
+                    AfterSavingEditedInfo?.Invoke(ref NewValues, _PeopleDGVRowIndex);
 
                     if (_Person == null)
                     {

@@ -75,29 +75,29 @@
     <Compile Include="ApplicationTypes\frmUpdateApplicationType.Designer.cs">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
     </Compile>
-    <Compile Include="ctrlDLApplicationInfo.cs">
+    <Compile Include="Controls\ctrlDLApplicationInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ctrlDLApplicationInfo.Designer.cs">
+    <Compile Include="Controls\ctrlDLApplicationInfo.Designer.cs">
       <DependentUpon>ctrlDLApplicationInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmScheduleTest.cs">
+    <Compile Include="Tests\frmScheduleTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmScheduleTest.Designer.cs">
+    <Compile Include="Tests\frmScheduleTest.Designer.cs">
       <DependentUpon>frmScheduleTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmTakeTest.cs">
+    <Compile Include="Tests\frmTakeTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmTakeTest.Designer.cs">
+    <Compile Include="Tests\frmTakeTest.Designer.cs">
       <DependentUpon>frmTakeTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmVisionTestAppointments.cs">
+    <Compile Include="Tests\frmTestsAppointments.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVisionTestAppointments.Designer.cs">
-      <DependentUpon>frmVisionTestAppointments.cs</DependentUpon>
+    <Compile Include="Tests\frmTestsAppointments.Designer.cs">
+      <DependentUpon>frmTestsAppointments.cs</DependentUpon>
     </Compile>
     <Compile Include="LocalDrivingLicenseApplications\frmNewLocalDrivingLicenseApplication.cs">
       <SubType>Form</SubType>
@@ -204,17 +204,17 @@
     <EmbeddedResource Include="ApplicationTypes\frmUpdateApplicationType.resx">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ctrlDLApplicationInfo.resx">
+    <EmbeddedResource Include="Controls\ctrlDLApplicationInfo.resx">
       <DependentUpon>ctrlDLApplicationInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmScheduleTest.resx">
+    <EmbeddedResource Include="Tests\frmScheduleTest.resx">
       <DependentUpon>frmScheduleTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmTakeTest.resx">
+    <EmbeddedResource Include="Tests\frmTakeTest.resx">
       <DependentUpon>frmTakeTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVisionTestAppointments.resx">
-      <DependentUpon>frmVisionTestAppointments.cs</DependentUpon>
+    <EmbeddedResource Include="Tests\frmTestsAppointments.resx">
+      <DependentUpon>frmTestsAppointments.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LocalDrivingLicenseApplications\frmNewLocalDrivingLicenseApplication.resx">
       <DependentUpon>frmNewLocalDrivingLicenseApplication.cs</DependentUpon>

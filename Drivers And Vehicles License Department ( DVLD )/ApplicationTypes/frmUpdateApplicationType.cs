@@ -14,10 +14,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class frmUpdateApplicationType : Form
     {
-        int _ApplicationTypeID;
+        byte _ApplicationTypeID;
         string _ApplicationTitle;
         string _ApplicationFees;
-        public frmUpdateApplicationType(int ApplicationTypeID,string ApplicationTitle,string ApplicationFees)
+        public frmUpdateApplicationType(byte ApplicationTypeID,string ApplicationTitle,string ApplicationFees)
         {
             InitializeComponent();
             _ApplicationTypeID = ApplicationTypeID;

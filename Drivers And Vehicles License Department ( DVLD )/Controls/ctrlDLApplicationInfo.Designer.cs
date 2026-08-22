@@ -112,7 +112,7 @@
             this.lblAppliedforLicenseTitle.AutoSize = true;
             this.lblAppliedforLicenseTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblAppliedforLicenseTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblAppliedforLicenseTitle.Location = new System.Drawing.Point(432, 52);
+            this.lblAppliedforLicenseTitle.Location = new System.Drawing.Point(399, 52);
             this.lblAppliedforLicenseTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblAppliedforLicenseTitle.Name = "lblAppliedforLicenseTitle";
             this.lblAppliedforLicenseTitle.Size = new System.Drawing.Size(251, 28);
@@ -125,7 +125,7 @@
             this.lblLicenseClassName.AutoSize = true;
             this.lblLicenseClassName.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblLicenseClassName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblLicenseClassName.Location = new System.Drawing.Point(730, 52);
+            this.lblLicenseClassName.Location = new System.Drawing.Point(697, 52);
             this.lblLicenseClassName.Margin = new System.Windows.Forms.Padding(0);
             this.lblLicenseClassName.Name = "lblLicenseClassName";
             this.lblLicenseClassName.Size = new System.Drawing.Size(64, 28);
@@ -138,7 +138,7 @@
             this.lblPassedTestsTitle.AutoSize = true;
             this.lblPassedTestsTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblPassedTestsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblPassedTestsTitle.Location = new System.Drawing.Point(506, 109);
+            this.lblPassedTestsTitle.Location = new System.Drawing.Point(473, 109);
             this.lblPassedTestsTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblPassedTestsTitle.Name = "lblPassedTestsTitle";
             this.lblPassedTestsTitle.Size = new System.Drawing.Size(177, 28);
@@ -151,7 +151,7 @@
             this.lblPassedTests.AutoSize = true;
             this.lblPassedTests.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblPassedTests.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblPassedTests.Location = new System.Drawing.Point(730, 109);
+            this.lblPassedTests.Location = new System.Drawing.Point(697, 109);
             this.lblPassedTests.Margin = new System.Windows.Forms.Padding(0);
             this.lblPassedTests.Name = "lblPassedTests";
             this.lblPassedTests.Size = new System.Drawing.Size(51, 28);
@@ -199,7 +199,7 @@
             this.pbPassedTests.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbPassedTests.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbPassedTests.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.PassedTests_32;
-            this.pbPassedTests.Location = new System.Drawing.Point(690, 107);
+            this.pbPassedTests.Location = new System.Drawing.Point(657, 107);
             this.pbPassedTests.Name = "pbPassedTests";
             this.pbPassedTests.Size = new System.Drawing.Size(32, 32);
             this.pbPassedTests.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -211,7 +211,7 @@
             this.pbLicenseClass.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbLicenseClass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbLicenseClass.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.License_Type_32;
-            this.pbLicenseClass.Location = new System.Drawing.Point(690, 50);
+            this.pbLicenseClass.Location = new System.Drawing.Point(657, 50);
             this.pbLicenseClass.Name = "pbLicenseClass";
             this.pbLicenseClass.Size = new System.Drawing.Size(32, 32);
             this.pbLicenseClass.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;

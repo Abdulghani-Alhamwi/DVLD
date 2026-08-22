@@ -1,28 +1,39 @@
 ﻿using System;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
-using static Driver_And_Vehicle_Licenses_Department___DVLD__.frmScheduleTest;
+using MyLib;
 
 namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 {
     public partial class frmTakeTest : Form
     {
-        public Action<short> OnTestTaken;
+        internal Action<int> OnTestTaken;
+        internal Action<int> AfterPassingTest;
+
         clsTestAppointment _Appointment;
-        short _DGVRowIndex;
-        public frmTakeTest(clsTestAppointment Appointment, enTestType TestType,short DGVRowIndex)
+        int _AppointmentsDGVRowIndex;
+        int  _LDLAppDGVRowIndex;
+        int _LDLAppID;
+        public frmTakeTest(clsTestAppointment Appointment, clsTestTypes.enTestType TestType,int AppointmentsDGVRowIndex,int LDLAppDGVRowIndex)
         {
             InitializeComponent();
             txtNotes.MaxLength = 500;
 
-            clsLocalDrivingLicenseApplication LDLApp = clsLocalDrivingLicenseApplication.Find(Appointment.LDLApplicationID);
+            clsLDLApplication LDLApp = clsLDLApplication.Find(Appointment.LDLApplicationID);
+            _LDLAppID = LDLApp.LDLApplicationID;
             _LoadInfo(Appointment,LDLApp, TestType);
+            
             _Appointment = Appointment;
-            _DGVRowIndex = DGVRowIndex;
+            this._AppointmentsDGVRowIndex = AppointmentsDGVRowIndex;
+            _LDLAppDGVRowIndex = LDLAppDGVRowIndex;
+
+            clsUtility.CenterControlHorizontally(gbTestAppointment, pbTestType);
+            clsUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
+
         }
-        private void _LoadInfo(clsTestAppointment Appointment,clsLocalDrivingLicenseApplication LDLApp, enTestType TestType)
+        private void _LoadInfo(clsTestAppointment Appointment,clsLDLApplication LDLApp, clsTestTypes.enTestType TestType)
         {
-            _ShowInfoByTestType(gbTestAppointment,pbTestType,lblTestFees,TestType);
+            frmScheduleTest.ShowInfoByTestType(gbTestAppointment,pbTestType,lblTestFees,TestType);
 
             lblLDLApplicationID.Text = LDLApp.LDLApplicationID.ToString();
 
@@ -32,10 +43,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 lblApplicantFullName.Text = clsPerson.GetFullName(LDLApp.ApplicantPersonID);
             }
 
-            lblDate.Text = Appointment.AppointmentDate.ToShortDateString();
+            lblDate.Text = Appointment.AppointmentDate.ToString(clsUtility.DateCustomFormat);
             lblTime.Text = Appointment.AppointmentDate.ToShortTimeString();
 
-            lblTrialNumber.Text = Trial.ToString();
+            lblTrialNumber.Text = clsTestAppointment.GetTotalAppointmentsCount(_LDLAppID,1).ToString();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -55,7 +66,10 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                 if (_Appointment.Save())
                 {
                     MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    OnTestTaken?.Invoke(_DGVRowIndex);
+                    OnTestTaken?.Invoke(_AppointmentsDGVRowIndex);
+
+                    if (Test.TestResult == true)
+                        AfterPassingTest?.Invoke(_LDLAppDGVRowIndex);
                 }
                 btnSave.Enabled = false; 
             }

@@ -488,3 +488,11 @@ Instead Of Appointment ID in same line.
 -> To Solve that : From Data Grid View Control Properties -> We Make : ColumnHeadersHeightSizeMode To EnableResizing and then we set the ColumnHeadersHeight property to proper height like 40.
 
 38) SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM , If We Enter A Date That Is Not With In That Range -> we will have exception when execution the query .
+
+39) We Can Date With In A Specific Format Using The Built-In Function Format : Format (ColumnName,Wanted Format) :
+SELECT TOP 1 TestAppointmentID AS [Appointment ID] ,FORMAT( AppointmentDate ,'dd/MM/yyyy')AS [Appointment Date] ,PaidFees AS [Paid Fees] , IsLocked  AS [Is Locked] FROM TestAppointments;
+
+40) 
+In C# we can pass class object by ref as an argument for a parameter , therefore that variable we can change its reference from with in the method therefore we can make it points to a new object -> which means we can change the reference that the variable it self points to therefore making it points to a new object .
+
+41)

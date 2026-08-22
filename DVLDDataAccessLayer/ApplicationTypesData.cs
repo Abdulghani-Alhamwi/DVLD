@@ -39,7 +39,7 @@ namespace DVLDDataAccessLayer
             return dtApplicationTypes;
         }
 
-        public static bool UpdateApplicationType(int ApplicationTypeID , string ApplicationTypeTitle,double ApplicationTypeFees)
+        public static bool UpdateApplicationType(byte ApplicationTypeID , string ApplicationTypeTitle,double ApplicationTypeFees)
         {
             int AffectedRows = -1;
 
@@ -71,9 +71,9 @@ namespace DVLDDataAccessLayer
             return (AffectedRows > 0);
         }
 
-        public static double GetApplicationTypeFees(int ApplicationTypeID)
+        public static decimal GetApplicationTypeFees(byte ApplicationTypeID)
         {
-            double ApplicationTypeFees = -1;
+            decimal ApplicationTypeFees = -1;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"SELECT ApplicationFees FROM ApplicationTypes
@@ -88,7 +88,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    ApplicationTypeFees = Convert.ToDouble(result);
+                    ApplicationTypeFees = Convert.ToDecimal(result);
 
             }
 
@@ -101,7 +101,7 @@ namespace DVLDDataAccessLayer
             return ApplicationTypeFees;
         }
 
-        public static string GetApplicationTypeTitle(int ApplicationTypeID)
+        public static string GetApplicationTypeTitle(byte ApplicationTypeID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 

@@ -49,7 +49,7 @@
             this.tsmiScheduleWrittenTest = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiScheduleStreetTest = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiIssueDrivingLicenseFirstTime = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiIssueDLFirstTime = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiShowLicense = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -160,14 +160,14 @@
             this.tsSeparator3,
             this.tsmiScheduleTests,
             this.tsSeparator4,
-            this.tsmiIssueDrivingLicenseFirstTime,
+            this.tsmiIssueDLFirstTime,
             this.tsSeparator5,
             this.tsmiShowLicense,
             this.tsSeparator6,
             this.tsmiShowPersonLicenseHistory});
             this.cmsLDLApplications.Name = "cmsPeopleMenu";
             this.cmsLDLApplications.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsLDLApplications.Size = new System.Drawing.Size(361, 328);
+            this.cmsLDLApplications.Size = new System.Drawing.Size(361, 350);
             this.cmsLDLApplications.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLDLApplications_Opening);
             this.cmsLDLApplications.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsLDLApplications_Paint);
             // 
@@ -240,7 +240,7 @@
             this.tsmiScheduleVisionTest.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tsmiScheduleVisionTest.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Vision_Test_32;
             this.tsmiScheduleVisionTest.Name = "tsmiScheduleVisionTest";
-            this.tsmiScheduleVisionTest.Size = new System.Drawing.Size(269, 38);
+            this.tsmiScheduleVisionTest.Size = new System.Drawing.Size(253, 26);
             this.tsmiScheduleVisionTest.Text = "Schedule Vision Test";
             this.tsmiScheduleVisionTest.Click += new System.EventHandler(this.tsmiScheduleVisionTest_Click);
             // 
@@ -250,7 +250,7 @@
             this.tsmiScheduleWrittenTest.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tsmiScheduleWrittenTest.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Written_Test_32;
             this.tsmiScheduleWrittenTest.Name = "tsmiScheduleWrittenTest";
-            this.tsmiScheduleWrittenTest.Size = new System.Drawing.Size(269, 38);
+            this.tsmiScheduleWrittenTest.Size = new System.Drawing.Size(253, 26);
             this.tsmiScheduleWrittenTest.Text = "Schedule Written Test";
             this.tsmiScheduleWrittenTest.Click += new System.EventHandler(this.tsmiScheduleWrittenTest_Click);
             // 
@@ -260,7 +260,7 @@
             this.tsmiScheduleStreetTest.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tsmiScheduleStreetTest.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Street_Test_32;
             this.tsmiScheduleStreetTest.Name = "tsmiScheduleStreetTest";
-            this.tsmiScheduleStreetTest.Size = new System.Drawing.Size(269, 38);
+            this.tsmiScheduleStreetTest.Size = new System.Drawing.Size(253, 26);
             this.tsmiScheduleStreetTest.Text = "Schedule Street Test";
             this.tsmiScheduleStreetTest.Click += new System.EventHandler(this.tsmiScheduleStreetTest_Click);
             // 
@@ -269,15 +269,16 @@
             this.tsSeparator4.Name = "tsSeparator4";
             this.tsSeparator4.Size = new System.Drawing.Size(357, 6);
             // 
-            // tsmiIssueDrivingLicenseFirstTime
+            // tsmiIssueDLFirstTime
             // 
-            this.tsmiIssueDrivingLicenseFirstTime.Enabled = false;
-            this.tsmiIssueDrivingLicenseFirstTime.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiIssueDrivingLicenseFirstTime.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.IssueDrivingLicense_32;
-            this.tsmiIssueDrivingLicenseFirstTime.Name = "tsmiIssueDrivingLicenseFirstTime";
-            this.tsmiIssueDrivingLicenseFirstTime.Padding = new System.Windows.Forms.Padding(0);
-            this.tsmiIssueDrivingLicenseFirstTime.Size = new System.Drawing.Size(360, 36);
-            this.tsmiIssueDrivingLicenseFirstTime.Text = "Issue Driving License (First Time)";
+            this.tsmiIssueDLFirstTime.Enabled = false;
+            this.tsmiIssueDLFirstTime.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiIssueDLFirstTime.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.IssueDrivingLicense_32;
+            this.tsmiIssueDLFirstTime.Name = "tsmiIssueDLFirstTime";
+            this.tsmiIssueDLFirstTime.Padding = new System.Windows.Forms.Padding(0);
+            this.tsmiIssueDLFirstTime.Size = new System.Drawing.Size(360, 36);
+            this.tsmiIssueDLFirstTime.Text = "Issue Driving License (First Time)";
+            this.tsmiIssueDLFirstTime.Click += new System.EventHandler(this.tsmiIssueDLFirstTime_Click);
             // 
             // tsSeparator5
             // 
@@ -530,7 +531,7 @@
         private System.Windows.Forms.PictureBox pbLocalLicense;
         private System.Windows.Forms.ToolStripSeparator tsSeparator3;
         private System.Windows.Forms.ToolStripSeparator tsSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem tsmiIssueDrivingLicenseFirstTime;
+        private System.Windows.Forms.ToolStripMenuItem tsmiIssueDLFirstTime;
         private System.Windows.Forms.ToolStripSeparator tsSeparator5;
         private System.Windows.Forms.ToolStripMenuItem tsmiShowLicense;
         private System.Windows.Forms.ToolStripSeparator tsSeparator6;

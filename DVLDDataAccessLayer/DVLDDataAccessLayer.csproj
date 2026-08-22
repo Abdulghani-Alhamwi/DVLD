@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ApplicationsData.cs" />
     <Compile Include="ApplicationTypesData.cs" />
+    <Compile Include="clsLicensesData.cs" />
     <Compile Include="TestsData.cs" />
     <Compile Include="CountriesData.cs" />
     <Compile Include="LicenseClassesData.cs" />

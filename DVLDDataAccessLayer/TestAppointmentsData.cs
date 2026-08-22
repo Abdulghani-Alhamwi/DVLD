@@ -7,10 +7,10 @@ namespace DVLDDataAccessLayer
     public class clsTestAppointmentsData
     {
 
-        private static string ColumnNamesQuery = @"SELECT TOP (@WantedNumberOfRecords) TestAppointmentID AS [Appointment ID] , AppointmentDate AS [Appointment Date] ,
+        private static string ColumnNamesQuery = @"SELECT TOP (@WantedNumberOfRecords) TestAppointmentID AS [Appointment ID] , FORMAT(AppointmentDate,'dd/MM/yyyy') AS [Appointment Date] ,
                              PaidFees AS [Paid Fees] , IsLocked  AS [Is Locked] FROM TestAppointments";
 
-        public static DataTable GetTestAppointments(byte WantedNumberOfRecords , byte TestTypeID,int LocalDrivingLicenseAppID, int LowestBroughtAppointmentID = -1)
+        public static DataTable GetTestAppointments(byte WantedNumberOfRecords , byte TestTypeID,int LocalDrivingLicenseAppID, int LowestBroughtAppointmentID = -1,string DateFormat = null)
     {
             DataTable dtTestAppointments = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -196,7 +196,7 @@ namespace DVLDDataAccessLayer
             return IsFound;
         }
 
-        public static short GetTotalAppointmentsCount(int LocalDrivingLicenseAppID, byte TestTypeID)
+        public static ushort GetTotalAppointmentsCount(int LocalDrivingLicenseAppID, byte TestTypeID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
@@ -214,7 +214,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    return Convert.ToInt16(result);
+                    return Convert.ToUInt16(result);
             }
 
             catch { }
@@ -224,7 +224,7 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
 
-            return -1;
+            return 0;
         }
 
         public static bool IsAppointmentSchedulingAvailable(int LocalDrivingLicenseAppID, byte TestTypeID)
