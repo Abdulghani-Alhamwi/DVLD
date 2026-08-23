@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Data;
-using System.Net;
 using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
 {
     public class clsUser
     {
-        public enum enMode {AddNew = 0 , Update = 1}
+        public enum enMode : byte {AddNew = 0 , Update = 1}
         enMode _CurrentMode;
         public int UserID { get; set; }
         public int PersonID { get; set; }
@@ -16,15 +15,14 @@ namespace DVLDBusinessLayer
         public string Salt { get; set; }
         public bool IsActive { get; set; }
 
-        public clsUser()
+        public clsUser(int PersonID, string UserName, string Password, string Salt, bool IsActive)
         {
-            UserID = -1;
-            PersonID = -1;
-            UserName = "";
-            Password = "";
-            Salt = "";
-            IsActive = false;
-            _CurrentMode = enMode.AddNew;
+            this.UserID = -1;
+            this.PersonID = PersonID;
+            this.UserName = UserName;
+            this.Password = Password;
+            this.Salt = Salt;
+            this.IsActive = IsActive;
         }
 
         private clsUser(int UserID , int PersonID,string UserName ,string Password,string Salt , bool IsActive)

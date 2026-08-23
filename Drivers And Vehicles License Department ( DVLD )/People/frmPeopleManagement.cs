@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using DVLDBusinessLayer;
 using MyLib; 
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class frmPeopleManagement : Form
     {

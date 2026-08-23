@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+﻿namespace DVLDPresentationLayer
 {
     partial class ctrlUserDetails
     {
@@ -35,7 +35,7 @@
             this.lblUserID = new System.Windows.Forms.Label();
             this.lblUserIDTitle = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.uctrlPersonDetails = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetails();
+            this.uctrlPersonDetails = new DVLDPresentationLayer.ctrlPersonDetails();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 

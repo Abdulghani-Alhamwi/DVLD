@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+﻿namespace DVLDPresentationLayer
 {
     partial class frmManageApplicationTypes
     {
@@ -140,7 +140,7 @@
             // 
             // tsmiEditApplicationType
             // 
-            this.tsmiEditApplicationType.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_32;
+            this.tsmiEditApplicationType.Image = global::DVLDPresentationLayer.Properties.Resources.edit_32;
             this.tsmiEditApplicationType.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsmiEditApplicationType.Name = "tsmiEditApplicationType";
             this.tsmiEditApplicationType.Size = new System.Drawing.Size(355, 38);
@@ -163,7 +163,7 @@
             // 
             this.pbApplicationTypes.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbApplicationTypes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbApplicationTypes.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Application_Types_512;
+            this.pbApplicationTypes.Image = global::DVLDPresentationLayer.Properties.Resources.Application_Types_512;
             this.pbApplicationTypes.Location = new System.Drawing.Point(283, 75);
             this.pbApplicationTypes.Margin = new System.Windows.Forms.Padding(2);
             this.pbApplicationTypes.Name = "pbApplicationTypes";
@@ -180,7 +180,7 @@
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
+            this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.Location = new System.Drawing.Point(634, 787);
             this.btnClose.Name = "btnClose";

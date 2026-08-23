@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
-using Driver_And_Vehicle_Licenses_Department___DVLD__.Properties;
+using DVLDPresentationLayer.Properties;
 using DVLDBusinessLayer;
 using MyLib;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class frmTestsAppointments : Form
     {
         internal Action<int> AfterPassingTest;
 
-       private clsTestTypes.enTestType _TestType;
+       private clsTestType.enTestType _TestType;
 
         private int _LDLAppId;
         private int _TestsDGVRowIndex;
         private byte _TestTypeID;
-        public frmTestsAppointments(int LDLApplicationID,int TestsDGVRowIndex, clsTestTypes.enTestType TestType)
+        public frmTestsAppointments(int LDLApplicationID,int TestsDGVRowIndex, clsTestType.enTestType TestType)
         {
             InitializeComponent();
             uctrlDLApplicationInfo.LoadInfo(LDLApplicationID);
@@ -26,26 +26,26 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             _LDLAppId = LDLApplicationID;
             _TestsDGVRowIndex = TestsDGVRowIndex;
             _TestType = TestType;
-            _TestTypeID = clsTestTypes.GetTestTypeID(_TestType);
+            _TestTypeID = clsTestType.GetTestTypeID(_TestType);
         }
 
-        private void _ShowInfoByTestType(clsTestTypes.enTestType TestType)
+        private void _ShowInfoByTestType(clsTestType.enTestType TestType)
         {
             switch(TestType)
             {
-                case clsTestTypes.enTestType.VisionTest:
+                case clsTestType.enTestType.VisionTest:
                     lblFormBigTitle.Text = "Vision Test Appointments";
                     lblFormTitle.Text = lblFormBigTitle.Text;
                     pbTestType.Image = Resources.Vision_512;
                     break;
 
-                case clsTestTypes.enTestType.WrittenTest:
+                case clsTestType.enTestType.WrittenTest:
                     lblFormBigTitle.Text = "Written Test Appointments";
                     lblFormTitle.Text = lblFormBigTitle.Text;
                     pbTestType.Image = Resources.Written_Test_512;
                     break;
 
-                case clsTestTypes.enTestType.StreetTest:
+                case clsTestType.enTestType.StreetTest:
                     lblFormBigTitle.Text = "Street Test Appointments";
                     lblFormTitle.Text = lblFormBigTitle.Text;
                     pbTestType.Image = Resources.driving_test_512;

@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+﻿namespace DVLDPresentationLayer
 {
     partial class frmLocalDrivingLicenseApplications
     {
@@ -175,7 +175,7 @@
             // 
             this.tsmiShowApplicationDetails.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tsmiShowApplicationDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiShowApplicationDetails.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.PersonDetails_32;
+            this.tsmiShowApplicationDetails.Image = global::DVLDPresentationLayer.Properties.Resources.PersonDetails_32;
             this.tsmiShowApplicationDetails.Name = "tsmiShowApplicationDetails";
             this.tsmiShowApplicationDetails.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiShowApplicationDetails.Size = new System.Drawing.Size(360, 36);
@@ -185,7 +185,7 @@
             // 
             this.tsmiEditApplication.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tsmiEditApplication.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiEditApplication.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_32;
+            this.tsmiEditApplication.Image = global::DVLDPresentationLayer.Properties.Resources.edit_32;
             this.tsmiEditApplication.Name = "tsmiEditApplication";
             this.tsmiEditApplication.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiEditApplication.Size = new System.Drawing.Size(360, 36);
@@ -197,7 +197,7 @@
             // 
             this.tsmiDelete.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tsmiDelete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiDelete.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Delete_32_2;
+            this.tsmiDelete.Image = global::DVLDPresentationLayer.Properties.Resources.Delete_32_2;
             this.tsmiDelete.Name = "tsmiDelete";
             this.tsmiDelete.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiDelete.Size = new System.Drawing.Size(360, 36);
@@ -209,7 +209,7 @@
             // 
             this.tsmiCancelApplication.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tsmiCancelApplication.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiCancelApplication.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Delete_32;
+            this.tsmiCancelApplication.Image = global::DVLDPresentationLayer.Properties.Resources.Delete_32;
             this.tsmiCancelApplication.Name = "tsmiCancelApplication";
             this.tsmiCancelApplication.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiCancelApplication.Size = new System.Drawing.Size(360, 36);
@@ -229,7 +229,7 @@
             this.tsmiScheduleStreetTest});
             this.tsmiScheduleTests.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tsmiScheduleTests.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiScheduleTests.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Schedule_Test_32;
+            this.tsmiScheduleTests.Image = global::DVLDPresentationLayer.Properties.Resources.Schedule_Test_32;
             this.tsmiScheduleTests.Name = "tsmiScheduleTests";
             this.tsmiScheduleTests.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiScheduleTests.Size = new System.Drawing.Size(360, 36);
@@ -238,7 +238,7 @@
             // tsmiScheduleVisionTest
             // 
             this.tsmiScheduleVisionTest.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiScheduleVisionTest.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Vision_Test_32;
+            this.tsmiScheduleVisionTest.Image = global::DVLDPresentationLayer.Properties.Resources.Vision_Test_32;
             this.tsmiScheduleVisionTest.Name = "tsmiScheduleVisionTest";
             this.tsmiScheduleVisionTest.Size = new System.Drawing.Size(253, 26);
             this.tsmiScheduleVisionTest.Text = "Schedule Vision Test";
@@ -248,7 +248,7 @@
             // 
             this.tsmiScheduleWrittenTest.Enabled = false;
             this.tsmiScheduleWrittenTest.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiScheduleWrittenTest.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Written_Test_32;
+            this.tsmiScheduleWrittenTest.Image = global::DVLDPresentationLayer.Properties.Resources.Written_Test_32;
             this.tsmiScheduleWrittenTest.Name = "tsmiScheduleWrittenTest";
             this.tsmiScheduleWrittenTest.Size = new System.Drawing.Size(253, 26);
             this.tsmiScheduleWrittenTest.Text = "Schedule Written Test";
@@ -258,7 +258,7 @@
             // 
             this.tsmiScheduleStreetTest.Enabled = false;
             this.tsmiScheduleStreetTest.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiScheduleStreetTest.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Street_Test_32;
+            this.tsmiScheduleStreetTest.Image = global::DVLDPresentationLayer.Properties.Resources.Street_Test_32;
             this.tsmiScheduleStreetTest.Name = "tsmiScheduleStreetTest";
             this.tsmiScheduleStreetTest.Size = new System.Drawing.Size(253, 26);
             this.tsmiScheduleStreetTest.Text = "Schedule Street Test";
@@ -273,7 +273,7 @@
             // 
             this.tsmiIssueDLFirstTime.Enabled = false;
             this.tsmiIssueDLFirstTime.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiIssueDLFirstTime.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.IssueDrivingLicense_32;
+            this.tsmiIssueDLFirstTime.Image = global::DVLDPresentationLayer.Properties.Resources.IssueDrivingLicense_32;
             this.tsmiIssueDLFirstTime.Name = "tsmiIssueDLFirstTime";
             this.tsmiIssueDLFirstTime.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiIssueDLFirstTime.Size = new System.Drawing.Size(360, 36);
@@ -289,7 +289,7 @@
             // 
             this.tsmiShowLicense.Enabled = false;
             this.tsmiShowLicense.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiShowLicense.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.License_View_32;
+            this.tsmiShowLicense.Image = global::DVLDPresentationLayer.Properties.Resources.License_View_32;
             this.tsmiShowLicense.Name = "tsmiShowLicense";
             this.tsmiShowLicense.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiShowLicense.Size = new System.Drawing.Size(360, 36);
@@ -303,7 +303,7 @@
             // tsmiShowPersonLicenseHistory
             // 
             this.tsmiShowPersonLicenseHistory.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiShowPersonLicenseHistory.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.PersonLicenseHistory_32;
+            this.tsmiShowPersonLicenseHistory.Image = global::DVLDPresentationLayer.Properties.Resources.PersonLicenseHistory_32;
             this.tsmiShowPersonLicenseHistory.Name = "tsmiShowPersonLicenseHistory";
             this.tsmiShowPersonLicenseHistory.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiShowPersonLicenseHistory.Size = new System.Drawing.Size(360, 36);

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class frmPersonDetails : Form
     {

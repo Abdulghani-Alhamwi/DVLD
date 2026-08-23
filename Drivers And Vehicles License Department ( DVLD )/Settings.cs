@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Properties {
+﻿namespace DVLDPresentationLayer.Properties {
     
     
     // This class allows you to handle specific events on the settings class:

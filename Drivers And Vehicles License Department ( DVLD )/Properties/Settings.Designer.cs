@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Properties {
+namespace DVLDPresentationLayer.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

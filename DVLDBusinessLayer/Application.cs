@@ -19,16 +19,16 @@ namespace DVLDBusinessLayer
         public decimal PaidApplicationFees { get; set; }
         public int CreatedByUserID { get; set; }
 
-        public clsApplication()
+        public clsApplication(int ApplicantPersonID, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
         {
-            ApplicationID = -1;
-            ApplicantPersonID = -1;
-            ApplicationDate = DateTime.Now;
-            ApplicationStatus = enApplicationStatus.New;
-            LastStatusDate = DateTime.Now;
-            PaidApplicationFees = -1;
-            CreatedByUserID = -1;
-            _CurrentMode = _enMode.AddNew;
+            this.ApplicationID = -1;
+            this.ApplicantPersonID = ApplicantPersonID;
+            this.ApplicationDate = ApplicationDate;
+            this.ApplicationTypeID = ApplicationTypeID;
+            this.ApplicationStatus = ApplicationStatus;
+            this.LastStatusDate = LastStatusDate;
+            this.PaidApplicationFees = PaidApplicationFees;
+            this.CreatedByUserID = CreatedByUserID;
         }
 
         protected clsApplication(int ApplicationID,int ApplicantPersonID,DateTime ApplicationDate,byte ApplicationTypeID,enApplicationStatus ApplicationStatus,DateTime LastStatusDate, decimal PaidApplicationFees,int CreatedByUserID)

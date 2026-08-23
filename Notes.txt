@@ -496,3 +496,16 @@ SELECT TOP 1 TestAppointmentID AS [Appointment ID] ,FORMAT( AppointmentDate ,'dd
 In C# we can pass class object by ref as an argument for a parameter , therefore that variable we can change its reference from with in the method therefore we can make it points to a new object -> which means we can change the reference that the variable it self points to therefore making it points to a new object .
 
 41)
+The Goal Of Using Database views is to view the data with in certain representation as we want -> in order to appear the result set in certain representation like we can store a query under the view to bring the full name and name the view : PersonFullName_v And to use it select * from Person PersonFullName_V instead of writing full query , the view is virtual table and it does not store data , it store the query under it , We can also select specific columns from the view because we can treat it like a table but it is virtual table , Like SELECT FirstName,LastName FROM View .
+
+42) 
+In C# , We Cannot Pass Property As An Argument With Out Or Ref Keywords :
+            _SetPasswordAndSalt(out User.Password,out User.Salt);
+
+            _SetPasswordAndSalt(ref User.Password,ref User.Salt);
+
+we will have error .
+
+we can use variable or object it self(variable from the object type) instead of property in order to use with it the keywords ref or out.
+
+

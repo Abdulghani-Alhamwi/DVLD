@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+﻿namespace DVLDPresentationLayer
 {
     partial class frmLoginScreen
     {
@@ -121,7 +121,7 @@
             // pbPassword
             // 
             this.pbPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbPassword.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
+            this.pbPassword.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
             this.pbPassword.Location = new System.Drawing.Point(707, 303);
             this.pbPassword.Name = "pbPassword";
             this.pbPassword.Size = new System.Drawing.Size(32, 32);
@@ -132,7 +132,7 @@
             // pbPerson
             // 
             this.pbPerson.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbPerson.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Person_32;
+            this.pbPerson.Image = global::DVLDPresentationLayer.Properties.Resources.Person_32;
             this.pbPerson.Location = new System.Drawing.Point(707, 231);
             this.pbPerson.Name = "pbPerson";
             this.pbPerson.Size = new System.Drawing.Size(32, 32);
@@ -148,7 +148,7 @@
             this.btnLogin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogin.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.btnLogin.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.sign_in_32;
+            this.btnLogin.Image = global::DVLDPresentationLayer.Properties.Resources.sign_in_32;
             this.btnLogin.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLogin.Location = new System.Drawing.Point(739, 454);
             this.btnLogin.Name = "btnLogin";
@@ -164,7 +164,7 @@
             this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.closeBlack32;
+            this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.closeBlack32;
             this.btnClose.Location = new System.Drawing.Point(1082, 17);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(48, 47);
@@ -175,7 +175,7 @@
             // pbLoginImage
             // 
             this.pbLoginImage.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pbLoginImage.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.LoginImage;
+            this.pbLoginImage.Image = global::DVLDPresentationLayer.Properties.Resources.LoginImage;
             this.pbLoginImage.Location = new System.Drawing.Point(0, 0);
             this.pbLoginImage.Name = "pbLoginImage";
             this.pbLoginImage.Size = new System.Drawing.Size(477, 641);

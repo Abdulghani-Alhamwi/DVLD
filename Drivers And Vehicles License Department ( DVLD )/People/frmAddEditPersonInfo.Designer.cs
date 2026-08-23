@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+﻿namespace DVLDPresentationLayer
 {
     partial class frmAddEditPersonInfo
     {
@@ -179,7 +179,7 @@
             this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
+            this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.Location = new System.Drawing.Point(487, 400);
             this.btnClose.Name = "btnClose";
@@ -210,7 +210,7 @@
             this.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
             this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSave.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Save_32;
+            this.btnSave.Image = global::DVLDPresentationLayer.Properties.Resources.Save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSave.Location = new System.Drawing.Point(686, 400);
             this.btnSave.Name = "btnSave";
@@ -234,7 +234,7 @@
             // 
             // pbPersonalImage
             // 
-            this.pbPersonalImage.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Male_512;
+            this.pbPersonalImage.Image = global::DVLDPresentationLayer.Properties.Resources.Male_512;
             this.pbPersonalImage.Location = new System.Drawing.Point(892, 108);
             this.pbPersonalImage.Name = "pbPersonalImage";
             this.pbPersonalImage.Size = new System.Drawing.Size(177, 199);
@@ -260,7 +260,7 @@
             // pbCountry
             // 
             this.pbCountry.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbCountry.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Country_32;
+            this.pbCountry.Image = global::DVLDPresentationLayer.Properties.Resources.Country_32;
             this.pbCountry.Location = new System.Drawing.Point(633, 205);
             this.pbCountry.Name = "pbCountry";
             this.pbCountry.Size = new System.Drawing.Size(32, 32);
@@ -271,7 +271,7 @@
             // pbPhone
             // 
             this.pbPhone.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbPhone.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Phone_32;
+            this.pbPhone.Image = global::DVLDPresentationLayer.Properties.Resources.Phone_32;
             this.pbPhone.Location = new System.Drawing.Point(633, 155);
             this.pbPhone.Name = "pbPhone";
             this.pbPhone.Size = new System.Drawing.Size(32, 32);
@@ -282,7 +282,7 @@
             // pbDate
             // 
             this.pbDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbDate.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Calendar_32;
+            this.pbDate.Image = global::DVLDPresentationLayer.Properties.Resources.Calendar_32;
             this.pbDate.Location = new System.Drawing.Point(633, 109);
             this.pbDate.Name = "pbDate";
             this.pbDate.Size = new System.Drawing.Size(32, 32);
@@ -293,7 +293,7 @@
             // pbPerson
             // 
             this.pbPerson.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbPerson.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Person_32;
+            this.pbPerson.Image = global::DVLDPresentationLayer.Properties.Resources.Person_32;
             this.pbPerson.Location = new System.Drawing.Point(198, 61);
             this.pbPerson.Name = "pbPerson";
             this.pbPerson.Size = new System.Drawing.Size(32, 32);
@@ -304,7 +304,7 @@
             // pbNationalNo
             // 
             this.pbNationalNo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbNationalNo.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
+            this.pbNationalNo.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
             this.pbNationalNo.Location = new System.Drawing.Point(198, 109);
             this.pbNationalNo.Name = "pbNationalNo";
             this.pbNationalNo.Size = new System.Drawing.Size(32, 32);
@@ -315,7 +315,7 @@
             // pbWoman
             // 
             this.pbWoman.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbWoman.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Woman_32;
+            this.pbWoman.Image = global::DVLDPresentationLayer.Properties.Resources.Woman_32;
             this.pbWoman.Location = new System.Drawing.Point(337, 158);
             this.pbWoman.Name = "pbWoman";
             this.pbWoman.Size = new System.Drawing.Size(32, 32);
@@ -326,7 +326,7 @@
             // pbMan
             // 
             this.pbMan.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbMan.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Man_32;
+            this.pbMan.Image = global::DVLDPresentationLayer.Properties.Resources.Man_32;
             this.pbMan.Location = new System.Drawing.Point(198, 157);
             this.pbMan.Name = "pbMan";
             this.pbMan.Size = new System.Drawing.Size(32, 32);
@@ -337,7 +337,7 @@
             // pbEmail
             // 
             this.pbEmail.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbEmail.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Email_32;
+            this.pbEmail.Image = global::DVLDPresentationLayer.Properties.Resources.Email_32;
             this.pbEmail.Location = new System.Drawing.Point(198, 205);
             this.pbEmail.Name = "pbEmail";
             this.pbEmail.Size = new System.Drawing.Size(32, 32);
@@ -348,7 +348,7 @@
             // pbAddress
             // 
             this.pbAddress.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbAddress.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Address_32;
+            this.pbAddress.Image = global::DVLDPresentationLayer.Properties.Resources.Address_32;
             this.pbAddress.Location = new System.Drawing.Point(198, 252);
             this.pbAddress.Name = "pbAddress";
             this.pbAddress.Size = new System.Drawing.Size(32, 32);
@@ -650,7 +650,7 @@
             // lblPersonID
             // 
             this.lblPersonID.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.lblPersonID.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
+            this.lblPersonID.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
             this.lblPersonID.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblPersonID.Location = new System.Drawing.Point(228, 156);
             this.lblPersonID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);

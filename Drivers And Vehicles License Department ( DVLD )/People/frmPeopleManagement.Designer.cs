@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+﻿namespace DVLDPresentationLayer
 {
     partial class frmPeopleManagement
     {
@@ -155,7 +155,7 @@
             // tsmiShowDetails
             // 
             this.tsmiShowDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiShowDetails.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.PersonDetails_32;
+            this.tsmiShowDetails.Image = global::DVLDPresentationLayer.Properties.Resources.PersonDetails_32;
             this.tsmiShowDetails.Name = "tsmiShowDetails";
             this.tsmiShowDetails.Size = new System.Drawing.Size(222, 38);
             this.tsmiShowDetails.Text = "Show Details";
@@ -170,7 +170,7 @@
             // tsmiAddNewUser
             // 
             this.tsmiAddNewUser.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiAddNewUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Add_Person_40;
+            this.tsmiAddNewUser.Image = global::DVLDPresentationLayer.Properties.Resources.Add_Person_40;
             this.tsmiAddNewUser.Name = "tsmiAddNewUser";
             this.tsmiAddNewUser.Size = new System.Drawing.Size(222, 38);
             this.tsmiAddNewUser.Text = "Add New User";
@@ -180,7 +180,7 @@
             // tsmiEdit
             // 
             this.tsmiEdit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiEdit.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_32;
+            this.tsmiEdit.Image = global::DVLDPresentationLayer.Properties.Resources.edit_32;
             this.tsmiEdit.Name = "tsmiEdit";
             this.tsmiEdit.Size = new System.Drawing.Size(222, 38);
             this.tsmiEdit.Text = "Edit";
@@ -190,7 +190,7 @@
             // tsmiDelete
             // 
             this.tsmiDelete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiDelete.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Delete_32;
+            this.tsmiDelete.Image = global::DVLDPresentationLayer.Properties.Resources.Delete_32;
             this.tsmiDelete.Name = "tsmiDelete";
             this.tsmiDelete.Size = new System.Drawing.Size(222, 38);
             this.tsmiDelete.Text = "Delete";
@@ -206,7 +206,7 @@
             // tsmiSendEmail
             // 
             this.tsmiSendEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiSendEmail.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.send_email_32;
+            this.tsmiSendEmail.Image = global::DVLDPresentationLayer.Properties.Resources.send_email_32;
             this.tsmiSendEmail.Name = "tsmiSendEmail";
             this.tsmiSendEmail.Size = new System.Drawing.Size(222, 38);
             this.tsmiSendEmail.Text = "Send Email";
@@ -215,7 +215,7 @@
             // tsmiPhoneCall
             // 
             this.tsmiPhoneCall.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiPhoneCall.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.call_32;
+            this.tsmiPhoneCall.Image = global::DVLDPresentationLayer.Properties.Resources.call_32;
             this.tsmiPhoneCall.Name = "tsmiPhoneCall";
             this.tsmiPhoneCall.Size = new System.Drawing.Size(222, 38);
             this.tsmiPhoneCall.Text = "Phone Call";
@@ -271,7 +271,7 @@
             this.btnAddNewPerson.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnAddNewPerson.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnAddNewPerson.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddNewPerson.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Add_Person_40;
+            this.btnAddNewPerson.Image = global::DVLDPresentationLayer.Properties.Resources.Add_Person_40;
             this.btnAddNewPerson.Location = new System.Drawing.Point(1078, 316);
             this.btnAddNewPerson.Name = "btnAddNewPerson";
             this.btnAddNewPerson.Size = new System.Drawing.Size(111, 70);
@@ -309,7 +309,7 @@
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
+            this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.Location = new System.Drawing.Point(1023, 715);
             this.btnClose.Name = "btnClose";
@@ -323,7 +323,7 @@
             // 
             this.pbPeople.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbPeople.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbPeople.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.People_400;
+            this.pbPeople.Image = global::DVLDPresentationLayer.Properties.Resources.People_400;
             this.pbPeople.Location = new System.Drawing.Point(482, 59);
             this.pbPeople.Margin = new System.Windows.Forms.Padding(2);
             this.pbPeople.Name = "pbPeople";

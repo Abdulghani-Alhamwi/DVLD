@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+﻿namespace DVLDPresentationLayer
 {
     partial class frmPersonDetails
     {
@@ -32,7 +32,7 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.lblPersonDetailsBigTitle = new System.Windows.Forms.Label();
             this.lblPersonDetailsTitle = new System.Windows.Forms.Label();
-            this.UctrlPersonDetails = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetails();
+            this.UctrlPersonDetails = new DVLDPresentationLayer.ctrlPersonDetails();
             this.SuspendLayout();
             // 
             // btnClose
@@ -42,7 +42,7 @@
             this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
+            this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.Location = new System.Drawing.Point(961, 581);
             this.btnClose.Name = "btnClose";

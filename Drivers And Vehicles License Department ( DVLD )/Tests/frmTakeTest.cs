@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using DVLDBusinessLayer;
 using MyLib;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class frmTakeTest : Form
     {
@@ -14,13 +14,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         int _AppointmentsDGVRowIndex;
         int  _LDLAppDGVRowIndex;
         int _LDLAppID;
-        public frmTakeTest(clsTestAppointment Appointment, clsTestTypes.enTestType TestType,int AppointmentsDGVRowIndex,int LDLAppDGVRowIndex)
+        public frmTakeTest(clsTestAppointment Appointment, clsTestType.enTestType TestType,int AppointmentsDGVRowIndex,int LDLAppDGVRowIndex)
         {
             InitializeComponent();
             txtNotes.MaxLength = 500;
 
             clsLDLApplication LDLApp = clsLDLApplication.Find(Appointment.LDLApplicationID);
-            _LDLAppID = LDLApp.LDLApplicationID;
+            _LDLAppID = LDLApp.LDLAppID;
             _LoadInfo(Appointment,LDLApp, TestType);
             
             _Appointment = Appointment;
@@ -31,11 +31,11 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             clsUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
 
         }
-        private void _LoadInfo(clsTestAppointment Appointment,clsLDLApplication LDLApp, clsTestTypes.enTestType TestType)
+        private void _LoadInfo(clsTestAppointment Appointment,clsLDLApplication LDLApp, clsTestType.enTestType TestType)
         {
             frmScheduleTest.ShowInfoByTestType(gbTestAppointment,pbTestType,lblTestFees,TestType);
 
-            lblLDLApplicationID.Text = LDLApp.LDLApplicationID.ToString();
+            lblLDLApplicationID.Text = LDLApp.LDLAppID.ToString();
 
             if (LDLApp != null)
             {
@@ -52,12 +52,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         private void btnSave_Click(object sender, EventArgs e)
         {
             clsTest Test = new clsTest
-            {
-                TestAppointmentID = _Appointment.TestAppointmentID,
-                TestResult = (rbPass.Checked) ? true : false,
-                Notes = (txtNotes.Text == "") ? null : txtNotes.Text,
-                CreatedByUserID = clsGlobalSettings.CurrentUserID
-            };
+            (
+                TestAppointmentID : _Appointment.TestAppointmentID,
+                TestResult : (rbPass.Checked) ? true : false,
+                Notes : (txtNotes.Text == "") ? null : txtNotes.Text,
+                CreatedByUserID : clsGlobalSettings.CurrentUserID
+            );
 
             if (Test.Save())
             {

@@ -2,10 +2,10 @@
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using Driver_And_Vehicle_Licenses_Department___DVLD__.Properties;
+using DVLDPresentationLayer.Properties;
 using DVLDBusinessLayer;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class ctrlPersonDetails : UserControl
     {

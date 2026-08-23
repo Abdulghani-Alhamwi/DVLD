@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using DVLDBusinessLayer;
 using MyLib;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class frmUpdateTestType : Form
     {
@@ -77,7 +77,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             else if(_ValidateData())
             {
-                 if (clsTestTypes.UpdateTestType(_ApplicationTypeID,txtTitle.Text,txtDescription.Text,Convert.ToDecimal(txtFees.Text)))
+                 if (clsTestType.UpdateTestType(_ApplicationTypeID,txtTitle.Text,txtDescription.Text,Convert.ToDecimal(txtFees.Text)))
                     MessageBox.Show("Test Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else
                     MessageBox.Show("Failed to update test type info!", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);

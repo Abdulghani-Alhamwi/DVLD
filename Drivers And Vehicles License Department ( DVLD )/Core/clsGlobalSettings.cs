@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     internal class clsGlobalSettings
     {

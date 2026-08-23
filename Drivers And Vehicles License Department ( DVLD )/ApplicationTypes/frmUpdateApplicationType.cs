@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using DVLDBusinessLayer;
 using MyLib;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class frmUpdateApplicationType : Form
     {
@@ -80,7 +80,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             else if (_ValidateData())
             {
-                if (clsApplicationTypes.UpdateApplicationType(_ApplicationTypeID, txtTitle.Text, Convert.ToDouble(txtFees.Text)))
+                if (clsApplicationType.UpdateApplicationType(_ApplicationTypeID, txtTitle.Text, Convert.ToDouble(txtFees.Text)))
                     MessageBox.Show("Application Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else
                     MessageBox.Show("Failed to update application type info!", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);

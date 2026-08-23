@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+﻿namespace DVLDPresentationLayer
 {
     partial class frmChangePassword
     {
@@ -43,7 +43,7 @@
             this.lblChangePasswordTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.erTextBox = new System.Windows.Forms.ErrorProvider(this.components);
-            this.uctrlUserDetails = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlUserDetails();
+            this.uctrlUserDetails = new DVLDPresentationLayer.ctrlUserDetails();
             ((System.ComponentModel.ISupportInitialize)(this.pbCurrentPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbConfirmPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNewPassword)).BeginInit();
@@ -53,7 +53,7 @@
             // pbCurrentPassword
             // 
             this.pbCurrentPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbCurrentPassword.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
+            this.pbCurrentPassword.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
             this.pbCurrentPassword.Location = new System.Drawing.Point(311, 590);
             this.pbCurrentPassword.Name = "pbCurrentPassword";
             this.pbCurrentPassword.Size = new System.Drawing.Size(32, 32);
@@ -94,7 +94,7 @@
             // pbConfirmPassword
             // 
             this.pbConfirmPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbConfirmPassword.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
+            this.pbConfirmPassword.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
             this.pbConfirmPassword.Location = new System.Drawing.Point(311, 735);
             this.pbConfirmPassword.Name = "pbConfirmPassword";
             this.pbConfirmPassword.Size = new System.Drawing.Size(32, 32);
@@ -157,7 +157,7 @@
             this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnSave.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Save_32;
+            this.btnSave.Image = global::DVLDPresentationLayer.Properties.Resources.Save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSave.Location = new System.Drawing.Point(952, 824);
             this.btnSave.Name = "btnSave";
@@ -175,7 +175,7 @@
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
+            this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.Location = new System.Drawing.Point(770, 824);
             this.btnClose.Name = "btnClose";
@@ -188,7 +188,7 @@
             // pbNewPassword
             // 
             this.pbNewPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbNewPassword.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
+            this.pbNewPassword.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
             this.pbNewPassword.Location = new System.Drawing.Point(311, 663);
             this.pbNewPassword.Name = "pbNewPassword";
             this.pbNewPassword.Size = new System.Drawing.Size(32, 32);

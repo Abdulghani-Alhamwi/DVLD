@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+﻿namespace DVLDPresentationLayer
 {
     partial class frmAddEditUserInfo
     {
@@ -35,7 +35,7 @@
             this.tcAddNewUser = new System.Windows.Forms.TabControl();
             this.tpPersonalInfo = new System.Windows.Forms.TabPage();
             this.btnNext = new System.Windows.Forms.Button();
-            this.uctrlpersonInfoByFilter = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetailsByFilter();
+            this.uctrlpersonInfoByFilter = new DVLDPresentationLayer.ctrlPersonDetailsByFilter();
             this.tpLoginInfo = new System.Windows.Forms.TabPage();
             this.chkIsActive = new System.Windows.Forms.CheckBox();
             this.pbUserID = new System.Windows.Forms.PictureBox();
@@ -141,7 +141,7 @@
             this.btnNext.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNext.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnNext.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Next_32;
+            this.btnNext.Image = global::DVLDPresentationLayer.Properties.Resources.Next_32;
             this.btnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnNext.Location = new System.Drawing.Point(942, 518);
             this.btnNext.Name = "btnNext";
@@ -159,7 +159,7 @@
             this.uctrlpersonInfoByFilter.Name = "uctrlpersonInfoByFilter";
             this.uctrlpersonInfoByFilter.Size = new System.Drawing.Size(1089, 487);
             this.uctrlpersonInfoByFilter.TabIndex = 0;
-            this.uctrlpersonInfoByFilter.OnPersonSelected += new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetailsByFilter.PersonSelectedEventHandler(this.uctrlpersonInfoByFilter_OnPersonSelected);
+            this.uctrlpersonInfoByFilter.OnPersonSelected += new DVLDPresentationLayer.ctrlPersonDetailsByFilter.PersonSelectedEventHandler(this.uctrlpersonInfoByFilter_OnPersonSelected);
             this.uctrlpersonInfoByFilter.AfterEditingPerson += new System.Action(this.uctrlpersonInfoByFilter_AfterEditingPerson);
             // 
             // tpLoginInfo
@@ -203,7 +203,7 @@
             // pbUserID
             // 
             this.pbUserID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbUserID.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
+            this.pbUserID.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
             this.pbUserID.Location = new System.Drawing.Point(326, 77);
             this.pbUserID.Name = "pbUserID";
             this.pbUserID.Size = new System.Drawing.Size(32, 32);
@@ -214,7 +214,7 @@
             // pbPassword
             // 
             this.pbPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbPassword.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
+            this.pbPassword.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
             this.pbPassword.Location = new System.Drawing.Point(326, 221);
             this.pbPassword.Name = "pbPassword";
             this.pbPassword.Size = new System.Drawing.Size(32, 32);
@@ -270,7 +270,7 @@
             // pbPerson
             // 
             this.pbPerson.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbPerson.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Person_32;
+            this.pbPerson.Image = global::DVLDPresentationLayer.Properties.Resources.Person_32;
             this.pbPerson.Location = new System.Drawing.Point(326, 149);
             this.pbPerson.Name = "pbPerson";
             this.pbPerson.Size = new System.Drawing.Size(32, 32);
@@ -281,7 +281,7 @@
             // pbConfirmPassword
             // 
             this.pbConfirmPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbConfirmPassword.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
+            this.pbConfirmPassword.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
             this.pbConfirmPassword.Location = new System.Drawing.Point(326, 293);
             this.pbConfirmPassword.Name = "pbConfirmPassword";
             this.pbConfirmPassword.Size = new System.Drawing.Size(32, 32);
@@ -359,7 +359,7 @@
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
+            this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.Location = new System.Drawing.Point(826, 758);
             this.btnClose.Name = "btnClose";
@@ -378,7 +378,7 @@
             this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnSave.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Save_32;
+            this.btnSave.Image = global::DVLDPresentationLayer.Properties.Resources.Save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSave.Location = new System.Drawing.Point(1006, 758);
             this.btnSave.Name = "btnSave";

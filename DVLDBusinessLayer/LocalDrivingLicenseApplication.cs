@@ -6,51 +6,55 @@ namespace DVLDBusinessLayer
 {
     public class clsLDLApplication:clsApplication
     {
-        public enum enMode { AddNew = 0 , Update = 1};
+        public enum enMode : byte { AddNew = 0 , Update = 1};
         private enMode _CurrentMode;
-        public int LDLApplicationID { get; set; }
+        public int LDLAppID { get; set; }
 
-        public clsLicenseClasses LicenseClass;
-
-        public clsLDLApplication()
+        public clsLicenseClass LicenseClass;
+        public clsLDLApplication(int ApplicantPersonID, byte LicenseClassID, string LicenseClassName, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
+              : base(ApplicantPersonID, ApplicationDate, ApplicationTypeID, ApplicationStatus, LastStatusDate, PaidApplicationFees, CreatedByUserID)
         {
-            LDLApplicationID = -1;
-            LicenseClass = new clsLicenseClasses();
-            _CurrentMode = enMode.AddNew;
+            this.LDLAppID = -1;
+            this.ApplicationID = -1;
+            this.LicenseClass = new clsLicenseClass(LicenseClassID, LicenseClassName);
+            this.ApplicantPersonID = ApplicantPersonID;
+            this.ApplicationDate = ApplicationDate;
+            this.ApplicationTypeID = ApplicationTypeID;
+            this.ApplicationStatus = ApplicationStatus;
+            this.LastStatusDate = LastStatusDate;
+            this.PaidApplicationFees = PaidApplicationFees;
+            this.CreatedByUserID = CreatedByUserID;
         }
 
-        private clsLDLApplication(int LDLApplicationID,int ApplicationID,clsLicenseClasses LicenseClass, int ApplicantPersonID, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
+        private clsLDLApplication(int LDLApplicationID,int ApplicationID,clsLicenseClass LicenseClass, int ApplicantPersonID, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
               :base(ApplicationID,ApplicantPersonID,ApplicationDate,ApplicationTypeID, ApplicationStatus,LastStatusDate,PaidApplicationFees,CreatedByUserID)            
         {
-            this.LDLApplicationID = LDLApplicationID;
+            this.LDLAppID = LDLApplicationID;
             this.ApplicationID = ApplicationID;
             this.LicenseClass = LicenseClass;
             _CurrentMode = enMode.Update;
             
         }
-
         public static DataTable GetLDLApplications(byte WantedNumberOfRecords, int LastLowestBroughtLDLApplicationID = -1)
         {
-            return clsLocalDrivingLicenseApplicationsData.GetLDLApplications(WantedNumberOfRecords,LastLowestBroughtLDLApplicationID);
+            return clsLDLApplicationsData.GetLDLApplications(WantedNumberOfRecords,LastLowestBroughtLDLApplicationID);
         }
-
         public static uint GetTotalLDLApplicationsCount()
         {
-            return clsLocalDrivingLicenseApplicationsData.GetTotalLDLApplicationsCount();
+            return clsLDLApplicationsData.GetTotalLDLApplicationsCount();
         }
-
         public static new clsLDLApplication Find(int LDLApplicationID)
         {
             byte ApplicationID = 0,LicenseClassID = 0;
             string LicenseClassName = "";
 
-            if (clsLocalDrivingLicenseApplicationsData.Find(LDLApplicationID, ref ApplicationID, ref LicenseClassID, ref LicenseClassName))
+            if (clsLDLApplicationsData.Find(LDLApplicationID, ref ApplicationID, ref LicenseClassID, ref LicenseClassName))
             {
             clsApplication Application = clsApplication.Find(ApplicationID);
 
                 if(Application!=null)
                 {
-                    clsLicenseClasses LicenseClass = new clsLicenseClasses() { ID = LicenseClassID, ClassName =  LicenseClassName};
+                    clsLicenseClass LicenseClass = new clsLicenseClass(LicenseClassID, LicenseClassName);
                     return new clsLDLApplication(LDLApplicationID, Application.ApplicationID,LicenseClass, Application.ApplicantPersonID, Application.ApplicationDate, Application.ApplicationTypeID, Application.ApplicationStatus, Application.LastStatusDate, Application.PaidApplicationFees, Application.CreatedByUserID);
                 }
             }
@@ -60,19 +64,19 @@ namespace DVLDBusinessLayer
 
         private bool _AddLDLApplication()
         {
-           LDLApplicationID = clsLocalDrivingLicenseApplicationsData.AddLDLApplication(ApplicationID, LicenseClass.ID);
+           LDLAppID = clsLDLApplicationsData.AddLDLApplication(ApplicationID, LicenseClass.ID);
 
-            return (LDLApplicationID != -1);
+            return (LDLAppID != -1);
         }
 
         private bool UpdateLDLApplication()
         {
-            return clsLocalDrivingLicenseApplicationsData.UpdateLDLApplication(LDLApplicationID,ApplicationID, LicenseClass.ID);
+            return clsLDLApplicationsData.UpdateLDLApplication(LDLAppID,ApplicationID, LicenseClass.ID);
         }
 
         public static bool DeleteLDLApplication(int LDLApplicationID,int ApplicationID)
         {
-            clsLocalDrivingLicenseApplicationsData.DeleteLDLApplication(LDLApplicationID);
+            clsLDLApplicationsData.DeleteLDLApplication(LDLApplicationID);
             return clsApplication.DeleteApplication(ApplicationID);
         }
         public new bool Save()
@@ -99,14 +103,14 @@ namespace DVLDBusinessLayer
 
         public static int GetApplicationID(int LDLApplicationID)
         {
-            return clsLocalDrivingLicenseApplicationsData.GetApplicationID(LDLApplicationID);
+            return clsLDLApplicationsData.GetApplicationID(LDLApplicationID);
         }
 
-        public static bool CanPersonApply(int ApplicantPersonID, int LicenseClassID,out enApplicationStatus?PersonApplicationStatus)
+        public static bool HasPersonApplied(int ApplicantPersonID, int LicenseClassID,out enApplicationStatus?PersonApplicationStatus)
         {
             byte ApplicationStatus;
             PersonApplicationStatus = null;
-            if (clsLocalDrivingLicenseApplicationsData.CanPersonApply(ApplicantPersonID, LicenseClassID, out ApplicationStatus))
+            if (clsLDLApplicationsData.HasPersonApplied(ApplicantPersonID, LicenseClassID, out ApplicationStatus))
             {
                 return true;
             }
@@ -115,23 +119,28 @@ namespace DVLDBusinessLayer
                 return false;
         }
 
+        public static bool CheckApplicantPersonAge(int ApplicantPersonID, int LicenseClassID)
+        {
+            return clsLDLApplicationsData.CheckApplicantPersonAge(ApplicantPersonID, LicenseClassID);
+        }
+
     public static int GetLDLApplicationID(int ApplicantPersonID)
     {
-            return clsLocalDrivingLicenseApplicationsData.GetLDLApplicationID(ApplicantPersonID);
+            return clsLDLApplicationsData.GetLDLApplicationID(ApplicantPersonID);
     }
 
     public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtLDLAppID = -1)
     {
-        return clsLocalDrivingLicenseApplicationsData.GetFilteredData(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,WildChar,LastLowestBroughtLDLAppID);
+        return clsLDLApplicationsData.GetFilteredData(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,WildChar,LastLowestBroughtLDLAppID);
     }
 
     public static sbyte GetPassedTests(int LDLApplicationID)
     {
-            return clsLocalDrivingLicenseApplicationsData.GetPassedTests(LDLApplicationID);
+            return clsLDLApplicationsData.GetPassedTests(LDLApplicationID);
     }
     public static DataTable GetColumnsNamesForView()
     {
-        return clsLocalDrivingLicenseApplicationsData.GetColumnsNamesForView();
+        return clsLDLApplicationsData.GetColumnsNamesForView();
     }
     }
 }

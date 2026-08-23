@@ -4,7 +4,7 @@ using MyLib;
 using DVLDBusinessLayer;
 using System.Data;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class frmUsersManagement : Form
     {

@@ -5,7 +5,7 @@ namespace DVLDBusinessLayer
 {
     public class clsTest
     {
-        enum _enMode {AddNew = 1,Update=2};
+        enum _enMode : byte {AddNew = 1,Update=2};
         _enMode _CurrentMode;
         public int TestID { get; set; }
         public int TestAppointmentID { get; set; }
@@ -13,11 +13,13 @@ namespace DVLDBusinessLayer
         public string Notes { get; set; }
         public int CreatedByUserID { get; set; }
 
-        public clsTest()
+        public clsTest(int TestAppointmentID,bool TestResult,string Notes,int CreatedByUserID)
         {
             TestID = -1;
-            TestAppointmentID = -1;
-            CreatedByUserID = -1;
+            this.TestAppointmentID = TestAppointmentID;
+            this.CreatedByUserID = CreatedByUserID;
+            this.Notes = Notes;
+            this.CreatedByUserID = CreatedByUserID;
         }
         private bool _AddNewTest()
         {

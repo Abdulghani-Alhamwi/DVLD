@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+﻿namespace DVLDPresentationLayer
 {
     partial class frmManageTestTypes
     {
@@ -158,7 +158,7 @@
             // 
             // tsmiEditTestType
             // 
-            this.tsmiEditTestType.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_32;
+            this.tsmiEditTestType.Image = global::DVLDPresentationLayer.Properties.Resources.edit_32;
             this.tsmiEditTestType.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsmiEditTestType.Name = "tsmiEditTestType";
             this.tsmiEditTestType.Size = new System.Drawing.Size(272, 38);
@@ -181,7 +181,7 @@
             // 
             this.pbTestTypes.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbTestTypes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbTestTypes.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.TestType_512;
+            this.pbTestTypes.Image = global::DVLDPresentationLayer.Properties.Resources.TestType_512;
             this.pbTestTypes.Location = new System.Drawing.Point(380, 83);
             this.pbTestTypes.Margin = new System.Windows.Forms.Padding(2);
             this.pbTestTypes.Name = "pbTestTypes";
@@ -199,7 +199,7 @@
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
+            this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.Location = new System.Drawing.Point(826, 795);
             this.btnClose.Name = "btnClose";

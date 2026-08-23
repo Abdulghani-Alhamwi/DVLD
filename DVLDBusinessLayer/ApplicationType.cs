@@ -4,7 +4,7 @@ using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
 {
-    public class clsApplicationTypes
+    public class clsApplicationType
     {
         public enum enApplicationType : byte { NewLDL = 1,RenewDL = 2,ReplacementForLostDL = 3 ,ReplacementForDamagedDL = 4 ,ReleaseDetainedDL = 5,NewInternationlLicense = 6,ReTakeTest = 7}
         public static DataTable GetApplicationTypes()
@@ -24,7 +24,6 @@ namespace DVLDBusinessLayer
         {
             return clsApplicationTypesData.GetApplicationTypeTitle(ApplicationTypeID);
         }
-
         public static byte GetApplicationTypeID(enApplicationType ApplicationType)
         {
             switch(ApplicationType)

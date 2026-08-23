@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Properties {
+namespace DVLDPresentationLayer.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DVLDPresentationLayer.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

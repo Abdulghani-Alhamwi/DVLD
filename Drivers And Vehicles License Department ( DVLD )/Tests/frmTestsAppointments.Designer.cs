@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+﻿namespace DVLDPresentationLayer
 {
     partial class frmTestsAppointments
     {
@@ -43,7 +43,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnScheduleTest = new System.Windows.Forms.Button();
             this.pbTestType = new System.Windows.Forms.PictureBox();
-            this.uctrlDLApplicationInfo = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlDLApplicationInfo();
+            this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrlDLApplicationInfo();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTestAppointments)).BeginInit();
             this.cmsAppointment.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbTestType)).BeginInit();
@@ -118,7 +118,7 @@
             // tsmiEdit
             // 
             this.tsmiEdit.Font = new System.Drawing.Font("Tahoma", 19F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiEdit.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.edit_32;
+            this.tsmiEdit.Image = global::DVLDPresentationLayer.Properties.Resources.edit_32;
             this.tsmiEdit.Name = "tsmiEdit";
             this.tsmiEdit.Size = new System.Drawing.Size(177, 38);
             this.tsmiEdit.Text = "Edit";
@@ -127,7 +127,7 @@
             // tsmiTakeTest
             // 
             this.tsmiTakeTest.Font = new System.Drawing.Font("Tahoma", 19F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiTakeTest.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Test_32;
+            this.tsmiTakeTest.Image = global::DVLDPresentationLayer.Properties.Resources.Test_32;
             this.tsmiTakeTest.Name = "tsmiTakeTest";
             this.tsmiTakeTest.Size = new System.Drawing.Size(177, 38);
             this.tsmiTakeTest.Text = "Take Test";
@@ -198,7 +198,7 @@
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
+            this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.Location = new System.Drawing.Point(1021, 965);
             this.btnClose.Name = "btnClose";
@@ -216,7 +216,7 @@
             this.btnScheduleTest.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnScheduleTest.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnScheduleTest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnScheduleTest.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.AddAppointment_32;
+            this.btnScheduleTest.Image = global::DVLDPresentationLayer.Properties.Resources.AddAppointment_32;
             this.btnScheduleTest.Location = new System.Drawing.Point(1116, 699);
             this.btnScheduleTest.Name = "btnScheduleTest";
             this.btnScheduleTest.Size = new System.Drawing.Size(69, 46);

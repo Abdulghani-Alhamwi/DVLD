@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using DVLDBusinessLayer;
 using MyLib;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class frmAddEditUserInfo : Form
     {
@@ -29,6 +29,12 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             _InitializeInfo(null);
         }
 
+        public frmAddEditUserInfo(int UsersDGVRowIndex)
+        {
+            InitializeComponent();
+            _InitializeInfo(null);
+            _UsersDGVRowIndex = UsersDGVRowIndex;
+        }
         public frmAddEditUserInfo(clsUser User, int UsersDGVRowIndex,string CurrentUserFullName)
         {
             InitializeComponent();
@@ -53,7 +59,6 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
-
         private void _SetTitles(clsUser.enMode Mode)
         {
             if (Mode == clsUser.enMode.AddNew)
@@ -178,13 +183,17 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _SetPasswordAndSalt(clsUser User)
         {
-            byte[] Salt = null;
-            User.Password = clsUtility.HashWithSaltPassword(txtPassword.Text, ref Salt);
-            User.Salt = Convert.ToBase64String(Salt);
+            _SetPasswordAndSalt(User.Password,User.Salt);
+        }
+        private void _SetPasswordAndSalt(string Password,string Salt)
+        {
+            byte[] SaltArray = null;
+            Password = clsUtility.HashWithSaltPassword(txtPassword.Text, ref SaltArray);
+            Salt = Convert.ToBase64String(SaltArray);
         }
 
         private bool _IsInfoUnchanged()
-        {
+        {   
             return (txtUserName.Text == clsUtility.DecryptUserName(_User.UserName)
                  && txtPassword.Text == _DefaultPasswordValue
                  && txtPasswordConfirmation.Text == _DefaultPasswordValue
@@ -192,37 +201,47 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
                  && _CurrentUserFullName == clsPerson.GetFullName(_PersonID));
         }
 
+        private void _SetUserInfo(out clsUser User)
+        {
+            if (_User != null)
+            {
+                User = _User;
+                User.UserName = clsUtility.EncryptUserName(txtUserName.Text);
+                if (txtPassword.Text != _DefaultPasswordValue)
+                    _SetPasswordAndSalt(User);
+
+                User.IsActive = chkIsActive.Checked;
+            }
+            else
+            {
+                string _Password = "";
+                string _Salt = "";
+                _SetPasswordAndSalt(_Password, _Salt);
+
+                User = new clsUser(
+                    PersonID: _PersonID,
+                    UserName: clsUtility.EncryptUserName(txtUserName.Text),
+                    Password: _Password,
+                    Salt: _Salt,
+                    IsActive: chkIsActive.Checked
+                    );
+
+            }
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
-            clsUser User;
-            if (_User == null)
+            if (_User != null)
             {
-                User = new clsUser();
-                User.PersonID = _PersonID;
-            }
-            else
-            {
-                if(_IsInfoUnchanged())
+                if (_IsInfoUnchanged())
                 {
-                    MessageBox.Show("There is'nt any change on user information", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
-                }    
-
-                User = _User;
-                User.PersonID = _User.PersonID;
+                    MessageBox.Show("There is'nt any change on user information", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
             }
-
-            User.UserName = clsUtility.EncryptUserName(txtUserName.Text);
-
-            if (_User == null)
-                _SetPasswordAndSalt(User);
-            else
-            {
-                if(txtPassword.Text != _DefaultPasswordValue)
-                    _SetPasswordAndSalt(User);
-            }
+            clsUser User;
+            _SetUserInfo(out User);
             
-            User.IsActive = chkIsActive.Checked;
-
             if(User.Save())
             {                
                 lblUserID.Text = User.UserID.ToString();

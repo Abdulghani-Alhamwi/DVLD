@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+﻿namespace DVLDPresentationLayer
 {
     partial class ctrlPersonDetailsByFilter
     {
@@ -34,7 +34,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnAddNewPerson = new System.Windows.Forms.Button();
             this.btnFindUser = new System.Windows.Forms.Button();
-            this.uctrlPersonDetails = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetails();
+            this.uctrlPersonDetails = new DVLDPresentationLayer.ctrlPersonDetails();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,7 +101,7 @@
             this.btnAddNewPerson.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnAddNewPerson.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnAddNewPerson.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddNewPerson.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.AddPerson_32;
+            this.btnAddNewPerson.Image = global::DVLDPresentationLayer.Properties.Resources.AddPerson_32;
             this.btnAddNewPerson.Location = new System.Drawing.Point(892, 39);
             this.btnAddNewPerson.Name = "btnAddNewPerson";
             this.btnAddNewPerson.Size = new System.Drawing.Size(74, 50);
@@ -117,7 +117,7 @@
             this.btnFindUser.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnFindUser.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnFindUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFindUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.SearchPerson;
+            this.btnFindUser.Image = global::DVLDPresentationLayer.Properties.Resources.SearchPerson;
             this.btnFindUser.Location = new System.Drawing.Point(794, 39);
             this.btnFindUser.Name = "btnFindUser";
             this.btnFindUser.Size = new System.Drawing.Size(74, 50);

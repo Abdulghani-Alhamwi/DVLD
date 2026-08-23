@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Driver_And_Vehicle_Licenses_Department___DVLD__.Core;
+using DVLDPresentationLayer.Core;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class frmMainScreen : Form
     {  

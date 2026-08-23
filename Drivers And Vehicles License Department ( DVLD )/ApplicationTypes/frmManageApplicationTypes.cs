@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class frmManageApplicationTypes : Form
     {
@@ -24,7 +24,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void frmManageApplicationTypes_Load(object sender, EventArgs e)
         {
-            dgvApplicationTypes.DataSource = clsApplicationTypes.GetApplicationTypes();
+            dgvApplicationTypes.DataSource = clsApplicationType.GetApplicationTypes();
             lblRecordsNumber.Text = dgvApplicationTypes.Rows.Count.ToString();
             dgvApplicationTypes.Font = new Font("Tahoma", 19);         
         }
@@ -41,7 +41,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                 frm.ShowDialog();
 
-                dgvApplicationTypes.DataSource = clsApplicationTypes.GetApplicationTypes();
+                dgvApplicationTypes.DataSource = clsApplicationType.GetApplicationTypes();
             }
         }
     }

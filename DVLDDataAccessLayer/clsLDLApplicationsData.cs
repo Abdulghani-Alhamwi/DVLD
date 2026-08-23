@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace DVLDDataAccessLayer
 {
-    public class clsLocalDrivingLicenseApplicationsData
+    public class clsLDLApplicationsData
     {
         private static string ColumnNamesQuery = 
          @"SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
@@ -246,15 +246,14 @@ namespace DVLDDataAccessLayer
 
             return -1;
         }
-        public static bool CanPersonApply(int ApplicantPersonID, int LicenseClassID, out byte ApplicationStatus)
+        public static bool HasPersonApplied(int ApplicantPersonID, int LicenseClassID, out byte ApplicationStatus)
         {
-            ApplicationStatus = 2;
+            ApplicationStatus = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Applications.ApplicationStatus FROM LocalDrivingLicenseApplications INNER JOIN Applications
-                             ON LocalDrivingLicenseApplications.ApplicationID = Applications.ApplicationID
-                             WHERE Applications.ApplicantPersonID = @ApplicantPersonID AND LocalDrivingLicenseApplications.LicenseClassID = @LicenseClassID
-                             AND Applications.ApplicationStatus IN (1,3)";
+            string query = @"SELECT Applications.ApplicationStatus FROM Applications INNER JOIN LocalDrivingLicenseApplications
+                             ON Applications.ApplicationID = LocalDrivingLicenseApplications.ApplicationID
+                             WHERE Applications.ApplicantPersonID = @ApplicantPersonID AND LocalDrivingLicenseApplications.LicenseClassID = @LicenseClassID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
@@ -279,6 +278,37 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return true;
+        }
+
+        public static bool CheckApplicantPersonAge(int ApplicantPersonID, int LicenseClassID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT Valid = 1 FROM LocalDrivingLicenseApplications INNER JOIN Applications ON Applications.ApplicationID = LocalDrivingLicenseApplications.ApplicationID
+                             INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID INNER JOIN LicenseClasses ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID
+                             WHERE Applications.ApplicantPersonID = @ApplicantPersonID AND LocalDrivingLicenseApplications.LicenseClassID = @LicenseClassID
+                             AND DATEDIFF(Year,People.DateOfBirth,GetDate()) >= LicenseClasses.MinimumAllowedAge";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
+            command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return true;
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return false;
         }
 
         public static int GetLDLApplicationID(int ApplicantPersonID)

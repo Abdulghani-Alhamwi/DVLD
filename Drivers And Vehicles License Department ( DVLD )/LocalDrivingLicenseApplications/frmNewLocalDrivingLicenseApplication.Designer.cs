@@ -1,4 +1,4 @@
-﻿namespace Driver_And_Vehicle_Licenses_Department___DVLD__.Core
+﻿namespace DVLDPresentationLayer.Core
 {
     partial class frmNewLocalDrivingLicenseApplication
     {
@@ -33,7 +33,7 @@
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.tcNewLocalDrivingLicenseApplication = new System.Windows.Forms.TabControl();
             this.tpPersonalInfo = new System.Windows.Forms.TabPage();
-            this.uctrlPersonDetailsByFilter = new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetailsByFilter();
+            this.uctrlPersonDetailsByFilter = new DVLDPresentationLayer.ctrlPersonDetailsByFilter();
             this.btnNext = new System.Windows.Forms.Button();
             this.tpApplicationInfo = new System.Windows.Forms.TabPage();
             this.cbLicenseClass = new System.Windows.Forms.ComboBox();
@@ -138,7 +138,7 @@
             this.uctrlPersonDetailsByFilter.Name = "uctrlPersonDetailsByFilter";
             this.uctrlPersonDetailsByFilter.Size = new System.Drawing.Size(1080, 486);
             this.uctrlPersonDetailsByFilter.TabIndex = 0;
-            this.uctrlPersonDetailsByFilter.OnPersonSelected += new Driver_And_Vehicle_Licenses_Department___DVLD__.ctrlPersonDetailsByFilter.PersonSelectedEventHandler(this.uctrlPersonDetailsByFilter_OnPersonSelected);
+            this.uctrlPersonDetailsByFilter.OnPersonSelected += new DVLDPresentationLayer.ctrlPersonDetailsByFilter.PersonSelectedEventHandler(this.uctrlPersonDetailsByFilter_OnPersonSelected);
             // 
             // btnNext
             // 
@@ -148,7 +148,7 @@
             this.btnNext.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNext.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnNext.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Next_32;
+            this.btnNext.Image = global::DVLDPresentationLayer.Properties.Resources.Next_32;
             this.btnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnNext.Location = new System.Drawing.Point(932, 505);
             this.btnNext.Name = "btnNext";
@@ -255,7 +255,7 @@
             // 
             this.pbDLApplicationID.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbDLApplicationID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbDLApplicationID.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Number_32;
+            this.pbDLApplicationID.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
             this.pbDLApplicationID.Location = new System.Drawing.Point(322, 53);
             this.pbDLApplicationID.Name = "pbDLApplicationID";
             this.pbDLApplicationID.Size = new System.Drawing.Size(32, 32);
@@ -267,7 +267,7 @@
             // 
             this.pbApplicationDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbApplicationDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbApplicationDate.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Calendar_32;
+            this.pbApplicationDate.Image = global::DVLDPresentationLayer.Properties.Resources.Calendar_32;
             this.pbApplicationDate.Location = new System.Drawing.Point(322, 105);
             this.pbApplicationDate.Name = "pbApplicationDate";
             this.pbApplicationDate.Size = new System.Drawing.Size(32, 32);
@@ -279,7 +279,7 @@
             // 
             this.pbLicenseClass.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbLicenseClass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbLicenseClass.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.License_Type_32;
+            this.pbLicenseClass.Image = global::DVLDPresentationLayer.Properties.Resources.License_Type_32;
             this.pbLicenseClass.Location = new System.Drawing.Point(322, 157);
             this.pbLicenseClass.Name = "pbLicenseClass";
             this.pbLicenseClass.Size = new System.Drawing.Size(32, 32);
@@ -291,7 +291,7 @@
             // 
             this.pbApplciationFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbApplciationFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbApplciationFees.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.money_32;
+            this.pbApplciationFees.Image = global::DVLDPresentationLayer.Properties.Resources.money_32;
             this.pbApplciationFees.Location = new System.Drawing.Point(322, 209);
             this.pbApplciationFees.Name = "pbApplciationFees";
             this.pbApplciationFees.Size = new System.Drawing.Size(32, 32);
@@ -303,7 +303,7 @@
             // 
             this.pbUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbUser.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.User_32__2;
+            this.pbUser.Image = global::DVLDPresentationLayer.Properties.Resources.User_32__2;
             this.pbUser.Location = new System.Drawing.Point(322, 261);
             this.pbUser.Name = "pbUser";
             this.pbUser.Size = new System.Drawing.Size(32, 32);
@@ -384,7 +384,7 @@
             this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnSave.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Save_32;
+            this.btnSave.Image = global::DVLDPresentationLayer.Properties.Resources.Save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSave.Location = new System.Drawing.Point(969, 802);
             this.btnSave.Name = "btnSave";
@@ -402,7 +402,7 @@
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.btnClose.Image = global::Driver_And_Vehicle_Licenses_Department___DVLD__.Properties.Resources.Close_32;
+            this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.Location = new System.Drawing.Point(792, 802);
             this.btnClose.Name = "btnClose";

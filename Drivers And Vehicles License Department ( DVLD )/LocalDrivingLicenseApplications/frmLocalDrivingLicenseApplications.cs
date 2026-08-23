@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
-using Driver_And_Vehicle_Licenses_Department___DVLD__.Core;
+using DVLDPresentationLayer.Core;
 using DVLDBusinessLayer;
 using MyLib;
+using DVLDPresentationLayer.LocalDrivingLicenseApplications;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class frmLocalDrivingLicenseApplications : Form
     {
@@ -283,16 +284,13 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             else
                 cbFilterBy.BackColor = clsUtility.ComboBoxBackColor;
         }
-        private void _DisableSpecificMenuOptions(clsLDLApplication.enApplicationStatus Status = clsApplication.enApplicationStatus.Canceled)
+        private void _DisableSpecificMenuOptions()
         {
             tsmiCancelApplication.Enabled = false;
             tsmiDelete.Enabled = false;
             tsmiEditApplication.Enabled = false;
-            if (Status == clsApplication.enApplicationStatus.Canceled)
-            {
-                tsmiShowLicense.Enabled = false;
-            }
             tsmiScheduleTests.Enabled = false;
+            tsmiIssueDLFirstTime.Enabled = false;
         }
         private void _EnableSpecificMenuOptions()
         {
@@ -301,7 +299,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             tsmiDelete.Enabled = true;
             tsmiScheduleTests.Enabled = true;
         }
-        private void _SetTestSchedulingLogic()
+        private void _SetNewApplicationMenuLogic()
         {
             switch (Convert.ToByte(dgvLDLApplications.SelectedRows[0].Cells["Passed Tests"].Value))
             {
@@ -352,16 +350,17 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
             {
                 case "New":
                     _EnableSpecificMenuOptions();
-                    _SetTestSchedulingLogic();
+                    _SetNewApplicationMenuLogic();
                     break;
 
                 case "Completed":
-                    _DisableSpecificMenuOptions(clsApplication.enApplicationStatus.Completed);
+                    _DisableSpecificMenuOptions();
                     tsmiShowLicense.Enabled = true;
                     break;
 
                 case "Canceled":
                     _DisableSpecificMenuOptions();
+                    tsmiShowLicense.Enabled = false;
                     break;
             }
         }
@@ -374,7 +373,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             if (_CanScheduleTest())
             {
-                frmTestsAppointments frm = new frmTestsAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index, clsTestTypes.enTestType.VisionTest);
+                frmTestsAppointments frm = new frmTestsAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index, clsTestType.enTestType.VisionTest);
                 frm.AfterPassingTest += _EditRowForPassedTest;
                 frm.ShowDialog();
             }
@@ -383,7 +382,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             if(_CanScheduleTest())
             {
-                frmTestsAppointments frm = new frmTestsAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index, clsTestTypes.enTestType.WrittenTest);
+                frmTestsAppointments frm = new frmTestsAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index, clsTestType.enTestType.WrittenTest);
                 frm.AfterPassingTest += _EditRowForPassedTest;
                 frm.ShowDialog();
             }
@@ -392,14 +391,34 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         {
             if(_CanScheduleTest())
             {
-                frmTestsAppointments frm = new frmTestsAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index, clsTestTypes.enTestType.StreetTest);
+                frmTestsAppointments frm = new frmTestsAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index, clsTestType.enTestType.StreetTest);
                 frm.AfterPassingTest += _EditRowForPassedTest;
                 frm.ShowDialog();
             }
         }
+
+        private void _EditAppStatusToCompleted(int DGVRowIndex)
+        {
+            clsApplication.ChangeApplicationStatus
+                (
+                clsLDLApplication.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value),
+                clsApplication.enApplicationStatus.Completed
+                );
+
+            clsUtility.EditOneColumnValueInDGV(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource, "Status", "Completed", DGVRowIndex);
+        }
+
         private void tsmiIssueDLFirstTime_Click(object sender, EventArgs e)
         {
+            if (dgvLDLApplications.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("you can select only one local driving licnse application in order to issue license for it.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
+           frmIssueDrivingLicense frm = new frmIssueDrivingLicense((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index);
+            frm.AfterLicenseIssuance += _EditAppStatusToCompleted;
+            frm.ShowDialog();
         }
     }
     }

@@ -6,7 +6,7 @@ namespace DVLDBusinessLayer
 {
     public class clsTestAppointment
     {
-        private enum _enMode {AddNew = 0 , Update = 1}
+        private enum _enMode : byte {AddNew = 0 , Update = 1}
         _enMode _CurrentMode;
         public int TestAppointmentID { get; set; }
         public byte TestTypeID { get; set; }
@@ -15,12 +15,14 @@ namespace DVLDBusinessLayer
         public decimal PaidFees { get; set; }
         public int CreatedByUserID { get; set; }
         public bool IsLocked { get; set; }
-        public clsTestAppointment()
+        public clsTestAppointment(byte TestTypeID, int LDLApplicationID, DateTime AppointmentDate, decimal PaidFees, int CreatedByUserID, bool IsLocked)
         {
             TestAppointmentID = -1;
-            LDLApplicationID = -1;
-            CreatedByUserID = -1;
-            AppointmentDate = DateTime.Now;
+            this.LDLApplicationID = LDLApplicationID;
+            this.AppointmentDate = AppointmentDate;
+            this.PaidFees = PaidFees;
+            this.IsLocked = IsLocked;
+            this.CreatedByUserID = CreatedByUserID;
         }
         private clsTestAppointment(int TestAppointmentID,byte TestTypeID,int LDLApplicationID,DateTime AppointmentDate,decimal PaidFees,int CreatedByUserID,bool IsLocked)
         {

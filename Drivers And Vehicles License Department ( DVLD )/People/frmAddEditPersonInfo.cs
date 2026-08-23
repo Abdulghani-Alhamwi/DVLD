@@ -5,11 +5,11 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Driver_And_Vehicle_Licenses_Department___DVLD__.Properties;
+using DVLDPresentationLayer.Properties;
 using MyLib;
 using DVLDBusinessLayer;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class frmAddEditPersonInfo : Form
     {
@@ -374,35 +374,31 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
             return Values;
         }
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            clsPerson Person;
 
+        private void _SetPersonInfo(out clsPerson Person)
+        {
             if (_Person == null)
-                Person = new clsPerson();
+            {
+                Person = new clsPerson
+                (
+                NationalNo: txtNationalNo.Text,
+                FirstName: txtFirstName.Text,
+                SecondName: txtSecondName.Text,
+                ThirdName: txtThirdName.Text,
+                LastName: txtLastName.Text,
+                DateOfBirth: dtpDateOfBirth.Value,
+                Gendor: (rbMale.Checked) ? clsPerson.enGendor.Male : clsPerson.enGendor.Female,
+                Address: txtAddress.Text,
+                Phone: txtPhone.Text,
+                Email: txtEmail.Text,
+                NationalityCountryID: clsCountries.GetCountryID(((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString()),
+                ImagePath: (_SelectedImageNewPath != null) ? _SelectedImageNewPath : (_SelectedImageNewPath == null && !_RemoveSavedImage) ? _SavedPersonalImagePath : null
+                );
+            }
             else
             {
-                if (_IsInfoUnchanged())
-                {
-                    MessageBox.Show("There is'nt any change on the information", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
-                }
-
                 Person = _Person;
-            }
 
-            CancelEventArgs CancelEvent = new CancelEventArgs();
-
-            bool IsValidEmail = (txtEmail.Text == "") ? true : _CheckIsValidEmail(txtEmail.Text, CancelEvent);
-
-            if (_ValidateName(txtFirstName, CancelEvent)
-             && _ValidateName(txtSecondName, CancelEvent)
-             && _ValidateName(txtThirdName, CancelEvent)
-             && _ValidateName(txtLastName, CancelEvent)
-             && _ValidateNationalNo(CancelEvent)
-             && IsValidEmail
-             && _ValidatePhone(CancelEvent)
-             && _ValidateAddress(CancelEvent))
-            {
                 Person.FirstName = txtFirstName.Text;
                 Person.SecondName = txtSecondName.Text;
                 Person.ThirdName = txtThirdName.Text;
@@ -422,10 +418,39 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
                 else if (_SelectedImageNewPath == null && !_RemoveSavedImage)
                     Person.ImagePath = _SavedPersonalImagePath;
-                
+
                 else
                     Person.ImagePath = null;
+            }
 
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if(_Person != null)
+            {
+                if (_IsInfoUnchanged())
+                {
+                    MessageBox.Show("There is'nt any change on the information", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+ 
+            CancelEventArgs CancelEvent = new CancelEventArgs();
+
+            bool IsValidEmail = (txtEmail.Text == "") ? true : _CheckIsValidEmail(txtEmail.Text, CancelEvent);
+
+            if (_ValidateName(txtFirstName, CancelEvent)
+             && _ValidateName(txtSecondName, CancelEvent)
+             && _ValidateName(txtThirdName, CancelEvent)
+             && _ValidateName(txtLastName, CancelEvent)
+             && _ValidateNationalNo(CancelEvent)
+             && IsValidEmail
+             && _ValidatePhone(CancelEvent)
+             && _ValidateAddress(CancelEvent))
+            {
+                clsPerson Person;
+                _SetPersonInfo(out Person);
 
                 if (Person.Save())
                 {

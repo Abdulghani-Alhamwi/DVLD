@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using DVLDBusinessLayer;
 using MyLib;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class ctrlDLApplicationInfo : UserControl
     {
@@ -13,20 +13,22 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         }
 
         int _PersonID = -1;
-        public void LoadInfo(int LDLApplicationID)
+
+        public clsLDLApplication LDLApplication;
+        public void LoadInfo(int LDLAppID)
         {
-            clsLDLApplication LDLApplication = clsLDLApplication.Find(LDLApplicationID);
+            LDLApplication = clsLDLApplication.Find(LDLAppID);
 
             if (LDLApplication != null)
             {
-                lblLDLApplicationID.Text = LDLApplication.LDLApplicationID.ToString();
+                lblLDLApplicationID.Text = LDLApplication.LDLAppID.ToString();
                 lblLicenseClassName.Text = LDLApplication.LicenseClass.ClassName;
-                lblPassedTests.Text = clsLDLApplication.GetPassedTests(LDLApplication.LDLApplicationID).ToString();
+                lblPassedTests.Text = clsLDLApplication.GetPassedTests(LDLApplication.LDLAppID).ToString();
 
                 lblApplicationID.Text = LDLApplication.ApplicationID.ToString();
                 lblStatus.Text = LDLApplication.GetApplicationStatus();
                 lblPaidFees.Text = Convert.ToSingle(LDLApplication.PaidApplicationFees).ToString();
-                lblApplicationType.Text = clsApplicationTypes.GetApplicationTypeTitle(LDLApplication.ApplicationTypeID);
+                lblApplicationType.Text = clsApplicationType.GetApplicationTypeTitle(LDLApplication.ApplicationTypeID);
                 lblApplicantFullName.Text = clsPerson.GetFullName(LDLApplication.ApplicantPersonID);
                 lblApplicationDate.Text = LDLApplication.ApplicationDate.ToString("d/MMM/yyyy");
                 lblLastStatusDate.Text = LDLApplication.LastStatusDate.ToString("d/MMM/yyyy");

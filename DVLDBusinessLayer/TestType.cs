@@ -4,9 +4,10 @@ using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
 {
-    public class clsTestTypes
+    public class clsTestType
     {
-        public enum enTestType { VisionTest = 1, WrittenTest = 2, StreetTest = 3 }
+        public enum enTestType : byte { VisionTest = 1, WrittenTest = 2, StreetTest = 3 }
+
         public static DataTable GetTestTypes()
         {
             return clsTestTypesData.GetTestTypes();

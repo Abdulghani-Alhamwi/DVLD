@@ -6,10 +6,9 @@ namespace DVLDBusinessLayer
 {
     public class clsPerson
     {
-         public enum enMode { AddNew = 0 , Update = 1 }
+         public enum enMode : byte { AddNew = 0 , Update = 1 }
          enMode _CurrentMode;
-
-        public enum enGendor { Male = 0 , Female = 1 }
+        public enum enGendor : byte { Male = 0 , Female = 1 }
         public enGendor? Gendor;
         public int PersonID { get; set; }
         public string NationalNo { get; set; }
@@ -25,28 +24,27 @@ namespace DVLDBusinessLayer
         public string CountryName { get; set; }
         public string ImagePath { get; set; }
 
-        public clsPerson()
+        public clsPerson(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, enGendor Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
-            PersonID = -1;
-            NationalNo = "";
-            _CurrentMode = enMode.AddNew;
-            FirstName = "";
-            SecondName = "";
-            ThirdName = "";
-            LastName = "";
-            Gendor = null;
-            DateOfBirth = DateTime.Now;
-            Address = "";
-            Phone = "";
-            Email = "";
-            CountryName = "";
-            NationalityCountryID = -1;
-            ImagePath = null;
+            this.PersonID = -1;
+            this.NationalNo = NationalNo;
+            this.FirstName = FirstName;
+            this.SecondName = SecondName;
+            this.ThirdName = ThirdName;
+            this.LastName = LastName;
+            this.Gendor = Gendor;
+            this.DateOfBirth = DateOfBirth;
+            this.Address = Address;
+            this.Phone = Phone;
+            this.Email = Email;
+            this.CountryName = CountryName;
+            this.NationalityCountryID = NationalityCountryID;
+            this.ImagePath = ImagePath;
         }
 
-        private clsPerson(int ID ,string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth,byte Gendor , string Address, string Phone, string Email,string CountryName,int NationalityCountryID , string ImagePath)
+        private clsPerson(int PersonID ,string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth,byte Gendor , string Address, string Phone, string Email,string CountryName,int NationalityCountryID , string ImagePath)
         {
-            this.PersonID = ID;
+            this.PersonID = PersonID;
             this.NationalNo = NationalNo;
             this.FirstName = FirstName;
             this.SecondName = SecondName;

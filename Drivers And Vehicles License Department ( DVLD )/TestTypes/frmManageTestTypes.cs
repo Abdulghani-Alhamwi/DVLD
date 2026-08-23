@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using DVLDBusinessLayer;
 
-namespace Driver_And_Vehicle_Licenses_Department___DVLD__
+namespace DVLDPresentationLayer
 {
     public partial class frmManageTestTypes : Form
     {
@@ -24,7 +23,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
 
         private void _RefreshTestTypesView()
         {
-            dgvTestTypes.DataSource = clsTestTypes.GetTestTypes();
+            dgvTestTypes.DataSource = clsTestType.GetTestTypes();
             _SetDataViewColumnsWidth();
         }
 
@@ -37,7 +36,7 @@ namespace Driver_And_Vehicle_Licenses_Department___DVLD__
         } 
         private void frmManageTestTypes_Load(object sender, EventArgs e)
         {
-            dgvTestTypes.DataSource = clsTestTypes.GetTestTypes();
+            dgvTestTypes.DataSource = clsTestType.GetTestTypes();
             lblRecordsNumber.Text = dgvTestTypes.Rows.Count.ToString();
             _SetDataViewColumnsWidth();
         }
