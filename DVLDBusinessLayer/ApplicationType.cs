@@ -11,7 +11,7 @@ namespace DVLDBusinessLayer
         {
             return clsApplicationTypesData.GetApplicationTypes();
         }
-        public static bool UpdateApplicationType(byte ApplicationTypeID,string ApplicationTypeTitle,double ApplicationTypeFees)
+        public static bool UpdateApplicationType(byte ApplicationTypeID,string ApplicationTypeTitle,decimal ApplicationTypeFees)
         {
             return clsApplicationTypesData.UpdateApplicationType(ApplicationTypeID, ApplicationTypeTitle, ApplicationTypeFees);
         }

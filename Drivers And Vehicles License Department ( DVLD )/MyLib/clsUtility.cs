@@ -18,6 +18,8 @@ namespace MyLib
 
         public static string DateCustomFormat = "dd/MM/yyyy";
 
+        private static string _FeesCustomFormat = "G29";
+
         public static byte WantedNumOfRowsFromDB = 10;
         public static string HashWithSaltPassword(string Password, ref byte[] Salt)
         {
@@ -212,6 +214,11 @@ namespace MyLib
         public static void CenterControlHorizontally(Control ContainerControl , Control control)
         {
             control.Location = new Point(ContainerControl.Width / 2 - control.Width / 2, control.Location.Y);
+        }
+
+        public static string SetFeesToCustomFormat(decimal Fees)
+        {
+            return Fees.ToString(_FeesCustomFormat);
         }
     }
 }

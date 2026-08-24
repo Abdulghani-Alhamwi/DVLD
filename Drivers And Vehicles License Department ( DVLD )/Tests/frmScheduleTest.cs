@@ -117,8 +117,8 @@ namespace DVLDPresentationLayer
             {
                 gbReTakeTestInfo.Enabled = true;
                 lblFormBigTitle.Text = "Schedule Retake Test";
-                lblRAppFees.Text = Convert.ToSingle(clsApplicationType.GetApplicationTypeFees(clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.ReTakeTest))).ToString();
-                lblTotalFees.Text = Convert.ToSingle(Convert.ToDecimal(lblTestFees.Text) + Convert.ToDecimal(lblRAppFees.Text)).ToString();
+                lblRAppFees.Text =  clsUtility.SetFeesToCustomFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.ReTakeTest)));
+                lblTotalFees.Text = clsUtility.SetFeesToCustomFormat(Convert.ToDecimal(lblTestFees.Text) + Convert.ToDecimal(lblRAppFees.Text));
             }
             else
             {
@@ -143,19 +143,19 @@ namespace DVLDPresentationLayer
                 case clsTestType.enTestType.VisionTest:
                     gbContentContainer.Text = "Vision Test";
                     pbTestType.Image = Resources.Vision_512;
-                    lblFees.Text = Convert.ToSingle(clsTestType.GetTestTypeFees(1)).ToString();
+                    lblFees.Text = clsUtility.SetFeesToCustomFormat(clsTestType.GetTestTypeFees(1));
                     break;
 
                 case clsTestType.enTestType.WrittenTest:
                     gbContentContainer.Text = "Written Test";
                     pbTestType.Image =Resources.Written_Test_512;
-                    lblFees.Text = Convert.ToSingle(clsTestType.GetTestTypeFees(2)).ToString();
+                    lblFees.Text = clsUtility.SetFeesToCustomFormat(clsTestType.GetTestTypeFees(2));
                     break;
 
                 case clsTestType.enTestType.StreetTest:
                     gbContentContainer.Text = "Street Test";
                     pbTestType.Image = Resources.driving_test_512;
-                    lblFees.Text = Convert.ToSingle(clsTestType.GetTestTypeFees(3)).ToString();
+                    lblFees.Text = clsUtility.SetFeesToCustomFormat(clsTestType.GetTestTypeFees(3));
                     break;
             }
         }
@@ -255,11 +255,12 @@ namespace DVLDPresentationLayer
             clsTestAppointment Appointment;
             if (_Appointment == null)
             {
+                byte _TestTypeID = clsTestType.GetTestTypeID(_TestType);
                 Appointment = new clsTestAppointment(
-                TestTypeID: clsTestType.GetTestTypeID(_TestType),
+                TestTypeID: _TestTypeID,
                 LDLApplicationID: _LDLApp.LDLAppID,
                 AppointmentDate: _GetAppointmentDate(),
-                PaidFees: clsTestType.GetTestTypeFees(1),
+                PaidFees: clsTestType.GetTestTypeFees(_TestTypeID),
                 CreatedByUserID: clsGlobalSettings.CurrentUserID,
                 IsLocked: false
                 );
@@ -283,7 +284,6 @@ namespace DVLDPresentationLayer
             }
             else
                 _SaveAppointment(Appointment);
-
         }
         private void mtxtAppointmentTime_Click(object sender, EventArgs e)
         {

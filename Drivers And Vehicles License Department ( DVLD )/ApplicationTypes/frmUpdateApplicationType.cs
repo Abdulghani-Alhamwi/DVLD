@@ -80,7 +80,7 @@ namespace DVLDPresentationLayer
 
             else if (_ValidateData())
             {
-                if (clsApplicationType.UpdateApplicationType(_ApplicationTypeID, txtTitle.Text, Convert.ToDouble(txtFees.Text)))
+                if (clsApplicationType.UpdateApplicationType(_ApplicationTypeID, txtTitle.Text, Convert.ToDecimal(txtFees.Text)))
                     MessageBox.Show("Application Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else
                     MessageBox.Show("Failed to update application type info!", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);

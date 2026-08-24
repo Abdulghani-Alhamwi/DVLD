@@ -10,7 +10,6 @@ namespace DVLDPresentationLayer
         {
             InitializeComponent();
         }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -38,7 +37,7 @@ namespace DVLDPresentationLayer
         {
             dgvTestTypes.DataSource = clsTestType.GetTestTypes();
             lblRecordsNumber.Text = dgvTestTypes.Rows.Count.ToString();
-            _SetDataViewColumnsWidth();
+            //_SetDataViewColumnsWidth();
         }
 
         private void tsmiEditTestType_Click(object sender, EventArgs e)

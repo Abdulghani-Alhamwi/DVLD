@@ -39,7 +39,7 @@ namespace DVLDDataAccessLayer
             return dtApplicationTypes;
         }
 
-        public static bool UpdateApplicationType(byte ApplicationTypeID , string ApplicationTypeTitle,double ApplicationTypeFees)
+        public static bool UpdateApplicationType(byte ApplicationTypeID , string ApplicationTypeTitle,decimal ApplicationTypeFees)
         {
             int AffectedRows = -1;
 

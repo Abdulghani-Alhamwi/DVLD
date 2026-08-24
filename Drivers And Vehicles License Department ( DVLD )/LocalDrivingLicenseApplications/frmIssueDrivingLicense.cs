@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
+using MyLib;
 
 namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
 {
@@ -15,7 +16,7 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
         {
             InitializeComponent();
             uctrlDLApplicationInfo.LoadInfo(LDLAppID);
-            lblLicenseFees.Text = Convert.ToSingle(clsLicenseClass.GetLicenseClassFees(uctrlDLApplicationInfo.LDLApplication.LicenseClass.ID)).ToString();
+            lblLicenseFees.Text = clsUtility.SetFeesToCustomFormat(clsLicenseClass.GetLicenseClassFees(uctrlDLApplicationInfo.LDLApplication.LicenseClass.ID));
             _LDLAppDGVRowIndex = DGVRowIndex;
         }
 
