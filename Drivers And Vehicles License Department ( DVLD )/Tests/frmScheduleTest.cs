@@ -239,7 +239,7 @@ namespace DVLDPresentationLayer
                 if (_Appointment == null)
                     _Appointment = Appointment;
 
-                object[] NewValues = new object[] { _Appointment.TestAppointmentID, _Appointment.AppointmentDate.ToString(clsUtility.DateCustomFormat), _Appointment.PaidFees, _Appointment.IsLocked };
+                object[] NewValues = new object[] { _Appointment.TestAppointmentID, _Appointment.AppointmentDate.ToString(clsUtility.DateTimeCustomFormat), _Appointment.PaidFees, _Appointment.IsLocked };
 
                 AfterSchedulingAppointment?.Invoke(ref NewValues);
                 AfterEditingAppointment?.Invoke(ref NewValues, _AppointmentsDGVRowIndex);

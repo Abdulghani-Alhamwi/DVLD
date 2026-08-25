@@ -31,7 +31,7 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.lblFormBigTitle = new System.Windows.Forms.Label();
             this.lblFormTitle = new System.Windows.Forms.Label();
-            this.tcNewLocalDrivingLicenseApplication = new System.Windows.Forms.TabControl();
+            this.tcNewLDLApplication = new System.Windows.Forms.TabControl();
             this.tpPersonalInfo = new System.Windows.Forms.TabPage();
             this.uctrlPersonDetailsByFilter = new DVLDPresentationLayer.ctrlPersonDetailsByFilter();
             this.btnNext = new System.Windows.Forms.Button();
@@ -53,7 +53,7 @@
             this.lblDLApplicationIDTitle = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
-            this.tcNewLocalDrivingLicenseApplication.SuspendLayout();
+            this.tcNewLDLApplication.SuspendLayout();
             this.tpPersonalInfo.SuspendLayout();
             this.tpApplicationInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDLApplicationID)).BeginInit();
@@ -107,17 +107,17 @@
             this.lblFormTitle.TabIndex = 45;
             this.lblFormTitle.Text = "Add Edit Local Driving License Application";
             // 
-            // tcNewLocalDrivingLicenseApplication
+            // tcNewLDLApplication
             // 
-            this.tcNewLocalDrivingLicenseApplication.Controls.Add(this.tpPersonalInfo);
-            this.tcNewLocalDrivingLicenseApplication.Controls.Add(this.tpApplicationInfo);
-            this.tcNewLocalDrivingLicenseApplication.Location = new System.Drawing.Point(22, 173);
-            this.tcNewLocalDrivingLicenseApplication.Name = "tcNewLocalDrivingLicenseApplication";
-            this.tcNewLocalDrivingLicenseApplication.Padding = new System.Drawing.Point(15, 3);
-            this.tcNewLocalDrivingLicenseApplication.SelectedIndex = 0;
-            this.tcNewLocalDrivingLicenseApplication.Size = new System.Drawing.Size(1103, 606);
-            this.tcNewLocalDrivingLicenseApplication.TabIndex = 46;
-            this.tcNewLocalDrivingLicenseApplication.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcNewLocalDrivingLicenseApplication_Selecting);
+            this.tcNewLDLApplication.Controls.Add(this.tpPersonalInfo);
+            this.tcNewLDLApplication.Controls.Add(this.tpApplicationInfo);
+            this.tcNewLDLApplication.Location = new System.Drawing.Point(22, 173);
+            this.tcNewLDLApplication.Name = "tcNewLDLApplication";
+            this.tcNewLDLApplication.Padding = new System.Drawing.Point(15, 3);
+            this.tcNewLDLApplication.SelectedIndex = 0;
+            this.tcNewLDLApplication.Size = new System.Drawing.Size(1103, 606);
+            this.tcNewLDLApplication.TabIndex = 46;
+            this.tcNewLDLApplication.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcNewLocalDrivingLicenseApplication_Selecting);
             // 
             // tpPersonalInfo
             // 
@@ -412,7 +412,7 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // frmNewLocalDrivingLicenseApplication
+            // frmNewLDLApplication
             // 
             this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -424,18 +424,18 @@
             this.ControlBox = false;
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.tcNewLocalDrivingLicenseApplication);
+            this.Controls.Add(this.tcNewLDLApplication);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.lblFormBigTitle);
             this.Controls.Add(this.lblFormTitle);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "frmNewLocalDrivingLicenseApplication";
+            this.Name = "frmNewLDLApplication";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.frmNewLocalDrivingLicenseApplication_Load);
-            this.tcNewLocalDrivingLicenseApplication.ResumeLayout(false);
+            this.tcNewLDLApplication.ResumeLayout(false);
             this.tpPersonalInfo.ResumeLayout(false);
             this.tpApplicationInfo.ResumeLayout(false);
             this.tpApplicationInfo.PerformLayout();
@@ -454,7 +454,7 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label lblFormBigTitle;
         private System.Windows.Forms.Label lblFormTitle;
-        private System.Windows.Forms.TabControl tcNewLocalDrivingLicenseApplication;
+        private System.Windows.Forms.TabControl tcNewLDLApplication;
         private System.Windows.Forms.TabPage tpPersonalInfo;
         private ctrlPersonDetailsByFilter uctrlPersonDetailsByFilter;
         private System.Windows.Forms.TabPage tpApplicationInfo;

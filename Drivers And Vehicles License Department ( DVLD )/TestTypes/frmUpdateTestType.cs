@@ -7,10 +7,14 @@ namespace DVLDPresentationLayer
 {
     public partial class frmUpdateTestType : Form
     {
-        int _ApplicationTypeID;
+        internal event Action<object[], byte> AfterUpdatingInfo;
+
+        byte _ApplicationTypeID;
         string _ApplicationTypeTitle, _ApplicationTypeDescription;
         double _ApplicationTypeFees;
-        public frmUpdateTestType(int ApplicationTypeID, string ApplicationTypeTitle, string ApplicationTypeDescription,double ApplicationTypeFees)
+        byte _TestsTypesDGVRowIndex;
+
+        public frmUpdateTestType(byte ApplicationTypeID, string ApplicationTypeTitle, string ApplicationTypeDescription,double ApplicationTypeFees,byte TestsTypesDGVRowIndex)
         {
             InitializeComponent();
 
@@ -23,6 +27,7 @@ namespace DVLDPresentationLayer
             _ApplicationTypeTitle = ApplicationTypeTitle;
             _ApplicationTypeDescription = ApplicationTypeDescription;
             _ApplicationTypeFees = ApplicationTypeFees;
+            _TestsTypesDGVRowIndex = TestsTypesDGVRowIndex;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -77,8 +82,12 @@ namespace DVLDPresentationLayer
 
             else if(_ValidateData())
             {
-                 if (clsTestType.UpdateTestType(_ApplicationTypeID,txtTitle.Text,txtDescription.Text,Convert.ToDecimal(txtFees.Text)))
+                if (clsTestType.UpdateTestType(_ApplicationTypeID, txtTitle.Text, txtDescription.Text, Convert.ToDecimal(txtFees.Text)))
+                {
+                    object[] NewValues = new object[] { _ApplicationTypeID, txtTitle.Text, txtDescription.Text, Convert.ToDecimal(txtFees.Text) };
+                    AfterUpdatingInfo?.Invoke(NewValues, _TestsTypesDGVRowIndex);
                     MessageBox.Show("Test Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
                 else
                     MessageBox.Show("Failed to update test type info!", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

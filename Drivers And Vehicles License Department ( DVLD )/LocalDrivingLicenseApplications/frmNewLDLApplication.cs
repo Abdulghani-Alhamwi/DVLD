@@ -79,7 +79,7 @@ namespace DVLDPresentationLayer.Core
         {
             if (_ApplicantPersonID != -1)
             {
-                tcNewLocalDrivingLicenseApplication.SelectedTab = tpApplicationInfo;
+                tcNewLDLApplication.SelectedTab = tpApplicationInfo;
                 return true;
             }
 
@@ -100,10 +100,10 @@ namespace DVLDPresentationLayer.Core
 
         private void tcNewLocalDrivingLicenseApplication_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if (tcNewLocalDrivingLicenseApplication.SelectedTab == tpApplicationInfo)
+            if (tcNewLDLApplication.SelectedTab == tpApplicationInfo)
             {
                 if (!_MoveToNextTab())
-                    tcNewLocalDrivingLicenseApplication.SelectedTab = tpPersonalInfo;
+                    tcNewLDLApplication.SelectedTab = tpPersonalInfo;
             }
         }
 
@@ -117,7 +117,7 @@ namespace DVLDPresentationLayer.Core
             this.Close();
         }
 
-        private void _ShowLocalDrivingApplicationDetails()
+        private void _ShowLDLAppDetails()
         {
             lblApplicationDate.Text = DateTime.Today.ToShortDateString();
             cbLicenseClass.DataSource = clsLicenseClass.GetLicenseClassesNames();
@@ -127,7 +127,7 @@ namespace DVLDPresentationLayer.Core
         }
         private void frmNewLocalDrivingLicenseApplication_Load(object sender, EventArgs e)
         {
-            _ShowLocalDrivingApplicationDetails();
+            _ShowLDLAppDetails();
         }
 
         private void cbLicenseClass_DropDown(object sender, EventArgs e)

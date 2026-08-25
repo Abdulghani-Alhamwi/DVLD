@@ -7,7 +7,7 @@ namespace DVLDDataAccessLayer
     public class clsTestAppointmentsData
     {
 
-        private static string ColumnNamesQuery = @"SELECT TOP (@WantedNumberOfRecords) TestAppointmentID AS [Appointment ID] , FORMAT(AppointmentDate,'dd/MM/yyyy') AS [Appointment Date] ,
+        private static string ColumnNamesQuery = @"SELECT TOP (@WantedNumberOfRecords) TestAppointmentID AS [Appointment ID] , FORMAT(AppointmentDate,'dd/MM/yyyy h:mm tt') AS [Appointment Date] ,
                              PaidFees AS [Paid Fees] , IsLocked  AS [Is Locked] FROM TestAppointments";
 
         public static DataTable GetTestAppointments(byte WantedNumberOfRecords , byte TestTypeID,int LocalDrivingLicenseAppID, int LowestBroughtAppointmentID = -1,string DateFormat = null)
