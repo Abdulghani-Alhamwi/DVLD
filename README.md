@@ -8,28 +8,58 @@ A Windows desktop application for managing people, users, driving license applic
 [![Database](https://img.shields.io/badge/database-SQL%20Server-red.svg)](#)
 [![Language](https://img.shields.io/badge/language-C%23-239120.svg)](#)
 
-## 🧭 Contents :
+## 📌 Overview :
 
-* [📌 Overview](#-overview)
-* [✨ Features](#-features)
-* [🏗️ Architecture](#️-architecture)
-* [🧰 Tech Stack](#-tech-stack)
-* [🔄 Main Workflow](#-main-workflow)
-* [🧪 Testing](#-testing)
-* [📁 Repository Notes](#-repository-notes)
-* [🤝 Contributing](#-contributing)
+DVLD is a C# Windows Forms application that models the workflow of a driver and vehicle licensing department.
+
+The system separates presentation, business, and data-access responsibilities into independent projects.
+
+The application covers the lifecycle of local driving license applications, from applicant registration through test scheduling and test results to license issuance.
+
+The repository also includes database design files for the DVLD relational model.
 
 ---
 
-## 📌 Overview :
+## 🎯 The Problem This Project Solves :
 
-DVLD is a C# Windows Forms application that models the workflow of a driving and vehicle licensing department.
+Managing a driving license process involves more than issuing a license.
 
-The system separates the presentation, business, and data-access responsibilities into independent projects.
+A person can move through several connected stages:
 
-The application covers the lifecycle of local driving license applications from applicant registration through test scheduling and test results to license issuance.
+```text
+👤 Person
+   ↓
+📝 Local Driving License Application
+   ↓
+📅 Test Appointment
+   ↓
+🧪 Test Result
+   ↓
+🚘 Driver
+   ↓
+🪪 License
+```
 
-The repository also includes database design files for the DVLD relational model.
+Each stage depends on information from the previous stages.
+
+Without a connected system, a licensing department can face problems such as:
+
+* Duplicate applications
+* Incorrect applicant information
+* Invalid license class selection
+* Incorrect test scheduling
+* Missing test history
+* Inconsistent driver records
+* Difficulty tracking application progress
+* Difficulty finding license records
+* Repeated business rules across different screens
+* Weak traceability between applications, tests, drivers, and licenses
+
+The core problem is:
+
+> **How can a licensing department manage a multi-step licensing process while keeping people, applications, tests, drivers, and licenses connected and consistent?**
+
+---
 
 ## ✨ Features :
 
@@ -46,13 +76,13 @@ The repository also includes database design files for the DVLD relational model
 <details>
 <summary>🔑 User and Access Management</summary>
 
-* User login and logout flow.
-* Active and inactive user states.
+* User login and logout.
+* Support active and inactive user states.
 * Add, edit, search, and delete users.
 * Change user passwords.
-* User-specific session information.
-* Remember-me login support.
-* Password hashing with salt in the authentication flow.
+* Maintain user-specific session information.
+* Support remember-me login.
+* Hash and salt passwords during authentication.
 
 </details>
 
@@ -109,29 +139,49 @@ The repository also includes database design files for the DVLD relational model
 
 ## 🏗️ Architecture :
 
-The solution is built with 3-tier architecture:
+The solution is built using a three-tier architecture:
 
+```text
 🖥️ Presentation Layer
         ↓
 🧠 Business Layer
         ↓
 🗄️ Data Access Layer
+        ↓
+💾 SQL Server Database
+```
+
+The solution contains three C# projects and uses project references to connect the presentation layer, business layer, and data-access layer.
+
+### 🖥️ Presentation Layer :
+
+The presentation layer contains the Windows Forms screens, reusable controls, navigation, user interaction, and presentation logic.
+
+### 🧠 Business Layer :
+
+The business layer contains the domain objects and business rules that control the licensing workflow.
+
+It is responsible for validation, workflow decisions, and coordinating persistence operations.
+
+### 🗄️ Data Access Layer :
+
+The data-access layer contains the SQL Server data-access classes and CRUD operations.
+
+It is responsible for database communication and persistence.
 
 ---
 
 ## 🧰 Tech Stack :
 
-| Area         | Technology              |
-| ------------ | ----------------------- |
-| Language     | C#                      |
-| UI           | Windows Forms           |
-| Runtime      | .NET Framework 4.8      |
-| IDE          | Visual Studio           |
-| Database     | Microsoft SQL Server    |
-| Database API | System.Data.SqlClient   |
-| Data Model   | Relational database     |
-
-The solution contains three C# projects and uses project references to connect the presentation layer, business layer, and data-access layer.
+| Area         | Technology            |
+| ------------ | --------------------- |
+| Language     | C#                    |
+| UI           | Windows Forms         |
+| Runtime      | .NET Framework 4.8    |
+| IDE          | Visual Studio         |
+| Database     | Microsoft SQL Server  |
+| Database API | System.Data.SqlClient |
+| Data Model   | Relational database   |
 
 ---
 
@@ -157,17 +207,20 @@ A typical local driving license process follows this flow:
    └── ✅ Passed
            │
            ▼
-        🪪 Driver / License
+        🚘 Driver
+           │
+           ▼
+        🪪 License
 ```
 
 The business layer contains checks for conditions such as:
 
-* minimum age for a license class
-* duplicate applications
-* test scheduling availability
-* passed test count
-* driver existence
-* license lookup
+* Minimum age for a license class
+* Duplicate applications
+* Test scheduling availability
+* Passed test count
+* Driver existence
+* License lookup
 
 ---
 
@@ -175,11 +228,23 @@ The business layer contains checks for conditions such as:
 
 The business layer contains test-related domain and appointment logic, including:
 
-* test scheduling
-* test result persistence
-* passed-test validation
-* appointment availability
-* license history
+* Test scheduling
+* Test result persistence
+* Passed-test validation
+* Appointment availability
+* License history
+
+---
+
+## 📁 Repository Notes :
+
+The repository contains the source code, project files, database design assets, and Visual Studio project structure required to work with the application.
+
+The database design files include the DVLD ERD and relational schema.
+
+For a clean Git repository, Visual Studio build and IDE artifacts such as `.vs`, `bin`, and `obj` should be excluded using `.gitignore`.
+
+---
 
 ## 🤝 Contributing :
 
@@ -187,12 +252,12 @@ Contributions should keep the existing layer boundaries clear.
 
 Before opening a pull request:
 
-* keep database operations in the data-access layer
-* keep domain rules in the business layer
-* keep UI concerns in the presentation layer
-* avoid duplicating business rules inside forms
-* document database changes
-* test workflow changes before merging
+* Keep database operations in the data-access layer.
+* Keep domain rules in the business layer.
+* Keep UI concerns in the presentation layer.
+* Avoid duplicating business rules inside forms.
+* Document database changes.
+* Test workflow changes before merging.
 
 A useful pull request should explain:
 
@@ -208,17 +273,17 @@ Does the database schema change?
 
 ## ⭐ Project Summary :
 
-DVLD is a layered C# WinForms system that demonstrates how a desktop licensing application can organize domain logic, SQL Server persistence, and user interaction.
+DVLD is a layered C# Windows Forms system that demonstrates how a desktop licensing application can organize domain logic, SQL Server persistence, and user interaction.
 
 It is a useful reference project for studying:
 
-* layered architecture
-* object-oriented design
+* Layered architecture
+* Object-oriented design
 * CRUD workflows
 * SQL Server data access
-* WinForms application design
-* authentication flows
-* relational database modeling
-* multi-step business processes
+* Windows Forms application development
+* Authentication flows
+* Relational database modeling
+* Multi-step business processes
 
 Built with C# and .NET Framework 4.8.
