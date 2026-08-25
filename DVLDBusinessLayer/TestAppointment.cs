@@ -18,6 +18,7 @@ namespace DVLDBusinessLayer
         public clsTestAppointment(byte TestTypeID, int LDLApplicationID, DateTime AppointmentDate, decimal PaidFees, int CreatedByUserID, bool IsLocked)
         {
             TestAppointmentID = -1;
+            this.TestTypeID = TestTypeID;
             this.LDLApplicationID = LDLApplicationID;
             this.AppointmentDate = AppointmentDate;
             this.PaidFees = PaidFees;

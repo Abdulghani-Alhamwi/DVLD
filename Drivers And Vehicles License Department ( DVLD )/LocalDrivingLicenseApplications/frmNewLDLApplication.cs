@@ -7,7 +7,7 @@ using MyLib;
 
 namespace DVLDPresentationLayer.Core
 {
-    public partial class frmNewLocalDrivingLicenseApplication : Form
+    public partial class frmNewLDLApplication : Form
     {
         private int _ApplicantPersonID = -1;
         private const int _NewLocalDrivingLicenseApplicationTypeID = 1;
@@ -20,24 +20,36 @@ namespace DVLDPresentationLayer.Core
         internal event EditedLDLApplication OnEditedLDLApplication;
 
         int _DGVRowIndex = -1;
-        public frmNewLocalDrivingLicenseApplication()
+        public frmNewLDLApplication()
         {
             InitializeComponent();
-
-            _SetTitles(clsLDLApplication.enMode.AddNew);
-            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            _InitializeFormData();
         }
 
-        public frmNewLocalDrivingLicenseApplication(clsLDLApplication LDLApplication ,int DGVRowIndex)
+        public frmNewLDLApplication(clsLDLApplication LDLApplication ,int DGVRowIndex)
         {
             InitializeComponent();
+            _InitilizeFormData(LDLApplication, DGVRowIndex);
+        }
 
-            _LDLApplication = LDLApplication;
-            _SetTitles(clsLDLApplication.enMode.Update);
-            _ApplicantPersonID = _LDLApplication.ApplicantPersonID;
-            _ShowDetailsForUpdateMode();
-            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
-            _DGVRowIndex = DGVRowIndex;
+        private void _InitilizeFormData(clsLDLApplication LDLApplication, int DGVRowIndex)
+        {
+            if(LDLApplication == null)
+                _SetTitles(clsLDLApplication.enMode.AddNew);
+            else
+            {
+                _LDLApplication = LDLApplication;
+                _SetTitles(clsLDLApplication.enMode.Update);
+                _ApplicantPersonID = _LDLApplication.ApplicantPersonID;
+                _ShowDetailsForUpdateMode();
+                _DGVRowIndex = DGVRowIndex;
+            }
+                clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+        }
+
+        private void _InitializeFormData()
+        {
+            _InitilizeFormData(null, -1);
         }
 
         private void _SetTitles(clsLDLApplication.enMode Mode)
@@ -175,7 +187,7 @@ namespace DVLDPresentationLayer.Core
             byte LicenseClassID = clsLicenseClass.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
             clsApplication.enApplicationStatus? PersonApplicationStatus;
 
-            if (clsLDLApplication.HasPersonApplied(_ApplicantPersonID, LicenseClassID, out PersonApplicationStatus) && clsLDLApplication.CheckApplicantPersonAge(_ApplicantPersonID,LicenseClassID))
+            if (clsLDLApplication.HasPersonApplied(_ApplicantPersonID, LicenseClassID, out PersonApplicationStatus) && clsLDLApplication.IsPersonAgeAppropriate(_ApplicantPersonID,LicenseClassID))
                 return true;
 
             else
@@ -221,7 +233,7 @@ namespace DVLDPresentationLayer.Core
 
                         object[] NewValues = new object[] { LDLApplication.LDLAppID, LDLApplication.LicenseClass.ClassName,
                             clsPerson.GetNationalNumber(LDLApplication.ApplicantPersonID), clsPerson.GetFullName(LDLApplication.ApplicantPersonID),
-                        LDLApplication.ApplicationDate,clsTest.GetTotalPassedTestsCount(LDLApplication.LDLAppID),LDLApplication.GetApplicationStatus()};
+                        LDLApplication.ApplicationDate.ToString(clsUtility.DateTimeCustomFormat),clsTest.GetTotalPassedTestsCount(LDLApplication.LDLAppID),LDLApplication.GetApplicationStatus()};
                         
                         OnAddedLDLApplication?.Invoke(ref NewValues);
                         OnEditedLDLApplication?.Invoke(ref NewValues, _DGVRowIndex);

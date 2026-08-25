@@ -18,6 +18,8 @@ namespace MyLib
 
         public static string DateCustomFormat = "dd/MM/yyyy";
 
+        public static string DateTimeCustomFormat = "dd/MM/yyyy h:mm tt";
+
         private static string _FeesCustomFormat = "G29";
 
         public static byte WantedNumOfRowsFromDB = 10;

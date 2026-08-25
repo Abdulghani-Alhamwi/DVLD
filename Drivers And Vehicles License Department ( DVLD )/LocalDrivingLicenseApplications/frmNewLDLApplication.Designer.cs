@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer.Core
 {
-    partial class frmNewLocalDrivingLicenseApplication
+    partial class frmNewLDLApplication
     {
         /// <summary>
         /// Required designer variable.

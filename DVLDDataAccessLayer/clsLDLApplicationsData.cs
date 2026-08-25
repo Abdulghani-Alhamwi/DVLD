@@ -9,7 +9,7 @@ namespace DVLDDataAccessLayer
         private static string ColumnNamesQuery = 
          @"SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
            People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
-           ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , FORMAT(ApplicationDate , 'dd/MM/yyyy') AS [Application Date] ,
+           ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , FORMAT(ApplicationDate , 'dd/MM/yyyy h:mm tt') AS [Application Date] ,
            (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests] ,
            (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) AS Status
            FROM LocalDrivingLicenseApplications INNER JOIN LicenseClasses
@@ -246,7 +246,7 @@ namespace DVLDDataAccessLayer
 
             return -1;
         }
-        public static bool HasPersonApplied(int ApplicantPersonID, int LicenseClassID, out byte ApplicationStatus)
+        public static bool HasPersonApplied(int ApplicantPersonID, byte LicenseClassID, out byte ApplicationStatus)
         {
             ApplicationStatus = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -280,17 +280,15 @@ namespace DVLDDataAccessLayer
             return true;
         }
 
-        public static bool CheckApplicantPersonAge(int ApplicantPersonID, int LicenseClassID)
+        public static bool IsPersonAgeAppropriate(int PersonID , byte LicenseClassID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Valid = 1 FROM LocalDrivingLicenseApplications INNER JOIN Applications ON Applications.ApplicationID = LocalDrivingLicenseApplications.ApplicationID
-                             INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID INNER JOIN LicenseClasses ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID
-                             WHERE Applications.ApplicantPersonID = @ApplicantPersonID AND LocalDrivingLicenseApplications.LicenseClassID = @LicenseClassID
-                             AND DATEDIFF(Year,People.DateOfBirth,GetDate()) >= LicenseClasses.MinimumAllowedAge";
+            string query = @"SELECT Valid = 1 WHERE (SELECT DATEDIFF(Year,DateOfBirth,GetDate()) FROM People WHERE PersonID = @PersonID)
+                             >= (SELECT MinimumAllowedAge FROM LicenseClasses WHERE LicenseClassID = @LicenseClassID)";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
+            command.Parameters.AddWithValue("@PersonID", PersonID);
             command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
 
             try

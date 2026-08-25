@@ -15,33 +15,41 @@ namespace DVLDPresentationLayer
         }
         clsPerson _Person;
         bool _ShownDefaultValues = false;
-        public clsPerson LoadPersonDetails (int PersonID,string NationalNo=null)
+        public clsPerson LoadPersonDetails (string NationalNo)
         {
-            if(NationalNo==null)
-            _Person = clsPerson.Find(PersonID);
-            else
             _Person = clsPerson.Find(NationalNo);
 
             if (_Person != null)
             {
                 _ShowPersonDetails();
-                lnlblEditPersonInfo.Enabled = true;
-                _ShownDefaultValues = false;
                 return _Person;
             }
             else
             {
                 _ShowDefaultDetails();
-                _ShownDefaultValues = true;
-                lnlblEditPersonInfo.Enabled = false;
-
-                if (NationalNo == null)
-                MessageBox.Show($"No Person With Person ID = {PersonID}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else
-                    MessageBox.Show($"No Person With National No. = {NationalNo}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                
+                MessageBox.Show($"No Person With National No. = {NationalNo}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
+        }
+        public clsPerson LoadPersonDetails(int PersonID)
+        {
+            _Person = clsPerson.Find(PersonID);
+
+            if (_Person != null)
+            {
+                _ShowPersonDetails();
+                return _Person;
+            }
+
+            else
+            {
+                _ShowDefaultDetails();
+
+                MessageBox.Show($"No Person With Person ID = {PersonID}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+
         }
         private void _ShowDefaultDetails()
         {
@@ -66,6 +74,9 @@ namespace DVLDPresentationLayer
 
                 pbPersonalImage.Image = Resources.Male_512;
             }
+
+            _ShownDefaultValues = true;
+            lnlblEditPersonInfo.Enabled = false;
         }
         private void _ShowPersonDetails()
         {
@@ -98,6 +109,9 @@ namespace DVLDPresentationLayer
             }
             else
                 pbPersonalImage.Image = (_Person.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
+
+            lnlblEditPersonInfo.Enabled = true;
+            _ShownDefaultValues = false;
         }
 
         private void _RefreshView()

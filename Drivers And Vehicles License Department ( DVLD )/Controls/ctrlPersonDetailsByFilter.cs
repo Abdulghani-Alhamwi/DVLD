@@ -13,9 +13,26 @@ namespace DVLDPresentationLayer
         public event PersonSelectedEventHandler OnPersonSelected;
 
         public event Action AfterEditingPerson;
+
+        private enum _enFindBy { PersonID = 1 , NationalNo = 2}
+
         public ctrlPersonDetailsByFilter()
         {
             InitializeComponent();
+        }
+
+        private _enFindBy GetSelectedItem()
+        {
+            switch(cbFindBy.SelectedItem)
+            {
+                case "Person ID":
+                    return _enFindBy.PersonID;
+
+                case "National No":
+                    return _enFindBy.NationalNo;
+            }
+
+            return _enFindBy.NationalNo;
         }
         private void PersonInformationByFilter_Load(object sender, EventArgs e)
         {
@@ -36,7 +53,7 @@ namespace DVLDPresentationLayer
 
         private void txtFindBy_KeyDown(object sender, KeyEventArgs e)
         {
-            if(cbFindBy.SelectedItem.ToString()=="Person ID")
+            if(GetSelectedItem() == _enFindBy.PersonID)
             {
                 if (Char.IsDigit((Char)e.KeyData) || e.KeyData == Keys.Back)
                     txtFindBy.ReadOnly = false;
@@ -56,7 +73,7 @@ namespace DVLDPresentationLayer
             txtFindBy.Text = PersonID.ToString();
             cbFindBy.SelectedItem = "Person ID";
             uctrlPersonDetails.LoadPersonDetails(PersonID);
-
+            OnPersonSelected?.Invoke(PersonID);
         }
         private void btnAddNewPerson_Click(object sender, EventArgs e)
         {
@@ -77,13 +94,13 @@ namespace DVLDPresentationLayer
             if(_PreviouslyFoundText == txtFindBy.Text)
                 return;
             
-            else if (cbFindBy.SelectedItem.ToString() == "National No")
+            else if (GetSelectedItem() == _enFindBy.NationalNo)//readability
             {
-                    clsPerson Person = uctrlPersonDetails.LoadPersonDetails(-1,txtFindBy.Text);
+                    clsPerson Person = uctrlPersonDetails.LoadPersonDetails(txtFindBy.Text);
                     _PreviouslyFoundText = txtFindBy.Text;
 
-                if(Person!=null)
-                    OnPersonSelected?.Invoke(Person.PersonID); ;
+                if (Person != null)
+                    OnPersonSelected?.Invoke(Person.PersonID);
             }
 
             else
@@ -92,7 +109,7 @@ namespace DVLDPresentationLayer
                     _PreviouslyFoundText = txtFindBy.Text;
                     OnPersonSelected?.Invoke(Person.PersonID);
             }
-            
+
         }
         private void btnFindUser_Click(object sender, EventArgs e)
         {
@@ -101,7 +118,7 @@ namespace DVLDPresentationLayer
 
         private void cbFindBy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbFindBy.SelectedItem.ToString() == "Person ID")
+            if (GetSelectedItem() == _enFindBy.PersonID)
             {
                 if (!txtFindBy.Text.All(char.IsDigit))
                     txtFindBy.Clear();

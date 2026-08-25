@@ -8,10 +8,10 @@ using DVLDPresentationLayer.LocalDrivingLicenseApplications;
 
 namespace DVLDPresentationLayer
 {
-    public partial class frmLocalDrivingLicenseApplications : Form
+    public partial class frmLDLApplications : Form
     {
         bool _AllowDataLoading;
-        public frmLocalDrivingLicenseApplications()
+        public frmLDLApplications()
         {
             InitializeComponent();
         }
@@ -111,7 +111,7 @@ namespace DVLDPresentationLayer
 
         private void btnAddLDLApplication_Click(object sender, EventArgs e)
         {
-            frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication();
+            frmNewLDLApplication frm = new frmNewLDLApplication();
             frm.OnAddedLDLApplication += _AddNewValuesToDGV;
             frm.ShowDialog();
         }
@@ -130,7 +130,7 @@ namespace DVLDPresentationLayer
             {
                 clsLDLApplication LDLApplication = clsLDLApplication.Find((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
 
-                frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication(LDLApplication,dgvLDLApplications.SelectedRows[0].Index);
+                frmNewLDLApplication frm = new frmNewLDLApplication(LDLApplication,dgvLDLApplications.SelectedRows[0].Index);
                 frm.OnEditedLDLApplication += _EditDataRowInDGV;
                 frm.ShowDialog();
             }

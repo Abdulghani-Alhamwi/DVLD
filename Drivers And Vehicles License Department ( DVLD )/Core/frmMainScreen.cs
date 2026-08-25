@@ -119,13 +119,13 @@ namespace DVLDPresentationLayer
 
         private void tsmiLocalLicense_Click(object sender, EventArgs e)
         {
-            frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication();
+            frmNewLDLApplication frm = new frmNewLDLApplication();
             frm.ShowDialog();
         }
 
         private void tsmiLocalDrivingLicenseApplications_Click(object sender, EventArgs e)
         {
-            frmLocalDrivingLicenseApplications frm = new frmLocalDrivingLicenseApplications();
+            frmLDLApplications frm = new frmLDLApplications();
             frm.ShowDialog();
         }
     }

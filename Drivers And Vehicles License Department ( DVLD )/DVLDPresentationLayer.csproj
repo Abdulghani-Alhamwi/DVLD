@@ -111,17 +111,17 @@
     <Compile Include="Tests\frmTestsAppointments.Designer.cs">
       <DependentUpon>frmTestsAppointments.cs</DependentUpon>
     </Compile>
-    <Compile Include="LocalDrivingLicenseApplications\frmNewLocalDrivingLicenseApplication.cs">
+    <Compile Include="LocalDrivingLicenseApplications\frmNewLDLApplication.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LocalDrivingLicenseApplications\frmNewLocalDrivingLicenseApplication.Designer.cs">
-      <DependentUpon>frmNewLocalDrivingLicenseApplication.cs</DependentUpon>
+    <Compile Include="LocalDrivingLicenseApplications\frmNewLDLApplication.Designer.cs">
+      <DependentUpon>frmNewLDLApplication.cs</DependentUpon>
     </Compile>
-    <Compile Include="LocalDrivingLicenseApplications\frmLocalDrivingLicenseApplications.cs">
+    <Compile Include="LocalDrivingLicenseApplications\frmLDLApplications.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LocalDrivingLicenseApplications\frmLocalDrivingLicenseApplications.Designer.cs">
-      <DependentUpon>frmLocalDrivingLicenseApplications.cs</DependentUpon>
+    <Compile Include="LocalDrivingLicenseApplications\frmLDLApplications.Designer.cs">
+      <DependentUpon>frmLDLApplications.cs</DependentUpon>
     </Compile>
     <Compile Include="TestTypes\frmManageTestTypes.cs">
       <SubType>Form</SubType>
@@ -234,11 +234,11 @@
     <EmbeddedResource Include="Tests\frmTestsAppointments.resx">
       <DependentUpon>frmTestsAppointments.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LocalDrivingLicenseApplications\frmNewLocalDrivingLicenseApplication.resx">
-      <DependentUpon>frmNewLocalDrivingLicenseApplication.cs</DependentUpon>
+    <EmbeddedResource Include="LocalDrivingLicenseApplications\frmNewLDLApplication.resx">
+      <DependentUpon>frmNewLDLApplication.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LocalDrivingLicenseApplications\frmLocalDrivingLicenseApplications.resx">
-      <DependentUpon>frmLocalDrivingLicenseApplications.cs</DependentUpon>
+    <EmbeddedResource Include="LocalDrivingLicenseApplications\frmLDLApplications.resx">
+      <DependentUpon>frmLDLApplications.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TestTypes\frmManageTestTypes.resx">
       <DependentUpon>frmManageTestTypes.cs</DependentUpon>

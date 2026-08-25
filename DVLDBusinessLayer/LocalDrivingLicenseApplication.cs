@@ -106,7 +106,7 @@ namespace DVLDBusinessLayer
             return clsLDLApplicationsData.GetApplicationID(LDLApplicationID);
         }
 
-        public static bool HasPersonApplied(int ApplicantPersonID, int LicenseClassID,out enApplicationStatus?PersonApplicationStatus)
+        public static bool HasPersonApplied(int ApplicantPersonID, byte LicenseClassID,out enApplicationStatus?PersonApplicationStatus)
         {
             byte ApplicationStatus;
             PersonApplicationStatus = null;
@@ -119,9 +119,9 @@ namespace DVLDBusinessLayer
                 return false;
         }
 
-        public static bool CheckApplicantPersonAge(int ApplicantPersonID, int LicenseClassID)
+        public static bool IsPersonAgeAppropriate(int PersonID, byte LicenseClassID)
         {
-            return clsLDLApplicationsData.CheckApplicantPersonAge(ApplicantPersonID, LicenseClassID);
+            return clsLDLApplicationsData.IsPersonAgeAppropriate(PersonID, LicenseClassID);
         }
 
     public static int GetLDLApplicationID(int ApplicantPersonID)

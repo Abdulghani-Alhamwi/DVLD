@@ -509,3 +509,7 @@ we will have error .
 we can use variable or object it self(variable from the object type) instead of property in order to use with it the keywords ref or out.
 
 
+43) Format data in sql query using built-in function Format , the h for hours like 6 , if we put hh -> hours be 06 , mm for minutes and tt for AM and PM
+ FORMAT(ApplicationDate , 'dd/MM/yyyy h:mm tt')
+
+44) also we can to put format for date when converting it to string using .ToString() and put format or use variable has format stored in it like : public static string DateTimeCustomFormat = "dd/MM/yyyy h:mm tt";
