@@ -229,7 +229,7 @@ The exact loading strategy can be implemented through filtering, pagination, off
 
 The important principle is:
 
-> **Retrieve the data required by the current operation instead of unnecessarily loading the entire dataset.**
+**Retrieve the data required by the current operation instead of unnecessarily loading the entire dataset.**
 
 ---
 
