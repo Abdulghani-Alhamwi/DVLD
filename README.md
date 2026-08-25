@@ -18,7 +18,7 @@ It manages people, users, driving license applications, license classes, applica
 
 The solution follows a three-tier architecture that separates the presentation layer, business layer, and data-access layer.
 
-The application also uses a database-oriented loading approach designed to handle large record sets by retrieving data gradually instead of loading the entire dataset into memory at once.
+The application also uses a database-oriented loading approach designed to handle large record sets by retrieving data gradually instead of loading the entire set of records into memory at once.
 
 This approach helps keep data retrieval controlled and supports a smoother user experience when working with growing database tables.
 
@@ -67,7 +67,7 @@ The driving license management process involves several challenges that this pro
 * Inconsistent driver records
 * Poor responsiveness when tables contain large numbers of records
 
-The project addresses these problems by combining a connected domain model, centralized business rules, structured data access, and controlled record loading.
+The project addresses these challenges by combining a connected domain model, centralized business rules, structured data access, and controlled record loading.
 
 ---
 
@@ -80,7 +80,7 @@ The project addresses these problems by combining a connected domain model, cent
 * Store personal information such as national number, name, date of birth, phone, email, address, and country.
 * Reuse person records across applications and user accounts.
 * Filter and paginate people records.
-* Retrieve records progressively instead of loading large datasets into memory at once.
+* Retrieve records progressively instead of loading large result sets into memory at once.
 
 </details>
 
@@ -93,7 +93,7 @@ The project addresses these problems by combining a connected domain model, cent
 * Change user passwords.
 * Maintain user-specific session information.
 * Support remember-me login.
-* Hash and salt passwords during authentication.
+* Protect user credentials through encryption and salted password hashing.
 
 </details>
 
@@ -107,7 +107,7 @@ The project addresses these problems by combining a connected domain model, cent
 * Track application status.
 * Search and filter applications.
 * View passed test counts.
-* Load application records gradually when retrieving larger datasets.
+* Load application records gradually when retrieving larger result sets.
 
 </details>
 
@@ -148,6 +148,15 @@ The project addresses these problems by combining a connected domain model, cent
 * Store minimum allowed ages for license classes.
 
 </details>
+
+---
+
+## 🔐 Security and Credential Protection :
+
+The authentication system applies protection mechanisms to user credentials before they are stored in the database.
+
+* User names are encrypted before being stored in the database.
+* Passwords are hashed with a unique salt before being stored in the database.
 
 ---
 
@@ -229,7 +238,7 @@ The exact loading strategy can be implemented through filtering, pagination, off
 
 The important principle is:
 
-**Retrieve the data required by the current operation instead of unnecessarily loading the entire dataset.**
+**Retrieve only the records required for the current operation instead of loading all available records into memory.**
 
 ---
 
@@ -438,6 +447,6 @@ This provides a more controlled path from:
 🖥️ Presentation Layer
 ```
 
-The result is a licensing application designed around clear separation of responsibilities, connected business workflows, and controlled database access.
+The result is a licensing application designed around clear separation of responsibilities, connected business workflows, controlled database access, and protected user credentials.
 
 Built with C# and .NET Framework 4.8.
