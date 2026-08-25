@@ -57,7 +57,7 @@ A person can move through a sequence of related stages, and every stage depends 
         🪪 License
 ```
 
-When these operations are handled independently, several problems can appear:
+The driving license management process involves several challenges that this project is designed to address, including:
 
 * Duplicate applications
 * Incorrect applicant information
@@ -65,17 +65,9 @@ When these operations are handled independently, several problems can appear:
 * Incorrect test scheduling
 * Missing test history
 * Inconsistent driver records
-* Difficulty tracking application progress
-* Difficulty finding related records
-* Repeated business rules across different forms
-* Unnecessary database queries and data loading
 * Poor responsiveness when tables contain large numbers of records
 
 The project addresses these problems by combining a connected domain model, centralized business rules, structured data access, and controlled record loading.
-
-The core question is:
-
-> **How can a licensing department manage a multi-step licensing process while keeping business rules, related records, and database operations consistent and efficient?**
 
 ---
 
