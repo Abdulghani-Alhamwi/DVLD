@@ -151,6 +151,60 @@ The project addresses these challenges by combining a connected domain model, ce
 
 ---
 
+## 🏗️ Architecture :
+
+The solution uses a three-tier architecture:
+
+```text
+🖥️ Presentation Layer
+        ↓
+🧠 Business Layer
+        ↓
+🗄️ Data Access Layer
+        ↓
+💾 SQL Server Database
+```
+
+Each layer has a defined responsibility.
+
+### 🖥️ Presentation Layer :
+
+The presentation layer contains the Windows Forms screens, reusable controls, navigation, user interaction, searching, filtering, and presentation logic.
+
+It is responsible for communicating with the user and displaying application results.
+
+It should not contain SQL queries or central business rules.
+
+### 🧠 Business Layer :
+
+The business layer contains the domain objects and business rules that control the licensing workflow.
+
+It is responsible for:
+
+* Validation
+* Business rules
+* Workflow decisions
+* Domain operations
+* Coordinating persistence operations
+
+### 🗄️ Data Access Layer :
+
+The data-access layer contains the SQL Server data-access classes and CRUD operations.
+
+It is responsible for:
+
+* Database communication
+* SQL queries
+* Data retrieval
+* Data insertion
+* Data updates
+* Data deletion
+* Controlled record loading
+
+The data-access layer is also the appropriate place to implement database-side filtering and progressive loading strategies.
+
+---
+
 ## 🔐 Security and Credential Protection :
 
 The authentication system applies protection mechanisms to user credentials before they are stored in the database.
@@ -239,62 +293,6 @@ The exact loading strategy can be implemented through filtering, pagination, off
 The important principle is:
 
 **Retrieve only the records required for the current operation instead of loading all available records into memory.**
-
----
-
-## 🏗️ Architecture :
-
-The solution uses a three-tier architecture:
-
-```text
-🖥️ Presentation Layer
-        ↓
-🧠 Business Layer
-        ↓
-🗄️ Data Access Layer
-        ↓
-💾 SQL Server Database
-```
-
-Each layer has a defined responsibility.
-
-### 🖥️ Presentation Layer :
-
-The presentation layer contains the Windows Forms screens, reusable controls, navigation, user interaction, searching, filtering, and presentation logic.
-
-It is responsible for communicating with the user and displaying application results.
-
-It should not contain SQL queries or central business rules.
-
-### 🧠 Business Layer :
-
-The business layer contains the domain objects and business rules that control the licensing workflow.
-
-It is responsible for:
-
-* Validation
-* Business rules
-* Workflow decisions
-* Domain operations
-* Coordinating persistence operations
-
-Examples include validating applicant age, checking duplicate applications, verifying test progression, and determining whether an operation can continue.
-
-### 🗄️ Data Access Layer :
-
-The data-access layer contains the SQL Server data-access classes and CRUD operations.
-
-It is responsible for:
-
-* Database communication
-* SQL queries
-* Data retrieval
-* Data insertion
-* Data updates
-* Data deletion
-* Controlled record loading
-
-The data-access layer is also the appropriate place to implement database-side filtering and progressive loading strategies.
 
 ---
 
