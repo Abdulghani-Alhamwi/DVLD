@@ -35,9 +35,13 @@ namespace DVLDBusinessLayer
             _CurrentMode = enMode.Update;
             
         }
-        public static DataTable GetLDLApplications(byte WantedNumberOfRecords, int LastLowestBroughtLDLApplicationID = -1)
+        public static DataTable GetLDLApplications(byte WantedNumberOfRecords)
         {
-            return clsLDLApplicationsData.GetLDLApplications(WantedNumberOfRecords,LastLowestBroughtLDLApplicationID);
+            return clsLDLApplicationsData.GetLDLApplications(WantedNumberOfRecords,-1);
+        }
+        public static DataTable GetLDLApplications(byte WantedNumberOfRecords, int LastLowestBroughtLDLApplicationID)
+        {
+            return clsLDLApplicationsData.GetLDLApplications(WantedNumberOfRecords, LastLowestBroughtLDLApplicationID);
         }
         public static uint GetTotalLDLApplicationsCount()
         {
@@ -129,12 +133,17 @@ namespace DVLDBusinessLayer
             return clsLDLApplicationsData.GetLDLApplicationID(ApplicantPersonID);
     }
 
-    public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtLDLAppID = -1)
+    public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
     {
-        return clsLDLApplicationsData.GetFilteredData(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,WildChar,LastLowestBroughtLDLAppID);
+        return clsLDLApplicationsData.GetFilteredData(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,WildChar,-1);
     }
 
-    public static sbyte GetPassedTests(int LDLApplicationID)
+   public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtLDLAppID, char? WildChar = null)
+   {
+       return clsLDLApplicationsData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar, LastLowestBroughtLDLAppID);
+   }
+
+        public static sbyte GetPassedTests(int LDLApplicationID)
     {
             return clsLDLApplicationsData.GetPassedTests(LDLApplicationID);
     }

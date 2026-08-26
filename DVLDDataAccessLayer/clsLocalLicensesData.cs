@@ -1,10 +1,50 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace DVLDDataAccessLayer
 {
-    public class clsLicensesData
+    public class clsLocalLicensesData
     {
+        public static DataTable GetLocalLicenses(byte WantedNumberOfRecords,int LastLowstBroughtLicID = -1)
+        {
+            DataTable dtLicensesData = null;
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT TOP(@WantedNumberOfRecords) LicenseID AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
+                             IssueDate AS [Issue Date],ExpirationDate AS [Expiration Date],IsActive AS [Is Active]
+                             FROM Licenses INNER JOIN LicenseClasses ON Licenses.LicenseClassID = LicenseClasses.LicenseClassID";
+
+            if (LastLowstBroughtLicID != -1)
+                query += " WHERE LicenseID < @LastLowstBroughtLicID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+
+            if (LastLowstBroughtLicID != -1)
+                command.Parameters.AddWithValue("@LastLowstBroughtLicID", LastLowstBroughtLicID);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if(reader.HasRows)
+                {
+                    dtLicensesData = new DataTable();
+                    dtLicensesData.Load(reader);
+                }
+                reader.Close();
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return dtLicensesData;
+        }
         public static int IssueDrivingLicense(int ApplicationID ,int DriverID,byte LicenseClassID,DateTime IssueDate , DateTime ExpirationDate,string Notes,decimal PaidFees,bool IsActive,byte IssueReason,int CreatedByUserID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);

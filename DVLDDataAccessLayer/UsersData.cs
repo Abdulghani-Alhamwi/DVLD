@@ -11,7 +11,7 @@ namespace DVLDDataAccessLayer
                                                   + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name] , UserName,IsActive AS [Is Active]
                                                    From Users INNER JOIN People ON Users.PersonID = People.PersonID";
 
-        public static DataTable GetAllUsersInfo(byte WantedNumberOfRecords, int LastLowestBroughtUserID = -1)
+        public static DataTable GetUsersInfo(byte WantedNumberOfRecords, int LastLowestBroughtUserID = -1)
         {
             DataTable dtUsers = null;
 

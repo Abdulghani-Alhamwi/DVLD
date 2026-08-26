@@ -36,7 +36,7 @@ namespace DVLDPresentationLayer
         bool _AllowDataLoading;
         private void frmPeopleManagement_Load(object sender, EventArgs e)
         {
-            DataTable dtPeople = clsPerson.GetAllPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
+            DataTable dtPeople = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
             
             if (dtPeople != null)
             {
@@ -74,7 +74,7 @@ namespace DVLDPresentationLayer
                 txtFilter.Focus();
 
                 if (_AllowDataLoading)
-                    dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
+                    dgvPeople.DataSource = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
                 else
                     _AllowDataLoading = true;
             }
@@ -82,7 +82,7 @@ namespace DVLDPresentationLayer
             {
                 txtFilter.Visible = false;
 
-                dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
+                dgvPeople.DataSource = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
                 _AllowDataLoading = false;
             }
                 txtFilter.Text = "";
@@ -103,10 +103,10 @@ namespace DVLDPresentationLayer
             else
             {
                 if (cbFilterBy.SelectedItem.ToString() == "Person ID" || cbFilterBy.SelectedItem.ToString() == "Phone")
-                    dtPeopleInfo = clsPerson.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null, (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value);
+                    dtPeopleInfo = clsPerson.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value, null);
 
                 else
-                    dtPeopleInfo = clsPerson.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value);
+                    dtPeopleInfo = clsPerson.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value, '%');
             }
 
                 dgvPeople.DataSource = dtPeopleInfo;
@@ -122,7 +122,7 @@ namespace DVLDPresentationLayer
             if (txtFilter.Text != "")
                 _AddFilteredData(null);
             else
-                dgvPeople.DataSource = clsPerson.GetAllPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
+                dgvPeople.DataSource = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
         }
         private void txtFilter_KeyDown(object sender, KeyEventArgs e)
         {
@@ -182,7 +182,8 @@ namespace DVLDPresentationLayer
              if (result == DialogResult.OK)
              {
                  int[] SelectedRowsIndex = new int[dgvPeople.SelectedRows.Count];
-                 for (byte i = 0; i < dgvPeople.SelectedRows.Count; i++)
+                 byte TotalDeletedRecords = 0;
+                for (byte i = 0; i < dgvPeople.SelectedRows.Count; i++)
                  {
                      if (!clsPerson.DeletePerson(Convert.ToInt32(dgvPeople.SelectedRows[i].Cells["Person ID"].Value)))
                      {
@@ -190,11 +191,14 @@ namespace DVLDPresentationLayer
                          SelectedRowsIndex[i] = -1;
                      }
                      else
-                         SelectedRowsIndex[i] = dgvPeople.SelectedRows[i].Index;
+                    {
+                        SelectedRowsIndex[i] = dgvPeople.SelectedRows[i].Index;
+                        TotalDeletedRecords++;
+                    }
                  }
                  clsUtility.DeleteSelectedRowsFromView(dgvPeople,SelectedRowsIndex);
-                 lblRecordsNumber.Text = clsPerson.GetTotalPeopleCount().ToString();
-             }
+                 lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) - TotalDeletedRecords).ToString();
+            }
         }
 
         private void _EditDataRowInDGV(ref object[] NewValues, int RowIndex)
@@ -278,7 +282,7 @@ namespace DVLDPresentationLayer
 
             else
             {
-                 NewRows = clsPerson.GetAllPeopleInfo(clsUtility.WantedNumOfRowsFromDB, (int)dgvPeople.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value)?.Select();
+                 NewRows = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB, (int)dgvPeople.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value)?.Select();
 
                 if (NewRows != null)
                     clsUtility.AddNewRowsToDGV(dgvPeople, (DataTable)dgvPeople.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvPeople));

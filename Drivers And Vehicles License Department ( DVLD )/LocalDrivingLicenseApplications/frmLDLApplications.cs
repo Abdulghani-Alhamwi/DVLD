@@ -157,6 +157,7 @@ namespace DVLDPresentationLayer
                 if (result == DialogResult.OK)
                 {
                 int[] SelectedRowsIndex = new int[dgvLDLApplications.SelectedRows.Count];
+                byte TotalDeletedRecords = 0;
 
                 for (short i = 0; i < dgvLDLApplications.SelectedRows.Count; i++)
                     {
@@ -164,8 +165,8 @@ namespace DVLDPresentationLayer
 
                     if (!clsLDLApplication.DeleteLDLApplication((int)dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value, ApplicationID))
                     {
-                      MessageBox.Show($"Local driving license application who has ID : {Convert.ToInt32(dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                      SelectedRowsIndex[i] = -1;
+                        MessageBox.Show($"Local driving license application who has ID : {Convert.ToInt32(dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        SelectedRowsIndex[i] = -1;
                     }
                     else if (dgvLDLApplications.SelectedRows[i].Cells["Status"].Value.ToString() == "Completed")
                     {
@@ -173,11 +174,14 @@ namespace DVLDPresentationLayer
                         continue;
                     }
                     else
+                    {
                         SelectedRowsIndex[i] = dgvLDLApplications.SelectedRows[i].Index;
+                        TotalDeletedRecords++;
+                    }
                     }
                     clsUtility.DeleteSelectedRowsFromView(dgvLDLApplications, SelectedRowsIndex);
-                    lblRecordsNumber.Text = clsLDLApplication.GetTotalLDLApplicationsCount().ToString();
-                }
+                    lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) - TotalDeletedRecords).ToString();
+            }
         }
         private void tsmiCancelApplication_Click(object sender, EventArgs e)
         {
@@ -214,13 +218,13 @@ namespace DVLDPresentationLayer
             else
             {
                 if (cbFilterBy.SelectedItem.ToString() == "L.D.L.AppID")
-                    dtLDLApplicationsInfo = clsLDLApplication.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null, (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
+                    dtLDLApplicationsInfo = clsLDLApplication.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value, null);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Status")
-                    dtLDLApplicationsInfo = clsLDLApplication.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(),cbStatus.SelectedItem.ToString(), null, (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
+                    dtLDLApplicationsInfo = clsLDLApplication.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(),cbStatus.SelectedItem.ToString(), (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value, null);
 
                 else
-                    dtLDLApplicationsInfo = clsLDLApplication.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value);
+                    dtLDLApplicationsInfo = clsLDLApplication.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvLDLApplications?.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value, '%');
             }
 
                 dgvLDLApplications.DataSource = dtLDLApplicationsInfo;
@@ -429,7 +433,7 @@ namespace DVLDPresentationLayer
                 return;
             }
 
-            frmLicenseInfo frm = new frmLicenseInfo(clsLicense.GetLicenseID(clsLDLApplication.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value)));
+            frmLicenseInfo frm = new frmLicenseInfo(clsLocalLicense.GetLicenseID(clsLDLApplication.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value)));
             frm.ShowDialog();
         }
     }

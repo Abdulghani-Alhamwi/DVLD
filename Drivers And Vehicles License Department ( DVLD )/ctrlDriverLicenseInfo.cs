@@ -15,7 +15,7 @@ namespace DVLDPresentationLayer
 
         internal void LoadDriverLicenseInfo(int LicenseID)
         {
-            clsLicense License = clsLicense.Find(LicenseID);
+            clsLocalLicense License = clsLocalLicense.Find(LicenseID);
 
             if(License != null)
             {

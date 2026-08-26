@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Data;
 using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
 {
-    public class clsLicense
+    public class clsLocalLicense
     {
         public enum enIssueReason : byte { FirstTime = 1 , Renew = 2 , ReplacementForDamaged = 3 , ReplacementForLost = 4}
         private enum _enMode : byte { AddNew = 0 , Update = 1 }
@@ -22,7 +23,7 @@ namespace DVLDBusinessLayer
         public enIssueReason IssueReason {get;set;}
         public int CreatedByUserID{get;set;}
 
-        public clsLicense(int ApplicationID, int DriverID, byte LicenseClassID, DateTime IssueDate, DateTime ExpirationDate, string Notes, decimal PaidFees, bool IsActive, enIssueReason IssueReason, int CreatedByUserID)
+        public clsLocalLicense(int ApplicationID, int DriverID, byte LicenseClassID, DateTime IssueDate, DateTime ExpirationDate, string Notes, decimal PaidFees, bool IsActive, enIssueReason IssueReason, int CreatedByUserID)
         {
             this.LicenseID = -1;
             this.ApplicationID = ApplicationID;
@@ -37,7 +38,7 @@ namespace DVLDBusinessLayer
             this.CreatedByUserID = CreatedByUserID;
         }
 
-        private clsLicense(int LicenseID, int ApplicationID, int DriverID, byte LicenseClassID, DateTime IssueDate, DateTime ExpirationDate, string Notes, decimal PaidFees, bool IsActive, enIssueReason IssueReason, int CreatedByUserID)
+        private clsLocalLicense(int LicenseID, int ApplicationID, int DriverID, byte LicenseClassID, DateTime IssueDate, DateTime ExpirationDate, string Notes, decimal PaidFees, bool IsActive, enIssueReason IssueReason, int CreatedByUserID)
         {
             this.LicenseID = LicenseID;
             this.ApplicationID = ApplicationID;
@@ -53,6 +54,15 @@ namespace DVLDBusinessLayer
             _CurrentMode = _enMode.Update;
         }
 
+        public static DataTable GetLocalLicenses(byte WantedNumberOfRecords)
+        {
+            return clsLocalLicensesData.GetLocalLicenses(WantedNumberOfRecords, -1);
+        }
+
+        public static DataTable GetLocalLicenses(byte WantedNumberOfRecords, int LastLowstBroughtLicID)
+        {
+            return clsLocalLicensesData.GetLocalLicenses(WantedNumberOfRecords, LastLowstBroughtLicID);
+        }
         public string GetIssueReasonAsString()
         {
             if (LicenseID != -1)
@@ -112,7 +122,7 @@ namespace DVLDBusinessLayer
         }
         private bool _IssueDrivingLicense()
         {
-            LicenseID = clsLicensesData.IssueDrivingLicense(ApplicationID, DriverID, LicenseClassID, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, _GetIssueReasonAsNumber(IssueReason), CreatedByUserID);
+            LicenseID = clsLocalLicensesData.IssueDrivingLicense(ApplicationID, DriverID, LicenseClassID, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, _GetIssueReasonAsNumber(IssueReason), CreatedByUserID);
 
             return (LicenseID != -1);
         }
@@ -131,7 +141,7 @@ namespace DVLDBusinessLayer
                 return false;
         }
 
-        public static clsLicense Find(int LicenseID)
+        public static clsLocalLicense Find(int LicenseID)
         {
             int ApplicationID = -1, DriverID = -1, CreatedByUserID = -1;
             byte LicenseClassID = 0;
@@ -141,10 +151,10 @@ namespace DVLDBusinessLayer
             decimal PaidFees = -1;
             bool IsActive = false;
 
-            if (clsLicensesData.Find(LicenseID,ref ApplicationID, ref DriverID, ref LicenseClassID, ref IssueDate,
+            if (clsLocalLicensesData.Find(LicenseID,ref ApplicationID, ref DriverID, ref LicenseClassID, ref IssueDate,
                 ref ExpirationDate, ref Notes, ref PaidFees, ref IsActive, ref IssueReason, ref CreatedByUserID))
             {
-                return new clsLicense(LicenseID, ApplicationID, DriverID, LicenseClassID, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, _GetIssueReasonAsEnum(IssueReason), CreatedByUserID);
+                return new clsLocalLicense(LicenseID, ApplicationID, DriverID, LicenseClassID, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, _GetIssueReasonAsEnum(IssueReason), CreatedByUserID);
             }
 
             else
@@ -153,7 +163,7 @@ namespace DVLDBusinessLayer
 
         public static int GetLicenseID(int ApplicationID)
         {
-            return clsLicensesData.GetLicenseID(ApplicationID);
+            return clsLocalLicensesData.GetLicenseID(ApplicationID);
         }
     }
 }

@@ -22,24 +22,10 @@ namespace DVLDPresentationLayer
             this.Close();
         }
 
-        private void _RefreshTestTypesView()
-        {
-            dgvTestTypes.DataSource = clsTestType.GetTestTypes();
-            _SetDataViewColumnsWidth();
-        }
-
-        private void _SetDataViewColumnsWidth()
-        {
-            dgvTestTypes.Columns["ID"].FillWeight = 100;
-            dgvTestTypes.Columns["Title"].FillWeight = 250  ;
-            dgvTestTypes.Columns["Description"].FillWeight = 350;
-            dgvTestTypes.Columns["Fees"].FillWeight = 150;
-        } 
         private void frmManageTestTypes_Load(object sender, EventArgs e)
         {
             dgvTestTypes.DataSource = clsTestType.GetTestTypes();
             lblRecordsNumber.Text = dgvTestTypes.Rows.Count.ToString();
-            //_SetDataViewColumnsWidth();
         }
 
         private void EditDGVRowData(object[] NewValues, byte DGVRowIndex)
@@ -59,9 +45,7 @@ namespace DVLDPresentationLayer
 
                 frm.AfterUpdatingInfo += EditDGVRowData;
 
-            frm.ShowDialog();
-
-            _RefreshTestTypesView();
+                frm.ShowDialog();
             }
         }
 

@@ -6,11 +6,12 @@ namespace DVLDDataAccessLayer
 {
     public class clsPeopleData
     {
-        private static string ColumnNamesQuery = @"SELECT TOP (@WantedNumberOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
-                                                   FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
-                                                   Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-                                                   FORMAT(DateOfBirth , 'dd/MM/yyyy') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
-                                                   FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
+        private static string ColumnNamesQuery =
+            @"SELECT TOP (@WantedNumberOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
+              FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
+              Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+              FORMAT(DateOfBirth , 'dd/MM/yyyy') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
+              FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
 
         public static int AddNewPerson(string NationalNo, string FirstName,
                        string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
@@ -154,7 +155,7 @@ namespace DVLDDataAccessLayer
             }
             return (AffectedRows > 0);
         }
-        public static DataTable GetAllPeopleInfo(byte WantedNumberOfRecords,int LastLowestbroughtPersonID = -1)
+        public static DataTable GetPeopleInfo(byte WantedNumberOfRecords,int LastLowestbroughtPersonID = -1)
         {
             DataTable dtPeople = null;
 

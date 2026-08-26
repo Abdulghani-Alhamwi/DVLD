@@ -9,7 +9,7 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
     {
         internal event Action<int> AfterLicenseIssuance;
 
-        clsLicense _License;
+        clsLocalLicense _License;
 
         int _LDLAppDGVRowIndex;
         public frmIssueDrivingLicense(int LDLAppID,int DGVRowIndex)
@@ -22,7 +22,7 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
 
         private bool _SaveLicenseInfo(clsLDLApplication LDLApplication ,int DriverID)
         {
-                  _License = new clsLicense(
+                  _License = new clsLocalLicense(
                   ApplicationID: LDLApplication.ApplicationID,
                   DriverID: DriverID,
                   LicenseClassID: LDLApplication.LicenseClass.ID,
@@ -31,7 +31,7 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
                   Notes: (txtNotes.Text != "") ? txtNotes.Text : null,
                   PaidFees: clsLicenseClass.GetLicenseClassFees(LDLApplication.LicenseClass.ID),
                   IsActive: true,
-                  IssueReason: clsLicense.enIssueReason.FirstTime,
+                  IssueReason: clsLocalLicense.enIssueReason.FirstTime,
                   CreatedByUserID: clsGlobalSettings.CurrentUserID
                   );
 

@@ -35,9 +35,14 @@ namespace DVLDBusinessLayer
             this.IsActive = IsActive;
             _CurrentMode = enMode.Update;
         }
-        public static DataTable GetAllUsersInfo(byte WantedNumberOfRecords, int LastLowestBroughtUserID = -1)
+        public static DataTable GetUsersInfo(byte WantedNumberOfRecords)
         {
-            return clsUsersData.GetAllUsersInfo(WantedNumberOfRecords,LastLowestBroughtUserID);
+            return clsUsersData.GetUsersInfo(WantedNumberOfRecords,-1);
+        }
+
+        public static DataTable GetUsersInfo(byte WantedNumberOfRecords, int LastLowestBroughtUserID)
+        {
+            return clsUsersData.GetUsersInfo(WantedNumberOfRecords, LastLowestBroughtUserID);
         }
 
         private bool _AddNewUser()
@@ -124,7 +129,12 @@ namespace DVLDBusinessLayer
             return clsUsersData.GetUserName(UserID);
         }
 
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
+        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
+        {
+            return clsUsersData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar, -1);
+        }
+
+        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestbroughtUserID, char? WildChar = null)
         {
             return clsUsersData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar, LastLowestbroughtUserID);
         }

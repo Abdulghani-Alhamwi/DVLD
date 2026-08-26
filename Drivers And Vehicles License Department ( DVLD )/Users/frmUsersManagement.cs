@@ -59,7 +59,7 @@ namespace DVLDPresentationLayer
         {
             if (_AllowDataLoading)
             {
-                dgvUsers.DataSource = clsUser.GetAllUsersInfo(clsUtility.WantedNumOfRowsFromDB);
+                dgvUsers.DataSource = clsUser.GetUsersInfo(clsUtility.WantedNumOfRowsFromDB);
                 _DecryptUsersNames((DataTable)dgvUsers.DataSource);
 
             }
@@ -73,7 +73,7 @@ namespace DVLDPresentationLayer
             {
                 txtFilter.Visible = false;
                 cbIsActive.Visible = false;
-                dgvUsers.DataSource = clsUser.GetAllUsersInfo(clsUtility.WantedNumOfRowsFromDB);
+                dgvUsers.DataSource = clsUser.GetUsersInfo(clsUtility.WantedNumOfRowsFromDB);
                 _DecryptUsersNames((DataTable)dgvUsers.DataSource);
                 _AllowDataLoading = false;
             }
@@ -121,7 +121,7 @@ namespace DVLDPresentationLayer
                 _AddFilteredData(null);
             else
             {
-                DataTable dtUsersInfo = clsUser.GetAllUsersInfo(clsUtility.WantedNumOfRowsFromDB);
+                DataTable dtUsersInfo = clsUser.GetUsersInfo(clsUtility.WantedNumOfRowsFromDB);
                 _DecryptUsersNames(dtUsersInfo);
                 dgvUsers.DataSource = dtUsersInfo;
             }
@@ -176,19 +176,23 @@ namespace DVLDPresentationLayer
                 if (result == DialogResult.OK)
                 {
                     int[] SelectedRowsIndex = new int[dgvUsers.SelectedRows.Count];
+                    byte TotalDeletedRecords = 0;
                     for (byte i = 0; i < dgvUsers.SelectedRows.Count; i++)
                     {
-                        if (!clsUser.DeleteUser((int)dgvUsers.SelectedRows[i].Cells["User ID"].Value))
-                        {
-                            MessageBox.Show($"User who has ID : {Convert.ToInt32(dgvUsers.SelectedRows[i].Cells["User ID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            SelectedRowsIndex[i] = -1;
-                        }
-                        else
-                            SelectedRowsIndex[i] = dgvUsers.SelectedRows[i].Index;
+                    if (!clsUser.DeleteUser((int)dgvUsers.SelectedRows[i].Cells["User ID"].Value))
+                    {
+                        MessageBox.Show($"User who has ID : {Convert.ToInt32(dgvUsers.SelectedRows[i].Cells["User ID"].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        SelectedRowsIndex[i] = -1;
+                    }
+                    else
+                    {
+                        SelectedRowsIndex[i] = dgvUsers.SelectedRows[i].Index;
+                        TotalDeletedRecords++;
+                    }
 
                     }
                     clsUtility.DeleteSelectedRowsFromView(dgvUsers, SelectedRowsIndex);
-                    lblRecordsNumber.Text = clsUser.GetTotalUsersCount().ToString();
+                    lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) -TotalDeletedRecords).ToString();
                 }
             }
 
@@ -290,7 +294,7 @@ namespace DVLDPresentationLayer
             else
             {
                 if (cbFilterBy.SelectedItem.ToString() == "User ID" || cbFilterBy.SelectedItem.ToString() == "Person ID")
-                    dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null, (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value);
+                    dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,(int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value,null);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "UserName")
                     dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), clsUtility.EncryptUserName(txtFilter.Text));
@@ -299,7 +303,7 @@ namespace DVLDPresentationLayer
                     dtUsersInfo = _FilterOnIsActive();
 
                 else
-                    dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%', (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value);
+                    dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value, '%');
             }
 
                 dgvUsers.DataSource = dtUsersInfo;
@@ -328,7 +332,7 @@ namespace DVLDPresentationLayer
 
             else
             {
-                NewRows = clsUser.GetAllUsersInfo(clsUtility.WantedNumOfRowsFromDB, (int)dgvUsers.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value)?.Select();
+                NewRows = clsUser.GetUsersInfo(clsUtility.WantedNumOfRowsFromDB, (int)dgvUsers.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value)?.Select();
 
                 if (NewRows != null)
                     clsUtility.AddNewRowsToDGV(dgvUsers, (DataTable)dgvUsers.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvUsers));
