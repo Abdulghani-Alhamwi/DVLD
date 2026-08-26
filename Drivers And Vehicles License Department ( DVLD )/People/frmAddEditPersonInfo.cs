@@ -268,7 +268,7 @@ namespace DVLDPresentationLayer
             DateTime MaxdateOfBirth = DateTime.Now.AddYears(-18);
 
             dtpDateOfBirth.Format = DateTimePickerFormat.Custom;
-            dtpDateOfBirth.CustomFormat = clsUtility.DateCustomFormat;
+            dtpDateOfBirth.CustomFormat = clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.NumericFormat);
             dtpDateOfBirth.Value = MaxdateOfBirth;
             dtpDateOfBirth.MaxDate = MaxdateOfBirth;
             dtpDateOfBirth.MinDate = new DateTime(1935, 1, 1);

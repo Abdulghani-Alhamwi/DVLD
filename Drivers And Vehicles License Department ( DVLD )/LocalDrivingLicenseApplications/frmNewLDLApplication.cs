@@ -233,7 +233,7 @@ namespace DVLDPresentationLayer.Core
 
                         object[] NewValues = new object[] { LDLApplication.LDLAppID, LDLApplication.LicenseClass.ClassName,
                             clsPerson.GetNationalNumber(LDLApplication.ApplicantPersonID), clsPerson.GetFullName(LDLApplication.ApplicantPersonID),
-                        LDLApplication.ApplicationDate.ToString(clsUtility.DateTimeCustomFormat),clsTest.GetTotalPassedTestsCount(LDLApplication.LDLAppID),LDLApplication.GetApplicationStatus()};
+                        LDLApplication.ApplicationDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)),clsTest.GetTotalPassedTestsCount(LDLApplication.LDLAppID),LDLApplication.GetApplicationStatus()};
                         
                         OnAddedLDLApplication?.Invoke(ref NewValues);
                         OnEditedLDLApplication?.Invoke(ref NewValues, _DGVRowIndex);

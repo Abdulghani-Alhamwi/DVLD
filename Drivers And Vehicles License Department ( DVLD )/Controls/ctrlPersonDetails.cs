@@ -45,7 +45,6 @@ namespace DVLDPresentationLayer
             else
             {
                 _ShowDefaultDetails();
-
                 MessageBox.Show($"No Person With Person ID = {PersonID}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }

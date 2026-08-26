@@ -39,21 +39,10 @@
             this.tsSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsLDLApplications = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmiShowApplicationDetails = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiEditApplication = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiCancelApplication = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiScheduleTests = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiScheduleVisionTest = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiScheduleWrittenTest = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiScheduleStreetTest = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiIssueDLFirstTime = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiShowLicense = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiShowPersonLicenseHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvLDLApplications = new System.Windows.Forms.DataGridView();
             this.lblLDLApplicationsTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
@@ -63,6 +52,17 @@
             this.btnAddLDLApplication = new System.Windows.Forms.Button();
             this.pbManageLDLApplications = new System.Windows.Forms.PictureBox();
             this.btnClose = new System.Windows.Forms.Button();
+            this.tsmiShowApplicationDetails = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiEditApplication = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCancelApplication = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiScheduleTests = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiScheduleVisionTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiScheduleWrittenTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiScheduleStreetTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiIssueDLFirstTime = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiShowLicense = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiShowPersonLicenseHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsLDLApplications.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLDLApplications)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLocalLicense)).BeginInit();
@@ -171,143 +171,25 @@
             this.cmsLDLApplications.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLDLApplications_Opening);
             this.cmsLDLApplications.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsLDLApplications_Paint);
             // 
-            // tsmiShowApplicationDetails
-            // 
-            this.tsmiShowApplicationDetails.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiShowApplicationDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiShowApplicationDetails.Image = global::DVLDPresentationLayer.Properties.Resources.PersonDetails_32;
-            this.tsmiShowApplicationDetails.Name = "tsmiShowApplicationDetails";
-            this.tsmiShowApplicationDetails.Padding = new System.Windows.Forms.Padding(0);
-            this.tsmiShowApplicationDetails.Size = new System.Drawing.Size(360, 36);
-            this.tsmiShowApplicationDetails.Text = "Show Application Details";
-            // 
-            // tsmiEditApplication
-            // 
-            this.tsmiEditApplication.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiEditApplication.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiEditApplication.Image = global::DVLDPresentationLayer.Properties.Resources.edit_32;
-            this.tsmiEditApplication.Name = "tsmiEditApplication";
-            this.tsmiEditApplication.Padding = new System.Windows.Forms.Padding(0);
-            this.tsmiEditApplication.Size = new System.Drawing.Size(360, 36);
-            this.tsmiEditApplication.Text = "Edit Application";
-            this.tsmiEditApplication.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.tsmiEditApplication.Click += new System.EventHandler(this.tsmiEditApplication_Click);
-            // 
-            // tsmiDelete
-            // 
-            this.tsmiDelete.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiDelete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiDelete.Image = global::DVLDPresentationLayer.Properties.Resources.Delete_32_2;
-            this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Padding = new System.Windows.Forms.Padding(0);
-            this.tsmiDelete.Size = new System.Drawing.Size(360, 36);
-            this.tsmiDelete.Text = "Delete Application";
-            this.tsmiDelete.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsmiDelete.Click += new System.EventHandler(this.tsmiDelete_Click);
-            // 
-            // tsmiCancelApplication
-            // 
-            this.tsmiCancelApplication.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiCancelApplication.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiCancelApplication.Image = global::DVLDPresentationLayer.Properties.Resources.Delete_32;
-            this.tsmiCancelApplication.Name = "tsmiCancelApplication";
-            this.tsmiCancelApplication.Padding = new System.Windows.Forms.Padding(0);
-            this.tsmiCancelApplication.Size = new System.Drawing.Size(360, 36);
-            this.tsmiCancelApplication.Text = "Cancel Application";
-            this.tsmiCancelApplication.Click += new System.EventHandler(this.tsmiCancelApplication_Click);
-            // 
             // tsSeparator3
             // 
             this.tsSeparator3.Name = "tsSeparator3";
             this.tsSeparator3.Size = new System.Drawing.Size(357, 6);
-            // 
-            // tsmiScheduleTests
-            // 
-            this.tsmiScheduleTests.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiScheduleVisionTest,
-            this.tsmiScheduleWrittenTest,
-            this.tsmiScheduleStreetTest});
-            this.tsmiScheduleTests.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiScheduleTests.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiScheduleTests.Image = global::DVLDPresentationLayer.Properties.Resources.Schedule_Test_32;
-            this.tsmiScheduleTests.Name = "tsmiScheduleTests";
-            this.tsmiScheduleTests.Padding = new System.Windows.Forms.Padding(0);
-            this.tsmiScheduleTests.Size = new System.Drawing.Size(360, 36);
-            this.tsmiScheduleTests.Text = "Schedule Tests";
-            // 
-            // tsmiScheduleVisionTest
-            // 
-            this.tsmiScheduleVisionTest.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiScheduleVisionTest.Image = global::DVLDPresentationLayer.Properties.Resources.Vision_Test_32;
-            this.tsmiScheduleVisionTest.Name = "tsmiScheduleVisionTest";
-            this.tsmiScheduleVisionTest.Size = new System.Drawing.Size(253, 26);
-            this.tsmiScheduleVisionTest.Text = "Schedule Vision Test";
-            this.tsmiScheduleVisionTest.Click += new System.EventHandler(this.tsmiScheduleVisionTest_Click);
-            // 
-            // tsmiScheduleWrittenTest
-            // 
-            this.tsmiScheduleWrittenTest.Enabled = false;
-            this.tsmiScheduleWrittenTest.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiScheduleWrittenTest.Image = global::DVLDPresentationLayer.Properties.Resources.Written_Test_32;
-            this.tsmiScheduleWrittenTest.Name = "tsmiScheduleWrittenTest";
-            this.tsmiScheduleWrittenTest.Size = new System.Drawing.Size(253, 26);
-            this.tsmiScheduleWrittenTest.Text = "Schedule Written Test";
-            this.tsmiScheduleWrittenTest.Click += new System.EventHandler(this.tsmiScheduleWrittenTest_Click);
-            // 
-            // tsmiScheduleStreetTest
-            // 
-            this.tsmiScheduleStreetTest.Enabled = false;
-            this.tsmiScheduleStreetTest.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiScheduleStreetTest.Image = global::DVLDPresentationLayer.Properties.Resources.Street_Test_32;
-            this.tsmiScheduleStreetTest.Name = "tsmiScheduleStreetTest";
-            this.tsmiScheduleStreetTest.Size = new System.Drawing.Size(253, 26);
-            this.tsmiScheduleStreetTest.Text = "Schedule Street Test";
-            this.tsmiScheduleStreetTest.Click += new System.EventHandler(this.tsmiScheduleStreetTest_Click);
             // 
             // tsSeparator4
             // 
             this.tsSeparator4.Name = "tsSeparator4";
             this.tsSeparator4.Size = new System.Drawing.Size(357, 6);
             // 
-            // tsmiIssueDLFirstTime
-            // 
-            this.tsmiIssueDLFirstTime.Enabled = false;
-            this.tsmiIssueDLFirstTime.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiIssueDLFirstTime.Image = global::DVLDPresentationLayer.Properties.Resources.IssueDrivingLicense_32;
-            this.tsmiIssueDLFirstTime.Name = "tsmiIssueDLFirstTime";
-            this.tsmiIssueDLFirstTime.Padding = new System.Windows.Forms.Padding(0);
-            this.tsmiIssueDLFirstTime.Size = new System.Drawing.Size(360, 36);
-            this.tsmiIssueDLFirstTime.Text = "Issue Driving License (First Time)";
-            this.tsmiIssueDLFirstTime.Click += new System.EventHandler(this.tsmiIssueDLFirstTime_Click);
-            // 
             // tsSeparator5
             // 
             this.tsSeparator5.Name = "tsSeparator5";
             this.tsSeparator5.Size = new System.Drawing.Size(357, 6);
             // 
-            // tsmiShowLicense
-            // 
-            this.tsmiShowLicense.Enabled = false;
-            this.tsmiShowLicense.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiShowLicense.Image = global::DVLDPresentationLayer.Properties.Resources.License_View_32;
-            this.tsmiShowLicense.Name = "tsmiShowLicense";
-            this.tsmiShowLicense.Padding = new System.Windows.Forms.Padding(0);
-            this.tsmiShowLicense.Size = new System.Drawing.Size(360, 36);
-            this.tsmiShowLicense.Text = "Show License";
-            // 
             // tsSeparator6
             // 
             this.tsSeparator6.Name = "tsSeparator6";
             this.tsSeparator6.Size = new System.Drawing.Size(357, 6);
-            // 
-            // tsmiShowPersonLicenseHistory
-            // 
-            this.tsmiShowPersonLicenseHistory.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiShowPersonLicenseHistory.Image = global::DVLDPresentationLayer.Properties.Resources.PersonLicenseHistory_32;
-            this.tsmiShowPersonLicenseHistory.Name = "tsmiShowPersonLicenseHistory";
-            this.tsmiShowPersonLicenseHistory.Padding = new System.Windows.Forms.Padding(0);
-            this.tsmiShowPersonLicenseHistory.Size = new System.Drawing.Size(360, 36);
-            this.tsmiShowPersonLicenseHistory.Text = "Show Person License History";
             // 
             // dgvLDLApplications
             // 
@@ -466,7 +348,126 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // frmLocalDrivingLicenseApplications
+            // tsmiShowApplicationDetails
+            // 
+            this.tsmiShowApplicationDetails.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiShowApplicationDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.tsmiShowApplicationDetails.Image = global::DVLDPresentationLayer.Properties.Resources.PersonDetails_32;
+            this.tsmiShowApplicationDetails.Name = "tsmiShowApplicationDetails";
+            this.tsmiShowApplicationDetails.Padding = new System.Windows.Forms.Padding(0);
+            this.tsmiShowApplicationDetails.Size = new System.Drawing.Size(360, 36);
+            this.tsmiShowApplicationDetails.Text = "Show Application Details";
+            // 
+            // tsmiEditApplication
+            // 
+            this.tsmiEditApplication.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiEditApplication.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.tsmiEditApplication.Image = global::DVLDPresentationLayer.Properties.Resources.edit_32;
+            this.tsmiEditApplication.Name = "tsmiEditApplication";
+            this.tsmiEditApplication.Padding = new System.Windows.Forms.Padding(0);
+            this.tsmiEditApplication.Size = new System.Drawing.Size(360, 36);
+            this.tsmiEditApplication.Text = "Edit Application";
+            this.tsmiEditApplication.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.tsmiEditApplication.Click += new System.EventHandler(this.tsmiEditApplication_Click);
+            // 
+            // tsmiDelete
+            // 
+            this.tsmiDelete.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiDelete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.tsmiDelete.Image = global::DVLDPresentationLayer.Properties.Resources.Delete_32_2;
+            this.tsmiDelete.Name = "tsmiDelete";
+            this.tsmiDelete.Padding = new System.Windows.Forms.Padding(0);
+            this.tsmiDelete.Size = new System.Drawing.Size(360, 36);
+            this.tsmiDelete.Text = "Delete Application";
+            this.tsmiDelete.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsmiDelete.Click += new System.EventHandler(this.tsmiDelete_Click);
+            // 
+            // tsmiCancelApplication
+            // 
+            this.tsmiCancelApplication.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiCancelApplication.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.tsmiCancelApplication.Image = global::DVLDPresentationLayer.Properties.Resources.Delete_32;
+            this.tsmiCancelApplication.Name = "tsmiCancelApplication";
+            this.tsmiCancelApplication.Padding = new System.Windows.Forms.Padding(0);
+            this.tsmiCancelApplication.Size = new System.Drawing.Size(360, 36);
+            this.tsmiCancelApplication.Text = "Cancel Application";
+            this.tsmiCancelApplication.Click += new System.EventHandler(this.tsmiCancelApplication_Click);
+            // 
+            // tsmiScheduleTests
+            // 
+            this.tsmiScheduleTests.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiScheduleVisionTest,
+            this.tsmiScheduleWrittenTest,
+            this.tsmiScheduleStreetTest});
+            this.tsmiScheduleTests.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiScheduleTests.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.tsmiScheduleTests.Image = global::DVLDPresentationLayer.Properties.Resources.Schedule_Test_32;
+            this.tsmiScheduleTests.Name = "tsmiScheduleTests";
+            this.tsmiScheduleTests.Padding = new System.Windows.Forms.Padding(0);
+            this.tsmiScheduleTests.Size = new System.Drawing.Size(360, 36);
+            this.tsmiScheduleTests.Text = "Schedule Tests";
+            // 
+            // tsmiScheduleVisionTest
+            // 
+            this.tsmiScheduleVisionTest.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiScheduleVisionTest.Image = global::DVLDPresentationLayer.Properties.Resources.Vision_Test_32;
+            this.tsmiScheduleVisionTest.Name = "tsmiScheduleVisionTest";
+            this.tsmiScheduleVisionTest.Size = new System.Drawing.Size(253, 26);
+            this.tsmiScheduleVisionTest.Text = "Schedule Vision Test";
+            this.tsmiScheduleVisionTest.Click += new System.EventHandler(this.tsmiScheduleVisionTest_Click);
+            // 
+            // tsmiScheduleWrittenTest
+            // 
+            this.tsmiScheduleWrittenTest.Enabled = false;
+            this.tsmiScheduleWrittenTest.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiScheduleWrittenTest.Image = global::DVLDPresentationLayer.Properties.Resources.Written_Test_32;
+            this.tsmiScheduleWrittenTest.Name = "tsmiScheduleWrittenTest";
+            this.tsmiScheduleWrittenTest.Size = new System.Drawing.Size(253, 26);
+            this.tsmiScheduleWrittenTest.Text = "Schedule Written Test";
+            this.tsmiScheduleWrittenTest.Click += new System.EventHandler(this.tsmiScheduleWrittenTest_Click);
+            // 
+            // tsmiScheduleStreetTest
+            // 
+            this.tsmiScheduleStreetTest.Enabled = false;
+            this.tsmiScheduleStreetTest.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiScheduleStreetTest.Image = global::DVLDPresentationLayer.Properties.Resources.Street_Test_32;
+            this.tsmiScheduleStreetTest.Name = "tsmiScheduleStreetTest";
+            this.tsmiScheduleStreetTest.Size = new System.Drawing.Size(253, 26);
+            this.tsmiScheduleStreetTest.Text = "Schedule Street Test";
+            this.tsmiScheduleStreetTest.Click += new System.EventHandler(this.tsmiScheduleStreetTest_Click);
+            // 
+            // tsmiIssueDLFirstTime
+            // 
+            this.tsmiIssueDLFirstTime.Enabled = false;
+            this.tsmiIssueDLFirstTime.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiIssueDLFirstTime.Image = global::DVLDPresentationLayer.Properties.Resources.IssueDrivingLicense_32;
+            this.tsmiIssueDLFirstTime.Name = "tsmiIssueDLFirstTime";
+            this.tsmiIssueDLFirstTime.Padding = new System.Windows.Forms.Padding(0);
+            this.tsmiIssueDLFirstTime.Size = new System.Drawing.Size(360, 36);
+            this.tsmiIssueDLFirstTime.Text = "Issue Driving License (First Time)";
+            this.tsmiIssueDLFirstTime.Click += new System.EventHandler(this.tsmiIssueDLFirstTime_Click);
+            // 
+            // tsmiShowLicense
+            // 
+            this.tsmiShowLicense.Enabled = false;
+            this.tsmiShowLicense.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiShowLicense.Image = global::DVLDPresentationLayer.Properties.Resources.License_View_32;
+            this.tsmiShowLicense.Name = "tsmiShowLicense";
+            this.tsmiShowLicense.Padding = new System.Windows.Forms.Padding(0);
+            this.tsmiShowLicense.Size = new System.Drawing.Size(360, 36);
+            this.tsmiShowLicense.Text = "Show License";
+            this.tsmiShowLicense.Click += new System.EventHandler(this.tsmiShowLicense_Click);
+            // 
+            // tsmiShowPersonLicenseHistory
+            // 
+            this.tsmiShowPersonLicenseHistory.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiShowPersonLicenseHistory.Image = global::DVLDPresentationLayer.Properties.Resources.PersonLicenseHistory_32;
+            this.tsmiShowPersonLicenseHistory.Name = "tsmiShowPersonLicenseHistory";
+            this.tsmiShowPersonLicenseHistory.Padding = new System.Windows.Forms.Padding(0);
+            this.tsmiShowPersonLicenseHistory.Size = new System.Drawing.Size(360, 36);
+            this.tsmiShowPersonLicenseHistory.Text = "Show Person License History";
+            // 
+            // frmLDLApplications
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -492,7 +493,7 @@
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "frmLocalDrivingLicenseApplications";
+            this.Name = "frmLDLApplications";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

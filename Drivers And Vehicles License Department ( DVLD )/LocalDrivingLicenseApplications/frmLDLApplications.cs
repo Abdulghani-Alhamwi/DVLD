@@ -420,5 +420,17 @@ namespace DVLDPresentationLayer
             frm.AfterLicenseIssuance += _EditAppStatusToCompleted;
             frm.ShowDialog();
         }
+
+        private void tsmiShowLicense_Click(object sender, EventArgs e)
+        {
+            if (dgvLDLApplications.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("you can select only one local driving licnse application in order to show license.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            frmLicenseInfo frm = new frmLicenseInfo(clsLicense.GetLicenseID(clsLDLApplication.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value)));
+            frm.ShowDialog();
+        }
     }
     }

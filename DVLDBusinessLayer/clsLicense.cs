@@ -53,25 +53,28 @@ namespace DVLDBusinessLayer
             _CurrentMode = _enMode.Update;
         }
 
-        public static string _GetIssueReasonAsString(enIssueReason IssueReason)
+        public string GetIssueReasonAsString()
         {
-            switch(IssueReason)
+            if (LicenseID != -1)
             {
-                case enIssueReason.FirstTime:
-                    return "First Time";
+                switch (IssueReason)
+                {
+                    case enIssueReason.FirstTime:
+                        return "First Time";
 
-                case enIssueReason.Renew:
-                    return "Renew";
+                    case enIssueReason.Renew:
+                        return "Renew";
 
-                case enIssueReason.ReplacementForDamaged:
-                    return "Replacement For Damaged";
+                    case enIssueReason.ReplacementForDamaged:
+                        return "Replacement For Damaged";
 
-                case enIssueReason.ReplacementForLost:
-                    return "Replacement For Lost";
+                    case enIssueReason.ReplacementForLost:
+                        return "Replacement For Lost";
+                }
             }
             return null;
         }
-        private static  byte _GetIssueReasonAsNumber(enIssueReason IssueReason)
+        private static byte _GetIssueReasonAsNumber(enIssueReason IssueReason)
         {
             switch (IssueReason)
             {
@@ -128,9 +131,9 @@ namespace DVLDBusinessLayer
                 return false;
         }
 
-        public static clsLicense Find(int LDLAppID)
+        public static clsLicense Find(int LicenseID)
         {
-            int LicenseID = -1, ApplicationID = -1, DriverID = -1, CreatedByUserID = -1;
+            int ApplicationID = -1, DriverID = -1, CreatedByUserID = -1;
             byte LicenseClassID = 0;
             string Notes = "";
             byte IssueReason =0;
@@ -138,7 +141,7 @@ namespace DVLDBusinessLayer
             decimal PaidFees = -1;
             bool IsActive = false;
 
-            if (clsLicensesData.Find(LDLAppID, ref LicenseID, ref ApplicationID, ref DriverID, ref LicenseClassID, ref IssueDate,
+            if (clsLicensesData.Find(LicenseID,ref ApplicationID, ref DriverID, ref LicenseClassID, ref IssueDate,
                 ref ExpirationDate, ref Notes, ref PaidFees, ref IsActive, ref IssueReason, ref CreatedByUserID))
             {
                 return new clsLicense(LicenseID, ApplicationID, DriverID, LicenseClassID, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, _GetIssueReasonAsEnum(IssueReason), CreatedByUserID);
@@ -146,6 +149,11 @@ namespace DVLDBusinessLayer
 
             else
                 return null;
+        }
+
+        public static int GetLicenseID(int ApplicationID)
+        {
+            return clsLicensesData.GetLicenseID(ApplicationID);
         }
     }
 }

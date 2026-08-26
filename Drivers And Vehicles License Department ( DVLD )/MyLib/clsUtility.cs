@@ -12,13 +12,11 @@ namespace MyLib
 {
     internal class clsUtility
     {
+        public enum enCustomDateFormat : byte { NumericFormat = 1 , DateAppreviatedMonthName = 2 , DateTimeCustomFormat = 3}
+
         public static Color ComboBoxBackColor = Color.FromArgb(228,228,228);
         public static Color ComboBoxItemsBackColor = Color.FromArgb(245,245,245);
         public static Color ComboBoxHighlightedBackColor = Color.FromArgb(221, 232, 240);
-
-        public static string DateCustomFormat = "dd/MM/yyyy";
-
-        public static string DateTimeCustomFormat = "dd/MM/yyyy h:mm tt";
 
         private static string _FeesCustomFormat = "G29";
 
@@ -222,6 +220,28 @@ namespace MyLib
         {
             return Fees.ToString(_FeesCustomFormat);
         }
+
+        /// <summary>
+        /// The enCustomDateFormat.NumericFormat returns format "dd/MM/yyyy",
+        /// The enCustomDateFormat.DateAppreviatedMonthName returns format "d/MMM/yyyy";
+        /// The enCustomDateFormat.DateTimeCustomFormat returns format "dd/MM/yyyy h:mm tt";
+        /// </summary>
+        public static string GetCustomDateFormat(enCustomDateFormat CustomFormat)
+        {
+            switch(CustomFormat)
+            {
+                case enCustomDateFormat.NumericFormat:
+                    return "dd/MM/yyyy";
+
+                case enCustomDateFormat.DateAppreviatedMonthName:
+                    return "d/MMM/yyyy";
+
+                case enCustomDateFormat.DateTimeCustomFormat:
+                    return "dd/MM/yyyy h:mm tt";
+            }
+            return null;
+        }
+
     }
 }
 

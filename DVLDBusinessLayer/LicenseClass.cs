@@ -22,6 +22,10 @@ namespace DVLDBusinessLayer
         {
             return clsLicenseClassesData.GetLicenseClassID(LicenseClassName);
         }
+        public static string GetLicenseClassName(byte LicenseClassID)
+        {
+            return clsLicenseClassesData.GetLicenseClassName(LicenseClassID);
+        }
         public static byte GetLicenseValidityLength(byte LicenseClassID)
         {
             return clsLicenseClassesData.GetLicenseValidityLength(LicenseClassID);

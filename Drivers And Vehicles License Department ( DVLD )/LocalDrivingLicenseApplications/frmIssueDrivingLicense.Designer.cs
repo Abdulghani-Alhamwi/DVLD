@@ -31,16 +31,16 @@
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.txtNotes = new System.Windows.Forms.TextBox();
-            this.pbNotes = new System.Windows.Forms.PictureBox();
             this.lblNotesTitle = new System.Windows.Forms.Label();
-            this.btnIssueLicense = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.pbFees = new System.Windows.Forms.PictureBox();
             this.lblLicenseFees = new System.Windows.Forms.Label();
             this.lblTestFeesTitle = new System.Windows.Forms.Label();
+            this.pbFees = new System.Windows.Forms.PictureBox();
+            this.btnIssueLicense = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.pbNotes = new System.Windows.Forms.PictureBox();
             this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrlDLApplicationInfo();
-            ((System.ComponentModel.ISupportInitialize)(this.pbNotes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFees)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNotes)).BeginInit();
             this.SuspendLayout();
             // 
             // lblFormTitle
@@ -86,18 +86,6 @@
             this.txtNotes.Size = new System.Drawing.Size(994, 168);
             this.txtNotes.TabIndex = 176;
             // 
-            // pbNotes
-            // 
-            this.pbNotes.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbNotes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbNotes.Image = global::DVLDPresentationLayer.Properties.Resources.Notes_32;
-            this.pbNotes.Location = new System.Drawing.Point(133, 593);
-            this.pbNotes.Name = "pbNotes";
-            this.pbNotes.Size = new System.Drawing.Size(32, 32);
-            this.pbNotes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbNotes.TabIndex = 175;
-            this.pbNotes.TabStop = false;
-            // 
             // lblNotesTitle
             // 
             this.lblNotesTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -110,6 +98,44 @@
             this.lblNotesTitle.Size = new System.Drawing.Size(95, 28);
             this.lblNotesTitle.TabIndex = 174;
             this.lblNotesTitle.Text = "Notes :";
+            // 
+            // lblLicenseFees
+            // 
+            this.lblLicenseFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblLicenseFees.AutoSize = true;
+            this.lblLicenseFees.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblLicenseFees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lblLicenseFees.Location = new System.Drawing.Point(256, 540);
+            this.lblLicenseFees.Margin = new System.Windows.Forms.Padding(0);
+            this.lblLicenseFees.Name = "lblLicenseFees";
+            this.lblLicenseFees.Size = new System.Drawing.Size(64, 28);
+            this.lblLicenseFees.TabIndex = 180;
+            this.lblLicenseFees.Text = "????";
+            // 
+            // lblTestFeesTitle
+            // 
+            this.lblTestFeesTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblTestFeesTitle.AutoSize = true;
+            this.lblTestFeesTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblTestFeesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lblTestFeesTitle.Location = new System.Drawing.Point(26, 540);
+            this.lblTestFeesTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblTestFeesTitle.Name = "lblTestFeesTitle";
+            this.lblTestFeesTitle.Size = new System.Drawing.Size(174, 28);
+            this.lblTestFeesTitle.TabIndex = 179;
+            this.lblTestFeesTitle.Text = "License Fees :";
+            // 
+            // pbFees
+            // 
+            this.pbFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbFees.Image = global::DVLDPresentationLayer.Properties.Resources.money_32;
+            this.pbFees.Location = new System.Drawing.Point(211, 538);
+            this.pbFees.Name = "pbFees";
+            this.pbFees.Size = new System.Drawing.Size(32, 32);
+            this.pbFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbFees.TabIndex = 181;
+            this.pbFees.TabStop = false;
             // 
             // btnIssueLicense
             // 
@@ -147,43 +173,17 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // pbFees
+            // pbNotes
             // 
-            this.pbFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbFees.Image = global::DVLDPresentationLayer.Properties.Resources.money_32;
-            this.pbFees.Location = new System.Drawing.Point(211, 538);
-            this.pbFees.Name = "pbFees";
-            this.pbFees.Size = new System.Drawing.Size(32, 32);
-            this.pbFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbFees.TabIndex = 181;
-            this.pbFees.TabStop = false;
-            // 
-            // lblLicenseFees
-            // 
-            this.lblLicenseFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblLicenseFees.AutoSize = true;
-            this.lblLicenseFees.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
-            this.lblLicenseFees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblLicenseFees.Location = new System.Drawing.Point(256, 540);
-            this.lblLicenseFees.Margin = new System.Windows.Forms.Padding(0);
-            this.lblLicenseFees.Name = "lblLicenseFees";
-            this.lblLicenseFees.Size = new System.Drawing.Size(64, 28);
-            this.lblLicenseFees.TabIndex = 180;
-            this.lblLicenseFees.Text = "????";
-            // 
-            // lblTestFeesTitle
-            // 
-            this.lblTestFeesTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblTestFeesTitle.AutoSize = true;
-            this.lblTestFeesTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
-            this.lblTestFeesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblTestFeesTitle.Location = new System.Drawing.Point(26, 540);
-            this.lblTestFeesTitle.Margin = new System.Windows.Forms.Padding(0);
-            this.lblTestFeesTitle.Name = "lblTestFeesTitle";
-            this.lblTestFeesTitle.Size = new System.Drawing.Size(174, 28);
-            this.lblTestFeesTitle.TabIndex = 179;
-            this.lblTestFeesTitle.Text = "License Fees :";
+            this.pbNotes.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbNotes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbNotes.Image = global::DVLDPresentationLayer.Properties.Resources.Notes_32;
+            this.pbNotes.Location = new System.Drawing.Point(133, 593);
+            this.pbNotes.Name = "pbNotes";
+            this.pbNotes.Size = new System.Drawing.Size(32, 32);
+            this.pbNotes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbNotes.TabIndex = 175;
+            this.pbNotes.TabStop = false;
             // 
             // uctrlDLApplicationInfo
             // 
@@ -223,8 +223,8 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            ((System.ComponentModel.ISupportInitialize)(this.pbNotes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFees)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNotes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

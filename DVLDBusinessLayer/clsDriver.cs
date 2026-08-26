@@ -48,5 +48,9 @@ namespace DVLDBusinessLayer
         {
             return clsDriversData.GetDriverID(PersonID);
         }
+        public static int GetDriverPersonID(int DriverID)
+        {
+            return clsDriversData.GetDriverPersonID(DriverID);
+        }
     }
 }

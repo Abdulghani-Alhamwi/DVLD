@@ -43,7 +43,7 @@ namespace DVLDPresentationLayer
                 lblApplicantFullName.Text = clsPerson.GetFullName(LDLApp.ApplicantPersonID);
             }
 
-            lblDate.Text = Appointment.AppointmentDate.ToString(clsUtility.DateCustomFormat);
+            lblDate.Text = Appointment.AppointmentDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.NumericFormat));
             lblTime.Text = Appointment.AppointmentDate.ToShortTimeString();
 
             lblTrialNumber.Text = clsTestAppointment.GetTotalAppointmentsCount(_LDLAppID,1).ToString();

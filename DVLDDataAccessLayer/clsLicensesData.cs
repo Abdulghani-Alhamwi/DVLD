@@ -48,18 +48,18 @@ namespace DVLDDataAccessLayer
             return -1;
         }
 
-    public static bool Find(int LDLAppID , ref int LicenseID,ref int ApplicationID,ref int DriverID, ref byte LicenseClassID,
+    public static bool Find(int LicenseID , ref int ApplicationID,ref int DriverID, ref byte LicenseClassID,
                             ref DateTime IssueDate, ref DateTime ExpirationDate, ref string Notes, ref decimal PaidFees, ref bool IsActive, ref byte IssueReason, ref int CreatedByUserID)
         {
 
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Licenses.* FROM Licenses INNER JOIN Applications ON License.ApplicationID = Applications.ApplicationID
-                             INNER JOIN LocalDrivingLicenseApplications ON Applications.LocalDrivingLicenseApplicationID = @LDLAppID";
+            string query = @"SELECT * FROM Licenses
+                             WHERE Licenses.LicenseID = @LicenseID";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@LDLAppID", LDLAppID);
+            command.Parameters.AddWithValue("@LicenseID", LicenseID);
 
             try
             {
@@ -74,8 +74,13 @@ namespace DVLDDataAccessLayer
                     LicenseClassID = Convert.ToByte(reader["LicenseClassID"]);
                     IssueDate = (DateTime)reader["IssueDate"];
                     ExpirationDate = (DateTime)reader["ExpirationDate"]; ;
-                    Notes = (string)reader["Notes"];
-                    PaidFees = (decimal)reader["Notes"];
+
+                    if (reader["Notes"] != DBNull.Value)
+                        Notes = (string)reader["Notes"];
+                    else
+                        Notes = null;
+
+                    PaidFees = (decimal)reader["PaidFees"];
                     IsActive = (bool)reader["IsActive"];
                     IssueReason = (byte)reader["IssueReason"];
                     CreatedByUserID = (int)reader["CreatedByUserID"];
@@ -95,5 +100,30 @@ namespace DVLDDataAccessLayer
             return IsFound;
         }
 
+        public static int GetLicenseID(int ApplicationID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            string query = "SELECT LicenseID FROM Licenses WHERE ApplicationID = @ApplicationID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return Convert.ToInt32(result);
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return -1;
+        }
     }
 }

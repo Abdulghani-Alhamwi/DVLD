@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using MyLib;
+using static MyLib.clsUtility;
 
 namespace DVLDPresentationLayer
 {
@@ -30,8 +31,8 @@ namespace DVLDPresentationLayer
                 lblPaidFees.Text = clsUtility.SetFeesToCustomFormat(LDLApplication.PaidApplicationFees);
                 lblApplicationType.Text = clsApplicationType.GetApplicationTypeTitle(LDLApplication.ApplicationTypeID);
                 lblApplicantFullName.Text = clsPerson.GetFullName(LDLApplication.ApplicantPersonID);
-                lblApplicationDate.Text = LDLApplication.ApplicationDate.ToString("d/MMM/yyyy");
-                lblLastStatusDate.Text = LDLApplication.LastStatusDate.ToString("d/MMM/yyyy");
+                lblApplicationDate.Text = LDLApplication.ApplicationDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
+                lblLastStatusDate.Text = LDLApplication.LastStatusDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
                 lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(LDLApplication.CreatedByUserID));
                 _PersonID = LDLApplication.ApplicantPersonID;
             }

@@ -265,10 +265,8 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT NationalNo,FirstName, SecondName,
-                             ThirdName, LastName, Gendor, DateOfBirth,
-                             Address, Phone, Email , NationalityCountryID ,
-                             ImagePath FROM People
+            string query = @"SELECT NationalNo,FirstName, SecondName,ThirdName, LastName, Gendor, DateOfBirth,
+                             Address, Phone, Email , NationalityCountryID ,ImagePath FROM People
                              WHERE PersonID = @PersonID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -286,24 +284,30 @@ namespace DVLDDataAccessLayer
                     FirstName = (string) reader["FirstName"];
                     SecondName = (string) reader["SecondName"];
 
-                    if (reader["ThirdName"]!=DBNull.Value)
-                    ThirdName = (string) reader["ThirdName"];
+                    if (reader["ThirdName"] != DBNull.Value)
+                        ThirdName = (string)reader["ThirdName"];
+                    else
+                        ThirdName = null;
 
-                    LastName = (string) reader["LastName"];
+                    LastName = (string)reader["LastName"];
                     DateOfBirth = (DateTime) reader["DateOfBirth"];
                     Gendor = (byte) reader["Gendor"];
                     Address = (string) reader["Address"];
                     Phone = (string) reader["Phone"];
 
-                    if (reader["Email"]!=DBNull.Value)
-                    Email = (string) reader["Email"];
+                    if (reader["Email"] != DBNull.Value)
+                        Email = (string)reader["Email"];
+                    else
+                        Email = null;                        
 
-                    NationalityCountryID = (int) reader["NationalityCountryID"];
+                        NationalityCountryID = (int)reader["NationalityCountryID"];
 
-                    if (reader["ImagePath"]!=DBNull.Value)
-                    ImagePath = (string) reader["ImagePath"];
+                    if (reader["ImagePath"] != DBNull.Value)
+                        ImagePath = (string)reader["ImagePath"];
+                    else
+                        ImagePath = null;
 
-                    return true;
+                        return true;
                 }
             }
 
@@ -527,7 +531,7 @@ namespace DVLDDataAccessLayer
                 return dtFilteredData;
         }
 
-        public static string GetFullName(int PersonID)
+        public static string GetPersonFullName(int PersonID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 

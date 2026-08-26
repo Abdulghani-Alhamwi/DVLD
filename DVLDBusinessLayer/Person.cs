@@ -23,6 +23,20 @@ namespace DVLDBusinessLayer
         public int NationalityCountryID { get; set; }
         public string CountryName { get; set; }
         public string ImagePath { get; set; }
+        public string FullName
+        {
+            get
+            {
+                if (PersonID != -1)
+                {
+                    if (ThirdName != null)
+                        return FirstName + " " + SecondName + " " + ThirdName + " " + LastName;
+                    else
+                        return FirstName + " " + SecondName + " " + LastName;
+                }
+                return null;
+            }
+        }
 
         public clsPerson(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, enGendor Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
@@ -152,10 +166,7 @@ namespace DVLDBusinessLayer
 
         public static bool SearchForNationalNo(string NationalNo)
         {
-            if (String.IsNullOrWhiteSpace(NationalNo) || NationalNo == "")
-                return false;
-
-                return clsPeopleData.SearchForNationalNo(NationalNo);
+              return clsPeopleData.SearchForNationalNo(NationalNo);
         }
 
         public static uint GetTotalPeopleCount()
@@ -170,7 +181,7 @@ namespace DVLDBusinessLayer
 
         public static string GetFullName(int PersonID)
         {
-            return clsPeopleData.GetFullName(PersonID);
+            return clsPeopleData.GetPersonFullName(PersonID);
         }
 
         public static string GetNationalNumber(int PersonID)
@@ -182,5 +193,6 @@ namespace DVLDBusinessLayer
         {
             return clsPeopleData.GetColumnsNamesForView();
         }
+
     }
 }

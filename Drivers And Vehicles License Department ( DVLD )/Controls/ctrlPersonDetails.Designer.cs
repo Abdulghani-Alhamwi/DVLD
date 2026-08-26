@@ -52,7 +52,7 @@
             this.pbPhone = new System.Windows.Forms.PictureBox();
             this.pbDate = new System.Windows.Forms.PictureBox();
             this.pbPerson = new System.Windows.Forms.PictureBox();
-            this.pbNumber = new System.Windows.Forms.PictureBox();
+            this.pbNationalNo = new System.Windows.Forms.PictureBox();
             this.pbGendor = new System.Windows.Forms.PictureBox();
             this.pbEmail = new System.Windows.Forms.PictureBox();
             this.pbAddress = new System.Windows.Forms.PictureBox();
@@ -62,7 +62,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbPhone)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPerson)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbNumber)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNationalNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbGendor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbEmail)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbAddress)).BeginInit();
@@ -324,7 +324,7 @@
             this.gbPersonInformation.Controls.Add(this.pbPhone);
             this.gbPersonInformation.Controls.Add(this.pbDate);
             this.gbPersonInformation.Controls.Add(this.pbPerson);
-            this.gbPersonInformation.Controls.Add(this.pbNumber);
+            this.gbPersonInformation.Controls.Add(this.pbNationalNo);
             this.gbPersonInformation.Controls.Add(this.pbGendor);
             this.gbPersonInformation.Controls.Add(this.pbEmail);
             this.gbPersonInformation.Controls.Add(this.pbAddress);
@@ -404,17 +404,17 @@
             this.pbPerson.TabIndex = 79;
             this.pbPerson.TabStop = false;
             // 
-            // pbNumber
+            // pbNationalNo
             // 
-            this.pbNumber.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbNumber.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbNumber.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
-            this.pbNumber.Location = new System.Drawing.Point(183, 146);
-            this.pbNumber.Name = "pbNumber";
-            this.pbNumber.Size = new System.Drawing.Size(32, 32);
-            this.pbNumber.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbNumber.TabIndex = 78;
-            this.pbNumber.TabStop = false;
+            this.pbNationalNo.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbNationalNo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbNationalNo.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
+            this.pbNationalNo.Location = new System.Drawing.Point(183, 146);
+            this.pbNationalNo.Name = "pbNationalNo";
+            this.pbNationalNo.Size = new System.Drawing.Size(32, 32);
+            this.pbNationalNo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbNationalNo.TabIndex = 78;
+            this.pbNationalNo.TabStop = false;
             // 
             // pbGendor
             // 
@@ -483,7 +483,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbPhone)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPerson)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbNumber)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNationalNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbGendor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbEmail)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbAddress)).EndInit();
@@ -518,7 +518,7 @@
         private System.Windows.Forms.PictureBox pbPhone;
         private System.Windows.Forms.PictureBox pbDate;
         private System.Windows.Forms.PictureBox pbPerson;
-        private System.Windows.Forms.PictureBox pbNumber;
+        private System.Windows.Forms.PictureBox pbNationalNo;
         private System.Windows.Forms.PictureBox pbGendor;
         private System.Windows.Forms.PictureBox pbEmail;
         private System.Windows.Forms.PictureBox pbAddress;

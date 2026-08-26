@@ -81,6 +81,18 @@
     <Compile Include="Controls\ctrlDLApplicationInfo.Designer.cs">
       <DependentUpon>ctrlDLApplicationInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="ctrlDriverLicenseInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlDriverLicenseInfo.Designer.cs">
+      <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLicenseInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLicenseInfo.Designer.cs">
+      <DependentUpon>frmLicenseInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="LocalDrivingLicenseApplications\frmIssueDrivingLicense.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,6 +231,12 @@
     <EmbeddedResource Include="Controls\ctrlDLApplicationInfo.resx">
       <DependentUpon>ctrlDLApplicationInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ctrlDriverLicenseInfo.resx">
+      <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLicenseInfo.resx">
+      <DependentUpon>frmLicenseInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LocalDrivingLicenseApplications\frmIssueDrivingLicense.resx">
       <DependentUpon>frmIssueDrivingLicense.cs</DependentUpon>
     </EmbeddedResource>
@@ -298,6 +316,8 @@
     <None Include="Resources\DVLD1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\LicenseView 400.png" />
+    <None Include="Resources\Question 32.png" />
     <None Include="Resources\Notes 32.png" />
     <None Include="Resources\Test 32.png" />
     <None Include="Resources\Written Test 512.png" />
