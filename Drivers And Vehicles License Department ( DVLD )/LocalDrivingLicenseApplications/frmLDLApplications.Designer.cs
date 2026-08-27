@@ -167,7 +167,7 @@
             this.tsmiShowPersonLicenseHistory});
             this.cmsLDLApplications.Name = "cmsPeopleMenu";
             this.cmsLDLApplications.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsLDLApplications.Size = new System.Drawing.Size(361, 328);
+            this.cmsLDLApplications.Size = new System.Drawing.Size(361, 350);
             this.cmsLDLApplications.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLDLApplications_Opening);
             this.cmsLDLApplications.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsLDLApplications_Paint);
             // 
@@ -309,6 +309,7 @@
             this.tsmiShowPersonLicenseHistory.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiShowPersonLicenseHistory.Size = new System.Drawing.Size(360, 36);
             this.tsmiShowPersonLicenseHistory.Text = "Show Person License History";
+            this.tsmiShowPersonLicenseHistory.Click += new System.EventHandler(this.tsmiShowPersonLicenseHistory_Click);
             // 
             // dgvLDLApplications
             // 

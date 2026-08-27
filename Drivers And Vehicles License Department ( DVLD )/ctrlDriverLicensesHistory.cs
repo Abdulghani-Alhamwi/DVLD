@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
+using MyLib;
 
 namespace DVLDPresentationLayer
 {
@@ -9,7 +10,12 @@ namespace DVLDPresentationLayer
         public ctrlDriverLicensesHistory()
         {
             InitializeComponent();
-            //clsLicense
+        }
+
+        public void LoadDriverLicenseHistory(int DriverID)
+        {
+            dgvLocalLicenses.DataSource = clsLocalLicense.GetLocalLicenses(DriverID,clsUtility.WantedNumOfRowsFromDB);
+            lblRecordsNumber.Text = clsLocalLicense.GetTotalDriverLicensesCount(DriverID).ToString();
         }
     }
 }

@@ -93,6 +93,12 @@
     <Compile Include="ctrlDriverLicensesHistory.Designer.cs">
       <DependentUpon>ctrlDriverLicensesHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmDriverLicenseHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDriverLicenseHistory.Designer.cs">
+      <DependentUpon>frmDriverLicenseHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmLicenseInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,12 +110,6 @@
     </Compile>
     <Compile Include="LocalDrivingLicenseApplications\frmIssueDrivingLicense.Designer.cs">
       <DependentUpon>frmIssueDrivingLicense.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Tests\frmLicensesHistory.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tests\frmLicensesHistory.Designer.cs">
-      <DependentUpon>frmLicensesHistory.cs</DependentUpon>
     </Compile>
     <Compile Include="Tests\frmScheduleTest.cs">
       <SubType>Form</SubType>
@@ -243,14 +243,14 @@
     <EmbeddedResource Include="ctrlDriverLicensesHistory.resx">
       <DependentUpon>ctrlDriverLicensesHistory.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmDriverLicenseHistory.resx">
+      <DependentUpon>frmDriverLicenseHistory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmLicenseInfo.resx">
       <DependentUpon>frmLicenseInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LocalDrivingLicenseApplications\frmIssueDrivingLicense.resx">
       <DependentUpon>frmIssueDrivingLicense.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tests\frmLicensesHistory.resx">
-      <DependentUpon>frmLicensesHistory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\frmScheduleTest.resx">
       <DependentUpon>frmScheduleTest.cs</DependentUpon>
@@ -325,6 +325,7 @@
     <None Include="Resources\DVLD1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\PersonLicenseHistory 512.png" />
     <None Include="Resources\LicenseView 400.png" />
     <None Include="Resources\Question 32.png" />
     <None Include="Resources\Notes 32.png" />

@@ -193,6 +193,10 @@ namespace DVLDBusinessLayer
         {
             return clsPeopleData.GetNationalNumber(PersonID);
         }
+        public static int GetPersonID(string NationalNo)
+        {
+            return clsPeopleData.GetPersonID(NationalNo);
+        }
 
         public static DataTable GetColumnsNamesForView()
         {

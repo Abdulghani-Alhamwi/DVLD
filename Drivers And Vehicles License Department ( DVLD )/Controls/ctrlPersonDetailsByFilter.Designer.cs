@@ -31,11 +31,11 @@
             this.txtFindBy = new System.Windows.Forms.TextBox();
             this.cbFindBy = new System.Windows.Forms.ComboBox();
             this.lblTitleFindBy = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbFilter = new System.Windows.Forms.GroupBox();
             this.btnAddNewPerson = new System.Windows.Forms.Button();
             this.btnFindUser = new System.Windows.Forms.Button();
             this.uctrlPersonDetails = new DVLDPresentationLayer.ctrlPersonDetails();
-            this.groupBox1.SuspendLayout();
+            this.gbFilter.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtFindBy
@@ -78,20 +78,20 @@
             this.lblTitleFindBy.TabIndex = 37;
             this.lblTitleFindBy.Text = "Find By :";
             // 
-            // groupBox1
+            // gbFilter
             // 
-            this.groupBox1.Controls.Add(this.btnAddNewPerson);
-            this.groupBox1.Controls.Add(this.btnFindUser);
-            this.groupBox1.Controls.Add(this.txtFindBy);
-            this.groupBox1.Controls.Add(this.cbFindBy);
-            this.groupBox1.Controls.Add(this.lblTitleFindBy);
-            this.groupBox1.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1073, 108);
-            this.groupBox1.TabIndex = 40;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Filter";
+            this.gbFilter.Controls.Add(this.btnAddNewPerson);
+            this.gbFilter.Controls.Add(this.btnFindUser);
+            this.gbFilter.Controls.Add(this.txtFindBy);
+            this.gbFilter.Controls.Add(this.cbFindBy);
+            this.gbFilter.Controls.Add(this.lblTitleFindBy);
+            this.gbFilter.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.gbFilter.Location = new System.Drawing.Point(3, 3);
+            this.gbFilter.Name = "gbFilter";
+            this.gbFilter.Size = new System.Drawing.Size(1073, 108);
+            this.gbFilter.TabIndex = 40;
+            this.gbFilter.TabStop = false;
+            this.gbFilter.Text = "Filter";
             // 
             // btnAddNewPerson
             // 
@@ -136,7 +136,7 @@
             this.uctrlPersonDetails.Location = new System.Drawing.Point(-6, 122);
             this.uctrlPersonDetails.Margin = new System.Windows.Forms.Padding(0);
             this.uctrlPersonDetails.Name = "uctrlPersonDetails";
-            this.uctrlPersonDetails.Size = new System.Drawing.Size(1084, 364);
+            this.uctrlPersonDetails.Size = new System.Drawing.Size(1084, 302);
             this.uctrlPersonDetails.TabIndex = 4;
             this.uctrlPersonDetails.AfterEditingPersonInfo += new System.Action(this.uctrlPersonDetails_AfterEditingPersonInfo);
             // 
@@ -145,13 +145,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gbFilter);
             this.Controls.Add(this.uctrlPersonDetails);
             this.Name = "ctrlPersonDetailsByFilter";
-            this.Size = new System.Drawing.Size(1080, 487);
+            this.Size = new System.Drawing.Size(1080, 423);
             this.Load += new System.EventHandler(this.PersonInformationByFilter_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gbFilter.ResumeLayout(false);
+            this.gbFilter.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -162,7 +162,7 @@
         private System.Windows.Forms.TextBox txtFindBy;
         private System.Windows.Forms.ComboBox cbFindBy;
         private System.Windows.Forms.Label lblTitleFindBy;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbFilter;
         private System.Windows.Forms.Button btnAddNewPerson;
         private System.Windows.Forms.Button btnFindUser;
     }

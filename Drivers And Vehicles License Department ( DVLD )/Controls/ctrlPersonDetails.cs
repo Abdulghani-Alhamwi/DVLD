@@ -132,5 +132,10 @@ namespace DVLDPresentationLayer
             else
                 MessageBox.Show("Person is not found!", "Details", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        private void gbPersonInformation_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

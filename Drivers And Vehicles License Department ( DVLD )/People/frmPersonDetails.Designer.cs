@@ -30,8 +30,8 @@
         {
             this.btnClose = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
-            this.lblPersonDetailsBigTitle = new System.Windows.Forms.Label();
-            this.lblPersonDetailsTitle = new System.Windows.Forms.Label();
+            this.lblFormBigTitle = new System.Windows.Forms.Label();
+            this.lblFormTitle = new System.Windows.Forms.Label();
             this.UctrlPersonDetails = new DVLDPresentationLayer.ctrlPersonDetails();
             this.SuspendLayout();
             // 
@@ -44,7 +44,7 @@
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(961, 581);
+            this.btnClose.Location = new System.Drawing.Point(961, 488);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 1;
@@ -71,29 +71,29 @@
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // lblPersonDetailsBigTitle
+            // lblFormBigTitle
             // 
-            this.lblPersonDetailsBigTitle.AutoSize = true;
-            this.lblPersonDetailsBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
-            this.lblPersonDetailsBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblPersonDetailsBigTitle.Location = new System.Drawing.Point(415, 75);
-            this.lblPersonDetailsBigTitle.Margin = new System.Windows.Forms.Padding(0);
-            this.lblPersonDetailsBigTitle.Name = "lblPersonDetailsBigTitle";
-            this.lblPersonDetailsBigTitle.Size = new System.Drawing.Size(336, 52);
-            this.lblPersonDetailsBigTitle.TabIndex = 87;
-            this.lblPersonDetailsBigTitle.Text = "Person Details";
+            this.lblFormBigTitle.AutoSize = true;
+            this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 30F, System.Drawing.FontStyle.Bold);
+            this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
+            this.lblFormBigTitle.Location = new System.Drawing.Point(415, 75);
+            this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblFormBigTitle.Name = "lblFormBigTitle";
+            this.lblFormBigTitle.Size = new System.Drawing.Size(311, 48);
+            this.lblFormBigTitle.TabIndex = 87;
+            this.lblFormBigTitle.Text = "Person Details";
             // 
-            // lblPersonDetailsTitle
+            // lblFormTitle
             // 
-            this.lblPersonDetailsTitle.AutoSize = true;
-            this.lblPersonDetailsTitle.Font = new System.Drawing.Font("Tahoma", 22F);
-            this.lblPersonDetailsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblPersonDetailsTitle.Location = new System.Drawing.Point(25, 19);
-            this.lblPersonDetailsTitle.Margin = new System.Windows.Forms.Padding(0);
-            this.lblPersonDetailsTitle.Name = "lblPersonDetailsTitle";
-            this.lblPersonDetailsTitle.Size = new System.Drawing.Size(203, 36);
-            this.lblPersonDetailsTitle.TabIndex = 86;
-            this.lblPersonDetailsTitle.Text = "Person Details";
+            this.lblFormTitle.AutoSize = true;
+            this.lblFormTitle.Font = new System.Drawing.Font("Tahoma", 22F);
+            this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lblFormTitle.Location = new System.Drawing.Point(25, 19);
+            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblFormTitle.Name = "lblFormTitle";
+            this.lblFormTitle.Size = new System.Drawing.Size(203, 36);
+            this.lblFormTitle.TabIndex = 86;
+            this.lblFormTitle.Text = "Person Details";
             // 
             // UctrlPersonDetails
             // 
@@ -102,10 +102,10 @@
             this.UctrlPersonDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.UctrlPersonDetails.Font = new System.Drawing.Font("Tahoma", 16F);
             this.UctrlPersonDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.UctrlPersonDetails.Location = new System.Drawing.Point(40, 182);
+            this.UctrlPersonDetails.Location = new System.Drawing.Point(40, 161);
             this.UctrlPersonDetails.Margin = new System.Windows.Forms.Padding(0);
             this.UctrlPersonDetails.Name = "UctrlPersonDetails";
-            this.UctrlPersonDetails.Size = new System.Drawing.Size(1087, 367);
+            this.UctrlPersonDetails.Size = new System.Drawing.Size(1087, 304);
             this.UctrlPersonDetails.TabIndex = 0;
             // 
             // frmPersonDetails
@@ -115,13 +115,13 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1167, 657);
+            this.ClientSize = new System.Drawing.Size(1167, 551);
             this.ControlBox = false;
             this.Controls.Add(this.UctrlPersonDetails);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.lblPersonDetailsBigTitle);
-            this.Controls.Add(this.lblPersonDetailsTitle);
+            this.Controls.Add(this.lblFormBigTitle);
+            this.Controls.Add(this.lblFormTitle);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
@@ -137,8 +137,8 @@
 
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Label lblPersonDetailsBigTitle;
-        private System.Windows.Forms.Label lblPersonDetailsTitle;
+        private System.Windows.Forms.Label lblFormBigTitle;
+        private System.Windows.Forms.Label lblFormTitle;
         private ctrlPersonDetails UctrlPersonDetails;
     }
 }

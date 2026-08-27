@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Windows.Forms;
+using DVLDBusinessLayer;
 using MyLib;
 
 namespace DVLDPresentationLayer
 {
-    public partial class frmPersonDetails : Form
+    public partial class frmDriverLicenseHistory : Form
     {
-        public frmPersonDetails(int PersonID)
+        public frmDriverLicenseHistory(int PersonID)
         {
             InitializeComponent();
-
-            if (UctrlPersonDetails.LoadPersonDetails(PersonID) == null)
-                this.Close();
-
+            uctrlPersonDetailsByFilter.SearchForPerson(PersonID);
+            uctrlDriverLicensesHistory.LoadDriverLicenseHistory(clsDriver.GetDriverID(PersonID));
             clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 

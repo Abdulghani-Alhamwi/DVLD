@@ -10,7 +10,6 @@ namespace DVLDBusinessLayer
         private enum _enMode : byte { AddNew = 0 , Update = 1 }
 
         private _enMode _CurrentMode;
-
         public int LicenseID { get; set; }
         public int ApplicationID { get; set; }
         public int DriverID{get;set;}
@@ -54,14 +53,14 @@ namespace DVLDBusinessLayer
             _CurrentMode = _enMode.Update;
         }
 
-        public static DataTable GetLocalLicenses(byte WantedNumberOfRecords)
+        public static DataTable GetLocalLicenses(int DriverID,byte WantedNumberOfRecords)
         {
-            return clsLocalLicensesData.GetLocalLicenses(WantedNumberOfRecords, -1);
+            return clsLocalLicensesData.GetLocalLicenses(DriverID,WantedNumberOfRecords, -1);
         }
 
-        public static DataTable GetLocalLicenses(byte WantedNumberOfRecords, int LastLowstBroughtLicID)
+        public static DataTable GetLocalLicenses(int DriverID,byte WantedNumberOfRecords, int LastLowstBroughtLicID)
         {
-            return clsLocalLicensesData.GetLocalLicenses(WantedNumberOfRecords, LastLowstBroughtLicID);
+            return clsLocalLicensesData.GetLocalLicenses(DriverID,WantedNumberOfRecords, LastLowstBroughtLicID);
         }
         public string GetIssueReasonAsString()
         {
@@ -164,6 +163,10 @@ namespace DVLDBusinessLayer
         public static int GetLicenseID(int ApplicationID)
         {
             return clsLocalLicensesData.GetLicenseID(ApplicationID);
+        }
+        public static short GetTotalDriverLicensesCount(int DriverID)
+        {
+            return clsLocalLicensesData.GetTotalDriverLicensesCount(DriverID);
         }
     }
 }

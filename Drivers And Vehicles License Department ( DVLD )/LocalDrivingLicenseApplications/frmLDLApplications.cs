@@ -436,5 +436,11 @@ namespace DVLDPresentationLayer
             frmLicenseInfo frm = new frmLicenseInfo(clsLocalLicense.GetLicenseID(clsLDLApplication.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value)));
             frm.ShowDialog();
         }
+
+        private void tsmiShowPersonLicenseHistory_Click(object sender, EventArgs e)
+        {
+            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsPerson.GetPersonID(dgvLDLApplications.SelectedRows[0].Cells["National No."].Value.ToString()));
+            frm.ShowDialog();
+        }
     }
     }

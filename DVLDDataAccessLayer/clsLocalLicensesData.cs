@@ -6,19 +6,21 @@ namespace DVLDDataAccessLayer
 {
     public class clsLocalLicensesData
     {
-        public static DataTable GetLocalLicenses(byte WantedNumberOfRecords,int LastLowstBroughtLicID = -1)
+        public static DataTable GetLocalLicenses(int DriverID,byte WantedNumberOfRecords,int LastLowstBroughtLicID = -1)
         {
             DataTable dtLicensesData = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"SELECT TOP(@WantedNumberOfRecords) LicenseID AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
-                             IssueDate AS [Issue Date],ExpirationDate AS [Expiration Date],IsActive AS [Is Active]
-                             FROM Licenses INNER JOIN LicenseClasses ON Licenses.LicenseClassID = LicenseClasses.LicenseClassID";
+                             Format(IssueDate,'dd/MM/yyyy h:MM tt') AS [Issue Date],FORMAT(ExpirationDate,'dd/MM/yyyy h:MM tt') AS [Expiration Date],IsActive AS [Is Active]
+                             FROM Licenses INNER JOIN LicenseClasses ON Licenses.LicenseClassID = LicenseClasses.LicenseClassID
+                             WHERE DriverID = @DriverID";
 
             if (LastLowstBroughtLicID != -1)
                 query += " WHERE LicenseID < @LastLowstBroughtLicID";
 
             SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@DriverID", DriverID);
             command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
 
             if (LastLowstBroughtLicID != -1)
@@ -165,5 +167,31 @@ namespace DVLDDataAccessLayer
             }
             return -1;
         }
+
+        public static short GetTotalDriverLicensesCount(int DriverID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            string query = "SELECT Count(LicenseID) FROM Licenses WHERE DriverID = @DriverID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@DriverID", DriverID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return Convert.ToInt16(result);
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return -1;
+        }    
     }
 }

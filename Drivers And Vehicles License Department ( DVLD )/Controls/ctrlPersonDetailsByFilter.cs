@@ -111,6 +111,13 @@ namespace DVLDPresentationLayer
             }
 
         }
+        public void SearchForPerson(int PersonID)
+        {
+            cbFindBy.SelectedItem = "PersonID";
+            txtFindBy.Text = PersonID.ToString();
+            uctrlPersonDetails.LoadPersonDetails(PersonID);
+            gbFilter.Enabled = false;           
+        }
         private void btnFindUser_Click(object sender, EventArgs e)
         {
             FindPerson();
