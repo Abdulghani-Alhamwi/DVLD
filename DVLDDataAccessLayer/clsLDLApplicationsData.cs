@@ -6,11 +6,11 @@ namespace DVLDDataAccessLayer
 {
     public class clsLDLApplicationsData
     {
-        private static string ColumnNamesQuery = 
+        private static string ColumnNamesQuery =
          @"SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
            People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
            ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , FORMAT(ApplicationDate , 'dd/MM/yyyy h:mm tt') AS [Application Date] ,
-           (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests] ,
+           (CASE WHEN SUM(CAST(Tests.TestResult AS tinyINT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS tinyINT)) ELSE 0 END) AS [Passed Tests] ,
            (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) AS Status
            FROM LocalDrivingLicenseApplications INNER JOIN LicenseClasses
            ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID 
@@ -336,7 +336,7 @@ namespace DVLDDataAccessLayer
             return -1;
         }
 
-        public static uint GetTotalLDLApplicationsCount()
+        public static int GetTotalLDLApplicationsCount()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
@@ -351,7 +351,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    return Convert.ToUInt32(result);
+                    return Convert.ToInt32(result);
 
             }
 

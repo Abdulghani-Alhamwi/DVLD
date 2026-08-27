@@ -7,7 +7,7 @@ namespace DVLDDataAccessLayer
     public class clsTestAppointmentsData
     {
 
-        private static string ColumnNamesQuery = @"SELECT TOP (@WantedNumberOfRecords) TestAppointmentID AS [Appointment ID] , FORMAT(AppointmentDate,'dd/MM/yyyy h:mm tt') AS [Appointment Date] ,
+        private static string Query = @"SELECT TOP (@WantedNumberOfRecords) TestAppointmentID AS [Appointment ID] , FORMAT(AppointmentDate,'dd/MM/yyyy h:mm tt') AS [Appointment Date] ,
                              PaidFees AS [Paid Fees] , IsLocked  AS [Is Locked] FROM TestAppointments";
 
         public static DataTable GetTestAppointments(byte WantedNumberOfRecords , byte TestTypeID,int LocalDrivingLicenseAppID, int LowestBroughtAppointmentID = -1,string DateFormat = null)
@@ -15,7 +15,7 @@ namespace DVLDDataAccessLayer
             DataTable dtTestAppointments = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = ColumnNamesQuery;
+            string query = Query;
 
             if (LowestBroughtAppointmentID != -1)
                 query += @" WHERE TestAppointmentID < @LowestBroughtAppointmentID AND TestTypeID = @TestTypeID AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID
@@ -61,7 +61,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            SqlCommand command = new SqlCommand(ColumnNamesQuery, connection);
+            SqlCommand command = new SqlCommand(Query, connection);
             command.Parameters.AddWithValue("@WantedNumberOfRecords", 0);
 
             try

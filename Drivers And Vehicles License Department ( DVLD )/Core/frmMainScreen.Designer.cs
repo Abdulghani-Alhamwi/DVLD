@@ -59,7 +59,7 @@
             this.tsmiManageApplicationTypes = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiManageTestTypes = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPeopleManagement = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDrivers = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiUsersManagement = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAccountSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCurrentUserInfo = new System.Windows.Forms.ToolStripMenuItem();
@@ -137,7 +137,7 @@
             this.msOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
             this.tsmiPeopleManagement,
-            this.toolStripMenuItem3,
+            this.tsmiDrivers,
             this.tsmiUsersManagement,
             this.tsmiAccountSettings});
             this.msOptions.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
@@ -319,11 +319,14 @@
             this.tsmiPeopleManagement.Text = "People";
             this.tsmiPeopleManagement.Click += new System.EventHandler(this.tsmiPeople_Click);
             // 
-            // toolStripMenuItem3
+            // tsmiDrivers
             // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(105, 68);
-            this.toolStripMenuItem3.Text = "Drivers";
+            this.tsmiDrivers.Image = global::DVLDPresentationLayer.Properties.Resources.Drivers_64;
+            this.tsmiDrivers.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsmiDrivers.Name = "tsmiDrivers";
+            this.tsmiDrivers.Size = new System.Drawing.Size(169, 68);
+            this.tsmiDrivers.Text = "Drivers";
+            this.tsmiDrivers.Click += new System.EventHandler(this.tsmiDrivers_Click);
             // 
             // tsmiUsersManagement
             // 
@@ -427,7 +430,7 @@
         private System.Windows.Forms.MenuStrip msOptions;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem tsmiPeopleManagement;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDrivers;
         private System.Windows.Forms.ToolStripMenuItem tsmiUsersManagement;
         private System.Windows.Forms.ToolStripMenuItem tsmiAccountSettings;
         private System.Windows.Forms.ToolStripMenuItem tsmiCurrentUserInfo;

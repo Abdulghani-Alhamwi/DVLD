@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
@@ -21,6 +22,45 @@ namespace MyLib
         private static string _FeesCustomFormat = "G29";
 
         public static byte WantedNumOfRowsFromDB = 10;
+
+        // Change Win32 style to remove the MDI client 3d border (sunken) .
+        [DllImport("user32.dll")]
+        private static extern int GetWindowLong(IntPtr windowHandle, int index);
+
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr windowHandle, int index, int newStyle);
+
+        [DllImport("user32.dll")]
+        private static extern bool SetWindowPos(IntPtr windowHandle, IntPtr insertAfterHandle,
+                              int x, int y, int width, int height, int flags);
+
+        private const int ExtendedStyleIndex = -20;
+        private const int ClientEdgeExtendedStyle = 0x00000200;
+        private const int NoSizeFlag = 0x0001;
+        private const int NoMoveFlag = 0x0002;
+        private const int NoZOrderFlag = 0x0004;
+        private const int FrameChangedFlag = 0x0020;
+
+        /// <summary>
+        /// Change Win32 style to remove the MDI client 3d border
+        /// </summary>
+        public static void RemoveMdiClientBorder(Form frm)
+        {
+
+            MdiClient mdiClient = frm.Controls.OfType<MdiClient>().FirstOrDefault();
+            if (mdiClient == null)
+            {
+                return;
+            }
+
+            int currentExtendedStyle = GetWindowLong(mdiClient.Handle, ExtendedStyleIndex);
+            int updatedExtendedStyle = currentExtendedStyle & ~ClientEdgeExtendedStyle;
+
+            SetWindowLong(mdiClient.Handle, ExtendedStyleIndex, updatedExtendedStyle);
+
+            SetWindowPos(mdiClient.Handle, IntPtr.Zero, 0, 0, 0, 0, NoSizeFlag | NoMoveFlag | NoZOrderFlag | FrameChangedFlag);
+
+        }
         public static string HashWithSaltPassword(string Password, ref byte[] Salt)
         {
             if (Salt == null)

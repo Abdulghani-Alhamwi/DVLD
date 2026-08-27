@@ -13,7 +13,7 @@ namespace DVLDDataAccessLayer
 
             string query = @"SELECT TOP(@WantedNumberOfRecords) LicenseID AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
                              Format(IssueDate,'dd/MM/yyyy h:MM tt') AS [Issue Date],FORMAT(ExpirationDate,'dd/MM/yyyy h:MM tt') AS [Expiration Date],IsActive AS [Is Active]
-                             FROM Licenses INNER JOIN LicenseClasses ON Licenses.LicenseClassID = LicenseClasses.LicenseClassID
+                             FROM LocalLicenses INNER JOIN LicenseClasses ON LocalLicenses.LicenseClassID = LicenseClasses.LicenseClassID
                              WHERE DriverID = @DriverID";
 
             if (LastLowstBroughtLicID != -1)
@@ -51,7 +51,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"INSERT INTO Licenses VALUES (@ApplicationID, @DriverID,@LicenseClassID,
+            string query = @"INSERT INTO LocalLicenses VALUES (@ApplicationID, @DriverID,@LicenseClassID,
                              @IssueDate,@ExpirationDate,@Notes,@PaidFees,@IsActive,@IssueReason,@CreatedByUserID);
                              SELECT SCOPE_IDENTITY();";
 
@@ -97,8 +97,8 @@ namespace DVLDDataAccessLayer
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT * FROM Licenses
-                             WHERE Licenses.LicenseID = @LicenseID";
+            string query = @"SELECT * FROM LocalLicenses
+                             WHERE LocalLicenses.LicenseID = @LicenseID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LicenseID", LicenseID);
@@ -145,7 +145,7 @@ namespace DVLDDataAccessLayer
         public static int GetLicenseID(int ApplicationID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = "SELECT LicenseID FROM Licenses WHERE ApplicationID = @ApplicationID";
+            string query = "SELECT LicenseID FROM LocalLicenses WHERE ApplicationID = @ApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
@@ -171,7 +171,7 @@ namespace DVLDDataAccessLayer
         public static short GetTotalDriverLicensesCount(int DriverID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = "SELECT Count(LicenseID) FROM Licenses WHERE DriverID = @DriverID";
+            string query = "SELECT Count(LicenseID) FROM LocalLicenses WHERE DriverID = @DriverID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@DriverID", DriverID);
@@ -191,7 +191,7 @@ namespace DVLDDataAccessLayer
             {
                 connection.Close();
             }
-            return -1;
+            return 0;
         }    
     }
 }

@@ -1,56 +1,19 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using DVLDPresentationLayer.Core;
+using MyLib;
 
 namespace DVLDPresentationLayer
 {
     public partial class frmMainScreen : Form
     {  
-        // Change Win32 style to remove the MDI client border -> to remove the mdi Client (sunken = 3d border) .
-        [DllImport("user32.dll")]
-        private static extern int GetWindowLong(IntPtr windowHandle, int index);
-
-        [DllImport("user32.dll")]
-        private static extern int SetWindowLong(IntPtr windowHandle, int index, int newStyle);
-
-        [DllImport("user32.dll")]
-        private static extern bool SetWindowPos(IntPtr windowHandle, IntPtr insertAfterHandle,
-                              int x, int y, int width, int height, int flags);
-
-        private const int ExtendedStyleIndex = -20;
-        private const int ClientEdgeExtendedStyle = 0x00000200;
-        private const int NoSizeFlag = 0x0001;
-        private const int NoMoveFlag = 0x0002;
-        private const int NoZOrderFlag = 0x0004;
-        private const int FrameChangedFlag = 0x0020;
-
-        private void _RemoveMdiClientBorder()
-        {
-
-            MdiClient mdiClient = this.Controls.OfType<MdiClient>().FirstOrDefault();
-            if (mdiClient == null)
-            {
-                return;
-            }
-
-            int currentExtendedStyle = GetWindowLong(mdiClient.Handle, ExtendedStyleIndex);
-            int updatedExtendedStyle = currentExtendedStyle & ~ClientEdgeExtendedStyle;
-
-            SetWindowLong(mdiClient.Handle, ExtendedStyleIndex, updatedExtendedStyle);
-
-            SetWindowPos(mdiClient.Handle, IntPtr.Zero, 0, 0, 0, 0, NoSizeFlag | NoMoveFlag | NoZOrderFlag | FrameChangedFlag);
-
-        }
-
         private frmLoginScreen _frmLogin;
         private bool _SignOut = false;
         public frmMainScreen(frmLoginScreen frmLogin)
         {
             InitializeComponent();
-            _RemoveMdiClientBorder();
+            clsUtility.RemoveMdiClientBorder(this);
 
             _frmLogin = frmLogin;
         }
@@ -127,6 +90,11 @@ namespace DVLDPresentationLayer
         {
             frmLDLApplications frm = new frmLDLApplications();
             frm.ShowDialog();
+        }
+
+        private void tsmiDrivers_Click(object sender, EventArgs e)
+        {
+             
         }
     }
 }

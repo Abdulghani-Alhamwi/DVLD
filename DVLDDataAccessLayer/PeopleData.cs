@@ -6,18 +6,16 @@ namespace DVLDDataAccessLayer
 {
     public class clsPeopleData
     {
-        private static string ColumnNamesQuery =
-            @"SELECT TOP (@WantedNumberOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
-              FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
-              Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-              FORMAT(DateOfBirth , 'dd/MM/yyyy') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
-              FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
+        private static string Query =
+         @"SELECT TOP (@WantedNumberOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
+           FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
+           Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+           FORMAT(DateOfBirth , 'dd/MM/yyyy') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
+           FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
 
         public static int AddNewPerson(string NationalNo, string FirstName,
                        string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
-            int PersonID = -1;
-
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"INSERT INTO People VALUES (@NationalNo , @FirstName ,
@@ -59,17 +57,16 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    PersonID = Convert.ToInt32(result);
-                    
+                    return Convert.ToInt32(result);
             }
 
-            catch(Exception ex) { Console.Write(ex.Message); }
+            catch { }
 
             finally
             {
                 connection.Close();
             }
-            return PersonID;
+            return -1;
         }
 
         public static bool UpdatePerson(int PersonID, string NationalNo, string FirstName,
@@ -161,7 +158,7 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = ColumnNamesQuery;
+            string query = Query;
             
             if (LastLowestbroughtPersonID != -1)
                 query += @" WHERE PersonID < @LastLowestbroughtPersonID";
@@ -202,7 +199,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = ColumnNamesQuery;
+            string query = Query;
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumberOfRecords", 0);
@@ -377,7 +374,7 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
-        public static uint GetTotalPeopleCount()
+        public static int GetTotalPeopleCount()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
@@ -392,7 +389,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    return Convert.ToUInt32(result);
+                    return Convert.ToInt32(result);
              
             }
 
@@ -438,9 +435,60 @@ namespace DVLDDataAccessLayer
             }
         }
 
-        private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
+        private static string _GetValueForGendorColumn(string Value)
         {
-            string query = ColumnNamesQuery;
+            switch(Value.Length)
+            {
+                case 1:
+                    if (Value.ToUpper() == "M")
+                        return "0";
+                    else if (Value.ToUpper() == "F")
+                        return "1";
+
+                    break;
+
+                case 2:
+                    if (Value.ToUpper() == "MA")
+                        return "0";
+                    else if (Value.ToUpper() == "FA")
+                        return "1";
+
+                        break;
+
+                case 3:
+                    if (Value.ToUpper() == "MAL")
+                        return "0";
+                    else if (Value.ToUpper() == "FEM")
+                        return "1";
+
+                    break;
+
+                case 4:
+                    if (Value.ToUpper() == "MALE")
+                        return "0";
+                    else if (Value.ToUpper() == "FEMA")
+                        return "1";
+
+                    break;
+
+                case 5:
+                    if (Value.ToUpper() == "FEMAL")
+                        return "1";
+
+                    break;
+
+                case 7:
+                    if (Value.ToUpper() == "FEMALE")
+                        return "1";
+
+                    break;
+            }
+            return "2";
+        }
+
+        private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
+        {
+            string query = Query;
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
@@ -458,7 +506,7 @@ namespace DVLDDataAccessLayer
             {
                 if (ColumnNameToFilter == "Gendor")
                 {
-                    query = "SELECT * FROM (" + query + ") R1";
+                    ValueToFilterBy = _GetValueForGendorColumn(ValueToFilterBy);
                 }
             }
 
@@ -496,7 +544,7 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetDataFilteringQuery(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,WildChar,LastLowestbroughtPersonID);
+            string query = _GetDataFilteringQuery(WantedNumberOfRecords,ColumnNameToFilter,ref ValueToFilterBy,WildChar,LastLowestbroughtPersonID);
 
             SqlCommand command = new SqlCommand(query, connection);
              command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);

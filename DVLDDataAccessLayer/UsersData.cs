@@ -6,20 +6,18 @@ namespace DVLDDataAccessLayer
 {
     public class clsUsersData
     {
-        private static string ColumnNamesQuery = @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
-                                                   People.FirstName + ' ' + People.SecondName
-                                                  + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name] , UserName,IsActive AS [Is Active]
-                                                   From Users INNER JOIN People ON Users.PersonID = People.PersonID";
+        private static string Query =
+         @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
+           People.FirstName + ' ' + People.SecondName
+          + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name] , UserName,IsActive AS [Is Active]
+           From Users INNER JOIN People ON Users.PersonID = People.PersonID";
 
         public static DataTable GetUsersInfo(byte WantedNumberOfRecords, int LastLowestBroughtUserID = -1)
         {
             DataTable dtUsers = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
-                              People.FirstName + ' ' + People.SecondName
-                             + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name] , UserName,IsActive AS [Is Active]
-                              From Users INNER JOIN People ON Users.PersonID = People.PersonID";
+            string query = Query;
 
             if (LastLowestBroughtUserID != -1)
                 query += " WHERE UserID < @LastLowestBroughtUserID";
@@ -58,7 +56,7 @@ namespace DVLDDataAccessLayer
         {
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = ColumnNamesQuery;
+            string query = Query;
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumberOfRecords", 0);
@@ -457,7 +455,7 @@ namespace DVLDDataAccessLayer
 
         private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
         {
-            string query = ColumnNamesQuery;
+            string query = Query;
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
@@ -544,7 +542,7 @@ namespace DVLDDataAccessLayer
             return dtFilteredData;
         }
 
-        public static uint GetTotalUsersCount()
+        public static int GetTotalUsersCount()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
@@ -559,7 +557,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    return Convert.ToUInt32(result);
+                    return Convert.ToInt32(result);
 
             }
 

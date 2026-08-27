@@ -5,6 +5,7 @@ using DVLDPresentationLayer.Core;
 using DVLDBusinessLayer;
 using MyLib;
 using DVLDPresentationLayer.LocalDrivingLicenseApplications;
+using DVLDPresentationLayer.Controls;
 
 namespace DVLDPresentationLayer
 {
@@ -341,7 +342,7 @@ namespace DVLDPresentationLayer
         {
             if (dgvLDLApplications.SelectedRows.Count > 1)
             {
-                MessageBox.Show("you can select only one local driving licnse application to schedule test to it", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You can select only one local driving license application to schedule test to it", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 cmsLDLApplications.Close();
                 return false;
             }
@@ -416,7 +417,7 @@ namespace DVLDPresentationLayer
         {
             if (dgvLDLApplications.SelectedRows.Count > 1)
             {
-                MessageBox.Show("you can select only one local driving licnse application in order to issue license for it.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You can select only one local driving license application in order to issue license for it.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -429,7 +430,7 @@ namespace DVLDPresentationLayer
         {
             if (dgvLDLApplications.SelectedRows.Count > 1)
             {
-                MessageBox.Show("you can select only one local driving licnse application in order to show license.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You can select only one local driving license application in order to show license.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -439,7 +440,25 @@ namespace DVLDPresentationLayer
 
         private void tsmiShowPersonLicenseHistory_Click(object sender, EventArgs e)
         {
+            if (dgvLDLApplications.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("You can select only one local driving license application in order to show person license history.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsPerson.GetPersonID(dgvLDLApplications.SelectedRows[0].Cells["National No."].Value.ToString()));
+            frm.ShowDialog();
+        }
+
+        private void tsmiShowApplicationDetails_Click(object sender, EventArgs e)
+        {
+            if (dgvLDLApplications.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("You can select only one local driving license application in order to view the application details.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            frmApplicationDetails frm = new frmApplicationDetails((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
             frm.ShowDialog();
         }
     }

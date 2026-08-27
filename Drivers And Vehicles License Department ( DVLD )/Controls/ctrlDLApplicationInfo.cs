@@ -16,7 +16,7 @@ namespace DVLDPresentationLayer
         int _PersonID = -1;
 
         public clsLDLApplication LDLApplication;
-        public void LoadInfo(int LDLAppID)
+        public void LoadLDLAppInfo(int LDLAppID)
         {
             LDLApplication = clsLDLApplication.Find(LDLAppID);
 

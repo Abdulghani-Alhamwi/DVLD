@@ -19,7 +19,7 @@ namespace DVLDPresentationLayer
         public frmTestsAppointments(int LDLApplicationID,int TestsDGVRowIndex, clsTestType.enTestType TestType)
         {
             InitializeComponent();
-            uctrlDLApplicationInfo.LoadInfo(LDLApplicationID);
+            uctrlDLApplicationInfo.LoadLDLAppInfo(LDLApplicationID);
 
             _ShowInfoByTestType(TestType);
 

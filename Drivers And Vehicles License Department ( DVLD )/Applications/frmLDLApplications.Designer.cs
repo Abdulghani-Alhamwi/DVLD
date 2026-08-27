@@ -180,6 +180,7 @@
             this.tsmiShowApplicationDetails.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiShowApplicationDetails.Size = new System.Drawing.Size(360, 36);
             this.tsmiShowApplicationDetails.Text = "Show Application Details";
+            this.tsmiShowApplicationDetails.Click += new System.EventHandler(this.tsmiShowApplicationDetails_Click);
             // 
             // tsmiEditApplication
             // 

@@ -43,7 +43,7 @@ namespace DVLDBusinessLayer
         {
             return clsLDLApplicationsData.GetLDLApplications(WantedNumberOfRecords, LastLowestBroughtLDLApplicationID);
         }
-        public static uint GetTotalLDLApplicationsCount()
+        public static int GetTotalLDLApplicationsCount()
         {
             return clsLDLApplicationsData.GetTotalLDLApplicationsCount();
         }
@@ -135,7 +135,7 @@ namespace DVLDBusinessLayer
 
     public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
     {
-        return clsLDLApplicationsData.GetFilteredData(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,WildChar,-1);
+        return clsLDLApplicationsData.GetFilteredData(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,WildChar);
     }
 
    public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtLDLAppID, char? WildChar = null)

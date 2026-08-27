@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Applications\frmApplicationDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Applications\frmApplicationDetails.Designer.cs">
+      <DependentUpon>frmApplicationDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\clsGlobalSettings.cs" />
     <Compile Include="Controls\ctrlPersonDetails.cs">
       <SubType>UserControl</SubType>
@@ -81,34 +87,34 @@
     <Compile Include="Controls\ctrlDLApplicationInfo.Designer.cs">
       <DependentUpon>ctrlDLApplicationInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="ctrlDriverLicenseInfo.cs">
+    <Compile Include="Controls\ctrlDriverLicenseInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ctrlDriverLicenseInfo.Designer.cs">
+    <Compile Include="Controls\ctrlDriverLicenseInfo.Designer.cs">
       <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="ctrlDriverLicensesHistory.cs">
+    <Compile Include="Controls\ctrlDriverLicensesHistory.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ctrlDriverLicensesHistory.Designer.cs">
+    <Compile Include="Controls\ctrlDriverLicensesHistory.Designer.cs">
       <DependentUpon>ctrlDriverLicensesHistory.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmDriverLicenseHistory.cs">
+    <Compile Include="Licenses\frmDriverLicenseHistory.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDriverLicenseHistory.Designer.cs">
+    <Compile Include="Licenses\frmDriverLicenseHistory.Designer.cs">
       <DependentUpon>frmDriverLicenseHistory.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmLicenseInfo.cs">
+    <Compile Include="Licenses\frmLicenseInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmLicenseInfo.Designer.cs">
+    <Compile Include="Licenses\frmLicenseInfo.Designer.cs">
       <DependentUpon>frmLicenseInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="LocalDrivingLicenseApplications\frmIssueDrivingLicense.cs">
+    <Compile Include="Licenses\frmIssueDrivingLicense.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LocalDrivingLicenseApplications\frmIssueDrivingLicense.Designer.cs">
+    <Compile Include="Licenses\frmIssueDrivingLicense.Designer.cs">
       <DependentUpon>frmIssueDrivingLicense.cs</DependentUpon>
     </Compile>
     <Compile Include="Tests\frmScheduleTest.cs">
@@ -129,16 +135,16 @@
     <Compile Include="Tests\frmTestsAppointments.Designer.cs">
       <DependentUpon>frmTestsAppointments.cs</DependentUpon>
     </Compile>
-    <Compile Include="LocalDrivingLicenseApplications\frmNewLDLApplication.cs">
+    <Compile Include="Applications\frmNewLDLApplication.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LocalDrivingLicenseApplications\frmNewLDLApplication.Designer.cs">
+    <Compile Include="Applications\frmNewLDLApplication.Designer.cs">
       <DependentUpon>frmNewLDLApplication.cs</DependentUpon>
     </Compile>
-    <Compile Include="LocalDrivingLicenseApplications\frmLDLApplications.cs">
+    <Compile Include="Applications\frmLDLApplications.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LocalDrivingLicenseApplications\frmLDLApplications.Designer.cs">
+    <Compile Include="Applications\frmLDLApplications.Designer.cs">
       <DependentUpon>frmLDLApplications.cs</DependentUpon>
     </Compile>
     <Compile Include="TestTypes\frmManageTestTypes.cs">
@@ -237,19 +243,22 @@
     <EmbeddedResource Include="Controls\ctrlDLApplicationInfo.resx">
       <DependentUpon>ctrlDLApplicationInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ctrlDriverLicenseInfo.resx">
+    <EmbeddedResource Include="Applications\frmApplicationDetails.resx">
+      <DependentUpon>frmApplicationDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ctrlDriverLicenseInfo.resx">
       <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ctrlDriverLicensesHistory.resx">
+    <EmbeddedResource Include="Controls\ctrlDriverLicensesHistory.resx">
       <DependentUpon>ctrlDriverLicensesHistory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDriverLicenseHistory.resx">
+    <EmbeddedResource Include="Licenses\frmDriverLicenseHistory.resx">
       <DependentUpon>frmDriverLicenseHistory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLicenseInfo.resx">
+    <EmbeddedResource Include="Licenses\frmLicenseInfo.resx">
       <DependentUpon>frmLicenseInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LocalDrivingLicenseApplications\frmIssueDrivingLicense.resx">
+    <EmbeddedResource Include="Licenses\frmIssueDrivingLicense.resx">
       <DependentUpon>frmIssueDrivingLicense.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\frmScheduleTest.resx">
@@ -261,10 +270,10 @@
     <EmbeddedResource Include="Tests\frmTestsAppointments.resx">
       <DependentUpon>frmTestsAppointments.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LocalDrivingLicenseApplications\frmNewLDLApplication.resx">
+    <EmbeddedResource Include="Applications\frmNewLDLApplication.resx">
       <DependentUpon>frmNewLDLApplication.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LocalDrivingLicenseApplications\frmLDLApplications.resx">
+    <EmbeddedResource Include="Applications\frmLDLApplications.resx">
       <DependentUpon>frmLDLApplications.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TestTypes\frmManageTestTypes.resx">
@@ -399,6 +408,7 @@
     <None Include="Resources\ApplicationType.png" />
     <None Include="Resources\AddAppointment 32.png" />
     <None Include="Resources\driving-test 512.png" />
+    <None Include="Resources\Drivers 64.png" />
     <Content Include="Resources\DVLD Logo.ico" />
     <None Include="Resources\People 400.png" />
     <None Include="Resources\People 64.png" />

@@ -169,14 +169,14 @@ namespace DVLDBusinessLayer
               return clsPeopleData.SearchForNationalNo(NationalNo);
         }
 
-        public static uint GetTotalPeopleCount()
+        public static int GetTotalPeopleCount()
         {
             return clsPeopleData.GetTotalPeopleCount();
         }
 
         public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
         {
-            return clsPeopleData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar,-1);
+            return clsPeopleData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar);
         }
 
         public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy,int LastLowestbroughtPersonID ,char? WildChar = null)

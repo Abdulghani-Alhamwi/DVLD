@@ -11,9 +11,9 @@ namespace DVLDDataAccessLayer
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"INSERT INTO Applications VALUES
-                     (@ApplicantPersonID,@ApplicationDate,@ApplicationTypeID,
-                      @ApplicationStatus,@LastStatusDate,@PaidApplicationFees,@CreatedByUserID);
-                       SELECT SCOPE_IDENTITY();";
+                            (@ApplicantPersonID,@ApplicationDate,@ApplicationTypeID,
+                             @ApplicationStatus,@LastStatusDate,@PaidApplicationFees,@CreatedByUserID);
+                             SELECT SCOPE_IDENTITY();";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
