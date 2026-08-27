@@ -126,13 +126,15 @@
             this.dgvLocalLicenses.Size = new System.Drawing.Size(1257, 205);
             this.dgvLocalLicenses.StandardTab = true;
             this.dgvLocalLicenses.TabIndex = 58;
+            this.dgvLocalLicenses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvLocalLicenses_Scroll);
+            this.dgvLocalLicenses.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvLocalLicenses_KeyDown);
             // 
             // tpInternationalLicenses
             // 
             this.tpInternationalLicenses.Location = new System.Drawing.Point(4, 38);
             this.tpInternationalLicenses.Name = "tpInternationalLicenses";
             this.tpInternationalLicenses.Padding = new System.Windows.Forms.Padding(3);
-            this.tpInternationalLicenses.Size = new System.Drawing.Size(1283, 341);
+            this.tpInternationalLicenses.Size = new System.Drawing.Size(1303, 310);
             this.tpInternationalLicenses.TabIndex = 1;
             this.tpInternationalLicenses.Text = "Intrnational";
             this.tpInternationalLicenses.UseVisualStyleBackColor = true;

@@ -34,7 +34,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.pbTestType = new System.Windows.Forms.PictureBox();
             this.uctrlPersonDetailsByFilter = new DVLDPresentationLayer.ctrlPersonDetailsByFilter();
-            this.ctrlDriverLicensesHistory1 = new DVLDPresentationLayer.ctrlDriverLicensesHistory();
+            this.uctrlDriverLicensesHistory = new DVLDPresentationLayer.ctrlDriverLicensesHistory();
             ((System.ComponentModel.ISupportInitialize)(this.pbTestType)).BeginInit();
             this.SuspendLayout();
             // 
@@ -125,16 +125,16 @@
             this.uctrlPersonDetailsByFilter.Size = new System.Drawing.Size(1080, 422);
             this.uctrlPersonDetailsByFilter.TabIndex = 57;
             // 
-            // ctrlDriverLicensesHistory1
+            // uctrlDriverLicensesHistory
             // 
-            this.ctrlDriverLicensesHistory1.AutoScroll = true;
-            this.ctrlDriverLicensesHistory1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.ctrlDriverLicensesHistory1.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.ctrlDriverLicensesHistory1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.ctrlDriverLicensesHistory1.Location = new System.Drawing.Point(23, 512);
-            this.ctrlDriverLicensesHistory1.Name = "ctrlDriverLicensesHistory1";
-            this.ctrlDriverLicensesHistory1.Size = new System.Drawing.Size(1356, 413);
-            this.ctrlDriverLicensesHistory1.TabIndex = 58;
+            this.uctrlDriverLicensesHistory.AutoScroll = true;
+            this.uctrlDriverLicensesHistory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlDriverLicensesHistory.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.uctrlDriverLicensesHistory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.uctrlDriverLicensesHistory.Location = new System.Drawing.Point(23, 512);
+            this.uctrlDriverLicensesHistory.Name = "uctrlDriverLicensesHistory";
+            this.uctrlDriverLicensesHistory.Size = new System.Drawing.Size(1356, 413);
+            this.uctrlDriverLicensesHistory.TabIndex = 58;
             // 
             // frmDriverLicenseHistory
             // 
@@ -145,7 +145,7 @@
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1386, 991);
             this.ControlBox = false;
-            this.Controls.Add(this.ctrlDriverLicensesHistory1);
+            this.Controls.Add(this.uctrlDriverLicensesHistory);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblFormBigTitle);
             this.Controls.Add(this.lblFormTitle);
@@ -172,6 +172,6 @@
         private System.Windows.Forms.PictureBox pbTestType;
         private System.Windows.Forms.Button btnClose;
         private ctrlPersonDetailsByFilter uctrlPersonDetailsByFilter;
-        private ctrlDriverLicensesHistory ctrlDriverLicensesHistory1;
+        private ctrlDriverLicensesHistory uctrlDriverLicensesHistory;
     }
 }
