@@ -66,14 +66,14 @@ namespace DVLDBusinessLayer
         {
             return clsDriversData.GetTotalDriversCount();
         }
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char WildChar, int LastLowestBroughtDriverID)
+        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy,char? WildChar = null)
         {
-            return clsDriversData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar, LastLowestBroughtDriverID);
+            return clsDriversData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, -1,WildChar);
         }
 
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy)
+        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtDriverID = -1, char? WildChar = null)
         {
-            return clsDriversData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy);
+            return clsDriversData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy,LastLowestBroughtDriverID,WildChar);
         }
 
     }

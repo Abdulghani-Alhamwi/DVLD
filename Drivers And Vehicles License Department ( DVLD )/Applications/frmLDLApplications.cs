@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
-using DVLDPresentationLayer.Core;
 using DVLDBusinessLayer;
-using MyLib;
-using DVLDPresentationLayer.LocalDrivingLicenseApplications;
 using DVLDPresentationLayer.Controls;
+using DVLDPresentationLayer.Core;
+using DVLDPresentationLayer.LocalDrivingLicenseApplications;
+using MyLib;
 
 namespace DVLDPresentationLayer
 {
@@ -18,8 +19,17 @@ namespace DVLDPresentationLayer
         }
         private void _AddComboBoxesFilterItems()
         {
-            object[] cbFilterItems = new object[] { "None", "L.D.L.AppID", "National No.", "Full Name", "Status" };
-            cbFilterBy.DataSource = cbFilterItems;
+            object[] Items = new object[dgvLDLApplications.Columns.Count - 2];
+            Items[0] = "None";
+
+            List<string> ldgvColumnsNames = clsUtility.GetdgvColumnsNames(dgvLDLApplications, new string[] { "Driving Class", "Application Date", "Passed Tests" });
+
+            for (byte i = 0; i < ldgvColumnsNames.Count; i++)
+            {
+                Items[i + 1] = ldgvColumnsNames[i];
+            }
+
+            cbFilterBy.Items.AddRange(Items);
             cbFilterBy.SelectedItem = "None";
 
             object[] cbStatusItems = new object[] { "All", "New", "Canceled", "Completed" };
@@ -28,8 +38,12 @@ namespace DVLDPresentationLayer
         }
         private void frmLocalDrivingLicenseApplications_Load(object sender, EventArgs e)
         {
-            lblRecordsNumber.Text = clsLDLApplication.GetTotalLDLApplicationsCount().ToString();
+            dgvLDLApplications.DataSource = clsLDLApplication.GetLDLApplications(clsUtility.WantedNumOfRowsFromDB);
+
+            if(dgvLDLApplications.DataSource != null)
             _AddComboBoxesFilterItems();
+
+            lblRecordsNumber.Text = clsLDLApplication.GetTotalLDLApplicationsCount().ToString();
         }
         private void btnExit_Click(object sender, EventArgs e)
         {
@@ -259,11 +273,7 @@ namespace DVLDPresentationLayer
                     clsUtility.AddNewRowsToDGV(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvLDLApplications));
             }
         }
-        private void dgvLDLApplications_Scroll(object sender, ScrollEventArgs e)
-        {
-            if (dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.None) == dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed))
-                _AppendPartOfRemainingData();
-        }
+        
         private void dgvLDLApplications_KeyDown(object sender, KeyEventArgs e)
         {
             if (dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.None) == dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Selected))
@@ -460,6 +470,14 @@ namespace DVLDPresentationLayer
 
             frmApplicationDetails frm = new frmApplicationDetails((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
             frm.ShowDialog();
+        }
+        private void dgvLDLApplications_Scroll(object sender, ScrollEventArgs e)
+        {
+            if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
+            {
+                if (dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.None) == dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed))
+                    _AppendPartOfRemainingData();
+            }
         }
     }
     }

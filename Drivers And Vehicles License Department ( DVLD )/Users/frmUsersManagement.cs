@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Windows.Forms;
-using MyLib;
-using DVLDBusinessLayer;
 using System.Data;
+using System.Windows.Forms;
+using DVLDBusinessLayer;
+using MyLib;
 
 namespace DVLDPresentationLayer
 {
@@ -25,13 +25,28 @@ namespace DVLDPresentationLayer
                 datarow["UserName"] = clsUtility.DecryptUserName(datarow["UserName"].ToString());
             }
         }
+        private void _AddDropDownItems()
+        {
+            object[] Items = new object[dgvUsers.Columns.Count + 1];
+            Items[0] = "None";
 
+            string[] lColumnsNames = clsUtility.GetdgvColumnsNames(dgvUsers);
+
+            for (byte i = 0; i < lColumnsNames.Length; i++)
+            {
+                Items[i + 1] = lColumnsNames[i];
+            }
+
+            cbFilterBy.Items.AddRange(Items);
+            cbFilterBy.SelectedItem = "None";
+        }
         bool _AllowDataLoading;
         private void frmUsersManagement_Load(object sender, EventArgs e)
         {
-            object[] Items = new object[] { "None", "User ID", "UserName", "Person ID", "Full Name", "Is Active" };
-            cbFilterBy.Items.AddRange(Items);
-            cbFilterBy.SelectedItem = "None";
+            dgvUsers.DataSource = clsUser.GetUsersInfo(clsUtility.WantedNumOfRowsFromDB);
+
+            if (dgvUsers.DataSource != null) 
+            _AddDropDownItems();
 
             lblRecordsNumber.Text = clsUser.GetTotalUsersCount().ToString();
         }
@@ -53,7 +68,6 @@ namespace DVLDPresentationLayer
             else
                 cbFilterBy.BackColor = clsUtility.ComboBoxBackColor;
         }
-
 
         private void _LoadDataAfterFirstTimeLoad(ref bool _AllowDataLoading)
         {
@@ -340,8 +354,11 @@ namespace DVLDPresentationLayer
         }
         private void dgvUsers_Scroll(object sender, ScrollEventArgs e)
         {
-            if (dgvUsers.Rows.GetLastRow(DataGridViewElementStates.None) == dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed))
-                _AppendPartOfRemainingData();
+            if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
+            {
+                if (dgvUsers.Rows.GetLastRow(DataGridViewElementStates.None) == dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed))
+                    _AppendPartOfRemainingData();
+            }
         }
 
         private void dgvUsers_KeyDown(object sender, KeyEventArgs e)

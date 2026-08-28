@@ -149,7 +149,7 @@
             this.tsmiPhoneCall});
             this.cmsPeopleMenu.Name = "cmsPeopleMenu";
             this.cmsPeopleMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPeopleMenu.Size = new System.Drawing.Size(223, 266);
+            this.cmsPeopleMenu.Size = new System.Drawing.Size(223, 244);
             this.cmsPeopleMenu.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsPeopleMenu_Paint);
             // 
             // tsmiShowDetails
@@ -224,11 +224,11 @@
             // lblTitleFilterBy
             // 
             this.lblTitleFilterBy.AutoSize = true;
-            this.lblTitleFilterBy.Font = new System.Drawing.Font("Tahoma", 22F, System.Drawing.FontStyle.Bold);
-            this.lblTitleFilterBy.Location = new System.Drawing.Point(38, 350);
+            this.lblTitleFilterBy.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Bold);
+            this.lblTitleFilterBy.Location = new System.Drawing.Point(38, 364);
             this.lblTitleFilterBy.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTitleFilterBy.Name = "lblTitleFilterBy";
-            this.lblTitleFilterBy.Size = new System.Drawing.Size(160, 36);
+            this.lblTitleFilterBy.Size = new System.Drawing.Size(147, 33);
             this.lblTitleFilterBy.TabIndex = 41;
             this.lblTitleFilterBy.Text = "Filter By :";
             // 
@@ -240,7 +240,7 @@
             this.cbFilterBy.Font = new System.Drawing.Font("Tahoma", 21F);
             this.cbFilterBy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.cbFilterBy.FormattingEnabled = true;
-            this.cbFilterBy.Location = new System.Drawing.Point(202, 347);
+            this.cbFilterBy.Location = new System.Drawing.Point(202, 355);
             this.cbFilterBy.Name = "cbFilterBy";
             this.cbFilterBy.Size = new System.Drawing.Size(226, 42);
             this.cbFilterBy.TabIndex = 2;
@@ -255,7 +255,7 @@
             this.txtFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFilter.Font = new System.Drawing.Font("Tahoma", 21F);
             this.txtFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtFilter.Location = new System.Drawing.Point(447, 348);
+            this.txtFilter.Location = new System.Drawing.Point(447, 356);
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(344, 41);
             this.txtFilter.TabIndex = 3;
@@ -272,9 +272,9 @@
             this.btnAddNewPerson.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnAddNewPerson.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddNewPerson.Image = global::DVLDPresentationLayer.Properties.Resources.Add_Person_40;
-            this.btnAddNewPerson.Location = new System.Drawing.Point(1078, 316);
+            this.btnAddNewPerson.Location = new System.Drawing.Point(1087, 332);
             this.btnAddNewPerson.Name = "btnAddNewPerson";
-            this.btnAddNewPerson.Size = new System.Drawing.Size(111, 70);
+            this.btnAddNewPerson.Size = new System.Drawing.Size(102, 65);
             this.btnAddNewPerson.TabIndex = 1;
             this.btnAddNewPerson.UseVisualStyleBackColor = true;
             this.btnAddNewPerson.Click += new System.EventHandler(this.btnAddNewPerson_Click);

@@ -7,9 +7,9 @@ namespace DVLDDataAccessLayer
     public class clsUsersData
     {
         private static string Query =
-         @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID] , Users.PersonID AS [Person ID] ,
+         @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID],Users.PersonID AS [Person ID] ,
            People.FirstName + ' ' + People.SecondName
-          + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name] , UserName,IsActive AS [Is Active]
+          + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],UserName,IsActive AS [Is Active]
            From Users INNER JOIN People ON Users.PersonID = People.PersonID";
 
         public static DataTable GetUsersInfo(byte WantedNumberOfRecords, int LastLowestBroughtUserID = -1)
@@ -501,7 +501,7 @@ namespace DVLDDataAccessLayer
                 return query;
         }
 
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
+        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestbroughtUserID = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 

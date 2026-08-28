@@ -131,12 +131,12 @@ namespace DVLDBusinessLayer
 
         public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
         {
-            return clsUsersData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar);
+            return clsUsersData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy,-1, WildChar);
         }
 
         public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestbroughtUserID, char? WildChar = null)
         {
-            return clsUsersData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar, LastLowestbroughtUserID);
+            return clsUsersData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, LastLowestbroughtUserID, WildChar);
         }
 
         public static int GetTotalUsersCount()

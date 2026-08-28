@@ -135,12 +135,12 @@ namespace DVLDBusinessLayer
 
     public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
     {
-        return clsLDLApplicationsData.GetFilteredData(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,WildChar);
+        return clsLDLApplicationsData.GetFilteredData(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,-1,WildChar);
     }
 
    public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtLDLAppID, char? WildChar = null)
    {
-       return clsLDLApplicationsData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar, LastLowestBroughtLDLAppID);
+       return clsLDLApplicationsData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, LastLowestBroughtLDLAppID, WildChar);
    }
 
         public static sbyte GetPassedTests(int LDLApplicationID)

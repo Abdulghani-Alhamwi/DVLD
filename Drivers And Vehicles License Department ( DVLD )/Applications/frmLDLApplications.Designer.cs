@@ -125,11 +125,11 @@
             // lblTitleFilterBy
             // 
             this.lblTitleFilterBy.AutoSize = true;
-            this.lblTitleFilterBy.Font = new System.Drawing.Font("Tahoma", 22F, System.Drawing.FontStyle.Bold);
-            this.lblTitleFilterBy.Location = new System.Drawing.Point(39, 379);
+            this.lblTitleFilterBy.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Bold);
+            this.lblTitleFilterBy.Location = new System.Drawing.Point(39, 382);
             this.lblTitleFilterBy.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTitleFilterBy.Name = "lblTitleFilterBy";
-            this.lblTitleFilterBy.Size = new System.Drawing.Size(160, 36);
+            this.lblTitleFilterBy.Size = new System.Drawing.Size(147, 33);
             this.lblTitleFilterBy.TabIndex = 53;
             this.lblTitleFilterBy.Text = "Filter By :";
             // 
@@ -167,7 +167,7 @@
             this.tsmiShowPersonLicenseHistory});
             this.cmsLDLApplications.Name = "cmsPeopleMenu";
             this.cmsLDLApplications.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsLDLApplications.Size = new System.Drawing.Size(361, 350);
+            this.cmsLDLApplications.Size = new System.Drawing.Size(361, 328);
             this.cmsLDLApplications.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLDLApplications_Opening);
             this.cmsLDLApplications.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsLDLApplications_Paint);
             // 

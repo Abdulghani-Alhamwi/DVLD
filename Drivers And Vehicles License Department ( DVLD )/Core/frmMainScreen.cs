@@ -94,7 +94,8 @@ namespace DVLDPresentationLayer
 
         private void tsmiDrivers_Click(object sender, EventArgs e)
         {
-             
+            frmDriversManagements frm = new frmDriversManagements();
+            frm.ShowDialog();
         }
     }
 }

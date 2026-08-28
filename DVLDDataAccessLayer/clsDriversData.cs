@@ -6,16 +6,13 @@ namespace DVLDDataAccessLayer
 {
     public class clsDriversData
     {
-
         private static string Query =
          @"SELECT TOP (@WantedNumberOfRecords) Drivers.DriverID AS [Driver ID] , Drivers.PersonID AS [Person ID] ,People.NationalNo AS [National No.],
-           People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],
-           Format(CreatedDate,'dd/MM/yyyy h:MM tt') AS [Date Created],SUM(CAST(LocalLicenses.IsActive AS tinyINT)) + SUM(CAST(InternationalLicenses.IsActive AS tinyINT)) AS [Active Licenses]
+           People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],Format(CreatedDate,'dd/MM/yyyy h:MM tt') AS [Date Created],
+           CASE WHEN (SUM(CAST(LocalLicenses.IsActive AS TINYINT)) + SUM(CAST(InternationalLicenses.IsActive AS tinyINT))) IS NULL THEN 0
+           ELSE SUM(CAST(LocalLicenses.IsActive AS TINYINT)) + SUM(CAST(InternationalLicenses.IsActive AS tinyINT)) END AS [Active Licenses]
            From Drivers INNER JOIN People ON Drivers.PersonID = People.PersonID INNER JOIN LocalLicenses ON Drivers.DriverID = LocalLicenses.DriverID
-           INNER JOIN InternationalLicenses ON Drivers.DriverID = InternationalLicenses.DriverID
-           GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
-           People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
-           Format(CreatedDate,'dd/MM/yyyy h:MM tt')";
+           LEFT JOIN InternationalLicenses ON Drivers.DriverID = InternationalLicenses.DriverID";
 
         public static DataTable GetDriversInfo(byte WantedNumberOfRecords, int LastLowestBroughtDriverID = -1)
         {
@@ -25,14 +22,21 @@ namespace DVLDDataAccessLayer
             string query = Query;
 
             if (LastLowestBroughtDriverID != -1)
-                query += " WHERE DriverID < @LastLowestBroughtUserID";
+                query += @" WHERE DriverID < @LastLowestBroughtUserID
+                            GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
+                            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
+                            Format(CreatedDate,'dd/MM/yyyy h:MM tt') ORDER BY Drivers.DriverID DESC";
 
-            query += " ORDER BY DriverID DESC";
+            else
+                query += @" GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
+                            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
+                            Format(CreatedDate,'dd/MM/yyyy h:MM tt') ORDER BY Drivers.DriverID DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
-            command.Parameters.AddWithValue("@LastLowestBroughtUserID", LastLowestBroughtDriverID);
 
+            if (LastLowestBroughtDriverID != -1) 
+            command.Parameters.AddWithValue("@LastLowestBroughtUserID", LastLowestBroughtDriverID);
 
             try
             {
@@ -195,22 +199,16 @@ namespace DVLDDataAccessLayer
             switch (SendedColumnName)
             {
                 case "Driver ID":
-                    return "DriverID";
+                    return "Drivers.DriverID";
 
                 case "Person ID":
-                    return "PersonID";
+                    return "Drivers.PersonID";
 
                 case "National No.":
-                    return "NationalNo";
+                    return "People.NationalNo";
 
                 case "Full Name":
-                    return "FullName";
-
-                case "Date Created":
-                    return "CreatedDate";
-
-                case "Active Licenses":
-                    return "SUM(CAST(LocalLicenses.IsActive AS tinyINT)) + SUM(CAST(InternationalLicenses.IsActive AS tinyINT))";
+                    return "People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName";
 
                 default:
                     return "";
@@ -223,30 +221,39 @@ namespace DVLDDataAccessLayer
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
                 if (LastLowestBroughtDriverID != -1)
-                    query += @" WHERE DriverID < @LastLowestbroughtPersonID
-                           ORDER BY DriverID DESC";
+                    query += @" WHERE DriverID < @LastLowestBroughtUserID
+                            GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
+                            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
+                            Format(CreatedDate,'dd/MM/yyyy h:MM tt') ORDER BY Drivers.DriverID DESC";
+
                 else
-                    query += " ORDER BY DriverID DESC";
+                    query += @" GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
+                            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
+                            Format(CreatedDate,'dd/MM/yyyy h:MM tt') ORDER BY Drivers.DriverID DESC";
+
                 return query;
             }
 
                 ColumnNameToFilter = _GetOriginalColumnName(ColumnNameToFilter);
 
             if (WildChar == null)
-                query += $" HAVING {ColumnNameToFilter} = @Value";
+                query += $" WHERE {ColumnNameToFilter} = @Value";
             else
-                query += $" HAVING {ColumnNameToFilter} LIKE @Value + @WildChar";
+                query += $" WHERE {ColumnNameToFilter} LIKE @Value + @WildChar";
 
-                if (LastLowestBroughtDriverID == -1)
-                    query += " ORDER BY DriverID DESC";
+            if (LastLowestBroughtDriverID != -1)
+                query += @" AND DriverID < @LastLowestBroughtUserID GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
+                            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
+                            Format(CreatedDate,'dd/MM/yyyy h:MM tt') ORDER BY Drivers.DriverID DESC";
 
-                else
-                    query += @" AND DriverID < @LastLowestbroughtPersonID
-                           ORDER BY DriverID DESC";
+            else
+                query += @" GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
+                            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
+                            Format(CreatedDate,'dd/MM/yyyy h:MM tt') ORDER BY Drivers.DriverID DESC";
 
             return query;
         }
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtDriverID = -1)
+        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtDriverID = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
@@ -278,7 +285,7 @@ namespace DVLDDataAccessLayer
                 reader.Close();
             }
 
-            catch { }
+            catch (Exception ex){ Console.Write(ex.Message); }
 
             finally
             {

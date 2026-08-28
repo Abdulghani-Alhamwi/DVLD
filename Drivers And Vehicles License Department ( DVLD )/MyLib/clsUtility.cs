@@ -206,7 +206,23 @@ namespace MyLib
 
             return ldgvColumnsNames;
         }
+        public static List<string> GetdgvColumnsNames(DataGridView dgv, string [] UnWantedColumnNames)
+        {
+            List<string> ldgvColumnsNames = new List<string>();
 
+            for (byte i = 0; i < dgv.Columns.Count; i++)
+            {
+                ldgvColumnsNames.Add(dgv.Columns[i].Name);
+            }
+
+            if (UnWantedColumnNames != null)
+            {
+                for (byte i = 0; i < UnWantedColumnNames.Length; i++)
+                    ldgvColumnsNames.Remove(UnWantedColumnNames[i]);
+            }
+
+            return ldgvColumnsNames;
+        }
 
         /// <summary>
         /// Remove rows from data grid view that its index in the provided array , if the record cannot be deleted from then the record index in the provided array must be -1.

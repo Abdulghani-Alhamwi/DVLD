@@ -19,11 +19,11 @@ namespace DVLDPresentationLayer
             object[] Items = new object[dgvPeople.Columns.Count];
             Items[0] = "None";
 
-            List<string> ldgvColumnsNames = clsUtility.GetdgvColumnsNames(dgvPeople,"Date Of Birth");
+            List<string> lColumnsNames = clsUtility.GetdgvColumnsNames(dgvPeople,"Date Of Birth");
 
-            for (byte i = 0; i < ldgvColumnsNames.Count; i++)
+            for (byte i = 0; i < lColumnsNames.Count; i++)
             {
-                Items[i + 1] = ldgvColumnsNames[i];
+                Items[i + 1] = lColumnsNames[i];
             }
             
             cbFilterBy.Items.AddRange(Items);
@@ -36,14 +36,13 @@ namespace DVLDPresentationLayer
         bool _AllowDataLoading;
         private void frmPeopleManagement_Load(object sender, EventArgs e)
         {
-            DataTable dtPeople = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
+            dgvPeople.DataSource = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
             
-            if (dtPeople != null)
+            if (dgvPeople.DataSource != null)
             {
                 dgvPeople.Font = new Font("Tahoma", 15.5f);
-                dgvPeople.DataSource = dtPeople;
+                _AddDropDownItems();
             }
-             _AddDropDownItems();
 
             lblRecordsNumber.Text = clsPerson.GetTotalPeopleCount().ToString();
         }
@@ -65,18 +64,20 @@ namespace DVLDPresentationLayer
         {
             clsUtility.DrawComboBoxItems(sender, e);
         }
-
+        private void _LoadDataAfterFirstTimeLoad(ref bool _AllowDataLoading)
+        {
+            if (_AllowDataLoading)
+                dgvPeople.DataSource = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
+            else
+                _AllowDataLoading = true;
+        }
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (((ComboBox)sender).SelectedItem.ToString() != "None")
             {
                 txtFilter.Visible = true;
                 txtFilter.Focus();
-
-                if (_AllowDataLoading)
-                    dgvPeople.DataSource = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
-                else
-                    _AllowDataLoading = true;
+                _LoadDataAfterFirstTimeLoad(ref _AllowDataLoading);
             }
             else
             {
@@ -291,8 +292,11 @@ namespace DVLDPresentationLayer
 
         private void dgvPeople_Scroll(object sender, ScrollEventArgs e)
         {
-            if (dgvPeople.Rows.GetLastRow(DataGridViewElementStates.None) == dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed))
-                _AppendPartOfRemainingData();
+            if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
+            {
+                if (dgvPeople.Rows.GetLastRow(DataGridViewElementStates.None) == dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed))
+                    _AppendPartOfRemainingData();
+            }
         }
         private void dgvPeople_KeyDown(object sender, KeyEventArgs e)
         {

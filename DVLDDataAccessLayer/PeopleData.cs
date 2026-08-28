@@ -538,7 +538,7 @@ namespace DVLDDataAccessLayer
                 return query;
         }
 
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords,string ColumnNameToFilter,string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
+        public static DataTable GetFilteredData(byte WantedNumberOfRecords,string ColumnNameToFilter,string ValueToFilterBy, int LastLowestbroughtPersonID = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 

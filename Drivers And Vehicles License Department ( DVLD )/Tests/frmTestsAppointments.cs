@@ -114,11 +114,6 @@ namespace DVLDPresentationLayer
                 _AppendPartOfRemainingData();
         }
 
-        private void dgvVisionTestAppointments_Scroll(object sender, ScrollEventArgs e)
-        {
-            if (dgvTestAppointments.Rows.GetLastRow(DataGridViewElementStates.None) == dgvTestAppointments.Rows.GetLastRow(DataGridViewElementStates.Displayed))
-                _AppendPartOfRemainingData();
-        }
         private void _EditDataRowInDGV(ref object[] NewValues,int RowIndex)
         {
             clsUtility.EditFullDataRowInDGV(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, ref NewValues, RowIndex);
@@ -188,5 +183,13 @@ namespace DVLDPresentationLayer
             else
                 MessageBox.Show("You can select one appointment to take test!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
          }
+        private void dgvVisionTestAppointments_Scroll(object sender, ScrollEventArgs e)
+        {
+            if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
+            {
+                if (dgvTestAppointments.Rows.GetLastRow(DataGridViewElementStates.None) == dgvTestAppointments.Rows.GetLastRow(DataGridViewElementStates.Displayed))
+                    _AppendPartOfRemainingData();
+            }
+        }
     }
 }

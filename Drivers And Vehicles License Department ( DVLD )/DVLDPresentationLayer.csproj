@@ -99,6 +99,12 @@
     <Compile Include="Controls\ctrlDriverLicensesHistory.Designer.cs">
       <DependentUpon>ctrlDriverLicensesHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmDriversManagements.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDriversManagements.Designer.cs">
+      <DependentUpon>frmDriversManagements.cs</DependentUpon>
+    </Compile>
     <Compile Include="Licenses\frmDriverLicenseHistory.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -251,6 +257,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrlDriverLicensesHistory.resx">
       <DependentUpon>ctrlDriverLicensesHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDriversManagements.resx">
+      <DependentUpon>frmDriversManagements.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Licenses\frmDriverLicenseHistory.resx">
       <DependentUpon>frmDriverLicenseHistory.cs</DependentUpon>
@@ -409,6 +418,7 @@
     <None Include="Resources\AddAppointment 32.png" />
     <None Include="Resources\driving-test 512.png" />
     <None Include="Resources\Drivers 64.png" />
+    <None Include="Resources\Driver Main.png" />
     <Content Include="Resources\DVLD Logo.ico" />
     <None Include="Resources\People 400.png" />
     <None Include="Resources\People 64.png" />

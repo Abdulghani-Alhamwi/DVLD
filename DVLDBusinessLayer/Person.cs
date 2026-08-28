@@ -176,12 +176,12 @@ namespace DVLDBusinessLayer
 
         public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
         {
-            return clsPeopleData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar);
+            return clsPeopleData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, -1,WildChar);
         }
 
         public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy,int LastLowestbroughtPersonID ,char? WildChar = null)
         {
-            return clsPeopleData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar,LastLowestbroughtPersonID);
+            return clsPeopleData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, LastLowestbroughtPersonID ,WildChar);
         }
 
         public static string GetFullName(int PersonID)
