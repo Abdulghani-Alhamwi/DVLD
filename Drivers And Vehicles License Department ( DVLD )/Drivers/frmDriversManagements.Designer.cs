@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblRecordsNumber = new System.Windows.Forms.Label();
             this.lblRecordsTitle = new System.Windows.Forms.Label();
@@ -36,22 +35,12 @@
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
             this.lblTitleFilterBy = new System.Windows.Forms.Label();
             this.pbDrivers = new System.Windows.Forms.PictureBox();
-            this.tsmiPhoneCall = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiSendEmail = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiAddNewUser = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiShowDetails = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsPeopleMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnClose = new System.Windows.Forms.Button();
             this.dgvDrivers = new System.Windows.Forms.DataGridView();
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblFormBigTitle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbDrivers)).BeginInit();
-            this.cmsPeopleMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDrivers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -132,87 +121,6 @@
             this.pbDrivers.TabIndex = 51;
             this.pbDrivers.TabStop = false;
             // 
-            // tsmiPhoneCall
-            // 
-            this.tsmiPhoneCall.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiPhoneCall.Image = global::DVLDPresentationLayer.Properties.Resources.call_32;
-            this.tsmiPhoneCall.Name = "tsmiPhoneCall";
-            this.tsmiPhoneCall.Size = new System.Drawing.Size(222, 38);
-            this.tsmiPhoneCall.Text = "Phone Call";
-            // 
-            // tsmiSendEmail
-            // 
-            this.tsmiSendEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiSendEmail.Image = global::DVLDPresentationLayer.Properties.Resources.send_email_32;
-            this.tsmiSendEmail.Name = "tsmiSendEmail";
-            this.tsmiSendEmail.Size = new System.Drawing.Size(222, 38);
-            this.tsmiSendEmail.Text = "Send Email";
-            // 
-            // tsSeparator2
-            // 
-            this.tsSeparator2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.tsSeparator2.Name = "tsSeparator2";
-            this.tsSeparator2.Size = new System.Drawing.Size(219, 6);
-            // 
-            // tsmiDelete
-            // 
-            this.tsmiDelete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiDelete.Image = global::DVLDPresentationLayer.Properties.Resources.Delete_32;
-            this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(222, 38);
-            this.tsmiDelete.Text = "Delete";
-            this.tsmiDelete.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tsmiEdit
-            // 
-            this.tsmiEdit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiEdit.Image = global::DVLDPresentationLayer.Properties.Resources.edit_32;
-            this.tsmiEdit.Name = "tsmiEdit";
-            this.tsmiEdit.Size = new System.Drawing.Size(222, 38);
-            this.tsmiEdit.Text = "Edit";
-            this.tsmiEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tsmiAddNewUser
-            // 
-            this.tsmiAddNewUser.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiAddNewUser.Image = global::DVLDPresentationLayer.Properties.Resources.Add_Person_40;
-            this.tsmiAddNewUser.Name = "tsmiAddNewUser";
-            this.tsmiAddNewUser.Size = new System.Drawing.Size(222, 38);
-            this.tsmiAddNewUser.Text = "Add New User";
-            this.tsmiAddNewUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tsSeparator1
-            // 
-            this.tsSeparator1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.tsSeparator1.Name = "tsSeparator1";
-            this.tsSeparator1.Size = new System.Drawing.Size(219, 6);
-            // 
-            // tsmiShowDetails
-            // 
-            this.tsmiShowDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.tsmiShowDetails.Image = global::DVLDPresentationLayer.Properties.Resources.PersonDetails_32;
-            this.tsmiShowDetails.Name = "tsmiShowDetails";
-            this.tsmiShowDetails.Size = new System.Drawing.Size(222, 38);
-            this.tsmiShowDetails.Text = "Show Details";
-            // 
-            // cmsPeopleMenu
-            // 
-            this.cmsPeopleMenu.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.cmsPeopleMenu.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.cmsPeopleMenu.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.cmsPeopleMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiShowDetails,
-            this.tsSeparator1,
-            this.tsmiAddNewUser,
-            this.tsmiEdit,
-            this.tsmiDelete,
-            this.tsSeparator2,
-            this.tsmiSendEmail,
-            this.tsmiPhoneCall});
-            this.cmsPeopleMenu.Name = "cmsPeopleMenu";
-            this.cmsPeopleMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPeopleMenu.Size = new System.Drawing.Size(223, 244);
-            // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -248,7 +156,6 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvDrivers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvDrivers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDrivers.ContextMenuStrip = this.cmsPeopleMenu;
             this.dgvDrivers.Location = new System.Drawing.Point(35, 415);
             this.dgvDrivers.Margin = new System.Windows.Forms.Padding(2);
             this.dgvDrivers.Name = "dgvDrivers";
@@ -335,7 +242,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.frmDriversManagements_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbDrivers)).EndInit();
-            this.cmsPeopleMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDrivers)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -350,15 +256,6 @@
         private System.Windows.Forms.ComboBox cbFilterBy;
         private System.Windows.Forms.Label lblTitleFilterBy;
         private System.Windows.Forms.PictureBox pbDrivers;
-        private System.Windows.Forms.ToolStripMenuItem tsmiPhoneCall;
-        private System.Windows.Forms.ToolStripMenuItem tsmiSendEmail;
-        private System.Windows.Forms.ToolStripSeparator tsSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem tsmiDelete;
-        private System.Windows.Forms.ToolStripMenuItem tsmiEdit;
-        private System.Windows.Forms.ToolStripMenuItem tsmiAddNewUser;
-        private System.Windows.Forms.ToolStripSeparator tsSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem tsmiShowDetails;
-        private System.Windows.Forms.ContextMenuStrip cmsPeopleMenu;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.DataGridView dgvDrivers;
         private System.Windows.Forms.Label lblFormTitle;

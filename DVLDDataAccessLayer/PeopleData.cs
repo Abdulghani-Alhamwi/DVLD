@@ -7,7 +7,7 @@ namespace DVLDDataAccessLayer
 {
     public class clsPeopleData
     {
-        private static string Query =
+        private static string _query =
          $@"SELECT TOP (@WantedNumberOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
            FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
            Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
@@ -75,9 +75,7 @@ namespace DVLDDataAccessLayer
         {
             int AffectedRows = -1;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = @"UPDATE PEOPLE
-                             SET
-                             NationalNo = @NationalNo ,FirstName = @FirstName ,SecondName = @SecondName ,
+            string query = @"UPDATE PEOPLE SET NationalNo = @NationalNo ,FirstName = @FirstName ,SecondName = @SecondName ,
                              ThirdName = @ThirdName ,LastName = @LastName ,DateOfBirth = @DateOfBirth ,
                              Gendor = @Gendor ,Address = @Address ,Phone = @Phone ,Email = @Email ,
                              NationalityCountryID = @NationalityCountryID ,ImagePath = @ImagePath 
@@ -159,7 +157,7 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = Query;
+            string query = _query;
             
             if (LastLowestbroughtPersonID != -1)
                 query += @" WHERE PersonID < @LastLowestbroughtPersonID";
@@ -200,7 +198,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = Query;
+            string query = _query;
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumberOfRecords", 0);
@@ -484,7 +482,7 @@ namespace DVLDDataAccessLayer
 
         private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
         {
-            string query = Query;
+            string query = _query;
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
@@ -580,9 +578,8 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT FirstName + ' ' + SecondName + ' ' + 
-                            CASE WHEN ThirdName IS NULL THEN LastName ELSE ThirdName + ' ' + LastName END
-                            FROM People WHERE PersonID = @PersonID";
+            string query = @"SELECT FirstName + ' ' + SecondName + ' ' + CASE WHEN ThirdName IS NULL THEN LastName ELSE ThirdName + ' ' + LastName END
+                             FROM People WHERE PersonID = @PersonID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@PersonID", PersonID);

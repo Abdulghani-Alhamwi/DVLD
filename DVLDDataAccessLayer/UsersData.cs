@@ -6,7 +6,7 @@ namespace DVLDDataAccessLayer
 {
     public class clsUsersData
     {
-        private static string Query =
+        private static string _query =
          @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID],Users.PersonID AS [Person ID] ,
            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],
            UserName,IsActive AS [Is Active] From Users INNER JOIN People ON Users.PersonID = People.PersonID";
@@ -16,7 +16,7 @@ namespace DVLDDataAccessLayer
             DataTable dtUsers = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = Query;
+            string query = _query;
 
             if (LastLowestBroughtUserID != -1)
                 query += " WHERE UserID < @LastLowestBroughtUserID";
@@ -55,7 +55,7 @@ namespace DVLDDataAccessLayer
         {
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = Query;
+            string query = _query;
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumberOfRecords", 0);
@@ -454,7 +454,7 @@ namespace DVLDDataAccessLayer
 
         private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
         {
-            string query = Query;
+            string query = _query;
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {

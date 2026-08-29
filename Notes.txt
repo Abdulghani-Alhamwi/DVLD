@@ -519,3 +519,7 @@ It is about that first word its first letter be small and the other words after 
 
 Translation :
 Camel Case Naming Style : أسلوب التسمية بحالة الكلمات المتداخلة
+
+46) The pascal case naming style -> is that the name of variable or method or object ..., each word in the name -> its first letter be in upper case.
+
+47) In .NET For Private fields and local variables and method parameters the built in things use camel case naming style (and private fields uses _camelcase which means there is a prefix _ at the start of the name)and for other things they used pascal case like for a method name ..., we can to use any naming style we want and to name as we want and we can if we want to use the standards for better readability among everything to use those naming styles and for the best readability we can use them as they are used in .NET like for local variables  , method parameters and private fields to use camel case and for other things to use pascal case naming style .
