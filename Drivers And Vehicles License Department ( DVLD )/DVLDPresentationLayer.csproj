@@ -99,16 +99,16 @@
     <Compile Include="Controls\ctrlDriverLicensesHistory.Designer.cs">
       <DependentUpon>ctrlDriverLicensesHistory.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmDriversManagements.cs">
+    <Compile Include="Drivers\frmDriversManagements.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDriversManagements.Designer.cs">
+    <Compile Include="Drivers\frmDriversManagements.Designer.cs">
       <DependentUpon>frmDriversManagements.cs</DependentUpon>
     </Compile>
-    <Compile Include="Licenses\frmDriverLicenseHistory.cs">
+    <Compile Include="Drivers\frmDriverLicenseHistory.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Licenses\frmDriverLicenseHistory.Designer.cs">
+    <Compile Include="Drivers\frmDriverLicenseHistory.Designer.cs">
       <DependentUpon>frmDriverLicenseHistory.cs</DependentUpon>
     </Compile>
     <Compile Include="Licenses\frmLicenseInfo.cs">
@@ -257,10 +257,10 @@
     <EmbeddedResource Include="Controls\ctrlDriverLicensesHistory.resx">
       <DependentUpon>ctrlDriverLicensesHistory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDriversManagements.resx">
+    <EmbeddedResource Include="Drivers\frmDriversManagements.resx">
       <DependentUpon>frmDriversManagements.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Licenses\frmDriverLicenseHistory.resx">
+    <EmbeddedResource Include="Drivers\frmDriverLicenseHistory.resx">
       <DependentUpon>frmDriverLicenseHistory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Licenses\frmLicenseInfo.resx">
