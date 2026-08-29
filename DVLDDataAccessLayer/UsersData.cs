@@ -8,9 +8,8 @@ namespace DVLDDataAccessLayer
     {
         private static string Query =
          @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID],Users.PersonID AS [Person ID] ,
-           People.FirstName + ' ' + People.SecondName
-          + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],UserName,IsActive AS [Is Active]
-           From Users INNER JOIN People ON Users.PersonID = People.PersonID";
+           People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],
+           UserName,IsActive AS [Is Active] From Users INNER JOIN People ON Users.PersonID = People.PersonID";
 
         public static DataTable GetUsersInfo(byte WantedNumberOfRecords, int LastLowestBroughtUserID = -1)
         {
@@ -310,7 +309,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT UserID , Password , Salt , IsActive
+            string query = @"SELECT UserID,Password,Salt,IsActive
                              FROM Users WHERE UserName = @UserName";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -345,7 +344,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT UserName , Password FROM Users
+            string query = @"SELECT UserName,Password FROM Users
                              WHERE UserID = @UserID";
 
             SqlCommand command = new SqlCommand(query, connection);

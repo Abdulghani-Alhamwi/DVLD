@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using Utility_Library;
 
 namespace DVLDDataAccessLayer
 {
     public class clsLDLApplicationsData
     {
         private static string ColumnNamesQuery =
-         @"SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
+         $@"SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
            People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
-           ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , FORMAT(ApplicationDate , 'dd/MM/yyyy h:mm tt') AS [Application Date] ,
+           ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , FORMAT(ApplicationDate , '{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Application Date] ,
            (CASE WHEN SUM(CAST(Tests.TestResult AS tinyINT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS tinyINT)) ELSE 0 END) AS [Passed Tests] ,
            (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) AS Status
            FROM LocalDrivingLicenseApplications INNER JOIN LicenseClasses
@@ -387,17 +388,18 @@ namespace DVLDDataAccessLayer
 
         private static string _GetDataFilteringQuery(byte WantedNumberOfRecords,ref string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtLDLAppID = -1)
         {
-            string query = @"SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
-                             People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
-                             ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , FORMAT(ApplicationDate , 'dd/MM/yyyy') AS [Application Date] ,
-                             (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests] ,
-                             (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) AS Status
-                             FROM LocalDrivingLicenseApplications INNER JOIN LicenseClasses
-                             ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID 
-                             INNER JOIN Applications ON LocalDrivingLicenseApplications.ApplicationID = Applications.ApplicationID
-                             INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID
-                             LEFT JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
-                             LEFT JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID";
+            string query =
+             $@"SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
+               People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
+               ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , FORMAT(ApplicationDate , '{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Application Date] ,
+               (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests] ,
+               (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) AS Status
+               FROM LocalDrivingLicenseApplications INNER JOIN LicenseClasses
+               ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID 
+               INNER JOIN Applications ON LocalDrivingLicenseApplications.ApplicationID = Applications.ApplicationID
+               INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID
+               LEFT JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
+               LEFT JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID";
 
             if (!string.IsNullOrEmpty(ValueToFilterBy))
             {
@@ -438,9 +440,9 @@ namespace DVLDDataAccessLayer
 
             if (LastLowestBroughtLDLAppID == -1)
             {
-                query += @" GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, LicenseClasses.ClassName,
+                query += $@" GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, LicenseClasses.ClassName,
                              People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName + ' ' + People.SecondName + ' ' + People.ThirdName + ' ' + People.LastName
-                             ELSE People.FirstName + ' ' + People.SecondName + ' ' + People.LastName END), ApplicationDate , (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) 
+                             ELSE People.FirstName + ' ' + People.SecondName + ' ' + People.LastName END), FORMAT(ApplicationDate , '{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') , (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) 
                              ORDER BY [L.D.L.AppID] DESC";
             }
 
@@ -451,10 +453,10 @@ namespace DVLDDataAccessLayer
                 else
                     query += " AND";
 
-                query += @" LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID < @LastLowestBroughtLDLAppID
+                query += $@" LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID < @LastLowestBroughtLDLAppID
                             GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, LicenseClasses.ClassName,
                             People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName + ' ' + People.SecondName + ' ' + People.ThirdName + ' ' + People.LastName
-                            ELSE People.FirstName + ' ' + People.SecondName + ' ' + People.LastName END), ApplicationDate , (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) 
+                            ELSE People.FirstName + ' ' + People.SecondName + ' ' + People.LastName END),FORMAT(ApplicationDate , '{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}'),(CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) 
                             ORDER BY [L.D.L.AppID] DESC";
             }
 

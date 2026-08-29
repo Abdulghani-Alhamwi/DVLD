@@ -10,3 +10,6 @@ C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.csp
 C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.csproj.CoreCompileInputs.cache
 C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.dll
 C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\bin\Debug\Utility Library.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\bin\Debug\Utility Library.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDData.BCCB9602.Up2Date

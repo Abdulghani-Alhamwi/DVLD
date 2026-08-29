@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
-using MyLib;
+using Utility_Library;
 
 namespace DVLDPresentationLayer
 {
@@ -24,7 +24,7 @@ namespace DVLDPresentationLayer
             object[] Items = new object[dgvDrivers.Columns.Count - 1];
             Items[0] = "None";
 
-            List<string> lColumnsNames = clsUtility.GetdgvColumnsNames(dgvDrivers, new string[] {"Date Created","Active Licenses"});
+            List<string> lColumnsNames = clsUtility.GetDgvColumnsNames(dgvDrivers, new string[] {"Date Created","Active Licenses"});
             
             for (byte i = 0; i < lColumnsNames.Count; i++)
             {
@@ -130,7 +130,7 @@ namespace DVLDPresentationLayer
                 NewRows = dtFilteredData.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDGV(dgvDrivers, (DataTable)dgvDrivers.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvDrivers));
+                    clsUtility.AddNewRowsToDgv(dgvDrivers, (DataTable)dgvDrivers.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvDrivers));
             }
 
             else
@@ -138,7 +138,7 @@ namespace DVLDPresentationLayer
                 NewRows = clsDriver.GetDriversInfo(clsUtility.WantedNumOfRowsFromDB, (int)dgvDrivers.Rows[dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value)?.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDGV(dgvDrivers, (DataTable)dgvDrivers.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvDrivers));
+                    clsUtility.AddNewRowsToDgv(dgvDrivers, (DataTable)dgvDrivers.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvDrivers));
             }
         }
         private void dgvDrivers_KeyDown(object sender, KeyEventArgs e)

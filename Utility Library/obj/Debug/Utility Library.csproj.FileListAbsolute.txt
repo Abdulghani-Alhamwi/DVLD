@@ -1,0 +1,6 @@
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Utility Library\bin\Debug\Utility Library.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Utility Library\bin\Debug\Utility Library.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Utility Library\obj\Debug\Utility Library.csproj.AssemblyReference.cache
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Utility Library\obj\Debug\Utility Library.csproj.CoreCompileInputs.cache
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Utility Library\obj\Debug\Utility Library.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Utility Library\obj\Debug\Utility Library.pdb

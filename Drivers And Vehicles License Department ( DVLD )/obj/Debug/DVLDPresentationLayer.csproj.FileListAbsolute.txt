@@ -42,3 +42,5 @@ D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD 
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.frmDriverLicenseHistory.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.Controls.frmApplicationDetails.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.frmDriversManagements.resources
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\bin\Debug\Utility Library.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\bin\Debug\Utility Library.pdb

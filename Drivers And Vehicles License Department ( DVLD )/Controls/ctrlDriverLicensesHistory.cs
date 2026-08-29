@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
-using MyLib;
+using Utility_Library;
 
 namespace DVLDPresentationLayer
 {
@@ -25,18 +25,18 @@ namespace DVLDPresentationLayer
             DataRow [] NewRows = clsLocalLicense.GetLocalLicenses(_DriverID, clsUtility.WantedNumOfRowsFromDB, (int)dgvLocalLicenses.Rows[dgvLocalLicenses.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value)?.Select();
 
             if (NewRows != null)
-                clsUtility.AddNewRowsToDGV(dgvLocalLicenses, (DataTable)dgvLocalLicenses.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvLocalLicenses));
+                clsUtility.AddNewRowsToDgv(dgvLocalLicenses, (DataTable)dgvLocalLicenses.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvLocalLicenses));
         }
 
         private void dgvLocalLicenses_Scroll(object sender, ScrollEventArgs e)
         {
-            if (dgvLocalLicenses.Rows.GetLastRow(DataGridViewElementStates.None) == dgvLocalLicenses.Rows.GetLastRow(DataGridViewElementStates.Displayed))
+            if (clsUtility.IsDgvLastRowDisplayed(dgvLocalLicenses))
                 _AppendPartOfRemainingData();
         }
 
         private void dgvLocalLicenses_KeyDown(object sender, KeyEventArgs e)
         {
-            if (dgvLocalLicenses.Rows.GetLastRow(DataGridViewElementStates.None) == dgvLocalLicenses.Rows.GetLastRow(DataGridViewElementStates.Selected))
+            if (clsUtility.IsDgvLastRowSelected(dgvLocalLicenses))
                 _AppendPartOfRemainingData();
         }
 

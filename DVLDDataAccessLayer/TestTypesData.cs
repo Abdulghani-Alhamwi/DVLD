@@ -12,8 +12,8 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT TestTypeID AS ID , TestTypeTitle AS Title ,
-                             TestTypeDescription AS Description , TestTypeFees AS Fees 
+            string query = @"SELECT TestTypeID AS ID,TestTypeTitle AS Title,
+                             TestTypeDescription AS Description,TestTypeFees AS Fees 
                              FROM TestTypes";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -46,10 +46,8 @@ namespace DVLDDataAccessLayer
             int AffectedRows = -1;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"UPDATE TestTypes SET
-                             TestTypeTitle = @Title,
-                             TestTypeDescription = @Description,
-                             TestTypeFees = @Fees
+            string query = @"UPDATE TestTypes SET TestTypeTitle = @Title,
+                             TestTypeDescription = @Description,TestTypeFees = @Fees
                              WHERE TestTypeID = @TestTypeID";
 
             SqlCommand command = new SqlCommand(query, connection);

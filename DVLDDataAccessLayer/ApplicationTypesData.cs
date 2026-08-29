@@ -12,7 +12,7 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT ApplicationTypeID AS ID , ApplicationTypeTitle AS Title ,
+            string query = @"SELECT ApplicationTypeID AS ID,ApplicationTypeTitle AS Title,
                              ApplicationFees AS Fees FROM ApplicationTypes";
 
             SqlCommand command = new SqlCommand(query,connection);
@@ -45,9 +45,7 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"UPDATE ApplicationTypes SET
-                             ApplicationTypeTitle = @Title , 
-                             ApplicationFees = @Fees
+            string query = @"UPDATE ApplicationTypes SET ApplicationTypeTitle = @Title,ApplicationFees = @Fees
                              WHERE ApplicationTypeID = @ID";
 
             SqlCommand command = new SqlCommand(query, connection);

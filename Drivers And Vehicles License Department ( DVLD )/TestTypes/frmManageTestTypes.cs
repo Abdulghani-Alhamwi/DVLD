@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
-using MyLib;
+using Utility_Library;
 
 namespace DVLDPresentationLayer
 {
@@ -30,7 +30,7 @@ namespace DVLDPresentationLayer
 
         private void EditDGVRowData(object[] NewValues, byte DGVRowIndex)
         {
-            clsUtility.EditFullDataRowInDGV(dgvTestTypes, (DataTable)dgvTestTypes.DataSource, ref NewValues, DGVRowIndex);
+            clsUtility.EditFullDataRowInDgv(dgvTestTypes, (DataTable)dgvTestTypes.DataSource, ref NewValues, DGVRowIndex);
         }
 
         private void tsmiEditTestType_Click(object sender, EventArgs e)

@@ -194,7 +194,6 @@
     <Compile Include="Users\frmAddEditUserInfo.Designer.cs">
       <DependentUpon>frmAddEditUserInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyLib\clsUtility.cs" />
     <Compile Include="Users\frmUsersManagement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -427,6 +426,10 @@
     <ProjectReference Include="..\DVLDBusinessLayer\DVLDBusinessLayer.csproj">
       <Project>{973bc8be-82ca-4f53-82ed-5adfa32cf45c}</Project>
       <Name>DVLDBusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility Library\Utility Library.csproj">
+      <Project>{6a90476b-aff3-44a7-8fa7-48295aabd3d7}</Project>
+      <Name>Utility Library</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

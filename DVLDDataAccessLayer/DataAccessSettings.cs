@@ -1,5 +1,6 @@
 ﻿using System;
 
+
 namespace DVLDDataAccessLayer
 {
     internal static class DataAccessSettings

@@ -58,5 +58,11 @@
     <Compile Include="TestTypesData.cs" />
     <Compile Include="UsersData.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utility Library\Utility Library.csproj">
+      <Project>{6a90476b-aff3-44a7-8fa7-48295aabd3d7}</Project>
+      <Name>Utility Library</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

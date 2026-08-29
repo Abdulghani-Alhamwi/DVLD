@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
-using MyLib;
+using Utility_Library;
 
 namespace DVLDPresentationLayer
 {
@@ -30,7 +30,7 @@ namespace DVLDPresentationLayer
             object[] Items = new object[dgvUsers.Columns.Count + 1];
             Items[0] = "None";
 
-            string[] lColumnsNames = clsUtility.GetdgvColumnsNames(dgvUsers);
+            string[] lColumnsNames = clsUtility.GetDgvColumnsNames(dgvUsers);
 
             for (byte i = 0; i < lColumnsNames.Length; i++)
             {
@@ -218,10 +218,10 @@ namespace DVLDPresentationLayer
         private void _EditDataRowInDGV(ref object[] NewValues, int RowIndex, string NewFullName = null)
         {
             if (NewFullName != null)
-                clsUtility.EditOneColumnValueInDGV(dgvUsers, (DataTable)dgvUsers.DataSource, "Full Name", NewFullName, RowIndex);
+                clsUtility.EditOneColumnValueInDgv(dgvUsers, (DataTable)dgvUsers.DataSource, "Full Name", NewFullName, RowIndex);
 
             else
-                clsUtility.EditFullDataRowInDGV(dgvUsers, (DataTable)dgvUsers.DataSource, ref NewValues, RowIndex);
+                clsUtility.EditFullDataRowInDgv(dgvUsers, (DataTable)dgvUsers.DataSource, ref NewValues, RowIndex);
         }
         private void tsmiEdit_Click(object sender, EventArgs e)
         {
@@ -341,7 +341,7 @@ namespace DVLDPresentationLayer
                 NewRows = dtFilteredData.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDGV(dgvUsers, (DataTable)dgvUsers.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvUsers));
+                    clsUtility.AddNewRowsToDgv(dgvUsers, (DataTable)dgvUsers.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvUsers));
             }
 
             else
@@ -349,21 +349,21 @@ namespace DVLDPresentationLayer
                 NewRows = clsUser.GetUsersInfo(clsUtility.WantedNumOfRowsFromDB, (int)dgvUsers.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value)?.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDGV(dgvUsers, (DataTable)dgvUsers.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvUsers));
+                    clsUtility.AddNewRowsToDgv(dgvUsers, (DataTable)dgvUsers.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvUsers));
             }
         }
         private void dgvUsers_Scroll(object sender, ScrollEventArgs e)
         {
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
-                if (dgvUsers.Rows.GetLastRow(DataGridViewElementStates.None) == dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed))
+                if (clsUtility.IsDgvLastRowDisplayed(dgvUsers))
                     _AppendPartOfRemainingData();
             }
         }
 
         private void dgvUsers_KeyDown(object sender, KeyEventArgs e)
         {
-            if (dgvUsers.Rows.GetLastRow(DataGridViewElementStates.None) == dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Selected))
+            if (clsUtility.IsDgvLastRowSelected(dgvUsers))
                 _AppendPartOfRemainingData();
         }
 

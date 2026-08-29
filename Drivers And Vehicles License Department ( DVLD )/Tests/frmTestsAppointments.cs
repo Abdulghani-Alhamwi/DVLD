@@ -3,7 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 using DVLDPresentationLayer.Properties;
 using DVLDBusinessLayer;
-using MyLib;
+using Utility_Library;
 
 namespace DVLDPresentationLayer
 {
@@ -105,18 +105,12 @@ namespace DVLDPresentationLayer
             DataRow[] NewRows = clsTestAppointment.GetTestAppointments(clsUtility.WantedNumOfRowsFromDB, _TestTypeID, _LDLAppId,(int)dgvTestAppointments.Rows[dgvTestAppointments.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Appointment ID"].Value)?.Select();
 
             if (NewRows != null)
-                clsUtility.AddNewRowsToDGV(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvTestAppointments));
-        }
-
-        private void dgvVisionTestAppointments_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (dgvTestAppointments.Rows.GetLastRow(DataGridViewElementStates.None) == dgvTestAppointments.Rows.GetLastRow(DataGridViewElementStates.Selected))
-                _AppendPartOfRemainingData();
+                clsUtility.AddNewRowsToDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvTestAppointments));
         }
 
         private void _EditDataRowInDGV(ref object[] NewValues,int RowIndex)
         {
-            clsUtility.EditFullDataRowInDGV(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, ref NewValues, RowIndex);
+            clsUtility.EditFullDataRowInDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, ref NewValues, RowIndex);
         }
         private void tsmiEdit_Click(object sender, EventArgs e)
         {
@@ -155,7 +149,7 @@ namespace DVLDPresentationLayer
 
         private void _LockTestAppoitment(int RowIndex)
         {
-            clsUtility.EditOneColumnValueInDGV(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, "Is Locked", true, RowIndex);
+            clsUtility.EditOneColumnValueInDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, "Is Locked", true, RowIndex);
         }
 
         private void tsmiTakeTest_Click(object sender, EventArgs e)
@@ -187,9 +181,15 @@ namespace DVLDPresentationLayer
         {
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
-                if (dgvTestAppointments.Rows.GetLastRow(DataGridViewElementStates.None) == dgvTestAppointments.Rows.GetLastRow(DataGridViewElementStates.Displayed))
+                if (clsUtility.IsDgvLastRowDisplayed(dgvTestAppointments))
                     _AppendPartOfRemainingData();
             }
+        }
+
+        private void dgvVisionTestAppointments_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (clsUtility.IsDgvLastRowSelected(dgvTestAppointments))
+                _AppendPartOfRemainingData();
         }
     }
 }

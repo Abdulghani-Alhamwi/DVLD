@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using Utility_Library;
 
 namespace DVLDDataAccessLayer
 {
     public class clsPeopleData
     {
         private static string Query =
-         @"SELECT TOP (@WantedNumberOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
+         $@"SELECT TOP (@WantedNumberOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
            FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
            Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-           FORMAT(DateOfBirth , 'dd/MM/yyyy') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
+           FORMAT(DateOfBirth , '{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.NumericFormat)}') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
            FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
 
         public static int AddNewPerson(string NationalNo, string FirstName,
@@ -323,10 +324,8 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT PersonID,FirstName, SecondName,
-                             ThirdName, LastName, Gendor, DateOfBirth,
-                             Address, Phone, Email , NationalityCountryID ,
-                             ImagePath FROM People
+            string query = @"SELECT PersonID,FirstName,SecondName,ThirdName,LastName,Gendor,DateOfBirth,
+                             Address,Phone,Email,NationalityCountryID,ImagePath FROM People
                              WHERE NationalNo = @NationalNo";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -423,9 +422,6 @@ namespace DVLDDataAccessLayer
 
                 case "Last Name":
                     return "LastName";
-
-                case "Date Of Birth":
-                    return "DateOfBirth";
 
                 case "Nationality":
                     return "Countries.CountryName";

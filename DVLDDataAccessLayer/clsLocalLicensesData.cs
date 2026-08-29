@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using Utility_Library;
 
 namespace DVLDDataAccessLayer
 {
@@ -11,8 +12,8 @@ namespace DVLDDataAccessLayer
             DataTable dtLicensesData = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT TOP(@WantedNumberOfRecords) LicenseID AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
-                             Format(IssueDate,'dd/MM/yyyy h:MM tt') AS [Issue Date],FORMAT(ExpirationDate,'dd/MM/yyyy h:MM tt') AS [Expiration Date],IsActive AS [Is Active]
+            string query = $@"SELECT TOP(@WantedNumberOfRecords) LicenseID AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
+                             Format(IssueDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],FORMAT(ExpirationDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Expiration Date],IsActive AS [Is Active]
                              FROM LocalLicenses INNER JOIN LicenseClasses ON LocalLicenses.LicenseClassID = LicenseClasses.LicenseClassID
                              WHERE DriverID = @DriverID";
 

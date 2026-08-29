@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using DVLDPresentationLayer.Properties;
-using MyLib;
+using Utility_Library;
 using DVLDBusinessLayer;
 
 namespace DVLDPresentationLayer
@@ -436,18 +436,18 @@ namespace DVLDPresentationLayer
                 }
             }
  
-            CancelEventArgs CancelEvent = new CancelEventArgs();
+            CancelEventArgs cancelEventArgs = new CancelEventArgs();
 
-            bool IsValidEmail = (txtEmail.Text == "") ? true : _CheckIsValidEmail(txtEmail.Text, CancelEvent);
+            bool IsValidEmail = (txtEmail.Text == "") ? true : _CheckIsValidEmail(txtEmail.Text, cancelEventArgs);
 
-            if (_ValidateName(txtFirstName, CancelEvent)
-             && _ValidateName(txtSecondName, CancelEvent)
-             && _ValidateName(txtThirdName, CancelEvent)
-             && _ValidateName(txtLastName, CancelEvent)
-             && _ValidateNationalNo(CancelEvent)
+            if (_ValidateName(txtFirstName, cancelEventArgs)
+             && _ValidateName(txtSecondName, cancelEventArgs)
+             && _ValidateName(txtThirdName, cancelEventArgs)
+             && _ValidateName(txtLastName, cancelEventArgs)
+             && _ValidateNationalNo(cancelEventArgs)
              && IsValidEmail
-             && _ValidatePhone(CancelEvent)
-             && _ValidateAddress(CancelEvent))
+             && _ValidatePhone(cancelEventArgs)
+             && _ValidateAddress(cancelEventArgs))
             {
                 clsPerson Person;
                 _SetPersonInfo(out Person);

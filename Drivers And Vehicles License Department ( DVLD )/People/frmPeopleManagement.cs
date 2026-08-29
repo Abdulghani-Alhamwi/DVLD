@@ -4,7 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
-using MyLib; 
+using Utility_Library; 
 
 namespace DVLDPresentationLayer
 {
@@ -19,7 +19,7 @@ namespace DVLDPresentationLayer
             object[] Items = new object[dgvPeople.Columns.Count];
             Items[0] = "None";
 
-            List<string> lColumnsNames = clsUtility.GetdgvColumnsNames(dgvPeople,"Date Of Birth");
+            List<string> lColumnsNames = clsUtility.GetDgvColumnsNames(dgvPeople,"Date Of Birth");
 
             for (byte i = 0; i < lColumnsNames.Count; i++)
             {
@@ -204,7 +204,7 @@ namespace DVLDPresentationLayer
 
         private void _EditDataRowInDGV(ref object[] NewValues, int RowIndex)
         {
-            clsUtility.EditFullDataRowInDGV(dgvPeople, (DataTable)dgvPeople.DataSource,ref NewValues, RowIndex);
+            clsUtility.EditFullDataRowInDgv(dgvPeople, (DataTable)dgvPeople.DataSource,ref NewValues, RowIndex);
         }
 
         private void tsmiEdit_Click(object sender, EventArgs e)
@@ -278,7 +278,7 @@ namespace DVLDPresentationLayer
                 NewRows = dtFilteredData.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDGV(dgvPeople, (DataTable)dgvPeople.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvPeople));
+                    clsUtility.AddNewRowsToDgv(dgvPeople, (DataTable)dgvPeople.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvPeople));
             }
 
             else
@@ -286,7 +286,7 @@ namespace DVLDPresentationLayer
                  NewRows = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB, (int)dgvPeople.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value)?.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDGV(dgvPeople, (DataTable)dgvPeople.DataSource, NewRows, clsUtility.GetdgvColumnsNames(dgvPeople));
+                    clsUtility.AddNewRowsToDgv(dgvPeople, (DataTable)dgvPeople.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvPeople));
             }
         }
 
@@ -294,13 +294,13 @@ namespace DVLDPresentationLayer
         {
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
-                if (dgvPeople.Rows.GetLastRow(DataGridViewElementStates.None) == dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed))
+                if (clsUtility.IsDgvLastRowDisplayed(dgvPeople))
                     _AppendPartOfRemainingData();
             }
         }
         private void dgvPeople_KeyDown(object sender, KeyEventArgs e)
         {
-            if (dgvPeople.Rows.GetLastRow(DataGridViewElementStates.None) == dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Selected))
+            if (clsUtility.IsDgvLastRowSelected(dgvPeople))
                 _AppendPartOfRemainingData();
         }
 

@@ -16,3 +16,5 @@ C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.csproj.
 C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.csproj.CopyComplete
 C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.dll
 C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Debug\Utility Library.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Debug\Utility Library.pdb

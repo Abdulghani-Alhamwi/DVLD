@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using Utility_Library;
 
 namespace DVLDDataAccessLayer
 {
     public class clsDriversData
     {
         private static string Query =
-         @"SELECT TOP (@WantedNumberOfRecords) Drivers.DriverID AS [Driver ID] , Drivers.PersonID AS [Person ID] ,People.NationalNo AS [National No.],
-           People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],Format(CreatedDate,'dd/MM/yyyy h:MM tt') AS [Date Created],
+         $@"SELECT TOP (@WantedNumberOfRecords) Drivers.DriverID AS [Driver ID] , Drivers.PersonID AS [Person ID] ,People.NationalNo AS [National No.],
+           People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],Format(CreatedDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Date Created],
            CASE WHEN (SUM(CAST(LocalLicenses.IsActive AS TINYINT)) + SUM(CAST(InternationalLicenses.IsActive AS tinyINT))) IS NULL THEN 0
            ELSE SUM(CAST(LocalLicenses.IsActive AS TINYINT)) + SUM(CAST(InternationalLicenses.IsActive AS tinyINT)) END AS [Active Licenses]
            From Drivers INNER JOIN People ON Drivers.PersonID = People.PersonID INNER JOIN LocalLicenses ON Drivers.DriverID = LocalLicenses.DriverID
@@ -22,15 +23,15 @@ namespace DVLDDataAccessLayer
             string query = Query;
 
             if (LastLowestBroughtDriverID != -1)
-                query += @" WHERE DriverID < @LastLowestBroughtUserID
+                query += $@" WHERE DriverID < @LastLowestBroughtUserID
                             GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
                             People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
-                            Format(CreatedDate,'dd/MM/yyyy h:MM tt') ORDER BY Drivers.DriverID DESC";
+                            Format(CreatedDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') ORDER BY Drivers.DriverID DESC";
 
             else
-                query += @" GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
+                query += $@" GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
                             People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
-                            Format(CreatedDate,'dd/MM/yyyy h:MM tt') ORDER BY Drivers.DriverID DESC";
+                            Format(CreatedDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') ORDER BY Drivers.DriverID DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
@@ -221,15 +222,15 @@ namespace DVLDDataAccessLayer
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
                 if (LastLowestBroughtDriverID != -1)
-                    query += @" WHERE DriverID < @LastLowestBroughtUserID
+                    query += $@" WHERE DriverID < @LastLowestBroughtUserID
                             GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
                             People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
-                            Format(CreatedDate,'dd/MM/yyyy h:MM tt') ORDER BY Drivers.DriverID DESC";
+                            Format(CreatedDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') ORDER BY Drivers.DriverID DESC";
 
                 else
-                    query += @" GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
+                    query += $@" GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
                             People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
-                            Format(CreatedDate,'dd/MM/yyyy h:MM tt') ORDER BY Drivers.DriverID DESC";
+                            Format(CreatedDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') ORDER BY Drivers.DriverID DESC";
 
                 return query;
             }
@@ -242,14 +243,14 @@ namespace DVLDDataAccessLayer
                 query += $" WHERE {ColumnNameToFilter} LIKE @Value + @WildChar";
 
             if (LastLowestBroughtDriverID != -1)
-                query += @" AND DriverID < @LastLowestBroughtUserID GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
+                query += $@" AND DriverID < @LastLowestBroughtUserID GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
                             People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
-                            Format(CreatedDate,'dd/MM/yyyy h:MM tt') ORDER BY Drivers.DriverID DESC";
+                            Format(CreatedDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') ORDER BY Drivers.DriverID DESC";
 
             else
-                query += @" GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
+                query += $@" GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
                             People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
-                            Format(CreatedDate,'dd/MM/yyyy h:MM tt') ORDER BY Drivers.DriverID DESC";
+                            Format(CreatedDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') ORDER BY Drivers.DriverID DESC";
 
             return query;
         }
@@ -285,7 +286,7 @@ namespace DVLDDataAccessLayer
                 reader.Close();
             }
 
-            catch (Exception ex){ Console.Write(ex.Message); }
+            catch { }
 
             finally
             {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
-using MyLib;
-using static MyLib.clsUtility;
+using Utility_Library;
+using static Utility_Library.clsUtility;
 
 namespace DVLDPresentationLayer
 {

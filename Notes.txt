@@ -513,3 +513,9 @@ we can use variable or object it self(variable from the object type) instead of 
  FORMAT(ApplicationDate , 'dd/MM/yyyy h:mm tt')
 
 44) also we can to put format for date when converting it to string using .ToString() and put format or use variable has format stored in it like : public static string DateTimeCustomFormat = "dd/MM/yyyy h:mm tt";
+
+45) The Camel Case naming style can be used for naming variables , methods ... Is :
+It is about that first word its first letter be small and the other words after first word each first letter of them be capital like :cancelEventArgs.
+
+Translation :
+Camel Case Naming Style : أسلوب التسمية بحالة الكلمات المتداخلة

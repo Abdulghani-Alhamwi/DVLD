@@ -9,8 +9,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"INSERT INTO Tests VALUES (@TestAppointmentID,@TestResult,
-                             @Notes,@CreatedByUserID);
+            string query = @"INSERT INTO Tests VALUES (@TestAppointmentID,@TestResult,@Notes,@CreatedByUserID);
                              SELECT SCOPE_IDENTITY()";
 
             SqlCommand command = new SqlCommand(query, connection);
