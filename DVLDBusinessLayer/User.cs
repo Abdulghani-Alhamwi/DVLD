@@ -35,14 +35,14 @@ namespace DVLDBusinessLayer
             this.IsActive = IsActive;
             _CurrentMode = enMode.Update;
         }
-        public static DataTable GetUsersInfo(byte WantedNumberOfRecords)
+        public static DataTable GetUsersInfo(byte WantedNumOfRecords)
         {
-            return clsUsersData.GetUsersInfo(WantedNumberOfRecords,-1);
+            return clsUsersData.GetUsersInfo(WantedNumOfRecords,-1);
         }
 
-        public static DataTable GetUsersInfo(byte WantedNumberOfRecords, int LastLowestBroughtUserID)
+        public static DataTable GetUsersInfo(byte WantedNumOfRecords, int LastLowestBroughtUserID)
         {
-            return clsUsersData.GetUsersInfo(WantedNumberOfRecords, LastLowestBroughtUserID);
+            return clsUsersData.GetUsersInfo(WantedNumOfRecords, LastLowestBroughtUserID);
         }
 
         private bool _AddNewUser()
@@ -129,14 +129,14 @@ namespace DVLDBusinessLayer
             return clsUsersData.GetUserName(UserID);
         }
 
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
         {
-            return clsUsersData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy,-1, WildChar);
+            return clsUsersData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy,-1, WildChar);
         }
 
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestbroughtUserID, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestbroughtUserID, char? WildChar = null)
         {
-            return clsUsersData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, LastLowestbroughtUserID, WildChar);
+            return clsUsersData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastLowestbroughtUserID, WildChar);
         }
 
         public static int GetTotalUsersCount()

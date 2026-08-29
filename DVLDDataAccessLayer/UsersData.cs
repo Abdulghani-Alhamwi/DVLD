@@ -7,11 +7,11 @@ namespace DVLDDataAccessLayer
     public class clsUsersData
     {
         private static string _query =
-         @"SELECT TOP (@WantedNumberOfRecords) UserID AS [User ID],Users.PersonID AS [Person ID] ,
+         @"SELECT TOP (@WantedNumOfRecords) UserID AS [User ID],Users.PersonID AS [Person ID] ,
            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],
            UserName,IsActive AS [Is Active] From Users INNER JOIN People ON Users.PersonID = People.PersonID";
 
-        public static DataTable GetUsersInfo(byte WantedNumberOfRecords, int LastLowestBroughtUserID = -1)
+        public static DataTable GetUsersInfo(byte WantedNumOfRecords, int LastLowestBroughtUserID = -1)
         {
             DataTable dtUsers = null;
 
@@ -24,7 +24,7 @@ namespace DVLDDataAccessLayer
                 query += " ORDER BY UserID DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
             command.Parameters.AddWithValue("@LastLowestBroughtUserID", LastLowestBroughtUserID);
 
 
@@ -58,7 +58,7 @@ namespace DVLDDataAccessLayer
             string query = _query;
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@WantedNumberOfRecords", 0);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
 
             try
             {
@@ -500,16 +500,16 @@ namespace DVLDDataAccessLayer
                 return query;
         }
 
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestbroughtUserID = -1, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestbroughtUserID = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetDataFilteringQuery(WantedNumberOfRecords, ColumnNameToFilter,ref ValueToFilterBy, WildChar, LastLowestbroughtUserID);
+            string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilter,ref ValueToFilterBy, WildChar, LastLowestbroughtUserID);
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
             command.Parameters.AddWithValue("@Value", ValueToFilterBy);
 

@@ -35,13 +35,13 @@ namespace DVLDBusinessLayer
             _CurrentMode = enMode.Update;
             
         }
-        public static DataTable GetLDLApplications(byte WantedNumberOfRecords)
+        public static DataTable GetLDLApplications(byte WantedNumOfRecords)
         {
-            return clsLDLApplicationsData.GetLDLApplications(WantedNumberOfRecords,-1);
+            return clsLDLApplicationsData.GetLDLApplications(WantedNumOfRecords,-1);
         }
-        public static DataTable GetLDLApplications(byte WantedNumberOfRecords, int LastLowestBroughtLDLApplicationID)
+        public static DataTable GetLDLApplications(byte WantedNumOfRecords, int LastLowestBroughtLDLApplicationID)
         {
-            return clsLDLApplicationsData.GetLDLApplications(WantedNumberOfRecords, LastLowestBroughtLDLApplicationID);
+            return clsLDLApplicationsData.GetLDLApplications(WantedNumOfRecords, LastLowestBroughtLDLApplicationID);
         }
         public static int GetTotalLDLApplicationsCount()
         {
@@ -133,14 +133,14 @@ namespace DVLDBusinessLayer
             return clsLDLApplicationsData.GetLDLApplicationID(ApplicantPersonID);
     }
 
-    public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
+    public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
     {
-        return clsLDLApplicationsData.GetFilteredData(WantedNumberOfRecords,ColumnNameToFilter,ValueToFilterBy,-1,WildChar);
+        return clsLDLApplicationsData.GetFilteredData(WantedNumOfRecords,ColumnNameToFilter,ValueToFilterBy,-1,WildChar);
     }
 
-   public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtLDLAppID, char? WildChar = null)
+   public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtLDLAppID, char? WildChar = null)
    {
-       return clsLDLApplicationsData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, LastLowestBroughtLDLAppID, WildChar);
+       return clsLDLApplicationsData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastLowestBroughtLDLAppID, WildChar);
    }
 
         public static sbyte GetPassedTests(int LDLApplicationID)

@@ -9,10 +9,10 @@ namespace DVLDDataAccessLayer
     {
 
         private static string Query = 
-         $@"SELECT TOP (@WantedNumberOfRecords) TestAppointmentID AS [Appointment ID] , FORMAT(AppointmentDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Appointment Date] ,
+         $@"SELECT TOP (@WantedNumOfRecords) TestAppointmentID AS [Appointment ID] , FORMAT(AppointmentDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Appointment Date] ,
            PaidFees AS [Paid Fees],IsLocked AS [Is Locked] FROM TestAppointments";
 
-        public static DataTable GetTestAppointments(byte WantedNumberOfRecords , byte TestTypeID,int LocalDrivingLicenseAppID, int LowestBroughtAppointmentID = -1,string DateFormat = null)
+        public static DataTable GetTestAppointments(byte WantedNumOfRecords , byte TestTypeID,int LocalDrivingLicenseAppID, int LowestBroughtAppointmentID = -1,string DateFormat = null)
     {
             DataTable dtTestAppointments = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -28,7 +28,7 @@ namespace DVLDDataAccessLayer
 
 
                 SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@WantedNumberOfRecords",WantedNumberOfRecords);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
             
             if(LowestBroughtAppointmentID != -1)
                 command.Parameters.AddWithValue("@LowestBroughtAppointmentID", LowestBroughtAppointmentID);
@@ -64,7 +64,7 @@ namespace DVLDDataAccessLayer
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(Query, connection);
-            command.Parameters.AddWithValue("@WantedNumberOfRecords", 0);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
 
             try
             {
@@ -157,7 +157,7 @@ namespace DVLDDataAccessLayer
             return (AffectedRows > 0);
         }
 
-        public static bool  Find(int TestAppointmentID,ref byte TestTypeID,ref int LocalDrivingLicenseAppID, ref DateTime AppointmentDate,ref decimal PaidFees,ref int CreatedByUserID,ref bool IsLocked)
+        public static bool Find(int TestAppointmentID,ref byte TestTypeID,ref int LocalDrivingLicenseAppID, ref DateTime AppointmentDate,ref decimal PaidFees,ref int CreatedByUserID,ref bool IsLocked)
         {
             bool IsFound = false;
 

@@ -8,7 +8,7 @@ namespace DVLDDataAccessLayer
     public class clsDriversData
     {
         private static string _query =
-         $@"SELECT TOP (@WantedNumberOfRecords) Drivers.DriverID AS [Driver ID] , Drivers.PersonID AS [Person ID] ,People.NationalNo AS [National No.],
+         $@"SELECT TOP (@WantedNumOfRecords) Drivers.DriverID AS [Driver ID] , Drivers.PersonID AS [Person ID] ,People.NationalNo AS [National No.],
            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],Format(CreatedDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Date Created],
            SUM(CAST(LocalLicenses.IsActive AS TINYINT)) + (CASE WHEN InternationalLicenses.IsActive IS NULL THEN 0 ELSE 1 END) AS [Active Licenses]
            From Drivers INNER JOIN People ON Drivers.PersonID = People.PersonID INNER JOIN LocalLicenses ON Drivers.DriverID = LocalLicenses.DriverID
@@ -18,7 +18,7 @@ namespace DVLDDataAccessLayer
          $@" GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
            Format(CreatedDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}'),InternationalLicenses.IsActive ORDER BY Drivers.DriverID DESC";
-        public static DataTable GetDriversInfo(byte WantedNumberOfRecords, int LastLowestBroughtDriverID = -1)
+        public static DataTable GetDriversInfo(byte WantedNumOfRecords, int LastLowestBroughtDriverID = -1)
         {
             DataTable dtDrivers = null;
 
@@ -26,16 +26,16 @@ namespace DVLDDataAccessLayer
             string query = _query;
 
             if (LastLowestBroughtDriverID != -1)
-                query += " WHERE DriverID < @LastLowestBroughtUserID" + _groupByPartOfQuery;
+                query += " WHERE DriverID < @LastLowestBroughtDriverID" + _groupByPartOfQuery;
 
             else
                 query += _groupByPartOfQuery;
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
             if (LastLowestBroughtDriverID != -1) 
-            command.Parameters.AddWithValue("@LastLowestBroughtUserID", LastLowestBroughtDriverID);
+            command.Parameters.AddWithValue("@LastLowestBroughtDriverID", LastLowestBroughtDriverID);
 
             try
             {
@@ -220,7 +220,7 @@ namespace DVLDDataAccessLayer
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
                 if (LastLowestBroughtDriverID != -1)
-                    query += " WHERE DriverID < @LastLowestBroughtUserID" + _groupByPartOfQuery;
+                    query += " WHERE DriverID < @LastLowestBroughtDriverID" + _groupByPartOfQuery;
 
                 else
                     query += _groupByPartOfQuery;
@@ -236,29 +236,32 @@ namespace DVLDDataAccessLayer
                 query += $" WHERE {ColumnNameToFilter} LIKE @Value + @WildChar";
 
             if (LastLowestBroughtDriverID != -1)
-                query += " AND DriverID < @LastLowestBroughtUserID" + _groupByPartOfQuery;
+                query += " AND DriverID < @LastLowestBroughtDriverID" + _groupByPartOfQuery;
 
             else
                 query += _groupByPartOfQuery;
 
             return query;
         }
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtDriverID = -1, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtDriverID = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetDataFilteringQuery(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar, LastLowestBroughtDriverID);
+            string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar, LastLowestBroughtDriverID);
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
             if (!string.IsNullOrEmpty(ValueToFilterBy))
                 command.Parameters.AddWithValue("@Value", ValueToFilterBy);
 
             if (WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
+
+            if(LastLowestBroughtDriverID!=-1)
+                command.Parameters.AddWithValue("@LastLowestBroughtDriverID", LastLowestBroughtDriverID);
 
             try
             {

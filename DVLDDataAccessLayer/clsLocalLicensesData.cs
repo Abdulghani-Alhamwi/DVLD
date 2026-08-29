@@ -7,12 +7,12 @@ namespace DVLDDataAccessLayer
 {
     public class clsLocalLicensesData
     {
-        public static DataTable GetLocalLicenses(int DriverID,byte WantedNumberOfRecords,int LastLowstBroughtLicID = -1)
+        public static DataTable GetLocalLicenses(int DriverID,byte WantedNumOfRecords,int LastLowstBroughtLicID = -1)
         {
             DataTable dtLicensesData = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = $@"SELECT TOP(@WantedNumberOfRecords) LicenseID AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
+            string query = $@"SELECT TOP(@WantedNumOfRecords) LicenseID AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
                              Format(IssueDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],FORMAT(ExpirationDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Expiration Date],IsActive AS [Is Active]
                              FROM LocalLicenses INNER JOIN LicenseClasses ON LocalLicenses.LicenseClassID = LicenseClasses.LicenseClassID
                              WHERE DriverID = @DriverID";
@@ -22,7 +22,7 @@ namespace DVLDDataAccessLayer
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@DriverID", DriverID);
-            command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
             if (LastLowstBroughtLicID != -1)
                 command.Parameters.AddWithValue("@LastLowstBroughtLicID", LastLowstBroughtLicID);
@@ -48,7 +48,7 @@ namespace DVLDDataAccessLayer
             }
             return dtLicensesData;
         }
-        public static int IssueDrivingLicense(int ApplicationID ,int DriverID,byte LicenseClassID,DateTime IssueDate , DateTime ExpirationDate,string Notes,decimal PaidFees,bool IsActive,byte IssueReason,int CreatedByUserID)
+        public static int IssueLocalDrivingLicense(int ApplicationID ,int DriverID,byte LicenseClassID,DateTime IssueDate , DateTime ExpirationDate,string Notes,decimal PaidFees,bool IsActive,byte IssueReason,int CreatedByUserID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 

@@ -137,9 +137,14 @@ namespace DVLDBusinessLayer
         {
             return clsPeopleData.UpdatePerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath);
         }
-        public static DataTable GetPeopleInfo(byte WantedNumberOfRecords, int LastLowestbroughtPersonID = -1)
+        public static DataTable GetPeopleInfo(byte WantedNumOfRecords)
         {
-            return clsPeopleData.GetPeopleInfo(WantedNumberOfRecords,LastLowestbroughtPersonID);
+            return clsPeopleData.GetPeopleInfo(WantedNumOfRecords, -1);
+        }
+
+        public static DataTable GetPeopleInfo(byte WantedNumOfRecords, int LastLowestbroughtPersonID)
+        {
+            return clsPeopleData.GetPeopleInfo(WantedNumOfRecords,LastLowestbroughtPersonID);
         }
         public bool Save()
         {
@@ -174,14 +179,14 @@ namespace DVLDBusinessLayer
             return clsPeopleData.GetTotalPeopleCount();
         }
 
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
         {
-            return clsPeopleData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, -1,WildChar);
+            return clsPeopleData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, -1,WildChar);
         }
 
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy,int LastLowestbroughtPersonID ,char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,int LastLowestbroughtPersonID ,char? WildChar = null)
         {
-            return clsPeopleData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, LastLowestbroughtPersonID ,WildChar);
+            return clsPeopleData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastLowestbroughtPersonID ,WildChar);
         }
 
         public static string GetFullName(int PersonID)

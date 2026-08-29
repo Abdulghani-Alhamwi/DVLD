@@ -37,14 +37,14 @@ namespace DVLDBusinessLayer
             _CurrentMode = _enMode.Update;
         }
 
-        public static DataTable GetTestAppointments(byte WantedNumberOfRecords,byte TestTypeID,int LDLAppId)
+        public static DataTable GetTestAppointments(byte WantedNumOfRecords,byte TestTypeID,int LDLAppId)
         {
-            return clsTestAppointmentsData.GetTestAppointments(WantedNumberOfRecords,TestTypeID,LDLAppId, -1);
+            return clsTestAppointmentsData.GetTestAppointments(WantedNumOfRecords,TestTypeID,LDLAppId, -1);
         }
 
-        public static DataTable GetTestAppointments(byte WantedNumberOfRecords, byte TestTypeID, int LDLAppId, int LowestBroughtAppointmentID = -1)
+        public static DataTable GetTestAppointments(byte WantedNumOfRecords, byte TestTypeID, int LDLAppId, int LowestBroughtAppointmentID = -1)
         {
-            return clsTestAppointmentsData.GetTestAppointments(WantedNumberOfRecords, TestTypeID, LDLAppId, LowestBroughtAppointmentID);
+            return clsTestAppointmentsData.GetTestAppointments(WantedNumOfRecords, TestTypeID, LDLAppId, LowestBroughtAppointmentID);
         }
 
         private bool _AddNewAppointment()

@@ -8,7 +8,7 @@ namespace DVLDDataAccessLayer
     public class clsLDLApplicationsData
     {
         private static string _query =
-         $@"SELECT TOP (@WantedNumberOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
+         $@"SELECT TOP (@WantedNumOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
            People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
            ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , FORMAT(ApplicationDate , '{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Application Date] ,
            (CASE WHEN SUM(CAST(Tests.TestResult AS tinyINT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS tinyINT)) ELSE 0 END) AS [Passed Tests] ,
@@ -25,7 +25,7 @@ namespace DVLDDataAccessLayer
                 People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName + ' ' + People.SecondName + ' ' + People.ThirdName + ' ' + People.LastName
                 ELSE People.FirstName + ' ' + People.SecondName + ' ' + People.LastName END), FORMAT(ApplicationDate , '{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') , (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END)";
 
-        public static DataTable GetLDLApplications(byte WantedNumberOfRecords, int LastLowestBroughtLDLAppID = -1)
+        public static DataTable GetLDLApplications(byte WantedNumOfRecords, int LastLowestBroughtLDLAppID = -1)
         {
             DataTable dtLDLApplications = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -35,14 +35,14 @@ namespace DVLDDataAccessLayer
             if (LastLowestBroughtLDLAppID == -1)
                 query += " ORDER BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID DESC";
             else
-                query += @" HAVING LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID < @LastLowestBroughtLDLApplicationID 
+                query += @" HAVING LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID < @LastLowestBroughtLDLAppID 
                            ORDER BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
             if (LastLowestBroughtLDLAppID != -1)
-                command.Parameters.AddWithValue("@LastLowestBroughtLDLApplicationID", LastLowestBroughtLDLAppID);
+                command.Parameters.AddWithValue("@LastLowestBroughtLDLAppID", LastLowestBroughtLDLAppID);
 
             try
             {
@@ -57,7 +57,7 @@ namespace DVLDDataAccessLayer
                 reader.Close();
             }
 
-            catch (Exception ex) { Console.Write(ex.Message); }
+            catch { }
 
             finally
             {
@@ -74,7 +74,7 @@ namespace DVLDDataAccessLayer
             string query = _query;
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@WantedNumberOfRecords", 0);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
 
             try
             {
@@ -388,7 +388,7 @@ namespace DVLDDataAccessLayer
             }
         }
 
-        private static string _GetDataFilteringQuery(byte WantedNumberOfRecords,ref string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtLDLAppID = -1)
+        private static string _GetDataFilteringQuery(byte WantedNumOfRecords,ref string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtLDLAppID = -1)
         {
             string query = _query;
 
@@ -448,16 +448,16 @@ namespace DVLDDataAccessLayer
             return query;
         }
 
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtLDLAppID = -1, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtLDLAppID = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetDataFilteringQuery(WantedNumberOfRecords,ref ColumnNameToFilter,ref ValueToFilterBy, WildChar,LastLowestBroughtLDLAppID);
+            string query = _GetDataFilteringQuery(WantedNumOfRecords,ref ColumnNameToFilter,ref ValueToFilterBy, WildChar,LastLowestBroughtLDLAppID);
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
              if(ColumnNameToFilter == "Applications.ApplicationStatus" && ValueToFilterBy != "All")
                 command.Parameters.AddWithValue("@Value", Convert.ToByte(ValueToFilterBy));

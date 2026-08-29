@@ -8,7 +8,7 @@ namespace DVLDDataAccessLayer
     public class clsPeopleData
     {
         private static string _query =
-         $@"SELECT TOP (@WantedNumberOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
+         $@"SELECT TOP (@WantedNumOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
            FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
            Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
            FORMAT(DateOfBirth , '{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.NumericFormat)}') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
@@ -151,7 +151,7 @@ namespace DVLDDataAccessLayer
             }
             return (AffectedRows > 0);
         }
-        public static DataTable GetPeopleInfo(byte WantedNumberOfRecords,int LastLowestbroughtPersonID = -1)
+        public static DataTable GetPeopleInfo(byte WantedNumOfRecords,int LastLowestbroughtPersonID = -1)
         {
             DataTable dtPeople = null;
 
@@ -165,7 +165,7 @@ namespace DVLDDataAccessLayer
                 query += " ORDER BY PersonID DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
             if(LastLowestbroughtPersonID != -1)
                 command.Parameters.AddWithValue("@LastLowestbroughtPersonID", LastLowestbroughtPersonID);
@@ -201,7 +201,7 @@ namespace DVLDDataAccessLayer
             string query = _query;
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@WantedNumberOfRecords", 0);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
 
             try
             {
@@ -480,7 +480,7 @@ namespace DVLDDataAccessLayer
             return "2";
         }
 
-        private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
+        private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
         {
             string query = _query;
 
@@ -532,16 +532,16 @@ namespace DVLDDataAccessLayer
                 return query;
         }
 
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords,string ColumnNameToFilter,string ValueToFilterBy, int LastLowestbroughtPersonID = -1, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords,string ColumnNameToFilter,string ValueToFilterBy, int LastLowestbroughtPersonID = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetDataFilteringQuery(WantedNumberOfRecords,ColumnNameToFilter,ref ValueToFilterBy,WildChar,LastLowestbroughtPersonID);
+            string query = _GetDataFilteringQuery(WantedNumOfRecords,ColumnNameToFilter,ref ValueToFilterBy,WildChar,LastLowestbroughtPersonID);
 
             SqlCommand command = new SqlCommand(query, connection);
-             command.Parameters.AddWithValue("@WantedNumberOfRecords", WantedNumberOfRecords);
+             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
             if (!string.IsNullOrEmpty(ValueToFilterBy))
                 command.Parameters.AddWithValue("@Value", ValueToFilterBy);

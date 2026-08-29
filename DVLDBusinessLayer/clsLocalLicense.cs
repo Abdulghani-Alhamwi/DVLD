@@ -53,14 +53,14 @@ namespace DVLDBusinessLayer
             _CurrentMode = _enMode.Update;
         }
 
-        public static DataTable GetLocalLicenses(int DriverID,byte WantedNumberOfRecords)
+        public static DataTable GetLocalLicenses(int DriverID,byte WantedNumOfRecords)
         {
-            return clsLocalLicensesData.GetLocalLicenses(DriverID,WantedNumberOfRecords, -1);
+            return clsLocalLicensesData.GetLocalLicenses(DriverID,WantedNumOfRecords, -1);
         }
 
-        public static DataTable GetLocalLicenses(int DriverID,byte WantedNumberOfRecords, int LastLowstBroughtLicID)
+        public static DataTable GetLocalLicenses(int DriverID,byte WantedNumOfRecords, int LastLowstBroughtLicID)
         {
-            return clsLocalLicensesData.GetLocalLicenses(DriverID,WantedNumberOfRecords, LastLowstBroughtLicID);
+            return clsLocalLicensesData.GetLocalLicenses(DriverID,WantedNumOfRecords, LastLowstBroughtLicID);
         }
         public string GetIssueReasonAsString()
         {
@@ -121,7 +121,7 @@ namespace DVLDBusinessLayer
         }
         private bool _IssueDrivingLicense()
         {
-            LicenseID = clsLocalLicensesData.IssueDrivingLicense(ApplicationID, DriverID, LicenseClassID, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, _GetIssueReasonAsNumber(IssueReason), CreatedByUserID);
+            LicenseID = clsLocalLicensesData.IssueLocalDrivingLicense(ApplicationID, DriverID, LicenseClassID, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, _GetIssueReasonAsNumber(IssueReason), CreatedByUserID);
 
             return (LicenseID != -1);
         }

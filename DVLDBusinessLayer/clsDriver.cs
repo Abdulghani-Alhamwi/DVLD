@@ -54,26 +54,26 @@ namespace DVLDBusinessLayer
         {
             return clsDriversData.GetDriverPersonID(DriverID);
         }
-        public static DataTable GetDriversInfo(byte WantedNumberOfRecords, int LastLowestBroughtDriverID)
+        public static DataTable GetDriversInfo(byte WantedNumOfRecords, int LastLowestBroughtDriverID)
         {
-            return clsDriversData.GetDriversInfo(WantedNumberOfRecords, LastLowestBroughtDriverID);
+            return clsDriversData.GetDriversInfo(WantedNumOfRecords, LastLowestBroughtDriverID);
         }
-        public static DataTable GetDriversInfo(byte WantedNumberOfRecords)
+        public static DataTable GetDriversInfo(byte WantedNumOfRecords)
         {
-            return clsDriversData.GetDriversInfo(WantedNumberOfRecords,-1);
+            return clsDriversData.GetDriversInfo(WantedNumOfRecords,-1);
         }
         public static int GetTotalDriversCount()
         {
             return clsDriversData.GetTotalDriversCount();
         }
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy,char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,char? WildChar = null)
         {
-            return clsDriversData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy, -1,WildChar);
+            return clsDriversData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, -1,WildChar);
         }
 
-        public static DataTable GetFilteredData(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtDriverID = -1, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtDriverID = -1, char? WildChar = null)
         {
-            return clsDriversData.GetFilteredData(WantedNumberOfRecords, ColumnNameToFilter, ValueToFilterBy,LastLowestBroughtDriverID,WildChar);
+            return clsDriversData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy,LastLowestBroughtDriverID,WildChar);
         }
 
     }
