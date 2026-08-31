@@ -39,7 +39,7 @@ namespace DVLDBusinessLayer
 
         public static DataTable GetTestAppointments(byte WantedNumOfRecords,byte TestTypeID,int LDLAppId)
         {
-            return clsTestAppointmentsData.GetTestAppointments(WantedNumOfRecords,TestTypeID,LDLAppId, -1);
+            return clsTestAppointmentsData.GetTestAppointments(WantedNumOfRecords,TestTypeID,LDLAppId);
         }
 
         public static DataTable GetTestAppointments(byte WantedNumOfRecords, byte TestTypeID, int LDLAppId, int LowestBroughtAppointmentID = -1)
@@ -94,7 +94,7 @@ namespace DVLDBusinessLayer
 
         }
 
-        public static ushort GetTotalAppointmentsCount(int LDLApplicationID, byte TestTypeID)
+        public static int GetTotalAppointmentsCount(int LDLApplicationID, byte TestTypeID)
         {
             return clsTestAppointmentsData.GetTotalAppointmentsCount(LDLApplicationID, TestTypeID);
         }

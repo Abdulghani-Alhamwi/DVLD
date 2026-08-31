@@ -37,7 +37,7 @@ namespace DVLDBusinessLayer
         }
         public static DataTable GetUsersInfo(byte WantedNumOfRecords)
         {
-            return clsUsersData.GetUsersInfo(WantedNumOfRecords,-1);
+            return clsUsersData.GetUsersInfo(WantedNumOfRecords);
         }
 
         public static DataTable GetUsersInfo(byte WantedNumOfRecords, int LastLowestBroughtUserID)

@@ -5,7 +5,7 @@ using Utility_Library;
 
 namespace DVLDDataAccessLayer
 {
-    public class clsLDLApplicationsData
+    public class clsLocalDrivingLicenseAppData
     {
         private static string _query =
          $@"SELECT TOP (@WantedNumOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
@@ -158,7 +158,7 @@ namespace DVLDDataAccessLayer
             return (AffectedRows > 0);
         }
 
-        public static bool Find(int LocalDrivingLicenseApplicationID, ref byte ApplicationID, ref byte LicenseClassID , ref string LicenseClassName)
+        public static bool Find(int LDLApplicationID, ref byte ApplicationID, ref byte LicenseClassID , ref string LicenseClassName)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -167,7 +167,7 @@ namespace DVLDDataAccessLayer
                              WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LocalDrivingLicenseApplicationID);
+            command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LDLApplicationID);
 
             try
             {

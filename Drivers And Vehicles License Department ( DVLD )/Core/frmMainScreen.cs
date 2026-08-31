@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using DVLDPresentationLayer.Applications;
 using DVLDPresentationLayer.Core;
 using Utility_Library;
 
@@ -88,13 +89,19 @@ namespace DVLDPresentationLayer
 
         private void tsmiLocalDrivingLicenseApplications_Click(object sender, EventArgs e)
         {
-            frmLDLApplications frm = new frmLDLApplications();
+            frmLDLApplicationsManagement frm = new frmLDLApplicationsManagement();
             frm.ShowDialog();
         }
 
         private void tsmiDrivers_Click(object sender, EventArgs e)
         {
             frmDriversManagements frm = new frmDriversManagements();
+            frm.ShowDialog();
+        }
+
+        private void tsmiInternationalLicense_Click(object sender, EventArgs e)
+        {
+            frmNewInternationalLicApplication frm = new frmNewInternationalLicApplication();
             frm.ShowDialog();
         }
     }

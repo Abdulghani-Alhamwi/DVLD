@@ -243,7 +243,7 @@ namespace DVLDPresentationLayer
                 return true;
         }
 
-        private bool _CheckIsValidEmail(string Email, CancelEventArgs e)
+        private bool _IsValidEmail(string Email, CancelEventArgs e)
         {
             if (txtEmail.Text.Contains(" ") || txtEmail.Text.Contains(",") || !(_ValidateEmailStart(Email)
             && _ValdiateEmailMiddle(Email) && _ValidateEmailEnd(Email)))
@@ -260,7 +260,7 @@ namespace DVLDPresentationLayer
         private void txtBoxEmail_Validating(object sender, CancelEventArgs e)
         {
             if (txtEmail.Text != "")
-                _CheckIsValidEmail(txtEmail.Text, e);
+                _IsValidEmail(txtEmail.Text, e);
         }
 
         private void _SetDateConstraint()
@@ -352,15 +352,11 @@ namespace DVLDPresentationLayer
 
         private bool _IsInfoUnchanged()
         {
-            return (_Person.FirstName == txtFirstName.Text
-                 && _Person.SecondName == txtSecondName.Text
-                 && _Person.ThirdName == txtThirdName.Text
-                 && _Person.LastName == txtLastName.Text
-                 && _Person.NationalNo == txtNationalNo.Text
-                 && _Person.DateOfBirth == dtpDateOfBirth.Value
+            return (_Person.FirstName == txtFirstName.Text && _Person.SecondName == txtSecondName.Text
+                 && _Person.ThirdName == txtThirdName.Text && _Person.LastName == txtLastName.Text
+                 && _Person.NationalNo == txtNationalNo.Text && _Person.DateOfBirth == dtpDateOfBirth.Value
                  && _Person.Gendor == (rbMale.Checked ? clsPerson.enGendor.Male : clsPerson.enGendor.Female)
-                 && _Person.Phone == txtPhone.Text
-                 && _Person.Email == txtEmail.Text
+                 && _Person.Phone == txtPhone.Text && _Person.Email == txtEmail.Text
                  && _Person.Address == txtAddress.Text
                  && _Person.CountryName == ((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString()
                  && _Person.ImagePath == (pbPersonalImage.ImageLocation == null ? _Person.ImagePath : pbPersonalImage.ImageLocation)
@@ -425,6 +421,16 @@ namespace DVLDPresentationLayer
 
         }
 
+        private bool _IsValidData()
+        {
+            CancelEventArgs cancelEventArgs = new CancelEventArgs();
+            bool IsValidEmail = (txtEmail.Text == "") ? true : _IsValidEmail(txtEmail.Text, cancelEventArgs);
+
+            return (_ValidateName(txtFirstName, cancelEventArgs)&& _ValidateName(txtSecondName, cancelEventArgs)
+             && _ValidateName(txtThirdName, cancelEventArgs) && _ValidateName(txtLastName, cancelEventArgs)
+             && _ValidateNationalNo(cancelEventArgs) && IsValidEmail
+             && _ValidatePhone(cancelEventArgs) && _ValidateAddress(cancelEventArgs));
+        }
         private void btnSave_Click(object sender, EventArgs e)
         {
             if(_Person != null)
@@ -436,18 +442,7 @@ namespace DVLDPresentationLayer
                 }
             }
  
-            CancelEventArgs cancelEventArgs = new CancelEventArgs();
-
-            bool IsValidEmail = (txtEmail.Text == "") ? true : _CheckIsValidEmail(txtEmail.Text, cancelEventArgs);
-
-            if (_ValidateName(txtFirstName, cancelEventArgs)
-             && _ValidateName(txtSecondName, cancelEventArgs)
-             && _ValidateName(txtThirdName, cancelEventArgs)
-             && _ValidateName(txtLastName, cancelEventArgs)
-             && _ValidateNationalNo(cancelEventArgs)
-             && IsValidEmail
-             && _ValidatePhone(cancelEventArgs)
-             && _ValidateAddress(cancelEventArgs))
+            if (_IsValidData())
             {
                 clsPerson Person;
                 _SetPersonInfo(out Person);

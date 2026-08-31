@@ -355,7 +355,6 @@
             this.gbPersonInformation.TabIndex = 84;
             this.gbPersonInformation.TabStop = false;
             this.gbPersonInformation.Text = "Person Information";
-            this.gbPersonInformation.Enter += new System.EventHandler(this.gbPersonInformation_Enter);
             // 
             // pbCountry
             // 

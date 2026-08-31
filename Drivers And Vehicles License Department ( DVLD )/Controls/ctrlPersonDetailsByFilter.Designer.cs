@@ -33,7 +33,7 @@
             this.lblTitleFindBy = new System.Windows.Forms.Label();
             this.gbFilter = new System.Windows.Forms.GroupBox();
             this.btnAddNewPerson = new System.Windows.Forms.Button();
-            this.btnFindUser = new System.Windows.Forms.Button();
+            this.btnSearchForUser = new System.Windows.Forms.Button();
             this.uctrlPersonDetails = new DVLDPresentationLayer.ctrlPersonDetails();
             this.gbFilter.SuspendLayout();
             this.SuspendLayout();
@@ -81,7 +81,7 @@
             // gbFilter
             // 
             this.gbFilter.Controls.Add(this.btnAddNewPerson);
-            this.gbFilter.Controls.Add(this.btnFindUser);
+            this.gbFilter.Controls.Add(this.btnSearchForUser);
             this.gbFilter.Controls.Add(this.txtFindBy);
             this.gbFilter.Controls.Add(this.cbFindBy);
             this.gbFilter.Controls.Add(this.lblTitleFindBy);
@@ -109,21 +109,21 @@
             this.btnAddNewPerson.UseVisualStyleBackColor = true;
             this.btnAddNewPerson.Click += new System.EventHandler(this.btnAddNewPerson_Click);
             // 
-            // btnFindUser
+            // btnSearchForUser
             // 
-            this.btnFindUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFindUser.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.btnFindUser.FlatAppearance.BorderSize = 2;
-            this.btnFindUser.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnFindUser.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnFindUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFindUser.Image = global::DVLDPresentationLayer.Properties.Resources.SearchPerson;
-            this.btnFindUser.Location = new System.Drawing.Point(794, 39);
-            this.btnFindUser.Name = "btnFindUser";
-            this.btnFindUser.Size = new System.Drawing.Size(74, 50);
-            this.btnFindUser.TabIndex = 2;
-            this.btnFindUser.UseVisualStyleBackColor = true;
-            this.btnFindUser.Click += new System.EventHandler(this.btnFindUser_Click);
+            this.btnSearchForUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSearchForUser.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnSearchForUser.FlatAppearance.BorderSize = 2;
+            this.btnSearchForUser.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnSearchForUser.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnSearchForUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearchForUser.Image = global::DVLDPresentationLayer.Properties.Resources.SearchPerson;
+            this.btnSearchForUser.Location = new System.Drawing.Point(794, 39);
+            this.btnSearchForUser.Name = "btnSearchForUser";
+            this.btnSearchForUser.Size = new System.Drawing.Size(74, 50);
+            this.btnSearchForUser.TabIndex = 2;
+            this.btnSearchForUser.UseVisualStyleBackColor = true;
+            this.btnSearchForUser.Click += new System.EventHandler(this.btnFindUser_Click);
             // 
             // uctrlPersonDetails
             // 
@@ -164,6 +164,6 @@
         private System.Windows.Forms.Label lblTitleFindBy;
         private System.Windows.Forms.GroupBox gbFilter;
         private System.Windows.Forms.Button btnAddNewPerson;
-        private System.Windows.Forms.Button btnFindUser;
+        private System.Windows.Forms.Button btnSearchForUser;
     }
 }

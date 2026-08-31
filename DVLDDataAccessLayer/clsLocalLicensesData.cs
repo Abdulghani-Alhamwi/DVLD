@@ -169,13 +169,13 @@ namespace DVLDDataAccessLayer
             return -1;
         }
 
-        public static short GetTotalDriverLicensesCount(int DriverID)
+        public static string GetLicenseNotes(int LocalLicenseID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = "SELECT Count(LicenseID) FROM LocalLicenses WHERE DriverID = @DriverID";
+            string query = "SELECT Notes FROM LocalLicenses WHERE LicenseID = @LicenseID";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@DriverID", DriverID);
+            command.Parameters.AddWithValue("@LicenseID", LocalLicenseID);
 
             try
             {
@@ -183,7 +183,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    return Convert.ToInt16(result);
+                    return result.ToString();
             }
 
             catch { }
@@ -192,7 +192,7 @@ namespace DVLDDataAccessLayer
             {
                 connection.Close();
             }
-            return 0;
-        }    
+            return null;
+        }
     }
 }

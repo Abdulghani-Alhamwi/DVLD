@@ -16,7 +16,7 @@ namespace DVLDPresentationLayer
         public void LoadDriverLicenseHistory(int DriverID)
         {
             dgvLocalLicenses.DataSource = clsLocalLicense.GetLocalLicenses(DriverID,clsUtility.WantedNumOfRowsFromDB);
-            lblRecordsNumber.Text = clsLocalLicense.GetTotalDriverLicensesCount(DriverID).ToString();
+            lblRecordsNumber.Text = clsDriver.GetTotalDriverLicensesCount(DriverID).ToString();
             _DriverID = DriverID;
         }
 

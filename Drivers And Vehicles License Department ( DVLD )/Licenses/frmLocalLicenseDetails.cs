@@ -4,15 +4,15 @@ using Utility_Library;
 
 namespace DVLDPresentationLayer
 {
-    public partial class frmLicenseInfo : Form
+    public partial class frmLocalLicenseDetails : Form
     {
-        public frmLicenseInfo(int LicenseID)
+        public frmLocalLicenseDetails(int LocalLicenseID)
         {
             InitializeComponent();
             clsUtility.CenterControlHorizontally(this, pbLicenseView);
             clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
 
-            uctrlDriverLicenseInfo.LoadDriverLicenseInfo(LicenseID);
+            uctrlDriverLicenseInfo.LoadDriverLicenseInfo(LocalLicenseID);
         }
 
         private void btnClose_Click(object sender, EventArgs e)

@@ -55,7 +55,7 @@ namespace DVLDBusinessLayer
 
         public static DataTable GetLocalLicenses(int DriverID,byte WantedNumOfRecords)
         {
-            return clsLocalLicensesData.GetLocalLicenses(DriverID,WantedNumOfRecords, -1);
+            return clsLocalLicensesData.GetLocalLicenses(DriverID,WantedNumOfRecords);
         }
 
         public static DataTable GetLocalLicenses(int DriverID,byte WantedNumOfRecords, int LastLowstBroughtLicID)
@@ -164,9 +164,13 @@ namespace DVLDBusinessLayer
         {
             return clsLocalLicensesData.GetLicenseID(ApplicationID);
         }
-        public static short GetTotalDriverLicensesCount(int DriverID)
+        public bool IsExpired()
         {
-            return clsLocalLicensesData.GetTotalDriverLicensesCount(DriverID);
+            return (ExpirationDate < DateTime.Now);
+        }
+        public static string GetLicenseNotes(int LocalLicenseID)
+        {
+            return clsLocalLicensesData.GetLicenseNotes(LocalLicenseID);
         }
     }
 }

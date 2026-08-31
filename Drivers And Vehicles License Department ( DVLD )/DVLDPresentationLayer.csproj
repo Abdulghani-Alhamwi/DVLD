@@ -56,6 +56,12 @@
     <Compile Include="Applications\frmApplicationDetails.Designer.cs">
       <DependentUpon>frmApplicationDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Applications\frmNewInternationalLicApplication.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Applications\frmNewInternationalLicApplication.Designer.cs">
+      <DependentUpon>frmNewInternationalLicApplication.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\clsGlobalSettings.cs" />
     <Compile Include="Controls\ctrlPersonDetails.cs">
       <SubType>UserControl</SubType>
@@ -81,23 +87,35 @@
     <Compile Include="ApplicationTypes\frmUpdateApplicationType.Designer.cs">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ctrlDLApplicationInfo.cs">
+    <Compile Include="Controls\ctrLDLApplicationDetails.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ctrlDLApplicationInfo.Designer.cs">
-      <DependentUpon>ctrlDLApplicationInfo.cs</DependentUpon>
+    <Compile Include="Controls\ctrLDLApplicationDetails.Designer.cs">
+      <DependentUpon>ctrLDLApplicationDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ctrlDriverLicenseInfo.cs">
+    <Compile Include="Controls\ctrlLDLicenseDetails.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ctrlDriverLicenseInfo.Designer.cs">
-      <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
+    <Compile Include="Controls\ctrlLDLicenseDetails.Designer.cs">
+      <DependentUpon>ctrlLDLicenseDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ctrlDriverLicensesHistory.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ctrlDriverLicensesHistory.Designer.cs">
       <DependentUpon>ctrlDriverLicensesHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlInternationalLicenseDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlInternationalLicenseDetails.Designer.cs">
+      <DependentUpon>ctrlInternationalLicenseDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlLDLicenseDetailsByFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlLDLicenseDetailsByFilter.Designer.cs">
+      <DependentUpon>ctrlLDLicenseDetailsByFilter.cs</DependentUpon>
     </Compile>
     <Compile Include="Drivers\frmDriversManagements.cs">
       <SubType>Form</SubType>
@@ -111,11 +129,17 @@
     <Compile Include="Drivers\frmDriverLicenseHistory.Designer.cs">
       <DependentUpon>frmDriverLicenseHistory.cs</DependentUpon>
     </Compile>
-    <Compile Include="Licenses\frmLicenseInfo.cs">
+    <Compile Include="Licenses\frmInternationalLicenseDetails.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Licenses\frmLicenseInfo.Designer.cs">
-      <DependentUpon>frmLicenseInfo.cs</DependentUpon>
+    <Compile Include="Licenses\frmInternationalLicenseDetails.Designer.cs">
+      <DependentUpon>frmInternationalLicenseDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Licenses\frmLocalLicenseDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Licenses\frmLocalLicenseDetails.Designer.cs">
+      <DependentUpon>frmLocalLicenseDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="Licenses\frmIssueDrivingLicense.cs">
       <SubType>Form</SubType>
@@ -147,11 +171,11 @@
     <Compile Include="Applications\frmNewLDLApplication.Designer.cs">
       <DependentUpon>frmNewLDLApplication.cs</DependentUpon>
     </Compile>
-    <Compile Include="Applications\frmLDLApplications.cs">
+    <Compile Include="Applications\frmLDLApplicationsManagement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Applications\frmLDLApplications.Designer.cs">
-      <DependentUpon>frmLDLApplications.cs</DependentUpon>
+    <Compile Include="Applications\frmLDLApplicationsManagement.Designer.cs">
+      <DependentUpon>frmLDLApplicationsManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="TestTypes\frmManageTestTypes.cs">
       <SubType>Form</SubType>
@@ -233,6 +257,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <EmbeddedResource Include="Applications\frmNewInternationalLicApplication.resx">
+      <DependentUpon>frmNewInternationalLicApplication.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrlPersonDetails.resx">
       <DependentUpon>ctrlPersonDetails.cs</DependentUpon>
     </EmbeddedResource>
@@ -245,17 +272,23 @@
     <EmbeddedResource Include="ApplicationTypes\frmUpdateApplicationType.resx">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ctrlDLApplicationInfo.resx">
-      <DependentUpon>ctrlDLApplicationInfo.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ctrLDLApplicationDetails.resx">
+      <DependentUpon>ctrLDLApplicationDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\frmApplicationDetails.resx">
       <DependentUpon>frmApplicationDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ctrlDriverLicenseInfo.resx">
-      <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ctrlLDLicenseDetails.resx">
+      <DependentUpon>ctrlLDLicenseDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrlDriverLicensesHistory.resx">
       <DependentUpon>ctrlDriverLicensesHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrlInternationalLicenseDetails.resx">
+      <DependentUpon>ctrlInternationalLicenseDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrlLDLicenseDetailsByFilter.resx">
+      <DependentUpon>ctrlLDLicenseDetailsByFilter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Drivers\frmDriversManagements.resx">
       <DependentUpon>frmDriversManagements.cs</DependentUpon>
@@ -263,8 +296,11 @@
     <EmbeddedResource Include="Drivers\frmDriverLicenseHistory.resx">
       <DependentUpon>frmDriverLicenseHistory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Licenses\frmLicenseInfo.resx">
-      <DependentUpon>frmLicenseInfo.cs</DependentUpon>
+    <EmbeddedResource Include="Licenses\frmInternationalLicenseDetails.resx">
+      <DependentUpon>frmInternationalLicenseDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\frmLocalLicenseDetails.resx">
+      <DependentUpon>frmLocalLicenseDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Licenses\frmIssueDrivingLicense.resx">
       <DependentUpon>frmIssueDrivingLicense.cs</DependentUpon>
@@ -281,8 +317,8 @@
     <EmbeddedResource Include="Applications\frmNewLDLApplication.resx">
       <DependentUpon>frmNewLDLApplication.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Applications\frmLDLApplications.resx">
-      <DependentUpon>frmLDLApplications.cs</DependentUpon>
+    <EmbeddedResource Include="Applications\frmLDLApplicationsManagement.resx">
+      <DependentUpon>frmLDLApplicationsManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TestTypes\frmManageTestTypes.resx">
       <DependentUpon>frmManageTestTypes.cs</DependentUpon>

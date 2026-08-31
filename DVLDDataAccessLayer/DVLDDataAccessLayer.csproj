@@ -51,7 +51,7 @@
     <Compile Include="TestsData.cs" />
     <Compile Include="CountriesData.cs" />
     <Compile Include="LicenseClassesData.cs" />
-    <Compile Include="clsLDLApplicationsData.cs" />
+    <Compile Include="clsLocalDrivingLicenseAppData.cs" />
     <Compile Include="PeopleData.cs" />
     <Compile Include="DataAccessSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

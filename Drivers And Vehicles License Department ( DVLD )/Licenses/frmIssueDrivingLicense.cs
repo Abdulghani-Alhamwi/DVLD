@@ -9,7 +9,7 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
     {
         internal event Action<int> AfterLicenseIssuance;
 
-        clsLocalLicense _License;
+        clsLocalLicense _LocalLicense;
 
         int _LDLAppDGVRowIndex;
         public frmIssueDrivingLicense(int LDLAppID,int DGVRowIndex)
@@ -20,9 +20,9 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
             _LDLAppDGVRowIndex = DGVRowIndex;
         }
 
-        private bool _SaveLicenseInfo(clsLDLApplication LDLApplication ,int DriverID)
+        private bool _SaveLicenseInfo(clsLocalDrivingLicenseApp LDLApplication ,int DriverID)
         {
-                  _License = new clsLocalLicense(
+                  _LocalLicense = new clsLocalLicense(
                   ApplicationID: LDLApplication.ApplicationID,
                   DriverID: DriverID,
                   LicenseClassID: LDLApplication.LicenseClass.ID,
@@ -35,7 +35,7 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
                   CreatedByUserID: clsGlobalSettings.CurrentUserID
                   );
 
-            return _License.Save();
+            return _LocalLicense.Save();
         }
 
         private bool _IssueLicense()
@@ -62,7 +62,8 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
             if (_IssueLicense())
             {
                 AfterLicenseIssuance?.Invoke(_LDLAppDGVRowIndex);
-                MessageBox.Show($"License Issued Successfully With License ID = {_License.LicenseID}", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"License Issued Successfully With License ID = {_LocalLicense.LicenseID}", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                uctrlDLApplicationInfo.ShowLicenseInfoLabel(_LocalLicense.LicenseID);
             }
             else
                 MessageBox.Show("Failed to issue license!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

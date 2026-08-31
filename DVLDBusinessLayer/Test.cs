@@ -5,7 +5,7 @@ namespace DVLDBusinessLayer
 {
     public class clsTest
     {
-        enum _enMode : byte {AddNew = 1,Update=2};
+        enum _enMode : byte {AddNew = 0 , Update = 1};
         _enMode _CurrentMode;
         public int TestID { get; set; }
         public int TestAppointmentID { get; set; }
@@ -17,6 +17,7 @@ namespace DVLDBusinessLayer
         {
             TestID = -1;
             this.TestAppointmentID = TestAppointmentID;
+            this.TestResult = TestResult;
             this.CreatedByUserID = CreatedByUserID;
             this.Notes = Notes;
             this.CreatedByUserID = CreatedByUserID;

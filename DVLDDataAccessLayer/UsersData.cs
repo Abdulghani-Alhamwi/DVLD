@@ -452,7 +452,7 @@ namespace DVLDDataAccessLayer
             }
         }
 
-        private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
+        private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
         {
             string query = _query;
 
@@ -516,6 +516,9 @@ namespace DVLDDataAccessLayer
             if (WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
 
+            if (LastLowestbroughtUserID != -1)
+                command.Parameters.AddWithValue("@LastLowestbroughtUserID", LastLowestbroughtUserID);
+
             try
             {
                 connection.Open();
@@ -566,8 +569,7 @@ namespace DVLDDataAccessLayer
             {
                 connection.Close();
             }
-            return 0;
+            return -1;
         }
-
     }
 }

@@ -38,7 +38,7 @@
             this.btnIssueLicense = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.pbNotes = new System.Windows.Forms.PictureBox();
-            this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrlDLApplicationInfo();
+            this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrLDLApplicationDetails();
             ((System.ComponentModel.ISupportInitialize)(this.pbFees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNotes)).BeginInit();
             this.SuspendLayout();
@@ -60,6 +60,7 @@
             // 
             this.btnExit.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
@@ -80,7 +81,7 @@
             this.txtNotes.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.txtNotes.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtNotes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtNotes.Location = new System.Drawing.Point(185, 593);
+            this.txtNotes.Location = new System.Drawing.Point(185, 615);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.Size = new System.Drawing.Size(994, 168);
@@ -92,7 +93,7 @@
             this.lblNotesTitle.AutoSize = true;
             this.lblNotesTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblNotesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblNotesTitle.Location = new System.Drawing.Point(26, 595);
+            this.lblNotesTitle.Location = new System.Drawing.Point(26, 617);
             this.lblNotesTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblNotesTitle.Name = "lblNotesTitle";
             this.lblNotesTitle.Size = new System.Drawing.Size(95, 28);
@@ -105,7 +106,7 @@
             this.lblLicenseFees.AutoSize = true;
             this.lblLicenseFees.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblLicenseFees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblLicenseFees.Location = new System.Drawing.Point(256, 540);
+            this.lblLicenseFees.Location = new System.Drawing.Point(256, 562);
             this.lblLicenseFees.Margin = new System.Windows.Forms.Padding(0);
             this.lblLicenseFees.Name = "lblLicenseFees";
             this.lblLicenseFees.Size = new System.Drawing.Size(64, 28);
@@ -118,7 +119,7 @@
             this.lblTestFeesTitle.AutoSize = true;
             this.lblTestFeesTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.lblTestFeesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblTestFeesTitle.Location = new System.Drawing.Point(26, 540);
+            this.lblTestFeesTitle.Location = new System.Drawing.Point(26, 562);
             this.lblTestFeesTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblTestFeesTitle.Name = "lblTestFeesTitle";
             this.lblTestFeesTitle.Size = new System.Drawing.Size(174, 28);
@@ -130,7 +131,7 @@
             this.pbFees.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbFees.Image = global::DVLDPresentationLayer.Properties.Resources.money_32;
-            this.pbFees.Location = new System.Drawing.Point(211, 538);
+            this.pbFees.Location = new System.Drawing.Point(211, 560);
             this.pbFees.Name = "pbFees";
             this.pbFees.Size = new System.Drawing.Size(32, 32);
             this.pbFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -147,7 +148,7 @@
             this.btnIssueLicense.Font = new System.Drawing.Font("Tahoma", 19F);
             this.btnIssueLicense.Image = global::DVLDPresentationLayer.Properties.Resources.License_Type_32;
             this.btnIssueLicense.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnIssueLicense.Location = new System.Drawing.Point(1013, 788);
+            this.btnIssueLicense.Location = new System.Drawing.Point(1013, 817);
             this.btnIssueLicense.Name = "btnIssueLicense";
             this.btnIssueLicense.Size = new System.Drawing.Size(166, 45);
             this.btnIssueLicense.TabIndex = 178;
@@ -165,7 +166,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 19F);
             this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(810, 788);
+            this.btnClose.Location = new System.Drawing.Point(810, 817);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 177;
@@ -178,7 +179,7 @@
             this.pbNotes.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbNotes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbNotes.Image = global::DVLDPresentationLayer.Properties.Resources.Notes_32;
-            this.pbNotes.Location = new System.Drawing.Point(133, 593);
+            this.pbNotes.Location = new System.Drawing.Point(133, 615);
             this.pbNotes.Name = "pbNotes";
             this.pbNotes.Size = new System.Drawing.Size(32, 32);
             this.pbNotes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -191,7 +192,7 @@
             this.uctrlDLApplicationInfo.AutoScroll = true;
             this.uctrlDLApplicationInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.uctrlDLApplicationInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.uctrlDLApplicationInfo.Location = new System.Drawing.Point(26, 65);
+            this.uctrlDLApplicationInfo.Location = new System.Drawing.Point(26, 88);
             this.uctrlDLApplicationInfo.Name = "uctrlDLApplicationInfo";
             this.uctrlDLApplicationInfo.Size = new System.Drawing.Size(1153, 452);
             this.uctrlDLApplicationInfo.TabIndex = 0;
@@ -203,7 +204,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1206, 847);
+            this.ClientSize = new System.Drawing.Size(1206, 886);
             this.ControlBox = false;
             this.Controls.Add(this.pbFees);
             this.Controls.Add(this.lblLicenseFees);
@@ -232,7 +233,7 @@
 
         #endregion
 
-        private ctrlDLApplicationInfo uctrlDLApplicationInfo;
+        private ctrLDLApplicationDetails uctrlDLApplicationInfo;
         private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.TextBox txtNotes;

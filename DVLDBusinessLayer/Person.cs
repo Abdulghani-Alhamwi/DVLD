@@ -119,7 +119,6 @@ namespace DVLDBusinessLayer
             else
                 return null;
         }
-
         private byte _GetGendorNumericValue()
         {
             if (Gendor == null)
@@ -139,7 +138,7 @@ namespace DVLDBusinessLayer
         }
         public static DataTable GetPeopleInfo(byte WantedNumOfRecords)
         {
-            return clsPeopleData.GetPeopleInfo(WantedNumOfRecords, -1);
+            return clsPeopleData.GetPeopleInfo(WantedNumOfRecords);
         }
 
         public static DataTable GetPeopleInfo(byte WantedNumOfRecords, int LastLowestbroughtPersonID)

@@ -6,7 +6,7 @@ namespace DVLDBusinessLayer
 {
     public class clsApplicationType
     {
-        public enum enApplicationType : byte { NewLDL = 1,RenewDL = 2,ReplacementForLostDL = 3 ,ReplacementForDamagedDL = 4 ,ReleaseDetainedDL = 5,NewInternationlLicense = 6,ReTakeTest = 7}
+        public enum enApplicationType : byte { NewLocalDrivingLicense = 1,RenewLicense = 2,ReplacementForLostLicense = 3 ,ReplacementForDamagedLicense = 4 ,ReleaseDetainedLicense = 5,NewInternationlLicense = 6,ReTakeTest = 7}
         public static DataTable GetApplicationTypes()
         {
             return clsApplicationTypesData.GetApplicationTypes();
@@ -16,8 +16,9 @@ namespace DVLDBusinessLayer
             return clsApplicationTypesData.UpdateApplicationType(ApplicationTypeID, ApplicationTypeTitle, ApplicationTypeFees);
         }
 
-        public static decimal GetApplicationTypeFees(byte ApplicationTypeID)
+        public static decimal GetApplicationTypeFees(enApplicationType ApplicationType)
         {
+            byte ApplicationTypeID = GetApplicationTypeID(ApplicationType);
             return clsApplicationTypesData.GetApplicationTypeFees(ApplicationTypeID);
         }
         public static string GetApplicationTypeTitle(byte ApplicationTypeID)
@@ -28,19 +29,19 @@ namespace DVLDBusinessLayer
         {
             switch(ApplicationType)
             {
-                case enApplicationType.NewLDL:
+                case enApplicationType.NewLocalDrivingLicense:
                     return 1;
 
-                case enApplicationType.RenewDL:
+                case enApplicationType.RenewLicense:
                     return 2;
 
-                case enApplicationType.ReplacementForLostDL:
+                case enApplicationType.ReplacementForLostLicense:
                     return 3;
 
-                case enApplicationType.ReplacementForDamagedDL:
+                case enApplicationType.ReplacementForDamagedLicense:
                     return 4;
 
-                case enApplicationType.ReleaseDetainedDL:
+                case enApplicationType.ReleaseDetainedLicense:
                     return 5;
 
                 case enApplicationType.NewInternationlLicense:

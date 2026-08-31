@@ -198,7 +198,7 @@ namespace DVLDDataAccessLayer
             return IsFound;
         }
 
-        public static ushort GetTotalAppointmentsCount(int LocalDrivingLicenseAppID, byte TestTypeID)
+        public static int GetTotalAppointmentsCount(int LocalDrivingLicenseAppID, byte TestTypeID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
@@ -226,7 +226,7 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
 
-            return 0;
+            return -1;
         }
 
         public static bool IsAppointmentSchedulingAvailable(int LocalDrivingLicenseAppID, byte TestTypeID)

@@ -191,7 +191,7 @@ namespace DVLDDataAccessLayer
             {
                 connection.Close();
             }
-            return 0;
+            return -1;
         }
         private static string _GetOriginalColumnName(string SendedColumnName)
         {
@@ -286,6 +286,63 @@ namespace DVLDDataAccessLayer
             }
 
             return dtFilteredData;
+        }
+        public static bool HasActiveLicenseFromClass(int DriverID,int LicenseClassID, out int LicenseID)
+        {
+            LicenseID = -1;
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT LicenseID FROM LocalLicenses WHERE DriverID = @DriverID
+                             AND LicenseClassID = @LicenseClassID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@DriverID", DriverID);
+            command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                {
+                    LicenseID = Convert.ToInt32(result);
+                    return true;
+                }
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return false;
+        }
+        public static sbyte GetTotalDriverLicensesCount(int DriverID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            string query = "SELECT Count(LicenseID) FROM LocalLicenses WHERE DriverID = @DriverID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@DriverID", DriverID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return Convert.ToSByte(result);
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return -1;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer
 {
-    partial class ctrlDriverLicenseInfo
+    partial class ctrlLDLicenseDetails
     {
         /// <summary> 
         /// Required designer variable.
@@ -54,7 +54,7 @@
             this.lblExpDateTitle = new System.Windows.Forms.Label();
             this.lblIsDetained = new System.Windows.Forms.Label();
             this.lblIsDetainedTitle = new System.Windows.Forms.Label();
-            this.gbDriverLicenseInfo = new System.Windows.Forms.GroupBox();
+            this.gbLDLicenseInfo = new System.Windows.Forms.GroupBox();
             this.pbIsDetained = new System.Windows.Forms.PictureBox();
             this.pbExpDate = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -69,7 +69,7 @@
             this.pbGendor = new System.Windows.Forms.PictureBox();
             this.pbIssueDate = new System.Windows.Forms.PictureBox();
             this.pbPersonalImage = new System.Windows.Forms.PictureBox();
-            this.gbDriverLicenseInfo.SuspendLayout();
+            this.gbLDLicenseInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbIsDetained)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbExpDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -95,9 +95,9 @@
             this.lblClassName.Location = new System.Drawing.Point(255, 49);
             this.lblClassName.Margin = new System.Windows.Forms.Padding(0);
             this.lblClassName.Name = "lblClassName";
-            this.lblClassName.Size = new System.Drawing.Size(64, 28);
+            this.lblClassName.Size = new System.Drawing.Size(71, 28);
             this.lblClassName.TabIndex = 101;
-            this.lblClassName.Text = "????";
+            this.lblClassName.Text = "[???]";
             // 
             // lblClassTitle
             // 
@@ -121,9 +121,9 @@
             this.lblDriverID.Location = new System.Drawing.Point(716, 237);
             this.lblDriverID.Margin = new System.Windows.Forms.Padding(0);
             this.lblDriverID.Name = "lblDriverID";
-            this.lblDriverID.Size = new System.Drawing.Size(56, 28);
+            this.lblDriverID.Size = new System.Drawing.Size(74, 28);
             this.lblDriverID.TabIndex = 98;
-            this.lblDriverID.Text = "????";
+            this.lblDriverID.Text = "[????]";
             // 
             // lblIsActive
             // 
@@ -134,9 +134,9 @@
             this.lblIsActive.Location = new System.Drawing.Point(716, 143);
             this.lblIsActive.Margin = new System.Windows.Forms.Padding(0);
             this.lblIsActive.Name = "lblIsActive";
-            this.lblIsActive.Size = new System.Drawing.Size(56, 28);
+            this.lblIsActive.Size = new System.Drawing.Size(74, 28);
             this.lblIsActive.TabIndex = 97;
-            this.lblIsActive.Text = "????";
+            this.lblIsActive.Text = "[????]";
             // 
             // lblDateOfBirth
             // 
@@ -147,9 +147,9 @@
             this.lblDateOfBirth.Location = new System.Drawing.Point(716, 190);
             this.lblDateOfBirth.Margin = new System.Windows.Forms.Padding(0);
             this.lblDateOfBirth.Name = "lblDateOfBirth";
-            this.lblDateOfBirth.Size = new System.Drawing.Size(56, 28);
+            this.lblDateOfBirth.Size = new System.Drawing.Size(74, 28);
             this.lblDateOfBirth.TabIndex = 96;
-            this.lblDateOfBirth.Text = "????";
+            this.lblDateOfBirth.Text = "[????]";
             // 
             // lblIssueDate
             // 
@@ -160,9 +160,9 @@
             this.lblIssueDate.Location = new System.Drawing.Point(252, 284);
             this.lblIssueDate.Margin = new System.Windows.Forms.Padding(0);
             this.lblIssueDate.Name = "lblIssueDate";
-            this.lblIssueDate.Size = new System.Drawing.Size(56, 28);
+            this.lblIssueDate.Size = new System.Drawing.Size(74, 28);
             this.lblIssueDate.TabIndex = 95;
-            this.lblIssueDate.Text = "????";
+            this.lblIssueDate.Text = "[????]";
             // 
             // lblGendor
             // 
@@ -173,9 +173,9 @@
             this.lblGendor.Location = new System.Drawing.Point(252, 237);
             this.lblGendor.Margin = new System.Windows.Forms.Padding(0);
             this.lblGendor.Name = "lblGendor";
-            this.lblGendor.Size = new System.Drawing.Size(56, 28);
+            this.lblGendor.Size = new System.Drawing.Size(74, 28);
             this.lblGendor.TabIndex = 93;
-            this.lblGendor.Text = "????";
+            this.lblGendor.Text = "[????]";
             // 
             // lblLicenseID
             // 
@@ -186,9 +186,9 @@
             this.lblLicenseID.Location = new System.Drawing.Point(252, 143);
             this.lblLicenseID.Margin = new System.Windows.Forms.Padding(0);
             this.lblLicenseID.Name = "lblLicenseID";
-            this.lblLicenseID.Size = new System.Drawing.Size(56, 28);
+            this.lblLicenseID.Size = new System.Drawing.Size(74, 28);
             this.lblLicenseID.TabIndex = 92;
-            this.lblLicenseID.Text = "????";
+            this.lblLicenseID.Text = "[????]";
             // 
             // lblPersonFullName
             // 
@@ -199,9 +199,9 @@
             this.lblPersonFullName.Location = new System.Drawing.Point(252, 96);
             this.lblPersonFullName.Margin = new System.Windows.Forms.Padding(0);
             this.lblPersonFullName.Name = "lblPersonFullName";
-            this.lblPersonFullName.Size = new System.Drawing.Size(64, 28);
+            this.lblPersonFullName.Size = new System.Drawing.Size(84, 28);
             this.lblPersonFullName.TabIndex = 91;
-            this.lblPersonFullName.Text = "????";
+            this.lblPersonFullName.Text = "[????]";
             // 
             // lblDriverIDTitle
             // 
@@ -303,9 +303,9 @@
             this.lblNationalNo.Location = new System.Drawing.Point(252, 190);
             this.lblNationalNo.Margin = new System.Windows.Forms.Padding(0);
             this.lblNationalNo.Name = "lblNationalNo";
-            this.lblNationalNo.Size = new System.Drawing.Size(56, 28);
+            this.lblNationalNo.Size = new System.Drawing.Size(74, 28);
             this.lblNationalNo.TabIndex = 112;
-            this.lblNationalNo.Text = "????";
+            this.lblNationalNo.Text = "[????]";
             // 
             // lblNationalNoTitle
             // 
@@ -329,9 +329,9 @@
             this.lblIssueReason.Location = new System.Drawing.Point(252, 331);
             this.lblIssueReason.Margin = new System.Windows.Forms.Padding(0);
             this.lblIssueReason.Name = "lblIssueReason";
-            this.lblIssueReason.Size = new System.Drawing.Size(56, 28);
+            this.lblIssueReason.Size = new System.Drawing.Size(74, 28);
             this.lblIssueReason.TabIndex = 115;
-            this.lblIssueReason.Text = "????";
+            this.lblIssueReason.Text = "[????]";
             // 
             // lblIssueReasonTitle
             // 
@@ -355,9 +355,9 @@
             this.lblNotes.Location = new System.Drawing.Point(252, 378);
             this.lblNotes.Margin = new System.Windows.Forms.Padding(0);
             this.lblNotes.Name = "lblNotes";
-            this.lblNotes.Size = new System.Drawing.Size(56, 28);
+            this.lblNotes.Size = new System.Drawing.Size(74, 28);
             this.lblNotes.TabIndex = 118;
-            this.lblNotes.Text = "????";
+            this.lblNotes.Text = "[????]";
             // 
             // lblNotesTitle
             // 
@@ -381,9 +381,9 @@
             this.lblExpDate.Location = new System.Drawing.Point(716, 284);
             this.lblExpDate.Margin = new System.Windows.Forms.Padding(0);
             this.lblExpDate.Name = "lblExpDate";
-            this.lblExpDate.Size = new System.Drawing.Size(56, 28);
+            this.lblExpDate.Size = new System.Drawing.Size(74, 28);
             this.lblExpDate.TabIndex = 121;
-            this.lblExpDate.Text = "????";
+            this.lblExpDate.Text = "[????]";
             // 
             // lblExpDateTitle
             // 
@@ -407,9 +407,9 @@
             this.lblIsDetained.Location = new System.Drawing.Point(716, 331);
             this.lblIsDetained.Margin = new System.Windows.Forms.Padding(0);
             this.lblIsDetained.Name = "lblIsDetained";
-            this.lblIsDetained.Size = new System.Drawing.Size(56, 28);
+            this.lblIsDetained.Size = new System.Drawing.Size(74, 28);
             this.lblIsDetained.TabIndex = 124;
-            this.lblIsDetained.Text = "????";
+            this.lblIsDetained.Text = "[????]";
             // 
             // lblIsDetainedTitle
             // 
@@ -424,54 +424,54 @@
             this.lblIsDetainedTitle.TabIndex = 123;
             this.lblIsDetainedTitle.Text = "Is Detained ?";
             // 
-            // gbDriverLicenseInfo
+            // gbLDLicenseInfo
             // 
-            this.gbDriverLicenseInfo.Controls.Add(this.pbIsDetained);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblIsDetained);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblIsDetainedTitle);
-            this.gbDriverLicenseInfo.Controls.Add(this.pbExpDate);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblExpDate);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblExpDateTitle);
-            this.gbDriverLicenseInfo.Controls.Add(this.pictureBox1);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblNotes);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblNotesTitle);
-            this.gbDriverLicenseInfo.Controls.Add(this.pbIssueReason);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblIssueReason);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblIssueReasonTitle);
-            this.gbDriverLicenseInfo.Controls.Add(this.pbNationalNo);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblNationalNo);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblNationalNoTitle);
-            this.gbDriverLicenseInfo.Controls.Add(this.pbClass);
-            this.gbDriverLicenseInfo.Controls.Add(this.pbDriverID);
-            this.gbDriverLicenseInfo.Controls.Add(this.pbIsActive);
-            this.gbDriverLicenseInfo.Controls.Add(this.pbDate);
-            this.gbDriverLicenseInfo.Controls.Add(this.pbPerson);
-            this.gbDriverLicenseInfo.Controls.Add(this.pbLicenseID);
-            this.gbDriverLicenseInfo.Controls.Add(this.pbGendor);
-            this.gbDriverLicenseInfo.Controls.Add(this.pbIssueDate);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblClassName);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblClassTitle);
-            this.gbDriverLicenseInfo.Controls.Add(this.pbPersonalImage);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblDriverID);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblIsActive);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblDateOfBirth);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblIssueDate);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblGendor);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblLicenseID);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblPersonFullName);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblDriverIDTitle);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblIsActiveTitle);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblDateOfBirthTitle);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblIssueDateTitle);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblGendorTitle);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblLicenseIDTitle);
-            this.gbDriverLicenseInfo.Controls.Add(this.lblNameTitle);
-            this.gbDriverLicenseInfo.Location = new System.Drawing.Point(6, 5);
-            this.gbDriverLicenseInfo.Name = "gbDriverLicenseInfo";
-            this.gbDriverLicenseInfo.Size = new System.Drawing.Size(1146, 428);
-            this.gbDriverLicenseInfo.TabIndex = 126;
-            this.gbDriverLicenseInfo.TabStop = false;
-            this.gbDriverLicenseInfo.Text = "Driver License Info";
+            this.gbLDLicenseInfo.Controls.Add(this.pbIsDetained);
+            this.gbLDLicenseInfo.Controls.Add(this.lblIsDetained);
+            this.gbLDLicenseInfo.Controls.Add(this.lblIsDetainedTitle);
+            this.gbLDLicenseInfo.Controls.Add(this.pbExpDate);
+            this.gbLDLicenseInfo.Controls.Add(this.lblExpDate);
+            this.gbLDLicenseInfo.Controls.Add(this.lblExpDateTitle);
+            this.gbLDLicenseInfo.Controls.Add(this.pictureBox1);
+            this.gbLDLicenseInfo.Controls.Add(this.lblNotes);
+            this.gbLDLicenseInfo.Controls.Add(this.lblNotesTitle);
+            this.gbLDLicenseInfo.Controls.Add(this.pbIssueReason);
+            this.gbLDLicenseInfo.Controls.Add(this.lblIssueReason);
+            this.gbLDLicenseInfo.Controls.Add(this.lblIssueReasonTitle);
+            this.gbLDLicenseInfo.Controls.Add(this.pbNationalNo);
+            this.gbLDLicenseInfo.Controls.Add(this.lblNationalNo);
+            this.gbLDLicenseInfo.Controls.Add(this.lblNationalNoTitle);
+            this.gbLDLicenseInfo.Controls.Add(this.pbClass);
+            this.gbLDLicenseInfo.Controls.Add(this.pbDriverID);
+            this.gbLDLicenseInfo.Controls.Add(this.pbIsActive);
+            this.gbLDLicenseInfo.Controls.Add(this.pbDate);
+            this.gbLDLicenseInfo.Controls.Add(this.pbPerson);
+            this.gbLDLicenseInfo.Controls.Add(this.pbLicenseID);
+            this.gbLDLicenseInfo.Controls.Add(this.pbGendor);
+            this.gbLDLicenseInfo.Controls.Add(this.pbIssueDate);
+            this.gbLDLicenseInfo.Controls.Add(this.lblClassName);
+            this.gbLDLicenseInfo.Controls.Add(this.lblClassTitle);
+            this.gbLDLicenseInfo.Controls.Add(this.pbPersonalImage);
+            this.gbLDLicenseInfo.Controls.Add(this.lblDriverID);
+            this.gbLDLicenseInfo.Controls.Add(this.lblIsActive);
+            this.gbLDLicenseInfo.Controls.Add(this.lblDateOfBirth);
+            this.gbLDLicenseInfo.Controls.Add(this.lblIssueDate);
+            this.gbLDLicenseInfo.Controls.Add(this.lblGendor);
+            this.gbLDLicenseInfo.Controls.Add(this.lblLicenseID);
+            this.gbLDLicenseInfo.Controls.Add(this.lblPersonFullName);
+            this.gbLDLicenseInfo.Controls.Add(this.lblDriverIDTitle);
+            this.gbLDLicenseInfo.Controls.Add(this.lblIsActiveTitle);
+            this.gbLDLicenseInfo.Controls.Add(this.lblDateOfBirthTitle);
+            this.gbLDLicenseInfo.Controls.Add(this.lblIssueDateTitle);
+            this.gbLDLicenseInfo.Controls.Add(this.lblGendorTitle);
+            this.gbLDLicenseInfo.Controls.Add(this.lblLicenseIDTitle);
+            this.gbLDLicenseInfo.Controls.Add(this.lblNameTitle);
+            this.gbLDLicenseInfo.Location = new System.Drawing.Point(6, -1);
+            this.gbLDLicenseInfo.Name = "gbLDLicenseInfo";
+            this.gbLDLicenseInfo.Size = new System.Drawing.Size(1146, 428);
+            this.gbLDLicenseInfo.TabIndex = 126;
+            this.gbLDLicenseInfo.TabStop = false;
+            this.gbLDLicenseInfo.Text = "Driver Local License Info";
             // 
             // pbIsDetained
             // 
@@ -642,19 +642,19 @@
             this.pbPersonalImage.TabIndex = 99;
             this.pbPersonalImage.TabStop = false;
             // 
-            // ctrlDriverLicenseInfo
+            // ctrlLDLicenseDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.Controls.Add(this.gbDriverLicenseInfo);
+            this.Controls.Add(this.gbLDLicenseInfo);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.Name = "ctrlDriverLicenseInfo";
-            this.Size = new System.Drawing.Size(1156, 440);
-            this.gbDriverLicenseInfo.ResumeLayout(false);
-            this.gbDriverLicenseInfo.PerformLayout();
+            this.Name = "ctrlLDLicenseDetails";
+            this.Size = new System.Drawing.Size(1156, 430);
+            this.gbLDLicenseInfo.ResumeLayout(false);
+            this.gbLDLicenseInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbIsDetained)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbExpDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -715,6 +715,6 @@
         private System.Windows.Forms.PictureBox pbIsDetained;
         private System.Windows.Forms.Label lblIsDetained;
         private System.Windows.Forms.Label lblIsDetainedTitle;
-        private System.Windows.Forms.GroupBox gbDriverLicenseInfo;
+        private System.Windows.Forms.GroupBox gbLDLicenseInfo;
     }
 }

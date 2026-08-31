@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer
 {
-    partial class frmLicenseInfo
+    partial class frmLocalLicenseDetails
     {
         /// <summary>
         /// Required designer variable.
@@ -33,7 +33,7 @@
             this.lblFormBigTitle = new System.Windows.Forms.Label();
             this.pbLicenseView = new System.Windows.Forms.PictureBox();
             this.btnClose = new System.Windows.Forms.Button();
-            this.uctrlDriverLicenseInfo = new DVLDPresentationLayer.ctrlDriverLicenseInfo();
+            this.uctrlDriverLicenseInfo = new DVLDPresentationLayer.ctrlLDLicenseDetails();
             ((System.ComponentModel.ISupportInitialize)(this.pbLicenseView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,9 +45,9 @@
             this.lblFormTitle.Location = new System.Drawing.Point(11, 7);
             this.lblFormTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormTitle.Name = "lblFormTitle";
-            this.lblFormTitle.Size = new System.Drawing.Size(142, 29);
+            this.lblFormTitle.Size = new System.Drawing.Size(204, 29);
             this.lblFormTitle.TabIndex = 42;
-            this.lblFormTitle.Text = "License Info";
+            this.lblFormTitle.Text = "Local License Info";
             // 
             // btnExit
             // 
@@ -75,12 +75,12 @@
             this.lblFormBigTitle.AutoSize = true;
             this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 30F, System.Drawing.FontStyle.Bold);
             this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblFormBigTitle.Location = new System.Drawing.Point(387, 163);
+            this.lblFormBigTitle.Location = new System.Drawing.Point(328, 163);
             this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormBigTitle.Name = "lblFormBigTitle";
-            this.lblFormBigTitle.Size = new System.Drawing.Size(403, 48);
+            this.lblFormBigTitle.Size = new System.Drawing.Size(520, 48);
             this.lblFormBigTitle.TabIndex = 43;
-            this.lblFormBigTitle.Text = "Driver License Info";
+            this.lblFormBigTitle.Text = "Driver Local License Info";
             // 
             // pbLicenseView
             // 
@@ -125,7 +125,7 @@
             this.uctrlDriverLicenseInfo.Size = new System.Drawing.Size(1157, 440);
             this.uctrlDriverLicenseInfo.TabIndex = 45;
             // 
-            // frmLicenseInfo
+            // frmLocalLicenseDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -143,7 +143,7 @@
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "frmLicenseInfo";
+            this.Name = "frmLocalLicenseDetails";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -159,7 +159,7 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.PictureBox pbLicenseView;
         private System.Windows.Forms.Label lblFormBigTitle;
-        private ctrlDriverLicenseInfo uctrlDriverLicenseInfo;
+        private ctrlLDLicenseDetails uctrlDriverLicenseInfo;
         private System.Windows.Forms.Button btnClose;
     }
 }

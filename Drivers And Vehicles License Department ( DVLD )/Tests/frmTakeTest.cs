@@ -7,8 +7,8 @@ namespace DVLDPresentationLayer
 {
     public partial class frmTakeTest : Form
     {
-        internal Action<int> OnTestTaken;
-        internal Action<int> AfterPassingTest;
+        internal event Action<int> AfterTestTaken;
+        internal event Action<int> AfterPassingTest;
 
         clsTestAppointment _Appointment;
         int _AppointmentsDGVRowIndex;
@@ -17,23 +17,24 @@ namespace DVLDPresentationLayer
         public frmTakeTest(clsTestAppointment Appointment, clsTestType.enTestType TestType,int AppointmentsDGVRowIndex,int LDLAppDGVRowIndex)
         {
             InitializeComponent();
-            txtNotes.MaxLength = 500;
 
-            clsLDLApplication LDLApp = clsLDLApplication.Find(Appointment.LDLApplicationID);
-            _LDLAppID = LDLApp.LDLAppID;
-            _LoadInfo(Appointment,LDLApp, TestType);
+            clsLocalDrivingLicenseApp LDLApp = clsLocalDrivingLicenseApp.Find(Appointment.LDLApplicationID);
+            _SetInfo(Appointment,LDLApp);
             
-            _Appointment = Appointment;
+            frmScheduleTest.ShowInfoByTestType(gbTestAppointment,pbTestType,lblTestFees,TestType);
+
             this._AppointmentsDGVRowIndex = AppointmentsDGVRowIndex;
             _LDLAppDGVRowIndex = LDLAppDGVRowIndex;
 
             clsUtility.CenterControlHorizontally(gbTestAppointment, pbTestType);
             clsUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
-
         }
-        private void _LoadInfo(clsTestAppointment Appointment,clsLDLApplication LDLApp, clsTestType.enTestType TestType)
+        private void _SetInfo(clsTestAppointment Appointment,clsLocalDrivingLicenseApp LDLApp)
         {
-            frmScheduleTest.ShowInfoByTestType(gbTestAppointment,pbTestType,lblTestFees,TestType);
+            txtNotes.MaxLength = 500;
+
+            _Appointment = Appointment;
+            _LDLAppID = LDLApp.LDLAppID;
 
             lblLDLApplicationID.Text = LDLApp.LDLAppID.ToString();
 
@@ -66,7 +67,7 @@ namespace DVLDPresentationLayer
                 if (_Appointment.Save())
                 {
                     MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    OnTestTaken?.Invoke(_AppointmentsDGVRowIndex);
+                    AfterTestTaken?.Invoke(_AppointmentsDGVRowIndex);
 
                     if (Test.TestResult == true)
                         AfterPassingTest?.Invoke(_LDLAppDGVRowIndex);

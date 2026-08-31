@@ -5,13 +5,13 @@ namespace DVLDDataAccessLayer
 {
     public class clsDetainedLicensesData
     {
-        public static bool IsDetainedLicense(int LicenseID)
+        public static bool IsDetainedLicense(int LocalLicenseID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query = "SELECT Found = 1 FROM DetainedLicenses WHERE LicenseID = @LicenseID";
 
             SqlCommand command = new SqlCommand(query,connection);
-            command.Parameters.AddWithValue("@LicenseID", LicenseID);
+            command.Parameters.AddWithValue("@LicenseID", LocalLicenseID);
 
             try
             {

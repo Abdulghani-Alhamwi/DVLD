@@ -9,7 +9,7 @@ namespace DVLDPresentationLayer
 {
     public partial class frmTestsAppointments : Form
     {
-        internal Action<int> AfterPassingTest;
+        internal event Action<int> AfterPassingTest;
 
        private clsTestType.enTestType _TestType;
 
@@ -147,9 +147,9 @@ namespace DVLDPresentationLayer
                 cmsAppointment.Close();
         }
 
-        private void _LockTestAppoitment(int RowIndex)
+        private void _LockTestAppointment(int DGVRowIndex)
         {
-            clsUtility.EditOneColumnValueInDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, "Is Locked", true, RowIndex);
+            clsUtility.EditOneColumnValueInDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, "Is Locked",true, DGVRowIndex);
         }
 
         private void tsmiTakeTest_Click(object sender, EventArgs e)
@@ -169,8 +169,8 @@ namespace DVLDPresentationLayer
 
                 clsTestAppointment TestAppointment = clsTestAppointment.Find((int)dgvTestAppointments.SelectedRows[0].Cells["Appointment ID"].Value);
                 frmTakeTest frm = new frmTakeTest(TestAppointment, _TestType, (int)dgvTestAppointments.SelectedRows[0].Index, _TestsDGVRowIndex);
-                frm.AfterPassingTest = AfterPassingTest;
-                frm.OnTestTaken += _LockTestAppoitment;
+                frm.AfterPassingTest += AfterPassingTest;
+                frm.AfterTestTaken += _LockTestAppointment;
 
                 frm.ShowDialog();
             }

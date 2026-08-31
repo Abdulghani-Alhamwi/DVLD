@@ -272,7 +272,10 @@ namespace Utility_Library
                 control.Location = new Point(ContainerControl.Width / 2 - control.Width / 2, control.Location.Y);
             }
 
-            public static string SetFeesToCustomFormat(decimal Fees)
+        /// <summary>
+        /// Return a string contains the fees and the format is if there was only zeros after the fraction , it shows only the number with out the fraction and zeros after the fraction.
+        /// </summary>
+        public static string SetFeesToCustomFormat(decimal Fees)
             {
                 return Fees.ToString(_FeesCustomFormat);
             }

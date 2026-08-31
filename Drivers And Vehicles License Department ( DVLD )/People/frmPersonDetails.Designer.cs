@@ -44,7 +44,7 @@
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(961, 488);
+            this.btnClose.Location = new System.Drawing.Point(949, 488);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 1;
@@ -62,7 +62,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1088, 19);
+            this.btnExit.Location = new System.Drawing.Point(1096, 10);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -76,7 +76,7 @@
             this.lblFormBigTitle.AutoSize = true;
             this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 30F, System.Drawing.FontStyle.Bold);
             this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblFormBigTitle.Location = new System.Drawing.Point(415, 75);
+            this.lblFormBigTitle.Location = new System.Drawing.Point(416, 48);
             this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblFormBigTitle.Name = "lblFormBigTitle";
             this.lblFormBigTitle.Size = new System.Drawing.Size(311, 48);
@@ -88,7 +88,7 @@
             this.lblFormTitle.AutoSize = true;
             this.lblFormTitle.Font = new System.Drawing.Font("Tahoma", 22F);
             this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblFormTitle.Location = new System.Drawing.Point(25, 19);
+            this.lblFormTitle.Location = new System.Drawing.Point(13, 10);
             this.lblFormTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblFormTitle.Name = "lblFormTitle";
             this.lblFormTitle.Size = new System.Drawing.Size(203, 36);
@@ -102,7 +102,7 @@
             this.UctrlPersonDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.UctrlPersonDetails.Font = new System.Drawing.Font("Tahoma", 16F);
             this.UctrlPersonDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.UctrlPersonDetails.Location = new System.Drawing.Point(40, 161);
+            this.UctrlPersonDetails.Location = new System.Drawing.Point(28, 161);
             this.UctrlPersonDetails.Margin = new System.Windows.Forms.Padding(0);
             this.UctrlPersonDetails.Name = "UctrlPersonDetails";
             this.UctrlPersonDetails.Size = new System.Drawing.Size(1087, 304);
@@ -115,7 +115,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1167, 551);
+            this.ClientSize = new System.Drawing.Size(1145, 551);
             this.ControlBox = false;
             this.Controls.Add(this.UctrlPersonDetails);
             this.Controls.Add(this.btnClose);

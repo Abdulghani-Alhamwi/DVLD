@@ -396,7 +396,7 @@ namespace DVLDDataAccessLayer
             {
                 connection.Close();
             }
-            return 0;
+            return -1;
         }
 
         private static string _GetOriginalColumnName(string SendedColumnName)
@@ -548,6 +548,9 @@ namespace DVLDDataAccessLayer
 
                 if(WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
+
+            if (LastLowestbroughtPersonID != -1)
+                command.Parameters.AddWithValue("@LastLowestbroughtPersonID", LastLowestbroughtPersonID);
 
             try
             {

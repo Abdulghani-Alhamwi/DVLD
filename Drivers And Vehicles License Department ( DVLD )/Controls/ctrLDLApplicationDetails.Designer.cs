@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer
 {
-    partial class ctrlDLApplicationInfo
+    partial class ctrLDLApplicationDetails
     {
         /// <summary> 
         /// Required designer variable.
@@ -193,6 +193,7 @@
             this.lnlblShowLicenseInfo.TabStop = true;
             this.lnlblShowLicenseInfo.Text = "Show License Info";
             this.lnlblShowLicenseInfo.Visible = false;
+            this.lnlblShowLicenseInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseInfo_LinkClicked);
             // 
             // pbPassedTests
             // 
@@ -583,7 +584,7 @@
             this.pbID.TabIndex = 106;
             this.pbID.TabStop = false;
             // 
-            // ctrlDLApplicationInfo
+            // ctrLDLApplicationDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -592,7 +593,7 @@
             this.Controls.Add(this.gbApplicationBasicInfo);
             this.Controls.Add(this.gbDLAppInfo);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.Name = "ctrlDLApplicationInfo";
+            this.Name = "ctrLDLApplicationDetails";
             this.Size = new System.Drawing.Size(1165, 452);
             this.gbDLAppInfo.ResumeLayout(false);
             this.gbDLAppInfo.PerformLayout();

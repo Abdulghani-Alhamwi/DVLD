@@ -6,9 +6,9 @@ using Utility_Library;
 
 namespace DVLDPresentationLayer
 {
-    public partial class ctrlDriverLicenseInfo : UserControl
+    public partial class ctrlLDLicenseDetails : UserControl
     {
-        public ctrlDriverLicenseInfo()
+        public ctrlLDLicenseDetails()
         {
             InitializeComponent();
         }

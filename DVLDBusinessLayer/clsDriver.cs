@@ -6,7 +6,7 @@ namespace DVLDBusinessLayer
 {
     public class clsDriver
     {
-        private enum _enMode : byte { AddNew = 1 , Update = 2}
+        private enum _enMode : byte { AddNew = 0 , Update = 1}
 
         private _enMode _CurrentMode;
         public int DriverID { get; set; }
@@ -60,7 +60,7 @@ namespace DVLDBusinessLayer
         }
         public static DataTable GetDriversInfo(byte WantedNumOfRecords)
         {
-            return clsDriversData.GetDriversInfo(WantedNumOfRecords,-1);
+            return clsDriversData.GetDriversInfo(WantedNumOfRecords);
         }
         public static int GetTotalDriversCount()
         {
@@ -74,6 +74,16 @@ namespace DVLDBusinessLayer
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtDriverID = -1, char? WildChar = null)
         {
             return clsDriversData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy,LastLowestBroughtDriverID,WildChar);
+        }
+
+        public static bool HasActiveLicenseFromClass(int DriverID, int LicenseClassID,out int LicenseID)
+        {
+            return clsDriversData.HasActiveLicenseFromClass(DriverID, LicenseClassID,out LicenseID);
+        }
+
+        public static sbyte GetTotalDriverLicensesCount(int DriverID)
+        {
+            return clsDriversData.GetTotalDriverLicensesCount(DriverID);
         }
 
     }

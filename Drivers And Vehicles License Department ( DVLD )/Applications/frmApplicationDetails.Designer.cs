@@ -32,7 +32,7 @@
             this.lblFormBigTitle = new System.Windows.Forms.Label();
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
-            this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrlDLApplicationInfo();
+            this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrLDLApplicationDetails();
             this.SuspendLayout();
             // 
             // btnClose
@@ -139,6 +139,6 @@
         private System.Windows.Forms.Label lblFormBigTitle;
         private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.Button btnExit;
-        private ctrlDLApplicationInfo uctrlDLApplicationInfo;
+        private ctrLDLApplicationDetails uctrlDLApplicationInfo;
     }
 }

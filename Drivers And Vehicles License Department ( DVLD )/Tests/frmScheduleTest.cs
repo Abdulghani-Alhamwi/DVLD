@@ -15,7 +15,7 @@ namespace DVLDPresentationLayer
         internal event EditedScheduledAppointment AfterEditingAppointment;
         public enum enTestTrial {FirstTime = 0 , ReTake = 1, Taken = 2}
 
-        private clsLDLApplication _LDLApp;
+        private clsLocalDrivingLicenseApp _LDLApp;
 
         private clsTestAppointment _Appointment;
 
@@ -72,7 +72,7 @@ namespace DVLDPresentationLayer
 
             _TestType = TestType;
             _TestTrial = TestTrial;
-            clsLDLApplication LDLApp = clsLDLApplication.Find(LDLAppID);
+            clsLocalDrivingLicenseApp LDLApp = clsLocalDrivingLicenseApp.Find(LDLAppID);
 
             if(Appointment != null)
             _Appointment = Appointment;
@@ -117,7 +117,7 @@ namespace DVLDPresentationLayer
             {
                 gbReTakeTestInfo.Enabled = true;
                 lblFormBigTitle.Text = "Schedule Retake Test";
-                lblRAppFees.Text =  clsUtility.SetFeesToCustomFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.ReTakeTest)));
+                lblRAppFees.Text =  clsUtility.SetFeesToCustomFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReTakeTest));
                 lblTotalFees.Text = clsUtility.SetFeesToCustomFormat(Convert.ToDecimal(lblTestFees.Text) + Convert.ToDecimal(lblRAppFees.Text));
             }
             else
