@@ -12,10 +12,10 @@ namespace DVLDPresentationLayer.Core
         private int _ApplicantPersonID = -1;
         clsLocalDrivingLicenseApp _LDLApplication;
 
-        internal delegate void AddedLDLApplication(ref object[] NewValues);
+        internal delegate void AddedLDLApplication(ref object[] NewAppDetails);
         internal event AddedLDLApplication OnAddedLDLApplication;
 
-        internal delegate void EditedLDLApplication(ref object[] NewValues,int DGVRowIndex);
+        internal delegate void EditedLDLApplication(ref object[] ModifiedAppDetails,int DGVRowIndex);
         internal event EditedLDLApplication OnEditedLDLApplication;
 
         int _DGVRowIndex = -1;
@@ -230,12 +230,12 @@ namespace DVLDPresentationLayer.Core
                             _SetTitles(clsLocalDrivingLicenseApp.enMode.Update);
                         }
 
-                        object[] NewValues = new object[] { LDLApplication.LDLAppID, LDLApplication.LicenseClass.ClassName,
+                        object[] NewDetails = new object[] { LDLApplication.LDLAppID, LDLApplication.LicenseClass.ClassName,
                         clsPerson.GetNationalNumber(LDLApplication.ApplicantPersonID), clsPerson.GetFullName(LDLApplication.ApplicantPersonID),
                         LDLApplication.ApplicationDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)),clsTest.GetTotalPassedTestsCount(LDLApplication.LDLAppID),LDLApplication.GetApplicationStatus()};
                         
-                        OnAddedLDLApplication?.Invoke(ref NewValues);
-                        OnEditedLDLApplication?.Invoke(ref NewValues, _DGVRowIndex);
+                        OnAddedLDLApplication?.Invoke(ref NewDetails);
+                        OnEditedLDLApplication?.Invoke(ref NewDetails, _DGVRowIndex);
                     }
                     else
                         MessageBox.Show("Saving failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -9,7 +9,7 @@ namespace DVLDDataAccessLayer
     {
         private static string _query =
          $@"SELECT TOP (@WantedNumOfRecords) InternationalLicenseID AS [Int.License ID],ApplicationID AS [Application ID],DriverID AS [Driver ID],
-           IssuedUsingLocalLicenseID AS [Issued Using L.License ID],Format(IssueDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],
+           IssuedUsingLocalLicenseID AS [L.License ID],Format(IssueDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],
            Format(ExpirationDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Expiration Date],IsActive AS [Is Active]
            FROM InternationalLicenses";
 
@@ -18,8 +18,7 @@ namespace DVLDDataAccessLayer
             DataTable dtIntLicenses = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _query + @"INNER JOIN Drivers ON InternationalLicenses.DriverID = Drivers.DriverID WHERE
-                           DriverID = @DriverID";
+            string query = _query + @" WHERE DriverID = @DriverID";
 
             if (LowstBroughtIntLicID != -1)
                 query += " AND DriverID < @LowstBroughtIntLicID";
@@ -30,7 +29,6 @@ namespace DVLDDataAccessLayer
 
             if (LowstBroughtIntLicID != -1)
                 command.Parameters.AddWithValue("@LowstBroughtIntLicID", LowstBroughtIntLicID);
-
 
             try
             {
@@ -90,6 +88,34 @@ namespace DVLDDataAccessLayer
             }
             return dtIntLicenses;
         }
+        public static DataTable GetColumnsNamesForView()
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            SqlCommand command = new SqlCommand(_query, connection);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                DataTable dtLDLApplications = new DataTable();
+                dtLDLApplications.Load(reader);
+                reader.Close();
+
+                return dtLDLApplications;
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return null;
+        }
 
         public static int IssueDriverLicense(int ApplicationID ,int DriverID,int LocalLicenseID,
             DateTime IssueDate,DateTime ExpirationDate,bool IsActive,int CreatedByUserID)
@@ -147,7 +173,7 @@ namespace DVLDDataAccessLayer
                 {
                     ApplicationID = (int)reader["ApplicationID"];
                     DriverID = (int)reader["DriverID"];
-                    LocalLicenseID = (int)reader["LocalLicenseID"];
+                    LocalLicenseID = (int)reader["IssuedUsingLocalLicenseID"];
                     IssueDate = (DateTime)reader["IssueDate"];
                     ExpirationDate = (DateTime)reader["ExpirationDate"];
                     IsActive = (bool)reader["IsActive"];
@@ -181,7 +207,7 @@ namespace DVLDDataAccessLayer
                 case "Driver ID":
                     return "DriverID";
 
-            case "Issued Using L.License ID":
+            case "L.License ID":
                     return "IssuedUsingLocalLicenseID";
 
                 case "Is Active":
@@ -341,6 +367,32 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return IsFound;
+        }
+
+        public static int GetLicenseID(int InternationalLicenseAppID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            string query = "SELECT LicenseID FROM LocalLicenses WHERE ApplicationID = @ApplicationID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ApplicationID", InternationalLicenseAppID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return Convert.ToInt32(result);
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return -1;
         }
     }
 }

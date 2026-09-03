@@ -113,7 +113,7 @@
             this.pbDrivers.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbDrivers.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbDrivers.Image = global::DVLDPresentationLayer.Properties.Resources.Driver_Main;
-            this.pbDrivers.Location = new System.Drawing.Point(588, 60);
+            this.pbDrivers.Location = new System.Drawing.Point(614, 60);
             this.pbDrivers.Margin = new System.Windows.Forms.Padding(2);
             this.pbDrivers.Name = "pbDrivers";
             this.pbDrivers.Size = new System.Drawing.Size(265, 156);
@@ -131,7 +131,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(1240, 709);
+            this.btnClose.Location = new System.Drawing.Point(1291, 709);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 47;
@@ -163,7 +163,7 @@
             this.dgvDrivers.RowHeadersWidth = 72;
             this.dgvDrivers.RowTemplate.Height = 32;
             this.dgvDrivers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDrivers.Size = new System.Drawing.Size(1371, 266);
+            this.dgvDrivers.Size = new System.Drawing.Size(1422, 266);
             this.dgvDrivers.StandardTab = true;
             this.dgvDrivers.TabIndex = 44;
             this.dgvDrivers.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvDrivers_Scroll);
@@ -192,7 +192,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1393, 8);
+            this.btnExit.Location = new System.Drawing.Point(1444, 8);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -207,7 +207,7 @@
             this.lblFormBigTitle.AutoSize = true;
             this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
             this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblFormBigTitle.Location = new System.Drawing.Point(539, 229);
+            this.lblFormBigTitle.Location = new System.Drawing.Point(565, 229);
             this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormBigTitle.Name = "lblFormBigTitle";
             this.lblFormBigTitle.Size = new System.Drawing.Size(363, 52);
@@ -221,7 +221,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1445, 774);
+            this.ClientSize = new System.Drawing.Size(1496, 774);
             this.ControlBox = false;
             this.Controls.Add(this.lblRecordsNumber);
             this.Controls.Add(this.lblRecordsTitle);

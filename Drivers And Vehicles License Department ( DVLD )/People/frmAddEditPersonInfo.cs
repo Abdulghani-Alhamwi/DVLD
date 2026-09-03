@@ -17,8 +17,8 @@ namespace DVLDPresentationLayer
         internal event AddedNewPersonEventHandler AfterAddingNewPerson;
         internal event Action AfterEditingPersonInfo;
 
-        internal delegate void SavedNewInfo(ref object[] NewValues);
-        internal delegate void SavedEditedInfo(ref object[] NewValues,int RowIndex);
+        internal delegate void SavedNewInfo(ref object[] NewPersonDetails);
+        internal delegate void SavedEditedInfo(ref object[] ModifiedPersonDetails,int PeopleDgvRowIndex);
         internal event SavedNewInfo AfterSavingNewInfo;
         internal event SavedEditedInfo AfterSavingEditedInfo;
 
@@ -466,9 +466,9 @@ namespace DVLDPresentationLayer
                     AfterAddingNewPerson?.Invoke(Person.PersonID);                    
                     AfterEditingPersonInfo?.Invoke();
 
-                    object[] NewValues = _GetCurrentValuesInArray();
-                    AfterSavingNewInfo?.Invoke(ref NewValues);
-                    AfterSavingEditedInfo?.Invoke(ref NewValues, _PeopleDGVRowIndex);
+                    object[] NewDetails = _GetCurrentValuesInArray();
+                    AfterSavingNewInfo?.Invoke(ref NewDetails);
+                    AfterSavingEditedInfo?.Invoke(ref NewDetails, _PeopleDGVRowIndex);
 
                     if (_Person == null)
                     {

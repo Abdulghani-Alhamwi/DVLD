@@ -132,7 +132,10 @@ namespace DVLDPresentationLayer
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
             if (txtFilter.Text != "")
-                _AddFilteredData(null);
+            {
+                DataTable dtFilteredInfo = _GetFilteredData();
+                dgvUsers.DataSource = dtFilteredInfo;
+            }
             else
             {
                 DataTable dtUsersInfo = clsUser.GetUsersInfo(clsUtility.WantedNumOfRowsFromDB);
@@ -150,12 +153,12 @@ namespace DVLDPresentationLayer
         {
             cbIsActive.BackColor = clsUtility.ComboBoxHighlightedBackColor;
         }
-        private void _AddNewRowToDGV(ref object[] NewValues)
+        private void _AddNewRowToDGV(ref object[] NewUserDetails)
         {
             if (dgvUsers.DataSource == null)
                 dgvUsers.DataSource = clsUser.GetColumnsNamesForView();
             
-            clsUtility.AddNewRowToDGV(dgvUsers, (DataTable)dgvUsers.DataSource, ref NewValues, "User ID");
+            clsUtility.AddNewRowToDGV(dgvUsers, (DataTable)dgvUsers.DataSource, ref NewUserDetails, "User ID");
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
 
@@ -215,13 +218,13 @@ namespace DVLDPresentationLayer
             _AddNewUserScreen();
         }
 
-        private void _EditDataRowInDGV(ref object[] NewValues, int RowIndex, string NewFullName = null)
+        private void _EditDataRowInDGV(ref object[] ModifiedUserDetails, int UsersDgvRowIndex, string NewFullName = null)
         {
             if (NewFullName != null)
-                clsUtility.EditOneColumnValueInDgv(dgvUsers, (DataTable)dgvUsers.DataSource, "Full Name", NewFullName, RowIndex);
+                clsUtility.EditOneColumnValueInDgv(dgvUsers, (DataTable)dgvUsers.DataSource, "Full Name", NewFullName, UsersDgvRowIndex);
 
             else
-                clsUtility.EditFullDataRowInDgv(dgvUsers, (DataTable)dgvUsers.DataSource, ref NewValues, RowIndex);
+                clsUtility.EditFullDataRowInDgv(dgvUsers, (DataTable)dgvUsers.DataSource, ref ModifiedUserDetails, UsersDgvRowIndex);
         }
         private void tsmiEdit_Click(object sender, EventArgs e)
         {
@@ -287,7 +290,7 @@ namespace DVLDPresentationLayer
             return dtFilteredData;
         }
 
-        private void _AddFilteredData(DataTable EmptyDataTable, bool ScrollCase = false)
+        private DataTable _GetFilteredData(bool ScrollCase = false)
         {
             DataTable dtUsersInfo;
             if (!ScrollCase)
@@ -320,14 +323,13 @@ namespace DVLDPresentationLayer
                     dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value, '%');
             }
 
-                dgvUsers.DataSource = dtUsersInfo;
             if (dtUsersInfo != null)
             {
                 _DecryptUsersNames(dtUsersInfo);
-
-                if (EmptyDataTable != null && ScrollCase)
-                    EmptyDataTable = (DataTable)dgvUsers.DataSource;
+                return dtUsersInfo;
             }
+            else
+                return null;
         }
         private void _AppendPartOfRemainingData()
         {
@@ -335,9 +337,7 @@ namespace DVLDPresentationLayer
 
             if (cbFilterBy.SelectedItem.ToString() != "None")
             {
-                DataTable dtFilteredData = new DataTable();
-
-                _AddFilteredData(dtFilteredData, true);
+                DataTable dtFilteredData = _GetFilteredData(true);
                 NewRows = dtFilteredData.Select();
 
                 if (NewRows != null)

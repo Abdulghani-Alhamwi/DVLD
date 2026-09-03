@@ -48,7 +48,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(1020, 714);
+            this.btnClose.Location = new System.Drawing.Point(1020, 682);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 183;
@@ -61,7 +61,7 @@
             this.lblFormTitle.AutoSize = true;
             this.lblFormTitle.Font = new System.Drawing.Font("Tahoma", 18F);
             this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblFormTitle.Location = new System.Drawing.Point(15, 13);
+            this.lblFormTitle.Location = new System.Drawing.Point(15, 11);
             this.lblFormTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormTitle.Name = "lblFormTitle";
             this.lblFormTitle.Size = new System.Drawing.Size(285, 29);
@@ -71,13 +71,14 @@
             // btnExit
             // 
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1159, 13);
+            this.btnExit.Location = new System.Drawing.Point(1161, 11);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -117,7 +118,7 @@
             this.uctrlInternationalLicenseDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.uctrlInternationalLicenseDetails.Font = new System.Drawing.Font("Tahoma", 18F);
             this.uctrlInternationalLicenseDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.uctrlInternationalLicenseDetails.Location = new System.Drawing.Point(20, 272);
+            this.uctrlInternationalLicenseDetails.Location = new System.Drawing.Point(20, 297);
             this.uctrlInternationalLicenseDetails.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.uctrlInternationalLicenseDetails.Name = "uctrlInternationalLicenseDetails";
             this.uctrlInternationalLicenseDetails.Size = new System.Drawing.Size(1171, 358);
@@ -141,7 +142,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1214, 769);
+            this.ClientSize = new System.Drawing.Size(1214, 741);
             this.ControlBox = false;
             this.Controls.Add(this.pbInternational);
             this.Controls.Add(this.uctrlInternationalLicenseDetails);

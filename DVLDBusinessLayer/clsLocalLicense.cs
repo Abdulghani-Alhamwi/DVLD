@@ -160,9 +160,9 @@ namespace DVLDBusinessLayer
                 return null;
         }
 
-        public static int GetLicenseID(int ApplicationID)
+        public static int GetLicenseID(int LDLApplicationID)
         {
-            return clsLocalLicensesData.GetLicenseID(ApplicationID);
+            return clsLocalLicensesData.GetLicenseID(LDLApplicationID);
         }
         public bool IsExpired()
         {

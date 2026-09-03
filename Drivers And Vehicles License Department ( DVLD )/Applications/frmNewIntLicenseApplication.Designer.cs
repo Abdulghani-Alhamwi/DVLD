@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer.Applications
 {
-    partial class frmNewInternationalLicApplication
+    partial class frmNewIntLicenseApplication
     {
         /// <summary>
         /// Required designer variable.

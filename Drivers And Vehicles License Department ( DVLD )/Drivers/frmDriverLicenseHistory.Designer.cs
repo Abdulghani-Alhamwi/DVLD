@@ -33,8 +33,8 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.pbTestType = new System.Windows.Forms.PictureBox();
-            this.uctrlPersonDetailsByFilter = new DVLDPresentationLayer.ctrlPersonDetailsByFilter();
             this.uctrlDriverLicensesHistory = new DVLDPresentationLayer.ctrlDriverLicensesHistory();
+            this.uctrlPersonDetailsByFilter = new DVLDPresentationLayer.ctrlPersonDetailsByFilter();
             ((System.ComponentModel.ISupportInitialize)(this.pbTestType)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,7 +44,7 @@
             this.lblFormBigTitle.AutoSize = true;
             this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 28F, System.Drawing.FontStyle.Bold);
             this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblFormBigTitle.Location = new System.Drawing.Point(508, 43);
+            this.lblFormBigTitle.Location = new System.Drawing.Point(616, 33);
             this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormBigTitle.Name = "lblFormBigTitle";
             this.lblFormBigTitle.Size = new System.Drawing.Size(311, 46);
@@ -57,7 +57,7 @@
             this.lblFormTitle.AutoSize = true;
             this.lblFormTitle.Font = new System.Drawing.Font("Tahoma", 18F);
             this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblFormTitle.Location = new System.Drawing.Point(13, 10);
+            this.lblFormTitle.Location = new System.Drawing.Point(12, 9);
             this.lblFormTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormTitle.Name = "lblFormTitle";
             this.lblFormTitle.Size = new System.Drawing.Size(173, 29);
@@ -75,7 +75,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1335, 11);
+            this.btnExit.Location = new System.Drawing.Point(1478, 9);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -95,7 +95,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(1210, 935);
+            this.btnClose.Location = new System.Drawing.Point(1280, 935);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 55;
@@ -108,22 +108,13 @@
             this.pbTestType.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbTestType.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbTestType.Image = global::DVLDPresentationLayer.Properties.Resources.PersonLicenseHistory_512;
-            this.pbTestType.Location = new System.Drawing.Point(26, 269);
+            this.pbTestType.Location = new System.Drawing.Point(33, 231);
             this.pbTestType.Margin = new System.Windows.Forms.Padding(2);
             this.pbTestType.Name = "pbTestType";
-            this.pbTestType.Size = new System.Drawing.Size(251, 220);
+            this.pbTestType.Size = new System.Drawing.Size(298, 222);
             this.pbTestType.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbTestType.TabIndex = 54;
             this.pbTestType.TabStop = false;
-            // 
-            // uctrlPersonDetailsByFilter
-            // 
-            this.uctrlPersonDetailsByFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.uctrlPersonDetailsByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.uctrlPersonDetailsByFilter.Location = new System.Drawing.Point(299, 86);
-            this.uctrlPersonDetailsByFilter.Name = "uctrlPersonDetailsByFilter";
-            this.uctrlPersonDetailsByFilter.Size = new System.Drawing.Size(1080, 422);
-            this.uctrlPersonDetailsByFilter.TabIndex = 57;
             // 
             // uctrlDriverLicensesHistory
             // 
@@ -133,8 +124,17 @@
             this.uctrlDriverLicensesHistory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.uctrlDriverLicensesHistory.Location = new System.Drawing.Point(23, 512);
             this.uctrlDriverLicensesHistory.Name = "uctrlDriverLicensesHistory";
-            this.uctrlDriverLicensesHistory.Size = new System.Drawing.Size(1356, 413);
+            this.uctrlDriverLicensesHistory.Size = new System.Drawing.Size(1450, 413);
             this.uctrlDriverLicensesHistory.TabIndex = 58;
+            // 
+            // uctrlPersonDetailsByFilter
+            // 
+            this.uctrlPersonDetailsByFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.uctrlPersonDetailsByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlPersonDetailsByFilter.Location = new System.Drawing.Point(394, 86);
+            this.uctrlPersonDetailsByFilter.Name = "uctrlPersonDetailsByFilter";
+            this.uctrlPersonDetailsByFilter.Size = new System.Drawing.Size(1080, 422);
+            this.uctrlPersonDetailsByFilter.TabIndex = 57;
             // 
             // frmDriverLicenseHistory
             // 
@@ -143,7 +143,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1386, 991);
+            this.ClientSize = new System.Drawing.Size(1527, 991);
             this.ControlBox = false;
             this.Controls.Add(this.uctrlDriverLicensesHistory);
             this.Controls.Add(this.btnClose);

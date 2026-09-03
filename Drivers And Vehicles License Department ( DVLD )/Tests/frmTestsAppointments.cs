@@ -62,12 +62,12 @@ namespace DVLDPresentationLayer
         {
             this.Close();
         }
-        private void _AddNewRowToDGV(ref object[] NewValues)
+        private void _AddNewRowToDGV(ref object[] NewAppointmentDetails)
         {
             if (dgvTestAppointments.DataSource == null)
                 dgvTestAppointments.DataSource = clsTestAppointment.GetColumnsNamesForView();
 
-            clsUtility.AddNewRowToDGV(dgvTestAppointments,(DataTable) dgvTestAppointments.DataSource, ref NewValues, "Appointment ID");
+            clsUtility.AddNewRowToDGV(dgvTestAppointments,(DataTable) dgvTestAppointments.DataSource, ref NewAppointmentDetails, "Appointment ID");
             lblRecordsNumber.Text = (Convert.ToInt16(lblRecordsNumber.Text) + 1).ToString();
         }
         private void btnScheduleTest_Click(object sender, EventArgs e)
@@ -108,9 +108,9 @@ namespace DVLDPresentationLayer
                 clsUtility.AddNewRowsToDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvTestAppointments));
         }
 
-        private void _EditDataRowInDGV(ref object[] NewValues,int RowIndex)
+        private void _EditDataRowInDGV(ref object[] ModifiedAppointmentDetails,int DgvRowIndex)
         {
-            clsUtility.EditFullDataRowInDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, ref NewValues, RowIndex);
+            clsUtility.EditFullDataRowInDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, ref ModifiedAppointmentDetails, DgvRowIndex);
         }
         private void tsmiEdit_Click(object sender, EventArgs e)
         {

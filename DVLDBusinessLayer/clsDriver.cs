@@ -81,9 +81,14 @@ namespace DVLDBusinessLayer
             return clsDriversData.HasActiveLicenseFromClass(DriverID, LicenseClassID,out LicenseID);
         }
 
-        public static sbyte GetTotalDriverLicensesCount(int DriverID)
+        public static short GetDriverLocalLicensesCount(int DriverID)
         {
-            return clsDriversData.GetTotalDriverLicensesCount(DriverID);
+            return clsDriversData.GetDriverLocalLicensesCount(DriverID);
+        }
+
+        public static short GetDriverInternationalLicensesCount(int DriverID)
+        {
+            return clsDriversData.GetDriverInternationalLicensesCount(DriverID);
         }
 
     }

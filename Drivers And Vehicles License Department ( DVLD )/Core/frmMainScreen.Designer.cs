@@ -279,6 +279,7 @@
             this.tsmiInternationalLicenseApplications.Name = "tsmiInternationalLicenseApplications";
             this.tsmiInternationalLicenseApplications.Size = new System.Drawing.Size(483, 42);
             this.tsmiInternationalLicenseApplications.Text = "International License Applications";
+            this.tsmiInternationalLicenseApplications.Click += new System.EventHandler(this.tsmiInternationalLicenseApplications_Click);
             // 
             // tsSeparator3
             // 

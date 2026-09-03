@@ -11,7 +11,7 @@ namespace DVLDBusinessLayer
         public int InternationalLicenseID { get; set; }
         public int ApplicationID { get; set; }
         public int DriverID { get; set; }
-        public int IssuesUsingLocalLicenseID { get; set; }
+        public int IssuedUsingLocalLicenseID { get; set; }
         public DateTime IssueDate { get; set; }
         public DateTime ExpirationDate { get; set; }
         public bool IsActive { get; set; }
@@ -22,7 +22,7 @@ namespace DVLDBusinessLayer
         {
             this.ApplicationID = ApplicationID;
             this.DriverID = DriverID;
-            this.IssuesUsingLocalLicenseID = LocalLicenseID;
+            this.IssuedUsingLocalLicenseID = LocalLicenseID;
             this.IssueDate = IssueDate;
             this.ExpirationDate = ExpirationDate;
             this.IsActive = IsActive;
@@ -34,7 +34,7 @@ namespace DVLDBusinessLayer
             this.InternationalLicenseID = InternationalLicenseID;
             this.ApplicationID = ApplicationID;
             this.DriverID = DriverID;
-            this.IssuesUsingLocalLicenseID = LocalLicenseID;
+            this.IssuedUsingLocalLicenseID = LocalLicenseID;
             this.IssueDate = IssueDate;
             this.ExpirationDate = ExpirationDate;
             this.IsActive = IsActive;
@@ -62,7 +62,7 @@ namespace DVLDBusinessLayer
         }
         private bool _IssueDriverLicense()
         {
-            InternationalLicenseID = clsInternationalLicensesData.IssueDriverLicense(ApplicationID, DriverID, IssuesUsingLocalLicenseID, IssueDate, ExpirationDate, IsActive, CreatedByUserID);
+            InternationalLicenseID = clsInternationalLicensesData.IssueDriverLicense(ApplicationID, DriverID, IssuedUsingLocalLicenseID, IssueDate, ExpirationDate, IsActive, CreatedByUserID);
 
             return InternationalLicenseID != -1;
         }
@@ -116,6 +116,14 @@ namespace DVLDBusinessLayer
         public bool IsExpired()
         {
             return (ExpirationDate < DateTime.Now);
+        }
+        public static DataTable GetColumnsNamesForView()
+        {
+            return clsInternationalLicensesData.GetColumnsNamesForView();
+        }
+        public static int GetLicenseID(int InternationalLicenseAppID)
+        {
+            return clsInternationalLicensesData.GetLicenseID(InternationalLicenseAppID);
         }
     }
 }

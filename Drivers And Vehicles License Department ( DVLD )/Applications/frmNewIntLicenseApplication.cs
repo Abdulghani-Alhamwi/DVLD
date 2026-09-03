@@ -6,13 +6,18 @@ using Utility_Library;
 
 namespace DVLDPresentationLayer.Applications
 {
-    public partial class frmNewInternationalLicApplication : Form
+    public partial class frmNewIntLicenseApplication : Form
     {
-        DateTime _InternationalLicenseExpDate = DateTime.Now.AddYears(1);
+        public delegate void IssuedLicense(ref object[] NewInternationalLicenseInfo);
 
-        int _LocalLicenseID, _DriverID, _InternationalLicenseID;
+        public event IssuedLicense OnIssuedLicense;
 
-        public frmNewInternationalLicApplication()
+        private DateTime _InternationalLicenseExpDate = DateTime.Now.AddYears(1);
+
+        private int _LocalLicenseID, _DriverID;
+
+        private clsInternationalLicense _NewInternationalLicense;
+        public frmNewIntLicenseApplication()
         {
             InitializeComponent();
             clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
@@ -24,7 +29,7 @@ namespace DVLDPresentationLayer.Applications
             lblIssueDate.Text = DateTime.Now.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
             lblExpirationDate.Text = _InternationalLicenseExpDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
             lblApplicationFees.Text = clsUtility.SetFeesToCustomFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewInternationlLicense));
-            lblUserName.Text = clsUser.GetUserName(clsGlobalSettings.CurrentUserID);
+            lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(clsGlobalSettings.CurrentUserID));
         }
         private bool _AddNewApplication(int DriverID, out int NewApplicationID)
         {
@@ -45,9 +50,9 @@ namespace DVLDPresentationLayer.Applications
             return (NewApplicationID != -1);
         }
 
-        private bool _IssueInternationalLicense(int LocalLicenseID, int DriverID, int NewApplicationID, out int InternationalLicenseID)
+        private bool _IssueInternationalLicense(int LocalLicenseID, int DriverID, int NewApplicationID)
         {
-            clsInternationalLicense InternationalLicense = new clsInternationalLicense
+            _NewInternationalLicense = new clsInternationalLicense
             (
             ApplicationID: NewApplicationID,
             DriverID: DriverID,
@@ -57,10 +62,7 @@ namespace DVLDPresentationLayer.Applications
             IsActive: true, CreatedByUserID: clsGlobalSettings.CurrentUserID
             );
 
-            InternationalLicense.Save();
-            InternationalLicenseID = InternationalLicense.InternationalLicenseID;
-
-            return (InternationalLicenseID != -1);
+            return (_NewInternationalLicense.Save());
         }
         private void btnExit_Click(object sender, EventArgs e)
         {
@@ -79,12 +81,18 @@ namespace DVLDPresentationLayer.Applications
             {
                 if (_AddNewApplication(_DriverID, out int NewApplicationID))
                 {
-                    if (_IssueInternationalLicense(_LocalLicenseID, _DriverID, NewApplicationID, out _InternationalLicenseID))
+                    if (_IssueInternationalLicense(_LocalLicenseID, _DriverID, NewApplicationID))
                     {
-                        MessageBox.Show($"International License Issued Successfully With ID : {_InternationalLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        clsApplication.ChangeApplicationStatus(NewApplicationID, clsApplication.enApplicationStatus.Completed);
 
+                        object[] NewInternationalLicenseInfo = new object[] { _NewInternationalLicense.InternationalLicenseID,_NewInternationalLicense.ApplicationID,_NewInternationalLicense.DriverID,
+                        _NewInternationalLicense.IssuedUsingLocalLicenseID,_NewInternationalLicense.IssueDate,_NewInternationalLicense.ExpirationDate,_NewInternationalLicense.IsActive};
+
+                        OnIssuedLicense?.Invoke(ref NewInternationalLicenseInfo);
                         lblInternationalLicenseAppID.Text = NewApplicationID.ToString();
-                        lblInternationalLicenseID.Text = _InternationalLicenseID.ToString();
+                        lblInternationalLicenseID.Text = _NewInternationalLicense.InternationalLicenseID.ToString();
+                        MessageBox.Show($"International License Issued Successfully With ID : {_NewInternationalLicense.InternationalLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                         btnIssueLicense.Enabled = false;
                         lnlblShowLicenseInfo.Enabled = true;
                     }
@@ -98,18 +106,21 @@ namespace DVLDPresentationLayer.Applications
 
         private void lnlblShowLicenseHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID(_DriverID));
+            frm.ShowDialog();
         }
 
         private void lnlblShowLicenseInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmInternationalLicenseDetails frm = new frmInternationalLicenseDetails(_InternationalLicenseID);
+            frmInternationalLicenseDetails frm = new frmInternationalLicenseDetails(_NewInternationalLicense.InternationalLicenseID);
             frm.ShowDialog();
         }
 
         private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(int LocalLicenseID, int DriverID)
         {
             _LocalLicenseID = LocalLicenseID;
+            lblLocalLicenseID.Text = LocalLicenseID.ToString();
+
             _DriverID = DriverID;
             lnlblShowLicenseHistory.Enabled = true;
         }

@@ -8,10 +8,10 @@ namespace DVLDPresentationLayer
 {
     public partial class frmScheduleTest : Form
     {
-        internal delegate void ScheduledAppointment(ref object[] NewValues);
+        internal delegate void ScheduledAppointment(ref object[] NewAppointmentDetails);
         internal event ScheduledAppointment AfterSchedulingAppointment;
 
-        internal delegate void EditedScheduledAppointment(ref object[] NewValues,int DGVRowIndex);
+        internal delegate void EditedScheduledAppointment(ref object[] ModifiedAppointmentDetails,int DGVRowIndex);
         internal event EditedScheduledAppointment AfterEditingAppointment;
         public enum enTestTrial {FirstTime = 0 , ReTake = 1, Taken = 2}
 
@@ -239,10 +239,10 @@ namespace DVLDPresentationLayer
                 if (_Appointment == null)
                     _Appointment = Appointment;
 
-                object[] NewValues = new object[] { _Appointment.TestAppointmentID, _Appointment.AppointmentDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)), _Appointment.PaidFees, _Appointment.IsLocked };
+                object[] NewDetails = new object[] { _Appointment.TestAppointmentID, _Appointment.AppointmentDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)), _Appointment.PaidFees, _Appointment.IsLocked };
 
-                AfterSchedulingAppointment?.Invoke(ref NewValues);
-                AfterEditingAppointment?.Invoke(ref NewValues, _AppointmentsDGVRowIndex);
+                AfterSchedulingAppointment?.Invoke(ref NewDetails);
+                AfterEditingAppointment?.Invoke(ref NewDetails, _AppointmentsDGVRowIndex);
 
                 btnSave.Enabled = false;
             }

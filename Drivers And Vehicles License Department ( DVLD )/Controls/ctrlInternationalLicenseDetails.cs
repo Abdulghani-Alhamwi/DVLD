@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
@@ -22,8 +21,9 @@ namespace DVLDPresentationLayer
             {
                 clsPerson Person = clsPerson.Find(clsDriver.GetDriverPersonID(InternationalLicense.DriverID));
 
+                lblIntLicenseID.Text = InternationalLicense.InternationalLicenseID.ToString();
                 lblPersonFullName.Text = Person.FullName;
-                lblLocalLicenseID.Text = InternationalLicense.IssuesUsingLocalLicenseID.ToString();
+                lblLocalLicenseID.Text = InternationalLicense.IssuedUsingLocalLicenseID.ToString();
                 lblNationalNo.Text = Person.NationalNo;
                 lblGendor.Text = (Person.Gendor == clsPerson.enGendor.Male) ? "Male" : "Female";
                 lblIssueDate.Text = InternationalLicense.IssueDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));

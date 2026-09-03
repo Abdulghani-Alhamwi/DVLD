@@ -45,7 +45,7 @@ namespace DVLDPresentationLayer
             clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
-        private void _AddFilteredData(DataTable EmptyDataTable, bool ScrollCase = false)
+        private DataTable _GetFilteredData(bool ScrollCase = false)
         {
             DataTable dtDriversInfo;
             if (!ScrollCase)
@@ -66,18 +66,17 @@ namespace DVLDPresentationLayer
                     dtDriversInfo = clsDriver.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvDrivers?.Rows[dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Driver ID"].Value, '%');
             }
 
-            dgvDrivers.DataSource = dtDriversInfo;
-
             if (dtDriversInfo != null)
             {
-                if (EmptyDataTable != null && ScrollCase)
-                    EmptyDataTable = (DataTable)dgvDrivers.DataSource;
+                return dtDriversInfo;
             }
+            else
+                return null;
         }
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
             if (txtFilter.Text != "")
-                _AddFilteredData(null);
+                dgvDrivers.DataSource = _GetFilteredData();
             else
                 dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsUtility.WantedNumOfRowsFromDB);
         }
@@ -124,9 +123,7 @@ namespace DVLDPresentationLayer
             DataRow[] NewRows;
             if (cbFilterBy.SelectedItem.ToString() != "None")
             {
-                DataTable dtFilteredData = new DataTable();
-
-                _AddFilteredData(dtFilteredData, true);
+                DataTable dtFilteredData = _GetFilteredData(true);
                 NewRows = dtFilteredData.Select();
 
                 if (NewRows != null)

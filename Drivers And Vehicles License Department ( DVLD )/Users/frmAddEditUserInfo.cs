@@ -8,13 +8,13 @@ namespace DVLDPresentationLayer
 {
     public partial class frmAddEditUserInfo : Form
     {
-        internal delegate void AddEditUserEventHandler();
-        internal event AddEditUserEventHandler OnAddedOrEditedUserInfo;
+        public delegate void AddEditUserEventHandler();
+        public event AddEditUserEventHandler OnAddedOrEditedUserInfo;
 
-        internal delegate void SavedNewInfo(ref object[] NewValues);
-        internal delegate void SavedEditedInfo(ref object[] NewValues, int RowIndex,string NewUserFullName);
-        internal event SavedNewInfo AfterSavingNewInfo;
-        internal event SavedEditedInfo AfterSavingEditedInfo;
+        public delegate void SavedNewInfo(ref object[] NewUserDetails);
+        public delegate void SavedEditedInfo(ref object[] ModifiedUserDetails, int RowIndex,string NewUserFullName);
+        public event SavedNewInfo AfterSavingNewInfo;
+        public event SavedEditedInfo AfterSavingEditedInfo;
 
         private int _PersonID = -1;
         private clsUser _User;
@@ -174,13 +174,6 @@ namespace DVLDPresentationLayer
             btnExit.CausesValidation = false;
         }
 
-        private object[] _GetCurrentValuesInArray()
-        {
-            object[] Values = new object[] {lblUserID.Text,_PersonID, clsPerson.GetFullName(_PersonID),txtUserName.Text,chkIsActive.Checked};
-
-            return Values;
-        }
-
         private void _SetPasswordAndSalt(clsUser User)
         {
             _SetPasswordAndSalt(User.Password,User.Salt);
@@ -257,9 +250,9 @@ namespace DVLDPresentationLayer
 
                 OnAddedOrEditedUserInfo?.Invoke();
 
-                object[] NewValues = _GetCurrentValuesInArray();
-                AfterSavingNewInfo?.Invoke(ref NewValues);
-                AfterSavingEditedInfo?.Invoke(ref NewValues,_UsersDGVRowIndex,null);
+                object[] NewDetails = new object[] { lblUserID.Text, _PersonID, clsPerson.GetFullName(_PersonID), txtUserName.Text, chkIsActive.Checked };
+                AfterSavingNewInfo?.Invoke(ref NewDetails);
+                AfterSavingEditedInfo?.Invoke(ref NewDetails,_UsersDGVRowIndex,null);
 
                 clsGlobalSettings.LoginInfoChanged = true;
             }
@@ -306,8 +299,8 @@ namespace DVLDPresentationLayer
             string UserFullName = clsPerson.GetFullName(_PersonID);
             if (_CurrentUserFullName != UserFullName && _CurrentUserFullName != null)
             {
-                object[] Values = null;
-                AfterSavingEditedInfo?.Invoke(ref Values, _UsersDGVRowIndex,UserFullName);
+                object[] ModifiedDetails = null;
+                AfterSavingEditedInfo?.Invoke(ref ModifiedDetails, _UsersDGVRowIndex,UserFullName);
             }
         }
     }

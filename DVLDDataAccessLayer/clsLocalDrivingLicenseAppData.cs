@@ -71,9 +71,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _query;
-
-            SqlCommand command = new SqlCommand(query, connection);
+            SqlCommand command = new SqlCommand(_query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
 
             try
@@ -88,7 +86,7 @@ namespace DVLDDataAccessLayer
                 return dtLDLApplications;
             }
 
-            catch (Exception ex) { Console.Write(ex.Message); }
+            catch { }
 
             finally
             {

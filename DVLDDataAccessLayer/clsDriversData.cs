@@ -319,7 +319,7 @@ namespace DVLDDataAccessLayer
             }
             return false;
         }
-        public static sbyte GetTotalDriverLicensesCount(int DriverID)
+        public static short GetDriverLocalLicensesCount(int DriverID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query = "SELECT Count(LicenseID) FROM LocalLicenses WHERE DriverID = @DriverID";
@@ -333,7 +333,32 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    return Convert.ToSByte(result);
+                    return Convert.ToInt16(result);
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return -1;
+        }
+        public static short GetDriverInternationalLicensesCount(int DriverID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            string query = "SELECT Count(InternationalLicenseID) FROM InternationalLicenses WHERE DriverID = @DriverID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@DriverID", DriverID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return Convert.ToInt16(result);
             }
 
             catch { }

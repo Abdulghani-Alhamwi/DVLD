@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using DVLDPresentationLayer.Applications;
 using DVLDPresentationLayer.Core;
+using DVLDPresentationLayer.Licenses;
 using Utility_Library;
 
 namespace DVLDPresentationLayer
@@ -101,7 +102,13 @@ namespace DVLDPresentationLayer
 
         private void tsmiInternationalLicense_Click(object sender, EventArgs e)
         {
-            frmNewInternationalLicApplication frm = new frmNewInternationalLicApplication();
+            frmNewIntLicenseApplication frm = new frmNewIntLicenseApplication();
+            frm.ShowDialog();
+        }
+
+        private void tsmiInternationalLicenseApplications_Click(object sender, EventArgs e)
+        {
+            frmIntLicenseApplications frm = new frmIntLicenseApplications();
             frm.ShowDialog();
         }
     }

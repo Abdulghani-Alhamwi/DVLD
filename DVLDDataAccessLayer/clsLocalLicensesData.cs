@@ -143,13 +143,13 @@ namespace DVLDDataAccessLayer
             return IsFound;
         }
 
-        public static int GetLicenseID(int ApplicationID)
+        public static int GetLicenseID(int LDLApplicationID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query = "SELECT LicenseID FROM LocalLicenses WHERE ApplicationID = @ApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+            command.Parameters.AddWithValue("@ApplicationID", LDLApplicationID);
 
             try
             {

@@ -38,7 +38,7 @@
             this.lblTitleFilterBy = new System.Windows.Forms.Label();
             this.tsSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.cmsLDLApplications = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmsLDLApplication = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiShowApplicationDetails = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEditApplication = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,15 +55,15 @@
             this.tsSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiShowPersonLicenseHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvLDLApplications = new System.Windows.Forms.DataGridView();
-            this.lblLDLApplicationsTitle = new System.Windows.Forms.Label();
+            this.lblFormTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
-            this.lblLDLApplicationsBigTitle = new System.Windows.Forms.Label();
+            this.lblFormBigTitle = new System.Windows.Forms.Label();
             this.cbStatus = new System.Windows.Forms.ComboBox();
             this.pbLocalLicense = new System.Windows.Forms.PictureBox();
             this.btnAddLDLApplication = new System.Windows.Forms.Button();
             this.pbManageLDLApplications = new System.Windows.Forms.PictureBox();
             this.btnClose = new System.Windows.Forms.Button();
-            this.cmsLDLApplications.SuspendLayout();
+            this.cmsLDLApplication.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLDLApplications)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLocalLicense)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbManageLDLApplications)).BeginInit();
@@ -73,7 +73,7 @@
             // 
             this.lblRecordsNumber.AutoSize = true;
             this.lblRecordsNumber.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lblRecordsNumber.Location = new System.Drawing.Point(209, 766);
+            this.lblRecordsNumber.Location = new System.Drawing.Point(209, 760);
             this.lblRecordsNumber.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRecordsNumber.Name = "lblRecordsNumber";
             this.lblRecordsNumber.Size = new System.Drawing.Size(0, 31);
@@ -84,7 +84,7 @@
             // 
             this.lblRecordsTitle.AutoSize = true;
             this.lblRecordsTitle.Font = new System.Drawing.Font("Tahoma", 19F, System.Drawing.FontStyle.Bold);
-            this.lblRecordsTitle.Location = new System.Drawing.Point(39, 766);
+            this.lblRecordsTitle.Location = new System.Drawing.Point(39, 760);
             this.lblRecordsTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRecordsTitle.Name = "lblRecordsTitle";
             this.lblRecordsTitle.Size = new System.Drawing.Size(164, 31);
@@ -145,12 +145,12 @@
             this.tsSeparator1.Name = "tsSeparator1";
             this.tsSeparator1.Size = new System.Drawing.Size(357, 6);
             // 
-            // cmsLDLApplications
+            // cmsLDLApplication
             // 
-            this.cmsLDLApplications.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.cmsLDLApplications.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.cmsLDLApplications.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.cmsLDLApplications.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmsLDLApplication.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.cmsLDLApplication.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.cmsLDLApplication.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.cmsLDLApplication.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiShowApplicationDetails,
             this.tsSeparator1,
             this.tsmiEditApplication,
@@ -165,11 +165,11 @@
             this.tsmiShowLicense,
             this.tsSeparator6,
             this.tsmiShowPersonLicenseHistory});
-            this.cmsLDLApplications.Name = "cmsPeopleMenu";
-            this.cmsLDLApplications.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsLDLApplications.Size = new System.Drawing.Size(361, 328);
-            this.cmsLDLApplications.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLDLApplications_Opening);
-            this.cmsLDLApplications.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsLDLApplications_Paint);
+            this.cmsLDLApplication.Name = "cmsPeopleMenu";
+            this.cmsLDLApplication.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.cmsLDLApplication.Size = new System.Drawing.Size(361, 328);
+            this.cmsLDLApplication.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLDLApplication_Opening);
+            this.cmsLDLApplication.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsLDLApplication_Paint);
             // 
             // tsmiShowApplicationDetails
             // 
@@ -329,7 +329,7 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvLDLApplications.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvLDLApplications.ColumnHeadersHeight = 40;
-            this.dgvLDLApplications.ContextMenuStrip = this.cmsLDLApplications;
+            this.dgvLDLApplications.ContextMenuStrip = this.cmsLDLApplication;
             this.dgvLDLApplications.Location = new System.Drawing.Point(39, 437);
             this.dgvLDLApplications.Margin = new System.Windows.Forms.Padding(2);
             this.dgvLDLApplications.Name = "dgvLDLApplications";
@@ -337,23 +337,23 @@
             this.dgvLDLApplications.RowHeadersWidth = 72;
             this.dgvLDLApplications.RowTemplate.Height = 32;
             this.dgvLDLApplications.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvLDLApplications.Size = new System.Drawing.Size(1698, 296);
+            this.dgvLDLApplications.Size = new System.Drawing.Size(1698, 278);
             this.dgvLDLApplications.StandardTab = true;
             this.dgvLDLApplications.TabIndex = 44;
             this.dgvLDLApplications.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvLDLApplications_Scroll);
             this.dgvLDLApplications.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvLDLApplications_KeyDown);
             // 
-            // lblLDLApplicationsTitle
+            // lblFormTitle
             // 
-            this.lblLDLApplicationsTitle.AutoSize = true;
-            this.lblLDLApplicationsTitle.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.lblLDLApplicationsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblLDLApplicationsTitle.Location = new System.Drawing.Point(26, 11);
-            this.lblLDLApplicationsTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblLDLApplicationsTitle.Name = "lblLDLApplicationsTitle";
-            this.lblLDLApplicationsTitle.Size = new System.Drawing.Size(366, 29);
-            this.lblLDLApplicationsTitle.TabIndex = 50;
-            this.lblLDLApplicationsTitle.Text = "Local Driving License Applications";
+            this.lblFormTitle.AutoSize = true;
+            this.lblFormTitle.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lblFormTitle.Location = new System.Drawing.Point(26, 11);
+            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblFormTitle.Name = "lblFormTitle";
+            this.lblFormTitle.Size = new System.Drawing.Size(366, 29);
+            this.lblFormTitle.TabIndex = 50;
+            this.lblFormTitle.Text = "Local Driving License Applications";
             // 
             // btnExit
             // 
@@ -375,18 +375,18 @@
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // lblLDLApplicationsBigTitle
+            // lblFormBigTitle
             // 
-            this.lblLDLApplicationsBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblLDLApplicationsBigTitle.AutoSize = true;
-            this.lblLDLApplicationsBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
-            this.lblLDLApplicationsBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblLDLApplicationsBigTitle.Location = new System.Drawing.Point(516, 259);
-            this.lblLDLApplicationsBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblLDLApplicationsBigTitle.Name = "lblLDLApplicationsBigTitle";
-            this.lblLDLApplicationsBigTitle.Size = new System.Drawing.Size(762, 52);
-            this.lblLDLApplicationsBigTitle.TabIndex = 51;
-            this.lblLDLApplicationsBigTitle.Text = "Local Driving License Applications";
+            this.lblFormBigTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblFormBigTitle.AutoSize = true;
+            this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
+            this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
+            this.lblFormBigTitle.Location = new System.Drawing.Point(516, 259);
+            this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblFormBigTitle.Name = "lblFormBigTitle";
+            this.lblFormBigTitle.Size = new System.Drawing.Size(762, 52);
+            this.lblFormBigTitle.TabIndex = 51;
+            this.lblFormBigTitle.Text = "Local Driving License Applications";
             // 
             // cbStatus
             // 
@@ -461,7 +461,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(1590, 759);
+            this.btnClose.Location = new System.Drawing.Point(1571, 753);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 48;
@@ -469,7 +469,7 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // frmLDLApplications
+            // frmLDLApplicationsManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -489,18 +489,18 @@
             this.Controls.Add(this.pbManageLDLApplications);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.dgvLDLApplications);
-            this.Controls.Add(this.lblLDLApplicationsTitle);
+            this.Controls.Add(this.lblFormTitle);
             this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.lblLDLApplicationsBigTitle);
+            this.Controls.Add(this.lblFormBigTitle);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "frmLDLApplications";
+            this.Name = "frmLDLApplicationsManagement";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.frmLocalDrivingLicenseApplications_Load);
-            this.cmsLDLApplications.ResumeLayout(false);
+            this.cmsLDLApplication.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLDLApplications)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLocalLicense)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbManageLDLApplications)).EndInit();
@@ -525,12 +525,12 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiEditApplication;
         private System.Windows.Forms.ToolStripSeparator tsSeparator1;
         private System.Windows.Forms.ToolStripMenuItem tsmiShowApplicationDetails;
-        private System.Windows.Forms.ContextMenuStrip cmsLDLApplications;
+        private System.Windows.Forms.ContextMenuStrip cmsLDLApplication;
         private System.Windows.Forms.ToolStripMenuItem tsmiDelete;
         private System.Windows.Forms.DataGridView dgvLDLApplications;
-        private System.Windows.Forms.Label lblLDLApplicationsTitle;
+        private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Label lblLDLApplicationsBigTitle;
+        private System.Windows.Forms.Label lblFormBigTitle;
         private System.Windows.Forms.PictureBox pbLocalLicense;
         private System.Windows.Forms.ToolStripSeparator tsSeparator3;
         private System.Windows.Forms.ToolStripSeparator tsSeparator4;

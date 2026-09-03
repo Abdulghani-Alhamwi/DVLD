@@ -67,19 +67,23 @@ namespace DVLDPresentationLayer
         }
         private void btnSearchForLicense_Click(object sender, EventArgs e)
         {
-            clsLocalLicense LocalLicense = clsLocalLicense.Find(Convert.ToInt32(txtLicenseID.Text));
-
-            if (LocalLicense != null)
+            if (txtLicenseID.Text != "")
             {
-                if(_CanDriverApply(LocalLicense))
+                clsLocalLicense LocalLicense = clsLocalLicense.Find(Convert.ToInt32(txtLicenseID.Text));
+
+                if (LocalLicense != null)
                 {
-                    uctrlLDLDetails.LoadDriverLicenseInfo(LocalLicense.LicenseID);
-                    OnSelectedLocalLicense?.Invoke(LocalLicense.LicenseID,LocalLicense.DriverID);
-                 }
+                    if (_CanDriverApply(LocalLicense))
+                    {
+                        uctrlLDLDetails.LoadDriverLicenseInfo(LocalLicense.LicenseID);
+                        OnSelectedLocalLicense?.Invoke(LocalLicense.LicenseID, LocalLicense.DriverID);
+                    }
+                }
+                else
+                    MessageBox.Show("There is no local license for the entered ID!", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
-                MessageBox.Show("There is no local license for the entered ID!", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            
+                MessageBox.Show("No entered ID!", "Enter License ID First", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

@@ -89,7 +89,7 @@ namespace DVLDPresentationLayer
                 txtFilter.Text = "";
         }
 
-        private void _AddFilteredData(DataTable EmptyDataTable, bool ScrollCase = false)
+        private DataTable _GetFilteredData(bool ScrollCase = false)
         {
             DataTable dtPeopleInfo;
             if (!ScrollCase)
@@ -110,18 +110,18 @@ namespace DVLDPresentationLayer
                     dtPeopleInfo = clsPerson.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value, '%');
             }
 
-                dgvPeople.DataSource = dtPeopleInfo;
 
             if (dtPeopleInfo != null)
             {
-                if (EmptyDataTable != null && ScrollCase)
-                    EmptyDataTable = (DataTable)dgvPeople.DataSource;
+                return dtPeopleInfo;
             }
+            else
+                return null;
         }
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
             if (txtFilter.Text != "")
-                _AddFilteredData(null);
+                dgvPeople.DataSource = _GetFilteredData();
             else
                 dgvPeople.DataSource = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
         }
@@ -146,12 +146,12 @@ namespace DVLDPresentationLayer
             else
                 txtFilter.ReadOnly = false;
         }                     
-        private void _AddNewRowToDGV(ref object[] NewValues)
+        private void _AddNewRowToDGV(ref object[] NewPersonDetails)
         {
             if (dgvPeople.DataSource == null)
                 dgvPeople.DataSource = clsPerson.GetColumnsNamesForView();
 
-            clsUtility.AddNewRowToDGV(dgvPeople,(DataTable)dgvPeople.DataSource,ref NewValues,"Person ID");
+            clsUtility.AddNewRowToDGV(dgvPeople,(DataTable)dgvPeople.DataSource,ref NewPersonDetails,"Person ID");
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
         private void _AddNewPersonScreen()
@@ -202,9 +202,9 @@ namespace DVLDPresentationLayer
             }
         }
 
-        private void _EditDataRowInDGV(ref object[] NewValues, int RowIndex)
+        private void _EditDataRowInDGV(ref object[] ModifiedPersonDetails, int PeopleDgvRowIndex)
         {
-            clsUtility.EditFullDataRowInDgv(dgvPeople, (DataTable)dgvPeople.DataSource,ref NewValues, RowIndex);
+            clsUtility.EditFullDataRowInDgv(dgvPeople, (DataTable)dgvPeople.DataSource,ref ModifiedPersonDetails, PeopleDgvRowIndex);
         }
 
         private void tsmiEdit_Click(object sender, EventArgs e)
@@ -272,9 +272,7 @@ namespace DVLDPresentationLayer
             DataRow[] NewRows;
             if (cbFilterBy.SelectedItem.ToString() != "None")
             {
-                DataTable dtFilteredData = new DataTable();
-
-                _AddFilteredData(dtFilteredData, true);
+                DataTable dtFilteredData = _GetFilteredData(true);
                 NewRows = dtFilteredData.Select();
 
                 if (NewRows != null)
