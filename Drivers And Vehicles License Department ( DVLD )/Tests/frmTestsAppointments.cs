@@ -108,9 +108,9 @@ namespace DVLDPresentationLayer
                 clsUtility.AddNewRowsToDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvTestAppointments));
         }
 
-        private void _EditDataRowInDGV(ref object[] ModifiedAppointmentDetails,int DgvRowIndex)
+        private void _EditDataRowInDGV(string NewDateTime,int DgvRowIndex)
         {
-            clsUtility.EditFullDataRowInDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, ref ModifiedAppointmentDetails, DgvRowIndex);
+            clsUtility.EditOneColumnValueInDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, "Appointment Date", NewDateTime, DgvRowIndex);
         }
         private void tsmiEdit_Click(object sender, EventArgs e)
         {
@@ -149,7 +149,12 @@ namespace DVLDPresentationLayer
 
         private void _LockTestAppointment(int DGVRowIndex)
         {
-            clsUtility.EditOneColumnValueInDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, "Is Locked",true, DGVRowIndex);
+            clsUtility.EditOneColumnValueInDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, "Is Locked", true, DGVRowIndex);
+        }
+
+        private void _UpdateLDLAppDgv()
+        {
+            AfterPassingTest.Invoke(_TestsDGVRowIndex);
         }
 
         private void tsmiTakeTest_Click(object sender, EventArgs e)
@@ -168,10 +173,10 @@ namespace DVLDPresentationLayer
                 }
 
                 clsTestAppointment TestAppointment = clsTestAppointment.Find((int)dgvTestAppointments.SelectedRows[0].Cells["Appointment ID"].Value);
-                frmTakeTest frm = new frmTakeTest(TestAppointment, _TestType, (int)dgvTestAppointments.SelectedRows[0].Index, _TestsDGVRowIndex);
-                frm.AfterPassingTest += AfterPassingTest;
+                frmTakeTest frm = new frmTakeTest(TestAppointment, _TestType, (int)dgvTestAppointments.SelectedRows[0].Index);
+                frm.AfterPassingTest += _UpdateLDLAppDgv;
                 frm.AfterTestTaken += _LockTestAppointment;
-
+                
                 frm.ShowDialog();
             }
             else

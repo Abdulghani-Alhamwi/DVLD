@@ -11,7 +11,7 @@ namespace DVLDPresentationLayer
         internal delegate void ScheduledAppointment(ref object[] NewAppointmentDetails);
         internal event ScheduledAppointment AfterSchedulingAppointment;
 
-        internal delegate void EditedScheduledAppointment(ref object[] ModifiedAppointmentDetails,int DGVRowIndex);
+        internal delegate void EditedScheduledAppointment(string NewAppointmentDate,int DGVRowIndex);
         internal event EditedScheduledAppointment AfterEditingAppointment;
         public enum enTestTrial {FirstTime = 0 , ReTake = 1, Taken = 2}
 
@@ -239,10 +239,13 @@ namespace DVLDPresentationLayer
                 if (_Appointment == null)
                     _Appointment = Appointment;
 
-                object[] NewDetails = new object[] { _Appointment.TestAppointmentID, _Appointment.AppointmentDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)), _Appointment.PaidFees, _Appointment.IsLocked };
+                if (AfterSchedulingAppointment != null)
+                {
+                    object[] NewDetails = new object[] { _Appointment.TestAppointmentID, _Appointment.AppointmentDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)), _Appointment.PaidFees, _Appointment.IsLocked };
+                    AfterSchedulingAppointment?.Invoke(ref NewDetails);
+                }
 
-                AfterSchedulingAppointment?.Invoke(ref NewDetails);
-                AfterEditingAppointment?.Invoke(ref NewDetails, _AppointmentsDGVRowIndex);
+                AfterEditingAppointment?.Invoke(_Appointment.AppointmentDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)), _AppointmentsDGVRowIndex);
 
                 btnSave.Enabled = false;
             }

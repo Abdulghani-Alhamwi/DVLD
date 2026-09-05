@@ -251,20 +251,20 @@ namespace Utility_Library
             /// </summary>
             public static void EditFullDataRowInDgv(DataGridView dgv, DataTable DataSource, ref object[] NewValues, int RowIndex)
             {
-                for (short i = 0; i < dgv.Columns.Count; i++)
-                {
-                    DataSource.Columns[i].ReadOnly = false;
-                    DataSource.Rows[RowIndex].SetField<object>(dgv.Columns[i].HeaderText, NewValues[i]);
-                }
+            for (short i = 0; i < dgv.Columns.Count; i++)
+            {
+                DataSource.Columns[i].ReadOnly = false;
+                dgv.Rows[RowIndex].Cells[i].Value = NewValues[i];
+            }
             }
 
             /// <summary>
             /// Edit one column value in a row in data grid view .
             /// </summary>
-            public static void EditOneColumnValueInDgv(DataGridView dgv, DataTable DataSource, string ColumnName, object NewValue, int RowIndex)
+            public static void EditOneColumnValueInDgv(DataGridView dgv,DataTable DataSource,string ColumnName, object NewValue, int RowIndex)
             {
-                DataSource.Columns[ColumnName].ReadOnly = false;
-                DataSource.Rows[RowIndex].SetField<object>(dgv.Columns[ColumnName].HeaderText, NewValue);
+            DataSource.Columns[ColumnName].ReadOnly = false;
+            dgv.Rows[RowIndex].Cells[ColumnName].Value = NewValue;
             }
 
             public static void CenterControlHorizontally(Control ContainerControl, Control control)

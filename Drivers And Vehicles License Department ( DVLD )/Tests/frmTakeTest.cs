@@ -8,13 +8,12 @@ namespace DVLDPresentationLayer
     public partial class frmTakeTest : Form
     {
         internal event Action<int> AfterTestTaken;
-        internal event Action<int> AfterPassingTest;
+        internal event Action AfterPassingTest;
 
         clsTestAppointment _Appointment;
         int _AppointmentsDGVRowIndex;
-        int  _LDLAppDGVRowIndex;
         int _LDLAppID;
-        public frmTakeTest(clsTestAppointment Appointment, clsTestType.enTestType TestType,int AppointmentsDGVRowIndex,int LDLAppDGVRowIndex)
+        public frmTakeTest(clsTestAppointment Appointment, clsTestType.enTestType TestType,int AppointmentsDGVRowIndex)
         {
             InitializeComponent();
 
@@ -24,7 +23,6 @@ namespace DVLDPresentationLayer
             frmScheduleTest.ShowInfoByTestType(gbTestAppointment,pbTestType,lblTestFees,TestType);
 
             this._AppointmentsDGVRowIndex = AppointmentsDGVRowIndex;
-            _LDLAppDGVRowIndex = LDLAppDGVRowIndex;
 
             clsUtility.CenterControlHorizontally(gbTestAppointment, pbTestType);
             clsUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
@@ -66,11 +64,11 @@ namespace DVLDPresentationLayer
                 _Appointment.IsLocked = true;
                 if (_Appointment.Save())
                 {
-                    MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     AfterTestTaken?.Invoke(_AppointmentsDGVRowIndex);
+                    MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     if (Test.TestResult == true)
-                        AfterPassingTest?.Invoke(_LDLAppDGVRowIndex);
+                        AfterPassingTest?.Invoke();
                 }
                 btnSave.Enabled = false; 
             }

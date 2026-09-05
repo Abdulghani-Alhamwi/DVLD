@@ -110,16 +110,15 @@ namespace DVLDBusinessLayer
             return clsLocalDrivingLicenseAppData.GetApplicationID(LDLApplicationID);
         }
 
-        public static bool HasPersonApplied(int ApplicantPersonID, byte LicenseClassID,out enApplicationStatus?PersonApplicationStatus)
+        public static bool HasPersonApplied(int ApplicantPersonID, byte LicenseClassID,ref enApplicationStatus PersonApplicationStatus)
         {
-            byte ApplicationStatus;
-            PersonApplicationStatus = null;
-            if (clsLocalDrivingLicenseAppData.HasPersonApplied(ApplicantPersonID, LicenseClassID, out ApplicationStatus))
+            byte ApplicationStatus = 0;
+            if (clsLocalDrivingLicenseAppData.HasPersonApplied(ApplicantPersonID, LicenseClassID, ref ApplicationStatus))
             {
+                PersonApplicationStatus = _GetApplicationStatus(ApplicationStatus);
                 return true;
             }
             else
-                PersonApplicationStatus = _GetApplicationStatus(ApplicationStatus);
                 return false;
         }
 

@@ -247,14 +247,14 @@ namespace DVLDDataAccessLayer
 
             return -1;
         }
-        public static bool HasPersonApplied(int ApplicantPersonID, byte LicenseClassID, out byte ApplicationStatus)
+        public static bool HasPersonApplied(int ApplicantPersonID, byte LicenseClassID, ref byte ApplicationStatus)
         {
-            ApplicationStatus = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Applications.ApplicationStatus FROM Applications INNER JOIN LocalDrivingLicenseApplications
+            string query = @"SELECT TOP (1) Applications.ApplicationStatus FROM Applications INNER JOIN LocalDrivingLicenseApplications
                              ON Applications.ApplicationID = LocalDrivingLicenseApplications.ApplicationID
-                             WHERE Applications.ApplicantPersonID = @ApplicantPersonID AND LocalDrivingLicenseApplications.LicenseClassID = @LicenseClassID";
+                             WHERE Applications.ApplicantPersonID = @ApplicantPersonID AND LocalDrivingLicenseApplications.LicenseClassID = @LicenseClassID
+                             ORDER BY Applications.ApplicationID DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
@@ -268,7 +268,7 @@ namespace DVLDDataAccessLayer
                 if (result != null)
                 {
                     ApplicationStatus = Convert.ToByte(result);
-                    return false;
+                    return true;
                 }
             }
 
@@ -278,7 +278,7 @@ namespace DVLDDataAccessLayer
             {
                 connection.Close();
             }
-            return true;
+            return false;
         }
 
         public static bool IsPersonAgeAppropriate(int PersonID , byte LicenseClassID)

@@ -128,6 +128,7 @@ namespace DVLDPresentationLayer
         {
             frmNewLDLApplication frm = new frmNewLDLApplication();
             frm.OnAddedLDLApplication += _AddNewValuesToDGV;
+            frm.OnEditedLDLApplication += _EditDataRowInDGV;
             frm.ShowDialog();
         }
 
@@ -212,7 +213,7 @@ namespace DVLDPresentationLayer
                     int ApplicationID = clsLocalDrivingLicenseApp.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
 
                     if (clsApplication.ChangeApplicationStatus(ApplicationID, clsApplication.enApplicationStatus.Canceled))
-                        clsUtility.EditOneColumnValueInDgv(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource,"Status", "Canceled", dgvLDLApplications.SelectedRows[0].Index);
+                        clsUtility.EditOneColumnValueInDgv(dgvLDLApplications,(DataTable)dgvLDLApplications.DataSource,"Status", "Canceled", dgvLDLApplications.SelectedRows[0].Index);
                     else
                         MessageBox.Show("Failed To Cancel Application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -370,10 +371,10 @@ namespace DVLDPresentationLayer
                     break;
             }
         }
-        private void _EditRowForPassedTest(int RowIndex)
+        private void _EditRowForPassedTest(int DgvRowIndex)
         {
-            byte PassedTests = Convert.ToByte(dgvLDLApplications.Rows[RowIndex].Cells["Passed Tests"].Value);
-            clsUtility.EditOneColumnValueInDgv(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource, "Passed Tests", PassedTests + 1, RowIndex);
+            byte PassedTests = Convert.ToByte(dgvLDLApplications.Rows[DgvRowIndex].Cells["Passed Tests"].Value);
+            clsUtility.EditOneColumnValueInDgv(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource,"Passed Tests", PassedTests + 1, DgvRowIndex);
         }
         private void tsmiScheduleVisionTest_Click(object sender, EventArgs e)
         {
@@ -411,7 +412,7 @@ namespace DVLDPresentationLayer
                 clsApplication.enApplicationStatus.Completed
                 );
 
-            clsUtility.EditOneColumnValueInDgv(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource, "Status", "Completed", DGVRowIndex);
+            clsUtility.EditOneColumnValueInDgv(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource,"Status", "Completed", DGVRowIndex);
         }
 
         private void tsmiIssueDLFirstTime_Click(object sender, EventArgs e)

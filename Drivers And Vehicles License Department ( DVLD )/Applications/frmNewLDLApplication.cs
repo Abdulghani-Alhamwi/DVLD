@@ -41,14 +41,14 @@ namespace DVLDPresentationLayer.Core
                 _SetTitles(clsLocalDrivingLicenseApp.enMode.Update);
                 _ApplicantPersonID = _LDLApplication.ApplicantPersonID;
                 _ShowDetailsForUpdateMode();
-                _DGVRowIndex = DGVRowIndex;
             }
-                clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            _DGVRowIndex = DGVRowIndex;
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private void _InitializeFormData()
         {
-            _InitilizeFormData(null, -1);
+            _InitilizeFormData(null,0);
         }
 
         private void _SetTitles(clsLocalDrivingLicenseApp.enMode Mode)
@@ -148,24 +148,29 @@ namespace DVLDPresentationLayer.Core
         {
             return (_LDLApplication.ApplicantPersonID == _ApplicantPersonID && ((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString() == _LDLApplication.LicenseClass.ClassName);
         }
-        private bool _SaveLDLApplication(out clsLocalDrivingLicenseApp LDLApplication)
+
+        private clsLocalDrivingLicenseApp _UpdateLDLApplicationInfo()
         {
-            if (_LDLApplication != null)
-            {
-                LDLApplication = _LDLApplication;
-                LDLApplication.LicenseClass.ID = clsLicenseClass.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
-                LDLApplication.LicenseClass.ClassName = ((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString();
-                LDLApplication.ApplicantPersonID = _ApplicantPersonID;
-                LDLApplication.ApplicationDate = DateTime.Now;
-                LDLApplication.ApplicationTypeID = clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.NewLocalDrivingLicense);
-                LDLApplication.ApplicationStatus = clsApplication.enApplicationStatus.New;
-                LDLApplication.LastStatusDate = DateTime.Now;
-                LDLApplication.PaidApplicationFees = Convert.ToDecimal(lblApplicationFees.Text);
-                LDLApplication.CreatedByUserID = clsGlobalSettings.CurrentUserID;
-            }
+            _LDLApplication.LicenseClass.ID = clsLicenseClass.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
+            _LDLApplication.LicenseClass.ClassName = ((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString();
+            _LDLApplication.ApplicantPersonID = _ApplicantPersonID;
+            _LDLApplication.ApplicationDate = DateTime.Now;
+            _LDLApplication.ApplicationTypeID = clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.NewLocalDrivingLicense);
+            _LDLApplication.ApplicationStatus = clsApplication.enApplicationStatus.New;
+            _LDLApplication.LastStatusDate = DateTime.Now;
+            _LDLApplication.PaidApplicationFees = Convert.ToDecimal(lblApplicationFees.Text);
+            _LDLApplication.CreatedByUserID = clsGlobalSettings.CurrentUserID;
+
+            if (_LDLApplication.Save())
+                return _LDLApplication;
+
             else
-            {
-                LDLApplication = new clsLocalDrivingLicenseApp(
+                return null;
+        }
+
+        private clsLocalDrivingLicenseApp _SaveLDLApplication()
+        {
+                clsLocalDrivingLicenseApp LDLApplication = new clsLocalDrivingLicenseApp(
                 ApplicantPersonID: _ApplicantPersonID,
                 LicenseClassID : clsLicenseClass.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString()),
                 LicenseClassName : ((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString(),
@@ -176,32 +181,78 @@ namespace DVLDPresentationLayer.Core
                 PaidApplicationFees: Convert.ToDecimal(lblApplicationFees.Text),
                 CreatedByUserID: clsGlobalSettings.CurrentUserID
               );
-            }           
 
-            return LDLApplication.Save();
+            if (LDLApplication.Save())
+                return LDLApplication;
+
+            else
+                return null;        
         }
 
         private bool _CanPersonApply()
         {
             byte LicenseClassID = clsLicenseClass.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
-            clsApplication.enApplicationStatus? PersonApplicationStatus;
+            clsApplication.enApplicationStatus PersonApplicationStatus = 0;
 
-            if (clsLocalDrivingLicenseApp.HasPersonApplied(_ApplicantPersonID, LicenseClassID, out PersonApplicationStatus) && clsLocalDrivingLicenseApp.IsPersonAgeAppropriate(_ApplicantPersonID,LicenseClassID))
+            if (!clsLocalDrivingLicenseApp.HasPersonApplied(_ApplicantPersonID, LicenseClassID, ref PersonApplicationStatus) && clsLocalDrivingLicenseApp.IsPersonAgeAppropriate(_ApplicantPersonID,LicenseClassID))
                 return true;
 
             else
             {
-                if (PersonApplicationStatus == clsApplication.enApplicationStatus.New)
-                    MessageBox.Show($"Choose another license class,the selected person already an active application for the selected class with ID : {clsLocalDrivingLicenseApp.GetLDLApplicationID(_ApplicantPersonID)}","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                if(PersonApplicationStatus != 0)
+                {
+                    switch(PersonApplicationStatus)
+                    {
+                        case clsApplication.enApplicationStatus.New:
+                            MessageBox.Show("Choose another license class,the selected person already has an active application of this selected class", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
 
-                else if (PersonApplicationStatus == clsApplication.enApplicationStatus.Completed)
-                    MessageBox.Show("Choose another license class,the selected person already has an active license of this selected class", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        case clsApplication.enApplicationStatus.Completed:
+                            MessageBox.Show($"Choose another license class,the selected person already has an active application for the selected class with ID : {clsLocalDrivingLicenseApp.GetLDLApplicationID(_ApplicantPersonID)}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
 
+                        case clsApplication.enApplicationStatus.Canceled:
+                            return true;
+                    }
+                }
+           
                 else
                     MessageBox.Show($"Person is younger than the minimum allowed age to apply for this license class which is : {clsLicenseClass.GetMinimumAllowedAge(LicenseClassID)} years.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return false;
             }
+        }
+        private void _SaveApplicationData()
+        {
+            clsLocalDrivingLicenseApp LDLApplication;
+
+            if (_LDLApplication != null)
+                LDLApplication = _UpdateLDLApplicationInfo();
+
+            else
+                LDLApplication = _SaveLDLApplication();
+
+            if (LDLApplication != null)
+            {
+                MessageBox.Show("Data Saved successfully", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                object[] NewDetails = new object[] { LDLApplication.LDLAppID, LDLApplication.LicenseClass.ClassName,
+                        clsPerson.GetNationalNumber(LDLApplication.ApplicantPersonID), clsPerson.GetFullName(LDLApplication.ApplicantPersonID),
+                        LDLApplication.ApplicationDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)),clsTest.GetTotalPassedTestsCount(LDLApplication.LDLAppID),LDLApplication.GetApplicationStatus()};
+
+                if (_LDLApplication == null)
+                {
+                    lblDLApplicationID.Text = LDLApplication.LDLAppID.ToString();
+                    _LDLApplication = LDLApplication;
+                    _SetTitles(clsLocalDrivingLicenseApp.enMode.Update);
+
+                    OnAddedLDLApplication?.Invoke(ref NewDetails);
+                }
+                else
+                    OnEditedLDLApplication?.Invoke(ref NewDetails, _DGVRowIndex);
+            }
+            else
+                MessageBox.Show("Saving failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -218,27 +269,7 @@ namespace DVLDPresentationLayer.Core
 
                 if (_CanPersonApply())
                 {
-                    clsLocalDrivingLicenseApp LDLApplication;
-                    if (_SaveLDLApplication(out LDLApplication))
-                    {
-                        lblDLApplicationID.Text = LDLApplication.LDLAppID.ToString();
-                        MessageBox.Show("Data Saved successfully", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        if (_LDLApplication == null)
-                        {
-                            _LDLApplication = LDLApplication;
-                            _SetTitles(clsLocalDrivingLicenseApp.enMode.Update);
-                        }
-
-                        object[] NewDetails = new object[] { LDLApplication.LDLAppID, LDLApplication.LicenseClass.ClassName,
-                        clsPerson.GetNationalNumber(LDLApplication.ApplicantPersonID), clsPerson.GetFullName(LDLApplication.ApplicantPersonID),
-                        LDLApplication.ApplicationDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)),clsTest.GetTotalPassedTestsCount(LDLApplication.LDLAppID),LDLApplication.GetApplicationStatus()};
-                        
-                        OnAddedLDLApplication?.Invoke(ref NewDetails);
-                        OnEditedLDLApplication?.Invoke(ref NewDetails, _DGVRowIndex);
-                    }
-                    else
-                        MessageBox.Show("Saving failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _SaveApplicationData();
                 }
             }
             else
