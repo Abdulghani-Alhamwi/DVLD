@@ -115,7 +115,7 @@
             this.tcNewLDLApplication.Name = "tcNewLDLApplication";
             this.tcNewLDLApplication.Padding = new System.Drawing.Point(15, 3);
             this.tcNewLDLApplication.SelectedIndex = 0;
-            this.tcNewLDLApplication.Size = new System.Drawing.Size(1103, 606);
+            this.tcNewLDLApplication.Size = new System.Drawing.Size(1103, 558);
             this.tcNewLDLApplication.TabIndex = 46;
             this.tcNewLDLApplication.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcNewLocalDrivingLicenseApplication_Selecting);
             // 
@@ -126,7 +126,7 @@
             this.tpPersonalInfo.Location = new System.Drawing.Point(4, 38);
             this.tpPersonalInfo.Name = "tpPersonalInfo";
             this.tpPersonalInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tpPersonalInfo.Size = new System.Drawing.Size(1095, 564);
+            this.tpPersonalInfo.Size = new System.Drawing.Size(1095, 516);
             this.tpPersonalInfo.TabIndex = 0;
             this.tpPersonalInfo.Text = "Personal Info";
             this.tpPersonalInfo.UseVisualStyleBackColor = true;
@@ -136,7 +136,7 @@
             this.uctrlPersonDetailsByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.uctrlPersonDetailsByFilter.Location = new System.Drawing.Point(4, 6);
             this.uctrlPersonDetailsByFilter.Name = "uctrlPersonDetailsByFilter";
-            this.uctrlPersonDetailsByFilter.Size = new System.Drawing.Size(1080, 486);
+            this.uctrlPersonDetailsByFilter.Size = new System.Drawing.Size(1080, 428);
             this.uctrlPersonDetailsByFilter.TabIndex = 0;
             this.uctrlPersonDetailsByFilter.OnPersonSelected += new DVLDPresentationLayer.ctrlPersonDetailsByFilter.PersonSelectedEventHandler(this.uctrlPersonDetailsByFilter_OnPersonSelected);
             // 
@@ -150,7 +150,7 @@
             this.btnNext.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnNext.Image = global::DVLDPresentationLayer.Properties.Resources.Next_32;
             this.btnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnNext.Location = new System.Drawing.Point(932, 505);
+            this.btnNext.Location = new System.Drawing.Point(932, 449);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(152, 42);
             this.btnNext.TabIndex = 47;
@@ -386,7 +386,7 @@
             this.btnSave.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnSave.Image = global::DVLDPresentationLayer.Properties.Resources.Save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(969, 802);
+            this.btnSave.Location = new System.Drawing.Point(969, 759);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 42);
             this.btnSave.TabIndex = 49;
@@ -404,7 +404,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(792, 802);
+            this.btnClose.Location = new System.Drawing.Point(792, 759);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(152, 42);
             this.btnClose.TabIndex = 48;
@@ -420,7 +420,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1148, 861);
+            this.ClientSize = new System.Drawing.Size(1148, 825);
             this.ControlBox = false;
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClose);

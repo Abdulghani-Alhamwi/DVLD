@@ -275,10 +275,10 @@ namespace Utility_Library
         /// <summary>
         /// Return a string contains the fees and the format is if there was only zeros after the fraction , it shows only the number with out the fraction and zeros after the fraction.
         /// </summary>
-        public static string SetFeesToCustomFormat(decimal Fees)
-            {
-                return Fees.ToString(_FeesCustomFormat);
-            }
+        public static string GetCustomFeesFormat(decimal Fees)
+        {
+            return Fees.ToString(_FeesCustomFormat);
+        }
 
             /// <summary>
             /// The enCustomDateFormat.NumericFormat returns format "dd/MM/yyyy",

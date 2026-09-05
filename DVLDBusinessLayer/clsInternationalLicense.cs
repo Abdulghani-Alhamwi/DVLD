@@ -100,27 +100,28 @@ namespace DVLDBusinessLayer
         {
             return clsInternationalLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, -1, WildChar);
         }
+
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LowstBroughtIntLicID, char? WildChar = null)
         {
             return clsInternationalLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LowstBroughtIntLicID, WildChar);
         }
+
         public static int GetTotalCount()
         {
             return clsInternationalLicensesData.GetTotalCount();
         }
+
         public static bool HasDriverActiveInternationalLicense(int LocalLicenseID, out int InternationalLicenseID)
         {
             InternationalLicenseID = -1;
             return clsInternationalLicensesData.HasDriverActiveInternationalLicense(LocalLicenseID,ref InternationalLicenseID);
         }
-        public bool IsExpired()
-        {
-            return (ExpirationDate < DateTime.Now);
-        }
+
         public static DataTable GetColumnsNamesForView()
         {
             return clsInternationalLicensesData.GetColumnsNamesForView();
         }
+
         public static int GetLicenseID(int InternationalLicenseAppID)
         {
             return clsInternationalLicensesData.GetLicenseID(InternationalLicenseAppID);

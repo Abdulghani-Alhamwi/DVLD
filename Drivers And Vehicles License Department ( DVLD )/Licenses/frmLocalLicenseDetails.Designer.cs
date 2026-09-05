@@ -106,7 +106,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(998, 679);
+            this.btnClose.Location = new System.Drawing.Point(998, 660);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 178;
@@ -122,7 +122,7 @@
             this.uctrlDriverLicenseInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.uctrlDriverLicenseInfo.Location = new System.Drawing.Point(10, 230);
             this.uctrlDriverLicenseInfo.Name = "uctrlDriverLicenseInfo";
-            this.uctrlDriverLicenseInfo.Size = new System.Drawing.Size(1157, 440);
+            this.uctrlDriverLicenseInfo.Size = new System.Drawing.Size(1157, 420);
             this.uctrlDriverLicenseInfo.TabIndex = 45;
             // 
             // frmLocalLicenseDetails
@@ -132,7 +132,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1179, 736);
+            this.ClientSize = new System.Drawing.Size(1179, 723);
             this.ControlBox = false;
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.uctrlDriverLicenseInfo);

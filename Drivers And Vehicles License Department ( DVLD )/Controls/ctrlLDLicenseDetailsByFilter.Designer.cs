@@ -44,7 +44,7 @@
             this.gbFilter.Font = new System.Drawing.Font("Tahoma", 18F);
             this.gbFilter.Location = new System.Drawing.Point(10, 1);
             this.gbFilter.Name = "gbFilter";
-            this.gbFilter.Size = new System.Drawing.Size(754, 108);
+            this.gbFilter.Size = new System.Drawing.Size(754, 92);
             this.gbFilter.TabIndex = 43;
             this.gbFilter.TabStop = false;
             this.gbFilter.Text = "Filter";
@@ -57,7 +57,7 @@
             this.btnSearchForLicense.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnSearchForLicense.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearchForLicense.Image = global::DVLDPresentationLayer.Properties.Resources.License_View_32;
-            this.btnSearchForLicense.Location = new System.Drawing.Point(643, 39);
+            this.btnSearchForLicense.Location = new System.Drawing.Point(643, 28);
             this.btnSearchForLicense.Name = "btnSearchForLicense";
             this.btnSearchForLicense.Size = new System.Drawing.Size(74, 50);
             this.btnSearchForLicense.TabIndex = 2;
@@ -68,21 +68,21 @@
             // 
             this.txtLicenseID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.txtLicenseID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtLicenseID.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.txtLicenseID.Font = new System.Drawing.Font("Tahoma", 16F);
             this.txtLicenseID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtLicenseID.Location = new System.Drawing.Point(240, 47);
+            this.txtLicenseID.Location = new System.Drawing.Point(240, 37);
             this.txtLicenseID.Name = "txtLicenseID";
-            this.txtLicenseID.Size = new System.Drawing.Size(373, 35);
+            this.txtLicenseID.Size = new System.Drawing.Size(373, 33);
             this.txtLicenseID.TabIndex = 1;
             // 
             // lblTitleLocalLicenseID
             // 
             this.lblTitleLocalLicenseID.AutoSize = true;
-            this.lblTitleLocalLicenseID.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
-            this.lblTitleLocalLicenseID.Location = new System.Drawing.Point(10, 50);
+            this.lblTitleLocalLicenseID.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
+            this.lblTitleLocalLicenseID.Location = new System.Drawing.Point(10, 40);
             this.lblTitleLocalLicenseID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTitleLocalLicenseID.Name = "lblTitleLocalLicenseID";
-            this.lblTitleLocalLicenseID.Size = new System.Drawing.Size(216, 28);
+            this.lblTitleLocalLicenseID.Size = new System.Drawing.Size(208, 27);
             this.lblTitleLocalLicenseID.TabIndex = 37;
             this.lblTitleLocalLicenseID.Text = "Local License ID :";
             // 
@@ -92,12 +92,12 @@
             this.uctrlLDLDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.uctrlLDLDetails.Font = new System.Drawing.Font("Tahoma", 18F);
             this.uctrlLDLDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.uctrlLDLDetails.Location = new System.Drawing.Point(3, 111);
+            this.uctrlLDLDetails.Location = new System.Drawing.Point(3, 100);
             this.uctrlLDLDetails.Name = "uctrlLDLDetails";
-            this.uctrlLDLDetails.Size = new System.Drawing.Size(1154, 435);
+            this.uctrlLDLDetails.Size = new System.Drawing.Size(1154, 410);
             this.uctrlLDLDetails.TabIndex = 44;
             // 
-            // ctrlLDLDetailsByFilter
+            // ctrlLDLicenseDetailsByFilter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -105,11 +105,11 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.Controls.Add(this.gbFilter);
             this.Controls.Add(this.uctrlLDLDetails);
-            this.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.Font = new System.Drawing.Font("Symbol", 8.25F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "ctrlLDLDetailsByFilter";
-            this.Size = new System.Drawing.Size(1157, 549);
+            this.Name = "ctrlLDLicenseDetailsByFilter";
+            this.Size = new System.Drawing.Size(1157, 510);
             this.gbFilter.ResumeLayout(false);
             this.gbFilter.PerformLayout();
             this.ResumeLayout(false);

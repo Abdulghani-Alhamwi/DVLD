@@ -14,7 +14,7 @@ namespace DVLDPresentationLayer.Applications
 
         private DateTime _InternationalLicenseExpDate = DateTime.Now.AddYears(1);
 
-        private int _LocalLicenseID, _DriverID;
+        private int _SelectedLocalLicenseID, _DriverID;
 
         private clsInternationalLicense _NewInternationalLicense;
         public frmNewIntLicenseApplication()
@@ -22,13 +22,16 @@ namespace DVLDPresentationLayer.Applications
             InitializeComponent();
             clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
             _ShowNewApplicationInfo();
+
+            _SelectedLocalLicenseID = -1;
+            _DriverID = -1;
         }
         private void _ShowNewApplicationInfo()
         {
             lblApplicationDate.Text = DateTime.Now.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
             lblIssueDate.Text = DateTime.Now.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
             lblExpirationDate.Text = _InternationalLicenseExpDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
-            lblApplicationFees.Text = clsUtility.SetFeesToCustomFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewInternationlLicense));
+            lblApplicationFees.Text = clsUtility.GetCustomFeesFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewInternationlLicense));
             lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(clsGlobalSettings.CurrentUserID));
         }
         private bool _AddNewApplication(int DriverID, out int NewApplicationID)
@@ -76,31 +79,36 @@ namespace DVLDPresentationLayer.Applications
 
         private void btnIssueLicense_Click(object sender, EventArgs e)
         {
+            if (_SelectedLocalLicenseID != -1)
+            { 
             DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to issue license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (ConfirmationQuestion == DialogResult.Yes)
-            {
-                if (_AddNewApplication(_DriverID, out int NewApplicationID))
+                if (ConfirmationQuestion == DialogResult.Yes)
                 {
-                    if (_IssueInternationalLicense(_LocalLicenseID, _DriverID, NewApplicationID))
+                    if (_AddNewApplication(_DriverID, out int NewApplicationID))
                     {
-                        clsApplication.ChangeApplicationStatus(NewApplicationID, clsApplication.enApplicationStatus.Completed);
+                        if (_IssueInternationalLicense(_SelectedLocalLicenseID, _DriverID, NewApplicationID))
+                        {
+                            clsApplication.ChangeApplicationStatus(NewApplicationID, clsApplication.enApplicationStatus.Completed);
 
-                        object[] NewInternationalLicenseInfo = new object[] { _NewInternationalLicense.InternationalLicenseID,_NewInternationalLicense.ApplicationID,_NewInternationalLicense.DriverID,
+                            object[] NewInternationalLicenseInfo = new object[] { _NewInternationalLicense.InternationalLicenseID,_NewInternationalLicense.ApplicationID,_NewInternationalLicense.DriverID,
                         _NewInternationalLicense.IssuedUsingLocalLicenseID,_NewInternationalLicense.IssueDate,_NewInternationalLicense.ExpirationDate,_NewInternationalLicense.IsActive};
 
-                        OnIssuedLicense?.Invoke(ref NewInternationalLicenseInfo);
-                        lblInternationalLicenseAppID.Text = NewApplicationID.ToString();
-                        lblInternationalLicenseID.Text = _NewInternationalLicense.InternationalLicenseID.ToString();
-                        MessageBox.Show($"International License Issued Successfully With ID : {_NewInternationalLicense.InternationalLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            OnIssuedLicense?.Invoke(ref NewInternationalLicenseInfo);
+                            lblInternationalLicenseAppID.Text = NewApplicationID.ToString();
+                            lblInternationalLicenseID.Text = _NewInternationalLicense.InternationalLicenseID.ToString();
+                            MessageBox.Show($"International License Issued Successfully With ID : {_NewInternationalLicense.InternationalLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        btnIssueLicense.Enabled = false;
-                        lnlblShowLicenseInfo.Enabled = true;
+                            btnIssueLicense.Enabled = false;
+                            lnlblShowLicenseInfo.Enabled = true;
+                        }
+                        else
+                            MessageBox.Show("Failed to issue license!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
-                        MessageBox.Show("Failed to issue license!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Failed to save application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
-                    MessageBox.Show("Failed to save application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Enter local license ID First in order to issue international license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -116,13 +124,72 @@ namespace DVLDPresentationLayer.Applications
             frm.ShowDialog();
         }
 
-        private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(int LocalLicenseID, int DriverID)
+        private bool _IsOrdinaryLocalDrivingLicense(int LicenseClassID)
         {
-            _LocalLicenseID = LocalLicenseID;
-            lblLocalLicenseID.Text = LocalLicenseID.ToString();
+            if (clsLicenseClass.GetLicenseClassEnumMember(LicenseClassID) == clsLicenseClass.enLicenseClasses.OrdinaryDrivingClass)
+                return true;
+            else
+                return false;
+        }
 
-            _DriverID = DriverID;
-            lnlblShowLicenseHistory.Enabled = true;
+        private bool _CanDriverApply(clsLocalLicense LocalLicense)
+        {
+            if (clsInternationalLicense.HasDriverActiveInternationalLicense(LocalLicense.LicenseID, out int InternationalLicenseID))
+            {
+                MessageBox.Show($"Person already has an active international license with ID : {InternationalLicenseID}"
+             , "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return false;
+            }
+
+            else if (!_IsOrdinaryLocalDrivingLicense(LocalLicense.LicenseClassID))
+            {
+                MessageBox.Show("The entered ID is for a local license but it is not from the ordinary driving license class!\nYou can issue international license only if you have local license from the ordinary driving license class."
+                    , "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return false;
+            }
+
+            else if (LocalLicense.IsExpired())
+            {
+                MessageBox.Show("The entered ID is for a local license but it has been expired!, re-new it first then re-apply for international license."
+                , "Expired Local License", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return false;
+            }
+
+            else if (!LocalLicense.IsActive)
+            {
+                if (clsDetainedLicenses.IsDetainedLicense(LocalLicense.LicenseID))
+                {
+                    MessageBox.Show("The entered ID is for a local license but it is not active because it has been detained,\nrelease it from detain first then re-apply for international license."
+                        , "Detained Local License", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (clsDriver.HasActiveLicenseFromClass(LocalLicense.DriverID, clsLicenseClass.GetLicenseClassID(clsLicenseClass.enLicenseClasses.OrdinaryDrivingClass), out int ActiveLicenseID))
+                {
+                    MessageBox.Show($"The entered ID is for a local license that is no longer active,\nThe driver has already active local licenseID from ordinary driving class which has been issued as {clsLocalLicense.GetLicenseNotes(ActiveLicenseID)} and its ID is : {ActiveLicenseID}"
+                        , "This License Is No Longer Active", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(clsLocalLicense LocalLicenseInfo)
+        {
+            lblLocalLicenseID.Text = LocalLicenseInfo.LicenseID.ToString();
+             _DriverID = LocalLicenseInfo.DriverID;
+
+            if (_CanDriverApply(LocalLicenseInfo))
+            {
+             _SelectedLocalLicenseID = LocalLicenseInfo.LicenseID;
+             btnIssueLicense.Enabled = true;
+            }
+            else
+                btnIssueLicense.Enabled = false;
+                lnlblShowLicenseHistory.Enabled = true;
         }
     }
 }

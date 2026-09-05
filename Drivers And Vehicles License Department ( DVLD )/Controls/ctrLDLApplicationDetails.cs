@@ -28,7 +28,7 @@ namespace DVLDPresentationLayer
 
                 lblApplicationID.Text = LDLApplication.ApplicationID.ToString();
                 lblStatus.Text = LDLApplication.GetApplicationStatus();
-                lblPaidFees.Text = clsUtility.SetFeesToCustomFormat(LDLApplication.PaidApplicationFees);
+                lblPaidFees.Text = clsUtility.GetCustomFeesFormat(LDLApplication.PaidApplicationFees);
                 lblApplicationType.Text = clsApplicationType.GetApplicationTypeTitle(LDLApplication.ApplicationTypeID);
                 lblApplicantFullName.Text = clsPerson.GetFullName(LDLApplication.ApplicantPersonID);
                 lblApplicationDate.Text = LDLApplication.ApplicationDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));

@@ -117,8 +117,8 @@ namespace DVLDPresentationLayer
             {
                 gbReTakeTestInfo.Enabled = true;
                 lblFormBigTitle.Text = "Schedule Retake Test";
-                lblRAppFees.Text =  clsUtility.SetFeesToCustomFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReTakeTest));
-                lblTotalFees.Text = clsUtility.SetFeesToCustomFormat(Convert.ToDecimal(lblTestFees.Text) + Convert.ToDecimal(lblRAppFees.Text));
+                lblRAppFees.Text =  clsUtility.GetCustomFeesFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReTakeTest));
+                lblTotalFees.Text = clsUtility.GetCustomFeesFormat(Convert.ToDecimal(lblTestFees.Text) + Convert.ToDecimal(lblRAppFees.Text));
             }
             else
             {
@@ -143,19 +143,19 @@ namespace DVLDPresentationLayer
                 case clsTestType.enTestType.VisionTest:
                     gbContentContainer.Text = "Vision Test";
                     pbTestType.Image = Resources.Vision_512;
-                    lblFees.Text = clsUtility.SetFeesToCustomFormat(clsTestType.GetTestTypeFees(1));
+                    lblFees.Text = clsUtility.GetCustomFeesFormat(clsTestType.GetTestTypeFees(1));
                     break;
 
                 case clsTestType.enTestType.WrittenTest:
                     gbContentContainer.Text = "Written Test";
                     pbTestType.Image =Resources.Written_Test_512;
-                    lblFees.Text = clsUtility.SetFeesToCustomFormat(clsTestType.GetTestTypeFees(2));
+                    lblFees.Text = clsUtility.GetCustomFeesFormat(clsTestType.GetTestTypeFees(2));
                     break;
 
                 case clsTestType.enTestType.StreetTest:
                     gbContentContainer.Text = "Street Test";
                     pbTestType.Image = Resources.driving_test_512;
-                    lblFees.Text = clsUtility.SetFeesToCustomFormat(clsTestType.GetTestTypeFees(3));
+                    lblFees.Text = clsUtility.GetCustomFeesFormat(clsTestType.GetTestTypeFees(3));
                     break;
             }
         }

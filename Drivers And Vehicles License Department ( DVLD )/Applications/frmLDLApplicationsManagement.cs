@@ -358,6 +358,7 @@ namespace DVLDPresentationLayer
                 case "New":
                     _EnableSpecificMenuOptions();
                     _SetNewApplicationMenuLogic();
+                    tsmiShowLicense.Enabled = false;
                     break;
 
                 case "Completed":

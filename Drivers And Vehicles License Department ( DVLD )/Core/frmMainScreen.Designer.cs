@@ -214,6 +214,7 @@
             this.tsmiRenewDrivingLicense.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.tsmiRenewDrivingLicense.Size = new System.Drawing.Size(569, 45);
             this.tsmiRenewDrivingLicense.Text = "Renew Driving License";
+            this.tsmiRenewDrivingLicense.Click += new System.EventHandler(this.tsmiRenewDrivingLicense_Click);
             // 
             // tsSeparator4
             // 

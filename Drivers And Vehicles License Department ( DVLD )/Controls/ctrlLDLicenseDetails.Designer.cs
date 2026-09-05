@@ -90,12 +90,12 @@
             // 
             this.lblClassName.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblClassName.AutoSize = true;
-            this.lblClassName.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblClassName.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblClassName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblClassName.Location = new System.Drawing.Point(255, 49);
+            this.lblClassName.Location = new System.Drawing.Point(246, 44);
             this.lblClassName.Margin = new System.Windows.Forms.Padding(0);
             this.lblClassName.Name = "lblClassName";
-            this.lblClassName.Size = new System.Drawing.Size(71, 28);
+            this.lblClassName.Size = new System.Drawing.Size(68, 27);
             this.lblClassName.TabIndex = 101;
             this.lblClassName.Text = "[???]";
             // 
@@ -103,12 +103,12 @@
             // 
             this.lblClassTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblClassTitle.AutoSize = true;
-            this.lblClassTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblClassTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblClassTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblClassTitle.Location = new System.Drawing.Point(10, 49);
+            this.lblClassTitle.Location = new System.Drawing.Point(10, 44);
             this.lblClassTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblClassTitle.Name = "lblClassTitle";
-            this.lblClassTitle.Size = new System.Drawing.Size(87, 28);
+            this.lblClassTitle.Size = new System.Drawing.Size(83, 27);
             this.lblClassTitle.TabIndex = 100;
             this.lblClassTitle.Text = "Class :";
             // 
@@ -116,12 +116,12 @@
             // 
             this.lblDriverID.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblDriverID.AutoSize = true;
-            this.lblDriverID.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.lblDriverID.Font = new System.Drawing.Font("Tahoma", 16F);
             this.lblDriverID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblDriverID.Location = new System.Drawing.Point(716, 237);
+            this.lblDriverID.Location = new System.Drawing.Point(711, 228);
             this.lblDriverID.Margin = new System.Windows.Forms.Padding(0);
             this.lblDriverID.Name = "lblDriverID";
-            this.lblDriverID.Size = new System.Drawing.Size(74, 28);
+            this.lblDriverID.Size = new System.Drawing.Size(68, 27);
             this.lblDriverID.TabIndex = 98;
             this.lblDriverID.Text = "[????]";
             // 
@@ -129,12 +129,12 @@
             // 
             this.lblIsActive.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblIsActive.AutoSize = true;
-            this.lblIsActive.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.lblIsActive.Font = new System.Drawing.Font("Tahoma", 16F);
             this.lblIsActive.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblIsActive.Location = new System.Drawing.Point(716, 143);
+            this.lblIsActive.Location = new System.Drawing.Point(711, 134);
             this.lblIsActive.Margin = new System.Windows.Forms.Padding(0);
             this.lblIsActive.Name = "lblIsActive";
-            this.lblIsActive.Size = new System.Drawing.Size(74, 28);
+            this.lblIsActive.Size = new System.Drawing.Size(68, 27);
             this.lblIsActive.TabIndex = 97;
             this.lblIsActive.Text = "[????]";
             // 
@@ -142,12 +142,12 @@
             // 
             this.lblDateOfBirth.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblDateOfBirth.AutoSize = true;
-            this.lblDateOfBirth.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.lblDateOfBirth.Font = new System.Drawing.Font("Tahoma", 16F);
             this.lblDateOfBirth.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblDateOfBirth.Location = new System.Drawing.Point(716, 190);
+            this.lblDateOfBirth.Location = new System.Drawing.Point(711, 181);
             this.lblDateOfBirth.Margin = new System.Windows.Forms.Padding(0);
             this.lblDateOfBirth.Name = "lblDateOfBirth";
-            this.lblDateOfBirth.Size = new System.Drawing.Size(74, 28);
+            this.lblDateOfBirth.Size = new System.Drawing.Size(68, 27);
             this.lblDateOfBirth.TabIndex = 96;
             this.lblDateOfBirth.Text = "[????]";
             // 
@@ -155,12 +155,12 @@
             // 
             this.lblIssueDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblIssueDate.AutoSize = true;
-            this.lblIssueDate.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.lblIssueDate.Font = new System.Drawing.Font("Tahoma", 16F);
             this.lblIssueDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblIssueDate.Location = new System.Drawing.Point(252, 284);
+            this.lblIssueDate.Location = new System.Drawing.Point(246, 275);
             this.lblIssueDate.Margin = new System.Windows.Forms.Padding(0);
             this.lblIssueDate.Name = "lblIssueDate";
-            this.lblIssueDate.Size = new System.Drawing.Size(74, 28);
+            this.lblIssueDate.Size = new System.Drawing.Size(68, 27);
             this.lblIssueDate.TabIndex = 95;
             this.lblIssueDate.Text = "[????]";
             // 
@@ -168,12 +168,12 @@
             // 
             this.lblGendor.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblGendor.AutoSize = true;
-            this.lblGendor.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.lblGendor.Font = new System.Drawing.Font("Tahoma", 16F);
             this.lblGendor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblGendor.Location = new System.Drawing.Point(252, 237);
+            this.lblGendor.Location = new System.Drawing.Point(246, 228);
             this.lblGendor.Margin = new System.Windows.Forms.Padding(0);
             this.lblGendor.Name = "lblGendor";
-            this.lblGendor.Size = new System.Drawing.Size(74, 28);
+            this.lblGendor.Size = new System.Drawing.Size(68, 27);
             this.lblGendor.TabIndex = 93;
             this.lblGendor.Text = "[????]";
             // 
@@ -181,12 +181,12 @@
             // 
             this.lblLicenseID.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblLicenseID.AutoSize = true;
-            this.lblLicenseID.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.lblLicenseID.Font = new System.Drawing.Font("Tahoma", 16F);
             this.lblLicenseID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblLicenseID.Location = new System.Drawing.Point(252, 143);
+            this.lblLicenseID.Location = new System.Drawing.Point(246, 133);
             this.lblLicenseID.Margin = new System.Windows.Forms.Padding(0);
             this.lblLicenseID.Name = "lblLicenseID";
-            this.lblLicenseID.Size = new System.Drawing.Size(74, 28);
+            this.lblLicenseID.Size = new System.Drawing.Size(68, 27);
             this.lblLicenseID.TabIndex = 92;
             this.lblLicenseID.Text = "[????]";
             // 
@@ -194,12 +194,12 @@
             // 
             this.lblPersonFullName.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblPersonFullName.AutoSize = true;
-            this.lblPersonFullName.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblPersonFullName.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblPersonFullName.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblPersonFullName.Location = new System.Drawing.Point(252, 96);
+            this.lblPersonFullName.Location = new System.Drawing.Point(246, 86);
             this.lblPersonFullName.Margin = new System.Windows.Forms.Padding(0);
             this.lblPersonFullName.Name = "lblPersonFullName";
-            this.lblPersonFullName.Size = new System.Drawing.Size(84, 28);
+            this.lblPersonFullName.Size = new System.Drawing.Size(80, 27);
             this.lblPersonFullName.TabIndex = 91;
             this.lblPersonFullName.Text = "[????]";
             // 
@@ -207,12 +207,12 @@
             // 
             this.lblDriverIDTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblDriverIDTitle.AutoSize = true;
-            this.lblDriverIDTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblDriverIDTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblDriverIDTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblDriverIDTitle.Location = new System.Drawing.Point(532, 237);
+            this.lblDriverIDTitle.Location = new System.Drawing.Point(532, 228);
             this.lblDriverIDTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblDriverIDTitle.Name = "lblDriverIDTitle";
-            this.lblDriverIDTitle.Size = new System.Drawing.Size(133, 28);
+            this.lblDriverIDTitle.Size = new System.Drawing.Size(130, 27);
             this.lblDriverIDTitle.TabIndex = 90;
             this.lblDriverIDTitle.Text = "Driver ID :";
             // 
@@ -220,12 +220,12 @@
             // 
             this.lblIsActiveTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblIsActiveTitle.AutoSize = true;
-            this.lblIsActiveTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblIsActiveTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblIsActiveTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblIsActiveTitle.Location = new System.Drawing.Point(531, 143);
+            this.lblIsActiveTitle.Location = new System.Drawing.Point(531, 134);
             this.lblIsActiveTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblIsActiveTitle.Name = "lblIsActiveTitle";
-            this.lblIsActiveTitle.Size = new System.Drawing.Size(134, 28);
+            this.lblIsActiveTitle.Size = new System.Drawing.Size(127, 27);
             this.lblIsActiveTitle.TabIndex = 89;
             this.lblIsActiveTitle.Text = "Is Active ?";
             // 
@@ -233,12 +233,12 @@
             // 
             this.lblDateOfBirthTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblDateOfBirthTitle.AutoSize = true;
-            this.lblDateOfBirthTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblDateOfBirthTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblDateOfBirthTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblDateOfBirthTitle.Location = new System.Drawing.Point(484, 190);
+            this.lblDateOfBirthTitle.Location = new System.Drawing.Point(484, 181);
             this.lblDateOfBirthTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblDateOfBirthTitle.Name = "lblDateOfBirthTitle";
-            this.lblDateOfBirthTitle.Size = new System.Drawing.Size(181, 28);
+            this.lblDateOfBirthTitle.Size = new System.Drawing.Size(170, 27);
             this.lblDateOfBirthTitle.TabIndex = 88;
             this.lblDateOfBirthTitle.Text = "Date Of Birth :";
             // 
@@ -246,12 +246,12 @@
             // 
             this.lblIssueDateTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblIssueDateTitle.AutoSize = true;
-            this.lblIssueDateTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblIssueDateTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblIssueDateTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblIssueDateTitle.Location = new System.Drawing.Point(10, 284);
+            this.lblIssueDateTitle.Location = new System.Drawing.Point(10, 275);
             this.lblIssueDateTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblIssueDateTitle.Name = "lblIssueDateTitle";
-            this.lblIssueDateTitle.Size = new System.Drawing.Size(153, 28);
+            this.lblIssueDateTitle.Size = new System.Drawing.Size(144, 27);
             this.lblIssueDateTitle.TabIndex = 87;
             this.lblIssueDateTitle.Text = "Issue Date :";
             // 
@@ -259,12 +259,12 @@
             // 
             this.lblGendorTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblGendorTitle.AutoSize = true;
-            this.lblGendorTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblGendorTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblGendorTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblGendorTitle.Location = new System.Drawing.Point(10, 237);
+            this.lblGendorTitle.Location = new System.Drawing.Point(10, 228);
             this.lblGendorTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblGendorTitle.Name = "lblGendorTitle";
-            this.lblGendorTitle.Size = new System.Drawing.Size(111, 28);
+            this.lblGendorTitle.Size = new System.Drawing.Size(107, 27);
             this.lblGendorTitle.TabIndex = 85;
             this.lblGendorTitle.Text = "Gendor :";
             // 
@@ -272,12 +272,12 @@
             // 
             this.lblLicenseIDTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblLicenseIDTitle.AutoSize = true;
-            this.lblLicenseIDTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblLicenseIDTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblLicenseIDTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblLicenseIDTitle.Location = new System.Drawing.Point(10, 143);
+            this.lblLicenseIDTitle.Location = new System.Drawing.Point(10, 134);
             this.lblLicenseIDTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblLicenseIDTitle.Name = "lblLicenseIDTitle";
-            this.lblLicenseIDTitle.Size = new System.Drawing.Size(149, 28);
+            this.lblLicenseIDTitle.Size = new System.Drawing.Size(143, 27);
             this.lblLicenseIDTitle.TabIndex = 84;
             this.lblLicenseIDTitle.Text = "License ID :";
             // 
@@ -285,12 +285,12 @@
             // 
             this.lblNameTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblNameTitle.AutoSize = true;
-            this.lblNameTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblNameTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblNameTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblNameTitle.Location = new System.Drawing.Point(10, 96);
+            this.lblNameTitle.Location = new System.Drawing.Point(10, 87);
             this.lblNameTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblNameTitle.Name = "lblNameTitle";
-            this.lblNameTitle.Size = new System.Drawing.Size(95, 28);
+            this.lblNameTitle.Size = new System.Drawing.Size(90, 27);
             this.lblNameTitle.TabIndex = 83;
             this.lblNameTitle.Text = "Name :";
             // 
@@ -298,12 +298,12 @@
             // 
             this.lblNationalNo.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblNationalNo.AutoSize = true;
-            this.lblNationalNo.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.lblNationalNo.Font = new System.Drawing.Font("Tahoma", 16F);
             this.lblNationalNo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblNationalNo.Location = new System.Drawing.Point(252, 190);
+            this.lblNationalNo.Location = new System.Drawing.Point(246, 181);
             this.lblNationalNo.Margin = new System.Windows.Forms.Padding(0);
             this.lblNationalNo.Name = "lblNationalNo";
-            this.lblNationalNo.Size = new System.Drawing.Size(74, 28);
+            this.lblNationalNo.Size = new System.Drawing.Size(68, 27);
             this.lblNationalNo.TabIndex = 112;
             this.lblNationalNo.Text = "[????]";
             // 
@@ -311,12 +311,12 @@
             // 
             this.lblNationalNoTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblNationalNoTitle.AutoSize = true;
-            this.lblNationalNoTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblNationalNoTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblNationalNoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblNationalNoTitle.Location = new System.Drawing.Point(10, 190);
+            this.lblNationalNoTitle.Location = new System.Drawing.Point(10, 181);
             this.lblNationalNoTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblNationalNoTitle.Name = "lblNationalNoTitle";
-            this.lblNationalNoTitle.Size = new System.Drawing.Size(165, 28);
+            this.lblNationalNoTitle.Size = new System.Drawing.Size(157, 27);
             this.lblNationalNoTitle.TabIndex = 111;
             this.lblNationalNoTitle.Text = "National No :";
             // 
@@ -324,12 +324,12 @@
             // 
             this.lblIssueReason.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblIssueReason.AutoSize = true;
-            this.lblIssueReason.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.lblIssueReason.Font = new System.Drawing.Font("Tahoma", 16F);
             this.lblIssueReason.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblIssueReason.Location = new System.Drawing.Point(252, 331);
+            this.lblIssueReason.Location = new System.Drawing.Point(246, 322);
             this.lblIssueReason.Margin = new System.Windows.Forms.Padding(0);
             this.lblIssueReason.Name = "lblIssueReason";
-            this.lblIssueReason.Size = new System.Drawing.Size(74, 28);
+            this.lblIssueReason.Size = new System.Drawing.Size(68, 27);
             this.lblIssueReason.TabIndex = 115;
             this.lblIssueReason.Text = "[????]";
             // 
@@ -337,12 +337,12 @@
             // 
             this.lblIssueReasonTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblIssueReasonTitle.AutoSize = true;
-            this.lblIssueReasonTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblIssueReasonTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblIssueReasonTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblIssueReasonTitle.Location = new System.Drawing.Point(10, 331);
+            this.lblIssueReasonTitle.Location = new System.Drawing.Point(10, 322);
             this.lblIssueReasonTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblIssueReasonTitle.Name = "lblIssueReasonTitle";
-            this.lblIssueReasonTitle.Size = new System.Drawing.Size(184, 28);
+            this.lblIssueReasonTitle.Size = new System.Drawing.Size(173, 27);
             this.lblIssueReasonTitle.TabIndex = 114;
             this.lblIssueReasonTitle.Text = "Issue Reason :";
             // 
@@ -350,12 +350,12 @@
             // 
             this.lblNotes.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblNotes.AutoSize = true;
-            this.lblNotes.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.lblNotes.Font = new System.Drawing.Font("Tahoma", 16F);
             this.lblNotes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblNotes.Location = new System.Drawing.Point(252, 378);
+            this.lblNotes.Location = new System.Drawing.Point(246, 369);
             this.lblNotes.Margin = new System.Windows.Forms.Padding(0);
             this.lblNotes.Name = "lblNotes";
-            this.lblNotes.Size = new System.Drawing.Size(74, 28);
+            this.lblNotes.Size = new System.Drawing.Size(68, 27);
             this.lblNotes.TabIndex = 118;
             this.lblNotes.Text = "[????]";
             // 
@@ -363,12 +363,12 @@
             // 
             this.lblNotesTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblNotesTitle.AutoSize = true;
-            this.lblNotesTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblNotesTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblNotesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblNotesTitle.Location = new System.Drawing.Point(10, 378);
+            this.lblNotesTitle.Location = new System.Drawing.Point(10, 369);
             this.lblNotesTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblNotesTitle.Name = "lblNotesTitle";
-            this.lblNotesTitle.Size = new System.Drawing.Size(95, 28);
+            this.lblNotesTitle.Size = new System.Drawing.Size(90, 27);
             this.lblNotesTitle.TabIndex = 117;
             this.lblNotesTitle.Text = "Notes :";
             // 
@@ -376,12 +376,12 @@
             // 
             this.lblExpDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblExpDate.AutoSize = true;
-            this.lblExpDate.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.lblExpDate.Font = new System.Drawing.Font("Tahoma", 16F);
             this.lblExpDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblExpDate.Location = new System.Drawing.Point(716, 284);
+            this.lblExpDate.Location = new System.Drawing.Point(711, 275);
             this.lblExpDate.Margin = new System.Windows.Forms.Padding(0);
             this.lblExpDate.Name = "lblExpDate";
-            this.lblExpDate.Size = new System.Drawing.Size(74, 28);
+            this.lblExpDate.Size = new System.Drawing.Size(68, 27);
             this.lblExpDate.TabIndex = 121;
             this.lblExpDate.Text = "[????]";
             // 
@@ -389,12 +389,12 @@
             // 
             this.lblExpDateTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblExpDateTitle.AutoSize = true;
-            this.lblExpDateTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblExpDateTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblExpDateTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblExpDateTitle.Location = new System.Drawing.Point(457, 284);
+            this.lblExpDateTitle.Location = new System.Drawing.Point(457, 275);
             this.lblExpDateTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblExpDateTitle.Name = "lblExpDateTitle";
-            this.lblExpDateTitle.Size = new System.Drawing.Size(208, 28);
+            this.lblExpDateTitle.Size = new System.Drawing.Size(199, 27);
             this.lblExpDateTitle.TabIndex = 120;
             this.lblExpDateTitle.Text = "Expiration Date :";
             // 
@@ -402,12 +402,12 @@
             // 
             this.lblIsDetained.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblIsDetained.AutoSize = true;
-            this.lblIsDetained.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.lblIsDetained.Font = new System.Drawing.Font("Tahoma", 16F);
             this.lblIsDetained.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblIsDetained.Location = new System.Drawing.Point(716, 331);
+            this.lblIsDetained.Location = new System.Drawing.Point(711, 322);
             this.lblIsDetained.Margin = new System.Windows.Forms.Padding(0);
             this.lblIsDetained.Name = "lblIsDetained";
-            this.lblIsDetained.Size = new System.Drawing.Size(74, 28);
+            this.lblIsDetained.Size = new System.Drawing.Size(68, 27);
             this.lblIsDetained.TabIndex = 124;
             this.lblIsDetained.Text = "[????]";
             // 
@@ -415,12 +415,12 @@
             // 
             this.lblIsDetainedTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblIsDetainedTitle.AutoSize = true;
-            this.lblIsDetainedTitle.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblIsDetainedTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblIsDetainedTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblIsDetainedTitle.Location = new System.Drawing.Point(498, 331);
+            this.lblIsDetainedTitle.Location = new System.Drawing.Point(498, 322);
             this.lblIsDetainedTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblIsDetainedTitle.Name = "lblIsDetainedTitle";
-            this.lblIsDetainedTitle.Size = new System.Drawing.Size(167, 28);
+            this.lblIsDetainedTitle.Size = new System.Drawing.Size(158, 27);
             this.lblIsDetainedTitle.TabIndex = 123;
             this.lblIsDetainedTitle.Text = "Is Detained ?";
             // 
@@ -468,7 +468,7 @@
             this.gbLDLicenseInfo.Controls.Add(this.lblNameTitle);
             this.gbLDLicenseInfo.Location = new System.Drawing.Point(6, -1);
             this.gbLDLicenseInfo.Name = "gbLDLicenseInfo";
-            this.gbLDLicenseInfo.Size = new System.Drawing.Size(1146, 428);
+            this.gbLDLicenseInfo.Size = new System.Drawing.Size(1146, 411);
             this.gbLDLicenseInfo.TabIndex = 126;
             this.gbLDLicenseInfo.TabStop = false;
             this.gbLDLicenseInfo.Text = "Driver Local License Info";
@@ -478,7 +478,7 @@
             this.pbIsDetained.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbIsDetained.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbIsDetained.Image = global::DVLDPresentationLayer.Properties.Resources.Question_32;
-            this.pbIsDetained.Location = new System.Drawing.Point(672, 329);
+            this.pbIsDetained.Location = new System.Drawing.Point(667, 319);
             this.pbIsDetained.Name = "pbIsDetained";
             this.pbIsDetained.Size = new System.Drawing.Size(32, 32);
             this.pbIsDetained.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -490,7 +490,7 @@
             this.pbExpDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbExpDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbExpDate.Image = global::DVLDPresentationLayer.Properties.Resources.Calendar_32;
-            this.pbExpDate.Location = new System.Drawing.Point(672, 282);
+            this.pbExpDate.Location = new System.Drawing.Point(667, 272);
             this.pbExpDate.Name = "pbExpDate";
             this.pbExpDate.Size = new System.Drawing.Size(32, 32);
             this.pbExpDate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -502,7 +502,7 @@
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBox1.Image = global::DVLDPresentationLayer.Properties.Resources.Notes_32;
-            this.pictureBox1.Location = new System.Drawing.Point(201, 376);
+            this.pictureBox1.Location = new System.Drawing.Point(195, 366);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -514,7 +514,7 @@
             this.pbIssueReason.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbIssueReason.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbIssueReason.Image = global::DVLDPresentationLayer.Properties.Resources.Notes_32;
-            this.pbIssueReason.Location = new System.Drawing.Point(201, 329);
+            this.pbIssueReason.Location = new System.Drawing.Point(195, 319);
             this.pbIssueReason.Name = "pbIssueReason";
             this.pbIssueReason.Size = new System.Drawing.Size(32, 32);
             this.pbIssueReason.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -526,7 +526,7 @@
             this.pbNationalNo.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbNationalNo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbNationalNo.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
-            this.pbNationalNo.Location = new System.Drawing.Point(201, 188);
+            this.pbNationalNo.Location = new System.Drawing.Point(195, 178);
             this.pbNationalNo.Name = "pbNationalNo";
             this.pbNationalNo.Size = new System.Drawing.Size(32, 32);
             this.pbNationalNo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -538,7 +538,7 @@
             this.pbClass.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbClass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbClass.Image = global::DVLDPresentationLayer.Properties.Resources.License_Type_32;
-            this.pbClass.Location = new System.Drawing.Point(203, 47);
+            this.pbClass.Location = new System.Drawing.Point(195, 41);
             this.pbClass.Name = "pbClass";
             this.pbClass.Size = new System.Drawing.Size(32, 32);
             this.pbClass.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -550,7 +550,7 @@
             this.pbDriverID.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbDriverID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbDriverID.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
-            this.pbDriverID.Location = new System.Drawing.Point(672, 235);
+            this.pbDriverID.Location = new System.Drawing.Point(667, 225);
             this.pbDriverID.Name = "pbDriverID";
             this.pbDriverID.Size = new System.Drawing.Size(32, 32);
             this.pbDriverID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -562,7 +562,7 @@
             this.pbIsActive.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbIsActive.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbIsActive.Image = global::DVLDPresentationLayer.Properties.Resources.Question_32;
-            this.pbIsActive.Location = new System.Drawing.Point(672, 141);
+            this.pbIsActive.Location = new System.Drawing.Point(667, 131);
             this.pbIsActive.Name = "pbIsActive";
             this.pbIsActive.Size = new System.Drawing.Size(32, 32);
             this.pbIsActive.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -574,7 +574,7 @@
             this.pbDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbDate.Image = global::DVLDPresentationLayer.Properties.Resources.Calendar_32;
-            this.pbDate.Location = new System.Drawing.Point(672, 188);
+            this.pbDate.Location = new System.Drawing.Point(667, 178);
             this.pbDate.Name = "pbDate";
             this.pbDate.Size = new System.Drawing.Size(32, 32);
             this.pbDate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -586,7 +586,7 @@
             this.pbPerson.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbPerson.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbPerson.Image = global::DVLDPresentationLayer.Properties.Resources.Person_32;
-            this.pbPerson.Location = new System.Drawing.Point(201, 94);
+            this.pbPerson.Location = new System.Drawing.Point(195, 87);
             this.pbPerson.Name = "pbPerson";
             this.pbPerson.Size = new System.Drawing.Size(32, 32);
             this.pbPerson.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -598,7 +598,7 @@
             this.pbLicenseID.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbLicenseID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbLicenseID.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
-            this.pbLicenseID.Location = new System.Drawing.Point(201, 141);
+            this.pbLicenseID.Location = new System.Drawing.Point(195, 133);
             this.pbLicenseID.Name = "pbLicenseID";
             this.pbLicenseID.Size = new System.Drawing.Size(32, 32);
             this.pbLicenseID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -610,7 +610,7 @@
             this.pbGendor.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbGendor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbGendor.Image = global::DVLDPresentationLayer.Properties.Resources.Man_32;
-            this.pbGendor.Location = new System.Drawing.Point(201, 235);
+            this.pbGendor.Location = new System.Drawing.Point(195, 225);
             this.pbGendor.Name = "pbGendor";
             this.pbGendor.Size = new System.Drawing.Size(32, 32);
             this.pbGendor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -622,7 +622,7 @@
             this.pbIssueDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbIssueDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbIssueDate.Image = global::DVLDPresentationLayer.Properties.Resources.Calendar_32;
-            this.pbIssueDate.Location = new System.Drawing.Point(201, 282);
+            this.pbIssueDate.Location = new System.Drawing.Point(195, 272);
             this.pbIssueDate.Name = "pbIssueDate";
             this.pbIssueDate.Size = new System.Drawing.Size(32, 32);
             this.pbIssueDate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -634,7 +634,7 @@
             this.pbPersonalImage.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbPersonalImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbPersonalImage.Image = global::DVLDPresentationLayer.Properties.Resources.Male_512;
-            this.pbPersonalImage.Location = new System.Drawing.Point(903, 96);
+            this.pbPersonalImage.Location = new System.Drawing.Point(903, 103);
             this.pbPersonalImage.Margin = new System.Windows.Forms.Padding(0);
             this.pbPersonalImage.Name = "pbPersonalImage";
             this.pbPersonalImage.Size = new System.Drawing.Size(224, 216);
@@ -652,7 +652,7 @@
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Name = "ctrlLDLicenseDetails";
-            this.Size = new System.Drawing.Size(1156, 430);
+            this.Size = new System.Drawing.Size(1156, 415);
             this.gbLDLicenseInfo.ResumeLayout(false);
             this.gbLDLicenseInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbIsDetained)).EndInit();

@@ -16,7 +16,7 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
         {
             InitializeComponent();
             uctrlDLApplicationInfo.LoadLDLAppInfo(LDLAppID);
-            lblLicenseFees.Text = clsUtility.SetFeesToCustomFormat(clsLicenseClass.GetLicenseClassFees(uctrlDLApplicationInfo.LDLApplication.LicenseClass.ID));
+            lblLicenseFees.Text = clsUtility.GetCustomFeesFormat(clsLicenseClass.GetLicenseClassFees(uctrlDLApplicationInfo.LDLApplication.LicenseClass.ID));
             _LDLAppDGVRowIndex = DGVRowIndex;
         }
 

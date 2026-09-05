@@ -111,5 +111,11 @@ namespace DVLDPresentationLayer
             frmIntLicenseApplications frm = new frmIntLicenseApplications();
             frm.ShowDialog();
         }
+
+        private void tsmiRenewDrivingLicense_Click(object sender, EventArgs e)
+        {
+            frmRenewLocalDrivingLicense frm = new frmRenewLocalDrivingLicense();
+            frm.ShowDialog();
+        }
     }
 }

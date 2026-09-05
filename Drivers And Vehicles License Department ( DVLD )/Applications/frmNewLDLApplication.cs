@@ -71,7 +71,7 @@ namespace DVLDPresentationLayer.Core
             lblDLApplicationID.Text = _LDLApplication.ApplicationID.ToString();
             cbLicenseClass.SelectedItem = _LDLApplication.LicenseClass.ClassName;
             lblApplicationDate.Text = _LDLApplication.ApplicationDate.ToShortDateString();
-            lblApplicationFees.Text = clsUtility.SetFeesToCustomFormat(_LDLApplication.PaidApplicationFees);
+            lblApplicationFees.Text = clsUtility.GetCustomFeesFormat(_LDLApplication.PaidApplicationFees);
             lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(_LDLApplication.CreatedByUserID));
         }
         private bool _MoveToNextTab()
@@ -121,7 +121,7 @@ namespace DVLDPresentationLayer.Core
             lblApplicationDate.Text = DateTime.Today.ToShortDateString();
             cbLicenseClass.DataSource = clsLicenseClass.GetLicenseClassesNames();
             cbLicenseClass.SelectedIndex = 2;
-            lblApplicationFees.Text = clsUtility.SetFeesToCustomFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewLocalDrivingLicense));
+            lblApplicationFees.Text = clsUtility.GetCustomFeesFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewLocalDrivingLicense));
             lblUserName.Text = clsGlobalSettings.CurrentUserName;
         }
         private void frmNewLocalDrivingLicenseApplication_Load(object sender, EventArgs e)

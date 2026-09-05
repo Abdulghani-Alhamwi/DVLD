@@ -172,5 +172,9 @@ namespace DVLDBusinessLayer
         {
             return clsLocalLicensesData.GetLicenseNotes(LocalLicenseID);
         }
+        public static bool DeactivateLicense(int LocalLicenseID)
+        {
+            return clsLocalLicensesData.DeactivateLicense(LocalLicenseID);
+        }
     }
 }
