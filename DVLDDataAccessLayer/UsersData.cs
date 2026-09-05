@@ -53,7 +53,6 @@ namespace DVLDDataAccessLayer
 
         public static DataTable GetColumnsNamesForView()
         {
-
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query = _query;
 
@@ -121,12 +120,11 @@ namespace DVLDDataAccessLayer
 
         public static bool UpdateUser(int UserID,int PersonID, string UserName, string Password,string Salt, bool IsActive)
         {
-            int AffectedRows = 0;
+            byte AffectedRows = 0;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"UPDATE USERS SET
-                             PersonID = @PersonID , UserName = @UserName ,
+            string query = @"UPDATE USERS SET PersonID = @PersonID , UserName = @UserName ,
                              Password = @Password ,Salt = @Salt, IsActive = @IsActive
                              WHERE UserID = @UserID";
 
@@ -141,7 +139,7 @@ namespace DVLDDataAccessLayer
             try
             {
                 connection.Open();
-                AffectedRows = command.ExecuteNonQuery();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
             catch { }
@@ -156,7 +154,7 @@ namespace DVLDDataAccessLayer
 
         public static bool DeleteUser(int UserID)
         {
-            int AffectedRows = 0;
+            byte AffectedRows = 0;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query = @"DELETE FROM Users
@@ -169,7 +167,7 @@ namespace DVLDDataAccessLayer
             {
                 connection.Open();
 
-                AffectedRows = command.ExecuteNonQuery();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
             catch { }
@@ -180,6 +178,7 @@ namespace DVLDDataAccessLayer
             }
             return (AffectedRows > 0);
         }
+
         public static bool IsUserExists(int PersonID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -208,6 +207,7 @@ namespace DVLDDataAccessLayer
 
             return false;
         }
+
         public static bool IsUserAlreadyExists(string UserName)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -239,6 +239,7 @@ namespace DVLDDataAccessLayer
 
         public static bool Find(int UserID, ref int PersonID, ref string UserName, ref string Password, ref string Salt, ref bool IsActive)
         {
+            bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"SELECT UserID,PersonID,UserName,Password,Salt
@@ -262,8 +263,9 @@ namespace DVLDDataAccessLayer
                     Salt = (string)reader["Salt"];
                     IsActive = (bool)reader["IsActive"];
 
-                    return true;
-                }    
+                    IsFound = true;
+                }
+                reader.Close();
             }
 
             catch { }
@@ -272,7 +274,7 @@ namespace DVLDDataAccessLayer
             {
                 connection.Close();
             }
-            return false;
+            return IsFound;
         }
 
         public static void GetUserPasswordWithSalt(int UserID , ref string Password, ref byte[] Salt)
@@ -375,7 +377,7 @@ namespace DVLDDataAccessLayer
 
         public static bool ChangePassword(int UserID , string Password ,string Salt)
         {
-            int AffectedRows = -1;
+            byte AffectedRows = 0;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
@@ -390,7 +392,7 @@ namespace DVLDDataAccessLayer
             try
             {
                 connection.Open();
-                AffectedRows = command.ExecuteNonQuery();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
             catch { }

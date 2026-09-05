@@ -44,7 +44,7 @@ namespace DVLDDataAccessLayer
 
         public static bool UpdateApplication(int ApplicationID, int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, short ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
         {
-            int AffectedRows = -1;
+            byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"UPDATE Applications SET
@@ -65,7 +65,7 @@ namespace DVLDDataAccessLayer
             try
             {
                 connection.Open();
-                AffectedRows = command.ExecuteNonQuery();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
             catch { }
@@ -80,7 +80,6 @@ namespace DVLDDataAccessLayer
         public static bool Find(int ApplicationID , ref int ApplicantPersonID,ref DateTime ApplicationDate, ref byte ApplicationTypeID,ref byte ApplicationStatus ,ref DateTime LastStatusDate,ref decimal PaidApplicationFees,ref int CreatedByUserID)
         {
             bool IsFound = false;
-
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"SELECT * FROM Applications
@@ -120,7 +119,7 @@ namespace DVLDDataAccessLayer
 
         public static bool DeleteApplication(int ApplicationID)
         {
-            int AffectedRows = -1;
+            byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"DELETE FROM Applications
@@ -132,7 +131,7 @@ namespace DVLDDataAccessLayer
             try
             {
                 connection.Open();
-                AffectedRows = command.ExecuteNonQuery();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
             catch { }
@@ -147,7 +146,7 @@ namespace DVLDDataAccessLayer
 
         public static bool ChangeApplicationStatus(int ApplicationID,byte TheNewStatus)
         {
-            int AffectedRows = -1;
+            byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"UPDATE Applications SET ApplicationStatus = @TheNewStatus
@@ -160,7 +159,7 @@ namespace DVLDDataAccessLayer
             try
             {
                 connection.Open();
-                AffectedRows = command.ExecuteNonQuery();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
             catch { }

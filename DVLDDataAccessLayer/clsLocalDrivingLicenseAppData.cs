@@ -95,9 +95,10 @@ namespace DVLDDataAccessLayer
 
             return null;
         }
+
         public static int AddLDLApplication(int ApplicationID, int LicenseClassID)
         {
-            int LocalDrivingLicenseApplicationID = -1;
+            int LDLApplicationID = -1;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query = @"INSERT INTO LocalDrivingLicenseApplications VALUES
@@ -114,7 +115,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    LocalDrivingLicenseApplicationID = Convert.ToInt32(result);
+                    LDLApplicationID = Convert.ToInt32(result);
             }
 
             catch { }
@@ -124,12 +125,12 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
 
-            return LocalDrivingLicenseApplicationID;
+            return LDLApplicationID;
         }
 
         public static bool UpdateLDLApplication(int LocalDrivingLicenseApplicationID, int ApplicationID, int LicenseClassID)
         {
-            int AffectedRows = -1;
+            byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query = @"UPDATE LocalDrivingLicenseApplications SET
                             ApplicationID = @ApplicationID , LicenseClassID = @LicenseClassID
@@ -143,7 +144,7 @@ namespace DVLDDataAccessLayer
             try
             {
                 connection.Open();
-                AffectedRows = command.ExecuteNonQuery();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
             catch { }
@@ -193,9 +194,10 @@ namespace DVLDDataAccessLayer
 
             return IsFound;
         }
+
         public static bool DeleteLDLApplication(int LDLApplicationID)
         {
-            int AffectedRows = -1;
+            byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"DELETE FROM LocalDrivingLicenseApplications
@@ -207,7 +209,7 @@ namespace DVLDDataAccessLayer
             try
             {
                 connection.Open();
-                AffectedRows = command.ExecuteNonQuery();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
             catch { }
@@ -247,6 +249,7 @@ namespace DVLDDataAccessLayer
 
             return -1;
         }
+
         public static bool HasPersonApplied(int ApplicantPersonID, byte LicenseClassID, ref byte ApplicationStatus)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);

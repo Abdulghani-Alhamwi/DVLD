@@ -73,7 +73,7 @@ namespace DVLDDataAccessLayer
         public static bool UpdatePerson(int PersonID, string NationalNo, string FirstName,
                        string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
-            int AffectedRows = -1;
+            byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query = @"UPDATE PEOPLE SET NationalNo = @NationalNo ,FirstName = @FirstName ,SecondName = @SecondName ,
                              ThirdName = @ThirdName ,LastName = @LastName ,DateOfBirth = @DateOfBirth ,
@@ -113,7 +113,7 @@ namespace DVLDDataAccessLayer
             try
             {
                 connection.Open();
-                AffectedRows = command.ExecuteNonQuery();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
 
             }
 
@@ -128,7 +128,7 @@ namespace DVLDDataAccessLayer
 
         public static bool DeletePerson(int PersonID)
         {
-            int AffectedRows = -1;
+            byte AffectedRows = 0;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query = @"DELETE FROM People
@@ -140,7 +140,7 @@ namespace DVLDDataAccessLayer
             try
             {
                 connection.Open();
-                AffectedRows = command.ExecuteNonQuery();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
             catch { }
@@ -151,6 +151,7 @@ namespace DVLDDataAccessLayer
             }
             return (AffectedRows > 0);
         }
+
         public static DataTable GetPeopleInfo(byte WantedNumOfRecords,int LastLowestbroughtPersonID = -1)
         {
             DataTable dtPeople = null;
@@ -257,9 +258,11 @@ namespace DVLDDataAccessLayer
 
             return false;
         }
+
         public static bool Find(int PersonID,ref string NationalNo,ref string FirstName,
                        ref string SecondName,ref string ThirdName,ref string LastName,ref DateTime DateOfBirth,ref byte Gendor,ref string Address,ref string Phone,ref string Email,ref int NationalityCountryID,ref string ImagePath)
         {
+            bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"SELECT NationalNo,FirstName, SecondName,ThirdName, LastName, Gendor, DateOfBirth,
@@ -304,8 +307,9 @@ namespace DVLDDataAccessLayer
                     else
                         ImagePath = null;
 
-                        return true;
+                    IsFound = true;
                 }
+                reader.Close();
             }
 
             catch { }
@@ -314,12 +318,13 @@ namespace DVLDDataAccessLayer
             {
                 connection.Close();
             }
-            return false;
+            return IsFound;
         }
 
         public static bool Find(string NationalNo,ref int PersonID, ref string FirstName,
                       ref string SecondName, ref string ThirdName, ref string LastName, ref DateTime DateOfBirth, ref byte Gendor, ref string Address, ref string Phone, ref string Email, ref int NationalityCountryID, ref string ImagePath)
         {
+            bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"SELECT PersonID,FirstName,SecondName,ThirdName,LastName,Gendor,DateOfBirth,
@@ -358,8 +363,9 @@ namespace DVLDDataAccessLayer
                     if (reader["ImagePath"] != DBNull.Value)
                         ImagePath = (string)reader["ImagePath"];
 
-                    return true;
+                    IsFound = true;
                 }
+                reader.Close();
             }
 
             catch { }
@@ -368,7 +374,7 @@ namespace DVLDDataAccessLayer
             {
                 connection.Close();
             }
-            return false;
+            return IsFound;
         }
 
         public static int GetTotalPeopleCount()
@@ -633,6 +639,7 @@ namespace DVLDDataAccessLayer
             }
             return null;
         }
+
         public static int GetPersonID(string NationalNo)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);

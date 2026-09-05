@@ -43,7 +43,7 @@ namespace DVLDDataAccessLayer
 
         public static bool UpdateTestType(int TestTypeID,string TestTypeTitle,string TestTypeDescription,decimal TestTypeFees)
         {
-            int AffectedRows = -1;
+            byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"UPDATE TestTypes SET TestTypeTitle = @Title,
@@ -59,8 +59,7 @@ namespace DVLDDataAccessLayer
             try
             {
                 connection.Open();
-
-                AffectedRows = command.ExecuteNonQuery();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
             catch { }

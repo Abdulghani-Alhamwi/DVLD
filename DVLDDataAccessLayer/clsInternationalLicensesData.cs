@@ -51,6 +51,7 @@ namespace DVLDDataAccessLayer
             }
             return dtIntLicenses;
         }
+
         public static DataTable GetAllInternationalLicenses(byte WantedNumOfRecords, int LowstBroughtIntLicID = -1)
         {
             DataTable dtIntLicenses = null;
@@ -88,6 +89,7 @@ namespace DVLDDataAccessLayer
             }
             return dtIntLicenses;
         }
+
         public static DataTable GetColumnsNamesForView()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -193,6 +195,7 @@ namespace DVLDDataAccessLayer
 
             return IsFound;
         }
+
         private static string _GetOriginalColumnName(string SendedColumnName)
         {
             
@@ -335,6 +338,7 @@ namespace DVLDDataAccessLayer
             }
             return -1;
         }
+
         public static bool HasDriverActiveInternationalLicense(int LocalLicenseID,ref int InternationalLicenseID)
         {
             bool IsFound = false;

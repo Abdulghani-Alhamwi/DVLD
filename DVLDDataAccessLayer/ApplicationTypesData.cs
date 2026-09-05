@@ -41,7 +41,7 @@ namespace DVLDDataAccessLayer
 
         public static bool UpdateApplicationType(byte ApplicationTypeID , string ApplicationTypeTitle,decimal ApplicationTypeFees)
         {
-            int AffectedRows = -1;
+            byte AffectedRows = 0;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
@@ -56,7 +56,7 @@ namespace DVLDDataAccessLayer
             try
             {
                 connection.Open();
-                AffectedRows = command.ExecuteNonQuery();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
             catch { }

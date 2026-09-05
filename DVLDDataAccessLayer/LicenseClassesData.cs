@@ -37,7 +37,7 @@ namespace DVLDDataAccessLayer
 
             return dtLicenseClassesNames;
         }
-        
+
         public static byte GetLicenseClassID(string LicenseClassName)
         {
             byte LicenseClassID = 0;
@@ -68,6 +68,7 @@ namespace DVLDDataAccessLayer
 
             return LicenseClassID;
         }
+
         public static string GetLicenseClassName(byte LicenseClassID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -156,6 +157,7 @@ namespace DVLDDataAccessLayer
 
             return -1;
         }
+
         public static byte GetMinimumAllowedAge(byte LicenseClassID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);

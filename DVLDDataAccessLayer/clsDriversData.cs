@@ -18,6 +18,7 @@ namespace DVLDDataAccessLayer
          $@" GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
            Format(CreatedDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}'),InternationalLicenses.IsActive ORDER BY Drivers.DriverID DESC";
+
         public static DataTable GetDriversInfo(byte WantedNumOfRecords, int LastLowestBroughtDriverID = -1)
         {
             DataTable dtDrivers = null;
@@ -59,6 +60,7 @@ namespace DVLDDataAccessLayer
             }
             return dtDrivers;
         }
+
         public static int AddNewDriver(int PersonID, int CreatedByUserID, DateTime CreatedDate)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -88,6 +90,7 @@ namespace DVLDDataAccessLayer
             }
             return -1;
         }
+
         public static bool IsPersonAlreadyADriver(int PersonID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -114,6 +117,7 @@ namespace DVLDDataAccessLayer
             }
             return false;
         }
+
         public static int GetDriverID(int PersonID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -140,6 +144,7 @@ namespace DVLDDataAccessLayer
             }
             return -1;
         }
+
         public static int GetDriverPersonID(int DriverID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -166,6 +171,7 @@ namespace DVLDDataAccessLayer
             }
             return -1;
         }
+
         public static int GetTotalDriversCount()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -193,6 +199,7 @@ namespace DVLDDataAccessLayer
             }
             return -1;
         }
+
         private static string _GetOriginalColumnName(string SendedColumnName)
         {
             switch (SendedColumnName)
@@ -213,6 +220,7 @@ namespace DVLDDataAccessLayer
                     return "";
             }
         }
+
         private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtDriverID = -1)
         {
             string query = clsDriversData._query;
@@ -243,6 +251,7 @@ namespace DVLDDataAccessLayer
 
             return query;
         }
+
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtDriverID = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
@@ -287,6 +296,7 @@ namespace DVLDDataAccessLayer
 
             return dtFilteredData;
         }
+
         public static bool HasActiveLicenseFromClass(int DriverID,int LicenseClassID, out int LicenseID)
         {
             LicenseID = -1;
@@ -319,6 +329,7 @@ namespace DVLDDataAccessLayer
             }
             return false;
         }
+
         public static short GetDriverLocalLicensesCount(int DriverID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -344,6 +355,7 @@ namespace DVLDDataAccessLayer
             }
             return -1;
         }
+
         public static short GetDriverInternationalLicensesCount(int DriverID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);

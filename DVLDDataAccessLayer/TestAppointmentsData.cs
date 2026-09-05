@@ -13,7 +13,7 @@ namespace DVLDDataAccessLayer
            PaidFees AS [Paid Fees],IsLocked AS [Is Locked] FROM TestAppointments";
 
         public static DataTable GetTestAppointments(byte WantedNumOfRecords , byte TestTypeID,int LocalDrivingLicenseAppID, int LowestBroughtAppointmentID = -1,string DateFormat = null)
-    {
+        {
             DataTable dtTestAppointments = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
@@ -59,6 +59,7 @@ namespace DVLDDataAccessLayer
 
             return dtTestAppointments;
     }
+
         public static DataTable GetColumnsNamesForView()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -123,9 +124,10 @@ namespace DVLDDataAccessLayer
 
             return AppointmentID;
         }
+
         public static bool UpdateAppointment(int TestAppointmentID,int TestTypeID, int LocalDrivingLicenseAppID, DateTime AppointmentDate, decimal PaidFees, int CreatedByUserID, bool IsLocked)
         {
-            int AffectedRows = -1;
+            byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"UPDATE TestAppointments SET TestTypeID = @TestTypeID,LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID,
@@ -144,7 +146,7 @@ namespace DVLDDataAccessLayer
             try
             {
                 connection.Open();
-                AffectedRows = command.ExecuteNonQuery();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
             catch { }
@@ -160,7 +162,6 @@ namespace DVLDDataAccessLayer
         public static bool Find(int TestAppointmentID,ref byte TestTypeID,ref int LocalDrivingLicenseAppID, ref DateTime AppointmentDate,ref decimal PaidFees,ref int CreatedByUserID,ref bool IsLocked)
         {
             bool IsFound = false;
-
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = "SELECT * FROM TestAppointments WHERE TestAppointmentID = @TestAppointmentID";

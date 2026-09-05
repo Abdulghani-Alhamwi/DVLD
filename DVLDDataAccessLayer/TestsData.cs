@@ -40,6 +40,7 @@ namespace DVLDDataAccessLayer
             }
             return -1;
         }
+
         public static bool HasPassedTheTest(int LDLApplicationID, int TestTypeID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -102,6 +103,6 @@ namespace DVLDDataAccessLayer
             }
             return -1;
         }
-      
+
     }
 }

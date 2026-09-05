@@ -48,6 +48,7 @@ namespace DVLDDataAccessLayer
             }
             return dtLicensesData;
         }
+
         public static int IssueLocalDrivingLicense(int ApplicationID ,int DriverID,byte LicenseClassID,DateTime IssueDate , DateTime ExpirationDate,string Notes,decimal PaidFees,bool IsActive,byte IssueReason,int CreatedByUserID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -91,10 +92,9 @@ namespace DVLDDataAccessLayer
             return -1;
         }
 
-    public static bool Find(int LicenseID , ref int ApplicationID,ref int DriverID, ref byte LicenseClassID,
+        public static bool Find(int LicenseID , ref int ApplicationID,ref int DriverID, ref byte LicenseClassID,
                             ref DateTime IssueDate, ref DateTime ExpirationDate, ref string Notes, ref decimal PaidFees, ref bool IsActive, ref byte IssueReason, ref int CreatedByUserID)
         {
-
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
@@ -194,6 +194,7 @@ namespace DVLDDataAccessLayer
             }
             return null;
         }
+
         public static bool DeactivateLicense(int LocalLicenseID)
         {
             byte AffectedRows = 0;

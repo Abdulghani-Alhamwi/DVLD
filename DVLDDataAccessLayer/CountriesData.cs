@@ -37,6 +37,7 @@ namespace DVLDDataAccessLayer
             }
             return dtCountries;
         }
+
         public static int GetCountryID(string CountryName)
         {
             int CountryID = -1;
@@ -67,6 +68,7 @@ namespace DVLDDataAccessLayer
             }
             return CountryID;
         }
+
         public static string GetCountryName(int NationalityCountryID)
         {
             string CountryName = "";
