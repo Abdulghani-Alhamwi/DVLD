@@ -39,6 +39,7 @@ namespace DVLDPresentationLayer.Licenses
             lblTotalFees.Text = clsUtility.GetCustomFeesFormat(
                 clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.RenewLicense) + clsLicenseClass.GetLicenseClassFees(_SelectedLicenseInfo.LicenseClassID));
         }
+
         private void lnlblShowLicenseHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID(_DriverID));
@@ -96,6 +97,16 @@ namespace DVLDPresentationLayer.Licenses
                 return false;
         }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private bool _IssueRenewedLocalLicense(int NewApplicationID,ref int NewLicenseID)
         {
             clsLocalLicense NewLocalLicense = new clsLocalLicense
@@ -124,7 +135,7 @@ namespace DVLDPresentationLayer.Licenses
 
         private void btnRenewLicense_Click(object sender, EventArgs e)
         {
-            if(_SelectedLocalLicenseID!=-1)
+            if (_SelectedLocalLicenseID != -1)
             { 
             DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to renew license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (ConfirmationQuestion == DialogResult.Yes)
@@ -154,10 +165,10 @@ namespace DVLDPresentationLayer.Licenses
                     }
                     else
                         MessageBox.Show("Failed to deactivate old local license!\nLicense renewal failed", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                    MessageBox.Show("Enter local license ID First in order to renew license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }             
             }
+            else
+                MessageBox.Show("Enter local license ID First in order to renew license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

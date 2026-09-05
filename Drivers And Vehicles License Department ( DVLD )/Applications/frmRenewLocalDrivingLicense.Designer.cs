@@ -225,9 +225,9 @@
             this.gbNewLicenseAppInfo.Controls.Add(this.lblAppFeesTitle);
             this.gbNewLicenseAppInfo.Controls.Add(this.lblRLApplicationIDTitle);
             this.gbNewLicenseAppInfo.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.gbNewLicenseAppInfo.Location = new System.Drawing.Point(21, 622);
+            this.gbNewLicenseAppInfo.Location = new System.Drawing.Point(21, 610);
             this.gbNewLicenseAppInfo.Name = "gbNewLicenseAppInfo";
-            this.gbNewLicenseAppInfo.Size = new System.Drawing.Size(1144, 347);
+            this.gbNewLicenseAppInfo.Size = new System.Drawing.Size(1144, 342);
             this.gbNewLicenseAppInfo.TabIndex = 195;
             this.gbNewLicenseAppInfo.TabStop = false;
             this.gbNewLicenseAppInfo.Text = "New License Application Info";
@@ -524,7 +524,7 @@
             this.btnRenewLicense.Font = new System.Drawing.Font("Tahoma", 19F);
             this.btnRenewLicense.Image = global::DVLDPresentationLayer.Properties.Resources.License_Type_32;
             this.btnRenewLicense.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRenewLicense.Location = new System.Drawing.Point(999, 989);
+            this.btnRenewLicense.Location = new System.Drawing.Point(999, 969);
             this.btnRenewLicense.Name = "btnRenewLicense";
             this.btnRenewLicense.Size = new System.Drawing.Size(166, 45);
             this.btnRenewLicense.TabIndex = 191;
@@ -537,7 +537,7 @@
             this.lnlblShowLicenseHistory.AutoSize = true;
             this.lnlblShowLicenseHistory.Enabled = false;
             this.lnlblShowLicenseHistory.Font = new System.Drawing.Font("Tahoma", 20F);
-            this.lnlblShowLicenseHistory.Location = new System.Drawing.Point(21, 989);
+            this.lnlblShowLicenseHistory.Location = new System.Drawing.Point(21, 969);
             this.lnlblShowLicenseHistory.Margin = new System.Windows.Forms.Padding(0);
             this.lnlblShowLicenseHistory.Name = "lnlblShowLicenseHistory";
             this.lnlblShowLicenseHistory.Size = new System.Drawing.Size(265, 33);
@@ -551,7 +551,7 @@
             this.lblFormBigTitle.AutoSize = true;
             this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
             this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblFormBigTitle.Location = new System.Drawing.Point(288, 52);
+            this.lblFormBigTitle.Location = new System.Drawing.Point(288, 50);
             this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblFormBigTitle.Name = "lblFormBigTitle";
             this.lblFormBigTitle.Size = new System.Drawing.Size(604, 52);
@@ -567,12 +567,13 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 19F);
             this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(801, 989);
+            this.btnClose.Location = new System.Drawing.Point(801, 969);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 190;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // lblFormTitle
             // 
@@ -596,20 +597,21 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1136, 6);
+            this.btnExit.Location = new System.Drawing.Point(1138, 6);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
             this.btnExit.TabIndex = 188;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // lnlblShowNewLicenseInfo
             // 
             this.lnlblShowNewLicenseInfo.AutoSize = true;
             this.lnlblShowNewLicenseInfo.Enabled = false;
             this.lnlblShowNewLicenseInfo.Font = new System.Drawing.Font("Tahoma", 20F);
-            this.lnlblShowNewLicenseInfo.Location = new System.Drawing.Point(305, 989);
+            this.lnlblShowNewLicenseInfo.Location = new System.Drawing.Point(305, 969);
             this.lnlblShowNewLicenseInfo.Margin = new System.Windows.Forms.Padding(0);
             this.lnlblShowNewLicenseInfo.Name = "lnlblShowNewLicenseInfo";
             this.lnlblShowNewLicenseInfo.Size = new System.Drawing.Size(291, 33);
@@ -624,7 +626,7 @@
             this.uctrlLDLDetailsByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.uctrlLDLDetailsByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
             this.uctrlLDLDetailsByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.uctrlLDLDetailsByFilter.Location = new System.Drawing.Point(12, 106);
+            this.uctrlLDLDetailsByFilter.Location = new System.Drawing.Point(12, 100);
             this.uctrlLDLDetailsByFilter.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.uctrlLDLDetailsByFilter.Name = "uctrlLDLDetailsByFilter";
             this.uctrlLDLDetailsByFilter.Size = new System.Drawing.Size(1157, 514);
@@ -638,7 +640,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1186, 1053);
+            this.ClientSize = new System.Drawing.Size(1186, 1047);
             this.ControlBox = false;
             this.Controls.Add(this.uctrlLDLDetailsByFilter);
             this.Controls.Add(this.gbNewLicenseAppInfo);

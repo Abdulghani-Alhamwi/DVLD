@@ -17,6 +17,7 @@ namespace DVLDPresentationLayer.Applications
         private int _SelectedLocalLicenseID, _DriverID;
 
         private clsInternationalLicense _NewInternationalLicense;
+
         public frmNewIntLicenseApplication()
         {
             InitializeComponent();
@@ -26,6 +27,7 @@ namespace DVLDPresentationLayer.Applications
             _SelectedLocalLicenseID = -1;
             _DriverID = -1;
         }
+
         private void _ShowNewApplicationInfo()
         {
             lblApplicationDate.Text = DateTime.Now.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
@@ -34,6 +36,7 @@ namespace DVLDPresentationLayer.Applications
             lblApplicationFees.Text = clsUtility.GetCustomFeesFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewInternationlLicense));
             lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(clsGlobalSettings.CurrentUserID));
         }
+
         private bool _AddNewApplication(int DriverID, out int NewApplicationID)
         {
             clsApplication InternationalLicenseApp = new clsApplication
@@ -67,6 +70,7 @@ namespace DVLDPresentationLayer.Applications
 
             return (_NewInternationalLicense.Save());
         }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -107,9 +111,9 @@ namespace DVLDPresentationLayer.Applications
                     else
                         MessageBox.Show("Failed to save application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
                 else
                     MessageBox.Show("Enter local license ID First in order to issue international license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
         }
 
         private void lnlblShowLicenseHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -152,8 +156,13 @@ namespace DVLDPresentationLayer.Applications
 
             else if (LocalLicense.IsExpired())
             {
-                MessageBox.Show("The entered ID is for a local license but it has been expired!, re-new it first then re-apply for international license."
-                , "Expired Local License", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if(clsLocalLicense.HasDriverRenewedLicense(LocalLicense.DriverID,LocalLicense.LicenseClassID,out int RenewedLicenseID))
+                    MessageBox.Show($"The entered ID is for a local license but it has been expired!\nThis driver has a renewed local license from the ordinary driving class with ID : {RenewedLicenseID}"
+                    , "Expired Local License", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                else
+                    MessageBox.Show("The entered ID is for a local license but it has been expired!, re-new it first then re-apply for international license."
+                    , "Expired Local License", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return false;
             }

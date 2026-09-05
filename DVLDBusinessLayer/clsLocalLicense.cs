@@ -164,17 +164,26 @@ namespace DVLDBusinessLayer
         {
             return clsLocalLicensesData.GetLicenseID(LDLApplicationID);
         }
+
         public bool IsExpired()
         {
             return (ExpirationDate < DateTime.Now);
         }
+
         public static string GetLicenseNotes(int LocalLicenseID)
         {
             return clsLocalLicensesData.GetLicenseNotes(LocalLicenseID);
         }
+
         public static bool DeactivateLicense(int LocalLicenseID)
         {
             return clsLocalLicensesData.DeactivateLicense(LocalLicenseID);
+        }
+
+        public static bool HasDriverRenewedLicense(int DriverID, int LicenseClassID,out int RenewedLicenseID)
+        {
+            RenewedLicenseID = 0;
+            return clsLocalLicensesData.HasDriverRenewedLicense(DriverID, LicenseClassID,ref RenewedLicenseID);
         }
     }
 }

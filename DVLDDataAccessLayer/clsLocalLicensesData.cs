@@ -219,5 +219,36 @@ namespace DVLDDataAccessLayer
             }
             return (AffectedRows != 0);
         }
+
+        public static bool HasDriverRenewedLicense(int DriverID,int LicenseClassID,ref int RenewedLicenseID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            string query = @"SELECT LicenseID FROM LocalLicenses
+                             WHERE DriverID = @DriverID AND LicenseClassID = @LicenseClassID AND IsActive = 1";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@DriverID", DriverID);
+            command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                {
+                    RenewedLicenseID = Convert.ToInt32(result);
+                    return true;
+                }
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return false;
+        }
     }
 }
