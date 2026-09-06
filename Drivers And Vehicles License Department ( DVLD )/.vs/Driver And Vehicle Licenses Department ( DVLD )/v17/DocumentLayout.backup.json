@@ -3,14 +3,12 @@
   "WorkspaceRootPath": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{52CBC0F2-70E4-4B09-A6D4-9DBAB805109E}|DVLDPresentationLayer.csproj|d:\\office\\programming advices\\course 19 - full real project - dvld\\project dvld my solution\\dvld\\drivers and vehicles license department ( dvld )\\applications\\frmnewintlicenseapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{52CBC0F2-70E4-4B09-A6D4-9DBAB805109E}|DVLDPresentationLayer.csproj|solutionrelative:applications\\frmnewintlicenseapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{52CBC0F2-70E4-4B09-A6D4-9DBAB805109E}|DVLDPresentationLayer.csproj|d:\\office\\programming advices\\course 19 - full real project - dvld\\project dvld my solution\\dvld\\drivers and vehicles license department ( dvld )\\applicationtypes\\frmupdateapplicationtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52CBC0F2-70E4-4B09-A6D4-9DBAB805109E}|DVLDPresentationLayer.csproj|solutionrelative:applicationtypes\\frmupdateapplicationtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{973BC8BE-82CA-4F53-82ED-5ADFA32CF45C}|..\\DVLDBusinessLayer\\DVLDBusinessLayer.csproj|d:\\office\\programming advices\\course 19 - full real project - dvld\\project dvld my solution\\dvld\\dvldbusinesslayer\\clslocallicense.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{87821629-02F7-465B-A682-7D5CA154AB67}|..\\DVLDDataAccessLayer\\DVLDDataAccessLayer.csproj|d:\\office\\programming advices\\course 19 - full real project - dvld\\project dvld my solution\\dvld\\dvlddataaccesslayer\\clslocallicensesdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{52CBC0F2-70E4-4B09-A6D4-9DBAB805109E}|DVLDPresentationLayer.csproj|d:\\office\\programming advices\\course 19 - full real project - dvld\\project dvld my solution\\dvld\\drivers and vehicles license department ( dvld )\\testtypes\\frmupdatetesttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52CBC0F2-70E4-4B09-A6D4-9DBAB805109E}|DVLDPresentationLayer.csproj|solutionrelative:testtypes\\frmupdatetesttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -20,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -53,40 +51,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "clsLocalLicense.cs",
-              "DocumentMoniker": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\DVLDBusinessLayer\\clsLocalLicense.cs",
-              "RelativeDocumentMoniker": "..\\DVLDBusinessLayer\\clsLocalLicense.cs",
-              "ToolTip": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\DVLDBusinessLayer\\clsLocalLicense.cs",
-              "RelativeToolTip": "..\\DVLDBusinessLayer\\clsLocalLicense.cs",
-              "ViewState": "AgIAAKwAAAAAAAAAAAAvwLkAAABcAAAAAAAAAA==",
+              "Title": "frmUpdateTestType.cs",
+              "DocumentMoniker": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\TestTypes\\frmUpdateTestType.cs",
+              "RelativeDocumentMoniker": "TestTypes\\frmUpdateTestType.cs",
+              "ToolTip": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\TestTypes\\frmUpdateTestType.cs",
+              "RelativeToolTip": "TestTypes\\frmUpdateTestType.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAUwCIAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-05T21:39:52.423Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "clsLocalLicensesData.cs",
-              "DocumentMoniker": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\DVLDDataAccessLayer\\clsLocalLicensesData.cs",
-              "RelativeDocumentMoniker": "..\\DVLDDataAccessLayer\\clsLocalLicensesData.cs",
-              "ToolTip": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\DVLDDataAccessLayer\\clsLocalLicensesData.cs",
-              "RelativeToolTip": "..\\DVLDDataAccessLayer\\clsLocalLicensesData.cs",
-              "ViewState": "AgIAAMQAAAAAAAAAAAAcwO8AAAA/AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-05T21:37:00.983Z",
+              "WhenOpened": "2026-09-06T22:23:08.901Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "frmNewIntLicenseApplication.cs",
-              "DocumentMoniker": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\Applications\\frmNewIntLicenseApplication.cs",
-              "RelativeDocumentMoniker": "Applications\\frmNewIntLicenseApplication.cs",
-              "ToolTip": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\Applications\\frmNewIntLicenseApplication.cs",
-              "RelativeToolTip": "Applications\\frmNewIntLicenseApplication.cs",
-              "ViewState": "AgIAAHsAAAAAAAAAAAApwJAAAAAAAAAAAAAAAA==",
+              "Title": "frmUpdateApplicationType.cs",
+              "DocumentMoniker": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\ApplicationTypes\\frmUpdateApplicationType.cs",
+              "RelativeDocumentMoniker": "ApplicationTypes\\frmUpdateApplicationType.cs",
+              "ToolTip": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\ApplicationTypes\\frmUpdateApplicationType.cs*",
+              "RelativeToolTip": "ApplicationTypes\\frmUpdateApplicationType.cs*",
+              "ViewState": "AgIAABUAAAAAAAAAAAAYwB8AAABgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-05T20:54:04.083Z",
+              "WhenOpened": "2026-09-06T22:20:06.973Z",
               "EditorCaption": ""
             }
           ]

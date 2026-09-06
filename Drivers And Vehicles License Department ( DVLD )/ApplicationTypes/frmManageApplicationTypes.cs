@@ -14,15 +14,6 @@ namespace DVLDPresentationLayer
             InitializeComponent();
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         private void frmManageApplicationTypes_Load(object sender, EventArgs e)
         {
@@ -33,7 +24,7 @@ namespace DVLDPresentationLayer
 
         private void EditDGVRowData(object[] NewValues,byte DGVRowIndex)
         {
-            clsUtility.EditFullDataRowInDgv(dgvApplicationTypes,(DataTable)dgvApplicationTypes.DataSource,ref NewValues,DGVRowIndex);
+            clsUtility.EditFullDataRowInDgv(dgvApplicationTypes,(DataTable)dgvApplicationTypes.DataSource,ref NewValues,DGVRowIndex,false);
         }
 
         private void tsmiEditApplicationType_Click(object sender, EventArgs e)
@@ -57,6 +48,15 @@ namespace DVLDPresentationLayer
                 cmsApplicationTypes.Close();
                 MessageBox.Show("There is'nt any application type!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace DVLDPresentationLayer
 
         public event Action AfterEditingPerson;
 
+        string _PreviouslyFoundText = null;
         private enum _enFindBy { PersonID = 1 , NationalNo = 2}
 
         public ctrlPersonDetailsByFilter()
@@ -34,6 +35,7 @@ namespace DVLDPresentationLayer
 
             return _enFindBy.NationalNo;
         }
+
         private void PersonInformationByFilter_Load(object sender, EventArgs e)
         {
             object[] Items = new object[] { "National No", "Person ID" };
@@ -41,6 +43,7 @@ namespace DVLDPresentationLayer
             cbFindBy.SelectedIndex = 0;
 
         }
+
         private void cbFindBy_DropDown(object sender, EventArgs e)
         {
             cbFindBy.BackColor = Color.FromArgb(245,245,245);
@@ -68,6 +71,7 @@ namespace DVLDPresentationLayer
         {
             clsUtility.DrawComboBoxItems(sender, e);
         }
+
         private void _LoadNewPersonData(int PersonID)
         {
             txtFindBy.Text = PersonID.ToString();
@@ -75,6 +79,7 @@ namespace DVLDPresentationLayer
             uctrlPersonDetails.LoadPersonDetails(PersonID);
             OnPersonSelected?.Invoke(PersonID);
         }
+
         private void btnAddNewPerson_Click(object sender, EventArgs e)
         {
             frmAddEditPersonInfo frm = new frmAddEditPersonInfo();
@@ -82,22 +87,21 @@ namespace DVLDPresentationLayer
             frm.ShowDialog();
         }
 
-        string _PreviouslyFoundText = null;
         private void FindPerson()
         {
-          if (txtFindBy.Text == "" || string.IsNullOrWhiteSpace(txtFindBy.Text))
+            if (txtFindBy.Text == "" || string.IsNullOrWhiteSpace(txtFindBy.Text))
             {
                 MessageBox.Show("Please select a person first by their National Number or ID.", "Select a Person", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-                
-            if(_PreviouslyFoundText == txtFindBy.Text)
+
+            if (_PreviouslyFoundText == txtFindBy.Text)
                 return;
-            
+
             else if (GetSelectedItem() == _enFindBy.NationalNo)//readability
             {
-                    clsPerson Person = uctrlPersonDetails.LoadPersonDetails(txtFindBy.Text);
-                    _PreviouslyFoundText = txtFindBy.Text;
+                clsPerson Person = uctrlPersonDetails.LoadPersonDetails(txtFindBy.Text);
+                _PreviouslyFoundText = txtFindBy.Text;
 
                 if (Person != null)
                     OnPersonSelected?.Invoke(Person.PersonID);
@@ -105,12 +109,13 @@ namespace DVLDPresentationLayer
 
             else
             {
-                    clsPerson Person = uctrlPersonDetails.LoadPersonDetails(Convert.ToInt32(txtFindBy.Text));
-                    _PreviouslyFoundText = txtFindBy.Text;
-                    OnPersonSelected?.Invoke(Person.PersonID);
+                clsPerson Person = uctrlPersonDetails.LoadPersonDetails(Convert.ToInt32(txtFindBy.Text));
+                _PreviouslyFoundText = txtFindBy.Text;
+                OnPersonSelected?.Invoke(Person.PersonID);
             }
 
         }
+
         public void SearchForPerson(int PersonID)
         {
             cbFindBy.SelectedItem = "PersonID";
@@ -118,6 +123,7 @@ namespace DVLDPresentationLayer
             uctrlPersonDetails.LoadPersonDetails(PersonID);
             gbFilter.Enabled = false;           
         }
+
         private void btnFindUser_Click(object sender, EventArgs e)
         {
             FindPerson();
@@ -131,6 +137,7 @@ namespace DVLDPresentationLayer
                     txtFindBy.Clear();
             }
         }
+
         public void LoadPersonDetails(int PersonID)
         {
           uctrlPersonDetails.LoadPersonDetails(PersonID);

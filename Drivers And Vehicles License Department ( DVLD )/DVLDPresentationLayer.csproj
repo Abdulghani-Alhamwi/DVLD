@@ -117,6 +117,12 @@
     <Compile Include="Controls\ctrlLDLicenseDetailsByFilter.Designer.cs">
       <DependentUpon>ctrlLDLicenseDetailsByFilter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Applications\frmReplacementForLostOrDamaged.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Applications\frmReplacementForLostOrDamaged.Designer.cs">
+      <DependentUpon>frmReplacementForLostOrDamaged.cs</DependentUpon>
+    </Compile>
     <Compile Include="Drivers\frmDriversManagements.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -301,6 +307,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrlLDLicenseDetailsByFilter.resx">
       <DependentUpon>ctrlLDLicenseDetailsByFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Applications\frmReplacementForLostOrDamaged.resx">
+      <DependentUpon>frmReplacementForLostOrDamaged.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Drivers\frmDriversManagements.resx">
       <DependentUpon>frmDriversManagements.cs</DependentUpon>

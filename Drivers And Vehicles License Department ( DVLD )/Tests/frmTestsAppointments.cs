@@ -110,7 +110,7 @@ namespace DVLDPresentationLayer
 
         private void _EditDataRowInDGV(string NewDateTime,int DgvRowIndex)
         {
-            clsUtility.EditOneColumnValueInDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, "Appointment Date", NewDateTime, DgvRowIndex);
+            clsUtility.EditOneColumnValueInDgv<string>(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, "Appointment Date", NewDateTime, DgvRowIndex);
         }
         private void tsmiEdit_Click(object sender, EventArgs e)
         {
@@ -149,7 +149,7 @@ namespace DVLDPresentationLayer
 
         private void _LockTestAppointment(int DGVRowIndex)
         {
-            clsUtility.EditOneColumnValueInDgv(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, "Is Locked", true, DGVRowIndex);
+            clsUtility.EditOneColumnValueInDgv<bool>(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, "Is Locked", true, DGVRowIndex);
         }
 
         private void _UpdateLDLAppDgv()

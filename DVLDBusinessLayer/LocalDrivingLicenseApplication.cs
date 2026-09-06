@@ -49,7 +49,8 @@ namespace DVLDBusinessLayer
         }
         public static new clsLocalDrivingLicenseApp Find(int LDLApplicationID)
         {
-            byte ApplicationID = 0,LicenseClassID = 0;
+            int ApplicationID = -1;
+            byte LicenseClassID = 0;
             string LicenseClassName = "";
 
             if (clsLocalDrivingLicenseAppData.Find(LDLApplicationID, ref ApplicationID, ref LicenseClassID, ref LicenseClassName))

@@ -547,3 +547,35 @@ The Reference type parameter in .Net/.NetFramework allocate 8 bytes for the refe
 byte AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
 instead of :
 int AffectedRows = command.ExecuteNonQuery();
+
+55)
+e.KeyData == Keys.OemPeriod
+the Keys.OemPeriod represents the . from the keyword and we used it for allowing user to write it in text box for the decimal point.
+
+56) In the following we used generic instead of the object type because the generic it will be faster for the value type case when the value is from value type and it is faster than if we put object type and using it we avoid the boxing and de-boxing which is allocating the value type in heap memory cause of implicit cast to it to object and by that we reduce pressure for unnecessary allocating in heap memory and we reduce pressure on garbage collector because when we send value type to type object -> implicit cast happens and allocate that value type as an object in heap memory while it is local variable in a method and in stack it stays and there is no necessary of allocating in heap for our goal :
+
+      public static void EditOneColumnValueInDgv<T>(DataGridView dgv, DataTable DataSource, string ColumnName, T NewValue, int RowIndex, bool IsSortedDataView = true)
+      {
+          if (IsSortedDataView)
+              RowIndex = (DataSource.Rows.Count - 1) - RowIndex;
+
+          DataSource.Columns[ColumnName].ReadOnly = false;
+          DataSource.Rows[RowIndex].SetField<T>(DataSource.Columns[ColumnName], NewValue);
+          DataSource.Rows[RowIndex].AcceptChanges();
+      }
+
+instead of :
+
+public static void EditOneColumnValueInDgv(DataGridView dgv, DataTable DataSource, string ColumnName, object NewValue, int RowIndex, bool IsSortedDataView = true)
+      {
+          if (IsSortedDataView)
+              RowIndex = (DataSource.Rows.Count - 1) - RowIndex;
+
+          DataSource.Columns[ColumnName].ReadOnly = false;
+          DataSource.Rows[RowIndex].SetField<object>(DataSource.Columns[ColumnName], NewValue);
+          DataSource.Rows[RowIndex].AcceptChanges();
+      }
+
+
+57) object z = (object)x and x is also an object -> no allocating for new object in heap memory , the current object x by that we have its reference to the object we are assigning to which is object z.
+

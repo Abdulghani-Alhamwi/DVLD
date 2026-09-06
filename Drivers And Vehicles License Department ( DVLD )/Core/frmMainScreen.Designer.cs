@@ -46,7 +46,7 @@
             this.tsmiInternationalLicense = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRenewDrivingLicense = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiReplacementForLostOrDamagedLicense = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiReplacementForLostOrDamaged = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiReleaseDetainedDrivingLicense = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRetakeTest = new System.Windows.Forms.ToolStripMenuItem();
@@ -170,7 +170,7 @@
             this.tsmiNewDrivingLicense,
             this.tsmiRenewDrivingLicense,
             this.tsSeparator4,
-            this.tsmiReplacementForLostOrDamagedLicense,
+            this.tsmiReplacementForLostOrDamaged,
             this.tsSeparator5,
             this.tsmiReleaseDetainedDrivingLicense,
             this.tsmiRetakeTest});
@@ -221,13 +221,14 @@
             this.tsSeparator4.Name = "tsSeparator4";
             this.tsSeparator4.Size = new System.Drawing.Size(566, 6);
             // 
-            // tsmiReplacementForLostOrDamagedLicense
+            // tsmiReplacementForLostOrDamaged
             // 
-            this.tsmiReplacementForLostOrDamagedLicense.Image = global::DVLDPresentationLayer.Properties.Resources.Damaged_Driving_License_321;
-            this.tsmiReplacementForLostOrDamagedLicense.Name = "tsmiReplacementForLostOrDamagedLicense";
-            this.tsmiReplacementForLostOrDamagedLicense.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
-            this.tsmiReplacementForLostOrDamagedLicense.Size = new System.Drawing.Size(569, 45);
-            this.tsmiReplacementForLostOrDamagedLicense.Text = "Replacement for Lost or Damaged License";
+            this.tsmiReplacementForLostOrDamaged.Image = global::DVLDPresentationLayer.Properties.Resources.Damaged_Driving_License_321;
+            this.tsmiReplacementForLostOrDamaged.Name = "tsmiReplacementForLostOrDamaged";
+            this.tsmiReplacementForLostOrDamaged.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.tsmiReplacementForLostOrDamaged.Size = new System.Drawing.Size(569, 45);
+            this.tsmiReplacementForLostOrDamaged.Text = "Replacement for Lost or Damaged License";
+            this.tsmiReplacementForLostOrDamaged.Click += new System.EventHandler(this.tsmiReplacementForLostOrDamaged_Click);
             // 
             // tsSeparator5
             // 
@@ -452,7 +453,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiInternationalLicense;
         private System.Windows.Forms.ToolStripMenuItem tsmiRenewDrivingLicense;
         private System.Windows.Forms.ToolStripSeparator tsSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem tsmiReplacementForLostOrDamagedLicense;
+        private System.Windows.Forms.ToolStripMenuItem tsmiReplacementForLostOrDamaged;
         private System.Windows.Forms.ToolStripSeparator tsSeparator5;
         private System.Windows.Forms.ToolStripMenuItem tsmiReleaseDetainedDrivingLicense;
         private System.Windows.Forms.ToolStripMenuItem tsmiRetakeTest;

@@ -26,19 +26,10 @@ namespace DVLDPresentationLayer
             txtFees.Text = ApplicationFees;
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         public static void ValidateFeesTextBox_KeyDown(ErrorProvider erControl, TextBox txtBox, KeyEventArgs e)
         {
-            if (e.KeyData == Keys.Back || char.IsDigit((char)e.KeyData))
+            if (e.KeyData == Keys.Back || char.IsDigit((char)e.KeyData) || e.KeyData == Keys.OemPeriod)
                 txtBox.ReadOnly = false;
             else
             {
@@ -79,8 +70,9 @@ namespace DVLDPresentationLayer
             {
                 if (clsApplicationType.UpdateApplicationType(_ApplicationTypeID, txtTitle.Text, Convert.ToDecimal(txtFees.Text)))
                 {
-                    object[] NewValues = new object[] { _ApplicationTypeID, txtTitle.Text, Convert.ToDecimal(txtFees.Text) };
+                    object[] NewValues = new object[] { _ApplicationTypeID, txtTitle.Text, clsUtility.GetCustomNumberFormat(Convert.ToSingle(txtFees.Text), clsUtility.enCustomNumberFormat.With4ZerosAfterFraction)};
                     AfterUpdatingInfo?.Invoke(NewValues, _AppTypesDGVRowIndex);
+
                     MessageBox.Show("Application Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -91,6 +83,15 @@ namespace DVLDPresentationLayer
         private void txtFees_KeyDown(object sender, KeyEventArgs e)
         {
             ValidateFeesTextBox_KeyDown(ertxtBox, txtFees, e);
+        }
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

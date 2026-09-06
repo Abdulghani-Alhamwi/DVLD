@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
+using DVLDPresentationLayer.Properties;
 using Utility_Library;
 
 namespace DVLDPresentationLayer
@@ -37,6 +38,8 @@ namespace DVLDPresentationLayer
 
                 if (File.Exists(Person.ImagePath))
                     pbPersonalImage.ImageLocation = Person.ImagePath;
+                else
+                    pbPersonalImage.Image = (Person.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
             }
         }
     }

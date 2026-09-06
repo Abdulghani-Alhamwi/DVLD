@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
+using DVLDPresentationLayer.Licenses;
 using Utility_Library;
 
 namespace DVLDPresentationLayer
@@ -59,6 +60,40 @@ namespace DVLDPresentationLayer
         {
             if (clsUtility.IsDgvLastRowSelected(dgvInternationalLicenses))
                 _AppendPartOfRemainingData(dgvInternationalLicenses, clsInternationalLicense.GetDriverInternationalLicenses(_DriverID, clsUtility.WantedNumOfRowsFromDB, (int)dgvInternationalLicenses.Rows[dgvInternationalLicenses.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Int.License ID"].Value));
+        }
+
+        private void tsmiShowLicenseInfo_Click(object sender, EventArgs e)
+        {
+            if(tcLicensesHistory.SelectedTab == tpLocalLicenses)
+            {
+                frmLocalLicenseDetails frm = new frmLocalLicenseDetails((int)dgvLocalLicenses.SelectedRows[0].Cells["Lic.ID"].Value);
+                frm.ShowDialog();
+            }
+            else
+            {
+                frmInternationalLicenseDetails frm = new frmInternationalLicenseDetails((int)dgvInternationalLicenses.SelectedRows[0].Cells["Int.License ID"].Value);
+                frm.ShowDialog();
+            }
+        }
+
+        private void cmsLicenseHistory_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (tcLicensesHistory.SelectedTab == tpLocalLicenses)
+            {
+                if (dgvLocalLicenses.Rows.Count == 0)
+                    cmsLicenseHistory.Close();
+
+                else if (dgvLocalLicenses.SelectedRows.Count > 1)
+                    MessageBox.Show("You can choose only one local license to show its info");
+            }
+            else
+            {
+                if (dgvInternationalLicenses.Rows.Count == 0)
+                    cmsLicenseHistory.Close();
+
+                else if (dgvInternationalLicenses.SelectedRows.Count > 1)
+                    MessageBox.Show("You can choose only one international license to show its info");
+            }
         }
     }
 }

@@ -12,16 +12,6 @@ namespace DVLDPresentationLayer
         {
             InitializeComponent();
         }
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void frmManageTestTypes_Load(object sender, EventArgs e)
         {
             dgvTestTypes.DataSource = clsTestType.GetTestTypes();
@@ -30,7 +20,7 @@ namespace DVLDPresentationLayer
 
         private void EditDGVRowData(object[] NewValues, byte DGVRowIndex)
         {
-            clsUtility.EditFullDataRowInDgv(dgvTestTypes, (DataTable)dgvTestTypes.DataSource, ref NewValues, DGVRowIndex);
+            clsUtility.EditFullDataRowInDgv(dgvTestTypes, (DataTable)dgvTestTypes.DataSource, ref NewValues, DGVRowIndex,false);
         }
 
         private void tsmiEditTestType_Click(object sender, EventArgs e)
@@ -57,5 +47,15 @@ namespace DVLDPresentationLayer
                 MessageBox.Show("There is'nt any test type!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

@@ -221,7 +221,7 @@ namespace DVLDPresentationLayer
         private void _EditDataRowInDGV(ref object[] ModifiedUserDetails, int UsersDgvRowIndex, string NewFullName = null)
         {
             if (NewFullName != null)
-                clsUtility.EditOneColumnValueInDgv(dgvUsers, (DataTable)dgvUsers.DataSource, "Full Name", NewFullName, UsersDgvRowIndex);
+                clsUtility.EditOneColumnValueInDgv<string>(dgvUsers, (DataTable)dgvUsers.DataSource, "Full Name", NewFullName, UsersDgvRowIndex);
 
             else
                 clsUtility.EditFullDataRowInDgv(dgvUsers, (DataTable)dgvUsers.DataSource, ref ModifiedUserDetails, UsersDgvRowIndex);

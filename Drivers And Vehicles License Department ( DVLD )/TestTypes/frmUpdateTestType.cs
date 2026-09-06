@@ -30,17 +30,6 @@ namespace DVLDPresentationLayer
             _TestsTypesDGVRowIndex = TestsTypesDGVRowIndex;
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-
         private void txtFees_KeyDowm(object sender, KeyEventArgs e)
         {
             frmUpdateApplicationType.ValidateFeesTextBox_KeyDown(ertxtBox, txtFees, e);
@@ -84,13 +73,24 @@ namespace DVLDPresentationLayer
             {
                 if (clsTestType.UpdateTestType(_ApplicationTypeID, txtTitle.Text, txtDescription.Text, Convert.ToDecimal(txtFees.Text)))
                 {
-                    object[] NewValues = new object[] { _ApplicationTypeID, txtTitle.Text, txtDescription.Text, Convert.ToDecimal(txtFees.Text) };
+                    object[] NewValues = new object[] { _ApplicationTypeID, txtTitle.Text, txtDescription.Text, clsUtility.GetCustomNumberFormat(Convert.ToSingle(txtFees.Text), clsUtility.enCustomNumberFormat.With4ZerosAfterFraction) };
                     AfterUpdatingInfo?.Invoke(NewValues, _TestsTypesDGVRowIndex);
+
                     MessageBox.Show("Test Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                     MessageBox.Show("Failed to update test type info!", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

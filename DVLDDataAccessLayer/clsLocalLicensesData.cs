@@ -20,6 +20,8 @@ namespace DVLDDataAccessLayer
             if (LastLowstBroughtLicID != -1)
                 query += " WHERE LicenseID < @LastLowstBroughtLicID";
 
+            query += " ORDER BY LicenseID DESC";
+
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@DriverID", DriverID);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);

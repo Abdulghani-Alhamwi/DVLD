@@ -219,7 +219,7 @@ namespace DVLDPresentationLayer
 
             if (PersonInfo != null)
             {
-                frmAddEditPersonInfo frm = new frmAddEditPersonInfo(PersonInfo,Convert.ToInt16(dgvPeople.SelectedRows[0].Index));
+                frmAddEditPersonInfo frm = new frmAddEditPersonInfo(PersonInfo,Convert.ToInt32(dgvPeople.SelectedRows[0].Index));
                 frm.AfterSavingEditedInfo += _EditDataRowInDGV;
                 frm.ShowDialog();
             }

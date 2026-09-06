@@ -15,11 +15,11 @@ namespace Utility_Library
     {
             public enum enCustomDateFormat : byte { NumericFormat = 1, DateAppreviatedMonthName = 2, DateTimeCustomFormat = 3 }
 
+            public enum enCustomNumberFormat : byte { With4ZerosAfterFraction = 0 ,NoJustZerosAfterFraction = 1}
+
             public static Color ComboBoxBackColor = Color.FromArgb(228, 228, 228);
             public static Color ComboBoxItemsBackColor = Color.FromArgb(245, 245, 245);
             public static Color ComboBoxHighlightedBackColor = Color.FromArgb(221, 232, 240);
-
-            private static string _FeesCustomFormat = "G29";
 
             public static byte WantedNumOfRowsFromDB = 10;
 
@@ -112,6 +112,7 @@ namespace Utility_Library
 
                 return Encoding.UTF8.GetString(DecryptedUserName);
             }
+
             public static void EnableErrorProvider(ErrorProvider erControl, Control control, string ErrorMessage, CancelEventArgs CancelEvent = null)
             {
                 erControl.SetError(control, ErrorMessage);
@@ -143,6 +144,7 @@ namespace Utility_Library
                 }
                 e.DrawFocusRectangle();
             }
+
             public static void FilterDataView(DataView dataview, string ColumnName, string FilterOnValue, KeyEventArgs e)
             {
                 if (dataview.Table.Rows.Count == 0)
@@ -242,50 +244,82 @@ namespace Utility_Library
             public static void AddNewRowToDGV(DataGridView dgv, DataTable DataSource, ref object[] NewValues, string dgvFirstColumnName)
             {
                 DataSource.Rows.Add(NewValues);
+                DataSource.AcceptChanges();
 
-                dgv.Sort(dgv.Columns[dgvFirstColumnName], ListSortDirection.Descending);
+                DataSource.DefaultView.Sort = $"{dgvFirstColumnName} DESC";
             }
 
             /// <summary>
             /// Edit row in data grid view , new values array length must match the number of data grid view columns and row index is the index of the row that the user want to edit. 
             /// </summary>
-            public static void EditFullDataRowInDgv(DataGridView dgv, DataTable DataSource, ref object[] NewValues, int RowIndex)
+            public static void EditFullDataRowInDgv(DataGridView dgv, DataTable DataSource, ref object[] NewValues, int RowIndex,bool IsSortedDataView = true)
             {
+            if (IsSortedDataView)
+                RowIndex = (DataSource.Rows.Count - 1) - RowIndex;
+
             for (short i = 0; i < dgv.Columns.Count; i++)
             {
                 DataSource.Columns[i].ReadOnly = false;
-                dgv.Rows[RowIndex].Cells[i].Value = NewValues[i];
+                DataSource.Rows[RowIndex].SetField<object>(DataSource.Columns[i], NewValues[i]);
             }
-            }
-
-            /// <summary>
-            /// Edit one column value in a row in data grid view .
-            /// </summary>
-            public static void EditOneColumnValueInDgv(DataGridView dgv,DataTable DataSource,string ColumnName, object NewValue, int RowIndex)
-            {
-            DataSource.Columns[ColumnName].ReadOnly = false;
-            dgv.Rows[RowIndex].Cells[ColumnName].Value = NewValue;
-            }
-
-            public static void CenterControlHorizontally(Control ContainerControl, Control control)
-            {
-                control.Location = new Point(ContainerControl.Width / 2 - control.Width / 2, control.Location.Y);
-            }
-
-        /// <summary>
-        /// Return a string contains the fees and the format is if there was only zeros after the fraction , it shows only the number with out the fraction and zeros after the fraction.
-        /// </summary>
-        public static string GetCustomFeesFormat(decimal Fees)
-        {
-            return Fees.ToString(_FeesCustomFormat);
+            DataSource.Rows[RowIndex].AcceptChanges();
         }
 
-            /// <summary>
-            /// The enCustomDateFormat.NumericFormat returns format "dd/MM/yyyy",
-            /// The enCustomDateFormat.DateAppreviatedMonthName returns format "d/MMM/yyyy";
-            /// The enCustomDateFormat.DateTimeCustomFormat returns format "dd/MM/yyyy h:mm tt";
-            /// </summary>
-            public static string GetCustomDateFormat(enCustomDateFormat CustomFormat)
+
+        /// <summary>
+        /// Edit one column value in a row in data grid view .
+        /// </summary>
+        public static void EditOneColumnValueInDgv<T>(DataGridView dgv, DataTable DataSource, string ColumnName, T NewValue, int RowIndex, bool IsSortedDataView = true)
+        {
+            if (IsSortedDataView)
+                RowIndex = (DataSource.Rows.Count - 1) - RowIndex;
+
+            DataSource.Columns[ColumnName].ReadOnly = false;
+            DataSource.Rows[RowIndex].SetField<T>(DataSource.Columns[ColumnName], NewValue);
+            DataSource.Rows[RowIndex].AcceptChanges();
+        }
+
+        public static void CenterControlHorizontally(Control ContainerControl, Control control)
+        {
+            control.Location = new Point(ContainerControl.Width / 2 - control.Width / 2, control.Location.Y);
+        }
+
+        private static string _GetNumberFormat(enCustomNumberFormat Format)
+        {
+            if (Format == enCustomNumberFormat.NoJustZerosAfterFraction)
+                return "G29";
+
+            else
+                return "F4";
+        }
+
+        /// <summary>
+        /// Takes decimal number and wanted format and returns a string contains the number and the format is :
+        /// if enCustomNumberFormat.NoJustZerosAfterFraction then if there was only zeros after the fraction , it shows only the number with out the fraction and zeros after the fraction.
+        /// if enCustomNumberFormat.With4ZerosAfterFraction then it will return string contain fees value with fraction and after it 4 zeros even if numbers after fraction was zeros and even if there was no fraction.
+        /// </summary>
+        public static string GetCustomNumberFormat(decimal Number,enCustomNumberFormat Format)
+        {
+            return Number.ToString(_GetNumberFormat(Format));
+        }
+
+        /// <summary>
+        /// Takes float number and wanted format and returns a string contains the number and the format is :
+        /// if enCustomNumberFormat.NoJustZerosAfterFraction then if there was only zeros after the fraction , it shows only the number with out the fraction and zeros after the fraction.
+        /// if enCustomNumberFormat.With4ZerosAfterFraction then it will return string contain fees value with fraction and after it 4 zeros even if numbers after fraction was zeros and even if there was no fraction.
+        /// </summary>
+        public static string GetCustomNumberFormat(float Number, enCustomNumberFormat Format)
+        {
+            return Number.ToString(_GetNumberFormat(Format));
+        }
+
+
+        /// <summary>
+        /// The enCustomDateFormat.NumericFormat returns format "dd/MM/yyyy",
+        /// The enCustomDateFormat.DateAppreviatedMonthName returns format "d/MMM/yyyy";
+        /// The enCustomDateFormat.DateTimeCustomFormat returns format "dd/MM/yyyy h:mm tt";
+        /// </summary>
+        public static string GetCustomDateFormat(enCustomDateFormat CustomFormat)
             {
                 switch (CustomFormat)
                 {

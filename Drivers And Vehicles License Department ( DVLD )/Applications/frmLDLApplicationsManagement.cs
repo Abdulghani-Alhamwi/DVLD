@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
@@ -213,7 +214,7 @@ namespace DVLDPresentationLayer
                     int ApplicationID = clsLocalDrivingLicenseApp.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
 
                     if (clsApplication.ChangeApplicationStatus(ApplicationID, clsApplication.enApplicationStatus.Canceled))
-                        clsUtility.EditOneColumnValueInDgv(dgvLDLApplications,(DataTable)dgvLDLApplications.DataSource,"Status", "Canceled", dgvLDLApplications.SelectedRows[0].Index);
+                        clsUtility.EditOneColumnValueInDgv<string>(dgvLDLApplications,(DataTable)dgvLDLApplications.DataSource,"Status", "Canceled", dgvLDLApplications.SelectedRows[0].Index);
                     else
                         MessageBox.Show("Failed To Cancel Application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -375,7 +376,9 @@ namespace DVLDPresentationLayer
         private void _EditRowForPassedTest(int DgvRowIndex)
         {
             byte PassedTests = Convert.ToByte(dgvLDLApplications.Rows[DgvRowIndex].Cells["Passed Tests"].Value);
-            clsUtility.EditOneColumnValueInDgv(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource,"Passed Tests", PassedTests + 1, DgvRowIndex);
+            PassedTests += 1;
+
+            clsUtility.EditOneColumnValueInDgv<byte>(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource, "Passed Tests", PassedTests, DgvRowIndex);
         }
         private void tsmiScheduleVisionTest_Click(object sender, EventArgs e)
         {
@@ -413,7 +416,7 @@ namespace DVLDPresentationLayer
                 clsApplication.enApplicationStatus.Completed
                 );
 
-            clsUtility.EditOneColumnValueInDgv(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource,"Status", "Completed", DGVRowIndex);
+            clsUtility.EditOneColumnValueInDgv<string>(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource,"Status", "Completed", DGVRowIndex);
         }
 
         private void tsmiIssueDLFirstTime_Click(object sender, EventArgs e)

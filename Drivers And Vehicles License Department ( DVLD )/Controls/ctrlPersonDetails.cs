@@ -9,12 +9,14 @@ namespace DVLDPresentationLayer
     public partial class ctrlPersonDetails : UserControl
     {
         public event Action AfterEditingPersonInfo;
+     
+        clsPerson _Person;
+        bool _ShownDefaultValues = false;
+
         public ctrlPersonDetails()
         {
             InitializeComponent();
         }
-        clsPerson _Person;
-        bool _ShownDefaultValues = false;
         public clsPerson LoadPersonDetails (string NationalNo)
         {
             _Person = clsPerson.Find(NationalNo);
@@ -32,6 +34,7 @@ namespace DVLDPresentationLayer
                 return null;
             }
         }
+
         public clsPerson LoadPersonDetails(int PersonID)
         {
             _Person = clsPerson.Find(PersonID);
@@ -50,6 +53,7 @@ namespace DVLDPresentationLayer
             }
 
         }
+
         private void _ShowDefaultDetails()
         {
             if (!_ShownDefaultValues)
@@ -77,6 +81,7 @@ namespace DVLDPresentationLayer
             _ShownDefaultValues = true;
             lnlblEditPersonInfo.Enabled = false;
         }
+
         private void _ShowPersonDetails()
         {
             lblPersonID.Text = _Person.PersonID.ToString();
@@ -126,8 +131,6 @@ namespace DVLDPresentationLayer
                 frm.AfterEditingPersonInfo += _RefreshView;
                 frm.ShowDialog();
                 _ShowPersonDetails();
-
-                
             }
             else
                 MessageBox.Show("Person is not found!", "Details", MessageBoxButtons.OK, MessageBoxIcon.Error);

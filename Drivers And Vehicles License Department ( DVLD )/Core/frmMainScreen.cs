@@ -117,5 +117,11 @@ namespace DVLDPresentationLayer
             frmRenewLocalDrivingLicense frm = new frmRenewLocalDrivingLicense();
             frm.ShowDialog();
         }
+
+        private void tsmiReplacementForLostOrDamaged_Click(object sender, EventArgs e)
+        {
+            frmReplacementForLostOrDamaged frm = new frmReplacementForLostOrDamaged();
+            frm.ShowDialog();
+        }
     }
 }

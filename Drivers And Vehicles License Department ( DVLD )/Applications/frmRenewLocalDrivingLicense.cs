@@ -2,12 +2,13 @@
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using Utility_Library;
+using static Utility_Library.clsUtility;
 
 namespace DVLDPresentationLayer.Licenses
 {
     public partial class frmRenewLocalDrivingLicense : Form
     {
-        int _RenewedLicenseID,_SelectedLocalLicenseID, _DriverID;
+        int _RenewedLicenseID;
         clsLocalLicense _SelectedLicenseInfo;
         public frmRenewLocalDrivingLicense()
         {
@@ -17,13 +18,12 @@ namespace DVLDPresentationLayer.Licenses
             _ShowDefaultInfo();
 
             _RenewedLicenseID = -1;
-            _SelectedLocalLicenseID = -1;
-            _DriverID = -1;
         }
 
         private void _ShowDefaultInfo()
         {
-            lblApplicationFees.Text = clsUtility.GetCustomFeesFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.RenewLicense));
+            lblApplicationFees.Text = clsUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.RenewLicense),
+                enCustomNumberFormat.NoJustZerosAfterFraction);
             lblApplicationDate.Text = DateTime.Now.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
             lblIssueDate.Text = lblApplicationDate.Text;
             lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(clsGlobalSettings.CurrentUserID));
@@ -31,18 +31,18 @@ namespace DVLDPresentationLayer.Licenses
 
         private void _ShowApplicationInfo()
         {
-            lblOldLocalLicenseID.Text = _SelectedLocalLicenseID.ToString();
+            lblOldLocalLicenseID.Text = _SelectedLicenseInfo.LicenseID.ToString();
             lblExpirationDate.Text = DateTime.Now.AddYears(clsLicenseClass.GetLicenseValidityLength(_SelectedLicenseInfo.LicenseClassID)).ToString(
                 clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
-            lblLicenseFees.Text = clsUtility.GetCustomFeesFormat(
-                clsLicenseClass.GetLicenseClassFees(_SelectedLicenseInfo.LicenseClassID));
-            lblTotalFees.Text = clsUtility.GetCustomFeesFormat(
-                clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.RenewLicense) + clsLicenseClass.GetLicenseClassFees(_SelectedLicenseInfo.LicenseClassID));
+            lblLicenseFees.Text = clsUtility.GetCustomNumberFormat(_SelectedLicenseInfo.PaidFees, enCustomNumberFormat.NoJustZerosAfterFraction);
+            lblTotalFees.Text = clsUtility.GetCustomNumberFormat(
+                clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.RenewLicense) + _SelectedLicenseInfo.PaidFees,
+                enCustomNumberFormat.NoJustZerosAfterFraction);
         }
 
         private void lnlblShowLicenseHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID(_DriverID));
+            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID(_SelectedLicenseInfo.DriverID));
             frm.ShowDialog();
         }
 
@@ -55,8 +55,6 @@ namespace DVLDPresentationLayer.Licenses
         private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(clsLocalLicense LocalLicenseInfo)
         {
             _SelectedLicenseInfo = LocalLicenseInfo;
-            _SelectedLocalLicenseID = _SelectedLicenseInfo.LicenseID;
-            _DriverID = _SelectedLicenseInfo.DriverID;
             _ShowApplicationInfo();
 
             if (!LocalLicenseInfo.IsExpired())
@@ -78,7 +76,7 @@ namespace DVLDPresentationLayer.Licenses
         {
             clsApplication LicenseRenewalApplication = new clsApplication
              (
-                ApplicantPersonID:clsDriver.GetDriverPersonID(_DriverID),
+                ApplicantPersonID:clsDriver.GetDriverPersonID(_SelectedLicenseInfo.DriverID),
                 ApplicationDate:DateTime.Now,
                 ApplicationTypeID:clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.RenewLicense),
                 ApplicationStatus:clsApplication.enApplicationStatus.New,
@@ -97,27 +95,17 @@ namespace DVLDPresentationLayer.Licenses
                 return false;
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private bool _IssueRenewedLocalLicense(int NewApplicationID,ref int NewLicenseID)
         {
             clsLocalLicense NewLocalLicense = new clsLocalLicense
             (
                 ApplicationID: NewApplicationID,
-                DriverID: _DriverID,
+                DriverID: _SelectedLicenseInfo.DriverID,
                 LicenseClassID: _SelectedLicenseInfo.LicenseClassID,
                 IssueDate: DateTime.Now,
                 ExpirationDate: DateTime.Now.AddYears(clsLicenseClass.GetLicenseValidityLength(_SelectedLicenseInfo.LicenseClassID)),
                 Notes: (txtNotes.Text != "") ? txtNotes.Text : null,
-                PaidFees: clsLicenseClass.GetLicenseClassFees(_SelectedLicenseInfo.LicenseClassID),
+                PaidFees: _SelectedLicenseInfo.PaidFees,
                 IsActive:true,
                 IssueReason: clsLocalLicense.enIssueReason.Renew,
                 CreatedByUserID: clsGlobalSettings.CurrentUserID
@@ -135,18 +123,20 @@ namespace DVLDPresentationLayer.Licenses
 
         private void btnRenewLicense_Click(object sender, EventArgs e)
         {
-            if (_SelectedLocalLicenseID != -1)
+            if (_SelectedLicenseInfo != null)
             { 
             DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to renew license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (ConfirmationQuestion == DialogResult.Yes)
                 {
-                    if (clsLocalLicense.DeactivateLicense(_SelectedLocalLicenseID))
-                    {
                         int NewApplicationID = -1;
                         if (_AddNewApplication(ref NewApplicationID))
                         {
                             int RenewedLicenseID = -1;
-                            if (_IssueRenewedLocalLicense(NewApplicationID, ref RenewedLicenseID))
+                        if (_IssueRenewedLocalLicense(NewApplicationID, ref RenewedLicenseID))
+                        {
+                            clsApplication.ChangeApplicationStatus(NewApplicationID, clsApplication.enApplicationStatus.Completed);
+
+                            if (clsLocalLicense.DeactivateLicense(_SelectedLicenseInfo.LicenseID))
                             {
                                 lblRenewLicenseAppID.Text = NewApplicationID.ToString();
                                 lblRenewedLicenseID.Text = RenewedLicenseID.ToString();
@@ -158,17 +148,27 @@ namespace DVLDPresentationLayer.Licenses
                                 btnRenewLicense.Enabled = false;
                             }
                             else
-                                MessageBox.Show("Failed to renew license!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Failed to deactivate old local license!\nLicense renewal failed", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                            MessageBox.Show("Failed to renew license!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         else
                             MessageBox.Show("Failed to save application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                        MessageBox.Show("Failed to deactivate old local license!\nLicense renewal failed", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }             
             }
             else
                 MessageBox.Show("Enter local license ID First in order to renew license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

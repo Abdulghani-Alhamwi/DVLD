@@ -92,9 +92,9 @@
             this.lblFormBigTitle.Location = new System.Drawing.Point(428, 42);
             this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormBigTitle.Name = "lblFormBigTitle";
-            this.lblFormBigTitle.Size = new System.Drawing.Size(424, 52);
+            this.lblFormBigTitle.Size = new System.Drawing.Size(290, 52);
             this.lblFormBigTitle.TabIndex = 41;
-            this.lblFormBigTitle.Text = "Add Edit New User";
+            this.lblFormBigTitle.Text = "frm Big Title";
             // 
             // lblFormTitle
             // 
@@ -103,9 +103,9 @@
             this.lblFormTitle.Location = new System.Drawing.Point(25, 8);
             this.lblFormTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormTitle.Name = "lblFormTitle";
-            this.lblFormTitle.Size = new System.Drawing.Size(212, 29);
+            this.lblFormTitle.Size = new System.Drawing.Size(103, 29);
             this.lblFormTitle.TabIndex = 42;
-            this.lblFormTitle.Text = "Add Edit New User";
+            this.lblFormTitle.Text = "frm Title";
             // 
             // tcAddNewUser
             // 

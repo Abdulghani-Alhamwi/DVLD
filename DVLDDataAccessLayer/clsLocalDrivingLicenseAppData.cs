@@ -157,16 +157,16 @@ namespace DVLDDataAccessLayer
             return (AffectedRows > 0);
         }
 
-        public static bool Find(int LDLApplicationID, ref byte ApplicationID, ref byte LicenseClassID , ref string LicenseClassName)
+        public static bool Find(int LDLApplicationID, ref int ApplicationID, ref byte LicenseClassID , ref string LicenseClassName)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query = @"SELECT LocalDrivingLicenseApplications.* , LicenseClasses.ClassName FROM LocalDrivingLicenseApplications
                              INNER JOIN LicenseClasses ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID
-                             WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID";
+                             WHERE LocalDrivingLicenseApplicationID = @LDLApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LDLApplicationID);
+            command.Parameters.AddWithValue("@LDLApplicationID", LDLApplicationID);
 
             try
             {
@@ -176,7 +176,7 @@ namespace DVLDDataAccessLayer
 
                 if (reader.Read())
                 {
-                    ApplicationID = Convert.ToByte(reader["ApplicationID"]);
+                    ApplicationID = (int)reader["ApplicationID"];
                     LicenseClassID = Convert.ToByte(reader["LicenseClassID"]);
                     LicenseClassName = (string)reader["ClassName"];
 

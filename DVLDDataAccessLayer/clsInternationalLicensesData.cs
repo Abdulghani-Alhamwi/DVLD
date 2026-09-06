@@ -23,6 +23,8 @@ namespace DVLDDataAccessLayer
             if (LowstBroughtIntLicID != -1)
                 query += " AND DriverID < @LowstBroughtIntLicID";
 
+            query += " ORDER BY InternationalLicenseID DESC";
+
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
             command.Parameters.AddWithValue("@DriverID", DriverID);
@@ -61,6 +63,8 @@ namespace DVLDDataAccessLayer
 
             if (LowstBroughtIntLicID != -1)
                 query += " AND DriverID < @LowstBroughtIntLicID";
+
+            query += " ORDER BY InternationalLicenseID DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);

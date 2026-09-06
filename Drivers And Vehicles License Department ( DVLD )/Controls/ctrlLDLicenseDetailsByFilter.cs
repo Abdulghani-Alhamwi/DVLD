@@ -29,5 +29,13 @@ namespace DVLDPresentationLayer
             else
                 MessageBox.Show("No entered ID!", "Enter License ID First", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        private void txtLicenseID_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (Char.IsDigit((Char)e.KeyData) || e.KeyData == Keys.Back)
+                txtLicenseID.ReadOnly = false;
+            else
+                txtLicenseID.ReadOnly = true;
+        }
     }
 }

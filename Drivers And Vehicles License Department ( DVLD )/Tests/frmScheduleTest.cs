@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
-using DVLDPresentationLayer.Properties;
 using DVLDBusinessLayer;
+using DVLDPresentationLayer.Properties;
 using Utility_Library;
+using static Utility_Library.clsUtility;
 
 namespace DVLDPresentationLayer
 {
@@ -77,8 +78,11 @@ namespace DVLDPresentationLayer
             if(Appointment != null)
             _Appointment = Appointment;
 
-            _LDLApp = LDLApp;
-            _LoadInfo(TestType, TestTrial);
+            if (LDLApp != null)
+            {
+                _LDLApp = LDLApp;
+                _LoadInfo(TestType, TestTrial);
+            }
 
             if (!_IsLockedMode)
             {
@@ -117,8 +121,10 @@ namespace DVLDPresentationLayer
             {
                 gbReTakeTestInfo.Enabled = true;
                 lblFormBigTitle.Text = "Schedule Retake Test";
-                lblRAppFees.Text =  clsUtility.GetCustomFeesFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReTakeTest));
-                lblTotalFees.Text = clsUtility.GetCustomFeesFormat(Convert.ToDecimal(lblTestFees.Text) + Convert.ToDecimal(lblRAppFees.Text));
+                lblRAppFees.Text =  clsUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReTakeTest),
+                    enCustomNumberFormat.NoJustZerosAfterFraction);
+                lblTotalFees.Text = clsUtility.GetCustomNumberFormat(Convert.ToDecimal(lblTestFees.Text) + Convert.ToDecimal(lblRAppFees.Text),
+                    enCustomNumberFormat.NoJustZerosAfterFraction);
             }
             else
             {
@@ -143,19 +149,19 @@ namespace DVLDPresentationLayer
                 case clsTestType.enTestType.VisionTest:
                     gbContentContainer.Text = "Vision Test";
                     pbTestType.Image = Resources.Vision_512;
-                    lblFees.Text = clsUtility.GetCustomFeesFormat(clsTestType.GetTestTypeFees(1));
+                    lblFees.Text = clsUtility.GetCustomNumberFormat(clsTestType.GetTestTypeFees(1), enCustomNumberFormat.NoJustZerosAfterFraction);
                     break;
 
                 case clsTestType.enTestType.WrittenTest:
                     gbContentContainer.Text = "Written Test";
                     pbTestType.Image =Resources.Written_Test_512;
-                    lblFees.Text = clsUtility.GetCustomFeesFormat(clsTestType.GetTestTypeFees(2));
+                    lblFees.Text = clsUtility.GetCustomNumberFormat(clsTestType.GetTestTypeFees(2), enCustomNumberFormat.NoJustZerosAfterFraction);
                     break;
 
                 case clsTestType.enTestType.StreetTest:
                     gbContentContainer.Text = "Street Test";
                     pbTestType.Image = Resources.driving_test_512;
-                    lblFees.Text = clsUtility.GetCustomFeesFormat(clsTestType.GetTestTypeFees(3));
+                    lblFees.Text = clsUtility.GetCustomNumberFormat(clsTestType.GetTestTypeFees(3), enCustomNumberFormat.NoJustZerosAfterFraction);
                     break;
             }
         }
