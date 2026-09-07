@@ -24,7 +24,7 @@ namespace DVLDPresentationLayer
 
         private void EditDGVRowData(object[] NewValues,byte DGVRowIndex)
         {
-            clsUtility.EditFullDataRowInDgv(dgvApplicationTypes,(DataTable)dgvApplicationTypes.DataSource,ref NewValues,DGVRowIndex,false);
+            clsUtility.EditFullDataRowInDgv(dgvApplicationTypes,(DataTable)dgvApplicationTypes.DataSource,NewValues,DGVRowIndex);
         }
 
         private void tsmiEditApplicationType_Click(object sender, EventArgs e)

@@ -9,7 +9,7 @@ namespace DVLDPresentationLayer.Applications
 {
     public partial class frmNewIntLicenseApplication : Form
     {
-        public delegate void IssuedLicense(ref object[] NewInternationalLicenseInfo);
+        public delegate void IssuedLicense(object[] NewInternationalLicenseInfo);
 
         public event IssuedLicense OnIssuedLicense;
 
@@ -183,9 +183,10 @@ namespace DVLDPresentationLayer.Applications
                             object[] NewInternationalLicenseInfo = new object[] { _NewInternationalLicense.InternationalLicenseID,_NewInternationalLicense.ApplicationID,_NewInternationalLicense.DriverID,
                         _NewInternationalLicense.IssuedUsingLocalLicenseID,_NewInternationalLicense.IssueDate,_NewInternationalLicense.ExpirationDate,_NewInternationalLicense.IsActive};
 
-                            OnIssuedLicense?.Invoke(ref NewInternationalLicenseInfo);
+                            OnIssuedLicense?.Invoke(NewInternationalLicenseInfo);
                             lblInternationalLicenseAppID.Text = NewApplicationID.ToString();
                             lblInternationalLicenseID.Text = _NewInternationalLicense.InternationalLicenseID.ToString();
+
                             MessageBox.Show($"International License Issued Successfully With ID : {_NewInternationalLicense.InternationalLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             btnIssueLicense.Enabled = false;

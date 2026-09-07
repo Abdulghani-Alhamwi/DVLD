@@ -8,10 +8,12 @@ namespace DVLDPresentationLayer
 {
     public partial class frmUsersManagement : Form
     {
+        private int _NumberOfDgvAddedRows;
         public frmUsersManagement()
         {
             InitializeComponent();
         }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -153,12 +155,12 @@ namespace DVLDPresentationLayer
         {
             cbIsActive.BackColor = clsUtility.ComboBoxHighlightedBackColor;
         }
-        private void _AddNewRowToDGV(ref object[] NewUserDetails)
+        private void _AddNewRowToDGV(object[] NewUserDetails)
         {
             if (dgvUsers.DataSource == null)
                 dgvUsers.DataSource = clsUser.GetColumnsNamesForView();
             
-            clsUtility.AddNewRowToDGV(dgvUsers, (DataTable)dgvUsers.DataSource, ref NewUserDetails, "User ID");
+            clsUtility.AddNewRowToDGV((DataTable)dgvUsers.DataSource, NewUserDetails, dgvUsers.Columns[0].HeaderText, ref _NumberOfDgvAddedRows);
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
 
@@ -218,13 +220,13 @@ namespace DVLDPresentationLayer
             _AddNewUserScreen();
         }
 
-        private void _EditDataRowInDGV(ref object[] ModifiedUserDetails, int UsersDgvRowIndex, string NewFullName = null)
+        private void _EditDataRowInDGV(object[] ModifiedUserDetails, int UsersDgvRowIndex, string NewFullName = null)
         {
             if (NewFullName != null)
-                clsUtility.EditOneColumnValueInDgv<string>(dgvUsers, (DataTable)dgvUsers.DataSource, "Full Name", NewFullName, UsersDgvRowIndex);
+                clsUtility.EditOneColumnValueInDgv<string>((DataTable)dgvUsers.DataSource, "Full Name", NewFullName, UsersDgvRowIndex, _NumberOfDgvAddedRows);
 
             else
-                clsUtility.EditFullDataRowInDgv(dgvUsers, (DataTable)dgvUsers.DataSource, ref ModifiedUserDetails, UsersDgvRowIndex);
+                clsUtility.EditFullDataRowInDgv(dgvUsers, (DataTable)dgvUsers.DataSource,ModifiedUserDetails, UsersDgvRowIndex, _NumberOfDgvAddedRows);
         }
         private void tsmiEdit_Click(object sender, EventArgs e)
         {

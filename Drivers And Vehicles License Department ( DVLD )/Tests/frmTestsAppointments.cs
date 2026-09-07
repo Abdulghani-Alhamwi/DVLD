@@ -9,6 +9,7 @@ namespace DVLDPresentationLayer
 {
     public partial class frmTestsAppointments : Form
     {
+        private int _NumberOfDgvAddedRows;
         internal event Action<int> AfterPassingTest;
 
        private clsTestType.enTestType _TestType;
@@ -62,12 +63,12 @@ namespace DVLDPresentationLayer
         {
             this.Close();
         }
-        private void _AddNewRowToDGV(ref object[] NewAppointmentDetails)
+        private void _AddNewRowToDGV(object[] NewAppointmentDetails)
         {
             if (dgvTestAppointments.DataSource == null)
                 dgvTestAppointments.DataSource = clsTestAppointment.GetColumnsNamesForView();
 
-            clsUtility.AddNewRowToDGV(dgvTestAppointments,(DataTable) dgvTestAppointments.DataSource, ref NewAppointmentDetails, "Appointment ID");
+            clsUtility.AddNewRowToDGV((DataTable) dgvTestAppointments.DataSource,NewAppointmentDetails, dgvTestAppointments.Columns[0].HeaderText, ref _NumberOfDgvAddedRows);
             lblRecordsNumber.Text = (Convert.ToInt16(lblRecordsNumber.Text) + 1).ToString();
         }
         private void btnScheduleTest_Click(object sender, EventArgs e)
@@ -110,7 +111,7 @@ namespace DVLDPresentationLayer
 
         private void _EditDataRowInDGV(string NewDateTime,int DgvRowIndex)
         {
-            clsUtility.EditOneColumnValueInDgv<string>(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, "Appointment Date", NewDateTime, DgvRowIndex);
+            clsUtility.EditOneColumnValueInDgv<string>((DataTable)dgvTestAppointments.DataSource, "Appointment Date", NewDateTime, DgvRowIndex, _NumberOfDgvAddedRows);
         }
         private void tsmiEdit_Click(object sender, EventArgs e)
         {
@@ -149,7 +150,7 @@ namespace DVLDPresentationLayer
 
         private void _LockTestAppointment(int DGVRowIndex)
         {
-            clsUtility.EditOneColumnValueInDgv<bool>(dgvTestAppointments, (DataTable)dgvTestAppointments.DataSource, "Is Locked", true, DGVRowIndex);
+            clsUtility.EditOneColumnValueInDgv<bool>((DataTable)dgvTestAppointments.DataSource, "Is Locked", true, DGVRowIndex, _NumberOfDgvAddedRows);
         }
 
         private void _UpdateLDLAppDgv()

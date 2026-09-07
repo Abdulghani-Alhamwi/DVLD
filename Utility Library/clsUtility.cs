@@ -238,24 +238,48 @@ namespace Utility_Library
                 }
             }
 
+        private static void _AddRowToDgvDataSource(DataTable DataSource,object[] NewValues,string dgvFirstColumnName)
+        {
+            DataSource.Rows.Add(NewValues);
+            DataSource.AcceptChanges();
+
+            DataSource.DefaultView.Sort = $"{dgvFirstColumnName} DESC";
+        }
+
             /// <summary>
             /// Add new row to data grid view , the new values array length must match the number of data grid view columns and the dgv first column name is to sort that column in order to display the new row as first row when the dgv has a lot of records in order to avoid user to scroll down to reach the new row.
             /// </summary>
-            public static void AddNewRowToDGV(DataGridView dgv, DataTable DataSource, ref object[] NewValues, string dgvFirstColumnName)
+            public static void AddNewRowToDGV(DataTable DataSource,object[] NewValues,string dgvFirstColumnName,ref int NumberOfAddedRows)
             {
-                DataSource.Rows.Add(NewValues);
-                DataSource.AcceptChanges();
-
-                DataSource.DefaultView.Sort = $"{dgvFirstColumnName} DESC";
+            _AddRowToDgvDataSource(DataSource,NewValues,dgvFirstColumnName);
+            NumberOfAddedRows++;
             }
 
+            public static void AddNewRowToDGV(DataTable DataSource, object[] NewValues,string dgvFirstColumnName)
+            {
+                _AddRowToDgvDataSource(DataSource,NewValues,dgvFirstColumnName);
+            }
+
+        private static int _GetRowIndexForDgvAddCase(DataTable DataSource,int RowIndex,int NumberOfAddedRows)
+            {
+                if (RowIndex < NumberOfAddedRows)
+                    RowIndex = (DataSource.Rows.Count - 1) - RowIndex;
+
+                else
+                    RowIndex -= NumberOfAddedRows;
+
+                return RowIndex;
+            }
+        
             /// <summary>
             /// Edit row in data grid view , new values array length must match the number of data grid view columns and row index is the index of the row that the user want to edit. 
             /// </summary>
-            public static void EditFullDataRowInDgv(DataGridView dgv, DataTable DataSource, ref object[] NewValues, int RowIndex,bool IsSortedDataView = true)
+            public static void EditFullDataRowInDgv(DataGridView dgv, DataTable DataSource,object[] NewValues, int RowIndex,int NumberOfAddedRows = -1)
             {
-            if (IsSortedDataView)
-                RowIndex = (DataSource.Rows.Count - 1) - RowIndex;
+            if (NumberOfAddedRows != -1)
+            {
+                RowIndex = _GetRowIndexForDgvAddCase(DataSource,RowIndex,NumberOfAddedRows);
+            }
 
             for (short i = 0; i < dgv.Columns.Count; i++)
             {
@@ -269,10 +293,12 @@ namespace Utility_Library
         /// <summary>
         /// Edit one column value in a row in data grid view .
         /// </summary>
-        public static void EditOneColumnValueInDgv<T>(DataGridView dgv, DataTable DataSource, string ColumnName, T NewValue, int RowIndex, bool IsSortedDataView = true)
+        public static void EditOneColumnValueInDgv<T>(DataTable DataSource, string ColumnName, T NewValue, int RowIndex, int NumberOfAddedRows = -1)
         {
-            if (IsSortedDataView)
-                RowIndex = (DataSource.Rows.Count - 1) - RowIndex;
+            if (NumberOfAddedRows != -1)
+            {
+                RowIndex = _GetRowIndexForDgvAddCase(DataSource, RowIndex, NumberOfAddedRows);
+            }
 
             DataSource.Columns[ColumnName].ReadOnly = false;
             DataSource.Rows[RowIndex].SetField<T>(DataSource.Columns[ColumnName], NewValue);

@@ -9,7 +9,7 @@ namespace DVLDPresentationLayer
 {
     public partial class frmScheduleTest : Form
     {
-        internal delegate void ScheduledAppointment(ref object[] NewAppointmentDetails);
+        internal delegate void ScheduledAppointment(object[] NewAppointmentDetails);
         internal event ScheduledAppointment AfterSchedulingAppointment;
 
         internal delegate void EditedScheduledAppointment(string NewAppointmentDate,int DGVRowIndex);
@@ -248,7 +248,7 @@ namespace DVLDPresentationLayer
                 if (AfterSchedulingAppointment != null)
                 {
                     object[] NewDetails = new object[] { _Appointment.TestAppointmentID, _Appointment.AppointmentDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)), _Appointment.PaidFees, _Appointment.IsLocked };
-                    AfterSchedulingAppointment?.Invoke(ref NewDetails);
+                    AfterSchedulingAppointment?.Invoke(NewDetails);
                 }
 
                 AfterEditingAppointment?.Invoke(_Appointment.AppointmentDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)), _AppointmentsDGVRowIndex);
@@ -285,7 +285,9 @@ namespace DVLDPresentationLayer
                 clsApplication Application;
                 if (_AddReTakeTestApp(out Application))
                 {
+                    Appointment.RetakeTestAppID = Application.ApplicationID;
                     lblReTestAppID.Text = Application.ApplicationID.ToString();
+
                     _SaveAppointment(Appointment);
                 }
                 else

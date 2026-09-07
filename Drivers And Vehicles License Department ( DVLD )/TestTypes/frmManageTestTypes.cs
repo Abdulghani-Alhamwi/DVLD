@@ -20,7 +20,7 @@ namespace DVLDPresentationLayer
 
         private void EditDGVRowData(object[] NewValues, byte DGVRowIndex)
         {
-            clsUtility.EditFullDataRowInDgv(dgvTestTypes, (DataTable)dgvTestTypes.DataSource, ref NewValues, DGVRowIndex,false);
+            clsUtility.EditFullDataRowInDgv(dgvTestTypes, (DataTable)dgvTestTypes.DataSource,NewValues, DGVRowIndex);
         }
 
         private void tsmiEditTestType_Click(object sender, EventArgs e)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
@@ -13,7 +12,8 @@ namespace DVLDPresentationLayer
 {
     public partial class frmLDLApplicationsManagement : Form
     {
-        bool _AllowDataLoading;
+        private int _NumberOfDgvAddedRows;
+        private bool _AllowDataLoading;
         public frmLDLApplicationsManagement()
         {
             InitializeComponent();
@@ -116,12 +116,12 @@ namespace DVLDPresentationLayer
                     txtFilter.ReadOnly = true;
             }
         }
-        private void _AddNewValuesToDGV(ref object[] NewAppDetails)
+        private void _AddNewValuesToDGV(object[] NewAppDetails)
         {
             if (dgvLDLApplications.DataSource == null)
                 dgvLDLApplications.DataSource = clsLocalDrivingLicenseApp.GetColumnsNamesForView();
 
-            clsUtility.AddNewRowToDGV(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource,ref NewAppDetails, dgvLDLApplications.Columns[0].HeaderText);
+            clsUtility.AddNewRowToDGV((DataTable)dgvLDLApplications.DataSource,NewAppDetails,dgvLDLApplications.Columns[0].HeaderText,ref _NumberOfDgvAddedRows);
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
 
@@ -133,9 +133,9 @@ namespace DVLDPresentationLayer
             frm.ShowDialog();
         }
 
-        private void _EditDataRowInDGV(ref object[] ModifiedAppDetails,int DgvRowIndex)
+        private void _EditDataRowInDGV(object[] ModifiedAppDetails,int DgvRowIndex)
         {
-            clsUtility.EditFullDataRowInDgv(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource, ref ModifiedAppDetails,DgvRowIndex);
+            clsUtility.EditFullDataRowInDgv(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource,ModifiedAppDetails,DgvRowIndex,_NumberOfDgvAddedRows);
         }
 
         private void tsmiEditApplication_Click(object sender, EventArgs e)
@@ -214,7 +214,7 @@ namespace DVLDPresentationLayer
                     int ApplicationID = clsLocalDrivingLicenseApp.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
 
                     if (clsApplication.ChangeApplicationStatus(ApplicationID, clsApplication.enApplicationStatus.Canceled))
-                        clsUtility.EditOneColumnValueInDgv<string>(dgvLDLApplications,(DataTable)dgvLDLApplications.DataSource,"Status", "Canceled", dgvLDLApplications.SelectedRows[0].Index);
+                        clsUtility.EditOneColumnValueInDgv<string>((DataTable)dgvLDLApplications.DataSource,"Status", "Canceled", dgvLDLApplications.SelectedRows[0].Index, _NumberOfDgvAddedRows);
                     else
                         MessageBox.Show("Failed To Cancel Application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -378,7 +378,7 @@ namespace DVLDPresentationLayer
             byte PassedTests = Convert.ToByte(dgvLDLApplications.Rows[DgvRowIndex].Cells["Passed Tests"].Value);
             PassedTests += 1;
 
-            clsUtility.EditOneColumnValueInDgv<byte>(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource, "Passed Tests", PassedTests, DgvRowIndex);
+            clsUtility.EditOneColumnValueInDgv<byte>((DataTable)dgvLDLApplications.DataSource, "Passed Tests", PassedTests, DgvRowIndex, _NumberOfDgvAddedRows);
         }
         private void tsmiScheduleVisionTest_Click(object sender, EventArgs e)
         {
@@ -416,7 +416,7 @@ namespace DVLDPresentationLayer
                 clsApplication.enApplicationStatus.Completed
                 );
 
-            clsUtility.EditOneColumnValueInDgv<string>(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource,"Status", "Completed", DGVRowIndex);
+            clsUtility.EditOneColumnValueInDgv<string>((DataTable)dgvLDLApplications.DataSource,"Status", "Completed", DGVRowIndex, _NumberOfDgvAddedRows);
         }
 
         private void tsmiIssueDLFirstTime_Click(object sender, EventArgs e)

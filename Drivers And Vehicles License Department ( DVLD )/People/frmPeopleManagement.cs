@@ -10,6 +10,7 @@ namespace DVLDPresentationLayer
 {
     public partial class frmPeopleManagement : Form
     {
+        private int _NumberOfDgvAddedRows;
         public frmPeopleManagement()
         {
             InitializeComponent();
@@ -146,12 +147,12 @@ namespace DVLDPresentationLayer
             else
                 txtFilter.ReadOnly = false;
         }                     
-        private void _AddNewRowToDGV(ref object[] NewPersonDetails)
+        private void _AddNewRowToDGV(object[] NewPersonDetails)
         {
             if (dgvPeople.DataSource == null)
                 dgvPeople.DataSource = clsPerson.GetColumnsNamesForView();
 
-            clsUtility.AddNewRowToDGV(dgvPeople,(DataTable)dgvPeople.DataSource,ref NewPersonDetails,"Person ID");
+            clsUtility.AddNewRowToDGV((DataTable)dgvPeople.DataSource,NewPersonDetails, dgvPeople.Columns[0].HeaderText, ref _NumberOfDgvAddedRows);
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
         private void _AddNewPersonScreen()
@@ -202,9 +203,9 @@ namespace DVLDPresentationLayer
             }
         }
 
-        private void _EditDataRowInDGV(ref object[] ModifiedPersonDetails, int PeopleDgvRowIndex)
+        private void _EditDataRowInDGV(object[] ModifiedPersonDetails, int PeopleDgvRowIndex)
         {
-            clsUtility.EditFullDataRowInDgv(dgvPeople, (DataTable)dgvPeople.DataSource,ref ModifiedPersonDetails, PeopleDgvRowIndex);
+            clsUtility.EditFullDataRowInDgv(dgvPeople, (DataTable)dgvPeople.DataSource,ModifiedPersonDetails, PeopleDgvRowIndex, _NumberOfDgvAddedRows);
         }
 
         private void tsmiEdit_Click(object sender, EventArgs e)

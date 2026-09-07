@@ -10,7 +10,7 @@ namespace DVLDPresentationLayer.Licenses
 {
     public partial class frmIntLicenseApplications : Form
     {
-        bool _AllowDataLoading;
+        private bool _AllowDataLoading;
         public frmIntLicenseApplications()
         {
             InitializeComponent();
@@ -143,12 +143,12 @@ namespace DVLDPresentationLayer.Licenses
                 else
                     txtFilter.ReadOnly = true;            
         }
-        private void _AddNewValuesToDGV(ref object[] NewValues)
+        private void _AddNewValuesToDGV(object[] NewValues)
         {
             if (dgvIntLicenseApplications.DataSource == null)
                 dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetColumnsNamesForView();
 
-            clsUtility.AddNewRowToDGV(dgvIntLicenseApplications, (DataTable)dgvIntLicenseApplications.DataSource,ref NewValues, dgvIntLicenseApplications.Columns[0].HeaderText);
+            clsUtility.AddNewRowToDGV((DataTable)dgvIntLicenseApplications.DataSource,NewValues, dgvIntLicenseApplications.Columns[0].HeaderText);
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
 

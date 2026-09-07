@@ -15,7 +15,8 @@ namespace DVLDBusinessLayer
         public decimal PaidFees { get; set; }
         public int CreatedByUserID { get; set; }
         public bool IsLocked { get; set; }
-        public clsTestAppointment(byte TestTypeID, int LDLApplicationID, DateTime AppointmentDate, decimal PaidFees, int CreatedByUserID, bool IsLocked)
+        public int RetakeTestAppID  { get; set; }
+        public clsTestAppointment(byte TestTypeID, int LDLApplicationID, DateTime AppointmentDate, decimal PaidFees, int CreatedByUserID, bool IsLocked,int RetakeTestAppID = -1)
         {
             TestAppointmentID = -1;
             this.TestTypeID = TestTypeID;
@@ -24,8 +25,9 @@ namespace DVLDBusinessLayer
             this.PaidFees = PaidFees;
             this.IsLocked = IsLocked;
             this.CreatedByUserID = CreatedByUserID;
+            this.RetakeTestAppID = RetakeTestAppID;
         }
-        private clsTestAppointment(int TestAppointmentID,byte TestTypeID,int LDLApplicationID,DateTime AppointmentDate,decimal PaidFees,int CreatedByUserID,bool IsLocked)
+        private clsTestAppointment(int TestAppointmentID,byte TestTypeID,int LDLApplicationID,DateTime AppointmentDate,decimal PaidFees,int CreatedByUserID,bool IsLocked,int RetakeTestAppID)
         {
             this.TestAppointmentID = TestAppointmentID;
             this.TestTypeID = TestTypeID;
@@ -34,6 +36,7 @@ namespace DVLDBusinessLayer
             this.PaidFees = PaidFees;
             this.CreatedByUserID = CreatedByUserID;
             this.IsLocked = IsLocked;
+            this.RetakeTestAppID = RetakeTestAppID;
             _CurrentMode = _enMode.Update;
         }
 
@@ -49,7 +52,7 @@ namespace DVLDBusinessLayer
 
         private bool _AddNewAppointment()
         {
-            TestAppointmentID = clsTestAppointmentsData.AddNewAppointment(TestTypeID, LDLApplicationID, AppointmentDate, PaidFees, CreatedByUserID, IsLocked);
+            TestAppointmentID = clsTestAppointmentsData.AddNewAppointment(TestTypeID, LDLApplicationID, AppointmentDate, PaidFees, CreatedByUserID, IsLocked,RetakeTestAppID);
 
             return (TestAppointmentID != -1);
         }
@@ -86,9 +89,10 @@ namespace DVLDBusinessLayer
             decimal PaidFees = -1;
             int CreatedByUserID = -1;
             bool IsLocked = false;
+            int RetakeTestAppID = -1;
 
-            if (clsTestAppointmentsData.Find(TestAppointmentID, ref TestTypeID, ref LDLApplicationID, ref AppointmentDate, ref PaidFees, ref CreatedByUserID, ref IsLocked))
-                return new clsTestAppointment(TestAppointmentID, TestTypeID, LDLApplicationID, AppointmentDate, PaidFees, CreatedByUserID, IsLocked);
+            if (clsTestAppointmentsData.Find(TestAppointmentID, ref TestTypeID, ref LDLApplicationID, ref AppointmentDate, ref PaidFees, ref CreatedByUserID, ref IsLocked,ref RetakeTestAppID))
+                return new clsTestAppointment(TestAppointmentID, TestTypeID, LDLApplicationID, AppointmentDate, PaidFees, CreatedByUserID, IsLocked,RetakeTestAppID);
             else
                 return null;
 

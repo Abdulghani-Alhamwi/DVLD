@@ -89,13 +89,12 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        public static int AddNewAppointment(int TestTypeID , int LocalDrivingLicenseAppID, DateTime AppointmentDate , decimal PaidFees , int CreatedByUserID , bool IsLocked)
+        public static int AddNewAppointment(int TestTypeID , int LocalDrivingLicenseAppID, DateTime AppointmentDate , decimal PaidFees , int CreatedByUserID , bool IsLocked,int RetakeTestAppID = -1)
         {
-            int AppointmentID = -1;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = @"INSERT INTO TestAppointments VALUES (@TestTypeID,@LocalDrivingLicenseAppID,
-                             @AppointmentDate,@PaidFees,@CreatedByUserID,@IsLocked);
+                             @AppointmentDate,@PaidFees,@CreatedByUserID,@IsLocked,@RetakeTestAppID);
                              SELECT SCOPE_IDENTITY();";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -106,23 +105,28 @@ namespace DVLDDataAccessLayer
             command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
             command.Parameters.AddWithValue("@IsLocked", IsLocked);
 
+            if(RetakeTestAppID == -1)
+                command.Parameters.AddWithValue("@RetakeTestAppID", DBNull.Value);
+            else
+                command.Parameters.AddWithValue("@RetakeTestAppID", RetakeTestAppID);
+
             try
-            {
-                connection.Open();
-                object result = command.ExecuteScalar();
+                {
+                    connection.Open();
+                    object result = command.ExecuteScalar();
 
-                if (result != null)
-                    AppointmentID = Convert.ToInt32(result);
-            }
+                    if (result != null)
+                        return Convert.ToInt32(result);
+                }
 
-            catch { }
+                catch { }
 
-            finally
-            {
-                connection.Close();
-            }
+                finally
+                {
+                    connection.Close();
+                }
 
-            return AppointmentID;
+            return -1;
         }
 
         public static bool UpdateAppointment(int TestAppointmentID,int TestTypeID, int LocalDrivingLicenseAppID, DateTime AppointmentDate, decimal PaidFees, int CreatedByUserID, bool IsLocked)
@@ -159,7 +163,7 @@ namespace DVLDDataAccessLayer
             return (AffectedRows > 0);
         }
 
-        public static bool Find(int TestAppointmentID,ref byte TestTypeID,ref int LocalDrivingLicenseAppID, ref DateTime AppointmentDate,ref decimal PaidFees,ref int CreatedByUserID,ref bool IsLocked)
+        public static bool Find(int TestAppointmentID,ref byte TestTypeID,ref int LocalDrivingLicenseAppID, ref DateTime AppointmentDate,ref decimal PaidFees,ref int CreatedByUserID,ref bool IsLocked,ref int RetakeTestAppID)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -183,6 +187,9 @@ namespace DVLDDataAccessLayer
                     PaidFees = (decimal)reader["PaidFees"];
                     CreatedByUserID = (int)reader["CreatedByUserID"];
                     IsLocked = (bool)reader["IsLocked"];
+
+                    if(reader["RetakeTestApplicationID"]!=DBNull.Value)
+                    RetakeTestAppID = (int)reader["RetakeTestApplicationID"];
 
                     IsFound = true;
                 }

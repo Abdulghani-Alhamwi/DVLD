@@ -13,10 +13,10 @@ namespace DVLDPresentationLayer.Core
         private int _ApplicantPersonID = -1;
         clsLocalDrivingLicenseApp _LDLApplication;
 
-        internal delegate void AddedLDLApplication(ref object[] NewAppDetails);
+        internal delegate void AddedLDLApplication(object[] NewAppDetails);
         internal event AddedLDLApplication OnAddedLDLApplication;
 
-        internal delegate void EditedLDLApplication(ref object[] ModifiedAppDetails,int DGVRowIndex);
+        internal delegate void EditedLDLApplication(object[] ModifiedAppDetails,int DGVRowIndex);
         internal event EditedLDLApplication OnEditedLDLApplication;
 
         int _DGVRowIndex = -1;
@@ -248,10 +248,10 @@ namespace DVLDPresentationLayer.Core
                     _LDLApplication = LDLApplication;
                     _SetTitles(clsLocalDrivingLicenseApp.enMode.Update);
 
-                    OnAddedLDLApplication?.Invoke(ref NewDetails);
+                    OnAddedLDLApplication?.Invoke(NewDetails);
                 }
                 else
-                    OnEditedLDLApplication?.Invoke(ref NewDetails, _DGVRowIndex);
+                    OnEditedLDLApplication?.Invoke(NewDetails, _DGVRowIndex);
             }
             else
                 MessageBox.Show("Saving failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
