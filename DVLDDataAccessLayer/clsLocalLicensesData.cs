@@ -252,5 +252,33 @@ namespace DVLDDataAccessLayer
             }
             return false;
         }
+
+        public static int GetDriverID(int LocalLicenseID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            string query = 
+             @"SELECT DriverID FROM LocalLicenses
+               WHERE LicenseID = @LicenseID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@LicenseID", LocalLicenseID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                return Convert.ToInt32(result);
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return -1;
+        }
     }
 }

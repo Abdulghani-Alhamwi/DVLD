@@ -118,11 +118,10 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox gbFilter;
         private System.Windows.Forms.Button btnSearchForLicense;
-        private System.Windows.Forms.TextBox txtLicenseID;
         private System.Windows.Forms.Label lblTitleLocalLicenseID;
-        private ctrlLDLicenseDetails uctrlLDLDetails;
+        public System.Windows.Forms.GroupBox gbFilter;
+        public ctrlLDLicenseDetails uctrlLDLDetails;
+        internal System.Windows.Forms.TextBox txtLicenseID;
     }
 }

@@ -7,9 +7,9 @@ using Utility_Library;
 
 namespace DVLDPresentationLayer
 {
-    public partial class frmDriversManagements : Form
+    public partial class frmDriversManagement : Form
     {
-        public frmDriversManagements()
+        public frmDriversManagement()
         {
             InitializeComponent();
         }

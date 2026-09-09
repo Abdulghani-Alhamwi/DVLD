@@ -153,14 +153,14 @@ namespace DVLDPresentationLayer.Applications
             return true;
         }
 
-        private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(clsLocalLicense LocalLicenseInfo)
+        private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(clsLocalLicense LicenseInfo)
         {
-            lblLocalLicenseID.Text = LocalLicenseInfo.LicenseID.ToString();
-             _DriverID = LocalLicenseInfo.DriverID;
+            lblLocalLicenseID.Text = LicenseInfo.LicenseID.ToString();
+             _DriverID = LicenseInfo.DriverID;
 
-            if (_CanDriverApply(LocalLicenseInfo))
+            if (_CanDriverApply(LicenseInfo))
             {
-             _SelectedLocalLicenseID = LocalLicenseInfo.LicenseID;
+             _SelectedLocalLicenseID = LicenseInfo.LicenseID;
              btnIssueLicense.Enabled = true;
             }
             else
@@ -170,16 +170,20 @@ namespace DVLDPresentationLayer.Applications
         private void btnIssueLicense_Click(object sender, EventArgs e)
         {
             if (_SelectedLocalLicenseID != -1)
-            { 
-            DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to issue license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            {
+                MessageBox.Show("Enter local license ID First in order to issue international license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+                DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to issue license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (ConfirmationQuestion == DialogResult.Yes)
                 {
                     if (_AddNewApplication(_DriverID, out int NewApplicationID))
                     {
-                        if (_IssueInternationalLicense(_SelectedLocalLicenseID, _DriverID, NewApplicationID))
+                    if (_IssueInternationalLicense(_SelectedLocalLicenseID, _DriverID, NewApplicationID))
+                    {
+                        if (clsApplication.ChangeApplicationStatus(NewApplicationID, clsApplication.enApplicationStatus.Completed))
                         {
-                            clsApplication.ChangeApplicationStatus(NewApplicationID, clsApplication.enApplicationStatus.Completed);
-
                             object[] NewInternationalLicenseInfo = new object[] { _NewInternationalLicense.InternationalLicenseID,_NewInternationalLicense.ApplicationID,_NewInternationalLicense.DriverID,
                         _NewInternationalLicense.IssuedUsingLocalLicenseID,_NewInternationalLicense.IssueDate,_NewInternationalLicense.ExpirationDate,_NewInternationalLicense.IsActive};
 
@@ -189,18 +193,19 @@ namespace DVLDPresentationLayer.Applications
 
                             MessageBox.Show($"International License Issued Successfully With ID : {_NewInternationalLicense.InternationalLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                            uctrlLDLDetailsByFilter.gbFilter.Enabled = false;
                             btnIssueLicense.Enabled = false;
                             lnlblShowLicenseInfo.Enabled = true;
                         }
                         else
-                            MessageBox.Show("Failed to issue license!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("International license issued successfully but failed to change application status to completed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                        MessageBox.Show("Failed to issue license!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                         MessageBox.Show("Failed to save application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-                else
-                    MessageBox.Show("Enter local license ID First in order to issue international license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }                    
         }
     }
 }

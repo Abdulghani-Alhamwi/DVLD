@@ -579,3 +579,7 @@ public static void EditOneColumnValueInDgv(DataGridView dgv, DataTable DataSourc
 
 57) object z = (object)x and x is also an object -> no allocating for new object in heap memory , the current object x by that we have its reference to the object we are assigning to which is object z.
 
+58)
+   Thread NewThread = new Thread(() => AfterReleasingALicense.Invoke(_DetainInfo.DetainID));
+   NewThread.Start();
+

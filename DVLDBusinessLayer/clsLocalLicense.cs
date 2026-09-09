@@ -185,5 +185,9 @@ namespace DVLDBusinessLayer
             RenewedLicenseID = 0;
             return clsLocalLicensesData.HasDriverRenewedLicense(DriverID, LicenseClassID,ref RenewedLicenseID);
         }
+        public static int GetDriverID(int LocalLicenseID)
+        {
+            return clsLocalLicensesData.GetDriverID(LocalLicenseID);
+        }
     }
 }

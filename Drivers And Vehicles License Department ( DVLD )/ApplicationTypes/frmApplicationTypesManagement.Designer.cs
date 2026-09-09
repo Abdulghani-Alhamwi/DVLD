@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer
 {
-    partial class frmManageApplicationTypes
+    partial class frmApplicationTypesManagement
     {
         /// <summary>
         /// Required designer variable.

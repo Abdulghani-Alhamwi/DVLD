@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer
 {
-    partial class frmManageTestTypes
+    partial class frmTestTypesManagement
     {
         /// <summary>
         /// Required designer variable.

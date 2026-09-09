@@ -25,8 +25,9 @@ namespace DVLDDataAccessLayer
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
-            command.Parameters.AddWithValue("@LastLowestBroughtUserID", LastLowestBroughtUserID);
 
+            if (LastLowestBroughtUserID != -1)
+                command.Parameters.AddWithValue("@LastLowestBroughtUserID", LastLowestBroughtUserID);
 
             try
             {
@@ -562,7 +563,6 @@ namespace DVLDDataAccessLayer
 
                 if (result != null)
                     return Convert.ToInt32(result);
-
             }
 
             catch { }

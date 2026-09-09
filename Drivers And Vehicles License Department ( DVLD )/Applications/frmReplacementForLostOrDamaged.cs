@@ -99,9 +99,13 @@ namespace DVLDPresentationLayer.Core
         
         private void btnIssueReplacement_Click(object sender, EventArgs e)
         {
-            if (_SelectedLicenseInfo != null)
+            if (_SelectedLicenseInfo == null)
             {
-                DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to issue a replacement for the license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                MessageBox.Show("Enter local license ID First in order to renew license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to issue a replacement for the license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (ConfirmationQuestion == DialogResult.Yes)
                 {
                     int NewApplicationID = -1;
@@ -110,9 +114,9 @@ namespace DVLDPresentationLayer.Core
                         int ReplacedLicenseID = -1;
                         if (_IssueReplacement(NewApplicationID, ref ReplacedLicenseID))
                         {
-                            clsApplication.ChangeApplicationStatus(NewApplicationID, clsApplication.enApplicationStatus.Completed);
-
-                            if (clsLocalLicense.DeactivateLicense(_SelectedLicenseInfo.LicenseID))
+                        if (clsLocalLicense.DeactivateLicense(_SelectedLicenseInfo.LicenseID))
+                        {
+                            if (clsApplication.ChangeApplicationStatus(NewApplicationID, clsApplication.enApplicationStatus.Completed))
                             {
                                 lblLicenseReplacementAppID.Text = NewApplicationID.ToString();
                                 lblReplacedLicenseID.Text = ReplacedLicenseID.ToString();
@@ -120,11 +124,15 @@ namespace DVLDPresentationLayer.Core
 
                                 MessageBox.Show($"License Replaced Successfully With ID : {ReplacedLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                                uctrlLDLDetailsByFilter.gbFilter.Enabled = false;
                                 lnlblShowNewLicenseInfo.Enabled = true;
                                 btnIssueReplacement.Enabled = false;
                             }
                             else
-                                MessageBox.Show("Failed to deactivate old local license!\nLicense renewal failed", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("License replaced successfully but failed to change application status to completed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                            MessageBox.Show("Failed to deactivate old local license!\nLicense renewal failed", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         else
                             MessageBox.Show("Failed to renew license!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -132,17 +140,14 @@ namespace DVLDPresentationLayer.Core
                     else
                         MessageBox.Show("Failed to save application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-            else
-                MessageBox.Show("Enter local license ID First in order to renew license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(clsLocalLicense LocalLicenseInfo)
+        private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(clsLocalLicense LicenseInfo)
         {
-            _SelectedLicenseInfo = LocalLicenseInfo;
+            _SelectedLicenseInfo = LicenseInfo;
             lblOldLocalLicenseID.Text = _SelectedLicenseInfo.LicenseID.ToString();
 
-            if (LocalLicenseInfo.IsActive)
+            if (LicenseInfo.IsActive)
             {
                 btnIssueReplacement.Enabled = true;
             }

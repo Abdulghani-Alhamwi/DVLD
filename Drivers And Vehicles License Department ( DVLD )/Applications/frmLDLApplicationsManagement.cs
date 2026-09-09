@@ -46,14 +46,6 @@ namespace DVLDPresentationLayer
 
             lblRecordsNumber.Text = clsLocalDrivingLicenseApp.GetTotalLDLApplicationsCount().ToString();
         }
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
         private void DrawComboBoxItems(object sender, DrawItemEventArgs e)
         {
             clsUtility.DrawComboBoxItems((ComboBox)sender, e);
@@ -479,6 +471,14 @@ namespace DVLDPresentationLayer
         {
             if (clsUtility.IsDgvLastRowSelected(dgvLDLApplications))
                 _AppendPartOfRemainingData();
+        }
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
  }

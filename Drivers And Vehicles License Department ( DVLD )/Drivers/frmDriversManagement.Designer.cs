@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer
 {
-    partial class frmDriversManagements
+    partial class frmDriversManagement
     {
         /// <summary>
         /// Required designer variable.
@@ -207,12 +207,12 @@
             this.lblFormBigTitle.AutoSize = true;
             this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
             this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblFormBigTitle.Location = new System.Drawing.Point(565, 229);
+            this.lblFormBigTitle.Location = new System.Drawing.Point(611, 229);
             this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormBigTitle.Name = "lblFormBigTitle";
-            this.lblFormBigTitle.Size = new System.Drawing.Size(363, 52);
+            this.lblFormBigTitle.Size = new System.Drawing.Size(270, 52);
             this.lblFormBigTitle.TabIndex = 50;
-            this.lblFormBigTitle.Text = "Manage Drivers";
+            this.lblFormBigTitle.Text = "Drivers List";
             // 
             // frmDriversManagements
             // 

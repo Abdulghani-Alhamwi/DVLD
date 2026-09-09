@@ -62,6 +62,12 @@
     <Compile Include="Applications\frmNewIntLicenseApplication.Designer.cs">
       <DependentUpon>frmNewIntLicenseApplication.cs</DependentUpon>
     </Compile>
+    <Compile Include="Licenses\frmDetainLocalLicense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Licenses\frmDetainLocalLicense.Designer.cs">
+      <DependentUpon>frmDetainLocalLicense.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\clsGlobalSettings.cs" />
     <Compile Include="Controls\ctrlPersonDetails.cs">
       <SubType>UserControl</SubType>
@@ -75,11 +81,11 @@
     <Compile Include="Controls\ctrlUserDetails.Designer.cs">
       <DependentUpon>ctrlUserDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationTypes\frmManageApplicationTypes.cs">
+    <Compile Include="ApplicationTypes\frmApplicationTypesManagement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ApplicationTypes\frmManageApplicationTypes.Designer.cs">
-      <DependentUpon>frmManageApplicationTypes.cs</DependentUpon>
+    <Compile Include="ApplicationTypes\frmApplicationTypesManagement.Designer.cs">
+      <DependentUpon>frmApplicationTypesManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="ApplicationTypes\frmUpdateApplicationType.cs">
       <SubType>Form</SubType>
@@ -123,11 +129,11 @@
     <Compile Include="Applications\frmReplacementForLostOrDamaged.Designer.cs">
       <DependentUpon>frmReplacementForLostOrDamaged.cs</DependentUpon>
     </Compile>
-    <Compile Include="Drivers\frmDriversManagements.cs">
+    <Compile Include="Drivers\frmDriversManagement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Drivers\frmDriversManagements.Designer.cs">
-      <DependentUpon>frmDriversManagements.cs</DependentUpon>
+    <Compile Include="Drivers\frmDriversManagement.Designer.cs">
+      <DependentUpon>frmDriversManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="Drivers\frmDriverLicenseHistory.cs">
       <SubType>Form</SubType>
@@ -165,6 +171,12 @@
     <Compile Include="Applications\frmRenewLocalDrivingLicense.Designer.cs">
       <DependentUpon>frmRenewLocalDrivingLicense.cs</DependentUpon>
     </Compile>
+    <Compile Include="Applications\frmReleaseDetainedLicense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Applications\frmReleaseDetainedLicense.Designer.cs">
+      <DependentUpon>frmReleaseDetainedLicense.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tests\frmScheduleTest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,11 +207,17 @@
     <Compile Include="Applications\frmLDLApplicationsManagement.Designer.cs">
       <DependentUpon>frmLDLApplicationsManagement.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestTypes\frmManageTestTypes.cs">
+    <Compile Include="Licenses\frmDetainedLicensesManagement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TestTypes\frmManageTestTypes.Designer.cs">
-      <DependentUpon>frmManageTestTypes.cs</DependentUpon>
+    <Compile Include="Licenses\frmDetainedLicensesManagement.Designer.cs">
+      <DependentUpon>frmDetainedLicensesManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestTypes\frmTestTypesManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestTypes\frmTestTypesManagement.Designer.cs">
+      <DependentUpon>frmTestTypesManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="TestTypes\frmUpdateTestType.cs">
       <SubType>Form</SubType>
@@ -284,8 +302,8 @@
     <EmbeddedResource Include="Controls\ctrlUserDetails.resx">
       <DependentUpon>ctrlUserDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ApplicationTypes\frmManageApplicationTypes.resx">
-      <DependentUpon>frmManageApplicationTypes.cs</DependentUpon>
+    <EmbeddedResource Include="ApplicationTypes\frmApplicationTypesManagement.resx">
+      <DependentUpon>frmApplicationTypesManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ApplicationTypes\frmUpdateApplicationType.resx">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
@@ -311,8 +329,11 @@
     <EmbeddedResource Include="Applications\frmReplacementForLostOrDamaged.resx">
       <DependentUpon>frmReplacementForLostOrDamaged.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Drivers\frmDriversManagements.resx">
-      <DependentUpon>frmDriversManagements.cs</DependentUpon>
+    <EmbeddedResource Include="Licenses\frmDetainLocalLicense.resx">
+      <DependentUpon>frmDetainLocalLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Drivers\frmDriversManagement.resx">
+      <DependentUpon>frmDriversManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Drivers\frmDriverLicenseHistory.resx">
       <DependentUpon>frmDriverLicenseHistory.cs</DependentUpon>
@@ -332,6 +353,9 @@
     <EmbeddedResource Include="Applications\frmRenewLocalDrivingLicense.resx">
       <DependentUpon>frmRenewLocalDrivingLicense.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Applications\frmReleaseDetainedLicense.resx">
+      <DependentUpon>frmReleaseDetainedLicense.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tests\frmScheduleTest.resx">
       <DependentUpon>frmScheduleTest.cs</DependentUpon>
     </EmbeddedResource>
@@ -347,8 +371,11 @@
     <EmbeddedResource Include="Applications\frmLDLApplicationsManagement.resx">
       <DependentUpon>frmLDLApplicationsManagement.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestTypes\frmManageTestTypes.resx">
-      <DependentUpon>frmManageTestTypes.cs</DependentUpon>
+    <EmbeddedResource Include="Licenses\frmDetainedLicensesManagement.resx">
+      <DependentUpon>frmDetainedLicensesManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestTypes\frmTestTypesManagement.resx">
+      <DependentUpon>frmTestTypesManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TestTypes\frmUpdateTestType.resx">
       <DependentUpon>frmUpdateTestType.cs</DependentUpon>
@@ -405,6 +432,8 @@
     <None Include="Resources\DVLD1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Release Detained License 64.png" />
+    <None Include="Resources\Release Detained License 32.png" />
     <None Include="Resources\PersonLicenseHistory 512.png" />
     <None Include="Resources\LicenseView 400.png" />
     <None Include="Resources\Question 32.png" />
@@ -481,6 +510,8 @@
     <None Include="Resources\driving-test 512.png" />
     <None Include="Resources\Drivers 64.png" />
     <None Include="Resources\Driver Main.png" />
+    <None Include="Resources\Detain 32.png" />
+    <None Include="Resources\Detain 512.png" />
     <Content Include="Resources\DVLD Logo.ico" />
     <None Include="Resources\People 400.png" />
     <None Include="Resources\People 64.png" />

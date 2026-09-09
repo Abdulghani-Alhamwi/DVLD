@@ -34,7 +34,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.lnlblShowNewLicenseInfo = new System.Windows.Forms.LinkLabel();
-            this.pbLocalLicenseID = new System.Windows.Forms.PictureBox();
+            this.pbOldLicenseID = new System.Windows.Forms.PictureBox();
             this.lblOldLocalLicenseID = new System.Windows.Forms.Label();
             this.lblOldLicenseIDTitle = new System.Windows.Forms.Label();
             this.pbReplacedLicenseID = new System.Windows.Forms.PictureBox();
@@ -44,7 +44,7 @@
             this.gbNewLicenseAppInfo = new System.Windows.Forms.GroupBox();
             this.pbApplicationDate = new System.Windows.Forms.PictureBox();
             this.pbAppFees = new System.Windows.Forms.PictureBox();
-            this.pbInternationalLicenseAppID = new System.Windows.Forms.PictureBox();
+            this.pbReplacedLicenseAppID = new System.Windows.Forms.PictureBox();
             this.lblUserName = new System.Windows.Forms.Label();
             this.lblApplicationDate = new System.Windows.Forms.Label();
             this.lblCreatedBy_Title = new System.Windows.Forms.Label();
@@ -58,13 +58,13 @@
             this.rbLostLicense = new System.Windows.Forms.RadioButton();
             this.gbReplacementFor = new System.Windows.Forms.GroupBox();
             this.uctrlLDLDetailsByFilter = new DVLDPresentationLayer.ctrlLDLicenseDetailsByFilter();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLocalLicenseID)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbOldLicenseID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbReplacedLicenseID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbUser)).BeginInit();
             this.gbNewLicenseAppInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbApplicationDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbAppFees)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbInternationalLicenseAppID)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbReplacedLicenseAppID)).BeginInit();
             this.gbReplacementFor.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -154,16 +154,16 @@
             this.lnlblShowNewLicenseInfo.Text = "Show New License Info";
             this.lnlblShowNewLicenseInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowNewLicenseInfo_LinkClicked);
             // 
-            // pbLocalLicenseID
+            // pbOldLicenseID
             // 
-            this.pbLocalLicenseID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbLocalLicenseID.Image = global::DVLDPresentationLayer.Properties.Resources.Driver_License_48;
-            this.pbLocalLicenseID.Location = new System.Drawing.Point(828, 82);
-            this.pbLocalLicenseID.Name = "pbLocalLicenseID";
-            this.pbLocalLicenseID.Size = new System.Drawing.Size(32, 32);
-            this.pbLocalLicenseID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbLocalLicenseID.TabIndex = 123;
-            this.pbLocalLicenseID.TabStop = false;
+            this.pbOldLicenseID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbOldLicenseID.Image = global::DVLDPresentationLayer.Properties.Resources.Driver_License_48;
+            this.pbOldLicenseID.Location = new System.Drawing.Point(828, 82);
+            this.pbOldLicenseID.Name = "pbOldLicenseID";
+            this.pbOldLicenseID.Size = new System.Drawing.Size(32, 32);
+            this.pbOldLicenseID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbOldLicenseID.TabIndex = 123;
+            this.pbOldLicenseID.TabStop = false;
             // 
             // lblOldLocalLicenseID
             // 
@@ -237,7 +237,7 @@
             // 
             // gbNewLicenseAppInfo
             // 
-            this.gbNewLicenseAppInfo.Controls.Add(this.pbLocalLicenseID);
+            this.gbNewLicenseAppInfo.Controls.Add(this.pbOldLicenseID);
             this.gbNewLicenseAppInfo.Controls.Add(this.lblOldLocalLicenseID);
             this.gbNewLicenseAppInfo.Controls.Add(this.lblOldLicenseIDTitle);
             this.gbNewLicenseAppInfo.Controls.Add(this.pbReplacedLicenseID);
@@ -246,7 +246,7 @@
             this.gbNewLicenseAppInfo.Controls.Add(this.pbUser);
             this.gbNewLicenseAppInfo.Controls.Add(this.pbApplicationDate);
             this.gbNewLicenseAppInfo.Controls.Add(this.pbAppFees);
-            this.gbNewLicenseAppInfo.Controls.Add(this.pbInternationalLicenseAppID);
+            this.gbNewLicenseAppInfo.Controls.Add(this.pbReplacedLicenseAppID);
             this.gbNewLicenseAppInfo.Controls.Add(this.lblUserName);
             this.gbNewLicenseAppInfo.Controls.Add(this.lblApplicationDate);
             this.gbNewLicenseAppInfo.Controls.Add(this.lblCreatedBy_Title);
@@ -285,16 +285,16 @@
             this.pbAppFees.TabIndex = 108;
             this.pbAppFees.TabStop = false;
             // 
-            // pbInternationalLicenseAppID
+            // pbReplacedLicenseAppID
             // 
-            this.pbInternationalLicenseAppID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbInternationalLicenseAppID.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
-            this.pbInternationalLicenseAppID.Location = new System.Drawing.Point(247, 44);
-            this.pbInternationalLicenseAppID.Name = "pbInternationalLicenseAppID";
-            this.pbInternationalLicenseAppID.Size = new System.Drawing.Size(32, 32);
-            this.pbInternationalLicenseAppID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbInternationalLicenseAppID.TabIndex = 106;
-            this.pbInternationalLicenseAppID.TabStop = false;
+            this.pbReplacedLicenseAppID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbReplacedLicenseAppID.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
+            this.pbReplacedLicenseAppID.Location = new System.Drawing.Point(247, 44);
+            this.pbReplacedLicenseAppID.Name = "pbReplacedLicenseAppID";
+            this.pbReplacedLicenseAppID.Size = new System.Drawing.Size(32, 32);
+            this.pbReplacedLicenseAppID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbReplacedLicenseAppID.TabIndex = 106;
+            this.pbReplacedLicenseAppID.TabStop = false;
             // 
             // lblUserName
             // 
@@ -486,14 +486,14 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            ((System.ComponentModel.ISupportInitialize)(this.pbLocalLicenseID)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbOldLicenseID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbReplacedLicenseID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbUser)).EndInit();
             this.gbNewLicenseAppInfo.ResumeLayout(false);
             this.gbNewLicenseAppInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbApplicationDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbAppFees)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbInternationalLicenseAppID)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbReplacedLicenseAppID)).EndInit();
             this.gbReplacementFor.ResumeLayout(false);
             this.gbReplacementFor.PerformLayout();
             this.ResumeLayout(false);
@@ -509,7 +509,7 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.LinkLabel lnlblShowNewLicenseInfo;
-        private System.Windows.Forms.PictureBox pbLocalLicenseID;
+        private System.Windows.Forms.PictureBox pbOldLicenseID;
         private System.Windows.Forms.Label lblOldLocalLicenseID;
         private System.Windows.Forms.Label lblOldLicenseIDTitle;
         private System.Windows.Forms.PictureBox pbReplacedLicenseID;
@@ -520,7 +520,7 @@
         private System.Windows.Forms.GroupBox gbNewLicenseAppInfo;
         private System.Windows.Forms.PictureBox pbApplicationDate;
         private System.Windows.Forms.PictureBox pbAppFees;
-        private System.Windows.Forms.PictureBox pbInternationalLicenseAppID;
+        private System.Windows.Forms.PictureBox pbReplacedLicenseAppID;
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.Label lblApplicationDate;
         private System.Windows.Forms.Label lblCreatedBy_Title;

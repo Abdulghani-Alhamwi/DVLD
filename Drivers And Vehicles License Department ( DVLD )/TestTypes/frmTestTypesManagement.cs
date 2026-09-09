@@ -6,9 +6,9 @@ using Utility_Library;
 
 namespace DVLDPresentationLayer
 {
-    public partial class frmManageTestTypes : Form
+    public partial class frmTestTypesManagement : Form
     {
-        public frmManageTestTypes()
+        public frmTestTypesManagement()
         {
             InitializeComponent();
         }

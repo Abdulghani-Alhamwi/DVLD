@@ -13,14 +13,13 @@ namespace DVLDPresentationLayer.Licenses
         public frmRenewLocalDrivingLicense()
         {
             InitializeComponent();
+            _ShowBasicInfo();
             clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
-
-            _ShowDefaultInfo();
 
             _RenewedLicenseID = -1;
         }
 
-        private void _ShowDefaultInfo()
+        private void _ShowBasicInfo()
         {
             lblApplicationFees.Text = clsUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.RenewLicense),
                 enCustomNumberFormat.NoJustZerosAfterFraction);
@@ -36,7 +35,7 @@ namespace DVLDPresentationLayer.Licenses
                 clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
             lblLicenseFees.Text = clsUtility.GetCustomNumberFormat(_SelectedLicenseInfo.PaidFees, enCustomNumberFormat.NoJustZerosAfterFraction);
             lblTotalFees.Text = clsUtility.GetCustomNumberFormat(
-                clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.RenewLicense) + _SelectedLicenseInfo.PaidFees,
+                Convert.ToDecimal(lblApplicationFees.Text) + _SelectedLicenseInfo.PaidFees,
                 enCustomNumberFormat.NoJustZerosAfterFraction);
         }
 
@@ -52,14 +51,14 @@ namespace DVLDPresentationLayer.Licenses
             frm.ShowDialog();
         }
 
-        private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(clsLocalLicense LocalLicenseInfo)
+        private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(clsLocalLicense LicenseInfo)
         {
-            _SelectedLicenseInfo = LocalLicenseInfo;
+            _SelectedLicenseInfo = LicenseInfo;
             _ShowApplicationInfo();
 
-            if (!LocalLicenseInfo.IsExpired())
+            if (!LicenseInfo.IsExpired())
             {
-                MessageBox.Show($"Selected license is not yet expired , it will expire on :\n{LocalLicenseInfo.ExpirationDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName))}",
+                MessageBox.Show($"Selected license is not yet expired , it will expire on :\n{LicenseInfo.ExpirationDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName))}",
                     "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 btnRenewLicense.Enabled = false;
@@ -124,8 +123,11 @@ namespace DVLDPresentationLayer.Licenses
         private void btnRenewLicense_Click(object sender, EventArgs e)
         {
             if (_SelectedLicenseInfo != null)
-            { 
-            DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to renew license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            {
+                MessageBox.Show("Enter local license ID First in order to renew license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+                DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to renew license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (ConfirmationQuestion == DialogResult.Yes)
                 {
                         int NewApplicationID = -1;
@@ -134,9 +136,9 @@ namespace DVLDPresentationLayer.Licenses
                             int RenewedLicenseID = -1;
                         if (_IssueRenewedLocalLicense(NewApplicationID, ref RenewedLicenseID))
                         {
-                            clsApplication.ChangeApplicationStatus(NewApplicationID, clsApplication.enApplicationStatus.Completed);
-
-                            if (clsLocalLicense.DeactivateLicense(_SelectedLicenseInfo.LicenseID))
+                        if (clsLocalLicense.DeactivateLicense(_SelectedLicenseInfo.LicenseID))
+                        {
+                            if (clsApplication.ChangeApplicationStatus(NewApplicationID, clsApplication.enApplicationStatus.Completed))
                             {
                                 lblRenewLicenseAppID.Text = NewApplicationID.ToString();
                                 lblRenewedLicenseID.Text = RenewedLicenseID.ToString();
@@ -144,11 +146,15 @@ namespace DVLDPresentationLayer.Licenses
 
                                 MessageBox.Show($"License Renewed Successfully With ID : {RenewedLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                                uctrlLDLDetailsByFilter.gbFilter.Enabled = false;
                                 lnlblShowNewLicenseInfo.Enabled = true;
                                 btnRenewLicense.Enabled = false;
                             }
                             else
-                                MessageBox.Show("Failed to deactivate old local license!\nLicense renewal failed", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("License renewed successfully but failed to change application status to completed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                            MessageBox.Show("Failed to deactivate old local license!\nLicense renewal failed", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         else
                             MessageBox.Show("Failed to renew license!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -156,9 +162,6 @@ namespace DVLDPresentationLayer.Licenses
                         else
                             MessageBox.Show("Failed to save application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }             
-            }
-            else
-                MessageBox.Show("Enter local license ID First in order to renew license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnExit_Click(object sender, EventArgs e)

@@ -112,13 +112,15 @@ namespace Utility_Library
 
                 return Encoding.UTF8.GetString(DecryptedUserName);
             }
-
-            public static void EnableErrorProvider(ErrorProvider erControl, Control control, string ErrorMessage, CancelEventArgs CancelEvent = null)
+            
+            public static void EnableErrorProvider(ErrorProvider erControl, Control control, string ErrorMessage, CancelEventArgs CancelArgs = null)
             {
                 erControl.SetError(control, ErrorMessage);
 
-                if (CancelEvent != null)
-                    CancelEvent.Cancel = true;
+            if (CancelArgs != null)
+                CancelArgs.Cancel = true;
+            else
+                CancelArgs.Cancel = false;
             }
 
             public static void DrawComboBoxItems(object sender, DrawItemEventArgs e, string ColumnName = null)

@@ -11,8 +11,82 @@ namespace DVLDDataAccessLayer
          $@"SELECT TOP (@WantedNumOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
            FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
            Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-           FORMAT(DateOfBirth , '{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.NumericFormat)}') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
+           FORMAT(DateOfBirth,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.NumericFormat)}') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
            FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
+
+        public static DataTable GetPeopleInfo(byte WantedNumOfRecords,int LastLowestbroughtPersonID = -1)
+        {
+            DataTable dtPeople = null;
+
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = _query;
+            
+            if (LastLowestbroughtPersonID != -1)
+                query += @" WHERE PersonID < @LastLowestbroughtPersonID";
+
+                query += " ORDER BY PersonID DESC";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
+
+            if(LastLowestbroughtPersonID != -1)
+                command.Parameters.AddWithValue("@LastLowestbroughtPersonID", LastLowestbroughtPersonID);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    dtPeople = new DataTable();
+                    dtPeople.Load(reader);
+                }
+
+                    reader.Close();
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return dtPeople;
+        }
+
+        public static DataTable GetColumnsNamesForView()
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = _query;
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                DataTable dtPeople = new DataTable();
+                dtPeople.Load(reader);
+                reader.Close();
+
+                return dtPeople;
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return null;
+        }
 
         public static int AddNewPerson(string NationalNo, string FirstName,
                        string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
@@ -150,80 +224,6 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return (AffectedRows > 0);
-        }
-
-        public static DataTable GetPeopleInfo(byte WantedNumOfRecords,int LastLowestbroughtPersonID = -1)
-        {
-            DataTable dtPeople = null;
-
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-
-            string query = _query;
-            
-            if (LastLowestbroughtPersonID != -1)
-                query += @" WHERE PersonID < @LastLowestbroughtPersonID";
-
-                query += " ORDER BY PersonID DESC";
-
-            SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
-
-            if(LastLowestbroughtPersonID != -1)
-                command.Parameters.AddWithValue("@LastLowestbroughtPersonID", LastLowestbroughtPersonID);
-
-            try
-            {
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    dtPeople = new DataTable();
-                    dtPeople.Load(reader);
-                }
-
-                    reader.Close();
-            }
-
-            catch { }
-
-            finally
-            {
-                connection.Close();
-            }
-
-            return dtPeople;
-        }
-
-        public static DataTable GetColumnsNamesForView()
-        {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-
-            string query = _query;
-
-            SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
-
-            try
-            {
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                DataTable dtPeople = new DataTable();
-                dtPeople.Load(reader);
-                reader.Close();
-
-                return dtPeople;
-            }
-
-            catch { }
-
-            finally
-            {
-                connection.Close();
-            }
-
-            return null;
         }
 
         public static bool SearchForNationalNo(string NationalNo)

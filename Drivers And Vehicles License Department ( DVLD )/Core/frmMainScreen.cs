@@ -2,8 +2,10 @@
 using System.Drawing;
 using System.Windows.Forms;
 using DVLDPresentationLayer.Applications;
+using DVLDPresentationLayer.Controls;
 using DVLDPresentationLayer.Core;
 using DVLDPresentationLayer.Licenses;
+using DVLDPresentationLayer.TestTypes;
 using Utility_Library;
 
 namespace DVLDPresentationLayer
@@ -72,13 +74,13 @@ namespace DVLDPresentationLayer
 
         private void tsmiManageApplicationTypes_Click(object sender, EventArgs e)
         {
-            frmManageApplicationTypes frm = new frmManageApplicationTypes();
+            frmApplicationTypesManagement frm = new frmApplicationTypesManagement();
             frm.ShowDialog();
         }
 
         private void tsmiManageTestTypes_Click(object sender, EventArgs e)
         {
-            frmManageTestTypes frm = new frmManageTestTypes();
+            frmTestTypesManagement frm = new frmTestTypesManagement();
             frm.ShowDialog();
         }
 
@@ -96,7 +98,7 @@ namespace DVLDPresentationLayer
 
         private void tsmiDrivers_Click(object sender, EventArgs e)
         {
-            frmDriversManagements frm = new frmDriversManagements();
+            frmDriversManagement frm = new frmDriversManagement();
             frm.ShowDialog();
         }
 
@@ -121,6 +123,36 @@ namespace DVLDPresentationLayer
         private void tsmiReplacementForLostOrDamaged_Click(object sender, EventArgs e)
         {
             frmReplacementForLostOrDamaged frm = new frmReplacementForLostOrDamaged();
+            frm.ShowDialog();
+        }
+
+        private void tsmiReleaseDetainedDrivingLicense_Click(object sender, EventArgs e)
+        {
+            frmReleaseDetainedLicense frm = new frmReleaseDetainedLicense();
+            frm.ShowDialog();
+        }
+
+        private void tsmiRetakeTest_Click(object sender, EventArgs e)
+        {
+            frmLDLApplicationsManagement frm = new frmLDLApplicationsManagement();
+            frm.ShowDialog();
+        }
+
+        private void tsmiDetainLicense_Click(object sender, EventArgs e)
+        {
+            frmDetainLocalLicense frm = new frmDetainLocalLicense();
+            frm.ShowDialog();
+        }
+
+        private void tsmiReleaseDetainedLicense_Click(object sender, EventArgs e)
+        {
+            frmReleaseDetainedLicense frm = new frmReleaseDetainedLicense();
+            frm.ShowDialog();
+        }
+
+        private void tsmiManageDetaiendLicenses_Click(object sender, EventArgs e)
+        {
+            frmDetainedLicensesManagement frm = new frmDetainedLicensesManagement();
             frm.ShowDialog();
         }
     }

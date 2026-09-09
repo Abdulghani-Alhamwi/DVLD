@@ -6,12 +6,14 @@ namespace DVLDPresentationLayer
 {
     public partial class ctrlLDLicenseDetailsByFilter : UserControl
     {
-        public delegate void SelectedLocalLicense(clsLocalLicense LocalLicenseInfo);
+        public delegate void SelectedLocalLicense(clsLocalLicense LicenseInfo);
         public event SelectedLocalLicense OnSelectedLocalLicense;
+
         public ctrlLDLicenseDetailsByFilter()
         {
             InitializeComponent();
         }
+
         private void btnSearchForLicense_Click(object sender, EventArgs e)
         {
             if (txtLicenseID.Text != "")

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using Utility_Library;
@@ -7,13 +8,14 @@ namespace DVLDPresentationLayer
 {
     public partial class frmUpdateApplicationType : Form
     {
-        internal event Action<object[],byte> AfterUpdatingInfo;
+        internal event Action<object[], byte> AfterUpdatingInfo;
+        private static CancelEventArgs _CancelArgs = new CancelEventArgs();
 
         byte _ApplicationTypeID;
         string _ApplicationTitle;
         string _ApplicationFees;
         byte _AppTypesDGVRowIndex;
-        public frmUpdateApplicationType(byte ApplicationTypeID,string ApplicationTitle,string ApplicationFees,byte AppTypesDGVRowIndex)
+        public frmUpdateApplicationType(byte ApplicationTypeID, string ApplicationTitle, string ApplicationFees, byte AppTypesDGVRowIndex)
         {
             InitializeComponent();
             _ApplicationTypeID = ApplicationTypeID;
@@ -26,15 +28,17 @@ namespace DVLDPresentationLayer
             txtFees.Text = ApplicationFees;
         }
 
-
         public static void ValidateFeesTextBox_KeyDown(ErrorProvider erControl, TextBox txtBox, KeyEventArgs e)
         {
-            if (e.KeyData == Keys.Back || char.IsDigit((char)e.KeyData) || e.KeyData == Keys.OemPeriod)
+            if (char.IsDigit((char)e.KeyData) || e.KeyData == Keys.OemPeriod || char.IsControl((char)e.KeyData))
+            {
                 txtBox.ReadOnly = false;
+                erControl.Dispose();
+            }
             else
             {
                 txtBox.ReadOnly = true;
-                clsUtility.EnableErrorProvider(erControl, txtBox, "You can enter only digits!", null);
+                clsUtility.EnableErrorProvider(erControl, txtBox, "You can enter only digits!", _CancelArgs);
             }
         }
         private bool _ValidateData()

@@ -7,9 +7,9 @@ using Utility_Library;
 
 namespace DVLDPresentationLayer
 {
-    public partial class frmManageApplicationTypes : Form
+    public partial class frmApplicationTypesManagement : Form
     {
-        public frmManageApplicationTypes()
+        public frmApplicationTypesManagement()
         {
             InitializeComponent();
         }
