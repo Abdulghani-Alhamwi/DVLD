@@ -579,7 +579,9 @@ public static void EditOneColumnValueInDgv(DataGridView dgv, DataTable DataSourc
 
 57) object z = (object)x and x is also an object -> no allocating for new object in heap memory , the current object x by that we have its reference to the object we are assigning to which is object z.
 
-58)
+58) In the following , the lambda creates a parameterless delegate its type void because the thread expects a reference for a method matches the delegate type signature because the parameter of the thread constructor is from delegate type and expects delegate or method matches the parameter delegate signature ,the parameter is from delegate type and there are two types that we can send reference to a procedure matches any of them , the first is threadstart delegate type and expects a parameterless procedure and the second delegate type expects parameterized procedure and the parameter type is object otherwise if parameter was int for example we will have error, the thread constructor can take new variable its type delegate from type threadstart and its parameterless procedure and it can take new variable from delegate type parameterizedthreadstart which is parameterized procedure and the parameter is object while if we put a procedure and its parameter is int we will have error , and here it creates parameterless delegate which is the () and () is part of lambda and the lambda => the method that is referring to or the delegate invocation for the method/s that is referring to, lambda wraps it with a parameterless procedure and under that procedure is the parameterized method or the delegate invocation , the parameter for the wrapped method is already known.
+the thread object takes parameterless procedure or takes a procedure but parametrized and parameter is from object type ,the thread won't work till we put thread.Start() and new thread will work in parallel with the calling thread;
+if we used thread.start() then thread.join() -> the calling thread waits till this thread to be executing alone and after it finishes -> the calling thread continue executing.
+
    Thread NewThread = new Thread(() => AfterReleasingALicense.Invoke(_DetainInfo.DetainID));
    NewThread.Start();
-
