@@ -13,17 +13,15 @@ namespace Utility_Library
 {
     public class clsUtility
     {
-            public enum enCustomDateFormat : byte { NumericFormat = 1, DateAppreviatedMonthName = 2, DateTimeCustomFormat = 3 }
+            public enum enCustomDateFormat : byte { NumericFormat = 0, DateAppreviatedMonthName = 1, DateTimeCustomFormat = 2 }
 
             public enum enCustomNumberFormat : byte { With4ZerosAfterFraction = 0 ,NoJustZerosAfterFraction = 1}
 
-            public static Color ComboBoxBackColor = Color.FromArgb(228, 228, 228);
-            public static Color ComboBoxItemsBackColor = Color.FromArgb(245, 245, 245);
-            public static Color ComboBoxHighlightedBackColor = Color.FromArgb(221, 232, 240);
+            public enum enDataGridViewSortDirection:byte { Ascending = 0 , Descending = 1 }
 
             public static byte WantedNumOfRowsFromDB = 10;
+            private int _NumberOfDgvAddedRows;
 
-            // Change Win32 style to remove the MDI client 3d border (sunken) .
             [DllImport("user32.dll")]
             private static extern int GetWindowLong(IntPtr windowHandle, int index);
 
@@ -42,11 +40,10 @@ namespace Utility_Library
             private const int FrameChangedFlag = 0x0020;
 
             /// <summary>
-            /// Change Win32 style to remove the MDI client 3d border
+            /// Change Win32 style to remove the MDI client 3d border (sunken)
             /// </summary>
             public static void RemoveMdiClientBorder(Form frm)
             {
-
                 MdiClient mdiClient = frm.Controls.OfType<MdiClient>().FirstOrDefault();
                 if (mdiClient == null)
                 {
@@ -59,8 +56,8 @@ namespace Utility_Library
                 SetWindowLong(mdiClient.Handle, ExtendedStyleIndex, updatedExtendedStyle);
 
                 SetWindowPos(mdiClient.Handle, IntPtr.Zero, 0, 0, 0, 0, NoSizeFlag | NoMoveFlag | NoZOrderFlag | FrameChangedFlag);
-
             }
+
             public static string HashWithSaltPassword(string Password, ref byte[] Salt)
             {
                 if (Salt == null)
@@ -94,7 +91,6 @@ namespace Utility_Library
                 Encryptor.Dispose();
 
                 return Convert.ToBase64String(EncryptedUserName);
-
             }
 
             public static string DecryptUserName(string UserName)
@@ -167,7 +163,7 @@ namespace Utility_Library
             /// <summary>
             /// Add new rows to data grid view.
             /// </summary>
-            public static void AddNewRowsToDgv(DataGridView dgv, DataTable CurrentDataSource, DataRow[] NewDataRows, string[] ColumnsNamesInOrder)
+            public static void AddNewRowsToDgv(DataGridView dgv,DataRow[] NewDataRows, string[] ColumnsNamesInOrder)
             {
                 object[] RowsValues;
                 for (short i = 0; i < NewDataRows.Length; i++)
@@ -177,7 +173,7 @@ namespace Utility_Library
                     {
                         RowsValues[j] = NewDataRows[i][ColumnsNamesInOrder[j]];
                     }
-                    CurrentDataSource.Rows.Add(RowsValues);
+                ((DataTable)dgv.DataSource).Rows.Add(RowsValues);
                 }
             }
 
@@ -229,58 +225,57 @@ namespace Utility_Library
             }
 
             /// <summary>
-            /// Remove rows from data grid view that its index in the provided array , if the record cannot be deleted from then the record index in the provided array must be -1.
+            /// Remove [1 - 255] rows from data grid view that its index in the provided array , if the record cannot be deleted from then the record index in the provided array must be -1.
             /// </summary>
-            public static void DeleteSelectedRowsFromView(DataGridView dgv, int[] SelectedRowsIndex)
+            public void DeleteSelectedDgvRows(DataGridView dgv, int[] SelectedRowsIndex)
             {
-                for (short i = 0; i < SelectedRowsIndex.Length; i++)
+                for (byte i = 0; i < SelectedRowsIndex.Length; i++)
                 {
-                    if (SelectedRowsIndex[i] != -1)
-                        dgv.Rows.RemoveAt(SelectedRowsIndex[i]);
+                if (SelectedRowsIndex[i] != -1)
+                {
+                    SelectedRowsIndex[i] = _GetActualRowIndexOfDgvRow((DataTable)dgv.DataSource, SelectedRowsIndex[i]);
+                    ((DataTable)dgv.DataSource).Rows.RemoveAt(SelectedRowsIndex[i]);
                 }
-            }
-
-        private static void _AddRowToDgvDataSource(DataTable DataSource,object[] NewValues,string dgvFirstColumnName)
-        {
-            DataSource.Rows.Add(NewValues);
-            DataSource.AcceptChanges();
-
-            DataSource.DefaultView.Sort = $"{dgvFirstColumnName} DESC";
+                }
         }
 
             /// <summary>
             /// Add new row to data grid view , the new values array length must match the number of data grid view columns and the dgv first column name is to sort that column in order to display the new row as first row when the dgv has a lot of records in order to avoid user to scroll down to reach the new row.
             /// </summary>
-            public static void AddNewRowToDGV(DataTable DataSource,object[] NewValues,string dgvFirstColumnName,ref int NumberOfAddedRows)
+            public void AddNewRowToDGV(DataGridView Dgv,object[] NewValues,string dgvFirstColumnName)
             {
-            _AddRowToDgvDataSource(DataSource,NewValues,dgvFirstColumnName);
-            NumberOfAddedRows++;
+                DataTable DataSource = (DataTable)Dgv.DataSource;
+                DataSource.Rows.Add(NewValues);
+                DataSource.AcceptChanges();
+                DataSource.DefaultView.Sort = $"{dgvFirstColumnName} DESC";
+
+                _NumberOfDgvAddedRows++;
             }
 
-            public static void AddNewRowToDGV(DataTable DataSource, object[] NewValues,string dgvFirstColumnName)
-            {
-                _AddRowToDgvDataSource(DataSource,NewValues,dgvFirstColumnName);
-            }
+        /// <summary>
+        /// return the the data source row index for a dgv row.
+        /// </summary>
+        private int _GetActualRowIndexOfDgvRow(DataTable DataSource,int DgvRowIndex)
+         {
+            int DataSourceRowIndex;
+            if (DgvRowIndex < _NumberOfDgvAddedRows)
+                DataSourceRowIndex = (DataSource.Rows.Count - 1) - DgvRowIndex;
 
-        private static int _GetRowIndexForDgvAddCase(DataTable DataSource,int RowIndex,int NumberOfAddedRows)
-            {
-                if (RowIndex < NumberOfAddedRows)
-                    RowIndex = (DataSource.Rows.Count - 1) - RowIndex;
+            else
+                DataSourceRowIndex = DgvRowIndex - _NumberOfDgvAddedRows;
 
-                else
-                    RowIndex -= NumberOfAddedRows;
+            return DataSourceRowIndex;
+         }
 
-                return RowIndex;
-            }
-        
             /// <summary>
             /// Edit row in data grid view , new values array length must match the number of data grid view columns and row index is the index of the row that the user want to edit. 
             /// </summary>
-            public static void EditFullDataRowInDgv(DataGridView dgv, DataTable DataSource,object[] NewValues, int RowIndex,int NumberOfAddedRows = -1)
+            public void EditFullDataRowInDgv(DataGridView dgv,object[] NewValues, int RowIndex)
             {
-            if (NumberOfAddedRows != -1)
+            DataTable DataSource = (DataTable)dgv.DataSource;
+            if (_NumberOfDgvAddedRows != 0)
             {
-                RowIndex = _GetRowIndexForDgvAddCase(DataSource,RowIndex,NumberOfAddedRows);
+                RowIndex = _GetActualRowIndexOfDgvRow(DataSource, RowIndex);
             }
 
             for (short i = 0; i < dgv.Columns.Count; i++)
@@ -295,11 +290,12 @@ namespace Utility_Library
         /// <summary>
         /// Edit one column value in a row in data grid view .
         /// </summary>
-        public static void EditOneColumnValueInDgv<T>(DataTable DataSource, string ColumnName, T NewValue, int RowIndex, int NumberOfAddedRows = -1)
+        public void EditOneColumnValueInDgv<T>(DataGridView dgv, string ColumnName, T NewValue, int RowIndex)
         {
-            if (NumberOfAddedRows != -1)
+            DataTable DataSource = (DataTable)dgv.DataSource;
+            if (_NumberOfDgvAddedRows != 0)
             {
-                RowIndex = _GetRowIndexForDgvAddCase(DataSource, RowIndex, NumberOfAddedRows);
+                RowIndex = _GetActualRowIndexOfDgvRow(DataSource, RowIndex);
             }
 
             DataSource.Columns[ColumnName].ReadOnly = false;
@@ -367,9 +363,50 @@ namespace Utility_Library
         {
             return (dgv.Rows.GetLastRow(DataGridViewElementStates.None) == dgv.Rows.GetLastRow(DataGridViewElementStates.Displayed));
         }
+
         public static bool IsDgvLastRowSelected(DataGridView dgv)
         {
             return (dgv.Rows.GetLastRow(DataGridViewElementStates.None) == dgv.Rows.GetLastRow(DataGridViewElementStates.Selected));
+        }
+
+        public static string GetDataGridViewSortDirection(enDataGridViewSortDirection CurrentDgvSortDirection)
+        {
+            switch(CurrentDgvSortDirection)
+            {
+                case enDataGridViewSortDirection.Ascending:
+                    return "Asc";
+
+                case enDataGridViewSortDirection.Descending:
+                    return "Desc";
+            }
+
+            return null;
+        }
+
+        public  void ModifyDataAfterUserOrdersColumn(DataGridView Dgv,DataTable NewSortedDataSource, DataGridViewCellMouseEventArgs e,ref string LastColumnNameDgvSortedBy,ref enDataGridViewSortDirection CurrentDgvSortDirection)
+        {
+            _NumberOfDgvAddedRows = 0;
+
+            if (LastColumnNameDgvSortedBy != Dgv.Columns[e.ColumnIndex].HeaderText)
+            {
+                LastColumnNameDgvSortedBy = Dgv.Columns[e.ColumnIndex].HeaderText;
+                CurrentDgvSortDirection = enDataGridViewSortDirection.Descending;
+            }
+            else
+            {
+                if (CurrentDgvSortDirection == enDataGridViewSortDirection.Descending)
+                    CurrentDgvSortDirection =  enDataGridViewSortDirection.Ascending;
+
+                else
+                    CurrentDgvSortDirection = enDataGridViewSortDirection.Descending;
+            }
+
+            Dgv.DataSource = NewSortedDataSource;
+        }
+
+        public static bool WasDgvColumnHeaderClicked(DataGridView Dgv,MouseEventArgs e)
+        {
+            return (e.Location.Y <= Dgv.ColumnHeadersHeight);
         }
     }
     }

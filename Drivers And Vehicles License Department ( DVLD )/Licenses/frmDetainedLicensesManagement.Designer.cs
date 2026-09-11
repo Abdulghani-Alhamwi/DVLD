@@ -177,7 +177,6 @@
             // 
             this.dgvDetainedLicenses.AllowUserToAddRows = false;
             this.dgvDetainedLicenses.AllowUserToDeleteRows = false;
-            this.dgvDetainedLicenses.AllowUserToOrderColumns = true;
             this.dgvDetainedLicenses.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvDetainedLicenses.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvDetainedLicenses.BackgroundColor = System.Drawing.Color.WhiteSmoke;

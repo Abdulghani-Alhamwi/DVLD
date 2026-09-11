@@ -37,21 +37,21 @@
             this.lblLocalRecordsNumTitle = new System.Windows.Forms.Label();
             this.lblLLHistoryTitle = new System.Windows.Forms.Label();
             this.dgvLocalLicenses = new System.Windows.Forms.DataGridView();
+            this.cmsLicenseHistory = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiShowLicenseInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tpInternationalLicenses = new System.Windows.Forms.TabPage();
             this.lblInternationalLicensesNum = new System.Windows.Forms.Label();
             this.lblIntRecordsNumTitle = new System.Windows.Forms.Label();
             this.lblIntLicensesHistoryTitle = new System.Windows.Forms.Label();
             this.dgvInternationalLicenses = new System.Windows.Forms.DataGridView();
             this.gbDriverLicenses = new System.Windows.Forms.GroupBox();
-            this.cmsLicenseHistory = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmiShowLicenseInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tcLicensesHistory.SuspendLayout();
             this.tpLocalLicenses.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLocalLicenses)).BeginInit();
+            this.cmsLicenseHistory.SuspendLayout();
             this.tpInternationalLicenses.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInternationalLicenses)).BeginInit();
             this.gbDriverLicenses.SuspendLayout();
-            this.cmsLicenseHistory.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcLicensesHistory
@@ -115,7 +115,6 @@
             // 
             this.dgvLocalLicenses.AllowUserToAddRows = false;
             this.dgvLocalLicenses.AllowUserToDeleteRows = false;
-            this.dgvLocalLicenses.AllowUserToOrderColumns = true;
             this.dgvLocalLicenses.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvLocalLicenses.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -140,6 +139,28 @@
             this.dgvLocalLicenses.TabIndex = 58;
             this.dgvLocalLicenses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvLocalLicenses_Scroll);
             this.dgvLocalLicenses.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvLocalLicenses_KeyDown);
+            // 
+            // cmsLicenseHistory
+            // 
+            this.cmsLicenseHistory.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.cmsLicenseHistory.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.cmsLicenseHistory.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.cmsLicenseHistory.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiShowLicenseInfo});
+            this.cmsLicenseHistory.Name = "cmsPeopleMenu";
+            this.cmsLicenseHistory.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.cmsLicenseHistory.Size = new System.Drawing.Size(242, 40);
+            this.cmsLicenseHistory.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLicenseHistory_Opening);
+            // 
+            // tsmiShowLicenseInfo
+            // 
+            this.tsmiShowLicenseInfo.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiShowLicenseInfo.Image = global::DVLDPresentationLayer.Properties.Resources.License_View_32;
+            this.tsmiShowLicenseInfo.Name = "tsmiShowLicenseInfo";
+            this.tsmiShowLicenseInfo.Padding = new System.Windows.Forms.Padding(0);
+            this.tsmiShowLicenseInfo.Size = new System.Drawing.Size(241, 36);
+            this.tsmiShowLicenseInfo.Text = "Show License Info";
+            this.tsmiShowLicenseInfo.Click += new System.EventHandler(this.tsmiShowLicenseInfo_Click);
             // 
             // tpInternationalLicenses
             // 
@@ -192,7 +213,6 @@
             // 
             this.dgvInternationalLicenses.AllowUserToAddRows = false;
             this.dgvInternationalLicenses.AllowUserToDeleteRows = false;
-            this.dgvInternationalLicenses.AllowUserToOrderColumns = true;
             this.dgvInternationalLicenses.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvInternationalLicenses.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -228,28 +248,6 @@
             this.gbDriverLicenses.TabStop = false;
             this.gbDriverLicenses.Text = "Driver Licenses";
             // 
-            // cmsLicenseHistory
-            // 
-            this.cmsLicenseHistory.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.cmsLicenseHistory.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.cmsLicenseHistory.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.cmsLicenseHistory.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiShowLicenseInfo});
-            this.cmsLicenseHistory.Name = "cmsPeopleMenu";
-            this.cmsLicenseHistory.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsLicenseHistory.Size = new System.Drawing.Size(242, 62);
-            this.cmsLicenseHistory.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLicenseHistory_Opening);
-            // 
-            // tsmiShowLicenseInfo
-            // 
-            this.tsmiShowLicenseInfo.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiShowLicenseInfo.Image = global::DVLDPresentationLayer.Properties.Resources.License_View_32;
-            this.tsmiShowLicenseInfo.Name = "tsmiShowLicenseInfo";
-            this.tsmiShowLicenseInfo.Padding = new System.Windows.Forms.Padding(0);
-            this.tsmiShowLicenseInfo.Size = new System.Drawing.Size(241, 36);
-            this.tsmiShowLicenseInfo.Text = "Show License Info";
-            this.tsmiShowLicenseInfo.Click += new System.EventHandler(this.tsmiShowLicenseInfo_Click);
-            // 
             // ctrlDriverLicensesHistory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -265,11 +263,11 @@
             this.tpLocalLicenses.ResumeLayout(false);
             this.tpLocalLicenses.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLocalLicenses)).EndInit();
+            this.cmsLicenseHistory.ResumeLayout(false);
             this.tpInternationalLicenses.ResumeLayout(false);
             this.tpInternationalLicenses.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInternationalLicenses)).EndInit();
             this.gbDriverLicenses.ResumeLayout(false);
-            this.cmsLicenseHistory.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

@@ -75,7 +75,6 @@
             // 
             this.dgvTestAppointments.AllowUserToAddRows = false;
             this.dgvTestAppointments.AllowUserToDeleteRows = false;
-            this.dgvTestAppointments.AllowUserToOrderColumns = true;
             this.dgvTestAppointments.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvTestAppointments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvTestAppointments.BackgroundColor = System.Drawing.Color.WhiteSmoke;

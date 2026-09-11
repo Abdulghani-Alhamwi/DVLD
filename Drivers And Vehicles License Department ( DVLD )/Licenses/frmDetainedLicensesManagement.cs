@@ -10,11 +10,12 @@ namespace DVLDPresentationLayer.TestTypes
 {
     public partial class frmDetainedLicensesManagement : Form
     {
-        private int _NumberOfDgvAddedRows;
         private bool _AllowDataLoading;
+        private clsUtility _UtilityLib;
         public frmDetainedLicensesManagement()
         {
             InitializeComponent();
+            _UtilityLib = new clsUtility();
         }
         private void _AddComboBoxesFilterItems()
         {
@@ -112,9 +113,9 @@ namespace DVLDPresentationLayer.TestTypes
             {
                 if ((int)DetainInfo.Cells["D.ID"].Value == DetainedLicenseID)
                 {
-                    clsUtility.EditOneColumnValueInDgv<bool>((DataTable)dgvDetainedLicenses.DataSource, "Is Released", true, dgvDetainedLicenses.Rows.IndexOf(DetainInfo), _NumberOfDgvAddedRows);
-                    clsUtility.EditOneColumnValueInDgv<string>((DataTable)dgvDetainedLicenses.DataSource, "Release Date", ReleaseDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)), dgvDetainedLicenses.Rows.IndexOf(DetainInfo), _NumberOfDgvAddedRows);
-                    clsUtility.EditOneColumnValueInDgv<int>((DataTable)dgvDetainedLicenses.DataSource, "Release App.ID", ReleaseApplicationID, dgvDetainedLicenses.Rows.IndexOf(DetainInfo), _NumberOfDgvAddedRows);
+                    _UtilityLib.EditOneColumnValueInDgv<bool>(dgvDetainedLicenses, "Is Released", true, dgvDetainedLicenses.Rows.IndexOf(DetainInfo));
+                    _UtilityLib.EditOneColumnValueInDgv<string>(dgvDetainedLicenses, "Release Date", ReleaseDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)), dgvDetainedLicenses.Rows.IndexOf(DetainInfo));
+                    _UtilityLib.EditOneColumnValueInDgv<int>(dgvDetainedLicenses, "Release App.ID", ReleaseApplicationID, dgvDetainedLicenses.Rows.IndexOf(DetainInfo));
                 }
             }
         }
@@ -131,7 +132,7 @@ namespace DVLDPresentationLayer.TestTypes
             if (dgvDetainedLicenses.DataSource == null)
                 dgvDetainedLicenses.DataSource = clsDetainedLicenses.GetColumnsNamesForView();
 
-            clsUtility.AddNewRowToDGV((DataTable)dgvDetainedLicenses.DataSource, NewAppDetails, dgvDetainedLicenses.Columns[0].HeaderText, ref _NumberOfDgvAddedRows);
+            _UtilityLib.AddNewRowToDGV(dgvDetainedLicenses, NewAppDetails, dgvDetainedLicenses.Columns[0].HeaderText);
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
 
@@ -181,7 +182,7 @@ namespace DVLDPresentationLayer.TestTypes
                 NewRows = dtFilteredData?.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDgv(dgvDetainedLicenses, (DataTable)dgvDetainedLicenses.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvDetainedLicenses));
+                    clsUtility.AddNewRowsToDgv(dgvDetainedLicenses, NewRows, clsUtility.GetDgvColumnsNames(dgvDetainedLicenses));
             }
 
             else
@@ -189,7 +190,7 @@ namespace DVLDPresentationLayer.TestTypes
                 NewRows = clsDetainedLicenses.GetDetainedLicensesInfo(clsUtility.WantedNumOfRowsFromDB, (int)dgvDetainedLicenses.Rows[dgvDetainedLicenses.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["D.ID"].Value)?.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDgv(dgvDetainedLicenses, (DataTable)dgvDetainedLicenses.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvDetainedLicenses));
+                    clsUtility.AddNewRowsToDgv(dgvDetainedLicenses, NewRows, clsUtility.GetDgvColumnsNames(dgvDetainedLicenses));
             }
         }
 
@@ -201,20 +202,20 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void ComboBoxes_DropDown(object sender, EventArgs e)
         {
-            ((ComboBox)sender).BackColor = clsUtility.ComboBoxItemsBackColor;
+            ((ComboBox)sender).BackColor = clsGlobalSettings.ComboBoxItemsBackColor;
         }
 
         private void cbIsReleased_DropDownClosed(object sender, EventArgs e)
         {
-            cbIsReleased.BackColor = clsUtility.ComboBoxHighlightedBackColor;
+            cbIsReleased.BackColor = clsGlobalSettings.ComboBoxHighlightedBackColor;
         }
 
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
         {
             if (cbFilterBy.SelectedItem.ToString() != "None")
-                cbFilterBy.BackColor = clsUtility.ComboBoxHighlightedBackColor;
+                cbFilterBy.BackColor = clsGlobalSettings.ComboBoxHighlightedBackColor;
             else
-                cbFilterBy.BackColor = clsUtility.ComboBoxBackColor;
+                cbFilterBy.BackColor = clsGlobalSettings.ComboBoxBackColor;
         }
 
    
@@ -253,9 +254,9 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void EditRowAfterReleasingLicense(int ReleaseApplicationID,DateTime ReleaseDate,int DetainedLicensesDgvRowIndex)
         {
-            clsUtility.EditOneColumnValueInDgv<bool>((DataTable)dgvDetainedLicenses.DataSource, "Is Released", true, DetainedLicensesDgvRowIndex, _NumberOfDgvAddedRows);
-            clsUtility.EditOneColumnValueInDgv<string>((DataTable)dgvDetainedLicenses.DataSource, "Release Date", ReleaseDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)), DetainedLicensesDgvRowIndex, _NumberOfDgvAddedRows);
-            clsUtility.EditOneColumnValueInDgv<int>((DataTable)dgvDetainedLicenses.DataSource, "Release App.ID", ReleaseApplicationID, DetainedLicensesDgvRowIndex, _NumberOfDgvAddedRows);
+            _UtilityLib.EditOneColumnValueInDgv<bool>(dgvDetainedLicenses, "Is Released", true, DetainedLicensesDgvRowIndex);
+            _UtilityLib.EditOneColumnValueInDgv<string>(dgvDetainedLicenses, "Release Date", ReleaseDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)), DetainedLicensesDgvRowIndex);
+            _UtilityLib.EditOneColumnValueInDgv<int>(dgvDetainedLicenses, "Release App.ID", ReleaseApplicationID, DetainedLicensesDgvRowIndex);
         }
 
         private void tsmiReleaseDetainedLicense_Click(object sender, EventArgs e)

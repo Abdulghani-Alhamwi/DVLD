@@ -10,10 +10,11 @@ namespace DVLDPresentationLayer
 {
     public partial class frmPeopleManagement : Form
     {
-        private int _NumberOfDgvAddedRows;
+        private clsUtility _UtilityLib;
         public frmPeopleManagement()
         {
             InitializeComponent();
+            _UtilityLib = new clsUtility();
         }
         private void _AddDropDownItems()
         {
@@ -51,14 +52,14 @@ namespace DVLDPresentationLayer
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
         {
             if (cbFilterBy.SelectedItem.ToString() != "None")
-                cbFilterBy.BackColor = clsUtility.ComboBoxHighlightedBackColor;
+                cbFilterBy.BackColor = clsGlobalSettings.ComboBoxHighlightedBackColor;
             else
-                cbFilterBy.BackColor = clsUtility.ComboBoxBackColor;
+                cbFilterBy.BackColor = clsGlobalSettings.ComboBoxBackColor;
         }
 
         private void cbFilterBy_DropDown(object sender, EventArgs e)
         {
-            cbFilterBy.BackColor = clsUtility.ComboBoxItemsBackColor;
+            cbFilterBy.BackColor = clsGlobalSettings.ComboBoxItemsBackColor;
         }
 
         private void cbFilterBy_DrawItem(object sender, DrawItemEventArgs e)
@@ -152,7 +153,7 @@ namespace DVLDPresentationLayer
             if (dgvPeople.DataSource == null)
                 dgvPeople.DataSource = clsPerson.GetColumnsNamesForView();
 
-            clsUtility.AddNewRowToDGV((DataTable)dgvPeople.DataSource,NewPersonDetails, dgvPeople.Columns[0].HeaderText, ref _NumberOfDgvAddedRows);
+            _UtilityLib.AddNewRowToDGV(dgvPeople,NewPersonDetails, dgvPeople.Columns[0].HeaderText);
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
         private void _AddNewPersonScreen()
@@ -198,14 +199,14 @@ namespace DVLDPresentationLayer
                         TotalDeletedRecords++;
                     }
                  }
-                 clsUtility.DeleteSelectedRowsFromView(dgvPeople,SelectedRowsIndex);
+                _UtilityLib.DeleteSelectedDgvRows(dgvPeople,SelectedRowsIndex);
                  lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) - TotalDeletedRecords).ToString();
             }
         }
 
         private void _EditDataRowInDGV(object[] ModifiedPersonDetails, int PeopleDgvRowIndex)
         {
-            clsUtility.EditFullDataRowInDgv(dgvPeople, (DataTable)dgvPeople.DataSource,ModifiedPersonDetails, PeopleDgvRowIndex, _NumberOfDgvAddedRows);
+            _UtilityLib.EditFullDataRowInDgv(dgvPeople, ModifiedPersonDetails, PeopleDgvRowIndex);
         }
 
         private void tsmiEdit_Click(object sender, EventArgs e)
@@ -258,11 +259,6 @@ namespace DVLDPresentationLayer
             _ShowPersonDetails();
         }
 
-        private void dgvPeople_DoubleClick(object sender, EventArgs e)
-        {
-            _ShowPersonDetails();
-        }
-
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -277,7 +273,7 @@ namespace DVLDPresentationLayer
                 NewRows = dtFilteredData.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDgv(dgvPeople, (DataTable)dgvPeople.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvPeople));
+                    clsUtility.AddNewRowsToDgv(dgvPeople, NewRows, clsUtility.GetDgvColumnsNames(dgvPeople));
             }
 
             else
@@ -285,7 +281,7 @@ namespace DVLDPresentationLayer
                  NewRows = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB, (int)dgvPeople.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value)?.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDgv(dgvPeople, (DataTable)dgvPeople.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvPeople));
+                    clsUtility.AddNewRowsToDgv(dgvPeople, NewRows, clsUtility.GetDgvColumnsNames(dgvPeople));
             }
         }
 
@@ -307,6 +303,12 @@ namespace DVLDPresentationLayer
         {
             if (dgvPeople.SelectedRows.Count == 0)
                 cmsPeopleMenu.Close();
+        }
+
+        private void dgvPeople_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (!clsUtility.WasDgvColumnHeaderClicked(dgvPeople, e))
+                _ShowPersonDetails();
         }
     }
 }

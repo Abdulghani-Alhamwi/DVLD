@@ -29,7 +29,7 @@ namespace DVLDPresentationLayer
             DataRow [] NewRows =PartOfRemainingData?.Select();
 
             if (NewRows != null)
-                clsUtility.AddNewRowsToDgv(Dgv, (DataTable)Dgv.DataSource, NewRows, clsUtility.GetDgvColumnsNames(Dgv));
+                clsUtility.AddNewRowsToDgv(Dgv,NewRows, clsUtility.GetDgvColumnsNames(Dgv));
         }
 
         private void dgvLocalLicenses_Scroll(object sender, ScrollEventArgs e)

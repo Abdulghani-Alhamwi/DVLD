@@ -316,7 +316,6 @@
             // 
             this.dgvLDLApplications.AllowUserToAddRows = false;
             this.dgvLDLApplications.AllowUserToDeleteRows = false;
-            this.dgvLDLApplications.AllowUserToOrderColumns = true;
             this.dgvLDLApplications.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvLDLApplications.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvLDLApplications.BackgroundColor = System.Drawing.Color.WhiteSmoke;

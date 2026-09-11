@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
@@ -9,11 +8,12 @@ namespace DVLDPresentationLayer
 {
     public partial class frmApplicationTypesManagement : Form
     {
+        private clsUtility _UtilityLib;
         public frmApplicationTypesManagement()
         {
             InitializeComponent();
+            _UtilityLib = new clsUtility();
         }
-
 
         private void frmManageApplicationTypes_Load(object sender, EventArgs e)
         {
@@ -24,7 +24,7 @@ namespace DVLDPresentationLayer
 
         private void EditDGVRowData(object[] NewValues,byte DGVRowIndex)
         {
-            clsUtility.EditFullDataRowInDgv(dgvApplicationTypes,(DataTable)dgvApplicationTypes.DataSource,NewValues,DGVRowIndex);
+            _UtilityLib.EditFullDataRowInDgv(dgvApplicationTypes, NewValues, DGVRowIndex);
         }
 
         private void tsmiEditApplicationType_Click(object sender, EventArgs e)

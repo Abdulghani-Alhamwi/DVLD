@@ -125,7 +125,6 @@
             // 
             this.dgvIntLicenseApplications.AllowUserToAddRows = false;
             this.dgvIntLicenseApplications.AllowUserToDeleteRows = false;
-            this.dgvIntLicenseApplications.AllowUserToOrderColumns = true;
             this.dgvIntLicenseApplications.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvIntLicenseApplications.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvIntLicenseApplications.BackgroundColor = System.Drawing.Color.WhiteSmoke;

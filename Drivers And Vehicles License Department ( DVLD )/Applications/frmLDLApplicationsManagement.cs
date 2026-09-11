@@ -12,11 +12,12 @@ namespace DVLDPresentationLayer
 {
     public partial class frmLDLApplicationsManagement : Form
     {
-        private int _NumberOfDgvAddedRows;
         private bool _AllowDataLoading;
+        private clsUtility _UtilityLib;
         public frmLDLApplicationsManagement()
         {
             InitializeComponent();
+            _UtilityLib = new clsUtility();
         }
         private void _AddComboBoxesFilterItems()
         {
@@ -113,7 +114,7 @@ namespace DVLDPresentationLayer
             if (dgvLDLApplications.DataSource == null)
                 dgvLDLApplications.DataSource = clsLocalDrivingLicenseApp.GetColumnsNamesForView();
 
-            clsUtility.AddNewRowToDGV((DataTable)dgvLDLApplications.DataSource,NewAppDetails,dgvLDLApplications.Columns[0].HeaderText,ref _NumberOfDgvAddedRows);
+            _UtilityLib.AddNewRowToDGV(dgvLDLApplications,NewAppDetails,dgvLDLApplications.Columns[0].HeaderText);
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
 
@@ -127,7 +128,7 @@ namespace DVLDPresentationLayer
 
         private void _EditDataRowInDGV(object[] ModifiedAppDetails,int DgvRowIndex)
         {
-            clsUtility.EditFullDataRowInDgv(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource,ModifiedAppDetails,DgvRowIndex,_NumberOfDgvAddedRows);
+            _UtilityLib.EditFullDataRowInDgv(dgvLDLApplications,ModifiedAppDetails,DgvRowIndex);
         }
 
         private void tsmiEditApplication_Click(object sender, EventArgs e)
@@ -188,8 +189,8 @@ namespace DVLDPresentationLayer
                         TotalDeletedRecords++;
                     }
                     }
-                    clsUtility.DeleteSelectedRowsFromView(dgvLDLApplications, SelectedRowsIndex);
-                    lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) - TotalDeletedRecords).ToString();
+                _UtilityLib.DeleteSelectedDgvRows(dgvLDLApplications, SelectedRowsIndex);
+                lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) - TotalDeletedRecords).ToString();
             }
         }
         private void tsmiCancelApplication_Click(object sender, EventArgs e)
@@ -206,7 +207,7 @@ namespace DVLDPresentationLayer
                     int ApplicationID = clsLocalDrivingLicenseApp.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
 
                     if (clsApplication.ChangeApplicationStatus(ApplicationID, clsApplication.enApplicationStatus.Canceled))
-                        clsUtility.EditOneColumnValueInDgv<string>((DataTable)dgvLDLApplications.DataSource,"Status", "Canceled", dgvLDLApplications.SelectedRows[0].Index, _NumberOfDgvAddedRows);
+                        _UtilityLib.EditOneColumnValueInDgv<string>(dgvLDLApplications, "Status", "Canceled", dgvLDLApplications.SelectedRows[0].Index);
                     else
                         MessageBox.Show("Failed To Cancel Application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -252,7 +253,7 @@ namespace DVLDPresentationLayer
                 NewRows = dtFilteredData?.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDgv(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvLDLApplications));
+                    clsUtility.AddNewRowsToDgv(dgvLDLApplications, NewRows, clsUtility.GetDgvColumnsNames(dgvLDLApplications));
             }
 
             else
@@ -260,7 +261,7 @@ namespace DVLDPresentationLayer
                 NewRows = clsLocalDrivingLicenseApp.GetLDLApplications(clsUtility.WantedNumOfRowsFromDB, (int)dgvLDLApplications.Rows[dgvLDLApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["L.D.L.AppID"].Value)?.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDgv(dgvLDLApplications, (DataTable)dgvLDLApplications.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvLDLApplications));
+                    clsUtility.AddNewRowsToDgv(dgvLDLApplications, NewRows, clsUtility.GetDgvColumnsNames(dgvLDLApplications));
             }
         }
         
@@ -271,18 +272,18 @@ namespace DVLDPresentationLayer
         }
         private void ComboBoxes_DropDown(object sender, EventArgs e)
         {
-            ((ComboBox)sender).BackColor = clsUtility.ComboBoxItemsBackColor;
+            ((ComboBox)sender).BackColor = clsGlobalSettings.ComboBoxItemsBackColor;
         }
         private void cbStatus_DropDownClosed(object sender, EventArgs e)
         {
-            cbStatus.BackColor = clsUtility.ComboBoxHighlightedBackColor;
+            cbStatus.BackColor = clsGlobalSettings.ComboBoxHighlightedBackColor;
         }
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
         {
             if(cbFilterBy.SelectedItem.ToString() != "None")
-                cbFilterBy.BackColor = clsUtility.ComboBoxHighlightedBackColor;
+                cbFilterBy.BackColor = clsGlobalSettings.ComboBoxHighlightedBackColor;
             else
-                cbFilterBy.BackColor = clsUtility.ComboBoxBackColor;
+                cbFilterBy.BackColor = clsGlobalSettings.ComboBoxBackColor;
         }
         private void _DisableSpecificMenuOptions()
         {
@@ -370,7 +371,7 @@ namespace DVLDPresentationLayer
             byte PassedTests = Convert.ToByte(dgvLDLApplications.Rows[DgvRowIndex].Cells["Passed Tests"].Value);
             PassedTests += 1;
 
-            clsUtility.EditOneColumnValueInDgv<byte>((DataTable)dgvLDLApplications.DataSource, "Passed Tests", PassedTests, DgvRowIndex, _NumberOfDgvAddedRows);
+            _UtilityLib.EditOneColumnValueInDgv<byte>(dgvLDLApplications, "Passed Tests", PassedTests, DgvRowIndex);
         }
         private void tsmiScheduleVisionTest_Click(object sender, EventArgs e)
         {
@@ -408,7 +409,7 @@ namespace DVLDPresentationLayer
                 clsApplication.enApplicationStatus.Completed
                 );
 
-            clsUtility.EditOneColumnValueInDgv<string>((DataTable)dgvLDLApplications.DataSource,"Status", "Completed", DGVRowIndex, _NumberOfDgvAddedRows);
+            _UtilityLib.EditOneColumnValueInDgv<string>(dgvLDLApplications, "Status", "Completed", DGVRowIndex);
         }
 
         private void tsmiIssueDLFirstTime_Click(object sender, EventArgs e)

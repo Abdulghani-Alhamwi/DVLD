@@ -455,13 +455,13 @@ namespace DVLDDataAccessLayer
             }
         }
 
-        private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtUserID = -1)
+        private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilter, ref string ValueToFilterBy, string ColumnNameToOrderBy,string SortDirection, int LastLowestbroughtUserID = -1, char? WildChar = null)
         {
             string query = _query;
 
-            if (string.IsNullOrEmpty(ValueToFilterBy))
+            if (string.IsNullOrEmpty(ValueToFilterBy) || string.IsNullOrEmpty(ColumnNameToFilter))
             {
-                query += " ORDER BY UserID DESC";
+                query += $" ORDER BY {ColumnNameToOrderBy} {SortDirection}";
                 return query;
             }
 
@@ -474,11 +474,11 @@ namespace DVLDDataAccessLayer
                 {
 
                     if (LastLowestbroughtUserID != -1)
-                        query += @" WHERE UserID < @LastLowestbroughtUserID
-                                    ORDER BY UserID DESC";
+                        query += $@" WHERE {ColumnNameToOrderBy} < @LastLowestbroughtUserID
+                                    ORDER BY {ColumnNameToOrderBy} {SortDirection}";
                     
                     else 
-                        query += " ORDER BY UserID DESC";
+                        query += $" ORDER BY {ColumnNameToOrderBy} {SortDirection}";
 
                     return query;
                 }
@@ -494,27 +494,29 @@ namespace DVLDDataAccessLayer
             
 
                 if (LastLowestbroughtUserID == -1)
-                    query += " ORDER BY UserID DESC";
+                    query += $" ORDER BY {ColumnNameToOrderBy} {SortDirection}";
 
                 else
-                    query += @" AND UserID < @LastLowestbroughtUserID
-                           ORDER BY UserID DESC";
+                    query += $@" AND {ColumnNameToOrderBy} < @LastLowestbroughtUserID
+                           ORDER BY {ColumnNameToOrderBy} {SortDirection}";
 
                 return query;
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestbroughtUserID = -1, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy,string SortDirection,
+            int LastLowestbroughtUserID = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilter,ref ValueToFilterBy, WildChar, LastLowestbroughtUserID);
+            string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilter, ref ValueToFilterBy, ColumnNameToOrderBy,SortDirection, LastLowestbroughtUserID, WildChar);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
-            command.Parameters.AddWithValue("@Value", ValueToFilterBy);
+            if (ValueToFilterBy != null)
+                command.Parameters.AddWithValue("@Value", ValueToFilterBy);
 
             if (WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
@@ -572,6 +574,14 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return -1;
+        }
+
+        public static DataTable GetSortedUsersInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy,string SortDirection)
+        {
+            if(ColumnNameToOrderBy != "UserName")
+            ColumnNameToOrderBy = _GetOriginalColumnName(ColumnNameToOrderBy);
+
+            return GetFilteredData(WantedNumOfRecords, null, null, ColumnNameToOrderBy, SortDirection, - 1, null);
         }
     }
 }

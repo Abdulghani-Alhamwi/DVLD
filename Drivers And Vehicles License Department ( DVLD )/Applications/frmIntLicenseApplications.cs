@@ -11,9 +11,11 @@ namespace DVLDPresentationLayer.Licenses
     public partial class frmIntLicenseApplications : Form
     {
         private bool _AllowDataLoading;
+        private clsUtility _UtilityLib;
         public frmIntLicenseApplications()
         {
             InitializeComponent();
+            _UtilityLib = new clsUtility();
         }
         private void frmInternationalLicensesManagement_Load(object sender, EventArgs e)
         {
@@ -148,7 +150,7 @@ namespace DVLDPresentationLayer.Licenses
             if (dgvIntLicenseApplications.DataSource == null)
                 dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetColumnsNamesForView();
 
-            clsUtility.AddNewRowToDGV((DataTable)dgvIntLicenseApplications.DataSource,NewValues, dgvIntLicenseApplications.Columns[0].HeaderText);
+            _UtilityLib.AddNewRowToDGV(dgvIntLicenseApplications,NewValues, dgvIntLicenseApplications.Columns[0].HeaderText);
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
 
@@ -174,7 +176,7 @@ namespace DVLDPresentationLayer.Licenses
                 NewRows = dtFilteredData?.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDgv(dgvIntLicenseApplications, (DataTable)dgvIntLicenseApplications.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvIntLicenseApplications));
+                    clsUtility.AddNewRowsToDgv(dgvIntLicenseApplications, NewRows, clsUtility.GetDgvColumnsNames(dgvIntLicenseApplications));
             }
 
             else
@@ -182,23 +184,23 @@ namespace DVLDPresentationLayer.Licenses
                 NewRows = clsInternationalLicense.GetAllInternationalLicenses(clsUtility.WantedNumOfRowsFromDB, (int)dgvIntLicenseApplications.Rows[dgvIntLicenseApplications.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Int.License ID"].Value)?.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDgv(dgvIntLicenseApplications, (DataTable)dgvIntLicenseApplications.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvIntLicenseApplications));
+                    clsUtility.AddNewRowsToDgv(dgvIntLicenseApplications, NewRows, clsUtility.GetDgvColumnsNames(dgvIntLicenseApplications));
             }
         }
         private void ComboBoxes_DropDown(object sender, EventArgs e)
         {
-            ((ComboBox)sender).BackColor = clsUtility.ComboBoxItemsBackColor;
+            ((ComboBox)sender).BackColor = clsGlobalSettings.ComboBoxItemsBackColor;
         }
         private void cbIsActive_DropDownClosed(object sender, EventArgs e)
         {
-            cbIsActive.BackColor = clsUtility.ComboBoxHighlightedBackColor;
+            cbIsActive.BackColor = clsGlobalSettings.ComboBoxHighlightedBackColor;
         }
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
         {
             if(cbFilterBy.SelectedItem.ToString() != "None")
-                cbFilterBy.BackColor = clsUtility.ComboBoxHighlightedBackColor;
+                cbFilterBy.BackColor = clsGlobalSettings.ComboBoxHighlightedBackColor;
             else
-                cbFilterBy.BackColor = clsUtility.ComboBoxBackColor;
+                cbFilterBy.BackColor = clsGlobalSettings.ComboBoxBackColor;
         }
         private void tsmiShowLicenseDetails_Click(object sender, EventArgs e)
         {

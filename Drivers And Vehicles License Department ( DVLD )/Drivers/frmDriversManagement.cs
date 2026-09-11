@@ -103,14 +103,14 @@ namespace DVLDPresentationLayer
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
         {
             if (cbFilterBy.SelectedItem.ToString() != "None")
-                cbFilterBy.BackColor = clsUtility.ComboBoxHighlightedBackColor;
+                cbFilterBy.BackColor = clsGlobalSettings.ComboBoxHighlightedBackColor;
             else
-                cbFilterBy.BackColor = clsUtility.ComboBoxBackColor;
+                cbFilterBy.BackColor = clsGlobalSettings.ComboBoxBackColor;
         }
 
         private void cbFilterBy_DropDown(object sender, EventArgs e)
         {
-            cbFilterBy.BackColor = clsUtility.ComboBoxItemsBackColor;
+            cbFilterBy.BackColor = clsGlobalSettings.ComboBoxItemsBackColor;
         }
 
         private void cbFilterBy_DrawItem(object sender, DrawItemEventArgs e)
@@ -127,7 +127,7 @@ namespace DVLDPresentationLayer
                 NewRows = dtFilteredData.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDgv(dgvDrivers, (DataTable)dgvDrivers.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvDrivers));
+                    clsUtility.AddNewRowsToDgv(dgvDrivers, NewRows, clsUtility.GetDgvColumnsNames(dgvDrivers));
             }
 
             else
@@ -135,7 +135,7 @@ namespace DVLDPresentationLayer
                 NewRows = clsDriver.GetDriversInfo(clsUtility.WantedNumOfRowsFromDB, (int)dgvDrivers.Rows[dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value)?.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDgv(dgvDrivers, (DataTable)dgvDrivers.DataSource, NewRows, clsUtility.GetDgvColumnsNames(dgvDrivers));
+                    clsUtility.AddNewRowsToDgv(dgvDrivers, NewRows, clsUtility.GetDgvColumnsNames(dgvDrivers));
             }
         }
         private void dgvDrivers_KeyDown(object sender, KeyEventArgs e)

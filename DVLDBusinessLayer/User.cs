@@ -129,14 +129,14 @@ namespace DVLDBusinessLayer
             return clsUsersData.GetUserName(UserID);
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection, char? WildChar = null)
         {
-            return clsUsersData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy,-1, WildChar);
+            return clsUsersData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, -1, WildChar);
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestbroughtUserID, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtUserID, char? WildChar = null)
         {
-            return clsUsersData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastLowestbroughtUserID, WildChar);
+            return clsUsersData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, LastLowestbroughtUserID, WildChar);
         }
 
         public static int GetTotalUsersCount()
@@ -147,6 +147,11 @@ namespace DVLDBusinessLayer
         public static DataTable GetColumnsNamesForView()
         {
             return clsUsersData.GetColumnsNamesForView();
+        }
+
+        public static DataTable GetSortedUsersInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy,string SortDirection)
+        {
+            return clsUsersData.GetSortedUsersInfo(WantedNumOfRecords, ColumnNameToOrderBy,SortDirection);
         }
     }
 }

@@ -105,7 +105,6 @@
             // 
             this.dgvPeople.AllowUserToAddRows = false;
             this.dgvPeople.AllowUserToDeleteRows = false;
-            this.dgvPeople.AllowUserToOrderColumns = true;
             this.dgvPeople.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPeople.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvPeople.BackgroundColor = System.Drawing.Color.WhiteSmoke;
@@ -130,8 +129,8 @@
             this.dgvPeople.StandardTab = true;
             this.dgvPeople.TabIndex = 0;
             this.dgvPeople.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvPeople_Scroll);
-            this.dgvPeople.DoubleClick += new System.EventHandler(this.dgvPeople_DoubleClick);
             this.dgvPeople.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvPeople_KeyDown);
+            this.dgvPeople.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgvPeople_MouseDoubleClick);
             // 
             // cmsPeopleMenu
             // 

@@ -143,7 +143,6 @@
             // 
             this.dgvDrivers.AllowUserToAddRows = false;
             this.dgvDrivers.AllowUserToDeleteRows = false;
-            this.dgvDrivers.AllowUserToOrderColumns = true;
             this.dgvDrivers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvDrivers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvDrivers.BackgroundColor = System.Drawing.Color.WhiteSmoke;
@@ -214,7 +213,7 @@
             this.lblFormBigTitle.TabIndex = 50;
             this.lblFormBigTitle.Text = "Drivers List";
             // 
-            // frmDriversManagements
+            // frmDriversManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -236,7 +235,7 @@
             this.Controls.Add(this.lblFormBigTitle);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.Name = "frmDriversManagements";
+            this.Name = "frmDriversManagement";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
