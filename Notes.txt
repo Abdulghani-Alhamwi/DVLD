@@ -585,3 +585,30 @@ if we used thread.start() then thread.join() -> the calling thread waits till th
 
    Thread NewThread = new Thread(() => AfterReleasingALicense.Invoke(_DetainInfo.DetainID));
    NewThread.Start();
+
+
+59)
+In the following , if we didn't create the non clustered index , if in the following query we did not use the order by clause -> what will happen is the following :
+the sql server will select the top 10 records directly from the first scan to the people table because here we just want the first top 10 records he can get with out Filter condition therefore here what will happen is from the first scan to the people table which contains 100000 records it will bring the nationalityCountryId for each record we bring and compare it with the countries.countryId which is clustered index , here the execution plan uses nested loops and here we scan the people table one time therefore the is no slowness to feel in it , but when we use the order by -> what will happen is the following :
+First the sql server will order the countries names descending and after that it will do table scan to the people table to bring the NationalityCountryID , here the countries names number is 193 because we have 193 country therefore we will have a loop and that loop is with in the countries number and each time in order to bring the nationalitycountryID for each countryname -> it does Full table scan for people table, therefore if we did simple calculation : 100000 * 193 then we find the it go through 19300000 record and here we will feel the slowness and the execution time may be 6 seconds , but here what actualy will happen is that it wont go through the 193 country name because the sql server once he had enough records ordered desc in order to bring the top 10 records ordered correctly by nationality desc once the sql server be able to ring the 10 records correctly with correct sorting according to the order by nationality -> it stop from going through the rest of countries names and return the 10 records and here it go through 104 country name in the loop and each time for each country name it does full table scan for the people table to bring the nationalitycountryid that is associated with each record and here 104 * 1000000 the result is going through 10400000 record , to solve this performance problem , we simply create a non clustered index for the nationality country id column that is with in the people table and by that we have efficient way to directly reach that nationality country id without the need for full table scan and here we will have execution time about 0 seconds and the rows that it goes through is just 1000000 instead of 10400000 because here it do full scan one time then orders those records desc then brings the top 10 , here it uses index seek to bring the nationality country id to evaluate the join predicate instead of table scan which is instead of clustered index scan each time with out the full table scan because the data is cashed in cash memory and organized by the column nationality country id.
+
+Slow :
+SELECT TOP (10) PersonID As [Person ID], NationalNo AS [National No.],
+           FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
+           Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+           FORMAT(DateOfBirth,'dd/MM/yyyy') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
+           FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
+           ORDER BY [Nationality] Desc 
+
+
+Fast :
+CREATE NONCLUSTERED INDEX PeopleNationailtyCountryID_RowStore
+ON People (
+NationalityCountryID)
+
+SELECT TOP (10) PersonID As [Person ID], NationalNo AS [National No.],
+           FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
+           Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
+           FORMAT(DateOfBirth,'dd/MM/yyyy') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
+           FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
+           ORDER BY [Nationality] Desc 
