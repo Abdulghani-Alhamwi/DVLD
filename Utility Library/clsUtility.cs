@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace Utility_Library
 {
@@ -383,30 +384,121 @@ namespace Utility_Library
             return null;
         }
 
-        public  void ModifyDataAfterUserOrdersColumn(DataGridView Dgv,DataTable NewSortedDataSource, DataGridViewCellMouseEventArgs e,ref string LastColumnNameDgvSortedBy,ref enDataGridViewSortDirection CurrentDgvSortDirection)
+        public void ModifyDataAfterUserOrdersColumn(DataGridView Dgv,DataTable NewSortedDataSource, DataGridViewCellMouseEventArgs e,ref string LastColumnNameDgvSortedBy)
         {
             _NumberOfDgvAddedRows = 0;
 
             if (LastColumnNameDgvSortedBy != Dgv.Columns[e.ColumnIndex].HeaderText)
             {
                 LastColumnNameDgvSortedBy = Dgv.Columns[e.ColumnIndex].HeaderText;
-                CurrentDgvSortDirection = enDataGridViewSortDirection.Descending;
             }
-            else
-            {
-                if (CurrentDgvSortDirection == enDataGridViewSortDirection.Descending)
-                    CurrentDgvSortDirection =  enDataGridViewSortDirection.Ascending;
-
-                else
-                    CurrentDgvSortDirection = enDataGridViewSortDirection.Descending;
-            }
-
+            
             Dgv.DataSource = NewSortedDataSource;
         }
 
         public static bool WasDgvColumnHeaderClicked(DataGridView Dgv,MouseEventArgs e)
         {
             return (e.Location.Y <= Dgv.ColumnHeadersHeight);
+        }
+
+        /// <summary>
+        /// Returns a datatable contains sorted info based on your query and sended arguments, the query must be designed to bring the sorted info , this method is for structure only in order to avoid repeating code and the sorted query must be sended from you.
+        /// </summary>
+        public static DataTable GetSortedInfoFromYourQueryAndArgs(string ConnectionString, string Query, byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
+           string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
+        {
+            DataTable dtSortedData = null;
+            SqlConnection connection = new SqlConnection(ConnectionString);
+
+            SqlCommand command = new SqlCommand(Query, connection);
+            command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
+
+            if (ValueToFilterBy != null)
+                command.Parameters.AddWithValue("@Value", ValueToFilterBy);
+
+            if (WildChar != null)
+                command.Parameters.AddWithValue("@WildChar", WildChar);
+
+            try
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    dtSortedData = new DataTable();
+                    dtSortedData.Load(reader);
+                }
+
+                reader.Close();
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return dtSortedData;
+        }
+
+        /// <summary>
+        /// Returns last query part with condition if there was brought id then order by sended column or directly if there was no last brought id then send -1 instead and by that it returns the last query part order by sended column
+        /// </summary>
+        public static string GetLastFilterQueryPart(string ColumnNameToFilterBy, string ColumnNameToOrderBy, string SortDirection,
+                int LastLowestbroughtID, bool PreviousConditionMayExists)
+        {
+            if (!PreviousConditionMayExists)
+            {
+                if (LastLowestbroughtID != -1)
+                    return $@" WHERE {ColumnNameToFilterBy} < {LastLowestbroughtID}
+                     ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+
+                else
+                    return $" ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+            }
+            else
+            {
+                if (LastLowestbroughtID != -1)
+                    return $@" AND {ColumnNameToFilterBy} < {LastLowestbroughtID}
+                     ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+
+                else
+                    return $" ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+            }
+        }
+
+        /// <summary>
+        /// Returns last query part with condition if there was brought id then order by sended column or directly if there was no last brought id then send -1 instead and by that it returns the last query part order by sended column
+        /// </summary
+        public static string GetLastFilterQueryPart(string ColumnNameToOrderBy, string SortDirection)
+        {
+            return GetLastFilterQueryPart(null, ColumnNameToOrderBy, SortDirection, -1, false);
+        }
+
+        /// <summary>
+        /// Returns last query part which is the where clause part for filteration based on a value , the WildChar if sended it will be used after the value to bring specified pattern.
+        /// </summary
+        public static string GetFilterQueryPart_ValueCondition(string ColumnNameToFilterBy, char? WildChar = null)
+        {
+            if (WildChar == null)
+                return $" WHERE {ColumnNameToFilterBy} = @Value";
+            else
+                return $" WHERE {ColumnNameToFilterBy} Like @Value + @WildChar";
+        }
+
+        /// <summary>
+        /// Returns a the new sort direction , if current sort direction was Asc then it returns Desc while if it was Desc then it returns Asc
+        /// </summary
+        public static enDataGridViewSortDirection ReverseCurrentDgvSortDirection(enDataGridViewSortDirection CurrentSortDirection)
+        {
+            if (CurrentSortDirection == enDataGridViewSortDirection.Descending)
+                return enDataGridViewSortDirection.Ascending;
+
+            else
+                return enDataGridViewSortDirection.Descending;
         }
     }
     }

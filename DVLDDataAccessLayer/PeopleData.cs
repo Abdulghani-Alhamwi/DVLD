@@ -486,65 +486,51 @@ namespace DVLDDataAccessLayer
             return "2";
         }
 
-        private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestbroughtPersonID = -1)
+        private static bool _IsOriginalColumnName(string ColumnNameToFilterBy)
         {
+            return (ColumnNameToFilterBy == "Gendor" || ColumnNameToFilterBy == "Phone" || ColumnNameToFilterBy == "Email");
+        }
+
+        private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy
+                    , string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtPersonID = -1, char? WildChar = null)
+        {
+            if (ColumnNameToOrderBy == null)
+                ColumnNameToOrderBy = "PersonID";
+
             string query = _query;
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-                if (LastLowestbroughtPersonID != -1)
-                query += @" WHERE PersonID < @LastLowestbroughtPersonID
-                           ORDER BY PersonID DESC";
-                else
-                    query += " ORDER BY PersonID DESC";
+               clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
                 return query;
             }
 
-            if (ColumnNameToFilter != "Gendor" && ColumnNameToFilter != "Phone" && ColumnNameToFilter != "Email")
-                ColumnNameToFilter = _GetOriginalColumnName(ColumnNameToFilter);
+            if (_IsOriginalColumnName(ColumnNameToFilterBy))
+                ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
             else
             {
-                if (ColumnNameToFilter == "Gendor")
+                if (ColumnNameToFilterBy == "Gendor")
                 {
                     ValueToFilterBy = _GetValueForGendorColumn(ValueToFilterBy);
                 }
             }
 
-                if (WildChar == null)
-                    query += $" WHERE {ColumnNameToFilter} = @Value";
-                else
-                    query += $" WHERE {ColumnNameToFilter} LIKE @Value + @WildChar";
+            query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
 
-            if (ColumnNameToFilter == "Gendor")
-            {
-                if (LastLowestbroughtPersonID == -1)
-                    query += " ORDER BY [Person ID] DESC";
+            query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy, ColumnNameToOrderBy, SortDirection, LastLowestbroughtPersonID, true);
 
-                else
-                    query += @" AND [Person ID] < @LastLowestbroughtPersonID
-                           ORDER BY [Person ID] DESC";
-            }
-
-            else
-            {
-                if (LastLowestbroughtPersonID == -1)
-                    query += " ORDER BY PersonID DESC";
-
-                else
-                    query += @" AND PersonID < @LastLowestbroughtPersonID
-                           ORDER BY PersonID DESC";
-            }
-
-                return query;
+            return query;
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords,string ColumnNameToFilter,string ValueToFilterBy, int LastLowestbroughtPersonID = -1, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords,string ColumnNameToFilter,string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection,
+            int LastLowestbroughtPersonID = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetDataFilteringQuery(WantedNumOfRecords,ColumnNameToFilter,ref ValueToFilterBy,WildChar,LastLowestbroughtPersonID);
+            string query = _GetDataFilteringQuery(WantedNumOfRecords,ColumnNameToFilter,ref ValueToFilterBy,
+                            ColumnNameToOrderBy,SortDirection, LastLowestbroughtPersonID, WildChar);
 
             SqlCommand command = new SqlCommand(query, connection);
              command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -555,13 +541,9 @@ namespace DVLDDataAccessLayer
                 if(WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
 
-            if (LastLowestbroughtPersonID != -1)
-                command.Parameters.AddWithValue("@LastLowestbroughtPersonID", LastLowestbroughtPersonID);
-
             try
             {
                 connection.Open();
-
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (reader.HasRows)
@@ -666,6 +648,39 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return -1;
+        }
+
+        private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection, string ColumnNameToFilterBy, ref string ValueToFilterBy, char? WildChar = null)
+        {
+            string query = _query;
+
+            if (_IsOriginalColumnName(ColumnNameToFilterBy))
+                ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
+
+            if (string.IsNullOrEmpty(ValueToFilterBy))
+            {
+                query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+
+            else
+            {
+                if (ColumnNameToFilterBy == "Gendor")
+                {
+                    ValueToFilterBy = _GetValueForGendorColumn(ValueToFilterBy);
+                }
+
+                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+
+            return query;
+        }
+
+        public static DataTable GetSortedPeopleInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
+            string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
+        {
+            return clsUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+                WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }
 }

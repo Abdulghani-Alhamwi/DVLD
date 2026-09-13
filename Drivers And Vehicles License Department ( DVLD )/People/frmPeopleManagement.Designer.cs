@@ -128,6 +128,7 @@
             this.dgvPeople.Size = new System.Drawing.Size(1153, 266);
             this.dgvPeople.StandardTab = true;
             this.dgvPeople.TabIndex = 0;
+            this.dgvPeople.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvPeople_ColumnHeaderMouseClick);
             this.dgvPeople.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvPeople_Scroll);
             this.dgvPeople.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvPeople_KeyDown);
             this.dgvPeople.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgvPeople_MouseDoubleClick);

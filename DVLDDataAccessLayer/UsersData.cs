@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using Utility_Library;
 
 namespace DVLDDataAccessLayer
 {
@@ -455,31 +456,28 @@ namespace DVLDDataAccessLayer
             }
         }
 
-        private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilter, ref string ValueToFilterBy, string ColumnNameToOrderBy,string SortDirection, int LastLowestbroughtUserID = -1, char? WildChar = null)
+        private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy,
+            string ColumnNameToOrderBy,string SortDirection, int LastLowestbroughtUserID = -1, char? WildChar = null)
         {
-            string query = _query;
+            if (ColumnNameToOrderBy == null)
+                ColumnNameToOrderBy = "UserID";
 
-            if (string.IsNullOrEmpty(ValueToFilterBy) || string.IsNullOrEmpty(ColumnNameToFilter))
+                string query = _query;
+
+            if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-                query += $" ORDER BY {ColumnNameToOrderBy} {SortDirection}";
+                query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
                 return query;
             }
 
-            if (ColumnNameToFilter != "UserName")
-                ColumnNameToFilter = _GetOriginalColumnName(ColumnNameToFilter);
+            if (ColumnNameToFilterBy != "UserName")
+                ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
 
-            if (ColumnNameToFilter == "IsActive")
+            if (ColumnNameToFilterBy == "IsActive")
             {
                 if (ValueToFilterBy == "All")
                 {
-
-                    if (LastLowestbroughtUserID != -1)
-                        query += $@" WHERE {ColumnNameToOrderBy} < @LastLowestbroughtUserID
-                                    ORDER BY {ColumnNameToOrderBy} {SortDirection}";
-                    
-                    else 
-                        query += $" ORDER BY {ColumnNameToOrderBy} {SortDirection}";
-
+                    query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy,ColumnNameToOrderBy, SortDirection, LastLowestbroughtUserID, false);
                     return query;
                 }
 
@@ -487,30 +485,22 @@ namespace DVLDDataAccessLayer
                     ValueToFilterBy = (ValueToFilterBy == "Yes") ? "1" : "0";
             }
 
-                if (WildChar == null)
-                    query += $" WHERE {ColumnNameToFilter} = @Value";
-                else
-                    query += $" WHERE {ColumnNameToFilter} Like @Value + @WildChar";
-            
+            query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
 
-                if (LastLowestbroughtUserID == -1)
-                    query += $" ORDER BY {ColumnNameToOrderBy} {SortDirection}";
+            query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy,ColumnNameToOrderBy, SortDirection, LastLowestbroughtUserID, true);
 
-                else
-                    query += $@" AND {ColumnNameToOrderBy} < @LastLowestbroughtUserID
-                           ORDER BY {ColumnNameToOrderBy} {SortDirection}";
-
-                return query;
+            return query;
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy,string SortDirection,
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy, string ColumnNameToOrderBy,string SortDirection,
             int LastLowestbroughtUserID = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilter, ref ValueToFilterBy, ColumnNameToOrderBy,SortDirection, LastLowestbroughtUserID, WildChar);
+            string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilterBy, ref ValueToFilterBy,
+                            ColumnNameToOrderBy,SortDirection, LastLowestbroughtUserID, WildChar);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -520,9 +510,6 @@ namespace DVLDDataAccessLayer
 
             if (WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
-
-            if (LastLowestbroughtUserID != -1)
-                command.Parameters.AddWithValue("@LastLowestbroughtUserID", LastLowestbroughtUserID);
 
             try
             {
@@ -576,12 +563,44 @@ namespace DVLDDataAccessLayer
             return -1;
         }
 
-        public static DataTable GetSortedUsersInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy,string SortDirection)
+        private static string _GetDataSortingQuery(string ColumnNameToOrderBy,string SortDirection, string ColumnNameToFilterBy ,ref string ValueToFilterBy, char? WildChar = null)
         {
-            if(ColumnNameToOrderBy != "UserName")
-            ColumnNameToOrderBy = _GetOriginalColumnName(ColumnNameToOrderBy);
+            string query = _query;
 
-            return GetFilteredData(WantedNumOfRecords, null, null, ColumnNameToOrderBy, SortDirection, - 1, null);
+            if (ColumnNameToFilterBy != "UserName")
+                ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
+
+            if (string.IsNullOrEmpty(ValueToFilterBy))
+            {
+                query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+
+            else
+            {
+                if (ColumnNameToFilterBy == "IsActive")
+                {
+                    if(ValueToFilterBy == "All")
+                    {
+                        query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+                        return query;
+                    }
+
+                    else
+                        ValueToFilterBy = (ValueToFilterBy == "Yes") ? "1" : "0";
+                }
+                
+                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+                
+            return query;
+        }
+
+        public static DataTable GetSortedUsersInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
+            string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
+        {
+            return clsUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+                WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }
 }

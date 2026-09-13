@@ -178,14 +178,16 @@ namespace DVLDBusinessLayer
             return clsPeopleData.GetTotalPeopleCount();
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,
+            string ColumnNameToOrderBy, string SortDirection, char? WildChar = null)
         {
-            return clsPeopleData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, -1,WildChar);
+            return clsPeopleData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, -1, WildChar);
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,int LastLowestbroughtPersonID ,char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,
+            string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtPersonID, char? WildChar = null)
         {
-            return clsPeopleData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastLowestbroughtPersonID ,WildChar);
+            return clsPeopleData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, LastLowestbroughtPersonID, WildChar);
         }
 
         public static string GetFullName(int PersonID)
@@ -206,6 +208,11 @@ namespace DVLDBusinessLayer
         {
             return clsPeopleData.GetColumnsNamesForView();
         }
-
+        public static DataTable GetSortedPeopleInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
+            string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
+        {
+            return clsPeopleData.GetSortedPeopleInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
+                    ColumnNameToFilterBy, ValueToFilterBy, WildChar);
+        }
     }
 }

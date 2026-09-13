@@ -10,10 +10,14 @@ namespace DVLDPresentationLayer
 {
     public partial class frmPeopleManagement : Form
     {
+        private string _LastColumnNameDgvSortedBy;
+        private clsUtility.enDataGridViewSortDirection _CurrentDgvSortDirection;
         private clsUtility _UtilityLib;
         public frmPeopleManagement()
         {
             InitializeComponent();
+            _LastColumnNameDgvSortedBy = "Person ID";
+            _CurrentDgvSortDirection = clsUtility.enDataGridViewSortDirection.Descending;
             _UtilityLib = new clsUtility();
         }
         private void _AddDropDownItems()
@@ -91,32 +95,41 @@ namespace DVLDPresentationLayer
                 txtFilter.Text = "";
         }
 
+        private bool _IsNumericColumn(string ColumnNameToFilterBy)
+        {
+            return (ColumnNameToFilterBy == "Person ID" || ColumnNameToFilterBy == "Phone");
+        }
+
         private DataTable _GetFilteredData(bool ScrollCase = false)
         {
             DataTable dtPeopleInfo;
             if (!ScrollCase)
             {
-                if (cbFilterBy.SelectedItem.ToString() == "Person ID" || cbFilterBy.SelectedItem.ToString() == "Phone")
-                    dtPeopleInfo = clsPerson.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text);
+                if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
+                    dtPeopleInfo = clsPerson.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
+                        _LastColumnNameDgvSortedBy, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection));
 
                 else
-                    dtPeopleInfo = clsPerson.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
+                    dtPeopleInfo = clsPerson.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
+                       _LastColumnNameDgvSortedBy, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), '%');
             }
 
             else
             {
-                if (cbFilterBy.SelectedItem.ToString() == "Person ID" || cbFilterBy.SelectedItem.ToString() == "Phone")
-                    dtPeopleInfo = clsPerson.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value, null);
+                if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
+                    dtPeopleInfo = clsPerson.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
+                       _LastColumnNameDgvSortedBy, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value, null);
 
                 else
-                    dtPeopleInfo = clsPerson.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value, '%');
+                    dtPeopleInfo = clsPerson.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
+                       _LastColumnNameDgvSortedBy, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), (int)dgvPeople?.Rows[dgvPeople.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value, '%');
             }
-
 
             if (dtPeopleInfo != null)
             {
                 return dtPeopleInfo;
             }
+
             else
                 return null;
         }
@@ -129,24 +142,24 @@ namespace DVLDPresentationLayer
         }
         private void txtFilter_KeyDown(object sender, KeyEventArgs e)
         {
-            if (cbFilterBy.SelectedItem.ToString() == "Person ID" || cbFilterBy.SelectedItem.ToString() == "Phone")
+            if(cbFilterBy.SelectedItem.ToString() == "None")
+                txtFilter.ReadOnly = false;
+
+            else if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
             {
                 if (Char.IsDigit((Char)e.KeyData) || e.KeyData == Keys.Back)
                     txtFilter.ReadOnly = false;
                 else
                     txtFilter.ReadOnly = true;
             }
-            else if (  cbFilterBy.SelectedItem.ToString() == "First Name"    || cbFilterBy.SelectedItem.ToString() == "Second Name"
-                    || cbFilterBy.SelectedItem.ToString() == "Third Name"  || cbFilterBy.SelectedItem.ToString() == "Last Name"
-                    || cbFilterBy.SelectedItem.ToString() == "Nationality" || cbFilterBy.SelectedItem.ToString() == "Gendor")
+            else
             {
                 if (Char.IsLetter((Char)e.KeyData) || e.KeyData == Keys.Back)
                     txtFilter.ReadOnly = false;
                 else
                     txtFilter.ReadOnly = true;
             }
-            else
-                txtFilter.ReadOnly = false;
+
         }                     
         private void _AddNewRowToDGV(object[] NewPersonDetails)
         {
@@ -309,6 +322,36 @@ namespace DVLDPresentationLayer
         {
             if (!clsUtility.WasDgvColumnHeaderClicked(dgvPeople, e))
                 _ShowPersonDetails();
+        }
+
+        private void dgvPeople_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            _CurrentDgvSortDirection = clsUtility.ReverseCurrentDgvSortDirection(_CurrentDgvSortDirection);
+
+            DataTable dtSortedInfo = null;
+
+            if (txtFilter.Text == "")
+            {
+                dtSortedInfo = clsPerson.GetSortedPeopleInfo(clsUtility.WantedNumOfRowsFromDB, dgvPeople.Columns[e.ColumnIndex].HeaderText
+                    , clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection));
+            }   
+
+            else
+            {
+                if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
+                {
+                    dtSortedInfo = clsPerson.GetSortedPeopleInfo(clsUtility.WantedNumOfRowsFromDB, dgvPeople.Columns[e.ColumnIndex].HeaderText
+                      , clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), txtFilter.Text, cbFilterBy.SelectedItem.ToString(), null);
+                }
+
+                else
+                {
+                    dtSortedInfo = clsPerson.GetSortedPeopleInfo(clsUtility.WantedNumOfRowsFromDB, dgvPeople.Columns[e.ColumnIndex].HeaderText, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection),
+                    cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
+                }
+            }
+
+            _UtilityLib.ModifyDataAfterUserOrdersColumn(dgvPeople, dtSortedInfo, e, ref _LastColumnNameDgvSortedBy);
         }
     }
 }
