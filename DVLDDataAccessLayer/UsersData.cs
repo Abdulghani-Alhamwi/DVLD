@@ -477,17 +477,17 @@ namespace DVLDDataAccessLayer
             {
                 if (ValueToFilterBy == "All")
                 {
-                    query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy,ColumnNameToOrderBy, SortDirection, LastLowestbroughtUserID, false);
+                    query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtUserID);
                     return query;
                 }
 
                 else
-                    ValueToFilterBy = (ValueToFilterBy == "Yes") ? "1" : "0";
+                    ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
             }
 
             query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
 
-            query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy,ColumnNameToOrderBy, SortDirection, LastLowestbroughtUserID, true);
+            query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtUserID);
 
             return query;
         }
@@ -586,9 +586,9 @@ namespace DVLDDataAccessLayer
                     }
 
                     else
-                        ValueToFilterBy = (ValueToFilterBy == "Yes") ? "1" : "0";
+                        ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
-                
+
                 query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
                 query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
             }
@@ -596,7 +596,7 @@ namespace DVLDDataAccessLayer
             return query;
         }
 
-        public static DataTable GetSortedUsersInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
+        public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
             return clsUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),

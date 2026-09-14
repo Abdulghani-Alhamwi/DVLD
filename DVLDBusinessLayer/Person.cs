@@ -208,10 +208,10 @@ namespace DVLDBusinessLayer
         {
             return clsPeopleData.GetColumnsNamesForView();
         }
-        public static DataTable GetSortedPeopleInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
+        public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
-            return clsPeopleData.GetSortedPeopleInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
+            return clsPeopleData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
                     ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }

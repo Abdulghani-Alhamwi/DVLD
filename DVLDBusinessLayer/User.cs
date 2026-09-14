@@ -149,10 +149,10 @@ namespace DVLDBusinessLayer
             return clsUsersData.GetColumnsNamesForView();
         }
 
-        public static DataTable GetSortedUsersInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy,string SortDirection
+        public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy,string SortDirection
             , string ColumnNameToFilterBy = null, string valueToFilterBy = null,char? WildChar = null)
         {
-            return clsUsersData.GetSortedUsersInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
+            return clsUsersData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
                 ColumnNameToFilterBy, valueToFilterBy,WildChar);
         }
     }

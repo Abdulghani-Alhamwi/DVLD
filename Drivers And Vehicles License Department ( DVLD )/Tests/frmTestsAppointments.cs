@@ -10,9 +10,12 @@ namespace DVLDPresentationLayer
     public partial class frmTestsAppointments : Form
     {
         internal event Action<int> AfterPassingTest;
+
+        private string _LastColumnNameDgvSortedBy;
+        private clsUtility.enDataGridViewSortDirection _CurrentDgvSortDirection;
         private clsUtility _UtilityLib;
 
-       private clsTestType.enTestType _TestType;
+       private clsTestType.enTestType _CurrentTestType;
 
         private int _LDLAppId;
         private int _TestsDGVRowIndex;
@@ -20,14 +23,17 @@ namespace DVLDPresentationLayer
         public frmTestsAppointments(int LDLApplicationID,int TestsDGVRowIndex, clsTestType.enTestType TestType)
         {
             InitializeComponent();
-            uctrlDLApplicationInfo.LoadLDLAppInfo(LDLApplicationID);
 
+            uctrlDLApplicationInfo.LoadLDLAppInfo(LDLApplicationID);
             _ShowInfoByTestType(TestType);
+
+            _LastColumnNameDgvSortedBy = null;
+            _CurrentDgvSortDirection = clsUtility.enDataGridViewSortDirection.Descending;
 
             _LDLAppId = LDLApplicationID;
             _TestsDGVRowIndex = TestsDGVRowIndex;
-            _TestType = TestType;
-            _TestTypeID = clsTestType.GetTestTypeID(_TestType);
+            _CurrentTestType = TestType;
+            _TestTypeID = clsTestType.GetTestTypeID(_CurrentTestType);
 
             _UtilityLib = new clsUtility();
         }
@@ -84,10 +90,10 @@ namespace DVLDPresentationLayer
                 {
                     frmScheduleTest frm;
                     if (dgvTestAppointments.Rows.Count == 0)
-                        frm = new frmScheduleTest(_LDLAppId, _TestType, frmScheduleTest.enTestTrial.FirstTime);
+                        frm = new frmScheduleTest(_LDLAppId, _CurrentTestType, frmScheduleTest.enTestTrial.FirstTime);
                     
                     else
-                        frm = new frmScheduleTest(_LDLAppId, _TestType, frmScheduleTest.enTestTrial.ReTake);
+                        frm = new frmScheduleTest(_LDLAppId, _CurrentTestType, frmScheduleTest.enTestTrial.ReTake);
 
                     frm.AfterSchedulingAppointment += _AddNewRowToDGV;
                     frm.ShowDialog();
@@ -123,18 +129,18 @@ namespace DVLDPresentationLayer
                 frmScheduleTest frm;
                 if (clsTest.HasPassedTheTest(_LDLAppId, _TestTypeID))
                 {
-                    frm = new frmScheduleTest(_LDLAppId, _TestType, frmScheduleTest.enTestTrial.Taken, TestAppointment);
+                    frm = new frmScheduleTest(_LDLAppId, _CurrentTestType, frmScheduleTest.enTestTrial.Taken, TestAppointment);
                     frm._SetControlsForLockedAppointment(true);
                 }
 
                 else if ((bool)dgvTestAppointments.SelectedRows[0].Cells["Is Locked"].Value)
                 {
-                    frm = new frmScheduleTest(_LDLAppId, _TestType, frmScheduleTest.enTestTrial.Taken, TestAppointment);
+                    frm = new frmScheduleTest(_LDLAppId, _CurrentTestType, frmScheduleTest.enTestTrial.Taken, TestAppointment);
                     frm._SetControlsForLockedAppointment(false);
                 }
                 else
                 {
-                    frm = new frmScheduleTest(_LDLAppId, _TestType, frmScheduleTest.enTestTrial.FirstTime, TestAppointment, (int)dgvTestAppointments.SelectedRows[0].Index);
+                    frm = new frmScheduleTest(_LDLAppId, _CurrentTestType, frmScheduleTest.enTestTrial.FirstTime, TestAppointment, (int)dgvTestAppointments.SelectedRows[0].Index);
                     frm.AfterEditingAppointment += _EditDataRowInDGV;
                 }
                     frm.ShowDialog();
@@ -176,7 +182,7 @@ namespace DVLDPresentationLayer
                 }
 
                 clsTestAppointment TestAppointment = clsTestAppointment.Find((int)dgvTestAppointments.SelectedRows[0].Cells["Appointment ID"].Value);
-                frmTakeTest frm = new frmTakeTest(TestAppointment, _TestType, (int)dgvTestAppointments.SelectedRows[0].Index);
+                frmTakeTest frm = new frmTakeTest(TestAppointment, _CurrentTestType, (int)dgvTestAppointments.SelectedRows[0].Index);
                 frm.AfterPassingTest += _UpdateLDLAppDgv;
                 frm.AfterTestTaken += _LockTestAppointment;
                 
@@ -198,6 +204,21 @@ namespace DVLDPresentationLayer
         {
             if (clsUtility.IsDgvLastRowSelected(dgvTestAppointments))
                 _AppendPartOfRemainingData();
+        }
+
+        private void _SortData(DataGridViewCellMouseEventArgs e)
+        {
+            _CurrentDgvSortDirection = clsUtility.ReverseCurrentDgvSortDirection(_CurrentDgvSortDirection);
+
+            DataTable dtSortedInfo = clsTestAppointment.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvTestAppointments.Columns[e.ColumnIndex].HeaderText
+                , clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection),_LDLAppId, _TestTypeID);
+
+            _UtilityLib.ModifyDataAfterUserOrdersColumn(dgvTestAppointments, dtSortedInfo, e, ref _LastColumnNameDgvSortedBy);
+        }
+
+        private void dgvTestAppointments_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            _SortData(e);
         }
     }
 }

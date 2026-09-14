@@ -111,5 +111,11 @@ namespace DVLDBusinessLayer
         {
             return clsTestAppointmentsData.GetColumnsNamesForView();
         }
+
+        public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection
+            ,int LDLApplicationID ,byte CurrentTestTypeID)
+        {
+            return clsTestAppointmentsData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, LDLApplicationID, CurrentTestTypeID);
+        }
     }
 }

@@ -99,6 +99,7 @@
             this.dgvTestAppointments.Size = new System.Drawing.Size(1154, 176);
             this.dgvTestAppointments.StandardTab = true;
             this.dgvTestAppointments.TabIndex = 44;
+            this.dgvTestAppointments.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvTestAppointments_ColumnHeaderMouseClick);
             this.dgvTestAppointments.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvVisionTestAppointments_Scroll);
             this.dgvTestAppointments.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvVisionTestAppointments_KeyDown);
             // 

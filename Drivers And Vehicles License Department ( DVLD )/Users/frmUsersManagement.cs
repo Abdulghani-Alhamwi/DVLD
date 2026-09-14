@@ -3,16 +3,15 @@ using System.Data;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using Utility_Library;
-using static Utility_Library.clsUtility;
 
 namespace DVLDPresentationLayer
 {
     public partial class frmUsersManagement : Form
     {
         private bool _AllowDataLoading = false;
-        private string _LastColumnNameDgvSortedBy;
         string _PreviousCbFilterSelectedItem;
         string _PreviousCbIsActiveSelectedItem;
+        private string _LastColumnNameDgvSortedBy;
         private clsUtility.enDataGridViewSortDirection _CurrentDgvSortDirection;
         private clsUtility _UtilityLib;
         public frmUsersManagement()
@@ -410,7 +409,7 @@ namespace DVLDPresentationLayer
                 cmsUsersMenu.Close();
         }
 
-        private void dgvUsers_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void _SortData(DataGridViewCellMouseEventArgs e)
         {
             _CurrentDgvSortDirection = clsUtility.ReverseCurrentDgvSortDirection(_CurrentDgvSortDirection);
 
@@ -419,7 +418,7 @@ namespace DVLDPresentationLayer
             if (txtFilter.Text == "" && cbFilterBy.SelectedItem.ToString() != "Is Active")
             {
 
-                dtSortedInfo = clsUser.GetSortedUsersInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText
+                dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText
                 , clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection));
             }
 
@@ -429,30 +428,35 @@ namespace DVLDPresentationLayer
                 {
                     case "Person ID":
                     case "User ID":
-                        dtSortedInfo = clsUser.GetSortedUsersInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText
-                , clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), txtFilter.Text, cbFilterBy.SelectedItem.ToString(),null);
+                        dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText
+                , clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), txtFilter.Text, cbFilterBy.SelectedItem.ToString(), null);
                         break;
 
                     case "UserName":
-                        dtSortedInfo = clsUser.GetSortedUsersInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection),
+                        dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection),
                         cbFilterBy.SelectedItem.ToString(), clsUtility.EncryptUserName(txtFilter.Text), null);
                         break;
 
                     case "Full Name":
-                        dtSortedInfo = clsUser.GetSortedUsersInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection),
+                        dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection),
                         cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
                         break;
 
                     case "Is Active":
-                        dtSortedInfo = clsUser.GetSortedUsersInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText
+                        dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText
                 , clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), cbFilterBy.SelectedItem.ToString(), cbIsActive.SelectedItem.ToString(), null);
                         break;
 
                 }
             }
 
-            _UtilityLib.ModifyDataAfterUserOrdersColumn(dgvUsers, dtSortedInfo, e,ref _LastColumnNameDgvSortedBy);
+            _UtilityLib.ModifyDataAfterUserOrdersColumn(dgvUsers, dtSortedInfo, e, ref _LastColumnNameDgvSortedBy);
             _DecryptUsersNames((DataTable)dgvUsers.DataSource);
+        }
+
+        private void dgvUsers_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            _SortData(e);
         }
 
         private void dgvUsers_MouseDoubleClick(object sender, MouseEventArgs e)

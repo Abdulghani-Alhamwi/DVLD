@@ -200,6 +200,7 @@
             this.dgvDetainedLicenses.Size = new System.Drawing.Size(1664, 266);
             this.dgvDetainedLicenses.StandardTab = true;
             this.dgvDetainedLicenses.TabIndex = 44;
+            this.dgvDetainedLicenses.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvDetainedLicenses_ColumnHeaderMouseClick);
             this.dgvDetainedLicenses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvDetainedLicenses_Scroll);
             this.dgvDetainedLicenses.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvDetainedLicenses_KeyDown);
             // 

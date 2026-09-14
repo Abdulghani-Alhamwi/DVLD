@@ -119,19 +119,27 @@ namespace DVLDBusinessLayer
             return clsDetainedLicensesData.GetTotalCount();
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection, char? WildChar = null)
         {
-            return clsDetainedLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, -1, WildChar);
+            return clsDetainedLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, -1, WildChar);
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestbroughtDetainID = -1, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtDetainID, char? WildChar = null)
         {
-            return clsDetainedLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastLowestbroughtDetainID, WildChar);
+            return clsDetainedLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, LastLowestbroughtDetainID, WildChar);
         }
 
         public static DataTable GetColumnsNamesForView()
         {
             return clsDetainedLicensesData.GetColumnsNamesForView();
         }
+
+        public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection
+         , string ColumnNameToFilterBy = null, string valueToFilterBy = null, char? WildChar = null)
+        {
+            return clsDetainedLicensesData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
+                ColumnNameToFilterBy, valueToFilterBy, WildChar);
+        }
+
     }
 }

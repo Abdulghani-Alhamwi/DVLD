@@ -495,7 +495,7 @@ namespace DVLDDataAccessLayer
                     , string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtPersonID = -1, char? WildChar = null)
         {
             if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = "PersonID";
+                ColumnNameToOrderBy = "Person ID";
 
             string query = _query;
 
@@ -505,7 +505,7 @@ namespace DVLDDataAccessLayer
                 return query;
             }
 
-            if (_IsOriginalColumnName(ColumnNameToFilterBy))
+            if (!_IsOriginalColumnName(ColumnNameToFilterBy))
                 ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
             else
             {
@@ -517,7 +517,7 @@ namespace DVLDDataAccessLayer
 
             query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
 
-            query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy, ColumnNameToOrderBy, SortDirection, LastLowestbroughtPersonID, true);
+            query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy, ColumnNameToOrderBy, SortDirection,true, LastLowestbroughtPersonID);
 
             return query;
         }
@@ -654,7 +654,7 @@ namespace DVLDDataAccessLayer
         {
             string query = _query;
 
-            if (_IsOriginalColumnName(ColumnNameToFilterBy))
+            if (!_IsOriginalColumnName(ColumnNameToFilterBy))
                 ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
@@ -676,7 +676,7 @@ namespace DVLDDataAccessLayer
             return query;
         }
 
-        public static DataTable GetSortedPeopleInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
+        public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
             return clsUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),

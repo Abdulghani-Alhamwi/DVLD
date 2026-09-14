@@ -8,7 +8,7 @@ namespace DVLDDataAccessLayer
     public class clsTestAppointmentsData
     {
 
-        private static string Query = 
+        private static string _query = 
          $@"SELECT TOP (@WantedNumOfRecords) TestAppointmentID AS [Appointment ID] , FORMAT(AppointmentDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Appointment Date] ,
            PaidFees AS [Paid Fees],IsLocked AS [Is Locked] FROM TestAppointments";
 
@@ -17,7 +17,7 @@ namespace DVLDDataAccessLayer
             DataTable dtTestAppointments = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = Query;
+            string query = _query;
 
             if (LowestBroughtAppointmentID != -1)
                 query += @" WHERE TestAppointmentID < @LowestBroughtAppointmentID AND TestTypeID = @TestTypeID AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID
@@ -64,7 +64,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            SqlCommand command = new SqlCommand(Query, connection);
+            SqlCommand command = new SqlCommand(_query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
 
             try
@@ -266,6 +266,22 @@ namespace DVLDDataAccessLayer
 
             return false;
         }
-            
+
+        private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection, int LDLApplicationID, byte TestTypeID)
+        {
+            string query = _query;
+
+            query += clsUtility.GetFilterQueryPart_ValueCondition("TestTypeID");
+            query += $" AND LocalDrivingLicenseApplicationID = {LDLApplicationID}";
+            query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+
+            return query;
+        }
+
+        public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection, int LDLApplicationID, byte TestTypeID)
+        {
+            return clsUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection,LDLApplicationID,TestTypeID),
+                WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,TestTypeID.ToString());
+        }
     }
 }

@@ -405,7 +405,7 @@ namespace Utility_Library
         /// Returns a datatable contains sorted info based on your query and sended arguments, the query must be designed to bring the sorted info , this method is for structure only in order to avoid repeating code and the sorted query must be sended from you.
         /// </summary>
         public static DataTable GetSortedInfoFromYourQueryAndArgs(string ConnectionString, string Query, byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
-           string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
+           string ColumnNameToFilterBy, string ValueToFilterBy, char? WildChar = null)
         {
             DataTable dtSortedData = null;
             SqlConnection connection = new SqlConnection(ConnectionString);
@@ -445,10 +445,18 @@ namespace Utility_Library
         }
 
         /// <summary>
+        /// Returns a datatable contains sorted info based on your query and sended arguments, the query must be designed to bring the sorted info , this method is for structure only in order to avoid repeating code and the sorted query must be sended from you.
+        /// </summary>
+        public static DataTable GetSortedInfoFromYourQueryAndArgs(string ConnectionString, string Query, byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,string ValueToFilterBy = null)
+        {
+            return GetSortedInfoFromYourQueryAndArgs(ConnectionString, Query, WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, null, ValueToFilterBy, null); 
+        }
+
+        /// <summary>
         /// Returns last query part with condition if there was brought id then order by sended column or directly if there was no last brought id then send -1 instead and by that it returns the last query part order by sended column
         /// </summary>
         public static string GetLastFilterQueryPart(string ColumnNameToFilterBy, string ColumnNameToOrderBy, string SortDirection,
-                int LastLowestbroughtID, bool PreviousConditionMayExists)
+                bool PreviousConditionMayExists, int LastLowestbroughtID = -1)
         {
             if (!PreviousConditionMayExists)
             {
@@ -475,7 +483,7 @@ namespace Utility_Library
         /// </summary
         public static string GetLastFilterQueryPart(string ColumnNameToOrderBy, string SortDirection)
         {
-            return GetLastFilterQueryPart(null, ColumnNameToOrderBy, SortDirection, -1, false);
+            return GetLastFilterQueryPart(null, ColumnNameToOrderBy, SortDirection, false, -1);
         }
 
         /// <summary>
@@ -500,5 +508,11 @@ namespace Utility_Library
             else
                 return enDataGridViewSortDirection.Descending;
         }
+
+        public static string GetYesNoValueAsNumericString(string FilterValue)
+        {
+            return (FilterValue == "Yes") ? "1" : "0";
+        }
+
     }
-    }
+}
