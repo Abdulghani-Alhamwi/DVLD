@@ -40,7 +40,7 @@ namespace DVLDPresentationLayer
         {
             this.Close();
         }
-        bool _AllowDataLoading;
+
         private void frmPeopleManagement_Load(object sender, EventArgs e)
         {
             dgvPeople.DataSource = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
@@ -71,29 +71,24 @@ namespace DVLDPresentationLayer
         {
             clsUtility.DrawComboBoxItems(sender, e);
         }
-        private void _LoadDataAfterFirstTimeLoad(ref bool _AllowDataLoading)
-        {
-            if (_AllowDataLoading)
-                dgvPeople.DataSource = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
-            else
-                _AllowDataLoading = true;
-        }
+
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_PreviousCbFilterSelectedItem == cbFilterBy.SelectedItem.ToString())
                 return;
 
+            if(!clsUtility._IsRepeatedDataLoadToDgv(txtFilter))
+            dgvPeople.DataSource = clsPerson.GetPeopleInfo(clsUtility.WantedNumOfRowsFromDB);
+
             if (((ComboBox)sender).SelectedItem.ToString() != "None")
             {
                 txtFilter.Visible = true;
                 txtFilter.Focus();
-                _LoadDataAfterFirstTimeLoad(ref _AllowDataLoading);
                 _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             }
             else
             {
                 txtFilter.Visible = false;
-                _LoadDataAfterFirstTimeLoad(ref _AllowDataLoading);
                 _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             }
             txtFilter.Text = "";
@@ -107,6 +102,7 @@ namespace DVLDPresentationLayer
         private DataTable _GetFilteredData(bool ScrollCase = false)
         {
             DataTable dtPeopleInfo;
+
             if (!ScrollCase)
             {
                 if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
@@ -146,10 +142,7 @@ namespace DVLDPresentationLayer
         }
         private void txtFilter_KeyDown(object sender, KeyEventArgs e)
         {
-            if (cbFilterBy.SelectedItem.ToString() == "None")
-                return;
-
-            else if (cbFilterBy.SelectedItem.ToString() == "National No.")
+             if (cbFilterBy.SelectedItem.ToString() == "National No.")
                 txtFilter.ReadOnly = false;
 
             else if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
@@ -290,7 +283,7 @@ namespace DVLDPresentationLayer
             if (cbFilterBy.SelectedItem.ToString() != "None")
             {
                 DataTable dtFilteredData = _GetFilteredData(true);
-                NewRows = dtFilteredData.Select();
+                NewRows = dtFilteredData?.Select();
 
                 if (NewRows != null)
                     clsUtility.AddNewRowsToDgv(dgvPeople, NewRows, clsUtility.GetDgvColumnsNames(dgvPeople));

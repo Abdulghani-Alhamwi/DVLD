@@ -8,7 +8,6 @@ namespace DVLDPresentationLayer
 {
     public partial class frmUsersManagement : Form
     {
-        private bool _AllowDataLoading = false;
         string _PreviousCbFilterSelectedItem;
         string _PreviousCbIsActiveSelectedItem;
         private string _LastColumnNameDgvSortedBy;
@@ -35,20 +34,25 @@ namespace DVLDPresentationLayer
                 datarow["UserName"] = clsUtility.DecryptUserName(datarow["UserName"].ToString());
             }
         }
-        private void _AddDropDownItems()
+        private void _AddComboBoxesItems()
         {
-            object[] Items = new object[dgvUsers.Columns.Count + 1];
-            Items[0] = "None";
+            object[] cbFilterByItems = new object[dgvUsers.Columns.Count + 1];
+            cbFilterByItems[0] = "None";
 
             string[] lColumnsNames = clsUtility.GetDgvColumnsNames(dgvUsers);
 
             for (byte i = 0; i < lColumnsNames.Length; i++)
             {
-                Items[i + 1] = lColumnsNames[i];
+                cbFilterByItems[i + 1] = lColumnsNames[i];
             }
 
-            cbFilterBy.Items.AddRange(Items);
+            cbFilterBy.Items.AddRange(cbFilterByItems);
             cbFilterBy.SelectedItem = "None";
+
+            object[] cbIsActiveItems = new object[] { "All", "Yes", "No" };
+
+            cbIsActive.Items.AddRange(cbIsActiveItems);
+            cbIsActive.SelectedItem = "All";
         }
 
         private void frmUsersManagement_Load(object sender, EventArgs e)
@@ -57,7 +61,7 @@ namespace DVLDPresentationLayer
             _DecryptUsersNames((DataTable)dgvUsers.DataSource);
 
             if (dgvUsers.DataSource != null) 
-            _AddDropDownItems();
+            _AddComboBoxesItems();
 
             lblRecordsNumber.Text = clsUser.GetTotalUsersCount().ToString();
         }
@@ -84,30 +88,27 @@ namespace DVLDPresentationLayer
             else
                 cbFilterBy.BackColor = clsGlobalSettings.ComboBoxBackColor;
         }
-
-        private void _LoadDataAfterFirstTimeLoad(ref bool _AllowDataLoading)
-        {
-            if (_AllowDataLoading)
-            {
-                dgvUsers.DataSource = clsUser.GetUsersInfo(clsUtility.WantedNumOfRowsFromDB);
-                _DecryptUsersNames((DataTable)dgvUsers.DataSource);
-            }
-
-            else
-                _AllowDataLoading = true;
-        }
         
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_PreviousCbFilterSelectedItem == cbFilterBy.SelectedItem.ToString())
                 return;
 
-            if (cbFilterBy.SelectedItem.ToString() == "None") 
+            if ((_PreviousCbFilterSelectedItem == "Is Active" && cbIsActive.SelectedItem.ToString() != "All")
+                || !clsUtility._IsRepeatedDataLoadToDgv(txtFilter))
+            {
+                dgvUsers.DataSource = clsUser.GetUsersInfo(clsUtility.WantedNumOfRowsFromDB);
+                _DecryptUsersNames((DataTable)dgvUsers.DataSource);
+            }
+
+            if (_PreviousCbFilterSelectedItem == "Is Active")
+                cbIsActive.SelectedItem = "All";
+
+            if (cbFilterBy.SelectedItem.ToString() == "None")
             {
                 txtFilter.Visible = false;
                 cbIsActive.Visible = false;
-                _LoadDataAfterFirstTimeLoad(ref _AllowDataLoading);
-                _AllowDataLoading = false;
+
                 _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             }
             else if (cbFilterBy.SelectedItem.ToString() != "Is Active")
@@ -115,7 +116,7 @@ namespace DVLDPresentationLayer
                 txtFilter.Visible = true;
                 cbIsActive.Visible = false;
                 txtFilter.Focus();
-                _LoadDataAfterFirstTimeLoad(ref _AllowDataLoading);
+
                 _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             }
             else
@@ -123,22 +124,20 @@ namespace DVLDPresentationLayer
                 txtFilter.Visible = false;
                 cbIsActive.Visible = true;
 
-                if(cbIsActive.Items.Count == 0)
-                {
-                    object[] Items = new object[] { "All", "Yes", "No" };
-                    cbIsActive.Items.AddRange(Items);
-                }
-                cbIsActive.SelectedIndex = 0;
-
-                _LoadDataAfterFirstTimeLoad(ref _AllowDataLoading);
                 _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             }
+
             txtFilter.Text = "";
+        }
+
+        private bool _IsNumericColumn(string ColumnNameToFilterBy)
+        {
+            return (ColumnNameToFilterBy == "Person ID" || ColumnNameToFilterBy == "User ID");
         }
 
         private void txtFilter_KeyDown(object sender, KeyEventArgs e)
         {
-            if (cbFilterBy.SelectedItem.ToString() == "Person ID" || cbFilterBy.SelectedItem.ToString() == "User ID")
+            if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
             {
                 if (Char.IsDigit((Char)e.KeyData) || e.KeyData == Keys.Back)
                     txtFilter.ReadOnly = false;
@@ -314,7 +313,7 @@ namespace DVLDPresentationLayer
             
             if (!ScrollCase)
             {
-                if (cbFilterBy.SelectedItem.ToString() == "User ID" || cbFilterBy.SelectedItem.ToString() == "Person ID")
+                if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
                     dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
                         _LastColumnNameDgvSortedBy, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), null);
 
@@ -332,7 +331,7 @@ namespace DVLDPresentationLayer
 
             else
             {
-                if (cbFilterBy.SelectedItem.ToString() == "User ID" || cbFilterBy.SelectedItem.ToString() == "Person ID")
+                if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
                     dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
                         _LastColumnNameDgvSortedBy, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value, null);
 
@@ -364,7 +363,7 @@ namespace DVLDPresentationLayer
             if (cbFilterBy.SelectedItem.ToString() != "None")
             {
                 DataTable dtFilteredData = _GetFilteredData(true);
-                NewRows = dtFilteredData.Select();
+                NewRows = dtFilteredData?.Select();
 
                 if (NewRows != null)
                     clsUtility.AddNewRowsToDgv(dgvUsers, NewRows, clsUtility.GetDgvColumnsNames(dgvUsers));
@@ -398,8 +397,11 @@ namespace DVLDPresentationLayer
             if (_PreviousCbIsActiveSelectedItem == cbIsActive.SelectedItem.ToString())
                 return;
 
-            dgvUsers.DataSource = _FilterOnIsActive();
-            _DecryptUsersNames((DataTable)dgvUsers.DataSource);
+            if (cbFilterBy.SelectedItem.ToString() == "Is Active")
+            {
+                dgvUsers.DataSource = _FilterOnIsActive();
+                _DecryptUsersNames((DataTable)dgvUsers.DataSource);
+            }
             _PreviousCbIsActiveSelectedItem = cbIsActive.SelectedItem.ToString();
         }
 
@@ -424,29 +426,32 @@ namespace DVLDPresentationLayer
 
             else
             {
-                switch (cbFilterBy.SelectedItem)
+                if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
                 {
-                    case "Person ID":
-                    case "User ID":
-                        dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText
+                    dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText
                 , clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), txtFilter.Text, cbFilterBy.SelectedItem.ToString(), null);
-                        break;
+                }
 
-                    case "UserName":
-                        dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection),
-                        cbFilterBy.SelectedItem.ToString(), clsUtility.EncryptUserName(txtFilter.Text), null);
-                        break;
+                else
+                {
+                    switch (cbFilterBy.SelectedItem)
+                    {
+                        case "UserName":
+                            dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection),
+                            cbFilterBy.SelectedItem.ToString(), clsUtility.EncryptUserName(txtFilter.Text), null);
+                            break;
 
-                    case "Full Name":
-                        dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection),
-                        cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
-                        break;
+                        case "Full Name":
+                            dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection),
+                            cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
+                            break;
 
-                    case "Is Active":
-                        dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText
-                , clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), cbFilterBy.SelectedItem.ToString(), cbIsActive.SelectedItem.ToString(), null);
-                        break;
+                        case "Is Active":
+                            dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText
+                    , clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), cbFilterBy.SelectedItem.ToString(), cbIsActive.SelectedItem.ToString(), null);
+                            break;
 
+                    }
                 }
             }
 

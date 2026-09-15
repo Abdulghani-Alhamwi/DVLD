@@ -12,6 +12,7 @@ namespace DVLDDataAccessLayer
            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],
            UserName,IsActive AS [Is Active] From Users INNER JOIN People ON Users.PersonID = People.PersonID";
 
+        private static string _PrimaryKeyColumnName = "UserID";
         public static DataTable GetUsersInfo(byte WantedNumOfRecords, int LastLowestBroughtUserID = -1)
         {
             DataTable dtUsers = null;
@@ -440,7 +441,7 @@ namespace DVLDDataAccessLayer
             switch(SendedColumnName)
             {
                 case "User ID":
-                    return "UserID";
+                    return _PrimaryKeyColumnName;
 
                 case "Person ID":
                     return "Users.PersonID";
@@ -460,13 +461,13 @@ namespace DVLDDataAccessLayer
             string ColumnNameToOrderBy,string SortDirection, int LastLowestbroughtUserID = -1, char? WildChar = null)
         {
             if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = "UserID";
+                ColumnNameToOrderBy = _PrimaryKeyColumnName;
 
                 string query = _query;
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-                query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtUserID);
                 return query;
             }
 
@@ -477,7 +478,7 @@ namespace DVLDDataAccessLayer
             {
                 if (ValueToFilterBy == "All")
                 {
-                    query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtUserID);
+                    query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtUserID);
                     return query;
                 }
 
@@ -487,7 +488,7 @@ namespace DVLDDataAccessLayer
 
             query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
 
-            query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtUserID);
+            query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtUserID);
 
             return query;
         }
@@ -572,7 +573,7 @@ namespace DVLDDataAccessLayer
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-                query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             else
@@ -581,7 +582,7 @@ namespace DVLDDataAccessLayer
                 {
                     if(ValueToFilterBy == "All")
                     {
-                        query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+                        query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
                         return query;
                     }
 
@@ -590,7 +591,7 @@ namespace DVLDDataAccessLayer
                 }
 
                 query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
                 
             return query;

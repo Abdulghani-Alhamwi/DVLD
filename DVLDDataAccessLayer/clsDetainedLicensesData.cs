@@ -14,6 +14,7 @@ namespace DVLDDataAccessLayer
            DetainedLicenses.ReleaseApplicationID AS [Release App.ID] FROM DetainedLicenses INNER JOIN LocalLicenses ON DetainedLicenses.LicenseID = LocalLicenses.LicenseID
            INNER JOIN Applications ON LocalLicenses.ApplicationID = Applications.ApplicationID INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID";
 
+        private static string _PrimaryKeyColumnName = "DetainID";
         public static DataTable GetDetainedLicensesInfo(byte WantedNumOfRecords, int LastLowestBroughtDetainID = -1)
         {
             DataTable dtDetainedLicenses = null;
@@ -291,30 +292,32 @@ namespace DVLDDataAccessLayer
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-                query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
-                return query;
+                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy,
+                                         SortDirection, false, LastLowestbroughtDetainID, false);
             }
 
-            ColumnNameToFilterBy = _GetOriginalColumnNameToFilterBy(ColumnNameToFilterBy);
-
-            if (ColumnNameToFilterBy == "IsReleased")
+            else
             {
-                if (ValueToFilterBy == "All")
-                {
-                    query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy, ColumnNameToOrderBy,
-                        SortDirection, false, LastLowestbroughtDetainID);
+                ColumnNameToFilterBy = _GetOriginalColumnNameToFilterBy(ColumnNameToFilterBy);
 
-                    return query;
+                if (ColumnNameToFilterBy == "IsReleased")
+                {
+                    if (ValueToFilterBy == "All")
+                    {
+                        query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy,
+                            SortDirection, false, LastLowestbroughtDetainID,false);
+
+                        return query;
+                    }
+
+                    else
+                        ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
-                else
-                    ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
+                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+
+                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtDetainID,false);
             }
-
-            query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-
-            query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtDetainID);
-
             return query;
         }
 
@@ -391,28 +394,32 @@ namespace DVLDDataAccessLayer
         private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection, string ColumnNameToFilterBy, ref string ValueToFilterBy, char? WildChar = null)
         {
             string query = _query;
-            
-            ColumnNameToFilterBy = _GetOriginalColumnNameToOrderBy(ColumnNameToFilterBy);
+
+            ColumnNameToOrderBy = _GetOriginalColumnNameToOrderBy(ColumnNameToOrderBy);
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-                query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,false);
             }
-
             else
             {
-                if (ValueToFilterBy == "All")
-                {
-                    query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+                ColumnNameToFilterBy = _GetOriginalColumnNameToFilterBy(ColumnNameToFilterBy);
 
-                    return query;
+                if (ColumnNameToFilterBy == "IsReleased")
+                {
+                    if (ValueToFilterBy == "All")
+                    {
+                        query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,false);
+
+                        return query;
+                    }
+
+                    else
+                        ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
-                else
-                    ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
-
                 query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,false);
             }
 
             return query;

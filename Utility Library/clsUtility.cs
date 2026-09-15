@@ -14,16 +14,16 @@ namespace Utility_Library
 {
     public class clsUtility
     {
-            public enum enCustomDateFormat : byte { NumericFormat = 0, DateAppreviatedMonthName = 1, DateTimeCustomFormat = 2 }
+        public enum enCustomDateFormat : byte { NumericFormat = 0, DateAppreviatedMonthName = 1, DateTimeCustomFormat = 2 }
 
-            public enum enCustomNumberFormat : byte { With4ZerosAfterFraction = 0 ,NoJustZerosAfterFraction = 1}
+        public enum enCustomNumberFormat : byte { With4ZerosAfterFraction = 0, NoJustZerosAfterFraction = 1 }
 
-            public enum enDataGridViewSortDirection:byte { Ascending = 0 , Descending = 1 }
+        public enum enDataGridViewSortDirection : byte { Ascending = 0, Descending = 1 }
 
-            public static byte WantedNumOfRowsFromDB = 10;
-            private int _NumberOfDgvAddedRows;
+        public static byte WantedNumOfRowsFromDB = 10;
+        private int _NumberOfDgvAddedRows;
 
-            [DllImport("user32.dll")]
+        [DllImport("user32.dll")]
             private static extern int GetWindowLong(IntPtr windowHandle, int index);
 
             [DllImport("user32.dll")]
@@ -455,35 +455,59 @@ namespace Utility_Library
         /// <summary>
         /// Returns last query part with condition if there was brought id then order by sended column or directly if there was no last brought id then send -1 instead and by that it returns the last query part order by sended column
         /// </summary>
-        public static string GetLastFilterQueryPart(string ColumnNameToFilterBy, string ColumnNameToOrderBy, string SortDirection,
-                bool PreviousConditionMayExists, int LastLowestbroughtID = -1)
+        public static string GetLastFilterQueryPart(string PrimaryKeyToFilterBy, string ColumnNameToOrderBy, string SortDirection,
+                bool PreviousConditionMayExists, int LastLowestbroughtID = -1 , bool HasColumnNameWhiteSpaces = true)
         {
-            if (!PreviousConditionMayExists)
+            if (HasColumnNameWhiteSpaces)
             {
-                if (LastLowestbroughtID != -1)
-                    return $@" WHERE {ColumnNameToFilterBy} < {LastLowestbroughtID}
+                if (!PreviousConditionMayExists)
+                {
+                    if (LastLowestbroughtID != -1)
+                        return $@" WHERE {PrimaryKeyToFilterBy} < {LastLowestbroughtID}
                      ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
 
+                    else
+                        return $" ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+                }
                 else
-                    return $" ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+                {
+                    if (LastLowestbroughtID != -1)
+                        return $@" AND {PrimaryKeyToFilterBy} < {LastLowestbroughtID}
+                     ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+
+                    else
+                        return $" ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+                }
             }
             else
             {
-                if (LastLowestbroughtID != -1)
-                    return $@" AND {ColumnNameToFilterBy} < {LastLowestbroughtID}
-                     ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+                if (!PreviousConditionMayExists)
+                {
+                    if (LastLowestbroughtID != -1)
+                        return $@" WHERE {PrimaryKeyToFilterBy} < {LastLowestbroughtID}
+                     ORDER BY {ColumnNameToOrderBy} {SortDirection}";
 
+                    else
+                        return $" ORDER BY {ColumnNameToOrderBy} {SortDirection}";
+                }
                 else
-                    return $" ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+                {
+                    if (LastLowestbroughtID != -1)
+                        return $@" AND {PrimaryKeyToFilterBy} < {LastLowestbroughtID}
+                     ORDER BY {ColumnNameToOrderBy} {SortDirection}";
+
+                    else
+                        return $" ORDER BY {ColumnNameToOrderBy} {SortDirection}";
+                }
             }
         }
 
         /// <summary>
         /// Returns last query part with condition if there was brought id then order by sended column or directly if there was no last brought id then send -1 instead and by that it returns the last query part order by sended column
         /// </summary
-        public static string GetLastFilterQueryPart(string ColumnNameToOrderBy, string SortDirection)
+        public static string GetLastSortQueryPart(string ColumnNameToOrderBy, string SortDirection,bool HasColumnNameWhiteSpaces = true)
         {
-            return GetLastFilterQueryPart(null, ColumnNameToOrderBy, SortDirection, false, -1);
+            return GetLastFilterQueryPart(null, ColumnNameToOrderBy, SortDirection, false, -1,HasColumnNameWhiteSpaces);
         }
 
         /// <summary>
@@ -513,6 +537,16 @@ namespace Utility_Library
         {
             return (FilterValue == "Yes") ? "1" : "0";
         }
+        
+        public static bool _IsRepeatedDataLoadToDgv(TextBox FilterationTextBox)
+        {
+            if (FilterationTextBox.Text == "")
+            {
+                return true;
+            }
 
+            else
+                return false;
+        }
     }
 }

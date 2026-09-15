@@ -273,7 +273,7 @@ namespace DVLDDataAccessLayer
 
             query += clsUtility.GetFilterQueryPart_ValueCondition("TestTypeID");
             query += $" AND LocalDrivingLicenseApplicationID = {LDLApplicationID}";
-            query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+            query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
 
             return query;
         }

@@ -59,6 +59,7 @@ namespace DVLDPresentationLayer
             else
                 dgvLDLApplications.DataSource = clsLocalDrivingLicenseApp.GetLDLApplications(clsUtility.WantedNumOfRowsFromDB);
         }
+
         private void _LoadDataAfterFirstTimeLoad(ref bool _AllowDataLoading)
         {
             if (_AllowDataLoading)
@@ -66,6 +67,7 @@ namespace DVLDPresentationLayer
             else
                 _AllowDataLoading = true;
         }
+
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbFilterBy.SelectedItem.ToString() != "None" && cbFilterBy.SelectedItem.ToString() != "Status")

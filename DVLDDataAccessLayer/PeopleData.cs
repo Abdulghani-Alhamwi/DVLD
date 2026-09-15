@@ -14,6 +14,7 @@ namespace DVLDDataAccessLayer
            FORMAT(DateOfBirth,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.NumericFormat)}') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
            FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
 
+        private static string _PrimaryKeyColumnName = "PersonID";
         public static DataTable GetPeopleInfo(byte WantedNumOfRecords,int LastLowestbroughtPersonID = -1)
         {
             DataTable dtPeople = null;
@@ -410,7 +411,7 @@ namespace DVLDDataAccessLayer
             switch(SendedColumnName)
             {
                 case "Person ID":
-                    return "PersonID";
+                    return _PrimaryKeyColumnName;
 
                 case "National No.":
                     return "NationalNo";
@@ -495,13 +496,13 @@ namespace DVLDDataAccessLayer
                     , string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtPersonID = -1, char? WildChar = null)
         {
             if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = "Person ID";
+                ColumnNameToOrderBy = _PrimaryKeyColumnName;
 
             string query = _query;
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-               clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtPersonID);
                 return query;
             }
 
@@ -517,7 +518,7 @@ namespace DVLDDataAccessLayer
 
             query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
 
-            query += clsUtility.GetLastFilterQueryPart(ColumnNameToFilterBy, ColumnNameToOrderBy, SortDirection,true, LastLowestbroughtPersonID);
+            query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection,true, LastLowestbroughtPersonID);
 
             return query;
         }
@@ -659,7 +660,7 @@ namespace DVLDDataAccessLayer
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-                query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             else
@@ -670,7 +671,7 @@ namespace DVLDDataAccessLayer
                 }
 
                 query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                query += clsUtility.GetLastFilterQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             return query;
