@@ -290,7 +290,8 @@ namespace DVLDDataAccessLayer
 
                 string query = _query;
 
-            if (string.IsNullOrEmpty(ValueToFilterBy))
+            if (string.IsNullOrEmpty(ValueToFilterBy)
+                || (ColumnNameToFilterBy == "IsReleased" && ValueToFilterBy == "All"))
             {
                 query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy,
                                          SortDirection, false, LastLowestbroughtDetainID, false);
@@ -302,16 +303,8 @@ namespace DVLDDataAccessLayer
 
                 if (ColumnNameToFilterBy == "IsReleased")
                 {
-                    if (ValueToFilterBy == "All")
-                    {
-                        query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy,
-                            SortDirection, false, LastLowestbroughtDetainID,false);
-
-                        return query;
-                    }
-
-                    else
-                        ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
+                    if (ValueToFilterBy != "All")
+                    ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
                 query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
@@ -397,7 +390,8 @@ namespace DVLDDataAccessLayer
 
             ColumnNameToOrderBy = _GetOriginalColumnNameToOrderBy(ColumnNameToOrderBy);
 
-            if (string.IsNullOrEmpty(ValueToFilterBy))
+            if (string.IsNullOrEmpty(ValueToFilterBy) 
+                || (ColumnNameToFilterBy == "IsReleased" && ValueToFilterBy == "All"))
             {
                 query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,false);
             }
@@ -407,15 +401,8 @@ namespace DVLDDataAccessLayer
 
                 if (ColumnNameToFilterBy == "IsReleased")
                 {
-                    if (ValueToFilterBy == "All")
-                    {
-                        query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,false);
-
-                        return query;
-                    }
-
-                    else
-                        ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
+                    if (ValueToFilterBy != "All")
+                    ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
                 query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);

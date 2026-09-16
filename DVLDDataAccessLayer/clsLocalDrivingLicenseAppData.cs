@@ -20,17 +20,19 @@ namespace DVLDDataAccessLayer
            LEFT JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
            LEFT JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID";
 
-            private static string _groupByQueryPart=
+            private static string _GroupByQueryPart=
             $@" GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, LicenseClasses.ClassName,
                 People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName + ' ' + People.SecondName + ' ' + People.ThirdName + ' ' + People.LastName
                 ELSE People.FirstName + ' ' + People.SecondName + ' ' + People.LastName END), FORMAT(ApplicationDate , '{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') , (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END)";
+
+        private static string _PrimaryKeyColumnName = "LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID";
 
         public static DataTable GetLDLApplications(byte WantedNumOfRecords, int LastLowestBroughtLDLAppID = -1)
         {
             DataTable dtLDLApplications = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _query + _groupByQueryPart;
+            string query = _query + _GroupByQueryPart;
 
             if (LastLowestBroughtLDLAppID == -1)
                 query += " ORDER BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID DESC";
@@ -367,7 +369,7 @@ namespace DVLDDataAccessLayer
             }
             return 0;
         }
-
+       
         private static string _GetOriginalColumnName(string SendedColumnName)
         {
             switch(SendedColumnName)
@@ -382,96 +384,84 @@ namespace DVLDDataAccessLayer
                     return "People.NationalNo";
 
                 case "Status":
-                        return "Applications.ApplicationStatus";
+                    return "Applications.ApplicationStatus";
 
                 default:
                     return null;
             }
         }
 
-        private static string _GetDataFilteringQuery(byte WantedNumOfRecords,ref string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtLDLAppID = -1)
+        private static string _GetStatusNumericValue(string FitlerValue)
         {
+                switch (FitlerValue)
+                {
+                case "New":
+                    return "1";
+
+                case "Canceled":
+                    return "2";
+
+                case "Completed":
+                    return "3";
+
+                default:
+                    return null;
+                }
+        }
+
+        private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy,
+             string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtLDLAppID = -1, char? WildChar = null)
+        {
+            if (ColumnNameToOrderBy == null)
+                ColumnNameToOrderBy = _PrimaryKeyColumnName;
+
+            ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
+
             string query = _query;
 
-            if (!string.IsNullOrEmpty(ValueToFilterBy))
+            if (string.IsNullOrEmpty(ValueToFilterBy)
+                || (ColumnNameToFilterBy == "Applications.ApplicationStatus" && ValueToFilterBy == "All"))
             {
-                if (ColumnNameToFilter != "None")
-                {
-                    ColumnNameToFilter = _GetOriginalColumnName(ColumnNameToFilter);
-
-                    if (ColumnNameToFilter == "Applications.ApplicationStatus")
-                    {
-                        if (ValueToFilterBy != "All")
-                        {
-                            switch (ValueToFilterBy)
-                            {
-                                case "New":
-                                    ValueToFilterBy = "1";
-                                    break;
-
-                                case "Canceled":
-                                    ValueToFilterBy = "2";
-                                    break;
-
-                                case "Completed":
-                                    ValueToFilterBy = "3";
-                                    break;
-                            }
-                        }
-                     }
-
-                    if (ValueToFilterBy != "All")
-                    {
-                        if (WildChar == null)
-                            query += $" WHERE {ColumnNameToFilter} = @Value";
-                        else
-                            query += $" WHERE {ColumnNameToFilter} LIKE @Value + @WildChar";
-                    }
-                }
+                query += _GroupByQueryPart;
+                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtLDLAppID);
             }
-
-            if (LastLowestBroughtLDLAppID == -1)
-            {
-                query += _groupByQueryPart + " ORDER BY [L.D.L.AppID] DESC";
-            }
-
             else
             {
-                if (string.IsNullOrEmpty(ValueToFilterBy) || ColumnNameToFilter == "None" || ValueToFilterBy == "All")
-                    query += " WHERE";
-                else
-                    query += " AND";
 
-                query += " LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID < @LastLowestBroughtLDLAppID" + _groupByQueryPart
-                            + " ORDER BY [L.D.L.AppID] DESC";
+                if (ColumnNameToFilterBy == "Applications.ApplicationStatus")
+                {
+                    if (ValueToFilterBy != "All")
+                        ValueToFilterBy = _GetStatusNumericValue(ValueToFilterBy);
+                }
+
+                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += _GroupByQueryPart;
+                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtLDLAppID);
             }
 
             return query;
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtLDLAppID = -1, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection,
+                  int LastLowestbroughtLDLAppID = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetDataFilteringQuery(WantedNumOfRecords,ref ColumnNameToFilter,ref ValueToFilterBy, WildChar,LastLowestBroughtLDLAppID);
+             
+            string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilterBy, ref ValueToFilterBy,
+                            ColumnNameToOrderBy, SortDirection, LastLowestbroughtLDLAppID, WildChar);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
-             if(ColumnNameToFilter == "Applications.ApplicationStatus" && ValueToFilterBy != "All")
-                command.Parameters.AddWithValue("@Value", Convert.ToByte(ValueToFilterBy));
-
-            else if (!(string.IsNullOrEmpty(ValueToFilterBy) || ColumnNameToFilter == "None" || ValueToFilterBy == "All"))
+            if (!string.IsNullOrEmpty(ValueToFilterBy))
                 command.Parameters.AddWithValue("@Value", ValueToFilterBy);
 
 
             if (WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
-
-            if(LastLowestBroughtLDLAppID != -1)
-                command.Parameters.AddWithValue("@LastLowestBroughtLDLAppID", LastLowestBroughtLDLAppID);
 
             try
             {
@@ -529,6 +519,41 @@ namespace DVLDDataAccessLayer
             }
 
             return -1;
+        }
+     
+        private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection, string ColumnNameToFilterBy, ref string ValueToFilterBy, char? WildChar = null)
+        {
+            string query = _query;
+
+            ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
+
+            if (string.IsNullOrEmpty(ValueToFilterBy)
+                || (ColumnNameToFilterBy == "Applications.ApplicationStatus" && ValueToFilterBy == "All"))
+            {
+                query += _GroupByQueryPart;
+                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+
+            else
+            {
+                if (ColumnNameToFilterBy == "Applications.ApplicationStatus")
+                {
+                    if(ValueToFilterBy != "All")
+                    ValueToFilterBy = _GetStatusNumericValue(ValueToFilterBy);
+                }
+
+                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += _GroupByQueryPart;
+                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+                return query;
+        }
+
+        public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
+            string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
+        {
+            return clsUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+                WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }
 }

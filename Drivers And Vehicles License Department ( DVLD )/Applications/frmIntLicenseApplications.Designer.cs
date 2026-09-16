@@ -63,7 +63,7 @@
             this.cbIsActive.Font = new System.Drawing.Font("Tahoma", 21F);
             this.cbIsActive.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.cbIsActive.FormattingEnabled = true;
-            this.cbIsActive.Location = new System.Drawing.Point(454, 377);
+            this.cbIsActive.Location = new System.Drawing.Point(452, 377);
             this.cbIsActive.Name = "cbIsActive";
             this.cbIsActive.Size = new System.Drawing.Size(182, 42);
             this.cbIsActive.TabIndex = 71;
@@ -79,7 +79,7 @@
             this.pbInternationalLicense.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pbInternationalLicense.Image = ((System.Drawing.Image)(resources.GetObject("pbInternationalLicense.Image")));
             this.pbInternationalLicense.ImageLocation = "";
-            this.pbInternationalLicense.Location = new System.Drawing.Point(768, 114);
+            this.pbInternationalLicense.Location = new System.Drawing.Point(825, 114);
             this.pbInternationalLicense.Margin = new System.Windows.Forms.Padding(2);
             this.pbInternationalLicense.Name = "pbInternationalLicense";
             this.pbInternationalLicense.Size = new System.Drawing.Size(58, 55);
@@ -96,7 +96,7 @@
             this.btnAddInternationalLicenseApp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnAddInternationalLicenseApp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddInternationalLicenseApp.Image = ((System.Drawing.Image)(resources.GetObject("btnAddInternationalLicenseApp.Image")));
-            this.btnAddInternationalLicenseApp.Location = new System.Drawing.Point(1216, 349);
+            this.btnAddInternationalLicenseApp.Location = new System.Drawing.Point(1332, 349);
             this.btnAddInternationalLicenseApp.Name = "btnAddInternationalLicenseApp";
             this.btnAddInternationalLicenseApp.Size = new System.Drawing.Size(111, 70);
             this.btnAddInternationalLicenseApp.TabIndex = 59;
@@ -113,7 +113,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(1161, 763);
+            this.btnClose.Location = new System.Drawing.Point(1218, 763);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 62;
@@ -138,16 +138,17 @@
             this.dgvIntLicenseApplications.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvIntLicenseApplications.ColumnHeadersHeight = 40;
             this.dgvIntLicenseApplications.ContextMenuStrip = this.cmsInternationalLicense;
-            this.dgvIntLicenseApplications.Location = new System.Drawing.Point(40, 441);
+            this.dgvIntLicenseApplications.Location = new System.Drawing.Point(38, 441);
             this.dgvIntLicenseApplications.Margin = new System.Windows.Forms.Padding(2);
             this.dgvIntLicenseApplications.Name = "dgvIntLicenseApplications";
             this.dgvIntLicenseApplications.ReadOnly = true;
             this.dgvIntLicenseApplications.RowHeadersWidth = 72;
             this.dgvIntLicenseApplications.RowTemplate.Height = 32;
             this.dgvIntLicenseApplications.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvIntLicenseApplications.Size = new System.Drawing.Size(1287, 296);
+            this.dgvIntLicenseApplications.Size = new System.Drawing.Size(1405, 296);
             this.dgvIntLicenseApplications.StandardTab = true;
             this.dgvIntLicenseApplications.TabIndex = 58;
+            this.dgvIntLicenseApplications.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvIntLicenseApplications_ColumnHeaderMouseClick);
             this.dgvIntLicenseApplications.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvInternationalLicenses_Scroll);
             this.dgvIntLicenseApplications.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvInternationalLicenses_KeyDown);
             // 
@@ -162,7 +163,7 @@
             this.tsmiShowPersonLicenseHistory});
             this.cmsInternationalLicense.Name = "cmsPeopleMenu";
             this.cmsInternationalLicense.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsInternationalLicense.Size = new System.Drawing.Size(323, 112);
+            this.cmsInternationalLicense.Size = new System.Drawing.Size(323, 134);
             this.cmsInternationalLicense.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsInternationalLicense_Paint);
             // 
             // tsmiShowPersonDetails
@@ -201,7 +202,7 @@
             this.lblFormTitle.AutoSize = true;
             this.lblFormTitle.Font = new System.Drawing.Font("Tahoma", 18F);
             this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblFormTitle.Location = new System.Drawing.Point(27, 15);
+            this.lblFormTitle.Location = new System.Drawing.Point(25, 15);
             this.lblFormTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormTitle.Name = "lblFormTitle";
             this.lblFormTitle.Size = new System.Drawing.Size(366, 29);
@@ -219,7 +220,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1313, 15);
+            this.btnExit.Location = new System.Drawing.Point(1429, 15);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -234,7 +235,7 @@
             this.lblFormBigTitle.AutoSize = true;
             this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
             this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblFormBigTitle.Location = new System.Drawing.Point(312, 263);
+            this.lblFormBigTitle.Location = new System.Drawing.Point(369, 263);
             this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormBigTitle.Name = "lblFormBigTitle";
             this.lblFormBigTitle.Size = new System.Drawing.Size(768, 52);
@@ -245,7 +246,7 @@
             // 
             this.lblRecordsNumber.AutoSize = true;
             this.lblRecordsNumber.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lblRecordsNumber.Location = new System.Drawing.Point(210, 770);
+            this.lblRecordsNumber.Location = new System.Drawing.Point(208, 770);
             this.lblRecordsNumber.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRecordsNumber.Name = "lblRecordsNumber";
             this.lblRecordsNumber.Size = new System.Drawing.Size(0, 31);
@@ -256,7 +257,7 @@
             // 
             this.lblRecordsTitle.AutoSize = true;
             this.lblRecordsTitle.Font = new System.Drawing.Font("Tahoma", 19F, System.Drawing.FontStyle.Bold);
-            this.lblRecordsTitle.Location = new System.Drawing.Point(40, 770);
+            this.lblRecordsTitle.Location = new System.Drawing.Point(38, 770);
             this.lblRecordsTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRecordsTitle.Name = "lblRecordsTitle";
             this.lblRecordsTitle.Size = new System.Drawing.Size(164, 31);
@@ -269,7 +270,7 @@
             this.txtFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFilter.Font = new System.Drawing.Font("Tahoma", 21F);
             this.txtFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtFilter.Location = new System.Drawing.Point(454, 378);
+            this.txtFilter.Location = new System.Drawing.Point(452, 378);
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(344, 41);
             this.txtFilter.TabIndex = 61;
@@ -285,7 +286,7 @@
             this.cbFilterBy.Font = new System.Drawing.Font("Tahoma", 21F);
             this.cbFilterBy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.cbFilterBy.FormattingEnabled = true;
-            this.cbFilterBy.Location = new System.Drawing.Point(209, 377);
+            this.cbFilterBy.Location = new System.Drawing.Point(207, 377);
             this.cbFilterBy.Name = "cbFilterBy";
             this.cbFilterBy.Size = new System.Drawing.Size(226, 42);
             this.cbFilterBy.TabIndex = 60;
@@ -298,7 +299,7 @@
             // 
             this.lblTitleFilterBy.AutoSize = true;
             this.lblTitleFilterBy.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Bold);
-            this.lblTitleFilterBy.Location = new System.Drawing.Point(40, 386);
+            this.lblTitleFilterBy.Location = new System.Drawing.Point(38, 386);
             this.lblTitleFilterBy.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTitleFilterBy.Name = "lblTitleFilterBy";
             this.lblTitleFilterBy.Size = new System.Drawing.Size(147, 33);
@@ -311,7 +312,7 @@
             this.pbManageInternationalLicenses.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pbManageInternationalLicenses.Image = ((System.Drawing.Image)(resources.GetObject("pbManageInternationalLicenses.Image")));
             this.pbManageInternationalLicenses.ImageLocation = "";
-            this.pbManageInternationalLicenses.Location = new System.Drawing.Point(561, 74);
+            this.pbManageInternationalLicenses.Location = new System.Drawing.Point(618, 74);
             this.pbManageInternationalLicenses.Margin = new System.Windows.Forms.Padding(2);
             this.pbManageInternationalLicenses.Name = "pbManageInternationalLicenses";
             this.pbManageInternationalLicenses.Size = new System.Drawing.Size(265, 169);
@@ -326,7 +327,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1368, 822);
+            this.ClientSize = new System.Drawing.Size(1486, 822);
             this.ControlBox = false;
             this.Controls.Add(this.cbIsActive);
             this.Controls.Add(this.pbInternationalLicense);

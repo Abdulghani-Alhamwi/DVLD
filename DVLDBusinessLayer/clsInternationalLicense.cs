@@ -96,14 +96,14 @@ namespace DVLDBusinessLayer
                 return null;
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection, char? WildChar = null)
         {
-            return clsInternationalLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, -1, WildChar);
+            return clsInternationalLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, -1, WildChar);
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LowstBroughtIntLicID, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtUserID, char? WildChar = null)
         {
-            return clsInternationalLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LowstBroughtIntLicID, WildChar);
+            return clsInternationalLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, LastLowestbroughtUserID, WildChar);
         }
 
         public static int GetTotalCount()
@@ -125,6 +125,13 @@ namespace DVLDBusinessLayer
         public static int GetLicenseID(int InternationalLicenseAppID)
         {
             return clsInternationalLicensesData.GetLicenseID(InternationalLicenseAppID);
+        }
+
+        public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection
+          , string ColumnNameToFilterBy = null, string valueToFilterBy = null, char? WildChar = null)
+        {
+            return clsInternationalLicensesData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
+                ColumnNameToFilterBy, valueToFilterBy, WildChar);
         }
     }
 }

@@ -465,30 +465,27 @@ namespace DVLDDataAccessLayer
 
                 string query = _query;
 
-            if (string.IsNullOrEmpty(ValueToFilterBy))
+            if (string.IsNullOrEmpty(ValueToFilterBy)
+                || (ColumnNameToFilterBy == "IsActive" && ValueToFilterBy == "All"))
             {
                 query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtUserID);
-                return query;
             }
 
-            if (ColumnNameToFilterBy != "UserName")
-                ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
-
-            if (ColumnNameToFilterBy == "IsActive")
+            else
             {
-                if (ValueToFilterBy == "All")
+                if (ColumnNameToFilterBy != "UserName")
+                    ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
+
+                if (ColumnNameToFilterBy == "IsActive")
                 {
-                    query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtUserID);
-                    return query;
+                    if(ValueToFilterBy != "All")
+                    ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
-                else
-                    ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
+                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+
+                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtUserID);
             }
-
-            query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-
-            query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtUserID);
 
             return query;
         }
@@ -571,7 +568,8 @@ namespace DVLDDataAccessLayer
             if (ColumnNameToFilterBy != "UserName")
                 ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
 
-            if (string.IsNullOrEmpty(ValueToFilterBy))
+            if (string.IsNullOrEmpty(ValueToFilterBy)
+                || (ColumnNameToFilterBy == "IsActive" && ValueToFilterBy == "All"))
             {
                 query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
@@ -580,14 +578,8 @@ namespace DVLDDataAccessLayer
             {
                 if (ColumnNameToFilterBy == "IsActive")
                 {
-                    if(ValueToFilterBy == "All")
-                    {
-                        query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
-                        return query;
-                    }
-
-                    else
-                        ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
+                    if(ValueToFilterBy != "All")
+                    ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
                 query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);

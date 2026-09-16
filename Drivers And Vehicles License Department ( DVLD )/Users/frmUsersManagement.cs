@@ -16,7 +16,6 @@ namespace DVLDPresentationLayer
         public frmUsersManagement()
         {
             InitializeComponent();
-            _LastColumnNameDgvSortedBy = null;
             _CurrentDgvSortDirection = clsUtility.enDataGridViewSortDirection.Descending;
             _UtilityLib = new clsUtility();
         }
@@ -108,25 +107,19 @@ namespace DVLDPresentationLayer
             {
                 txtFilter.Visible = false;
                 cbIsActive.Visible = false;
-
-                _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             }
             else if (cbFilterBy.SelectedItem.ToString() != "Is Active")
             {
                 txtFilter.Visible = true;
                 cbIsActive.Visible = false;
                 txtFilter.Focus();
-
-                _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             }
             else
             {
                 txtFilter.Visible = false;
                 cbIsActive.Visible = true;
-
-                _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             }
-
+            _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             txtFilter.Text = "";
         }
 
@@ -293,7 +286,7 @@ namespace DVLDPresentationLayer
                 frm.ShowDialog();
             }
         }
-        private DataTable _FilterOnIsActive(bool ScrollCase = false)
+        private DataTable _GetFilteredDataOnIsActive(bool ScrollCase = false)
         {
             DataTable dtFilteredData;
             if (!ScrollCase)
@@ -322,7 +315,7 @@ namespace DVLDPresentationLayer
                         _LastColumnNameDgvSortedBy, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection),null);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Is Active")
-                    dtUsersInfo = _FilterOnIsActive();
+                    dtUsersInfo = _GetFilteredDataOnIsActive();
 
                 else
                     dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
@@ -340,7 +333,7 @@ namespace DVLDPresentationLayer
                         _LastColumnNameDgvSortedBy, clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), (int)dgvUsers?.Rows[dgvUsers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["User ID"].Value, null);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Is Active")
-                    dtUsersInfo = _FilterOnIsActive(true);
+                    dtUsersInfo = _GetFilteredDataOnIsActive(true);
 
                 else
                     dtUsersInfo = clsUser.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
@@ -399,10 +392,10 @@ namespace DVLDPresentationLayer
 
             if (cbFilterBy.SelectedItem.ToString() == "Is Active")
             {
-                dgvUsers.DataSource = _FilterOnIsActive();
+                dgvUsers.DataSource = _GetFilteredDataOnIsActive();
                 _DecryptUsersNames((DataTable)dgvUsers.DataSource);
+                _PreviousCbIsActiveSelectedItem = cbIsActive.SelectedItem.ToString();
             }
-            _PreviousCbIsActiveSelectedItem = cbIsActive.SelectedItem.ToString();
         }
 
         private void cmsUsersMenu_Paint(object sender, PaintEventArgs e)
@@ -429,7 +422,7 @@ namespace DVLDPresentationLayer
                 if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
                 {
                     dtSortedInfo = clsUser.GetSortedInfo(clsUtility.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText
-                , clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection), txtFilter.Text, cbFilterBy.SelectedItem.ToString(), null);
+                , clsUtility.GetDataGridViewSortDirection(_CurrentDgvSortDirection),cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);
                 }
 
                 else

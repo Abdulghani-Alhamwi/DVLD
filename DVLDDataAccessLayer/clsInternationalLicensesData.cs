@@ -13,6 +13,8 @@ namespace DVLDDataAccessLayer
            Format(ExpirationDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Expiration Date],IsActive AS [Is Active]
            FROM InternationalLicenses";
 
+        private static string _PrimaryKeyColumnName = "InternationalLicenseID";
+
         public static DataTable GetDriverInternationalLicenses(int DriverID, byte WantedNumOfRecords, int LowstBroughtIntLicID = -1)
         {
             DataTable dtIntLicenses = null;
@@ -214,7 +216,7 @@ namespace DVLDDataAccessLayer
                 case "Driver ID":
                     return "DriverID";
 
-            case "L.License ID":
+                case "L.License ID":
                     return "IssuedUsingLocalLicenseID";
 
                 case "Is Active":
@@ -224,71 +226,54 @@ namespace DVLDDataAccessLayer
                     return "";
             }
         }
-
-        private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilter,ref string ValueToFilterBy, char? WildChar = null, int LowstBroughtIntLicID = -1)
+        private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy,
+                string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtIntAppID = -1, char? WildChar = null)
         {
+            if (ColumnNameToOrderBy == null)
+                ColumnNameToOrderBy = _PrimaryKeyColumnName;
+
+            ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
+
             string query = _query;
 
-            if (string.IsNullOrEmpty(ValueToFilterBy))
+            if (string.IsNullOrEmpty(ValueToFilterBy)
+                  || (ColumnNameToFilterBy == "IsActive" && ValueToFilterBy == "All"))
             {
-                query += " ORDER BY InternationalLicenseID DESC";
-                return query;
+                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtIntAppID);
             }
-                ColumnNameToFilter = _GetOriginalColumnName(ColumnNameToFilter);
-
-            if (ColumnNameToFilter == "IsActive")
+            else
             {
-                if (ValueToFilterBy == "All")
+                if (ColumnNameToFilterBy == "IsActive")
                 {
-
-                    if (LowstBroughtIntLicID != -1)
-                        query += @" WHERE InternationalLicenseID < @LowstBroughtIntLicID
-                                    ORDER BY InternationalLicenseID DESC";
-                    
-                    else 
-                        query += " ORDER BY InternationalLicenseID DESC";
-
-                    return query;
+                    if (ValueToFilterBy != "All")
+                        ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
-                else
-                    ValueToFilterBy = (ValueToFilterBy == "Yes") ? "1" : "0";
+                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtIntAppID);
             }
 
-                if (WildChar == null)
-                    query += $" WHERE {ColumnNameToFilter} = @Value";
-                else
-                    query += $" WHERE {ColumnNameToFilter} Like @Value + @WildChar";
-            
-
-                if (LowstBroughtIntLicID == -1)
-                    query += " ORDER BY InternationalLicenseID DESC";
-
-                else
-                    query += @" AND InternationalLicenseID < @LowstBroughtIntLicID
-                           ORDER BY InternationalLicenseID DESC";
-
-                return query;
+            return query;
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LowstBroughtIntLicID = -1, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection,
+                          int LastLowestbroughtLDLAppID = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilter,ref ValueToFilterBy, WildChar, LowstBroughtIntLicID);
+            string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilterBy, ref ValueToFilterBy,
+                            ColumnNameToOrderBy, SortDirection, LastLowestbroughtLDLAppID, WildChar);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
+            if(! string.IsNullOrEmpty(ValueToFilterBy))
             command.Parameters.AddWithValue("@Value", ValueToFilterBy);
 
             if (WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
-
-            if (LowstBroughtIntLicID != -1)
-                command.Parameters.AddWithValue("@LastLowestbroughtUserID", LowstBroughtIntLicID);
 
             try
             {
@@ -380,7 +365,7 @@ namespace DVLDDataAccessLayer
         public static int GetLicenseID(int InternationalLicenseAppID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = "SELECT LicenseID FROM LocalLicenses WHERE ApplicationID = @ApplicationID";
+            string query = "SELECT InternationalLicenseID FROM InternationalLicenses WHERE ApplicationID = @ApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicationID", InternationalLicenseAppID);
@@ -401,6 +386,39 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return -1;
+        }
+
+        private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection, string ColumnNameToFilterBy, ref string ValueToFilterBy, char? WildChar = null)
+        {
+            string query = _query;
+
+            ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
+
+            if (string.IsNullOrEmpty(ValueToFilterBy)
+                || (ColumnNameToFilterBy == "IsActive" && ValueToFilterBy == "All"))
+            {
+                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+
+            else
+            {
+                if (ColumnNameToFilterBy == "IsActive")
+                {
+                    if(ValueToFilterBy !="All")
+                    ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
+                }
+
+                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+            return query;
+        }
+
+        public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
+            string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
+        {
+            return clsUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+                WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }
 }

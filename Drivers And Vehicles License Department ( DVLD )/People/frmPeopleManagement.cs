@@ -17,7 +17,6 @@ namespace DVLDPresentationLayer
         public frmPeopleManagement()
         {
             InitializeComponent();
-            _LastColumnNameDgvSortedBy = "Person ID";
             _CurrentDgvSortDirection = clsUtility.enDataGridViewSortDirection.Descending;
             _UtilityLib = new clsUtility();
         }
@@ -84,13 +83,12 @@ namespace DVLDPresentationLayer
             {
                 txtFilter.Visible = true;
                 txtFilter.Focus();
-                _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             }
             else
             {
                 txtFilter.Visible = false;
-                _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             }
+            _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             txtFilter.Text = "";
         }
 

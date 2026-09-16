@@ -339,6 +339,7 @@
             this.dgvLDLApplications.Size = new System.Drawing.Size(1698, 278);
             this.dgvLDLApplications.StandardTab = true;
             this.dgvLDLApplications.TabIndex = 44;
+            this.dgvLDLApplications.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvLDLApplications_ColumnHeaderMouseClick);
             this.dgvLDLApplications.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvLDLApplications_Scroll);
             this.dgvLDLApplications.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvLDLApplications_KeyDown);
             // 

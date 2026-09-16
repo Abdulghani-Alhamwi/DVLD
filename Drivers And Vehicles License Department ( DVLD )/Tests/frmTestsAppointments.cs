@@ -27,7 +27,6 @@ namespace DVLDPresentationLayer
             uctrlDLApplicationInfo.LoadLDLAppInfo(LDLApplicationID);
             _ShowInfoByTestType(TestType);
 
-            _LastColumnNameDgvSortedBy = null;
             _CurrentDgvSortDirection = clsUtility.enDataGridViewSortDirection.Descending;
 
             _LDLAppId = LDLApplicationID;
