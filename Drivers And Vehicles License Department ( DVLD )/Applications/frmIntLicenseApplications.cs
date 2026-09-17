@@ -242,7 +242,7 @@ namespace DVLDPresentationLayer.Licenses
         {
             if (dgvIntLicenseApplications.SelectedRows.Count > 1)
             {
-                MessageBox.Show("You have to select only one international driving license application in order to show driver licenses history.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You have to select only one international driving license application in order to show driver license history.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 

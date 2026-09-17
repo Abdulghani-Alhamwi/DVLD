@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
+using DVLDPresentationLayer.Licenses;
 using Utility_Library;
 
 namespace DVLDPresentationLayer
@@ -189,6 +190,18 @@ namespace DVLDPresentationLayer
                     if (dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.None) == dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.Displayed))
                         _AppendPartOfRemainingData();
                 }
+        }
+
+        private void tsmiShowPersonLicenseHistory_Click(object sender, EventArgs e)
+        {
+            if (dgvDrivers.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("You have to select only one driver in order to show their license history.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID((int)dgvDrivers.SelectedRows[0].Cells["Driver ID"].Value));
+            frm.ShowDialog();
         }
     }
 }

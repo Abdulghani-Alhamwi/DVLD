@@ -64,14 +64,6 @@ namespace DVLDPresentationLayer
                 dgvLDLApplications.DataSource = clsLocalDrivingLicenseApp.GetLDLApplications(clsUtility.WantedNumOfRowsFromDB);
         }
 
-        private void _LoadDataAfterFirstTimeLoad(ref bool _AllowDataLoading)
-        {
-            if (_AllowDataLoading)
-                dgvLDLApplications.DataSource = clsLocalDrivingLicenseApp.GetLDLApplications(clsUtility.WantedNumOfRowsFromDB);
-            else
-                _AllowDataLoading = true;
-        }
-
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_PreviousCbFilterSelectedItem == cbFilterBy.SelectedItem.ToString())
@@ -167,26 +159,27 @@ namespace DVLDPresentationLayer
                 cmsLDLApplication.Close();
         }
         private void tsmiDelete_Click(object sender, EventArgs e)
-        {            
-                if (dgvLDLApplications.SelectedRows.Count > 5)
-                {
-                    MessageBox.Show("You Can Delete Maximum 5 Local Driving License Applications In One Time!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
+        {
+            if (dgvLDLApplications.SelectedRows.Count > 5)
+            {
+                MessageBox.Show("You Can Delete Maximum 5 Local Driving License Applications In One Time!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-                DialogResult result;
-                if(dgvLDLApplications.SelectedRows.Count == 1)
+            DialogResult result;
+            if (dgvLDLApplications.SelectedRows.Count == 1)
                 result = MessageBox.Show("Are you sure you want to delete this application?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-                else
+
+            else
                 result = MessageBox.Show("Are you sure you want to delete those applications?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
-                if (result == DialogResult.OK)
-                {
+            if (result == DialogResult.OK)
+            {
                 int[] SelectedRowsIndex = new int[dgvLDLApplications.SelectedRows.Count];
                 byte TotalDeletedRecords = 0;
 
                 for (short i = 0; i < dgvLDLApplications.SelectedRows.Count; i++)
-                    {
+                {
                     int ApplicationID = clsLocalDrivingLicenseApp.GetApplicationID((int)dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value);
 
                     if (!clsLocalDrivingLicenseApp.DeleteLDLApplication((int)dgvLDLApplications.SelectedRows[i].Cells["L.D.L.AppID"].Value, ApplicationID))
@@ -204,7 +197,7 @@ namespace DVLDPresentationLayer
                         SelectedRowsIndex[i] = dgvLDLApplications.SelectedRows[i].Index;
                         TotalDeletedRecords++;
                     }
-                    }
+                }
                 _UtilityLib.DeleteSelectedDgvRows(dgvLDLApplications, SelectedRowsIndex);
                 lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) - TotalDeletedRecords).ToString();
             }

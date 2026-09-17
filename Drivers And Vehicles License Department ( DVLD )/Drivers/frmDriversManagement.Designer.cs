@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblRecordsNumber = new System.Windows.Forms.Label();
             this.lblRecordsTitle = new System.Windows.Forms.Label();
@@ -40,8 +41,11 @@
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblFormBigTitle = new System.Windows.Forms.Label();
+            this.cmsDriver = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiShowPersonLicenseHistory = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pbDrivers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDrivers)).BeginInit();
+            this.cmsDriver.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblRecordsNumber
@@ -155,6 +159,7 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvDrivers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvDrivers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDrivers.ContextMenuStrip = this.cmsDriver;
             this.dgvDrivers.Location = new System.Drawing.Point(35, 415);
             this.dgvDrivers.Margin = new System.Windows.Forms.Padding(2);
             this.dgvDrivers.Name = "dgvDrivers";
@@ -213,6 +218,27 @@
             this.lblFormBigTitle.TabIndex = 50;
             this.lblFormBigTitle.Text = "Drivers List";
             // 
+            // cmsDriver
+            // 
+            this.cmsDriver.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.cmsDriver.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.cmsDriver.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.cmsDriver.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiShowPersonLicenseHistory});
+            this.cmsDriver.Name = "cmsPeopleMenu";
+            this.cmsDriver.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.cmsDriver.Size = new System.Drawing.Size(323, 40);
+            // 
+            // tsmiShowPersonLicenseHistory
+            // 
+            this.tsmiShowPersonLicenseHistory.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiShowPersonLicenseHistory.Image = global::DVLDPresentationLayer.Properties.Resources.PersonLicenseHistory_32;
+            this.tsmiShowPersonLicenseHistory.Name = "tsmiShowPersonLicenseHistory";
+            this.tsmiShowPersonLicenseHistory.Padding = new System.Windows.Forms.Padding(0);
+            this.tsmiShowPersonLicenseHistory.Size = new System.Drawing.Size(322, 36);
+            this.tsmiShowPersonLicenseHistory.Text = "Show Person License History";
+            this.tsmiShowPersonLicenseHistory.Click += new System.EventHandler(this.tsmiShowPersonLicenseHistory_Click);
+            // 
             // frmDriversManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -242,6 +268,7 @@
             this.Load += new System.EventHandler(this.frmDriversManagements_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbDrivers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDrivers)).EndInit();
+            this.cmsDriver.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -260,5 +287,7 @@
         private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label lblFormBigTitle;
+        private System.Windows.Forms.ContextMenuStrip cmsDriver;
+        private System.Windows.Forms.ToolStripMenuItem tsmiShowPersonLicenseHistory;
     }
 }

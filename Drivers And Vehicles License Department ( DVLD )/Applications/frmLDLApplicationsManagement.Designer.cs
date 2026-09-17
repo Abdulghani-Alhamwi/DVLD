@@ -167,7 +167,7 @@
             this.tsmiShowPersonLicenseHistory});
             this.cmsLDLApplication.Name = "cmsPeopleMenu";
             this.cmsLDLApplication.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsLDLApplication.Size = new System.Drawing.Size(361, 328);
+            this.cmsLDLApplication.Size = new System.Drawing.Size(361, 350);
             this.cmsLDLApplication.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLDLApplication_Opening);
             this.cmsLDLApplication.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsLDLApplication_Paint);
             // 
