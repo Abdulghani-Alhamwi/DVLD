@@ -15,7 +15,7 @@ namespace DVLDPresentationLayer
         private void _ShowLoginInformation(clsUser User)
         {
             lblUserID.Text = User.UserID.ToString();
-            lblUserName.Text = clsUtility.DecryptUserName(User.UserName);
+            lblUserName.Text = clsGeneralUtility.DecryptUserName(User.UserName);
             lblIsActive.Text = (User.IsActive) ? "Yes" : "No";
         }
 

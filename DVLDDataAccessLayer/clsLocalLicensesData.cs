@@ -7,27 +7,27 @@ namespace DVLDDataAccessLayer
 {
     public class clsLocalLicensesData
     {
+        private static readonly string _PrimaryKeyColumnName = "LicenseID";
+
         public static DataTable GetLocalLicenses(int DriverID,byte WantedNumOfRecords,int LastLowstBroughtLicID = -1)
         {
             DataTable dtLicensesData = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = $@"SELECT TOP(@WantedNumOfRecords) LicenseID AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
-                             Format(IssueDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],FORMAT(ExpirationDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Expiration Date],IsActive AS [Is Active]
-                             FROM LocalLicenses INNER JOIN LicenseClasses ON LocalLicenses.LicenseClassID = LicenseClasses.LicenseClassID
+            string query = $@"SELECT TOP(@WantedNumOfRecords) {_PrimaryKeyColumnName} AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
+                             Format(IssueDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],
+                             FORMAT(ExpirationDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Expiration Date],
+                             IsActive AS [Is Active] FROM LocalLicenses INNER JOIN LicenseClasses ON LocalLicenses.LicenseClassID = LicenseClasses.LicenseClassID
                              WHERE DriverID = @DriverID";
 
             if (LastLowstBroughtLicID != -1)
-                query += " WHERE LicenseID < @LastLowstBroughtLicID";
+                query += $" WHERE {_PrimaryKeyColumnName} < {LastLowstBroughtLicID}";
 
-            query += " ORDER BY LicenseID DESC";
+            query += $" ORDER BY {_PrimaryKeyColumnName} DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@DriverID", DriverID);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
-
-            if (LastLowstBroughtLicID != -1)
-                command.Parameters.AddWithValue("@LastLowstBroughtLicID", LastLowstBroughtLicID);
 
             try
             {
@@ -100,8 +100,7 @@ namespace DVLDDataAccessLayer
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT * FROM LocalLicenses
-                             WHERE LocalLicenses.LicenseID = @LicenseID";
+            string query = $@"SELECT * FROM LocalLicenses WHERE {_PrimaryKeyColumnName} = @LicenseID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LicenseID", LicenseID);
@@ -113,7 +112,6 @@ namespace DVLDDataAccessLayer
 
                 if(reader.Read())
                 {
-                    LicenseID = (int)reader["LicenseID"];
                     ApplicationID = (int)reader["ApplicationID"];
                     DriverID = (int)reader["DriverID"];
                     LicenseClassID = Convert.ToByte(reader["LicenseClassID"]);
@@ -148,7 +146,7 @@ namespace DVLDDataAccessLayer
         public static int GetLicenseID(int LDLApplicationID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = "SELECT LicenseID FROM LocalLicenses WHERE ApplicationID = @ApplicationID";
+            string query = $"SELECT {_PrimaryKeyColumnName} FROM LocalLicenses WHERE ApplicationID = @ApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicationID", LDLApplicationID);
@@ -174,7 +172,7 @@ namespace DVLDDataAccessLayer
         public static string GetLicenseNotes(int LocalLicenseID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = "SELECT Notes FROM LocalLicenses WHERE LicenseID = @LicenseID";
+            string query = $"SELECT Notes FROM LocalLicenses WHERE {_PrimaryKeyColumnName} = @LicenseID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LicenseID", LocalLicenseID);
@@ -201,8 +199,7 @@ namespace DVLDDataAccessLayer
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = @"UPDATE LocalLicenses SET IsActive = 0
-                             WHERE LicenseID = @LicenseID";
+            string query = $@"UPDATE LocalLicenses SET IsActive = 0 WHERE {_PrimaryKeyColumnName} = @LicenseID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LicenseID", LocalLicenseID);
@@ -225,7 +222,7 @@ namespace DVLDDataAccessLayer
         public static bool HasDriverRenewedLicense(int DriverID,int LicenseClassID,ref int RenewedLicenseID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = @"SELECT LicenseID FROM LocalLicenses
+            string query = $@"SELECT {_PrimaryKeyColumnName} FROM LocalLicenses
                              WHERE DriverID = @DriverID AND LicenseClassID = @LicenseClassID AND IsActive = 1";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -257,8 +254,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query = 
-             @"SELECT DriverID FROM LocalLicenses
-               WHERE LicenseID = @LicenseID";
+             $@"SELECT DriverID FROM LocalLicenses WHERE {_PrimaryKeyColumnName} = @LicenseID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LicenseID", LocalLicenseID);

@@ -27,13 +27,13 @@ namespace DVLDPresentationLayer
                 lblLicenseID.Text = License.LicenseID.ToString();
                 lblNationalNo.Text = Person.NationalNo;
                 lblGendor.Text = (Person.Gendor == clsPerson.enGendor.Male) ? "Male" : "Female";
-                lblIssueDate.Text = License.IssueDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
+                lblIssueDate.Text = License.IssueDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
                 lblIssueReason.Text = License.GetIssueReasonAsString();
                 lblNotes.Text = (License.Notes != null) ? License.Notes : "No Notes";
                 lblIsActive.Text = (License.IsActive) ? "Yes" : "No";
-                lblDateOfBirth.Text = Person.DateOfBirth.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
+                lblDateOfBirth.Text = Person.DateOfBirth.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
                 lblDriverID.Text = License.DriverID.ToString();
-                lblExpDate.Text =  License.ExpirationDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
+                lblExpDate.Text =  License.ExpirationDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
                 lblIsDetained.Text = (clsDetainedLicenses.IsDetainedLicense(License.LicenseID)) ? "Yes" : "No";
 
                 if (File.Exists(Person.ImagePath))

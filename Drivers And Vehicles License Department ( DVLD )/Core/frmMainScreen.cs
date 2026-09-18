@@ -17,7 +17,7 @@ namespace DVLDPresentationLayer
         public frmMainScreen(frmLoginScreen frmLogin)
         {
             InitializeComponent();
-            clsUtility.RemoveMdiClientBorder(this);
+            clsGeneralUtility.RemoveMdiClientBorder(this);
 
             _frmLogin = frmLogin;
         }

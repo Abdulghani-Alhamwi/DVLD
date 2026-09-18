@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using DVLDBusinessLayer;
 using DVLDPresentationLayer.Licenses;
 using Utility_Library;
-using static Utility_Library.clsUtility;
+using static Utility_Library.clsGeneralUtility;
 
 namespace DVLDPresentationLayer.Applications
 {
@@ -22,7 +22,7 @@ namespace DVLDPresentationLayer.Applications
         public frmNewIntLicenseApplication()
         {
             InitializeComponent();
-            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
             _ShowNewApplicationInfo();
 
             _SelectedLocalLicenseID = -1;
@@ -31,12 +31,12 @@ namespace DVLDPresentationLayer.Applications
 
         private void _ShowNewApplicationInfo()
         {
-            lblApplicationDate.Text = DateTime.Now.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
-            lblIssueDate.Text = DateTime.Now.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
-            lblExpirationDate.Text = _InternationalLicenseExpDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
-            lblApplicationFees.Text = clsUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewInternationlLicense),
+            lblApplicationDate.Text = DateTime.Now.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblIssueDate.Text = DateTime.Now.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblExpirationDate.Text = _InternationalLicenseExpDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewInternationlLicense),
                 enCustomNumberFormat.NoJustZerosAfterFraction);
-            lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(clsGlobalSettings.CurrentUserID));
+            lblUserName.Text = clsGeneralUtility.DecryptUserName(clsUser.GetUserName(clsGlobalSettings.CurrentUserID));
         }
 
         private bool _AddNewApplication(int DriverID, out int NewApplicationID)

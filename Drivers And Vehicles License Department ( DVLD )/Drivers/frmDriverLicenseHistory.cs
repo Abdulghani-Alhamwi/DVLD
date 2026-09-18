@@ -12,7 +12,7 @@ namespace DVLDPresentationLayer
             InitializeComponent();
             uctrlPersonDetailsByFilter.SearchForPerson(PersonID);
             uctrlDriverLicensesHistory.LoadDriverLicenseHistory(clsDriver.GetDriverID(PersonID));
-            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private void btnExit_Click(object sender, EventArgs e)

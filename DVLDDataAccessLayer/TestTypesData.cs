@@ -6,15 +6,15 @@ namespace DVLDDataAccessLayer
 {
     public class clsTestTypesData
     {
+        private static readonly string _PrimaryKeyColumnName = "TestTypeID";
+
         public static DataTable GetTestTypes()
         {
             DataTable dtTestTypes = null;
-
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT TestTypeID AS ID,TestTypeTitle AS Title,
-                             TestTypeDescription AS Description,TestTypeFees AS Fees 
-                             FROM TestTypes";
+            string query = $@"SELECT {_PrimaryKeyColumnName} AS ID, TestTypeTitle AS Title,
+                              TestTypeDescription AS Description, TestTypeFees AS Fees FROM TestTypes";
 
             SqlCommand command = new SqlCommand(query, connection);
 
@@ -46,9 +46,8 @@ namespace DVLDDataAccessLayer
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"UPDATE TestTypes SET TestTypeTitle = @Title,
-                             TestTypeDescription = @Description,TestTypeFees = @Fees
-                             WHERE TestTypeID = @TestTypeID";
+            string query = $@"UPDATE TestTypes SET TestTypeTitle = @Title, TestTypeDescription = @Description,
+                             TestTypeFees = @Fees WHERE {_PrimaryKeyColumnName} = @TestTypeID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
@@ -77,8 +76,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT TestTypeFees FROM TestTypes
-                             WHERE TestTypeID = @TestTypeId";
+            string query = $@"SELECT TestTypeFees FROM TestTypes WHERE {_PrimaryKeyColumnName} = @TestTypeId";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@TestTypeID", TestTypeID);

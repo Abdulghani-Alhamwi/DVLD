@@ -7,14 +7,15 @@ namespace DVLDDataAccessLayer
 {
     public class clsDetainedLicensesData
     {
+        private static string _PrimaryKeyColumnName = "DetainID";
+
         private static string _query =
-         $@"SELECT TOP(@WantedNumOfRecords) DetainID AS [D.ID],DetainedLicenses.LicenseID AS [L.ID],FORMAT(DetainDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [D.Date],IsReleased AS [Is Released],
-           FineFees AS [Fine Fees],FORMAT(ReleaseDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Release Date],People.NationalNo AS [N.No.],
+         $@"SELECT TOP(@WantedNumOfRecords) {_PrimaryKeyColumnName} AS [D.ID],DetainedLicenses.LicenseID AS [L.ID],FORMAT(DetainDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [D.Date],IsReleased AS [Is Released],
+           FineFees AS [Fine Fees],FORMAT(ReleaseDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Release Date],People.NationalNo AS [N.No.],
            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],
            DetainedLicenses.ReleaseApplicationID AS [Release App.ID] FROM DetainedLicenses INNER JOIN LocalLicenses ON DetainedLicenses.LicenseID = LocalLicenses.LicenseID
            INNER JOIN Applications ON LocalLicenses.ApplicationID = Applications.ApplicationID INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID";
 
-        private static string _PrimaryKeyColumnName = "DetainID";
         public static DataTable GetDetainedLicensesInfo(byte WantedNumOfRecords, int LastLowestBroughtDetainID = -1)
         {
             DataTable dtDetainedLicenses = null;
@@ -23,15 +24,12 @@ namespace DVLDDataAccessLayer
             string query = _query;
 
             if (LastLowestBroughtDetainID != -1)
-                query += " WHERE DetainID < @LastLowestBroughtDetainID";
+                query += $" WHERE {_PrimaryKeyColumnName} < {LastLowestBroughtDetainID}";
 
-            query += " ORDER BY DetainID DESC";
+            query += $" ORDER BY {_PrimaryKeyColumnName} DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
-
-            if(LastLowestBroughtDetainID != -1)
-            command.Parameters.AddWithValue("@LastLowestBroughtDetainID", LastLowestBroughtDetainID);
 
             try
             {
@@ -55,6 +53,7 @@ namespace DVLDDataAccessLayer
             }
             return dtDetainedLicenses;
         }
+
         public static DataTable GetColumnsNamesForView()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -83,7 +82,6 @@ namespace DVLDDataAccessLayer
 
             return null;
         }
-
 
         public static bool IsDetainedLicense(int LocalLicenseID)
         {
@@ -151,7 +149,6 @@ namespace DVLDDataAccessLayer
             string query = @"UPDATE DetainedLicenses SET IsReleased = 1, ReleaseDate = @ReleaseDate,
                              ReleasedByUserID = @ReleasedByUserID, ReleaseApplicationID = @ReleaseApplicationID
                              WHERE LicenseID = @LicenseID";
-
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ReleaseDate", ReleaseDate);
@@ -225,7 +222,7 @@ namespace DVLDDataAccessLayer
             switch (SendedColumnName)
             {
                 case "Detain ID":
-                    return "DetainID";
+                    return _PrimaryKeyColumnName;
 
                 case "Is Released":
                     return "IsReleased";
@@ -249,7 +246,7 @@ namespace DVLDDataAccessLayer
             switch (SendedColumnName)
             {
                 case "D.ID":
-                    return "DetainID";
+                    return _PrimaryKeyColumnName;
 
                 case "L.ID":
                     return "DetainedLicenses.LicenseID";
@@ -284,7 +281,7 @@ namespace DVLDDataAccessLayer
                     string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtDetainID = -1, char? WildChar = null)
         {
             if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = "DetainID";
+                ColumnNameToOrderBy = _PrimaryKeyColumnName;
             else
                 ColumnNameToOrderBy = _GetOriginalColumnNameToOrderBy(ColumnNameToOrderBy);
 
@@ -293,7 +290,7 @@ namespace DVLDDataAccessLayer
             if (string.IsNullOrEmpty(ValueToFilterBy)
                 || (ColumnNameToFilterBy == "IsReleased" && ValueToFilterBy == "All"))
             {
-                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy,
+                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy,
                                          SortDirection, false, LastLowestbroughtDetainID, false);
             }
 
@@ -304,12 +301,12 @@ namespace DVLDDataAccessLayer
                 if (ColumnNameToFilterBy == "IsReleased")
                 {
                     if (ValueToFilterBy != "All")
-                    ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
+                    ValueToFilterBy = clsGeneralUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
-                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
 
-                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtDetainID,false);
+                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtDetainID,false);
             }
             return query;
         }
@@ -361,7 +358,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Count(DetainID) FROM DetainedLicenses";
+            string query = $@"SELECT Count({_PrimaryKeyColumnName}) FROM DetainedLicenses";
 
             SqlCommand command = new SqlCommand(query, connection);
 
@@ -393,7 +390,7 @@ namespace DVLDDataAccessLayer
             if (string.IsNullOrEmpty(ValueToFilterBy) 
                 || (ColumnNameToFilterBy == "IsReleased" && ValueToFilterBy == "All"))
             {
-                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,false);
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,false);
             }
             else
             {
@@ -402,11 +399,11 @@ namespace DVLDDataAccessLayer
                 if (ColumnNameToFilterBy == "IsReleased")
                 {
                     if (ValueToFilterBy != "All")
-                    ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
+                    ValueToFilterBy = clsGeneralUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
-                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,false);
+                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,false);
             }
 
             return query;
@@ -415,7 +412,7 @@ namespace DVLDDataAccessLayer
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
-            return clsUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }

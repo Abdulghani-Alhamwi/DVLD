@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using Utility_Library;
-using static Utility_Library.clsUtility;
+using static Utility_Library.clsGeneralUtility;
 
 namespace DVLDPresentationLayer.Core
 {
@@ -44,7 +44,7 @@ namespace DVLDPresentationLayer.Core
                 _ShowDetailsForUpdateMode();
             }
             _DGVRowIndex = DGVRowIndex;
-            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private void _InitializeFormData()
@@ -72,8 +72,8 @@ namespace DVLDPresentationLayer.Core
             lblDLApplicationID.Text = _LDLApplication.ApplicationID.ToString();
             cbLicenseClass.SelectedItem = _LDLApplication.LicenseClass.ClassName;
             lblApplicationDate.Text = _LDLApplication.ApplicationDate.ToShortDateString();
-            lblApplicationFees.Text = clsUtility.GetCustomNumberFormat(_LDLApplication.PaidApplicationFees, enCustomNumberFormat.NoJustZerosAfterFraction);
-            lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(_LDLApplication.CreatedByUserID));
+            lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(_LDLApplication.PaidApplicationFees, enCustomNumberFormat.NoJustZerosAfterFraction);
+            lblUserName.Text = clsGeneralUtility.DecryptUserName(clsUser.GetUserName(_LDLApplication.CreatedByUserID));
         }
         private bool _MoveToNextTab()
         {
@@ -122,7 +122,7 @@ namespace DVLDPresentationLayer.Core
             lblApplicationDate.Text = DateTime.Today.ToShortDateString();
             cbLicenseClass.DataSource = clsLicenseClass.GetLicenseClassesNames();
             cbLicenseClass.SelectedIndex = 2;
-            lblApplicationFees.Text = clsUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewLocalDrivingLicense),
+            lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewLocalDrivingLicense),
                 enCustomNumberFormat.NoJustZerosAfterFraction);
             lblUserName.Text = clsGlobalSettings.CurrentUserName;
         }
@@ -138,7 +138,7 @@ namespace DVLDPresentationLayer.Core
 
         private void cbLicenseClass_DrawItem(object sender, DrawItemEventArgs e)
         {
-            clsUtility.DrawComboBoxItems(sender, e,"ClassName");
+            clsGeneralUtility.DrawComboBoxItems(sender, e,"ClassName");
         }
 
         private void cbLicenseClass_DropDownClosed(object sender, EventArgs e)
@@ -240,7 +240,7 @@ namespace DVLDPresentationLayer.Core
 
                 object[] NewDetails = new object[] { LDLApplication.LDLAppID, LDLApplication.LicenseClass.ClassName,
                         clsPerson.GetNationalNumber(LDLApplication.ApplicantPersonID), clsPerson.GetFullName(LDLApplication.ApplicantPersonID),
-                        LDLApplication.ApplicationDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)),clsTest.GetTotalPassedTestsCount(LDLApplication.LDLAppID),LDLApplication.GetApplicationStatus()};
+                        LDLApplication.ApplicationDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)),clsTest.GetTotalPassedTestsCount(LDLApplication.LDLAppID),LDLApplication.GetApplicationStatus()};
 
                 if (_LDLApplication == null)
                 {

@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using Utility_Library;
-using static Utility_Library.clsUtility;
+using static Utility_Library.clsGeneralUtility;
 
 namespace DVLDPresentationLayer
 {
@@ -29,12 +29,12 @@ namespace DVLDPresentationLayer
 
                 lblApplicationID.Text = LDLApplication.ApplicationID.ToString();
                 lblStatus.Text = LDLApplication.GetApplicationStatus();
-                lblPaidFees.Text = clsUtility.GetCustomNumberFormat(LDLApplication.PaidApplicationFees, enCustomNumberFormat.NoJustZerosAfterFraction);
+                lblPaidFees.Text = clsGeneralUtility.GetCustomNumberFormat(LDLApplication.PaidApplicationFees, enCustomNumberFormat.NoJustZerosAfterFraction);
                 lblApplicationType.Text = clsApplicationType.GetApplicationTypeTitle(LDLApplication.ApplicationTypeID);
                 lblApplicantFullName.Text = clsPerson.GetFullName(LDLApplication.ApplicantPersonID);
-                lblApplicationDate.Text = LDLApplication.ApplicationDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
-                lblLastStatusDate.Text = LDLApplication.LastStatusDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
-                lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(LDLApplication.CreatedByUserID));
+                lblApplicationDate.Text = LDLApplication.ApplicationDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+                lblLastStatusDate.Text = LDLApplication.LastStatusDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+                lblUserName.Text = clsGeneralUtility.DecryptUserName(clsUser.GetUserName(LDLApplication.CreatedByUserID));
                 _PersonID = LDLApplication.ApplicantPersonID;
             }
         }

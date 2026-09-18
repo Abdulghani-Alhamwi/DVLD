@@ -612,3 +612,8 @@ SELECT TOP (10) PersonID As [Person ID], NationalNo AS [National No.],
            FORMAT(DateOfBirth,'dd/MM/yyyy') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
            FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID
            ORDER BY [Nationality] Desc 
+
+
+60) The multi line string takes more string length ,more memory and more network cost but we can use it for readability when we have a long query for a better maintainability therefore even if it takes cost -> we take instead better readability and maintainability.
+string query = @"Select..
+Where..";

@@ -7,25 +7,26 @@ namespace DVLDDataAccessLayer
 {
     public class clsLocalDrivingLicenseAppData
     {
+        private static string _PrimaryKeyColumnName = "LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID";
+
         private static string _query =
-         $@"SELECT TOP (@WantedNumOfRecords) LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
+         $@"SELECT TOP (@WantedNumOfRecords) {_PrimaryKeyColumnName} AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
            People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
-           ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , FORMAT(ApplicationDate , '{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Application Date] ,
+           ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , FORMAT(ApplicationDate , '{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Application Date] ,
            (CASE WHEN SUM(CAST(Tests.TestResult AS tinyINT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS tinyINT)) ELSE 0 END) AS [Passed Tests] ,
            (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END) AS Status
            FROM LocalDrivingLicenseApplications INNER JOIN LicenseClasses
            ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID 
            INNER JOIN Applications ON LocalDrivingLicenseApplications.ApplicationID = Applications.ApplicationID
            INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID
-           LEFT JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
+           LEFT JOIN TestAppointments ON {_PrimaryKeyColumnName} = TestAppointments.LocalDrivingLicenseApplicationID 
            LEFT JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID";
 
             private static string _GroupByQueryPart=
-            $@" GROUP BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID, LicenseClasses.ClassName,
-                People.NationalNo,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName + ' ' + People.SecondName + ' ' + People.ThirdName + ' ' + People.LastName
-                ELSE People.FirstName + ' ' + People.SecondName + ' ' + People.LastName END), FORMAT(ApplicationDate , '{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') , (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END)";
-
-        private static string _PrimaryKeyColumnName = "LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID";
+            $@" GROUP BY {_PrimaryKeyColumnName}, LicenseClasses.ClassName, People.NationalNo,
+                (CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName + ' ' + People.SecondName + ' ' + People.ThirdName + ' ' + People.LastName ELSE People.FirstName + ' ' + People.SecondName + ' ' + People.LastName END),
+                FORMAT(ApplicationDate , '{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}'),
+                (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END)";
 
         public static DataTable GetLDLApplications(byte WantedNumOfRecords, int LastLowestBroughtLDLAppID = -1)
         {
@@ -35,16 +36,13 @@ namespace DVLDDataAccessLayer
             string query = _query + _GroupByQueryPart;
 
             if (LastLowestBroughtLDLAppID == -1)
-                query += " ORDER BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID DESC";
+                query += $" ORDER BY {_PrimaryKeyColumnName} DESC";
             else
-                query += @" HAVING LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID < @LastLowestBroughtLDLAppID 
-                           ORDER BY LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID DESC";
+                query += $@" HAVING {_PrimaryKeyColumnName} < {LastLowestBroughtLDLAppID}
+                           ORDER BY {_PrimaryKeyColumnName} DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
-
-            if (LastLowestBroughtLDLAppID != -1)
-                command.Parameters.AddWithValue("@LastLowestBroughtLDLAppID", LastLowestBroughtLDLAppID);
 
             try
             {
@@ -104,8 +102,7 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
             string query = @"INSERT INTO LocalDrivingLicenseApplications VALUES
-                            (@ApplicationID,@LicenseClassID);
-                             SELECT SCOPE_IDENTITY();";
+                             (@ApplicationID,@LicenseClassID); SELECT SCOPE_IDENTITY();";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
@@ -134,9 +131,9 @@ namespace DVLDDataAccessLayer
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = @"UPDATE LocalDrivingLicenseApplications SET
-                            ApplicationID = @ApplicationID , LicenseClassID = @LicenseClassID
-                            WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID";
+            string query = $@"UPDATE LocalDrivingLicenseApplications SET
+                             ApplicationID = @ApplicationID , LicenseClassID = @LicenseClassID
+                             WHERE {_PrimaryKeyColumnName} = @LocalDrivingLicenseApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LocalDrivingLicenseApplicationID);
@@ -163,9 +160,9 @@ namespace DVLDDataAccessLayer
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = @"SELECT LocalDrivingLicenseApplications.* , LicenseClasses.ClassName FROM LocalDrivingLicenseApplications
+            string query = $@"SELECT LocalDrivingLicenseApplications.* , LicenseClasses.ClassName FROM LocalDrivingLicenseApplications
                              INNER JOIN LicenseClasses ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID
-                             WHERE LocalDrivingLicenseApplicationID = @LDLApplicationID";
+                             WHERE {_PrimaryKeyColumnName} = @LDLApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LDLApplicationID", LDLApplicationID);
@@ -202,8 +199,8 @@ namespace DVLDDataAccessLayer
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"DELETE FROM LocalDrivingLicenseApplications
-                             WHERE LocalDrivingLicenseApplicationID = @LDLApplicationID";
+            string query = $@"DELETE FROM LocalDrivingLicenseApplications
+                             WHERE {_PrimaryKeyColumnName} = @LDLApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LDLApplicationID", LDLApplicationID);
@@ -228,8 +225,8 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT ApplicationID FROM LocalDrivingLicenseApplications
-                             WHERE LocalDrivingLicenseApplicationID = @LDLApplicationID";
+            string query = $@"SELECT ApplicationID FROM LocalDrivingLicenseApplications
+                             WHERE {_PrimaryKeyColumnName} = @LDLApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LDLApplicationID", LDLApplicationID);
@@ -318,7 +315,7 @@ namespace DVLDDataAccessLayer
         public static int GetLDLApplicationID(int ApplicantPersonID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = @"SELECT LocalDrivingLicenseApplicationID FROM LocalDrivingLicenseApplications INNER JOIN Applications
+            string query = $@"SELECT {_PrimaryKeyColumnName} FROM LocalDrivingLicenseApplications INNER JOIN Applications
                              ON Applications.ApplicantPersonID = @ApplicantPersonID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -346,7 +343,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Count(LocalDrivingLicenseApplicationID) FROM LocalDrivingLicenseApplications";
+            string query = $@"SELECT Count({_PrimaryKeyColumnName}) FROM LocalDrivingLicenseApplications";
 
             SqlCommand command = new SqlCommand(query, connection);
 
@@ -375,7 +372,7 @@ namespace DVLDDataAccessLayer
             switch(SendedColumnName)
             {
                 case "L.D.L.AppID":
-                    return "LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID";
+                    return _PrimaryKeyColumnName;
 
                 case "Full Name":
                     return "CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName\r\n                             ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END";
@@ -423,7 +420,7 @@ namespace DVLDDataAccessLayer
                 || (ColumnNameToFilterBy == "Applications.ApplicationStatus" && ValueToFilterBy == "All"))
             {
                 query += _GroupByQueryPart;
-                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtLDLAppID);
+                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtLDLAppID);
             }
             else
             {
@@ -434,9 +431,9 @@ namespace DVLDDataAccessLayer
                         ValueToFilterBy = _GetStatusNumericValue(ValueToFilterBy);
                 }
 
-                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
                 query += _GroupByQueryPart;
-                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtLDLAppID);
+                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtLDLAppID);
             }
 
             return query;
@@ -492,11 +489,11 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests]
+            string query = $@"SELECT (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests]
                              FROM LocalDrivingLicenseApplications
-                             INNER JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID 
+                             INNER JOIN TestAppointments ON {_PrimaryKeyColumnName} = TestAppointments.LocalDrivingLicenseApplicationID 
                              INNER JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID
-                             WHERE LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = @LDLApplicationID";
+                             WHERE {_PrimaryKeyColumnName} = @LDLApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LDLApplicationID", LDLApplicationID);
@@ -531,7 +528,7 @@ namespace DVLDDataAccessLayer
                 || (ColumnNameToFilterBy == "Applications.ApplicationStatus" && ValueToFilterBy == "All"))
             {
                 query += _GroupByQueryPart;
-                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             else
@@ -542,9 +539,9 @@ namespace DVLDDataAccessLayer
                     ValueToFilterBy = _GetStatusNumericValue(ValueToFilterBy);
                 }
 
-                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
                 query += _GroupByQueryPart;
-                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
                 return query;
         }
@@ -552,7 +549,7 @@ namespace DVLDDataAccessLayer
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
-            return clsUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }

@@ -8,11 +8,11 @@ namespace DVLDPresentationLayer
 {
     public partial class frmApplicationTypesManagement : Form
     {
-        private clsUtility _UtilityLib;
+        private clsDgvUtilityLib _DgvUtilityLib;
         public frmApplicationTypesManagement()
         {
             InitializeComponent();
-            _UtilityLib = new clsUtility();
+            _DgvUtilityLib = new clsDgvUtilityLib();
         }
 
         private void frmManageApplicationTypes_Load(object sender, EventArgs e)
@@ -24,7 +24,7 @@ namespace DVLDPresentationLayer
 
         private void EditDGVRowData(object[] NewValues,byte DGVRowIndex)
         {
-            _UtilityLib.EditFullDataRowInDgv(dgvApplicationTypes, NewValues, DGVRowIndex);
+            _DgvUtilityLib.EditFullDataRowInDgv(dgvApplicationTypes, NewValues, DGVRowIndex);
         }
 
         private void tsmiEditApplicationType_Click(object sender, EventArgs e)

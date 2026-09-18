@@ -48,7 +48,7 @@ namespace DVLDPresentationLayer
                 this._Person = PersonInfo;
                 _SetTitles(clsPerson.enMode.Update);
             }
-            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private void _SetTitles(clsPerson.enMode Mode)
@@ -105,19 +105,19 @@ namespace DVLDPresentationLayer
         }
         private void cbFilterBy_DrawItem(object sender, DrawItemEventArgs e)
         {
-            clsUtility.DrawComboBoxItems(sender, e,"CountryName");
+            clsGeneralUtility.DrawComboBoxItems(sender, e,"CountryName");
         }
         private bool _ValidateName(object sender, CancelEventArgs e)
         {
             if ((((TextBox)sender).Text == "" || string.IsNullOrWhiteSpace(((TextBox)sender).Text)) && ((TextBox)sender).Tag.ToString() != "Third Name")
             {
-                clsUtility.EnableErrorProvider(erTextBox, (TextBox)sender, $"It is required to enter your {((TextBox)sender).Tag.ToString()}!", e);
+                clsGeneralUtility.EnableErrorProvider(erTextBox, (TextBox)sender, $"It is required to enter your {((TextBox)sender).Tag.ToString()}!", e);
                 return false;
             }
 
             else if (!(((TextBox)sender).Text.All(Char.IsLetter) || ((TextBox)sender).Text.Contains("-") || ((TextBox)sender).Text.Contains("_")))
             {
-                clsUtility.EnableErrorProvider(erTextBox, (TextBox)sender, $"{((TextBox)sender).Tag.ToString()} must contain only letters!", e);
+                clsGeneralUtility.EnableErrorProvider(erTextBox, (TextBox)sender, $"{((TextBox)sender).Tag.ToString()} must contain only letters!", e);
                 return false;
             }
 
@@ -131,7 +131,7 @@ namespace DVLDPresentationLayer
         {
             if (txtAddress.Text == "" || string.IsNullOrWhiteSpace(txtAddress.Text))
             {
-                clsUtility.EnableErrorProvider(erTextBox,txtAddress, $"It is required to enter your Address!", e);
+                clsGeneralUtility.EnableErrorProvider(erTextBox,txtAddress, $"It is required to enter your Address!", e);
                 return false;
             }
             else
@@ -153,7 +153,7 @@ namespace DVLDPresentationLayer
         {
             if (txtNationalNo.Text == "" || string.IsNullOrWhiteSpace(txtNationalNo.Text))
             {
-                clsUtility.EnableErrorProvider(erTextBox,txtNationalNo, "It is required to enter your National No!", e);
+                clsGeneralUtility.EnableErrorProvider(erTextBox,txtNationalNo, "It is required to enter your National No!", e);
                 return false;
             }
 
@@ -165,7 +165,7 @@ namespace DVLDPresentationLayer
 
                 else if (clsPerson.SearchForNationalNo(txtNationalNo.Text))
                 {
-                    clsUtility.EnableErrorProvider(erTextBox,txtNationalNo, $"National Number is used for another person!", e);
+                    clsGeneralUtility.EnableErrorProvider(erTextBox,txtNationalNo, $"National Number is used for another person!", e);
                     return false;
                 }
                 else
@@ -176,7 +176,7 @@ namespace DVLDPresentationLayer
 
             else if (clsPerson.SearchForNationalNo(txtNationalNo.Text))
             {
-                clsUtility.EnableErrorProvider(erTextBox,txtNationalNo, $"National Number is used for another person!", e);
+                clsGeneralUtility.EnableErrorProvider(erTextBox,txtNationalNo, $"National Number is used for another person!", e);
                 return false;
             }
 
@@ -193,13 +193,13 @@ namespace DVLDPresentationLayer
         {
             if (txtPhone.Text == "" || string.IsNullOrWhiteSpace(txtPhone.Text))
             {
-                clsUtility.EnableErrorProvider(erTextBox,txtPhone, "It is required to enter your Phone Number!", e);
+                clsGeneralUtility.EnableErrorProvider(erTextBox,txtPhone, "It is required to enter your Phone Number!", e);
                 return false;
             }
 
             else if (!txtPhone.Text.All(Char.IsDigit))
             {
-                clsUtility.EnableErrorProvider(erTextBox,txtPhone, "Phone Number must contains only digits!", e);
+                clsGeneralUtility.EnableErrorProvider(erTextBox,txtPhone, "Phone Number must contains only digits!", e);
                 return false;
             }
             else
@@ -248,7 +248,7 @@ namespace DVLDPresentationLayer
             if (txtEmail.Text.Contains(" ") || txtEmail.Text.Contains(",") || !(_ValidateEmailStart(Email)
             && _ValdiateEmailMiddle(Email) && _ValidateEmailEnd(Email)))
             {
-                clsUtility.EnableErrorProvider(erTextBox,txtEmail, "Invalid Email Address Format!", e);
+                clsGeneralUtility.EnableErrorProvider(erTextBox,txtEmail, "Invalid Email Address Format!", e);
                 return false;
             }
             else
@@ -268,7 +268,7 @@ namespace DVLDPresentationLayer
             DateTime MaxdateOfBirth = DateTime.Now.AddYears(-18);
 
             dtpDateOfBirth.Format = DateTimePickerFormat.Custom;
-            dtpDateOfBirth.CustomFormat = clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.NumericFormat);
+            dtpDateOfBirth.CustomFormat = clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.NumericFormat);
             dtpDateOfBirth.Value = MaxdateOfBirth;
             dtpDateOfBirth.MaxDate = MaxdateOfBirth;
             dtpDateOfBirth.MinDate = new DateTime(1935, 1, 1);

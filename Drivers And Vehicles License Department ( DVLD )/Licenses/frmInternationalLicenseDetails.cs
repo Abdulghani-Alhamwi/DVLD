@@ -9,8 +9,8 @@ namespace DVLDPresentationLayer.Licenses
         public frmInternationalLicenseDetails(int InternationalLicenseID)
         {
             InitializeComponent();
-            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
-            clsUtility.CenterControlHorizontally(this, pbLicenseView);
+            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(this, pbLicenseView);
 
             uctrlInternationalLicenseDetails.LoadInternationalLicenseInfo(InternationalLicenseID);
         }

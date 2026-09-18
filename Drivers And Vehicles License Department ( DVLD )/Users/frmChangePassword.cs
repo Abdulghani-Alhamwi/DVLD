@@ -40,16 +40,16 @@ namespace DVLDPresentationLayer
         private bool _ValidateCurrentPassword()
         {
             if(txtCurrentPassword.Text == "" || string.IsNullOrWhiteSpace(txtPasswordConfirmation.Text))
-                clsUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password cannot be empty!", null);
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password cannot be empty!", null);
 
-            else if (clsUtility.HashWithSaltPassword(txtCurrentPassword.Text, ref _Salt) == _Password)
+            else if (clsGeneralUtility.HashWithSaltPassword(txtCurrentPassword.Text, ref _Salt) == _Password)
             {
                 erTextBox.Dispose();
                 return true;
             }
 
             else
-                clsUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password is wrong!", null);
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password is wrong!", null);
 
             return false;
         }
@@ -58,7 +58,7 @@ namespace DVLDPresentationLayer
         {
             if (txtNewPassword.Text == "" || string.IsNullOrWhiteSpace(txtNewPassword.Text))
             {
-                clsUtility.EnableErrorProvider(erTextBox, txtNewPassword, "New password cannot be empty!", null);
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtNewPassword, "New password cannot be empty!", null);
                 return false;
             }            
             else
@@ -74,13 +74,13 @@ namespace DVLDPresentationLayer
 
             if (txtPasswordConfirmation.Text == "" || string.IsNullOrWhiteSpace(txtPasswordConfirmation.Text))
             {
-                clsUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation cannot be empty!", null);
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation cannot be empty!", null);
                 return false;
             }
 
             else if (txtPasswordConfirmation.Text != txtNewPassword.Text)
             {
-                clsUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation does not match password!", null);
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation does not match password!", null);
                 return false;
             }
             else
@@ -109,7 +109,7 @@ namespace DVLDPresentationLayer
             if (_ValidateCurrentPassword() && _ValidateNewPassword() && _ValidatePasswordConfirmation())
             {
                 byte[] Salt = null;
-                string NewPassword = clsUtility.HashWithSaltPassword(txtNewPassword.Text, ref Salt);
+                string NewPassword = clsGeneralUtility.HashWithSaltPassword(txtNewPassword.Text, ref Salt);
 
                 if (clsUser.ChangePassword(_UserID, NewPassword, Convert.ToBase64String(Salt)))
                 {

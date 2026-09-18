@@ -7,11 +7,11 @@ namespace DVLDPresentationLayer
 {
     public partial class frmTestTypesManagement : Form
     {
-        private clsUtility _UtilityLib;
+        private clsDgvUtilityLib _DgvUtilityLib;
         public frmTestTypesManagement()
         {
             InitializeComponent();
-            _UtilityLib = new clsUtility();
+            _DgvUtilityLib = new clsDgvUtilityLib();
         }
         private void frmManageTestTypes_Load(object sender, EventArgs e)
         {
@@ -21,7 +21,7 @@ namespace DVLDPresentationLayer
 
         private void EditDGVRowData(object[] NewValues, byte DGVRowIndex)
         {
-            _UtilityLib.EditFullDataRowInDgv(dgvTestTypes, NewValues, DGVRowIndex);
+            _DgvUtilityLib.EditFullDataRowInDgv(dgvTestTypes, NewValues, DGVRowIndex);
         }
 
         private void tsmiEditTestType_Click(object sender, EventArgs e)

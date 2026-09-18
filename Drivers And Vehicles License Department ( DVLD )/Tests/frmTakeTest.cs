@@ -24,8 +24,8 @@ namespace DVLDPresentationLayer
 
             this._AppointmentsDGVRowIndex = AppointmentsDGVRowIndex;
 
-            clsUtility.CenterControlHorizontally(gbTestAppointment, pbTestType);
-            clsUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, pbTestType);
+            clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
         }
         private void _SetInfo(clsTestAppointment Appointment,clsLocalDrivingLicenseApp LDLApp)
         {
@@ -42,7 +42,7 @@ namespace DVLDPresentationLayer
                 lblApplicantFullName.Text = clsPerson.GetFullName(LDLApp.ApplicantPersonID);
             }
 
-            lblDate.Text = Appointment.AppointmentDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.NumericFormat));
+            lblDate.Text = Appointment.AppointmentDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.NumericFormat));
             lblTime.Text = Appointment.AppointmentDate.ToShortTimeString();
 
             lblTrialNumber.Text = clsTestAppointment.GetTotalAppointmentsCount(_LDLAppID,1).ToString();

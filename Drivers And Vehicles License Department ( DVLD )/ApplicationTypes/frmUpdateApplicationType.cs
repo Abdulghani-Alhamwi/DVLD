@@ -38,20 +38,20 @@ namespace DVLDPresentationLayer
             else
             {
                 txtBox.ReadOnly = true;
-                clsUtility.EnableErrorProvider(erControl, txtBox, "You can enter only digits!", _CancelArgs);
+                clsGeneralUtility.EnableErrorProvider(erControl, txtBox, "You can enter only digits!", _CancelArgs);
             }
         }
         private bool _ValidateData()
         {
             if (txtTitle.Text == "" || String.IsNullOrWhiteSpace(txtTitle.Text))
             {
-                clsUtility.EnableErrorProvider(ertxtBox, txtTitle, "Title cannot be empty!", null);
+                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtTitle, "Title cannot be empty!", null);
                 return false;
             }
 
             else if (txtFees.Text == "" || String.IsNullOrWhiteSpace(txtFees.Text))
             {
-                clsUtility.EnableErrorProvider(ertxtBox, txtFees, "Application Fees cannot be empty!", null);
+                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtFees, "Application Fees cannot be empty!", null);
                 return false;
             }
             else
@@ -74,7 +74,7 @@ namespace DVLDPresentationLayer
             {
                 if (clsApplicationType.UpdateApplicationType(_ApplicationTypeID, txtTitle.Text, Convert.ToDecimal(txtFees.Text)))
                 {
-                    object[] NewValues = new object[] { _ApplicationTypeID, txtTitle.Text, clsUtility.GetCustomNumberFormat(Convert.ToSingle(txtFees.Text), clsUtility.enCustomNumberFormat.With4ZerosAfterFraction)};
+                    object[] NewValues = new object[] { _ApplicationTypeID, txtTitle.Text, clsGeneralUtility.GetCustomNumberFormat(Convert.ToSingle(txtFees.Text), clsGeneralUtility.enCustomNumberFormat.With4ZerosAfterFraction)};
                     AfterUpdatingInfo?.Invoke(NewValues, _AppTypesDGVRowIndex);
 
                     MessageBox.Show("Application Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

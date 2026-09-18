@@ -445,7 +445,6 @@
             this.IsMdiContainer = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmMainScreen";
-            this.ShowInTaskbar = false;
             this.Text = "Driver And Vehicle Licenses Department";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMainScreen_FormClosing);

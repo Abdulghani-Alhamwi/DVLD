@@ -9,7 +9,7 @@ namespace DVLDPresentationLayer.Controls
         public frmApplicationDetails(int LDLApplicationID)
         {
             InitializeComponent();
-            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
             uctrlDLApplicationInfo.LoadLDLAppInfo(LDLApplicationID);
         }
 

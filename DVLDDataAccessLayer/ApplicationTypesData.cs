@@ -6,14 +6,16 @@ namespace DVLDDataAccessLayer
 {
     public class clsApplicationTypesData
     {
+        private static string _PrimaryKeyColumnName = "ApplicationTypeID";
+
         public static DataTable GetApplicationTypes()
         {
             DataTable dtApplicationTypes = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT ApplicationTypeID AS ID,ApplicationTypeTitle AS Title,
-                             ApplicationFees AS Fees FROM ApplicationTypes";
+            string query = $@"SELECT {_PrimaryKeyColumnName} AS ID, ApplicationTypeTitle AS Title,
+                              ApplicationFees AS Fees FROM ApplicationTypes";
 
             SqlCommand command = new SqlCommand(query,connection);
 
@@ -42,11 +44,10 @@ namespace DVLDDataAccessLayer
         public static bool UpdateApplicationType(byte ApplicationTypeID , string ApplicationTypeTitle,decimal ApplicationTypeFees)
         {
             byte AffectedRows = 0;
-
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"UPDATE ApplicationTypes SET ApplicationTypeTitle = @Title,ApplicationFees = @Fees
-                             WHERE ApplicationTypeID = @ID";
+            string query = $@"UPDATE ApplicationTypes SET ApplicationTypeTitle = @Title,
+                              ApplicationFees = @Fees WHERE {_PrimaryKeyColumnName} = @ID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ID", ApplicationTypeID);
@@ -74,8 +75,8 @@ namespace DVLDDataAccessLayer
             decimal ApplicationTypeFees = -1;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT ApplicationFees FROM ApplicationTypes
-                             WHERE ApplicationTypeID = @ApplicationTypeID";
+            string query = $@"SELECT ApplicationFees FROM ApplicationTypes
+                              WHERE {_PrimaryKeyColumnName} = @ApplicationTypeID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
@@ -103,8 +104,8 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT ApplicationTypeTitle FROM ApplicationTypes
-                             WHERE ApplicationTypeID = @ApplicationTypeID";
+            string query = $@"SELECT ApplicationTypeTitle FROM ApplicationTypes
+                              WHERE {_PrimaryKeyColumnName} = @ApplicationTypeID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);

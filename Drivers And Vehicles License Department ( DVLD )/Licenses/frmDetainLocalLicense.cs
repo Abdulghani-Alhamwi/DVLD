@@ -14,13 +14,13 @@ namespace DVLDPresentationLayer.Controls
         {
             InitializeComponent();
             _ShowBasicInfo();
-            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private void _ShowBasicInfo()
         {
-            lblDetainedDate.Text = DateTime.Now.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
-            lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(clsGlobalSettings.CurrentUserID));
+            lblDetainedDate.Text = DateTime.Now.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblUserName.Text = clsGeneralUtility.DecryptUserName(clsUser.GetUserName(clsGlobalSettings.CurrentUserID));
         }
 
         private void _DetainLicense()
@@ -35,7 +35,7 @@ namespace DVLDPresentationLayer.Controls
                     lblDetainID.Text = DetainedLicense.DetainID.ToString();
                     MessageBox.Show($"License Detained Successfully With ID = {DetainedLicense.DetainID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    object[] DetainedLicenseInfo = new object[] { DetainedLicense.DetainID , DetainedLicense.LocalLicenseID, DetainedLicense.DetainDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat))
+                    object[] DetainedLicenseInfo = new object[] { DetainedLicense.DetainID , DetainedLicense.LocalLicenseID, DetainedLicense.DetainDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat))
                         , DetainedLicense.IsReleased,DetainedLicense.FineFees,null,clsPerson.GetNationalNumber(clsDriver.GetDriverPersonID(clsLocalLicense.GetDriverID(DetainedLicense.LocalLicenseID)))
                         ,clsPerson.GetFullName(clsDriver.GetDriverPersonID(clsLocalLicense.GetDriverID(DetainedLicense.LocalLicenseID))), null};
 

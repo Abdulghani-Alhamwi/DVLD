@@ -6,6 +6,8 @@ namespace DVLDDataAccessLayer
 {
     public class clsCountriesData
     {
+        private static readonly string _PrimaryKeyColumnName = "CountryID";
+
         public static DataTable GetAllCountries()
         {
             DataTable dtCountries = null;
@@ -44,8 +46,7 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT CountryID FROM Countries
-                             WHERE CountryName = @CountryName";
+            string query = $@"SELECT {_PrimaryKeyColumnName} FROM Countries WHERE CountryName = @CountryName";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@CountryName", CountryName);
@@ -75,8 +76,7 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT CountryName FROM Countries
-                             WHERE CountryID = @CountryID";
+            string query = $@"SELECT CountryName FROM Countries WHERE {_PrimaryKeyColumnName} = @CountryID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@CountryID", NationalityCountryID);

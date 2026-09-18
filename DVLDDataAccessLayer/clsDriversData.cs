@@ -7,17 +7,20 @@ namespace DVLDDataAccessLayer
 {
     public class clsDriversData
     {
+        private static readonly string _PrimaryKeyColumnName = "Drivers.DriverID";
+
         private static string _query =
-         $@"SELECT TOP (@WantedNumOfRecords) Drivers.DriverID AS [Driver ID] , Drivers.PersonID AS [Person ID] ,People.NationalNo AS [National No.],
-           People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],Format(CreatedDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Date Created],
-           SUM(CAST(LocalLicenses.IsActive AS TINYINT)) + (CASE WHEN InternationalLicenses.IsActive IS NULL THEN 0 ELSE 1 END) AS [Active Licenses]
-           From Drivers INNER JOIN People ON Drivers.PersonID = People.PersonID INNER JOIN LocalLicenses ON Drivers.DriverID = LocalLicenses.DriverID
-           LEFT JOIN InternationalLicenses ON Drivers.DriverID = InternationalLicenses.DriverID";
+         $@"SELECT TOP (@WantedNumOfRecords) {_PrimaryKeyColumnName} AS [Driver ID] , Drivers.PersonID AS [Person ID] ,People.NationalNo AS [National No.],
+            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],Format(CreatedDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Date Created],
+            SUM(CAST(LocalLicenses.IsActive AS TINYINT)) + (CASE WHEN InternationalLicenses.IsActive IS NULL THEN 0 ELSE 1 END) AS [Active Licenses]
+            From Drivers INNER JOIN People ON Drivers.PersonID = People.PersonID INNER JOIN LocalLicenses ON {_PrimaryKeyColumnName} = LocalLicenses.DriverID
+            LEFT JOIN InternationalLicenses ON {_PrimaryKeyColumnName} = InternationalLicenses.DriverID";
 
         private static string _groupByPartOfQuery =
-         $@" GROUP BY Drivers.DriverID,Drivers.PersonID,People.NationalNo,
-           People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
-           Format(CreatedDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}'),InternationalLicenses.IsActive ORDER BY Drivers.DriverID DESC";
+         $@" GROUP BY {_PrimaryKeyColumnName}, Drivers.PersonID, People.NationalNo,
+            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
+            Format(CreatedDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}'), InternationalLicenses.IsActive
+            ORDER BY {_PrimaryKeyColumnName} DESC";
 
         public static DataTable GetDriversInfo(byte WantedNumOfRecords, int LastLowestBroughtDriverID = -1)
         {
@@ -27,16 +30,13 @@ namespace DVLDDataAccessLayer
             string query = _query;
 
             if (LastLowestBroughtDriverID != -1)
-                query += " WHERE DriverID < @LastLowestBroughtDriverID" + _groupByPartOfQuery;
+                query += $" WHERE {_PrimaryKeyColumnName} < {LastLowestBroughtDriverID}" + _groupByPartOfQuery;
 
             else
                 query += _groupByPartOfQuery;
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
-
-            if (LastLowestBroughtDriverID != -1) 
-            command.Parameters.AddWithValue("@LastLowestBroughtDriverID", LastLowestBroughtDriverID);
 
             try
             {
@@ -122,7 +122,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT DriverID FROM Drivers WHERE PersonID = @PersonID";
+            string query = $@"SELECT {_PrimaryKeyColumnName} FROM Drivers WHERE PersonID = @PersonID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@PersonID", PersonID);
@@ -149,7 +149,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT PersonID FROM Drivers WHERE DriverID = @DriverID";
+            string query = $@"SELECT PersonID FROM Drivers WHERE {_PrimaryKeyColumnName} = @DriverID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@DriverID", DriverID);
@@ -176,7 +176,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Count(DriverID) FROM Drivers";
+            string query = $@"SELECT Count({_PrimaryKeyColumnName}) FROM Drivers";
 
             SqlCommand command = new SqlCommand(query, connection);
 
@@ -205,7 +205,7 @@ namespace DVLDDataAccessLayer
             switch (SendedColumnName)
             {
                 case "Driver ID":
-                    return "Drivers.DriverID";
+                    return _PrimaryKeyColumnName;
 
                 case "Person ID":
                     return "Drivers.PersonID";
@@ -221,14 +221,14 @@ namespace DVLDDataAccessLayer
             }
         }
 
-        private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilter, string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtDriverID = -1)
+        private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtDriverID = -1)
         {
-            string query = clsDriversData._query;
+            string query = _query;
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
                 if (LastLowestBroughtDriverID != -1)
-                    query += " WHERE DriverID < @LastLowestBroughtDriverID" + _groupByPartOfQuery;
+                    query += $" WHERE {_PrimaryKeyColumnName} < {LastLowestBroughtDriverID}" + _groupByPartOfQuery;
 
                 else
                     query += _groupByPartOfQuery;
@@ -236,15 +236,12 @@ namespace DVLDDataAccessLayer
                 return query;
             }
 
-                ColumnNameToFilter = _GetOriginalColumnName(ColumnNameToFilter);
+            ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
 
-            if (WildChar == null)
-                query += $" WHERE {ColumnNameToFilter} = @Value";
-            else
-                query += $" WHERE {ColumnNameToFilter} LIKE @Value + @WildChar";
+            query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
 
             if (LastLowestBroughtDriverID != -1)
-                query += " AND DriverID < @LastLowestBroughtDriverID" + _groupByPartOfQuery;
+                query += $" AND {_PrimaryKeyColumnName} < {LastLowestBroughtDriverID}" + _groupByPartOfQuery;
 
             else
                 query += _groupByPartOfQuery;
@@ -268,9 +265,6 @@ namespace DVLDDataAccessLayer
 
             if (WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
-
-            if(LastLowestBroughtDriverID!=-1)
-                command.Parameters.AddWithValue("@LastLowestBroughtDriverID", LastLowestBroughtDriverID);
 
             try
             {
@@ -302,7 +296,7 @@ namespace DVLDDataAccessLayer
             LicenseID = -1;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT LicenseID FROM LocalLicenses WHERE DriverID = @DriverID
+            string query = $@"SELECT LicenseID FROM LocalLicenses WHERE DriverID = @DriverID
                              AND LicenseClassID = @LicenseClassID";
 
             SqlCommand command = new SqlCommand(query, connection);

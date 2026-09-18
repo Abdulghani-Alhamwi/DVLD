@@ -57,7 +57,7 @@ namespace DVLDPresentationLayer.Licenses
 
         private void _InitilizeFormData(int LocalLicenseID = -1)
           {
-            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
             
             if (LocalLicenseID != -1)
                {
@@ -101,10 +101,10 @@ namespace DVLDPresentationLayer.Licenses
         private void _ShowDetainInfo()
         {
             lblDetainID.Text = _DetainInfo.DetainID.ToString();
-            lblDetainedDate.Text = _DetainInfo.DetainDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateAppreviatedMonthName));
-            lblUserName.Text = clsUtility.DecryptUserName(clsUser.GetUserName(_DetainInfo.CreatedByUserID));
-            lblApplicationFees.Text = clsUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReleaseDetainedLicense),clsUtility.enCustomNumberFormat.NoJustZerosAfterFraction);
-            lblFineFees.Text = clsUtility.GetCustomNumberFormat(_DetainInfo.FineFees, clsUtility.enCustomNumberFormat.NoJustZerosAfterFraction);
+            lblDetainedDate.Text = _DetainInfo.DetainDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblUserName.Text = clsGeneralUtility.DecryptUserName(clsUser.GetUserName(_DetainInfo.CreatedByUserID));
+            lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReleaseDetainedLicense),clsGeneralUtility.enCustomNumberFormat.NoJustZerosAfterFraction);
+            lblFineFees.Text = clsGeneralUtility.GetCustomNumberFormat(_DetainInfo.FineFees, clsGeneralUtility.enCustomNumberFormat.NoJustZerosAfterFraction);
             lblTotalFees.Text = (Convert.ToDecimal(lblApplicationFees.Text) + Convert.ToDecimal(lblFineFees.Text)).ToString();
         }
 

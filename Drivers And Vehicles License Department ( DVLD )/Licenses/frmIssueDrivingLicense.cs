@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using Utility_Library;
-using static Utility_Library.clsUtility;
+using static Utility_Library.clsGeneralUtility;
 
 namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
 {
@@ -17,7 +17,7 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
         {
             InitializeComponent();
             uctrlDLApplicationInfo.LoadLDLAppInfo(LDLAppID);
-            lblLicenseFees.Text = clsUtility.GetCustomNumberFormat(clsLicenseClass.GetLicenseClassFees(uctrlDLApplicationInfo.LDLApplication.LicenseClass.ID),
+            lblLicenseFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsLicenseClass.GetLicenseClassFees(uctrlDLApplicationInfo.LDLApplication.LicenseClass.ID),
                 enCustomNumberFormat.NoJustZerosAfterFraction);
             _LDLAppDGVRowIndex = DGVRowIndex;
         }

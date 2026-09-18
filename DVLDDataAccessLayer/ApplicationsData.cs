@@ -5,13 +5,14 @@ namespace DVLDDataAccessLayer
 {
     public class clsApplicationsData
     {
+        private static string _PrimaryKeyColumnName = "ApplicationID";
+
         public static int AddApplication(int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, short ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
         {
             int ApplicationID = -1;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"INSERT INTO Applications VALUES
-                            (@ApplicantPersonID,@ApplicationDate,@ApplicationTypeID,
+            string query = @"INSERT INTO Applications VALUES (@ApplicantPersonID, @ApplicationDate, @ApplicationTypeID,
                              @ApplicationStatus,@LastStatusDate,@PaidApplicationFees,@CreatedByUserID);
                              SELECT SCOPE_IDENTITY();";
 
@@ -47,10 +48,10 @@ namespace DVLDDataAccessLayer
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"UPDATE Applications SET
-                             ApplicantPersonID = @ApplicantPersonID,ApplicationDate = @ApplicationDate,ApplicationTypeID = @ApplicationTypeID,
-                             ApplicationStatus = @ApplicationStatus,LastStatusDate = @LastStatusDate,PaidFees = @PaidApplicationFees,CreatedByUserID = @CreatedByUserID
-                             WHERE ApplicationID = @ApplicationID";
+            string query =
+             $@"UPDATE Applications SET ApplicantPersonID = @ApplicantPersonID, ApplicationDate = @ApplicationDate,
+               ApplicationTypeID = @ApplicationTypeID, ApplicationStatus = @ApplicationStatus, LastStatusDate = @LastStatusDate,
+               PaidFees = @PaidApplicationFees, CreatedByUserID = @CreatedByUserID WHERE {_PrimaryKeyColumnName} = @ApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicationID",ApplicationID);
@@ -82,8 +83,8 @@ namespace DVLDDataAccessLayer
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT * FROM Applications
-                             WHERE ApplicationID = @ApplicationID";
+            string query = $@"SELECT * FROM Applications WHERE {_PrimaryKeyColumnName} = @ApplicationID";
+
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
 
@@ -122,8 +123,7 @@ namespace DVLDDataAccessLayer
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"DELETE FROM Applications
-                             WHERE ApplicationID = @ApplicationID";
+            string query = $@"DELETE FROM Applications WHERE {_PrimaryKeyColumnName} = @ApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
@@ -149,8 +149,8 @@ namespace DVLDDataAccessLayer
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"UPDATE Applications SET ApplicationStatus = @TheNewStatus
-                             WHERE ApplicationID = @ApplicationID";
+            string query = $@"UPDATE Applications SET ApplicationStatus = @TheNewStatus
+                             WHERE {_PrimaryKeyColumnName} = @ApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicationID", ApplicationID);

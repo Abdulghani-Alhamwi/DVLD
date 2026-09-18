@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using DVLDBusinessLayer;
 using DVLDPresentationLayer.Properties;
 using Utility_Library;
-using static Utility_Library.clsUtility;
+using static Utility_Library.clsGeneralUtility;
 
 namespace DVLDPresentationLayer
 {
@@ -57,8 +57,8 @@ namespace DVLDPresentationLayer
             }
             lblNote.Visible = true;
 
-            clsUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
-            clsUtility.CenterControlHorizontally(gbTestAppointment, lblNote);
+            clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, lblNote);
 
             btnSave.Enabled = false;
             dtpTestAppointmentDate.Enabled = false;
@@ -69,7 +69,7 @@ namespace DVLDPresentationLayer
         {
             InitializeComponent();
             dtpTestAppointmentDate.Format = DateTimePickerFormat.Custom;
-            dtpTestAppointmentDate.CustomFormat = clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.NumericFormat);
+            dtpTestAppointmentDate.CustomFormat = clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.NumericFormat);
 
             _TestType = TestType;
             _TestTrial = TestTrial;
@@ -110,7 +110,7 @@ namespace DVLDPresentationLayer
         {
             ShowInfoByTestType(gbTestAppointment,pbTestType,lblTestFees,TestType);
 
-            clsUtility.CenterControlHorizontally(gbTestAppointment, pbTestType);
+            clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, pbTestType);
 
             lblLDLApplicationID.Text = _LDLApp.LDLAppID.ToString();
 
@@ -121,9 +121,9 @@ namespace DVLDPresentationLayer
             {
                 gbReTakeTestInfo.Enabled = true;
                 lblFormBigTitle.Text = "Schedule Retake Test";
-                lblRAppFees.Text =  clsUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReTakeTest),
+                lblRAppFees.Text =  clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReTakeTest),
                     enCustomNumberFormat.NoJustZerosAfterFraction);
-                lblTotalFees.Text = clsUtility.GetCustomNumberFormat(Convert.ToDecimal(lblTestFees.Text) + Convert.ToDecimal(lblRAppFees.Text),
+                lblTotalFees.Text = clsGeneralUtility.GetCustomNumberFormat(Convert.ToDecimal(lblTestFees.Text) + Convert.ToDecimal(lblRAppFees.Text),
                     enCustomNumberFormat.NoJustZerosAfterFraction);
             }
             else
@@ -138,7 +138,7 @@ namespace DVLDPresentationLayer
                 dtpTestAppointmentDate.Value = _Appointment.AppointmentDate;    
                 mtxtAppointmentTime.Text = _Appointment.AppointmentDate.ToString("hh:mm tt");
             }
-            clsUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
             lblTrialNumber.Text = clsTestAppointment.GetTotalAppointmentsCount(_LDLApp.LDLAppID,1).ToString();
         }
 
@@ -149,19 +149,19 @@ namespace DVLDPresentationLayer
                 case clsTestType.enTestType.VisionTest:
                     gbContentContainer.Text = "Vision Test";
                     pbTestType.Image = Resources.Vision_512;
-                    lblFees.Text = clsUtility.GetCustomNumberFormat(clsTestType.GetTestTypeFees(1), enCustomNumberFormat.NoJustZerosAfterFraction);
+                    lblFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsTestType.GetTestTypeFees(1), enCustomNumberFormat.NoJustZerosAfterFraction);
                     break;
 
                 case clsTestType.enTestType.WrittenTest:
                     gbContentContainer.Text = "Written Test";
                     pbTestType.Image =Resources.Written_Test_512;
-                    lblFees.Text = clsUtility.GetCustomNumberFormat(clsTestType.GetTestTypeFees(2), enCustomNumberFormat.NoJustZerosAfterFraction);
+                    lblFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsTestType.GetTestTypeFees(2), enCustomNumberFormat.NoJustZerosAfterFraction);
                     break;
 
                 case clsTestType.enTestType.StreetTest:
                     gbContentContainer.Text = "Street Test";
                     pbTestType.Image = Resources.driving_test_512;
-                    lblFees.Text = clsUtility.GetCustomNumberFormat(clsTestType.GetTestTypeFees(3), enCustomNumberFormat.NoJustZerosAfterFraction);
+                    lblFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsTestType.GetTestTypeFees(3), enCustomNumberFormat.NoJustZerosAfterFraction);
                     break;
             }
         }
@@ -247,11 +247,11 @@ namespace DVLDPresentationLayer
 
                 if (AfterSchedulingAppointment != null)
                 {
-                    object[] NewDetails = new object[] { _Appointment.TestAppointmentID, _Appointment.AppointmentDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)), _Appointment.PaidFees, _Appointment.IsLocked };
+                    object[] NewDetails = new object[] { _Appointment.TestAppointmentID, _Appointment.AppointmentDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)), _Appointment.PaidFees, _Appointment.IsLocked };
                     AfterSchedulingAppointment?.Invoke(NewDetails);
                 }
 
-                AfterEditingAppointment?.Invoke(_Appointment.AppointmentDate.ToString(clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)), _AppointmentsDGVRowIndex);
+                AfterEditingAppointment?.Invoke(_Appointment.AppointmentDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)), _AppointmentsDGVRowIndex);
 
                 btnSave.Enabled = false;
             }
@@ -303,10 +303,10 @@ namespace DVLDPresentationLayer
         private void mtxtAppointmentTime_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if(mtxtAppointmentTime.Text.Substring(0,1) == " ")
-                clsUtility.EnableErrorProvider(erTime, mtxtAppointmentTime, "Time cannot be empty!", e);
+                clsGeneralUtility.EnableErrorProvider(erTime, mtxtAppointmentTime, "Time cannot be empty!", e);
 
             else if (!DateTime.TryParse(mtxtAppointmentTime.Text, out DateTime dt))
-                clsUtility.EnableErrorProvider(erTime, mtxtAppointmentTime, "Invalid time format , format must be like : 10:00 AM", e);
+                clsGeneralUtility.EnableErrorProvider(erTime, mtxtAppointmentTime, "Invalid time format , format must be like : 10:00 AM", e);
 
             else
                 erTime.Dispose();

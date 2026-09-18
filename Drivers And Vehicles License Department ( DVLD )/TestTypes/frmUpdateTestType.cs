@@ -40,13 +40,13 @@ namespace DVLDPresentationLayer
             bool IsValidData = false;
 
             if (txtTitle.Text == "" || string.IsNullOrWhiteSpace(txtTitle.Text))
-                clsUtility.EnableErrorProvider(ertxtBox, txtTitle, "Title cannot be empty!", null);
+                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtTitle, "Title cannot be empty!", null);
 
             else if (txtDescription.Text == "" || string.IsNullOrWhiteSpace(txtDescription.Text))
-                clsUtility.EnableErrorProvider(ertxtBox, txtTitle, "Description cannot be empty!", null);
+                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtTitle, "Description cannot be empty!", null);
 
             else if (txtFees.Text == "")
-                clsUtility.EnableErrorProvider(ertxtBox, txtTitle, "Fees cannot be empty!", null);
+                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtTitle, "Fees cannot be empty!", null);
 
             else
             {
@@ -73,7 +73,7 @@ namespace DVLDPresentationLayer
             {
                 if (clsTestType.UpdateTestType(_ApplicationTypeID, txtTitle.Text, txtDescription.Text, Convert.ToDecimal(txtFees.Text)))
                 {
-                    object[] NewValues = new object[] { _ApplicationTypeID, txtTitle.Text, txtDescription.Text, clsUtility.GetCustomNumberFormat(Convert.ToSingle(txtFees.Text), clsUtility.enCustomNumberFormat.With4ZerosAfterFraction) };
+                    object[] NewValues = new object[] { _ApplicationTypeID, txtTitle.Text, txtDescription.Text, clsGeneralUtility.GetCustomNumberFormat(Convert.ToSingle(txtFees.Text), clsGeneralUtility.enCustomNumberFormat.With4ZerosAfterFraction) };
                     AfterUpdatingInfo?.Invoke(NewValues, _TestsTypesDGVRowIndex);
 
                     MessageBox.Show("Test Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

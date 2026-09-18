@@ -6,6 +6,8 @@ namespace DVLDDataAccessLayer
 {
     public class clsLicenseClassesData
     {
+        private static readonly string _PrimaryKeyColumnName = "LicenseClassID";
+
         public static DataTable GetLicenseClassesNames()
         {
             DataTable dtLicenseClassesNames = null;
@@ -43,8 +45,7 @@ namespace DVLDDataAccessLayer
             byte LicenseClassID = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT LicenseClassID FROM LicenseClasses
-                             WHERE ClassName = @ClassName";
+            string query = $@"SELECT {_PrimaryKeyColumnName} FROM LicenseClasses WHERE ClassName = @ClassName";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ClassName", LicenseClassName);
@@ -73,8 +74,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT ClassName FROM LicenseClasses
-                             WHERE LicenseClassID = @LicenseClassID";
+            string query = $@"SELECT ClassName FROM LicenseClasses WHERE {_PrimaryKeyColumnName} = @LicenseClassID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
@@ -103,8 +103,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT DefaultValidityLength FROM LicenseClasses
-                             WHERE LicenseClassID = @LicenseClassID";
+            string query = $@"SELECT DefaultValidityLength FROM LicenseClasses WHERE {_PrimaryKeyColumnName} = @LicenseClassID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
@@ -133,8 +132,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT ClassFees FROM LicenseClasses
-                             WHERE LicenseClassID = @LicenseClassID";
+            string query = $@"SELECT ClassFees FROM LicenseClasses WHERE {_PrimaryKeyColumnName} = @LicenseClassID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
@@ -162,8 +160,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT MinimumAllowedAge FROM LicenseClasses
-                             WHERE LicenseClassID = @LicenseClassID";
+            string query = $@"SELECT MinimumAllowedAge FROM LicenseClasses WHERE {_PrimaryKeyColumnName} = @LicenseClassID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);

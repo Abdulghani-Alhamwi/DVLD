@@ -7,14 +7,15 @@ namespace DVLDDataAccessLayer
 {
     public class clsPeopleData
     {
+        private static readonly string _PrimaryKeyColumnName = "PersonID";
+
         private static string _query =
-         $@"SELECT TOP (@WantedNumOfRecords) PersonID As [Person ID], NationalNo AS [National No.],
+         $@"SELECT TOP (@WantedNumOfRecords) {_PrimaryKeyColumnName} As [Person ID], NationalNo AS [National No.],
            FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
            Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-           FORMAT(DateOfBirth,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.NumericFormat)}') AS [Date Of Birth] ,Countries.CountryName AS Nationality, Phone, Email
-           FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
+           FORMAT(DateOfBirth,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.NumericFormat)}') AS [Date Of Birth],
+           Countries.CountryName AS Nationality, Phone, Email FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
 
-        private static string _PrimaryKeyColumnName = "PersonID";
         public static DataTable GetPeopleInfo(byte WantedNumOfRecords,int LastLowestbroughtPersonID = -1)
         {
             DataTable dtPeople = null;
@@ -24,15 +25,12 @@ namespace DVLDDataAccessLayer
             string query = _query;
             
             if (LastLowestbroughtPersonID != -1)
-                query += @" WHERE PersonID < @LastLowestbroughtPersonID";
+                query += $@" WHERE {_PrimaryKeyColumnName} < {LastLowestbroughtPersonID}";
 
-                query += " ORDER BY PersonID DESC";
+                query += $" ORDER BY {_PrimaryKeyColumnName} DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
-
-            if(LastLowestbroughtPersonID != -1)
-                command.Parameters.AddWithValue("@LastLowestbroughtPersonID", LastLowestbroughtPersonID);
 
             try
             {
@@ -61,7 +59,6 @@ namespace DVLDDataAccessLayer
         public static DataTable GetColumnsNamesForView()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-
             string query = _query;
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -94,9 +91,8 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"INSERT INTO People VALUES (@NationalNo , @FirstName ,
-                             @SecondName , @ThirdName , @LastName , @DateOfBirth , @Gendor,
-                             @Address , @Phone , @Email , @NationalityCountryID, @ImagePath);
+            string query = @"INSERT INTO People VALUES (@NationalNo, @FirstName, @SecondName, @ThirdName,
+                             @LastName, @DateOfBirth, @Gendor, @Address, @Phone, @Email, @NationalityCountryID, @ImagePath);
                              SELECT SCOPE_IDENTITY()";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -150,11 +146,11 @@ namespace DVLDDataAccessLayer
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = @"UPDATE PEOPLE SET NationalNo = @NationalNo ,FirstName = @FirstName ,SecondName = @SecondName ,
+            string query = $@"UPDATE PEOPLE SET NationalNo = @NationalNo ,FirstName = @FirstName ,SecondName = @SecondName ,
                              ThirdName = @ThirdName ,LastName = @LastName ,DateOfBirth = @DateOfBirth ,
                              Gendor = @Gendor ,Address = @Address ,Phone = @Phone ,Email = @Email ,
                              NationalityCountryID = @NationalityCountryID ,ImagePath = @ImagePath 
-                             WHERE PersonID = @PersonID";
+                             WHERE {_PrimaryKeyColumnName} = @PersonID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@PersonID", PersonID);
@@ -206,8 +202,7 @@ namespace DVLDDataAccessLayer
             byte AffectedRows = 0;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = @"DELETE FROM People
-                           WHERE PersonID = @PersonID";
+            string query = $@"DELETE FROM People WHERE {_PrimaryKeyColumnName} = @PersonID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@PersonID", PersonID);
@@ -231,10 +226,9 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Found = 1 FROM People
-                             WHERE NationalNo = @NationalNo";
-            SqlCommand command = new SqlCommand(query, connection);
+            string query = @"SELECT Found = 1 FROM People WHERE NationalNo = @NationalNo";
 
+            SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@NationalNo", NationalNo);
 
             try
@@ -266,9 +260,9 @@ namespace DVLDDataAccessLayer
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT NationalNo,FirstName, SecondName,ThirdName, LastName, Gendor, DateOfBirth,
+            string query = $@"SELECT NationalNo,FirstName, SecondName,ThirdName, LastName, Gendor, DateOfBirth,
                              Address, Phone, Email , NationalityCountryID ,ImagePath FROM People
-                             WHERE PersonID = @PersonID";
+                             WHERE {_PrimaryKeyColumnName} = @PersonID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@PersonID",PersonID);
@@ -328,7 +322,7 @@ namespace DVLDDataAccessLayer
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT PersonID,FirstName,SecondName,ThirdName,LastName,Gendor,DateOfBirth,
+            string query = $@"SELECT {_PrimaryKeyColumnName},FirstName,SecondName,ThirdName,LastName,Gendor,DateOfBirth,
                              Address,Phone,Email,NationalityCountryID,ImagePath FROM People
                              WHERE NationalNo = @NationalNo";
 
@@ -382,7 +376,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Count(PersonID) FROM People";
+            string query = $@"SELECT Count({_PrimaryKeyColumnName}) FROM People";
 
             SqlCommand command = new SqlCommand(query, connection);
 
@@ -502,7 +496,7 @@ namespace DVLDDataAccessLayer
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtPersonID);
+                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtPersonID);
                 return query;
             }
 
@@ -516,9 +510,9 @@ namespace DVLDDataAccessLayer
                 }
             }
 
-            query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+            query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
 
-            query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection,true, LastLowestbroughtPersonID);
+            query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection,true, LastLowestbroughtPersonID);
 
             return query;
         }
@@ -570,8 +564,8 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT FirstName + ' ' + SecondName + ' ' + CASE WHEN ThirdName IS NULL THEN LastName ELSE ThirdName + ' ' + LastName END
-                             FROM People WHERE PersonID = @PersonID";
+            string query = $@"SELECT FirstName + ' ' + SecondName + ' ' + CASE WHEN ThirdName IS NULL THEN LastName ELSE ThirdName + ' ' + LastName END
+                             FROM People WHERE {_PrimaryKeyColumnName} = @PersonID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@PersonID", PersonID);
@@ -599,7 +593,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = "SELECT NationalNo FROM People WHERE PersonID = @PersonID";
+            string query = $"SELECT NationalNo FROM People WHERE {_PrimaryKeyColumnName} = @PersonID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@PersonID", PersonID);
@@ -627,7 +621,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = "SELECT PersonID FROM People WHERE NationalNo = @NationalNo";
+            string query = $"SELECT {_PrimaryKeyColumnName} FROM People WHERE NationalNo = @NationalNo";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@NationalNo", NationalNo);
@@ -660,7 +654,7 @@ namespace DVLDDataAccessLayer
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             else
@@ -670,8 +664,8 @@ namespace DVLDDataAccessLayer
                     ValueToFilterBy = _GetValueForGendorColumn(ValueToFilterBy);
                 }
 
-                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             return query;
@@ -680,7 +674,7 @@ namespace DVLDDataAccessLayer
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
-            return clsUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }

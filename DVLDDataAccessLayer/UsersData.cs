@@ -7,12 +7,13 @@ namespace DVLDDataAccessLayer
 {
     public class clsUsersData
     {
+        private static readonly string _PrimaryKeyColumnName = "UserID"; 
+
         private static string _query =
-         @"SELECT TOP (@WantedNumOfRecords) UserID AS [User ID],Users.PersonID AS [Person ID] ,
+         $@"SELECT TOP (@WantedNumOfRecords) {_PrimaryKeyColumnName} AS [User ID],Users.PersonID AS [Person ID] ,
            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],
            UserName,IsActive AS [Is Active] From Users INNER JOIN People ON Users.PersonID = People.PersonID";
 
-        private static string _PrimaryKeyColumnName = "UserID";
         public static DataTable GetUsersInfo(byte WantedNumOfRecords, int LastLowestBroughtUserID = -1)
         {
             DataTable dtUsers = null;
@@ -21,15 +22,12 @@ namespace DVLDDataAccessLayer
             string query = _query;
 
             if (LastLowestBroughtUserID != -1)
-                query += " WHERE UserID < @LastLowestBroughtUserID";
+                query += $" WHERE {_PrimaryKeyColumnName} < {LastLowestBroughtUserID}";
                             
-                query += " ORDER BY UserID DESC";
+                query += $" ORDER BY {_PrimaryKeyColumnName} DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
-
-            if (LastLowestBroughtUserID != -1)
-                command.Parameters.AddWithValue("@LastLowestBroughtUserID", LastLowestBroughtUserID);
 
             try
             {
@@ -88,8 +86,7 @@ namespace DVLDDataAccessLayer
             int UserID = -1;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"INSERT INTO Users VALUES
-                             (@PersonID, @UserName, @Password,@Salt, @IsActive) ;
+            string query = @"INSERT INTO Users VALUES (@PersonID, @UserName, @Password, @Salt, @IsActive);
                              SELECT SCOPE_IDENTITY();";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -127,9 +124,9 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"UPDATE USERS SET PersonID = @PersonID , UserName = @UserName ,
-                             Password = @Password ,Salt = @Salt, IsActive = @IsActive
-                             WHERE UserID = @UserID";
+            string query = $@"UPDATE USERS SET PersonID = @PersonID, UserName = @UserName,
+                             Password = @Password, Salt = @Salt, IsActive = @IsActive
+                             WHERE {_PrimaryKeyColumnName} = @UserID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserID",UserID);
@@ -160,8 +157,7 @@ namespace DVLDDataAccessLayer
             byte AffectedRows = 0;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = @"DELETE FROM Users
-                             WHERE UserID = @UserID";
+            string query = $@"DELETE FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserID" , UserID);
@@ -186,8 +182,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Found = 1
-                             FROM Users WHERE PersonID = @PersonID";
+            string query = @"SELECT Found = 1 FROM Users WHERE PersonID = @PersonID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@PersonID", PersonID);
@@ -215,8 +210,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Found = 1 FROM Users 
-                             WHERE UserName = @UserName";
+            string query = @"SELECT Found = 1 FROM Users WHERE UserName = @UserName";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserName",UserName);
@@ -245,9 +239,7 @@ namespace DVLDDataAccessLayer
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT UserID,PersonID,UserName,Password,Salt
-                             ,IsActive FROM Users 
-                             WHERE UserID = @UserID";
+            string query = $@"SELECT * FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserID", UserID);
@@ -284,8 +276,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Password , Salt FROM Users
-                             WHERE UserID = @UserID";
+            string query = $@"SELECT Password, Salt FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
 
             SqlCommand command = new SqlCommand(query,connection);
             command.Parameters.AddWithValue("@UserID", UserID);
@@ -314,8 +305,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT UserID,Password,Salt,IsActive
-                             FROM Users WHERE UserName = @UserName";
+            string query = $@"SELECT {_PrimaryKeyColumnName}, Password, Salt, IsActive FROM Users WHERE UserName = @UserName";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserName", UserName);
@@ -327,7 +317,7 @@ namespace DVLDDataAccessLayer
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
-                    UserID = (int)reader["UserID"];
+                    UserID = (int)reader[_PrimaryKeyColumnName];
                     Password = (string)reader["Password"];
                     Salt = Convert.FromBase64String((string)reader["Salt"]);
                     IsActive = (bool)reader["IsActive"];
@@ -349,8 +339,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT UserName,Password FROM Users
-                             WHERE UserID = @UserID";
+            string query = $@"SELECT UserName, Password FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserID", UserID);
@@ -384,8 +373,7 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"UPDATE Users SET Password = @Password , Salt = @Salt
-                             WHERE UserID = @UserID";
+            string query = $@"UPDATE Users SET Password = @Password, Salt = @Salt WHERE {_PrimaryKeyColumnName} = @UserID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserID", UserID);
@@ -411,7 +399,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = "SELECT UserName FROM Users WHERE UserID = @UserID";
+            string query = $"SELECT UserName FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserID", UserID);
@@ -468,7 +456,7 @@ namespace DVLDDataAccessLayer
             if (string.IsNullOrEmpty(ValueToFilterBy)
                 || (ColumnNameToFilterBy == "IsActive" && ValueToFilterBy == "All"))
             {
-                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtUserID);
+                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtUserID);
             }
 
             else
@@ -479,12 +467,12 @@ namespace DVLDDataAccessLayer
                 if (ColumnNameToFilterBy == "IsActive")
                 {
                     if(ValueToFilterBy != "All")
-                    ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
+                    ValueToFilterBy = clsGeneralUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
-                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
 
-                query += clsUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtUserID);
+                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtUserID);
             }
 
             return query;
@@ -538,7 +526,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Count(UserID) FROM Users";
+            string query = $@"SELECT Count({_PrimaryKeyColumnName}) FROM Users";
 
             SqlCommand command = new SqlCommand(query, connection);
 
@@ -571,7 +559,7 @@ namespace DVLDDataAccessLayer
             if (string.IsNullOrEmpty(ValueToFilterBy)
                 || (ColumnNameToFilterBy == "IsActive" && ValueToFilterBy == "All"))
             {
-                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             else
@@ -579,11 +567,11 @@ namespace DVLDDataAccessLayer
                 if (ColumnNameToFilterBy == "IsActive")
                 {
                     if(ValueToFilterBy != "All")
-                    ValueToFilterBy = clsUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
+                    ValueToFilterBy = clsGeneralUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
-                query += clsUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
                 
             return query;
@@ -592,7 +580,7 @@ namespace DVLDDataAccessLayer
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
-            return clsUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }

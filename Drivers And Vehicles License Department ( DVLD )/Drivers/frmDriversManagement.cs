@@ -25,7 +25,7 @@ namespace DVLDPresentationLayer
             object[] Items = new object[dgvDrivers.Columns.Count - 1];
             Items[0] = "None";
 
-            List<string> lColumnsNames = clsUtility.GetDgvColumnsNames(dgvDrivers, new string[] {"Date Created","Active Licenses"});
+            List<string> lColumnsNames = clsDgvUtilityLib.GetDgvColumnsNames(dgvDrivers, new string[] {"Date Created","Active Licenses"});
             
             for (byte i = 0; i < lColumnsNames.Count; i++)
             {
@@ -37,13 +37,13 @@ namespace DVLDPresentationLayer
         }
         private void _SetCertainControlsPosition()
         {
-            dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsUtility.WantedNumOfRowsFromDB);
+            dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDgvUtilityLib.WantedNumOfRowsFromDB);
 
             if(dgvDrivers.DataSource != null)
             _AddDropDownItems();
 
-            clsUtility.CenterControlHorizontally(this, pbDrivers);
-            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(this, pbDrivers);
+            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private DataTable _GetFilteredData(bool ScrollCase = false)
@@ -52,19 +52,19 @@ namespace DVLDPresentationLayer
             if (!ScrollCase)
             {
                 if (cbFilterBy.SelectedItem.ToString() == "Driver ID" || cbFilterBy.SelectedItem.ToString() == "Person ID")
-                    dtDriversInfo = clsDriver.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,null);
+                    dtDriversInfo = clsDriver.GetFilteredData(clsDgvUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,null);
 
                 else
-                    dtDriversInfo = clsDriver.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
+                    dtDriversInfo = clsDriver.GetFilteredData(clsDgvUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
             }
 
             else
             {
                 if (cbFilterBy.SelectedItem.ToString() == "Driver ID" || cbFilterBy.SelectedItem.ToString() == "Person ID")
-                    dtDriversInfo = clsDriver.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvDrivers?.Rows[dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Driver ID"].Value, null);
+                    dtDriversInfo = clsDriver.GetFilteredData(clsDgvUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvDrivers?.Rows[dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Driver ID"].Value, null);
 
                 else
-                    dtDriversInfo = clsDriver.GetFilteredData(clsUtility.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvDrivers?.Rows[dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Driver ID"].Value, '%');
+                    dtDriversInfo = clsDriver.GetFilteredData(clsDgvUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text, (int)dgvDrivers?.Rows[dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Driver ID"].Value, '%');
             }
 
             if (dtDriversInfo != null)
@@ -79,7 +79,7 @@ namespace DVLDPresentationLayer
             if (txtFilter.Text != "")
                 dgvDrivers.DataSource = _GetFilteredData();
             else
-                dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsUtility.WantedNumOfRowsFromDB);
+                dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDgvUtilityLib.WantedNumOfRowsFromDB);
         }
         private void txtFilter_KeyDown(object sender, KeyEventArgs e)
         {
@@ -116,7 +116,7 @@ namespace DVLDPresentationLayer
 
         private void cbFilterBy_DrawItem(object sender, DrawItemEventArgs e)
         {
-            clsUtility.DrawComboBoxItems(sender, e);
+            clsGeneralUtility.DrawComboBoxItems(sender, e);
         }
 
         private void _AppendPartOfRemainingData()
@@ -128,15 +128,15 @@ namespace DVLDPresentationLayer
                 NewRows = dtFilteredData.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDgv(dgvDrivers, NewRows, clsUtility.GetDgvColumnsNames(dgvDrivers));
+                    clsDgvUtilityLib.AddNewRowsToDgv(dgvDrivers, NewRows, clsDgvUtilityLib.GetDgvColumnsNames(dgvDrivers));
             }
 
             else
             {
-                NewRows = clsDriver.GetDriversInfo(clsUtility.WantedNumOfRowsFromDB, (int)dgvDrivers.Rows[dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value)?.Select();
+                NewRows = clsDriver.GetDriversInfo(clsDgvUtilityLib.WantedNumOfRowsFromDB, (int)dgvDrivers.Rows[dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Person ID"].Value)?.Select();
 
                 if (NewRows != null)
-                    clsUtility.AddNewRowsToDgv(dgvDrivers, NewRows, clsUtility.GetDgvColumnsNames(dgvDrivers));
+                    clsDgvUtilityLib.AddNewRowsToDgv(dgvDrivers, NewRows, clsDgvUtilityLib.GetDgvColumnsNames(dgvDrivers));
             }
         }
         private void dgvDrivers_KeyDown(object sender, KeyEventArgs e)
@@ -159,7 +159,7 @@ namespace DVLDPresentationLayer
         {
             if (_AllowDataLoading)
             {
-                dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsUtility.WantedNumOfRowsFromDB);
+                dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDgvUtilityLib.WantedNumOfRowsFromDB);
             }
             else
                 _AllowDataLoading = true;
@@ -178,7 +178,7 @@ namespace DVLDPresentationLayer
             {
                 txtFilter.Visible = false;
 
-                dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsUtility.WantedNumOfRowsFromDB);
+                dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDgvUtilityLib.WantedNumOfRowsFromDB);
                 _AllowDataLoading = false;
             }
             txtFilter.Text = "";

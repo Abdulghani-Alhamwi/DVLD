@@ -57,7 +57,7 @@ namespace DVLDPresentationLayer
                 btnSave.Enabled = true;
             }
 
-            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
         private void _SetTitles(clsUser.enMode Mode)
         {
@@ -77,7 +77,7 @@ namespace DVLDPresentationLayer
             uctrlpersonInfoByFilter.LoadPersonDetails(_User.PersonID);
 
             lblUserID.Text = _User.UserID.ToString();
-            txtUserName.Text = clsUtility.DecryptUserName(_User.UserName);
+            txtUserName.Text = clsGeneralUtility.DecryptUserName(_User.UserName);
             txtPassword.Text = _DefaultPasswordValue;
             txtPasswordConfirmation.Text = _DefaultPasswordValue;
             chkIsActive.Checked = _User.IsActive;
@@ -134,15 +134,15 @@ namespace DVLDPresentationLayer
         {
             if (_User !=null)
             {
-                if (txtUserName.Text == clsUtility.DecryptUserName(_User.UserName))
+                if (txtUserName.Text == clsGeneralUtility.DecryptUserName(_User.UserName))
                     return;
             }
 
             if (txtUserName.Text == "" || string.IsNullOrWhiteSpace(txtUserName.Text))
-                clsUtility.EnableErrorProvider(erTextBox, txtUserName, "Username cannot be blank.", e);
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtUserName, "Username cannot be blank.", e);
 
-            else if (clsUser.IsUserAlreadyExists(clsUtility.EncryptUserName(txtUserName.Text)))
-                clsUtility.EnableErrorProvider(erTextBox, txtUserName, "Username is already taken by another user. Please choose another username.", e);
+            else if (clsUser.IsUserAlreadyExists(clsGeneralUtility.EncryptUserName(txtUserName.Text)))
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtUserName, "Username is already taken by another user. Please choose another username.", e);
 
             else
                 erTextBox.Dispose();
@@ -150,10 +150,10 @@ namespace DVLDPresentationLayer
         private void txtPasswordConfirmation_Validating(object sender,CancelEventArgs e)
         {
             if (txtPasswordConfirmation.Text == "" || string.IsNullOrWhiteSpace(txtPasswordConfirmation.Text)) 
-                clsUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation cannot be blank.", null);
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation cannot be blank.", null);
 
             else if (txtPasswordConfirmation.Text != txtPasswordConfirmation.Text)
-                clsUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation does not match password!", null);
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation does not match password!", null);
             
             else
                 erTextBox.Dispose();
@@ -162,7 +162,7 @@ namespace DVLDPresentationLayer
         private void txtPassword_Validating(object sender, CancelEventArgs e)
         {
             if (txtPassword.Text == "" || string.IsNullOrWhiteSpace(txtPassword.Text))
-                clsUtility.EnableErrorProvider(erTextBox, ((TextBox)sender), "Password cannot be blank.", null);
+                clsGeneralUtility.EnableErrorProvider(erTextBox, ((TextBox)sender), "Password cannot be blank.", null);
 
             else
                 erTextBox.Dispose();
@@ -181,13 +181,13 @@ namespace DVLDPresentationLayer
         private void _SetPasswordAndSalt(string Password,string Salt)
         {
             byte[] SaltArray = null;
-            Password = clsUtility.HashWithSaltPassword(txtPassword.Text, ref SaltArray);
+            Password = clsGeneralUtility.HashWithSaltPassword(txtPassword.Text, ref SaltArray);
             Salt = Convert.ToBase64String(SaltArray);
         }
 
         private bool _IsInfoUnchanged()
         {   
-            return (txtUserName.Text == clsUtility.DecryptUserName(_User.UserName)
+            return (txtUserName.Text == clsGeneralUtility.DecryptUserName(_User.UserName)
                  && txtPassword.Text == _DefaultPasswordValue
                  && txtPasswordConfirmation.Text == _DefaultPasswordValue
                  && chkIsActive.Checked == _User.IsActive
@@ -199,7 +199,7 @@ namespace DVLDPresentationLayer
             if (_User != null)
             {
                 User = _User;
-                User.UserName = clsUtility.EncryptUserName(txtUserName.Text);
+                User.UserName = clsGeneralUtility.EncryptUserName(txtUserName.Text);
                 if (txtPassword.Text != _DefaultPasswordValue)
                     _SetPasswordAndSalt(User);
 
@@ -213,7 +213,7 @@ namespace DVLDPresentationLayer
 
                 User = new clsUser(
                     PersonID: _PersonID,
-                    UserName: clsUtility.EncryptUserName(txtUserName.Text),
+                    UserName: clsGeneralUtility.EncryptUserName(txtUserName.Text),
                     Password: _Password,
                     Salt: _Salt,
                     IsActive: chkIsActive.Checked

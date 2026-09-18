@@ -7,10 +7,13 @@ namespace DVLDDataAccessLayer
 {
     public class clsTestAppointmentsData
     {
+        private static readonly string _PrimaryKeyColumnName = "TestAppointmentID";
 
         private static string _query = 
-         $@"SELECT TOP (@WantedNumOfRecords) TestAppointmentID AS [Appointment ID] , FORMAT(AppointmentDate,'{clsUtility.GetCustomDateFormat(clsUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Appointment Date] ,
-           PaidFees AS [Paid Fees],IsLocked AS [Is Locked] FROM TestAppointments";
+         $@"SELECT TOP (@WantedNumOfRecords) {_PrimaryKeyColumnName} AS [Appointment ID],
+            FORMAT(AppointmentDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Appointment Date] ,
+            PaidFees AS [Paid Fees],IsLocked AS [Is Locked] FROM TestAppointments";
+
 
         public static DataTable GetTestAppointments(byte WantedNumOfRecords , byte TestTypeID,int LocalDrivingLicenseAppID, int LowestBroughtAppointmentID = -1,string DateFormat = null)
         {
@@ -20,22 +23,19 @@ namespace DVLDDataAccessLayer
             string query = _query;
 
             if (LowestBroughtAppointmentID != -1)
-                query += @" WHERE TestAppointmentID < @LowestBroughtAppointmentID AND TestTypeID = @TestTypeID AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID
-                            ORDER BY TestAppointmentID DESC";
+                query += $@" WHERE {_PrimaryKeyColumnName} < {LowestBroughtAppointmentID} AND TestTypeID = @TestTypeID
+                             AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID ORDER BY {_PrimaryKeyColumnName} DESC";
             else
-                query += @" WHERE TestTypeID = @TestTypeID AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID
-                            ORDER BY TestAppointmentID DESC";
+                query += $@" WHERE TestTypeID = @TestTypeID AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID
+                             ORDER BY {_PrimaryKeyColumnName} DESC";
 
 
-                SqlCommand command = new SqlCommand(query, connection);
+            SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
-            
-            if(LowestBroughtAppointmentID != -1)
-                command.Parameters.AddWithValue("@LowestBroughtAppointmentID", LowestBroughtAppointmentID);
 
-                command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
+            command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
 
-                command.Parameters.AddWithValue("@LocalDrivingLicenseAppID", LocalDrivingLicenseAppID);
+            command.Parameters.AddWithValue("@LocalDrivingLicenseAppID", LocalDrivingLicenseAppID);
 
             try
             {
@@ -134,9 +134,9 @@ namespace DVLDDataAccessLayer
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"UPDATE TestAppointments SET TestTypeID = @TestTypeID,LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID,
+            string query = $@"UPDATE TestAppointments SET TestTypeID = @TestTypeID,LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID,
                              AppointmentDate = @AppointmentDate,PaidFees = @PaidFees,CreatedByUserID = @CreatedByUserID,
-                             IsLocked = @IsLocked WHERE TestAppointmentID = @TestAppointmentID";
+                             IsLocked = @IsLocked WHERE {_PrimaryKeyColumnName} = @TestAppointmentID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@TestAppointmentID", TestAppointmentID);
@@ -168,7 +168,7 @@ namespace DVLDDataAccessLayer
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = "SELECT * FROM TestAppointments WHERE TestAppointmentID = @TestAppointmentID";
+            string query = $"SELECT * FROM TestAppointments WHERE {_PrimaryKeyColumnName} = @TestAppointmentID";
 
             SqlCommand command = new SqlCommand(query,connection);
             command.Parameters.AddWithValue("@TestAppointmentID", TestAppointmentID);
@@ -210,7 +210,7 @@ namespace DVLDDataAccessLayer
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Count(TestAppointmentID) FROM TestAppointments
+            string query = $@"SELECT Count({_PrimaryKeyColumnName}) FROM TestAppointments
                              WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID AND TestTypeID = @TestTypeID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -271,17 +271,18 @@ namespace DVLDDataAccessLayer
         {
             string query = _query;
 
-            query += clsUtility.GetFilterQueryPart_ValueCondition("TestTypeID");
+            query += clsGeneralUtility.GetFilterQueryPart_ValueCondition("TestTypeID");
             query += $" AND LocalDrivingLicenseApplicationID = {LDLApplicationID}";
-            query += clsUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+            query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
 
             return query;
         }
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection, int LDLApplicationID, byte TestTypeID)
         {
-            return clsUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection,LDLApplicationID,TestTypeID),
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection,LDLApplicationID,TestTypeID),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,TestTypeID.ToString());
         }
+
     }
 }

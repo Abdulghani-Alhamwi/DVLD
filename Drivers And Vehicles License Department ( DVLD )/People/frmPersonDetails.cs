@@ -13,7 +13,7 @@ namespace DVLDPresentationLayer
             if (UctrlPersonDetails.LoadPersonDetails(PersonID) == null)
                 this.Close();
 
-            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private void btnExit_Click(object sender, EventArgs e)

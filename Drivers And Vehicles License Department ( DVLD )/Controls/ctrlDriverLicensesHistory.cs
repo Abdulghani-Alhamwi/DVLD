@@ -16,10 +16,10 @@ namespace DVLDPresentationLayer
         private int _DriverID;
         public void LoadDriverLicenseHistory(int DriverID)
         {
-            dgvLocalLicenses.DataSource = clsLocalLicense.GetLocalLicenses(DriverID,clsUtility.WantedNumOfRowsFromDB);
+            dgvLocalLicenses.DataSource = clsLocalLicense.GetLocalLicenses(DriverID, clsDgvUtilityLib.WantedNumOfRowsFromDB);
             lblLocalLicensesNum.Text = clsDriver.GetDriverLocalLicensesCount(DriverID).ToString();
 
-            dgvInternationalLicenses.DataSource = clsInternationalLicense.GetDriverInternationalLicenses(DriverID, clsUtility.WantedNumOfRowsFromDB);
+            dgvInternationalLicenses.DataSource = clsInternationalLicense.GetDriverInternationalLicenses(DriverID, clsDgvUtilityLib.WantedNumOfRowsFromDB);
             lblInternationalLicensesNum.Text = clsDriver.GetDriverInternationalLicensesCount(DriverID).ToString();
             _DriverID = DriverID;
         }
@@ -29,37 +29,39 @@ namespace DVLDPresentationLayer
             DataRow [] NewRows =PartOfRemainingData?.Select();
 
             if (NewRows != null)
-                clsUtility.AddNewRowsToDgv(Dgv,NewRows, clsUtility.GetDgvColumnsNames(Dgv));
+                clsDgvUtilityLib.AddNewRowsToDgv(Dgv,NewRows, clsDgvUtilityLib.GetDgvColumnsNames(Dgv));
         }
 
         private void dgvLocalLicenses_Scroll(object sender, ScrollEventArgs e)
         {
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
-                if (clsUtility.IsDgvLastRowDisplayed(dgvLocalLicenses))
-                    _AppendPartOfRemainingData(dgvLocalLicenses, clsLocalLicense.GetLocalLicenses(_DriverID, clsUtility.WantedNumOfRowsFromDB, (int)dgvLocalLicenses.Rows[dgvLocalLicenses.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Lic.ID"].Value));
+                if (clsDgvUtilityLib.IsDgvLastRowDisplayed(dgvLocalLicenses))
+                    _AppendPartOfRemainingData(dgvLocalLicenses, clsLocalLicense.GetLocalLicenses(_DriverID, clsDgvUtilityLib.WantedNumOfRowsFromDB,
+                        (int)dgvLocalLicenses.Rows[dgvLocalLicenses.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Lic.ID"].Value));
             }
         }
 
         private void dgvLocalLicenses_KeyDown(object sender, KeyEventArgs e)
         {
-                if (clsUtility.IsDgvLastRowSelected(dgvLocalLicenses))
-                _AppendPartOfRemainingData(dgvLocalLicenses, clsLocalLicense.GetLocalLicenses(_DriverID, clsUtility.WantedNumOfRowsFromDB, (int)dgvLocalLicenses.Rows[dgvLocalLicenses.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Lic.ID"].Value));
+                if (clsDgvUtilityLib.IsDgvLastRowSelected(dgvLocalLicenses))
+                _AppendPartOfRemainingData(dgvLocalLicenses, clsLocalLicense.GetLocalLicenses(_DriverID, clsDgvUtilityLib.WantedNumOfRowsFromDB,
+                    (int)dgvLocalLicenses.Rows[dgvLocalLicenses.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Lic.ID"].Value));
         }
 
         private void dgvInternationalLicenses_Scroll(object sender, ScrollEventArgs e)
         {
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
-                if (clsUtility.IsDgvLastRowDisplayed(dgvInternationalLicenses))
-                    _AppendPartOfRemainingData(dgvInternationalLicenses, clsInternationalLicense.GetDriverInternationalLicenses(_DriverID, clsUtility.WantedNumOfRowsFromDB, (int)dgvInternationalLicenses.Rows[dgvInternationalLicenses.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Int.License ID"].Value));
+                if (clsDgvUtilityLib.IsDgvLastRowDisplayed(dgvInternationalLicenses))
+                    _AppendPartOfRemainingData(dgvInternationalLicenses, clsInternationalLicense.GetDriverInternationalLicenses(_DriverID, clsDgvUtilityLib.WantedNumOfRowsFromDB, (int)dgvInternationalLicenses.Rows[dgvInternationalLicenses.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Int.License ID"].Value));
             }
         }
 
         private void dgvInternationalLicenses_KeyDown(object sender, KeyEventArgs e)
         {
-            if (clsUtility.IsDgvLastRowSelected(dgvInternationalLicenses))
-                _AppendPartOfRemainingData(dgvInternationalLicenses, clsInternationalLicense.GetDriverInternationalLicenses(_DriverID, clsUtility.WantedNumOfRowsFromDB, (int)dgvInternationalLicenses.Rows[dgvInternationalLicenses.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Int.License ID"].Value));
+            if (clsDgvUtilityLib.IsDgvLastRowSelected(dgvInternationalLicenses))
+                _AppendPartOfRemainingData(dgvInternationalLicenses, clsInternationalLicense.GetDriverInternationalLicenses(_DriverID, clsDgvUtilityLib.WantedNumOfRowsFromDB, (int)dgvInternationalLicenses.Rows[dgvInternationalLicenses.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Int.License ID"].Value));
         }
 
         private void tsmiShowLicenseInfo_Click(object sender, EventArgs e)
