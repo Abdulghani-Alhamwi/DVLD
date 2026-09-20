@@ -9,24 +9,20 @@ namespace DVLDPresentationLayer
     {
         internal event Action<object[], byte> AfterUpdatingInfo;
 
-        byte _ApplicationTypeID;
-        string _ApplicationTypeTitle, _ApplicationTypeDescription;
-        double _ApplicationTypeFees;
         byte _TestsTypesDGVRowIndex;
 
-        public frmUpdateTestType(byte ApplicationTypeID, string ApplicationTypeTitle, string ApplicationTypeDescription,double ApplicationTypeFees,byte TestsTypesDGVRowIndex)
+        private clsTestType _TestType;
+
+        public frmUpdateTestType(byte TestTypeID, string TestTypeTitle, string TestTypeDescription,decimal TestTypeFees,byte TestsTypesDGVRowIndex)
         {
             InitializeComponent();
 
-            lblID.Text = ApplicationTypeID.ToString();
-            txtTitle.Text = ApplicationTypeTitle;
-            txtDescription.Text = ApplicationTypeDescription;
-            txtFees.Text = ApplicationTypeFees.ToString();
+            lblID.Text = TestTypeID.ToString();
+            txtTitle.Text = TestTypeTitle;
+            txtDescription.Text = TestTypeDescription;
+            txtFees.Text = TestTypeFees.ToString();
 
-            _ApplicationTypeID = ApplicationTypeID;
-            _ApplicationTypeTitle = ApplicationTypeTitle;
-            _ApplicationTypeDescription = ApplicationTypeDescription;
-            _ApplicationTypeFees = ApplicationTypeFees;
+            _TestType = new clsTestType(TestTypeID, TestTypeTitle, TestTypeDescription,TestTypeFees);
             _TestsTypesDGVRowIndex = TestsTypesDGVRowIndex;
         }
 
@@ -58,30 +54,32 @@ namespace DVLDPresentationLayer
 
         }
 
-        private bool _IsInfoUnchanged()
-        {
-            return (txtTitle.Text == _ApplicationTypeTitle
-                  & txtDescription.Text == _ApplicationTypeDescription
-                  & txtFees.Text == _ApplicationTypeFees.ToString());
-        }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (_IsInfoUnchanged())
-                MessageBox.Show("There are no changes on the test type info", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            else if(_ValidateData())
+            if (_ValidateData())
             {
-                if (clsTestType.UpdateTestType(_ApplicationTypeID, txtTitle.Text, txtDescription.Text, Convert.ToDecimal(txtFees.Text)))
-                {
-                    object[] NewValues = new object[] { _ApplicationTypeID, txtTitle.Text, txtDescription.Text, clsGeneralUtility.GetCustomNumberFormat(Convert.ToSingle(txtFees.Text), clsGeneralUtility.enCustomNumberFormat.With4ZerosAfterFraction) };
-                    AfterUpdatingInfo?.Invoke(NewValues, _TestsTypesDGVRowIndex);
+                _TestType.TestTypeTitle = txtTitle.Text;
+                _TestType.TestTypeDescription = txtDescription.Text;
+                _TestType.TestTypeFees = Convert.ToDecimal(txtFees.Text);
 
-                    MessageBox.Show("Test Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (_TestType.AreAllFieldsOldValuesNotChanged())
+                    MessageBox.Show("There are no changes on the test type info", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                else 
+                {
+                    if (_TestType.Save())
+                    {
+                        object[] NewValues = new object[] { _TestType.TestTypeID, txtTitle.Text, txtDescription.Text, clsGeneralUtility.GetCustomNumberFormat(Convert.ToSingle(txtFees.Text), clsGeneralUtility.enCustomNumberFormat.With4ZerosAfterFraction) };
+                        AfterUpdatingInfo?.Invoke(NewValues, _TestsTypesDGVRowIndex);
+
+                        MessageBox.Show("Test Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                        MessageBox.Show("Failed to update test type info!", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                else
-                    MessageBox.Show("Failed to update test type info!", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();

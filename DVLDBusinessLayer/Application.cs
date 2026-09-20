@@ -19,6 +19,8 @@ namespace DVLDBusinessLayer
         public decimal PaidApplicationFees { get; set; }
         public int CreatedByUserID { get; set; }
 
+        protected clsApplicationsData.clsOldApplicationData OldApplicationData;
+
         public clsApplication(int ApplicantPersonID, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
         {
             this.ApplicationID = -1;
@@ -42,9 +44,11 @@ namespace DVLDBusinessLayer
             this.PaidApplicationFees = PaidApplicationFees;
             this.CreatedByUserID = CreatedByUserID;
             _CurrentMode = _enMode.Update;
+
+            OldApplicationData = new clsApplicationsData.clsOldApplicationData(ApplicantPersonID, _GetApplicationStatusNumericValue(ApplicationStatus));
         }
 
-        private static byte _GetApplicationStatus(enApplicationStatus Status)
+        private static byte _GetApplicationStatusNumericValue(enApplicationStatus Status)
         {
             switch(Status)
             {
@@ -97,14 +101,20 @@ namespace DVLDBusinessLayer
 
         private bool _AddNewApplication()
         {
-            ApplicationID = clsApplicationsData.AddApplication(ApplicantPersonID, ApplicationDate, ApplicationTypeID, _GetApplicationStatus(ApplicationStatus), LastStatusDate, PaidApplicationFees, CreatedByUserID);
+            ApplicationID = clsApplicationsData.AddApplication(ApplicantPersonID, ApplicationDate, ApplicationTypeID, _GetApplicationStatusNumericValue(ApplicationStatus), LastStatusDate, PaidApplicationFees, CreatedByUserID);
 
             return (ApplicationID != -1);
         }
 
+        protected bool HasOldApplicationDataNotChanged()
+        {
+            return (OldApplicationData.ApplicantPersonID == ApplicantPersonID
+                && OldApplicationData.ApplicationStatus == _GetApplicationStatusNumericValue(ApplicationStatus));
+        }
+
         private bool _UpdateApplication()
         {
-            return clsApplicationsData.UpdateApplication(ApplicationID, ApplicantPersonID, ApplicationDate, ApplicationTypeID, _GetApplicationStatus(ApplicationStatus), LastStatusDate, PaidApplicationFees, CreatedByUserID);
+            return clsApplicationsData.UpdateApplication(ApplicationID, ApplicantPersonID, _GetApplicationStatusNumericValue(ApplicationStatus), LastStatusDate,OldApplicationData);
         }
 
         public static clsApplication Find(int ApplicationID)
@@ -148,7 +158,7 @@ namespace DVLDBusinessLayer
 
         public static bool ChangeApplicationStatus(int ApplicationID ,enApplicationStatus TheNewStatus)
         {
-            return clsApplicationsData.ChangeApplicationStatus(ApplicationID, _GetApplicationStatus(TheNewStatus));
+            return clsApplicationsData.ChangeApplicationStatus(ApplicationID, _GetApplicationStatusNumericValue(TheNewStatus));
         }
 
     }

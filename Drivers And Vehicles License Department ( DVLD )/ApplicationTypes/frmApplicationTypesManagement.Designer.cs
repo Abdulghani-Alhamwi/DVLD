@@ -131,11 +131,11 @@
             // 
             // cmsApplicationTypes
             // 
-            this.cmsApplicationTypes.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
+            this.cmsApplicationTypes.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.cmsApplicationTypes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiEditApplicationType});
             this.cmsApplicationTypes.Name = "cmsApplicationTypes";
-            this.cmsApplicationTypes.Size = new System.Drawing.Size(356, 42);
+            this.cmsApplicationTypes.Size = new System.Drawing.Size(345, 64);
             this.cmsApplicationTypes.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsApplicationTypes_Paint);
             // 
             // tsmiEditApplicationType
@@ -143,7 +143,7 @@
             this.tsmiEditApplicationType.Image = global::DVLDPresentationLayer.Properties.Resources.edit_32;
             this.tsmiEditApplicationType.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsmiEditApplicationType.Name = "tsmiEditApplicationType";
-            this.tsmiEditApplicationType.Size = new System.Drawing.Size(355, 38);
+            this.tsmiEditApplicationType.Size = new System.Drawing.Size(344, 38);
             this.tsmiEditApplicationType.Text = "Edit Application Type";
             this.tsmiEditApplicationType.Click += new System.EventHandler(this.tsmiEditApplicationType_Click);
             // 

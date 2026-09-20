@@ -1,12 +1,26 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace DVLDDataAccessLayer
 {
     public class clsApplicationTypesData
     {
         private static string _PrimaryKeyColumnName = "ApplicationTypeID";
+
+        private enum enUpdatableColumns : byte { ApplicationTypeTitle, ApplicationTypeFees }
+
+        public class clsOldApplicationTypeData
+        {
+            public string ApplicationTypeTitle;
+            public decimal ApplicationTypeFees;
+
+            public clsOldApplicationTypeData(string ApplicationTypeTitle, decimal ApplicationTypeFees)
+            {
+                this.ApplicationTypeTitle = ApplicationTypeTitle;
+                this.ApplicationTypeFees = ApplicationTypeFees;
+            }
+        }
 
         public static DataTable GetApplicationTypes()
         {
@@ -41,18 +55,72 @@ namespace DVLDDataAccessLayer
             return dtApplicationTypes;
         }
 
-        public static bool UpdateApplicationType(byte ApplicationTypeID , string ApplicationTypeTitle,decimal ApplicationTypeFees)
+        private static void _ResetChangedOldValues(string ApplicationTypeTitle, decimal ApplicationTypeFees, clsOldApplicationTypeData OldApplicationTypeData)
+        {
+            if (ApplicationTypeTitle != OldApplicationTypeData.ApplicationTypeTitle)
+                OldApplicationTypeData.ApplicationTypeTitle = null;
+
+            if (ApplicationTypeFees != OldApplicationTypeData.ApplicationTypeFees)
+                OldApplicationTypeData.ApplicationTypeFees = -1;
+        }
+
+        private static string _GetColumnValueSetPartForUpdate(enUpdatableColumns UpdatableColumn)
+        {
+            switch (UpdatableColumn)
+            {
+                case enUpdatableColumns.ApplicationTypeTitle:
+                    return " ApplicationTypeTitle = @Title";
+
+                case enUpdatableColumns.ApplicationTypeFees:
+                    return " ApplicationFees = @Fees";
+            }
+
+            return null;
+        }
+
+        private static string _GetUpdateQuery(string ApplicationTypeTitle, decimal ApplicationTypeFees, clsOldApplicationTypeData OldApplicationTypeData, bool HasOldDataChangedFully)
+        {
+            string query = "UPDATE ApplicationTypes SET";
+
+            if (!HasOldDataChangedFully)
+            {
+                if (ApplicationTypeTitle != OldApplicationTypeData.ApplicationTypeTitle)
+                {
+                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.ApplicationTypeTitle);
+                }
+
+                else
+                {
+                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.ApplicationTypeFees);
+                }
+
+            }
+
+            else
+                query += @" ApplicationTypeTitle = @Title, ApplicationFees = @Fees";
+
+            query += $" WHERE {_PrimaryKeyColumnName} = @ID";
+
+            _ResetChangedOldValues(ApplicationTypeTitle, ApplicationTypeFees, OldApplicationTypeData);
+
+            return query;
+        }
+
+        public static bool UpdateApplicationType(byte ApplicationTypeID, string ApplicationTypeTitle, decimal ApplicationTypeFees, clsOldApplicationTypeData OldApplicationTypeData, bool HasOldDataChangedFully)
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = $@"UPDATE ApplicationTypes SET ApplicationTypeTitle = @Title,
-                              ApplicationFees = @Fees WHERE {_PrimaryKeyColumnName} = @ID";
+            string query = _GetUpdateQuery(ApplicationTypeTitle, ApplicationTypeFees, OldApplicationTypeData, HasOldDataChangedFully);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ID", ApplicationTypeID);
-            command.Parameters.AddWithValue("@Title", ApplicationTypeTitle);
-            command.Parameters.AddWithValue("@Fees", ApplicationTypeFees);
+
+            if (OldApplicationTypeData.ApplicationTypeTitle == null)
+                command.Parameters.AddWithValue("@Title", ApplicationTypeTitle);
+
+            if (OldApplicationTypeData.ApplicationTypeFees == -1)
+                command.Parameters.AddWithValue("@Fees", ApplicationTypeFees);
 
             try
             {
@@ -60,7 +128,7 @@ namespace DVLDDataAccessLayer
                 AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
-            catch { }
+            catch (Exception ex) { Console.Write(ex.Message); }
 
             finally
             {

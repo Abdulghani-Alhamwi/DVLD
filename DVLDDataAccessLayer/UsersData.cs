@@ -14,6 +14,30 @@ namespace DVLDDataAccessLayer
            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],
            UserName,IsActive AS [Is Active] From Users INNER JOIN People ON Users.PersonID = People.PersonID";
 
+        private enum enUpdatableColumns : byte
+        {
+            PersonID, UserName, Password, Salt, IsActive
+        }
+
+        public class clsOldUserData
+        {
+            public int PersonID;
+            public string UserName;
+            public string Password;
+            public string OldSalt;
+            public bool? IsActiveCase;
+
+            public clsOldUserData(int OldPersonID, string OldUserName, string OldPassword,
+                string OldSalt, bool OldIsActiveCase)
+            {
+                this.PersonID = OldPersonID;
+                this.UserName = OldUserName;
+                this.Password = OldPassword;
+                this.OldSalt = OldSalt;
+                this.IsActiveCase = OldIsActiveCase;
+            }
+        }
+
         public static DataTable GetUsersInfo(byte WantedNumOfRecords, int LastLowestBroughtUserID = -1)
         {
             DataTable dtUsers = null;
@@ -118,22 +142,129 @@ namespace DVLDDataAccessLayer
             return UserID;
         }
 
-        public static bool UpdateUser(int UserID,int PersonID, string UserName, string Password,string Salt, bool IsActive)
+        private static void _ResetChangedOldValues(int PersonID, string UserName, string Password, string Salt, bool IsActive, clsOldUserData OldUserData)
+        {
+            if (PersonID != OldUserData.PersonID)
+                OldUserData.PersonID = -1;
+
+            if (UserName != OldUserData.UserName)
+                OldUserData.UserName = null;
+
+            if (Password != OldUserData.Password)
+            {
+                OldUserData.Password = null;
+                OldUserData.OldSalt = null;
+            }
+
+            if (IsActive != OldUserData.IsActiveCase)
+                OldUserData.IsActiveCase = null;
+        }
+
+        private static string _GetColumnValueSetPartForUpdate(enUpdatableColumns UpdatableColumns)
+        {
+            switch(UpdatableColumns)
+            {
+                case enUpdatableColumns.PersonID:
+                    return " PersonID = @PersonID";
+
+                case enUpdatableColumns.UserName:
+                    return " UserName = @UserName";
+
+                case enUpdatableColumns.Password:
+                    return " Password = @Password";
+
+                case enUpdatableColumns.Salt:
+                    return ",Salt = @Salt";
+
+                case enUpdatableColumns.IsActive:
+                    return " IsActive = @IsActive";
+            }
+
+            return null;
+        }
+
+        private static string _GetUpdateQuery(int PersonID, string UserName, string Password, string Salt, bool IsActive, clsOldUserData OldUserData, bool HasOldDataChangedFully)
+        {
+            string query = "UPDATE Users SET";
+
+            if (!HasOldDataChangedFully)
+            {
+                if (PersonID != OldUserData.PersonID)
+                {
+                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.PersonID);
+
+                    if (UserName != OldUserData.UserName)
+                        query += ","+ _GetColumnValueSetPartForUpdate(enUpdatableColumns.UserName);
+
+                    if (Password != OldUserData.Password)
+                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Password)
+                               + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Salt);
+
+                    if (IsActive != OldUserData.IsActiveCase)
+                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.IsActive);
+                }
+
+                else if (UserName != OldUserData.UserName)
+                {
+                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.UserName);
+
+                    if (Password != OldUserData.Password)
+                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Password)
+                               + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Salt);
+
+                    if (IsActive != OldUserData.IsActiveCase)
+                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.IsActive);
+                }
+
+                else if (Password != OldUserData.Password)
+                {
+                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.Password)
+                           + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Salt);
+
+                    if (IsActive != OldUserData.IsActiveCase)
+                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.IsActive);
+                }
+
+                else
+                       if (IsActive != OldUserData.IsActiveCase)
+                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.IsActive);
+
+            }
+
+            else
+                query += @" PersonID = @PersonID, UserName = @UserName, Password = @Password, Salt = @Salt, IsActive = @IsActive";
+
+            query += $" WHERE {_PrimaryKeyColumnName} = @UserID";
+
+            _ResetChangedOldValues(PersonID, UserName, Password, Salt, IsActive, OldUserData);
+
+            return query;
+        }
+
+        public static bool UpdateUser(int UserID,int PersonID, string UserName, string Password,string Salt, bool IsActive, clsOldUserData OldUserData, bool HasOldDataChangedFully)
         {
             byte AffectedRows = 0;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = $@"UPDATE USERS SET PersonID = @PersonID, UserName = @UserName,
-                             Password = @Password, Salt = @Salt, IsActive = @IsActive
-                             WHERE {_PrimaryKeyColumnName} = @UserID";
+            string query = _GetUpdateQuery(PersonID, UserName, Password, Salt, IsActive, OldUserData, HasOldDataChangedFully);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserID",UserID);
-            command.Parameters.AddWithValue("@PersonID", PersonID);
-            command.Parameters.AddWithValue("@UserName", UserName);
-            command.Parameters.AddWithValue("@Password", Password);
-            command.Parameters.AddWithValue("@Salt", Salt);
+
+            if (OldUserData.PersonID == -1)
+                command.Parameters.AddWithValue("@PersonID", PersonID);
+
+            if (OldUserData.UserName == null)
+                command.Parameters.AddWithValue("@UserName", UserName);
+
+            if (OldUserData.Password == null)
+            {
+                command.Parameters.AddWithValue("@Password", Password);
+                command.Parameters.AddWithValue("@Salt", Salt);
+            }
+                
+            if(OldUserData.IsActiveCase == null)
             command.Parameters.AddWithValue("@IsActive", IsActive);
 
             try

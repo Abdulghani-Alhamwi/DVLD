@@ -90,6 +90,7 @@ namespace DVLDPresentationLayer
             {
                 pbPersonalImage.ImageLocation = _Person.ImagePath;
                 lnlblRemove.Visible = true;
+                _UploadedPersonalImage = true;
             }
             else
                 pbPersonalImage.Image = (_Person.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
@@ -313,7 +314,7 @@ namespace DVLDPresentationLayer
             ofdSelectImage.ShowDialog();
 
         }
-        string _SelectedImageNewPath;
+        string _NewSelectedImagePath;
         string _ImagesFolderPath = @"C:\DVLD-People-Images";
         bool _UploadedPersonalImage = false;
         private void ofdSelectImage_FileOk(object sender, CancelEventArgs e)
@@ -323,7 +324,7 @@ namespace DVLDPresentationLayer
 
             if (ofdSelectImage.FileName != "")
             {
-                _SelectedImageNewPath = _ImagesFolderPath + @"\" + Guid.NewGuid().ToString() + ofdSelectImage.SafeFileName;
+                _NewSelectedImagePath = _ImagesFolderPath + @"\" + Guid.NewGuid().ToString() + ofdSelectImage.SafeFileName;
 
                 pbPersonalImage.ImageLocation = ofdSelectImage.FileName;
 
@@ -332,36 +333,23 @@ namespace DVLDPresentationLayer
             }
         }
 
-        bool _RemoveSavedImage = false;
+        bool _RemovedSavedImage = false;
         private void lnlblRemove_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (pbPersonalImage.ImageLocation == _SavedPersonalImagePath && !String.IsNullOrEmpty(_SavedPersonalImagePath))
             {
-                _RemoveSavedImage = true;
+                _RemovedSavedImage = true;
             }
 
             pbPersonalImage.Image = (rbMale.Checked) ? Resources.Male_512 : Resources.Female_512;
 
             pbPersonalImage.ImageLocation = null;
-
             
-            _SelectedImageNewPath = null;
+            _NewSelectedImagePath = null;
             _UploadedPersonalImage = false;
             lnlblRemove.Visible = false;
         }
 
-        private bool _IsInfoUnchanged()
-        {
-            return (_Person.FirstName == txtFirstName.Text && _Person.SecondName == txtSecondName.Text
-                 && _Person.ThirdName == txtThirdName.Text && _Person.LastName == txtLastName.Text
-                 && _Person.NationalNo == txtNationalNo.Text && _Person.DateOfBirth == dtpDateOfBirth.Value
-                 && _Person.Gendor == (rbMale.Checked ? clsPerson.enGendor.Male : clsPerson.enGendor.Female)
-                 && _Person.Phone == txtPhone.Text && _Person.Email == txtEmail.Text
-                 && _Person.Address == txtAddress.Text
-                 && _Person.CountryName == ((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString()
-                 && _Person.ImagePath == (pbPersonalImage.ImageLocation == null ? _Person.ImagePath : pbPersonalImage.ImageLocation)
-                 );
-        }
         private object[] _GetCurrentValuesInArray()
         {
             object[] Values = new object[] {lblPersonID.Text,txtNationalNo.Text, txtFirstName.Text , txtSecondName.Text , txtThirdName.Text ,
@@ -388,7 +376,7 @@ namespace DVLDPresentationLayer
                 Phone: txtPhone.Text,
                 Email: txtEmail.Text,
                 NationalityCountryID: clsCountries.GetCountryID(((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString()),
-                ImagePath: (_SelectedImageNewPath != null) ? _SelectedImageNewPath : (_SelectedImageNewPath == null && !_RemoveSavedImage) ? _SavedPersonalImagePath : null
+                ImagePath: (_NewSelectedImagePath != null) ? _NewSelectedImagePath : (_NewSelectedImagePath == null && !_RemovedSavedImage) ? _SavedPersonalImagePath : null
                 );
             }
             else
@@ -409,10 +397,10 @@ namespace DVLDPresentationLayer
                 Person.NationalityCountryID = clsCountries.GetCountryID(((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString());
                 Person.Address = txtAddress.Text;
 
-                if (_SelectedImageNewPath != null)
-                    Person.ImagePath = _SelectedImageNewPath;
+                if (_NewSelectedImagePath != null)
+                    Person.ImagePath = _NewSelectedImagePath;
 
-                else if (_SelectedImageNewPath == null && !_RemoveSavedImage)
+                else if (_NewSelectedImagePath == null && !_RemovedSavedImage)
                     Person.ImagePath = _SavedPersonalImagePath;
 
                 else
@@ -433,28 +421,28 @@ namespace DVLDPresentationLayer
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if(_Person != null)
+            if (_IsValidData())
             {
-                if (_IsInfoUnchanged())
+             clsPerson Person;
+            _SetPersonInfo(out Person);
+
+            if (_Person != null)
+            {
+                if (_Person.AreAllFieldsOldValuesNotChanged())
                 {
                     MessageBox.Show("There is'nt any change on the information", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
             }
- 
-            if (_IsValidData())
-            {
-                clsPerson Person;
-                _SetPersonInfo(out Person);
 
                 if (Person.Save())
                 {
                     lblPersonID.Text = Person.PersonID.ToString();
 
-                    if (_SelectedImageNewPath != null)
-                        File.Copy(ofdSelectImage.FileName, _SelectedImageNewPath);
+                    if (_NewSelectedImagePath != null)
+                        File.Copy(ofdSelectImage.FileName, _NewSelectedImagePath);
 
-                    if(_RemoveSavedImage)
+                    if(_RemovedSavedImage)
                     {
                         if (File.Exists(_SavedPersonalImagePath))
                             File.Delete(_SavedPersonalImagePath);

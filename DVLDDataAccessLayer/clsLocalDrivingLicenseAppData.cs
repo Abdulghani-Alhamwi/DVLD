@@ -28,6 +28,7 @@ namespace DVLDDataAccessLayer
                 FORMAT(ApplicationDate , '{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}'),
                 (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END)";
 
+
         public static DataTable GetLDLApplications(byte WantedNumOfRecords, int LastLowestBroughtLDLAppID = -1)
         {
             DataTable dtLDLApplications = null;
@@ -127,17 +128,38 @@ namespace DVLDDataAccessLayer
             return LDLApplicationID;
         }
 
-        public static bool UpdateLDLApplication(int LocalDrivingLicenseApplicationID, int ApplicationID, int LicenseClassID)
+        private static void _ResetChangedOldValues(int LicenseClassID,ref int _OldLicenseClassID)
+        {
+            if (LicenseClassID != _OldLicenseClassID)
+                _OldLicenseClassID = -1;
+        }
+
+        private static string _GetUpdateQuery(int LicenseClassID,ref int OldLicenseClassID)
+        {
+            string query = "UPDATE LocalDrivingLicenseApplications SET";
+
+            if (LicenseClassID != OldLicenseClassID)
+            {
+                query += " LicenseClassID = @LicenseClassID";
+            }
+
+            query += $" WHERE {_PrimaryKeyColumnName} = @LocalDrivingLicenseApplicationID";
+
+            _ResetChangedOldValues(LicenseClassID,ref OldLicenseClassID);
+
+            return query;
+        }
+
+        public static bool UpdateLDLApplication(int LocalDrivingLicenseApplicationID,int LicenseClassID,int OldLicenseClassID)
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = $@"UPDATE LocalDrivingLicenseApplications SET
-                             ApplicationID = @ApplicationID , LicenseClassID = @LicenseClassID
-                             WHERE {_PrimaryKeyColumnName} = @LocalDrivingLicenseApplicationID";
+            string query = _GetUpdateQuery(LicenseClassID,ref OldLicenseClassID);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LocalDrivingLicenseApplicationID);
-            command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+
+            if (OldLicenseClassID == -1)
             command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
 
             try

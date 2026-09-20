@@ -7,6 +7,20 @@ namespace DVLDDataAccessLayer
     {
         private static string _PrimaryKeyColumnName = "ApplicationID";
 
+        private enum enUpdatableColumns : byte { ApplicantPersonID, ApplicationStatus, LastStatusDate }
+
+        public class clsOldApplicationData
+        {
+            public int ApplicantPersonID;
+            public short ApplicationStatus;
+
+            public clsOldApplicationData(int ApplicantPersonID, short ApplicationStatus)
+            {
+                this.ApplicantPersonID = ApplicantPersonID;
+                this.ApplicationStatus = ApplicationStatus;
+        }
+        }
+
         public static int AddApplication(int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, short ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
         {
             int ApplicationID = -1;
@@ -43,33 +57,82 @@ namespace DVLDDataAccessLayer
             return ApplicationID;
         }
 
-        public static bool UpdateApplication(int ApplicationID, int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, short ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
+        private static void _ResetChangedOldValues(int ApplicantPersonID, short ApplicationStatus, DateTime LastStatusDate,clsOldApplicationData oldApplicationData)
+        {
+            if (ApplicantPersonID != oldApplicationData.ApplicantPersonID)
+                oldApplicationData.ApplicantPersonID = -1;
+
+            if (ApplicationStatus != oldApplicationData.ApplicationStatus)
+            {
+                oldApplicationData.ApplicationStatus = -1;
+            }
+        }
+
+        private static string _GetColumnValueSetPartForUpdate(enUpdatableColumns UpdatableColumn)
+        {
+            switch (UpdatableColumn)
+            {
+                case enUpdatableColumns.ApplicantPersonID:
+                    return " ApplicantPersonID = @ApplicantPersonID";
+
+                case enUpdatableColumns.ApplicationStatus:
+                    return " ApplicationStatus = @Status";
+
+                case enUpdatableColumns.LastStatusDate:
+                    return ",LastStatusDate = @LastStatusDate";
+            }
+
+            return null;
+        }
+
+        private static string _GetUpdateQuery(int ApplicantPersonID, short ApplicationStatus, DateTime LastStatusDate, clsOldApplicationData OldApplicationData)
+        {
+            string query = "UPDATE Applications SET";
+
+                if (ApplicantPersonID != OldApplicationData.ApplicantPersonID)
+                {
+                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.ApplicantPersonID);
+                }
+
+                else
+                {
+                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.ApplicationStatus)
+                           + _GetColumnValueSetPartForUpdate(enUpdatableColumns.LastStatusDate);
+                }
+
+            query += $" WHERE {_PrimaryKeyColumnName} = @ApplicationID";
+
+            _ResetChangedOldValues(ApplicantPersonID, ApplicationStatus, LastStatusDate, OldApplicationData);
+
+            return query;
+        }
+
+        public static bool UpdateApplication(int ApplicationID, int ApplicantPersonID, short ApplicationStatus, DateTime LastStatusDate, clsOldApplicationData OldApplicationData)
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query =
-             $@"UPDATE Applications SET ApplicantPersonID = @ApplicantPersonID, ApplicationDate = @ApplicationDate,
-               ApplicationTypeID = @ApplicationTypeID, ApplicationStatus = @ApplicationStatus, LastStatusDate = @LastStatusDate,
-               PaidFees = @PaidApplicationFees, CreatedByUserID = @CreatedByUserID WHERE {_PrimaryKeyColumnName} = @ApplicationID";
+            string query = _GetUpdateQuery(ApplicantPersonID,ApplicationStatus,LastStatusDate,OldApplicationData);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicationID",ApplicationID);
-            command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
-            command.Parameters.AddWithValue("@ApplicationDate", ApplicationDate);
-            command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
-            command.Parameters.AddWithValue("@ApplicationStatus", ApplicationStatus);
-            command.Parameters.AddWithValue("@LastStatusDate", LastStatusDate);
-            command.Parameters.AddWithValue("@PaidApplicationFees", PaidApplicationFees);
-            command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
 
+            if(OldApplicationData.ApplicantPersonID == -1)
+            command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
+
+            if (OldApplicationData.ApplicationStatus == -1)
+            {
+                command.Parameters.AddWithValue("@Status", ApplicationStatus);
+                command.Parameters.AddWithValue("@LastStatusDate", LastStatusDate);
+            }
+            
             try
             {
                 connection.Open();
                 AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
-            catch { }
+            catch (Exception ex){ Console.Write(ex.Message); }
 
             finally
             {

@@ -11,6 +11,8 @@ namespace DVLDBusinessLayer
         public int LDLAppID { get; set; }
 
         public clsLicenseClass LicenseClass;
+
+        private int _OldLicenseClassID;
         public clsLocalDrivingLicenseApp(int ApplicantPersonID, byte LicenseClassID, string LicenseClassName, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
               : base(ApplicantPersonID, ApplicationDate, ApplicationTypeID, ApplicationStatus, LastStatusDate, PaidApplicationFees, CreatedByUserID)
         {
@@ -33,7 +35,8 @@ namespace DVLDBusinessLayer
             this.ApplicationID = ApplicationID;
             this.LicenseClass = LicenseClass;
             _CurrentMode = enMode.Update;
-            
+
+            _OldLicenseClassID = LicenseClass.ID;
         }
         public static DataTable GetLDLApplications(byte WantedNumOfRecords)
         {
@@ -74,9 +77,19 @@ namespace DVLDBusinessLayer
             return (LDLAppID != -1);
         }
 
+        public bool AreAllFieldsOldValuesNotChanged()
+        {
+            return (_OldLicenseClassID == LicenseClass.ID && OldApplicationData.ApplicantPersonID == ApplicantPersonID);
+        }
+
+        private bool _IsLicenseClassNotChanged()
+        {
+            return (_OldLicenseClassID == LicenseClass.ID);
+        }
+
         private bool UpdateLDLApplication()
         {
-            return clsLocalDrivingLicenseAppData.UpdateLDLApplication(LDLAppID,ApplicationID, LicenseClass.ID);
+            return clsLocalDrivingLicenseAppData.UpdateLDLApplication(LDLAppID, LicenseClass.ID, _OldLicenseClassID);
         }
 
         public static bool DeleteLDLApplication(int LDLApplicationID,int ApplicationID)
@@ -84,9 +97,19 @@ namespace DVLDBusinessLayer
             clsLocalDrivingLicenseAppData.DeleteLDLApplication(LDLApplicationID);
             return clsApplication.DeleteApplication(ApplicationID);
         }
+
+        private bool _SaveApplication()
+        {
+            if (HasOldApplicationDataNotChanged())
+                return true;
+
+            else
+                return base.Save();
+        }
+
         public new bool Save()
         {
-            if (base.Save())
+            if (_SaveApplication())
             {
                 switch (_CurrentMode)
                 {
@@ -96,11 +119,16 @@ namespace DVLDBusinessLayer
                             _CurrentMode = enMode.Update;
                             return true;
                         }
+
                         else
                             return false;
 
                     case enMode.Update:
-                        return UpdateLDLApplication();
+                        if(_IsLicenseClassNotChanged())
+                            return true;
+
+                        else
+                            return UpdateLDLApplication();
                 }
             }
                 return false;

@@ -14,6 +14,19 @@ namespace DVLDDataAccessLayer
             FORMAT(AppointmentDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Appointment Date] ,
             PaidFees AS [Paid Fees],IsLocked AS [Is Locked] FROM TestAppointments";
 
+        private enum enUpdatableColumns : byte { AppointmentDate, IsLocked }
+
+        public class clsOldAppointmentData
+        {
+            public DateTime? AppointmentDate;
+            public bool? IsLocked;
+
+            public clsOldAppointmentData(DateTime AppointmentDate, bool IsLocked)
+            {
+                this.AppointmentDate = AppointmentDate;
+                this.IsLocked = IsLocked;
+            }
+        }
 
         public static DataTable GetTestAppointments(byte WantedNumOfRecords , byte TestTypeID,int LocalDrivingLicenseAppID, int LowestBroughtAppointmentID = -1,string DateFormat = null)
         {
@@ -129,22 +142,72 @@ namespace DVLDDataAccessLayer
             return -1;
         }
 
-        public static bool UpdateAppointment(int TestAppointmentID,int TestTypeID, int LocalDrivingLicenseAppID, DateTime AppointmentDate, decimal PaidFees, int CreatedByUserID, bool IsLocked)
+        private static void _ResetChangedOldValues(DateTime AppointmentDate, bool IsLocked, clsOldAppointmentData OldAppointmentData)
+        {
+            if (AppointmentDate != OldAppointmentData.AppointmentDate)
+                OldAppointmentData.AppointmentDate = null;
+
+            if (IsLocked != OldAppointmentData.IsLocked)
+                OldAppointmentData.IsLocked = null;
+        }
+
+        private static string _GetColumnValueSetPartForUpdate(enUpdatableColumns UpdatableColumn)
+        {
+            switch (UpdatableColumn)
+            {
+                case enUpdatableColumns.AppointmentDate:
+                    return " AppointmentDate = @AppointmentDate";
+
+                case enUpdatableColumns.IsLocked:
+                    return " IsLocked = @IsLocked";
+            }
+
+            return null;
+        }
+
+        private static string _GetUpdateQuery(DateTime AppointmentDate, bool IsLocked, clsOldAppointmentData OldAppointmentData, bool HasOldDataChangedFully)
+        {
+            string query = "UPDATE TestAppointments SET";
+
+            if (!HasOldDataChangedFully)
+            {
+                if (AppointmentDate != OldAppointmentData.AppointmentDate)
+                {
+                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.AppointmentDate);
+                }
+
+                else if (IsLocked != OldAppointmentData.IsLocked)
+                {
+                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.IsLocked);
+                }
+
+            }
+
+            else
+                query += @" AppointmentDate = @AppointmentDate, IsLocked = @IsLocked";
+
+            query += $" WHERE {_PrimaryKeyColumnName} = @TestAppointmentID";
+
+            _ResetChangedOldValues(AppointmentDate, IsLocked, OldAppointmentData);
+
+            return query;
+        }
+
+        public static bool UpdateAppointment(int TestAppointmentID,DateTime AppointmentDate,bool IsLocked, clsOldAppointmentData OldAppointmentData, bool HasOldDataChangedFully)
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = $@"UPDATE TestAppointments SET TestTypeID = @TestTypeID,LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID,
-                             AppointmentDate = @AppointmentDate,PaidFees = @PaidFees,CreatedByUserID = @CreatedByUserID,
-                             IsLocked = @IsLocked WHERE {_PrimaryKeyColumnName} = @TestAppointmentID";
+            string query = _GetUpdateQuery(AppointmentDate, IsLocked, OldAppointmentData, HasOldDataChangedFully);
+
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@TestAppointmentID", TestAppointmentID);
-            command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
-            command.Parameters.AddWithValue("@LocalDrivingLicenseAppID", LocalDrivingLicenseAppID);
+
+            if(OldAppointmentData.AppointmentDate == null)
             command.Parameters.AddWithValue("@AppointmentDate", AppointmentDate);
-            command.Parameters.AddWithValue("@PaidFees", PaidFees);
-            command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
+
+            if(OldAppointmentData.IsLocked == null)
             command.Parameters.AddWithValue("@IsLocked", IsLocked);
 
             try

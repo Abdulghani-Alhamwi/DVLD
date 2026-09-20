@@ -45,7 +45,7 @@ namespace DVLDBusinessLayer
                     return enLicenseClasses.SmallMotorcycle;
             }
         }
-        public static int GetLicenseClassID(enLicenseClasses LicenseClass)
+        public static byte GetLicenseClassID(enLicenseClasses LicenseClass)
         {
             switch (LicenseClass)
             {
@@ -71,7 +71,7 @@ namespace DVLDBusinessLayer
                     return 7;
 
                 default:
-                    return -1;
+                    return 0;
             }
         }
 
@@ -79,22 +79,33 @@ namespace DVLDBusinessLayer
         {
             return clsLicenseClassesData.GetLicenseClassesNames();
         }
+
         public static byte GetLicenseClassID(string LicenseClassName)
         {
             return clsLicenseClassesData.GetLicenseClassID(LicenseClassName);
         }
+
         public static string GetLicenseClassName(byte LicenseClassID)
         {
             return clsLicenseClassesData.GetLicenseClassName(LicenseClassID);
         }
+
+        public static string GetLicenseClassName(enLicenseClasses LicenseClass)
+        {
+            byte LicenseClassID = GetLicenseClassID(LicenseClass);
+            return clsLicenseClassesData.GetLicenseClassName(LicenseClassID);
+        }
+
         public static byte GetLicenseValidityLength(byte LicenseClassID)
         {
             return clsLicenseClassesData.GetLicenseValidityLength(LicenseClassID);
         }
+
         public static decimal GetLicenseClassFees(byte LicenseClassID)
         {
             return clsLicenseClassesData.GetLicenseClassFees(LicenseClassID);
         }
+
         public static byte GetMinimumAllowedAge(byte LicenseClassID)
         {
             return clsLicenseClassesData.GetMinimumAllowedAge(LicenseClassID);

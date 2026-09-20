@@ -7,13 +7,42 @@ namespace DVLDBusinessLayer
     public class clsApplicationType
     {
         public enum enApplicationType : byte { NewLocalDrivingLicense = 1,RenewLicense = 2,ReplacementForLostLicense = 3 ,ReplacementForDamagedLicense = 4 ,ReleaseDetainedLicense = 5,NewInternationlLicense = 6,ReTakeTest = 7}
+
+        public byte ApplicationTypeID { get; set; }
+        public string ApplicationTypeTitle { get; set; }
+        public decimal ApplicationTypeFees { get; set; }
+
+        public clsApplicationTypesData.clsOldApplicationTypeData _OldApplicationTypeData;
+
+        public clsApplicationType(byte ApplicationTypeID, string ApplicationTypeTitle, decimal ApplicationTypeFees)
+        {
+            this.ApplicationTypeID = ApplicationTypeID;
+            this.ApplicationTypeTitle = ApplicationTypeTitle;
+            this.ApplicationTypeFees = ApplicationTypeFees;
+
+            _OldApplicationTypeData = new clsApplicationTypesData.clsOldApplicationTypeData(
+                                          ApplicationTypeTitle, ApplicationTypeFees);
+        }
+
         public static DataTable GetApplicationTypes()
         {
             return clsApplicationTypesData.GetApplicationTypes();
         }
-        public static bool UpdateApplicationType(byte ApplicationTypeID,string ApplicationTypeTitle,decimal ApplicationTypeFees)
+
+        public bool AreAllFieldsOldValuesNotChanged()
         {
-            return clsApplicationTypesData.UpdateApplicationType(ApplicationTypeID, ApplicationTypeTitle, ApplicationTypeFees);
+            return (ApplicationTypeTitle == _OldApplicationTypeData.ApplicationTypeTitle && ApplicationTypeFees == _OldApplicationTypeData.ApplicationTypeFees);
+        }
+
+        private bool _HasOldDataChangedFully()
+        {
+            return (ApplicationTypeTitle != _OldApplicationTypeData.ApplicationTypeTitle && ApplicationTypeFees != _OldApplicationTypeData.ApplicationTypeFees);                   
+        }
+
+        private bool _UpdateApplicationType()
+        {
+            return clsApplicationTypesData.UpdateApplicationType(ApplicationTypeID, ApplicationTypeTitle, ApplicationTypeFees,
+                _OldApplicationTypeData, _HasOldDataChangedFully());
         }
 
         public static decimal GetApplicationTypeFees(enApplicationType ApplicationType)
@@ -51,6 +80,11 @@ namespace DVLDBusinessLayer
                     return 7;
             }
             return 0;
+        }
+
+        public bool Save()
+        {
+            return _UpdateApplicationType();
         }
     }
 }

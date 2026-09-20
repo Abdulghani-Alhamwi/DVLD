@@ -84,9 +84,15 @@ namespace DVLDPresentationLayer
                 _LoadInfo(TestType, TestTrial);
             }
 
-            if (!_IsLockedMode)
+            if (!_IsLockedMode && Appointment == null)
             {
                 dtpTestAppointmentDate.MinDate = DateTime.Now;
+                dtpTestAppointmentDate.MaxDate = dtpTestAppointmentDate.MinDate.AddMonths(3);
+            }
+
+            else if(Appointment != null)
+            {
+                dtpTestAppointmentDate.MinDate =Appointment.AppointmentDate;
                 dtpTestAppointmentDate.MaxDate = dtpTestAppointmentDate.MinDate.AddMonths(3);
             }
         }
@@ -277,7 +283,16 @@ namespace DVLDPresentationLayer
             else
             {
                 Appointment = _Appointment;
-                Appointment.AppointmentDate = _GetAppointmentDate();
+                DateTime NewAppointmentDate = _GetAppointmentDate();
+
+                if (Appointment.AppointmentDate == NewAppointmentDate)
+                {
+                    MessageBox.Show("there is'nt any change on the appointment data", "No change", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                else
+                    Appointment.AppointmentDate = NewAppointmentDate;
             }
 
             if (_TestTrial == enTestTrial.ReTake)

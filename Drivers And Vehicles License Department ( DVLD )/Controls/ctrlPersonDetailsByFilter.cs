@@ -98,7 +98,7 @@ namespace DVLDPresentationLayer
             if (_PreviouslyFoundText == txtFindBy.Text)
                 return;
 
-            else if (GetSelectedItem() == _enFindBy.NationalNo)//readability
+            else if (GetSelectedItem() == _enFindBy.NationalNo)
             {
                 clsPerson Person = uctrlPersonDetails.LoadPersonDetails(txtFindBy.Text);
                 _PreviouslyFoundText = txtFindBy.Text;
@@ -111,6 +111,8 @@ namespace DVLDPresentationLayer
             {
                 clsPerson Person = uctrlPersonDetails.LoadPersonDetails(Convert.ToInt32(txtFindBy.Text));
                 _PreviouslyFoundText = txtFindBy.Text;
+
+                if (Person != null)
                 OnPersonSelected?.Invoke(Person.PersonID);
             }
 

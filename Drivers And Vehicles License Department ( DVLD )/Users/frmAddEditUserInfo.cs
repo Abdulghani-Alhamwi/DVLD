@@ -185,20 +185,12 @@ namespace DVLDPresentationLayer
             Salt = Convert.ToBase64String(SaltArray);
         }
 
-        private bool _IsInfoUnchanged()
-        {   
-            return (txtUserName.Text == clsGeneralUtility.DecryptUserName(_User.UserName)
-                 && txtPassword.Text == _DefaultPasswordValue
-                 && txtPasswordConfirmation.Text == _DefaultPasswordValue
-                 && chkIsActive.Checked == _User.IsActive
-                 && _CurrentUserFullName == clsPerson.GetFullName(_PersonID));
-        }
-
         private void _SetUserInfo(out clsUser User)
         {
             if (_User != null)
             {
                 User = _User;
+                User.PersonID = _PersonID;
                 User.UserName = clsGeneralUtility.EncryptUserName(txtUserName.Text);
                 if (txtPassword.Text != _DefaultPasswordValue)
                     _SetPasswordAndSalt(User);
@@ -224,27 +216,28 @@ namespace DVLDPresentationLayer
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            clsUser User;
+            _SetUserInfo(out User);
+
             if (_User != null)
             {
-                if (_IsInfoUnchanged())
+                if (_User.AreAllFieldsOldValuesNotChanged())
                 {
                     MessageBox.Show("There is'nt any change on user information", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
             }
-            clsUser User;
-            _SetUserInfo(out User);
             
             if(User.Save())
             {                
-                lblUserID.Text = User.UserID.ToString();
-                MessageBox.Show("Data Saved successfully", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 if (_User == null)
                 {
+                    lblUserID.Text = User.UserID.ToString();
                     _SetTitles(clsUser.enMode.Update);
                     _User = User;
                 }
+
+                MessageBox.Show("Data Saved successfully", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 _CurrentUserFullName = clsPerson.GetFullName(_PersonID);
 

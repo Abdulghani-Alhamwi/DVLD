@@ -6,9 +6,9 @@ namespace DVLDBusinessLayer
 {
     public class clsPerson
     {
-         public enum enMode : byte { AddNew = 0 , Update = 1 }
-         enMode _CurrentMode;
-        public enum enGendor : byte { Male = 0 , Female = 1 }
+        public enum enMode : byte { AddNew = 0, Update = 1 }
+        enMode _CurrentMode;
+        public enum enGendor : byte { Male = 0, Female = 1 }
         public enGendor? Gendor;
         public int PersonID { get; set; }
         public string NationalNo { get; set; }
@@ -37,6 +37,8 @@ namespace DVLDBusinessLayer
                 return null;
             }
         }
+
+        private clsPeopleData.clsOldPersonData _OldPersonData;
 
         public clsPerson(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, enGendor Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
@@ -74,6 +76,10 @@ namespace DVLDBusinessLayer
             this.ImagePath = ImagePath;
 
             this._CurrentMode = enMode.Update;
+
+            _OldPersonData = new clsPeopleData.clsOldPersonData
+            (NationalNo, FirstName, SecondName, ThirdName, LastName,DateOfBirth,
+             _GetGendorNumericValue(),Address, Phone, Email, NationalityCountryID, ImagePath);
         }
 
         public static clsPerson Find(int PersonID)
@@ -119,22 +125,41 @@ namespace DVLDBusinessLayer
             else
                 return null;
         }
-        private byte _GetGendorNumericValue()
+        private byte? _GetGendorNumericValue()
         {
             if (Gendor == null)
-                return 0;
+                return null;
 
             return Convert.ToByte((Gendor == enGendor.Male) ? 0 : 1);
         }
         private bool _AddNewPerson()
         {
-            PersonID = clsPeopleData.AddNewPerson(NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath);
+            PersonID = clsPeopleData.AddNewPerson(NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue()
+                , Address, Phone, Email, NationalityCountryID, ImagePath);
 
             return (PersonID != -1);
         }
+
+        public bool AreAllFieldsOldValuesNotChanged()
+        {
+            return (_OldPersonData.NationalNo == NationalNo && _OldPersonData.FirstName == FirstName && _OldPersonData.SecondName == SecondName
+                 && _OldPersonData.ThirdName == ThirdName && _OldPersonData.LastName == LastName && _OldPersonData.DateOfBirth == DateOfBirth
+                 && _OldPersonData.Gendor == _GetGendorNumericValue() && _OldPersonData.Address == Address && _OldPersonData.Phone == Phone
+                 && _OldPersonData.Email == Email && _OldPersonData.NationalityCountryID == NationalityCountryID && _OldPersonData.ImagePath == ImagePath);
+        }
+
+        private bool _HasOldDataChangedFully()
+        {
+            return (_OldPersonData.NationalNo != NationalNo && _OldPersonData.FirstName != FirstName && _OldPersonData.SecondName != SecondName
+                 && _OldPersonData.ThirdName != ThirdName && _OldPersonData.LastName != LastName && _OldPersonData.DateOfBirth != DateOfBirth
+                 && _OldPersonData.Gendor != _GetGendorNumericValue() && _OldPersonData.Address != Address && _OldPersonData.Phone != Phone
+                 && _OldPersonData.Email != Email && _OldPersonData.NationalityCountryID != NationalityCountryID && _OldPersonData.ImagePath != ImagePath);
+        }
+
         private bool _UpdatePerson()
         {
-            return clsPeopleData.UpdatePerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath);
+            return clsPeopleData.UpdatePerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue()
+                , Address, Phone, Email, NationalityCountryID, ImagePath,_OldPersonData, _HasOldDataChangedFully());
         }
         public static DataTable GetPeopleInfo(byte WantedNumOfRecords)
         {

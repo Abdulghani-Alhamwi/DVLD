@@ -11,21 +11,18 @@ namespace DVLDPresentationLayer
         internal event Action<object[], byte> AfterUpdatingInfo;
         private static CancelEventArgs _CancelArgs = new CancelEventArgs();
 
-        byte _ApplicationTypeID;
-        string _ApplicationTitle;
-        string _ApplicationFees;
-        byte _AppTypesDGVRowIndex;
+        private byte _AppTypesDGVRowIndex;
+        private clsApplicationType _ApplicationType;
         public frmUpdateApplicationType(byte ApplicationTypeID, string ApplicationTitle, string ApplicationFees, byte AppTypesDGVRowIndex)
         {
             InitializeComponent();
-            _ApplicationTypeID = ApplicationTypeID;
-            _ApplicationTitle = ApplicationTitle;
-            _ApplicationFees = ApplicationFees;
             _AppTypesDGVRowIndex = AppTypesDGVRowIndex;
 
             lblID.Text = ApplicationTypeID.ToString();
             txtTitle.Text = ApplicationTitle;
             txtFees.Text = ApplicationFees;
+
+            _ApplicationType = new clsApplicationType(ApplicationTypeID, ApplicationTitle, Convert.ToDecimal(ApplicationFees));
         }
 
         public static void ValidateFeesTextBox_KeyDown(ErrorProvider erControl, TextBox txtBox, KeyEventArgs e)
@@ -60,27 +57,28 @@ namespace DVLDPresentationLayer
             return true;
         }
 
-        private bool _IsInfoUnchanged()
-        {
-            return (txtTitle.Text == _ApplicationTitle
-                 && txtFees.Text == _ApplicationFees);
-        }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (_IsInfoUnchanged())
-                MessageBox.Show("There are no changes on the application type info", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            else if (_ValidateData())
+            if (_ValidateData())
             {
-                if (clsApplicationType.UpdateApplicationType(_ApplicationTypeID, txtTitle.Text, Convert.ToDecimal(txtFees.Text)))
-                {
-                    object[] NewValues = new object[] { _ApplicationTypeID, txtTitle.Text, clsGeneralUtility.GetCustomNumberFormat(Convert.ToSingle(txtFees.Text), clsGeneralUtility.enCustomNumberFormat.With4ZerosAfterFraction)};
-                    AfterUpdatingInfo?.Invoke(NewValues, _AppTypesDGVRowIndex);
+                _ApplicationType.ApplicationTypeTitle = txtTitle.Text;
+                _ApplicationType.ApplicationTypeFees = Convert.ToDecimal(txtFees.Text);
 
-                    MessageBox.Show("Application Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                if (_ApplicationType.AreAllFieldsOldValuesNotChanged())
+                    MessageBox.Show("There are no changes on the application type info", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 else
-                    MessageBox.Show("Failed to update application type info!", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                {
+                    if (_ApplicationType.Save())
+                    {
+                        object[] NewValues = new object[] { _ApplicationType.ApplicationTypeID, txtTitle.Text, clsGeneralUtility.GetCustomNumberFormat(Convert.ToSingle(txtFees.Text), clsGeneralUtility.enCustomNumberFormat.With4ZerosAfterFraction) };
+                        AfterUpdatingInfo?.Invoke(NewValues, _AppTypesDGVRowIndex);
+
+                        MessageBox.Show("Application Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                        MessageBox.Show("Failed to update application type info!", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

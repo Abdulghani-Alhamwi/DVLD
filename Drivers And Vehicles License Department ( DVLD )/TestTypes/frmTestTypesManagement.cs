@@ -32,7 +32,7 @@ namespace DVLDPresentationLayer
             else
             {
                 frmUpdateTestType frm = new frmUpdateTestType(Convert.ToByte(dgvTestTypes.SelectedRows[0].Cells["ID"].Value),
-                (string)dgvTestTypes.SelectedRows[0].Cells["Title"].Value, (string)dgvTestTypes.SelectedRows[0].Cells["Description"].Value, Convert.ToDouble(dgvTestTypes.SelectedRows[0].Cells["Fees"].Value), (byte)dgvTestTypes.SelectedRows[0].Index);
+                (string)dgvTestTypes.SelectedRows[0].Cells["Title"].Value, (string)dgvTestTypes.SelectedRows[0].Cells["Description"].Value, Convert.ToDecimal(dgvTestTypes.SelectedRows[0].Cells["Fees"].Value), (byte)dgvTestTypes.SelectedRows[0].Index);
 
                 frm.AfterUpdatingInfo += EditDGVRowData;
 

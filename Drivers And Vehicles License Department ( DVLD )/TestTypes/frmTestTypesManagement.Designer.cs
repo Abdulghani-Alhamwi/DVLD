@@ -149,11 +149,11 @@
             // 
             // cmsApplicationTypes
             // 
-            this.cmsApplicationTypes.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
+            this.cmsApplicationTypes.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
             this.cmsApplicationTypes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiEditTestType});
             this.cmsApplicationTypes.Name = "cmsApplicationTypes";
-            this.cmsApplicationTypes.Size = new System.Drawing.Size(273, 42);
+            this.cmsApplicationTypes.Size = new System.Drawing.Size(265, 64);
             this.cmsApplicationTypes.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsApplicationTypes_Paint);
             // 
             // tsmiEditTestType
@@ -161,7 +161,7 @@
             this.tsmiEditTestType.Image = global::DVLDPresentationLayer.Properties.Resources.edit_32;
             this.tsmiEditTestType.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsmiEditTestType.Name = "tsmiEditTestType";
-            this.tsmiEditTestType.Size = new System.Drawing.Size(272, 38);
+            this.tsmiEditTestType.Size = new System.Drawing.Size(264, 38);
             this.tsmiEditTestType.Text = "Edit Test Type";
             this.tsmiEditTestType.Click += new System.EventHandler(this.tsmiEditTestType_Click);
             // 

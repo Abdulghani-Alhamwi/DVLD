@@ -16,6 +16,9 @@ namespace DVLDBusinessLayer
         public int CreatedByUserID { get; set; }
         public bool IsLocked { get; set; }
         public int RetakeTestAppID  { get; set; }
+
+        private clsTestAppointmentsData.clsOldAppointmentData _OldAppointmentData;
+
         public clsTestAppointment(byte TestTypeID, int LDLApplicationID, DateTime AppointmentDate, decimal PaidFees, int CreatedByUserID, bool IsLocked,int RetakeTestAppID = -1)
         {
             TestAppointmentID = -1;
@@ -38,6 +41,8 @@ namespace DVLDBusinessLayer
             this.IsLocked = IsLocked;
             this.RetakeTestAppID = RetakeTestAppID;
             _CurrentMode = _enMode.Update;
+
+            _OldAppointmentData = new clsTestAppointmentsData.clsOldAppointmentData(AppointmentDate, IsLocked);
         }
 
         public static DataTable GetTestAppointments(byte WantedNumOfRecords,byte TestTypeID,int LDLAppId)
@@ -57,9 +62,20 @@ namespace DVLDBusinessLayer
             return (TestAppointmentID != -1);
         }
 
+        public bool HasAppointmentDateChanged()
+        {
+            return (_OldAppointmentData.AppointmentDate == AppointmentDate);
+        }
+
+        private bool _HasOldDataChangedFully()
+        {
+            return (_OldAppointmentData.AppointmentDate == AppointmentDate
+                && _OldAppointmentData.IsLocked == IsLocked);
+        }
+
         private bool _UpdateAppointment()
         {
-            return clsTestAppointmentsData.UpdateAppointment(TestAppointmentID, TestTypeID, LDLApplicationID, AppointmentDate, PaidFees, CreatedByUserID, IsLocked);
+            return clsTestAppointmentsData.UpdateAppointment(TestAppointmentID,AppointmentDate,IsLocked, _OldAppointmentData, _HasOldDataChangedFully());
         }
 
         public bool Save()

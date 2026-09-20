@@ -15,6 +15,8 @@ namespace DVLDBusinessLayer
         public string Salt { get; set; }
         public bool IsActive { get; set; }
 
+        private clsUsersData.clsOldUserData _OldUserData;
+
         public clsUser(int PersonID, string UserName, string Password, string Salt, bool IsActive)
         {
             this.UserID = -1;
@@ -34,7 +36,11 @@ namespace DVLDBusinessLayer
             this.Salt = Salt;
             this.IsActive = IsActive;
             _CurrentMode = enMode.Update;
+
+            _OldUserData = new clsUsersData.clsOldUserData(PersonID, UserName, Password
+                           ,Salt, IsActive);
         }
+
         public static DataTable GetUsersInfo(byte WantedNumOfRecords)
         {
             return clsUsersData.GetUsersInfo(WantedNumOfRecords);
@@ -52,9 +58,24 @@ namespace DVLDBusinessLayer
             return (UserID != -1);
         }
 
+        public bool AreAllFieldsOldValuesNotChanged()
+        {
+            return (_OldUserData.PersonID == PersonID && _OldUserData.UserName == UserName &&
+                    _OldUserData.Password == Password && _OldUserData.OldSalt == Salt &&
+                    _OldUserData.IsActiveCase == IsActive);
+        }
+
+        private bool _HasOldDataChangedFully()
+        {
+            return (_OldUserData.PersonID != PersonID && _OldUserData.UserName != UserName &&
+                    _OldUserData.Password != Password && _OldUserData.OldSalt != Salt &&
+                    _OldUserData.IsActiveCase != IsActive);
+        }
+
         private bool _UpdateUser()
         {
-            return clsUsersData.UpdateUser(UserID, PersonID, UserName, Password, Salt, IsActive);
+            return clsUsersData.UpdateUser(UserID, PersonID, UserName, Password, Salt, IsActive
+                ,_OldUserData, _HasOldDataChangedFully());
         }
 
         public bool Save()
@@ -109,6 +130,7 @@ namespace DVLDBusinessLayer
         {
             clsUsersData.GetUserPasswordWithSalt(UserID, ref Password, ref Salt);
         }
+
         public static bool GetLoginInfo(string UserName,ref int UserID, ref string Password, ref bool IsActive, ref byte[] Salt)
         {
             return clsUsersData.GetLoginInfo(UserName,ref UserID, ref Password,ref IsActive, ref Salt);
