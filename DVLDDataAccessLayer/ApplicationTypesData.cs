@@ -28,8 +28,7 @@ namespace DVLDDataAccessLayer
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = $@"SELECT {_PrimaryKeyColumnName} AS ID, ApplicationTypeTitle AS Title,
-                              ApplicationFees AS Fees FROM ApplicationTypes";
+            string query = "SELECT * FROM ApplicationTypes_View";
 
             SqlCommand command = new SqlCommand(query,connection);
 

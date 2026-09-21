@@ -33,8 +33,7 @@ namespace DVLDDataAccessLayer
             DataTable dtTestTypes = null;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = $@"SELECT {_PrimaryKeyColumnName} AS ID, TestTypeTitle AS Title,
-                              TestTypeDescription AS Description, TestTypeFees AS Fees FROM TestTypes";
+            string query = "SELECT * FROM TestTypes_View";
 
             SqlCommand command = new SqlCommand(query, connection);
 
