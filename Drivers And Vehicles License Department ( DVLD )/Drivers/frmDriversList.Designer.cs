@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer
 {
-    partial class frmDriversManagement
+    partial class frmDriversList
     {
         /// <summary>
         /// Required designer variable.
@@ -38,11 +38,11 @@
             this.pbDrivers = new System.Windows.Forms.PictureBox();
             this.btnClose = new System.Windows.Forms.Button();
             this.dgvDrivers = new System.Windows.Forms.DataGridView();
+            this.cmsDriver = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiShowPersonLicenseHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblFormBigTitle = new System.Windows.Forms.Label();
-            this.cmsDriver = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmiShowPersonLicenseHistory = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pbDrivers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDrivers)).BeginInit();
             this.cmsDriver.SuspendLayout();
@@ -170,8 +170,30 @@
             this.dgvDrivers.Size = new System.Drawing.Size(1422, 266);
             this.dgvDrivers.StandardTab = true;
             this.dgvDrivers.TabIndex = 44;
+            this.dgvDrivers.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvDrivers_ColumnHeaderMouseClick);
             this.dgvDrivers.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvDrivers_Scroll);
             this.dgvDrivers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvDrivers_KeyDown);
+            // 
+            // cmsDriver
+            // 
+            this.cmsDriver.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.cmsDriver.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.cmsDriver.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.cmsDriver.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiShowPersonLicenseHistory});
+            this.cmsDriver.Name = "cmsPeopleMenu";
+            this.cmsDriver.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.cmsDriver.Size = new System.Drawing.Size(323, 40);
+            // 
+            // tsmiShowPersonLicenseHistory
+            // 
+            this.tsmiShowPersonLicenseHistory.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiShowPersonLicenseHistory.Image = global::DVLDPresentationLayer.Properties.Resources.PersonLicenseHistory_32;
+            this.tsmiShowPersonLicenseHistory.Name = "tsmiShowPersonLicenseHistory";
+            this.tsmiShowPersonLicenseHistory.Padding = new System.Windows.Forms.Padding(0);
+            this.tsmiShowPersonLicenseHistory.Size = new System.Drawing.Size(322, 36);
+            this.tsmiShowPersonLicenseHistory.Text = "Show Person License History";
+            this.tsmiShowPersonLicenseHistory.Click += new System.EventHandler(this.tsmiShowPersonLicenseHistory_Click);
             // 
             // lblFormTitle
             // 
@@ -218,28 +240,7 @@
             this.lblFormBigTitle.TabIndex = 50;
             this.lblFormBigTitle.Text = "Drivers List";
             // 
-            // cmsDriver
-            // 
-            this.cmsDriver.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.cmsDriver.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.cmsDriver.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.cmsDriver.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiShowPersonLicenseHistory});
-            this.cmsDriver.Name = "cmsPeopleMenu";
-            this.cmsDriver.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsDriver.Size = new System.Drawing.Size(323, 40);
-            // 
-            // tsmiShowPersonLicenseHistory
-            // 
-            this.tsmiShowPersonLicenseHistory.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiShowPersonLicenseHistory.Image = global::DVLDPresentationLayer.Properties.Resources.PersonLicenseHistory_32;
-            this.tsmiShowPersonLicenseHistory.Name = "tsmiShowPersonLicenseHistory";
-            this.tsmiShowPersonLicenseHistory.Padding = new System.Windows.Forms.Padding(0);
-            this.tsmiShowPersonLicenseHistory.Size = new System.Drawing.Size(322, 36);
-            this.tsmiShowPersonLicenseHistory.Text = "Show Person License History";
-            this.tsmiShowPersonLicenseHistory.Click += new System.EventHandler(this.tsmiShowPersonLicenseHistory_Click);
-            // 
-            // frmDriversManagement
+            // frmDriversList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -261,7 +262,7 @@
             this.Controls.Add(this.lblFormBigTitle);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.Name = "frmDriversManagement";
+            this.Name = "frmDriversList";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

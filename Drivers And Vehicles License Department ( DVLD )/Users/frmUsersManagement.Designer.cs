@@ -69,7 +69,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(988, 13);
+            this.btnExit.Location = new System.Drawing.Point(1151, 13);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -137,7 +137,7 @@
             this.lblFormBigTitle.AutoSize = true;
             this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 32F, System.Drawing.FontStyle.Bold);
             this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblFormBigTitle.Location = new System.Drawing.Point(336, 217);
+            this.lblFormBigTitle.Location = new System.Drawing.Point(417, 217);
             this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormBigTitle.Name = "lblFormBigTitle";
             this.lblFormBigTitle.Size = new System.Drawing.Size(327, 52);
@@ -276,7 +276,7 @@
             this.dgvUsers.RowHeadersWidth = 72;
             this.dgvUsers.RowTemplate.Height = 32;
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsers.Size = new System.Drawing.Size(974, 292);
+            this.dgvUsers.Size = new System.Drawing.Size(1137, 292);
             this.dgvUsers.StandardTab = true;
             this.dgvUsers.TabIndex = 0;
             this.dgvUsers.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvUsers_ColumnHeaderMouseClick);
@@ -322,7 +322,7 @@
             this.btnAddNewUser.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnAddNewUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddNewUser.Image = global::DVLDPresentationLayer.Properties.Resources.Add_New_User_72;
-            this.btnAddNewUser.Location = new System.Drawing.Point(895, 324);
+            this.btnAddNewUser.Location = new System.Drawing.Point(1058, 324);
             this.btnAddNewUser.Name = "btnAddNewUser";
             this.btnAddNewUser.Size = new System.Drawing.Size(111, 70);
             this.btnAddNewUser.TabIndex = 1;
@@ -334,7 +334,7 @@
             this.pbUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbUser.Image = global::DVLDPresentationLayer.Properties.Resources.Users_2_400;
-            this.pbUser.Location = new System.Drawing.Point(367, 57);
+            this.pbUser.Location = new System.Drawing.Point(448, 57);
             this.pbUser.Margin = new System.Windows.Forms.Padding(2);
             this.pbUser.Name = "pbUser";
             this.pbUser.Size = new System.Drawing.Size(265, 137);
@@ -352,7 +352,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(840, 747);
+            this.btnClose.Location = new System.Drawing.Point(1003, 747);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 4;
@@ -367,7 +367,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1042, 817);
+            this.ClientSize = new System.Drawing.Size(1205, 817);
             this.ControlBox = false;
             this.Controls.Add(this.btnAddNewUser);
             this.Controls.Add(this.cbIsActive);

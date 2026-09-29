@@ -34,7 +34,7 @@ namespace DVLDPresentationLayer
                 lblDateOfBirth.Text = Person.DateOfBirth.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
                 lblDriverID.Text = License.DriverID.ToString();
                 lblExpDate.Text =  License.ExpirationDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
-                lblIsDetained.Text = (clsDetainedLicenses.IsDetainedLicense(License.LicenseID)) ? "Yes" : "No";
+                lblIsDetained.Text = (clsDetainedLicense.IsDetainedLicense(License.LicenseID)) ? "Yes" : "No";
 
                 if (File.Exists(Person.ImagePath))
                     pbPersonalImage.ImageLocation = Person.ImagePath;

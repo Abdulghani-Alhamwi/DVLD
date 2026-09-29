@@ -8,13 +8,22 @@ namespace DVLDDataAccessLayer
     public class clsTestAppointmentsData
     {
         private static readonly string _PrimaryKeyColumnName = "TestAppointmentID";
+        private static readonly string _PrimaryKeyViewedColumnName = "Appointment ID";
 
-        private static string _query = 
-         $@"SELECT TOP (@WantedNumOfRecords) {_PrimaryKeyColumnName} AS [Appointment ID],
-            FORMAT(AppointmentDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Appointment Date] ,
-            PaidFees AS [Paid Fees],IsLocked AS [Is Locked] FROM TestAppointments";
+        private static readonly string _FixedQueryPart =
+          $@"{_PrimaryKeyColumnName} AS [Appointment ID],
+          FORMAT(AppointmentDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Appointment Date] ,
+          PaidFees AS [Paid Fees],IsLocked AS [Is Locked] FROM TestAppointments";
 
-        private enum enUpdatableColumns : byte { AppointmentDate, IsLocked }
+        private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
+
+        private static readonly string _QueryConditionPart = "TestTypeID = @TestTypeID AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID";
+
+        private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
+
+        private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
+
+        private enum _enUpdatableColumns : byte { AppointmentDate, IsLocked }
 
         public class clsOldAppointmentData
         {
@@ -28,20 +37,27 @@ namespace DVLDDataAccessLayer
             }
         }
 
-        public static DataTable GetTestAppointments(byte WantedNumOfRecords , byte TestTypeID,int LocalDrivingLicenseAppID, int LowestBroughtAppointmentID = -1,string DateFormat = null)
+        public static DataTable GetTestAppointments(byte WantedNumOfRecords , byte TestTypeID,int LocalDrivingLicenseAppID, int _LastBroughtAppointmentID = -1
+            , string ColumnNameToOrderBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             DataTable dtTestAppointments = null;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _query;
+            if (ColumnNameToOrderBy == null)
+                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
 
-            if (LowestBroughtAppointmentID != -1)
-                query += $@" WHERE {_PrimaryKeyColumnName} < {LowestBroughtAppointmentID} AND TestTypeID = @TestTypeID
-                             AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID ORDER BY {_PrimaryKeyColumnName} DESC";
+            string query;
+
+            if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+            {
+                query = _GetQueryForCursorPagination(_LastBroughtAppointmentID, ColumnNameToOrderBy, SortDirection);
+            }
+
             else
-                query += $@" WHERE TestTypeID = @TestTypeID AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID
-                             ORDER BY {_PrimaryKeyColumnName} DESC";
+            {
+                query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
+            }
 
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -49,6 +65,12 @@ namespace DVLDDataAccessLayer
             command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
 
             command.Parameters.AddWithValue("@LocalDrivingLicenseAppID", LocalDrivingLicenseAppID);
+
+            if(_LastBroughtAppointmentID != -1)
+            command.Parameters.AddWithValue("@LastBroughtAppointmentID", _LastBroughtAppointmentID);
+
+            if (NumberOfRowsToOffset != -1)
+            command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try
             {
@@ -73,11 +95,53 @@ namespace DVLDDataAccessLayer
             return dtTestAppointments;
     }
 
+        private static string _GetQueryForCursorPagination(int _LastBroughtAppointmentID,string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query;
+            if (_LastBroughtAppointmentID != -1)
+            {
+                query = _QueryWithoutPagination;
+                query += $@" WHERE {_PrimaryKeyColumnName} < @LowestBroughtAppointmentID AND {_QueryConditionPart}";
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+
+            else
+            {
+                query = _QueryWithoutPagination;
+                query += $" WHERE {_QueryConditionPart}";
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+
+            return query;
+        }
+
+        private static string _GetQueryForOffsetPagination(int NumberOfRowsToOffset, string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query;
+
+            if (NumberOfRowsToOffset == -1)
+            {
+                query = _QueryWithoutPagination;
+                query += $" WHERE {_QueryConditionPart}";
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+
+            else
+            {
+                query = _QueryForOffsetPagination;
+                query += $" WHERE {_QueryConditionPart}";
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += _OffsetPaginationQueryPart;
+            }
+
+            return query;
+        }
+
         public static DataTable GetColumnsNamesForView()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            SqlCommand command = new SqlCommand(_query, connection);
+            SqlCommand command = new SqlCommand(_QueryWithoutPagination, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
 
             try
@@ -151,14 +215,14 @@ namespace DVLDDataAccessLayer
                 OldAppointmentData.IsLocked = null;
         }
 
-        private static string _GetColumnValueSetPartForUpdate(enUpdatableColumns UpdatableColumn)
+        private static string _GetColumnValueSetPartForUpdate(_enUpdatableColumns UpdatableColumn)
         {
             switch (UpdatableColumn)
             {
-                case enUpdatableColumns.AppointmentDate:
+                case _enUpdatableColumns.AppointmentDate:
                     return " AppointmentDate = @AppointmentDate";
 
-                case enUpdatableColumns.IsLocked:
+                case _enUpdatableColumns.IsLocked:
                     return " IsLocked = @IsLocked";
             }
 
@@ -173,12 +237,12 @@ namespace DVLDDataAccessLayer
             {
                 if (AppointmentDate != OldAppointmentData.AppointmentDate)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.AppointmentDate);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.AppointmentDate);
                 }
 
                 else if (IsLocked != OldAppointmentData.IsLocked)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.IsLocked);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.IsLocked);
                 }
 
             }
@@ -332,7 +396,7 @@ namespace DVLDDataAccessLayer
 
         private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection, int LDLApplicationID, byte TestTypeID)
         {
-            string query = _query;
+            string query = _QueryWithoutPagination;
 
             query += clsGeneralUtility.GetFilterQueryPart_ValueCondition("TestTypeID");
             query += $" AND LocalDrivingLicenseApplicationID = {LDLApplicationID}";
@@ -346,6 +410,5 @@ namespace DVLDDataAccessLayer
             return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection,LDLApplicationID,TestTypeID),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,TestTypeID.ToString());
         }
-
     }
 }

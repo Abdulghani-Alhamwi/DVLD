@@ -129,11 +129,11 @@
     <Compile Include="Applications\frmReplacementForLostOrDamaged.Designer.cs">
       <DependentUpon>frmReplacementForLostOrDamaged.cs</DependentUpon>
     </Compile>
-    <Compile Include="Drivers\frmDriversManagement.cs">
+    <Compile Include="Drivers\frmDriversList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Drivers\frmDriversManagement.Designer.cs">
-      <DependentUpon>frmDriversManagement.cs</DependentUpon>
+    <Compile Include="Drivers\frmDriversList.Designer.cs">
+      <DependentUpon>frmDriversList.cs</DependentUpon>
     </Compile>
     <Compile Include="Drivers\frmDriverLicenseHistory.cs">
       <SubType>Form</SubType>
@@ -332,8 +332,8 @@
     <EmbeddedResource Include="Licenses\frmDetainLocalLicense.resx">
       <DependentUpon>frmDetainLocalLicense.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Drivers\frmDriversManagement.resx">
-      <DependentUpon>frmDriversManagement.cs</DependentUpon>
+    <EmbeddedResource Include="Drivers\frmDriversList.resx">
+      <DependentUpon>frmDriversList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Drivers\frmDriverLicenseHistory.resx">
       <DependentUpon>frmDriverLicenseHistory.cs</DependentUpon>

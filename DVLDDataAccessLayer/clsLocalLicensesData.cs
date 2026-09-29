@@ -9,25 +9,46 @@ namespace DVLDDataAccessLayer
     {
         private static readonly string _PrimaryKeyColumnName = "LicenseID";
 
-        public static DataTable GetLocalLicenses(int DriverID,byte WantedNumOfRecords,int LastLowstBroughtLicID = -1)
+        private static readonly string _PrimaryKeyViewedColumnName = "Lic.ID";
+
+        private static readonly string _FixedQueryPart =
+          $@"{_PrimaryKeyColumnName} AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
+            Format(IssueDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],
+            FORMAT(ExpirationDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Expiration Date],
+            IsActive AS [Is Active] FROM LocalLicenses INNER JOIN LicenseClasses ON LocalLicenses.LicenseClassID = LicenseClasses.LicenseClassID
+            WHERE DriverID = @DriverID";
+
+        private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
+
+        private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
+
+        private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
+
+        public static DataTable GetLocalLicenses(int DriverID,byte WantedNumOfRecords,int LastBroughtLicenseID = -1
+            , string ColumnNameToOrderBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             DataTable dtLicensesData = null;
+
+            if (ColumnNameToOrderBy == null)
+                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
+
+            string query;
+
+            if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+            {
+                query = _GetQueryForCursorPagination(LastBroughtLicenseID, ColumnNameToOrderBy, SortDirection);
+            }
+
+            else
+            {
+                query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
+            }
+
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = $@"SELECT TOP(@WantedNumOfRecords) {_PrimaryKeyColumnName} AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
-                             Format(IssueDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],
-                             FORMAT(ExpirationDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Expiration Date],
-                             IsActive AS [Is Active] FROM LocalLicenses INNER JOIN LicenseClasses ON LocalLicenses.LicenseClassID = LicenseClasses.LicenseClassID
-                             WHERE DriverID = @DriverID";
-
-            if (LastLowstBroughtLicID != -1)
-                query += $" WHERE {_PrimaryKeyColumnName} < {LastLowstBroughtLicID}";
-
-            query += $" ORDER BY {_PrimaryKeyColumnName} DESC";
-
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@DriverID", DriverID);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
+            command.Parameters.AddWithValue("@DriverID", DriverID);
 
             try
             {
@@ -49,6 +70,44 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return dtLicensesData;
+        }
+
+        private static string _GetQueryForCursorPagination(int LastBroughtLicenseID, string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query;
+            if (LastBroughtLicenseID != -1)
+            {
+                query = _QueryWithoutPagination;
+                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtLicenseID, true, true);
+            }
+
+            else
+            {
+                query = _QueryWithoutPagination;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+            }
+
+            return query;
+        }
+
+        private static string _GetQueryForOffsetPagination(int NumberOfRowsToOffset, string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query;
+
+            if (NumberOfRowsToOffset == -1)
+            {
+                query = _QueryWithoutPagination;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+            }
+
+            else
+            {
+                query = _QueryForOffsetPagination;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += _OffsetPaginationQueryPart;
+            }
+
+            return query;
         }
 
         public static int IssueLocalDrivingLicense(int ApplicationID ,int DriverID,byte LicenseClassID,DateTime IssueDate , DateTime ExpirationDate,string Notes,decimal PaidFees,bool IsActive,byte IssueReason,int CreatedByUserID)
@@ -275,6 +334,24 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return -1;
+        }
+
+        private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query = _QueryWithoutPagination;
+            query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+            return query;
+        }
+
+        public static DataTable GetSortedInfo(int DriverID,byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection)
+        {
+            SqlConnection Connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            SqlCommand Command = new SqlCommand(_GetDataSortingQuery(ColumnNameToOrderBy, SortDirection), Connection);
+            Command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
+            Command.Parameters.AddWithValue("@DriverID", DriverID);
+
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(Connection, Command);
         }
     }
 }

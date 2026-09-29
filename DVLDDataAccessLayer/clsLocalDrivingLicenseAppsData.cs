@@ -5,12 +5,14 @@ using Utility_Library;
 
 namespace DVLDDataAccessLayer
 {
-    public class clsLocalDrivingLicenseAppData
+    public class clsLocalDrivingLicenseAppsData
     {
-        private static string _PrimaryKeyColumnName = "LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID";
+        private static readonly string _PrimaryKeyColumnName = "LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID";
 
-        private static string _query =
-         $@"SELECT TOP (@WantedNumOfRecords) {_PrimaryKeyColumnName} AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
+        private static readonly string _PrimaryKeyViewedColumnName = "L.D.L.AppID";
+
+        private static readonly string _FixedQueryPart =
+            $@"{_PrimaryKeyColumnName} AS [L.D.L.AppID] , LicenseClasses.ClassName AS [Driving Class] ,
            People.NationalNo As [National No.] ,(CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName +' '+ People.SecondName +' '+ People.ThirdName + ' ' + People.LastName
            ELSE People.FirstName +' '+ People.SecondName +' '+ People.LastName END) AS [Full Name] , FORMAT(ApplicationDate , '{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Application Date] ,
            (CASE WHEN SUM(CAST(Tests.TestResult AS tinyINT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS tinyINT)) ELSE 0 END) AS [Passed Tests] ,
@@ -22,28 +24,45 @@ namespace DVLDDataAccessLayer
            LEFT JOIN TestAppointments ON {_PrimaryKeyColumnName} = TestAppointments.LocalDrivingLicenseApplicationID 
            LEFT JOIN Tests ON TestAppointments.TestAppointmentID = Tests.TestAppointmentID";
 
-            private static string _GroupByQueryPart=
+        private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
+
+        private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
+
+        private static readonly string _GroupByQueryPart=
             $@" GROUP BY {_PrimaryKeyColumnName}, LicenseClasses.ClassName, People.NationalNo,
                 (CASE WHEN People.ThirdName IS NOT NULL THEN People.FirstName + ' ' + People.SecondName + ' ' + People.ThirdName + ' ' + People.LastName ELSE People.FirstName + ' ' + People.SecondName + ' ' + People.LastName END),
                 FORMAT(ApplicationDate , '{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}'),
                 (CASE WHEN Applications.ApplicationStatus = 1 THEN 'New' WHEN Applications.ApplicationStatus = 2 THEN 'Canceled' ELSE 'Completed' END)";
 
+        private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
 
-        public static DataTable GetLDLApplications(byte WantedNumOfRecords, int LastLowestBroughtLDLAppID = -1)
+        public static DataTable GetLDLApplications(byte WantedNumOfRecords, int LastBroughtLDLAppID = -1, string ColumnNameToOrderBy = null
+            , int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             DataTable dtLDLApplications = null;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _query + _GroupByQueryPart;
+            if (ColumnNameToOrderBy == null)
+                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
 
-            if (LastLowestBroughtLDLAppID == -1)
-                query += $" ORDER BY {_PrimaryKeyColumnName} DESC";
+            string query;
+
+            if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+            {
+                query = _GetQueryForCursorPagination(LastBroughtLDLAppID, ColumnNameToOrderBy, SortDirection);
+            }
+
             else
-                query += $@" HAVING {_PrimaryKeyColumnName} < {LastLowestBroughtLDLAppID}
-                           ORDER BY {_PrimaryKeyColumnName} DESC";
+            {
+                query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
+            }
+
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
+
+            if (NumberOfRowsToOffset != -1)
+                command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try
             {
@@ -68,11 +87,54 @@ namespace DVLDDataAccessLayer
             return dtLDLApplications;
         }
 
+        private static string _GetQueryForCursorPagination(int LastBroughtLDLAppID, string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query;
+            if (LastBroughtLDLAppID != -1)
+            {
+                query = _QueryWithoutPagination;
+                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtLDLAppID, true, false);
+                query += _GroupByQueryPart;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+            }
+
+            else
+            {
+                query = _QueryWithoutPagination;
+                query += _GroupByQueryPart;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+            }
+
+            return query;
+        }
+
+        private static string _GetQueryForOffsetPagination(int NumberOfRowsToOffset, string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query;
+
+            if (NumberOfRowsToOffset == -1)
+            {
+                query = _QueryWithoutPagination;
+                query += _GroupByQueryPart;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+            }
+
+            else
+            {
+                query = _QueryForOffsetPagination;
+                query += _GroupByQueryPart;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += _OffsetPaginationQueryPart;
+            }
+
+            return query;
+        }
+
         public static DataTable GetColumnsNamesForView()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            SqlCommand command = new SqlCommand(_query, connection);
+            SqlCommand command = new SqlCommand(_QueryWithoutPagination, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
 
             try
@@ -429,20 +491,27 @@ namespace DVLDDataAccessLayer
         }
 
         private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy,
-             string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtLDLAppID = -1, char? WildChar = null)
+             string ColumnNameToOrderBy, string SortDirection, int LastBroughtLDLAppID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
+            string query;
+
             if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = _PrimaryKeyColumnName;
+                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
 
             ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
-
-            string query = _query;
 
             if (string.IsNullOrEmpty(ValueToFilterBy)
                 || (ColumnNameToFilterBy == "Applications.ApplicationStatus" && ValueToFilterBy == "All"))
             {
-                query += _GroupByQueryPart;
-                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtLDLAppID);
+                if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+                {
+                    query = _GetQueryForCursorPagination(LastBroughtLDLAppID, ColumnNameToOrderBy, SortDirection);
+                }
+
+                else
+                {
+                    query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
+                }
             }
             else
             {
@@ -453,16 +522,30 @@ namespace DVLDDataAccessLayer
                         ValueToFilterBy = _GetStatusNumericValue(ValueToFilterBy);
                 }
 
-                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                query += _GroupByQueryPart;
-                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtLDLAppID);
+                if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+                {
+                    query = _QueryWithoutPagination;
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                    query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtLDLAppID, true, false);
+                    query += _GroupByQueryPart;
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                }
+
+                else
+                {
+                    query = _QueryForOffsetPagination;
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                    query += _GroupByQueryPart;
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                    query += _OffsetPaginationQueryPart;
+                }
             }
 
             return query;
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection,
-                  int LastLowestbroughtLDLAppID = -1, char? WildChar = null)
+                  int LastBroughtLDLAppID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
@@ -470,7 +553,7 @@ namespace DVLDDataAccessLayer
 
              
             string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilterBy, ref ValueToFilterBy,
-                            ColumnNameToOrderBy, SortDirection, LastLowestbroughtLDLAppID, WildChar);
+                            ColumnNameToOrderBy, SortDirection, LastBroughtLDLAppID,NumberOfRowsToOffset, WildChar);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -481,6 +564,9 @@ namespace DVLDDataAccessLayer
 
             if (WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
+
+            if (NumberOfRowsToOffset != -1)
+                command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try
             {
@@ -542,7 +628,7 @@ namespace DVLDDataAccessLayer
      
         private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection, string ColumnNameToFilterBy, ref string ValueToFilterBy, char? WildChar = null)
         {
-            string query = _query;
+            string query = _QueryWithoutPagination;
 
             ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
 
@@ -550,7 +636,7 @@ namespace DVLDDataAccessLayer
                 || (ColumnNameToFilterBy == "Applications.ApplicationStatus" && ValueToFilterBy == "All"))
             {
                 query += _GroupByQueryPart;
-                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
             }
 
             else
@@ -563,9 +649,9 @@ namespace DVLDDataAccessLayer
 
                 query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
                 query += _GroupByQueryPart;
-                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
             }
-                return query;
+            return query;
         }
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,

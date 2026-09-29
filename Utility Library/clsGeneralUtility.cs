@@ -109,8 +109,6 @@ namespace Utility_Library
 
             if (CancelArgs != null)
                 CancelArgs.Cancel = true;
-            else
-                CancelArgs.Cancel = false;
         }
 
         public static void DrawComboBoxItems(object sender, DrawItemEventArgs e, string ColumnName = null)
@@ -197,43 +195,60 @@ namespace Utility_Library
         /// Returns a datatable contains sorted info based on your query and sended arguments, the query must be designed to bring the sorted info , this method is for structure only in order to avoid repeating code and the sorted query must be sended from you.
         /// </summary>
         public static DataTable GetSortedInfoFromYourQueryAndArgs(string ConnectionString, string Query, byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
-           string ColumnNameToFilterBy, string ValueToFilterBy, char? WildChar = null)
+           string ColumnNameToFilterBy, string ValueToFilterBy, char? WildChar = null, SqlConnection CustomConnection = null, SqlCommand CustomCommand = null)
         {
             DataTable dtSortedData = null;
-            SqlConnection connection = new SqlConnection(ConnectionString);
 
-            SqlCommand command = new SqlCommand(Query, connection);
-            command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
+            SqlConnection Connection;
+            SqlCommand Command = null;
 
-            if (ValueToFilterBy != null)
-                command.Parameters.AddWithValue("@Value", ValueToFilterBy);
-
-            if (WildChar != null)
-                command.Parameters.AddWithValue("@WildChar", WildChar);
-
-            try
+            if (CustomCommand == null)
             {
-                connection.Open();
+                Connection = new SqlConnection(ConnectionString);
 
-                SqlDataReader reader = command.ExecuteReader();
+                Command = new SqlCommand(Query, Connection);
+                Command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
-                if (reader.HasRows)
+                if (ValueToFilterBy != null)
+                    Command.Parameters.AddWithValue("@Value", ValueToFilterBy);
+
+                if (WildChar != null)
+                    Command.Parameters.AddWithValue("@WildChar", WildChar);
+            }
+            else
+                Connection = CustomConnection;
+
+                try
                 {
-                    dtSortedData = new DataTable();
-                    dtSortedData.Load(reader);
+                    Connection.Open();
+
+                    SqlDataReader reader = (CustomCommand == null) ? Command.ExecuteReader() : CustomCommand.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        dtSortedData = new DataTable();
+                        dtSortedData.Load(reader);
+                    }
+
+                    reader.Close();
                 }
 
-                reader.Close();
-            }
+                catch(Exception e) { Console.Write(e.Message); }
 
-            catch { }
-
-            finally
-            {
-                connection.Close();
-            }
+                finally
+                {
+                    Connection.Close();
+                }
 
             return dtSortedData;
+        }
+
+        /// <summary>
+        /// Returns a datatable contains sorted info based on your query and sended arguments, the query must be designed to bring the sorted info , this method is for structure only in order to avoid repeating code and the sorted query must be sended from you.
+        /// </summary>
+        public static DataTable GetSortedInfoFromYourQueryAndArgs(SqlConnection CustomConnection, SqlCommand CustomCommand)
+        {
+            return GetSortedInfoFromYourQueryAndArgs(null, null, 0, null, null, null, null, null, CustomConnection, CustomCommand);
         }
 
         /// <summary>
@@ -248,58 +263,113 @@ namespace Utility_Library
         /// Returns last query part with condition if there was brought id then order by sended column or directly if there was no last brought id then send -1 instead and by that it returns the last query part order by sended column
         /// </summary>
         public static string GetLastFilterQueryPart(string PrimaryKeyToFilterBy, string ColumnNameToOrderBy, string SortDirection,
-                bool PreviousConditionMayExists, int LastLowestbroughtID = -1 , bool HasColumnNameWhiteSpaces = true)
+                bool PreviousConditionMayExists, int LastBroughtID = -1 , bool HasOrderColumnNameWhiteSpaces = true,bool ResultWithOrderByClause = false)
         {
-            if (HasColumnNameWhiteSpaces)
-            {
-                if (!PreviousConditionMayExists)
-                {
-                    if (LastLowestbroughtID != -1)
-                        return $@" WHERE {PrimaryKeyToFilterBy} < {LastLowestbroughtID}
-                     ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+            char ComparisonOperator = (SortDirection == "Desc") ? '<' : '>';
 
+            if (ResultWithOrderByClause)
+            {
+                if (HasOrderColumnNameWhiteSpaces)
+                {
+                    if (!PreviousConditionMayExists)
+                    {
+                        if (LastBroughtID != -1)
+                            return $@" WHERE {PrimaryKeyToFilterBy} {ComparisonOperator} {LastBroughtID}
+                                  ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+
+                        else
+                            return $" ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+                    }
                     else
-                        return $" ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+                    {
+                        if (LastBroughtID != -1)
+                            return $@" AND {PrimaryKeyToFilterBy} {ComparisonOperator} {LastBroughtID}
+                                 ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+
+                        else
+                            return $" ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+                    }
                 }
+
                 else
                 {
-                    if (LastLowestbroughtID != -1)
-                        return $@" AND {PrimaryKeyToFilterBy} < {LastLowestbroughtID}
-                     ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+                    if (!PreviousConditionMayExists)
+                    {
+                        if (LastBroughtID != -1)
+                            return $@" WHERE {PrimaryKeyToFilterBy} {ComparisonOperator} {LastBroughtID}
+                     ORDER BY {ColumnNameToOrderBy} {SortDirection}";
 
+                        else
+                            return $" ORDER BY {ColumnNameToOrderBy} {SortDirection}";
+                    }
                     else
-                        return $" ORDER BY [{ColumnNameToOrderBy}] {SortDirection}";
+                    {
+                        if (LastBroughtID != -1)
+                            return $@" AND {PrimaryKeyToFilterBy} {ComparisonOperator} {LastBroughtID}
+                     ORDER BY {ColumnNameToOrderBy} {SortDirection}";
+
+                        else
+                            return $" ORDER BY {ColumnNameToOrderBy} {SortDirection}";
+                    }
                 }
             }
+
             else
             {
-                if (!PreviousConditionMayExists)
+                if (HasOrderColumnNameWhiteSpaces)
                 {
-                    if (LastLowestbroughtID != -1)
-                        return $@" WHERE {PrimaryKeyToFilterBy} < {LastLowestbroughtID}
-                     ORDER BY {ColumnNameToOrderBy} {SortDirection}";
-
+                    if (!PreviousConditionMayExists)
+                    {
+                        if (LastBroughtID != -1)
+                            return $@" WHERE {PrimaryKeyToFilterBy} {ComparisonOperator} {LastBroughtID}";
+                    }
                     else
-                        return $" ORDER BY {ColumnNameToOrderBy} {SortDirection}";
+                    {
+                        if (LastBroughtID != -1)
+                            return $@" AND {PrimaryKeyToFilterBy} {ComparisonOperator} {LastBroughtID}";
+                    }
                 }
+
                 else
                 {
-                    if (LastLowestbroughtID != -1)
-                        return $@" AND {PrimaryKeyToFilterBy} < {LastLowestbroughtID}
-                     ORDER BY {ColumnNameToOrderBy} {SortDirection}";
-
+                    if (!PreviousConditionMayExists)
+                    {
+                        if (LastBroughtID != -1)
+                            return $@" WHERE {PrimaryKeyToFilterBy} {ComparisonOperator} {LastBroughtID}";
+                    }
                     else
-                        return $" ORDER BY {ColumnNameToOrderBy} {SortDirection}";
+                    {
+                        if (LastBroughtID != -1)
+                            return $@" AND {PrimaryKeyToFilterBy} {ComparisonOperator} {LastBroughtID}";
+                    }
                 }
             }
+
+            return null;
         }
 
         /// <summary>
         /// Returns last query part with condition if there was brought id then order by sended column or directly if there was no last brought id then send -1 instead and by that it returns the last query part order by sended column
         /// </summary
-        public static string GetLastSortQueryPart(string ColumnNameToOrderBy, string SortDirection,bool HasColumnNameWhiteSpaces = true)
+        public static string GetLastSortQueryPart(string ColumnNameToOrderBy, string SortDirection,bool HasOrderColumnNameWhiteSpaces = true)
         {
-            return GetLastFilterQueryPart(null, ColumnNameToOrderBy, SortDirection, false, -1,HasColumnNameWhiteSpaces);
+            return GetLastFilterQueryPart(null, ColumnNameToOrderBy, SortDirection, false, -1,HasOrderColumnNameWhiteSpaces,true);
+        }
+
+        /// <summary>
+        /// Returns last part of the query that is used to bring table data and that part is the order by part or the where clause part for cursor pagination and after it the order by clause.
+        /// </summary
+        public static string GetLastQueryPart(string PrimaryKeyColumnName,string LastColumnNameDataOrderedBy,string SortDirection,bool IsTherePreviousCondition = false,int LastBroughtID = -1, bool HasOrderColumnNameWhiteSpaces = true,bool ResultWithOrderByClause = false)
+        {
+            return GetLastFilterQueryPart(PrimaryKeyColumnName, LastColumnNameDataOrderedBy, SortDirection, IsTherePreviousCondition, LastBroughtID, HasOrderColumnNameWhiteSpaces,ResultWithOrderByClause);
+        }
+
+        /// <summary>
+        /// Returns last part of the query that is used to bring table data and that part is the order by part.
+        /// </summary
+        public static string GetOrderByQueryPart(string LastColumnNameDataOrderedBy, string SortDirection,bool HasOrderColumnNameWhiteSpaces = true)
+        {
+            return GetLastFilterQueryPart(null, LastColumnNameDataOrderedBy, SortDirection, false, -1, HasOrderColumnNameWhiteSpaces, true);
         }
 
         /// <summary>
@@ -316,6 +386,78 @@ namespace Utility_Library
         public static string GetYesNoValueAsNumericString(string FilterValue)
         {
             return (FilterValue == "Yes") ? "1" : "0";
+        }
+
+
+        /// <summary>
+        /// Returns appropriate hour number to give to datetime object to show the time correctly if it entered hour in AM or PM.
+        /// </summary
+        public static byte GetAppropriatetHourNumForAmOrPm(byte EnteredHour,bool IsTime_PM)
+        {
+            if (IsTime_PM)
+            {
+                switch (EnteredHour)
+                {
+                    case 1:
+                        EnteredHour = 13;
+                        break;
+
+                    case 2:
+                        EnteredHour = 14;
+                        break;
+
+                    case 3:
+                        EnteredHour = 15;
+                        break;
+
+                    case 4:
+                        EnteredHour = 16;
+                        break;
+
+                    case 5:
+                        EnteredHour = 17;
+                        break;
+
+                    case 6:
+                        EnteredHour = 18;
+                        break;
+
+                    case 7:
+                        EnteredHour = 19;
+                        break;
+
+                    case 8:
+                        EnteredHour = 20;
+                        break;
+
+                    case 9:
+                        EnteredHour = 21;
+                        break;
+
+                    case 10:
+                        EnteredHour = 22;
+                        break;
+
+                    case 11:
+                        EnteredHour = 23;
+                        break;
+                }
+            }
+            else
+            {
+                if (EnteredHour == 12)
+                    EnteredHour = 0;
+            }
+
+            return EnteredHour;
+        }
+
+        /// <summary>
+        /// Returns offset pagination query part to add to your main query , the returned part is : " OFFSET @NumberOfRowsToOffset ROWS FETCH NEXT @WantedNumOfRecords ROWS ONLY"
+        /// </summary
+        public static string GetOffsetPaginationQueryPart()
+        {
+            return " OFFSET @NumberOfRowsToOffset ROWS FETCH NEXT @WantedNumOfRecords ROWS ONLY";
         }
     }
 }

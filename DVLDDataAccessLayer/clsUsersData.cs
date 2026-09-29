@@ -7,16 +7,23 @@ namespace DVLDDataAccessLayer
 {
     public class clsUsersData
     {
-        private static readonly string _PrimaryKeyColumnName = "UserID"; 
+        private static readonly string _PrimaryKeyColumnName = "UserID";
+        private static readonly string _PrimaryKeyViewedColumnName = "User ID";
 
-        private static string _query =
-         $@"SELECT TOP (@WantedNumOfRecords) {_PrimaryKeyColumnName} AS [User ID],Users.PersonID AS [Person ID] ,
+        private static readonly string _FixedQueryPart =
+            $@"{_PrimaryKeyColumnName} AS [User ID],Users.PersonID AS [Person ID] ,
            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],
-           UserName,IsActive AS [Is Active] From Users INNER JOIN People ON Users.PersonID = People.PersonID";
+           UserName,IsActive AS [Is Active],Permissions From Users INNER JOIN People ON Users.PersonID = People.PersonID";
 
-        private enum enUpdatableColumns : byte
+        private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
+
+        private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
+
+        private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
+
+        private enum _enUpdatableColumns : byte
         {
-            PersonID, UserName, Password, Salt, IsActive
+            PersonID, UserName, Password, Salt, IsActive,Permissions
         }
 
         public class clsOldUserData
@@ -26,32 +33,47 @@ namespace DVLDDataAccessLayer
             public string Password;
             public string OldSalt;
             public bool? IsActiveCase;
+            public sbyte? Permissions;
 
             public clsOldUserData(int OldPersonID, string OldUserName, string OldPassword,
-                string OldSalt, bool OldIsActiveCase)
+                string OldSalt, bool OldIsActiveCase,sbyte? OldPermissions)
             {
                 this.PersonID = OldPersonID;
                 this.UserName = OldUserName;
                 this.Password = OldPassword;
                 this.OldSalt = OldSalt;
                 this.IsActiveCase = OldIsActiveCase;
+                this.Permissions = OldPermissions;
             }
         }
 
-        public static DataTable GetUsersInfo(byte WantedNumOfRecords, int LastLowestBroughtUserID = -1)
+        public static DataTable GetUsersInfo(byte WantedNumOfRecords, int LastBroughtUserID = -1, string ColumnNameToOrderBy = null
+            , int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             DataTable dtUsers = null;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = _query;
+            if (ColumnNameToOrderBy == null)
+                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
 
-            if (LastLowestBroughtUserID != -1)
-                query += $" WHERE {_PrimaryKeyColumnName} < {LastLowestBroughtUserID}";
-                            
-                query += $" ORDER BY {_PrimaryKeyColumnName} DESC";
+            string query;
+
+            if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+            {
+                query = _GetQueryForCursorPagination(LastBroughtUserID, ColumnNameToOrderBy, SortDirection);
+            }
+
+            else
+            {
+                query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
+            }
+
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
+
+            if (NumberOfRowsToOffset != -1)
+                command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try
             {
@@ -76,10 +98,49 @@ namespace DVLDDataAccessLayer
             return dtUsers;
         }
 
+        private static string _GetQueryForCursorPagination(int LastBroughtUserID, string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query;
+            if (LastBroughtUserID != -1)
+            {
+                query = _QueryWithoutPagination;
+                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtUserID);
+            }
+
+            else
+            {
+                query = _QueryWithoutPagination;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+
+            return query;
+        }
+
+        private static string _GetQueryForOffsetPagination(int NumberOfRowsToOffset, string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query;
+
+            if (NumberOfRowsToOffset == -1)
+            {
+                query = _QueryWithoutPagination;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+
+            else
+            {
+                query = _QueryForOffsetPagination;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += _OffsetPaginationQueryPart;
+            }
+
+            return query;
+        }
+
+
         public static DataTable GetColumnsNamesForView()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = _query;
+            string query = _QueryWithoutPagination;
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
@@ -105,12 +166,12 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        public static int AddNewUser(int PersonID , string UserName,string Password ,string Salt,bool IsActive)
+        public static int AddNewUser(int PersonID , string UserName,string Password ,string Salt,bool IsActive,sbyte Permissions)
         {
             int UserID = -1;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"INSERT INTO Users VALUES (@PersonID, @UserName, @Password, @Salt, @IsActive);
+            string query = @"INSERT INTO Users VALUES (@PersonID, @UserName, @Password, @Salt, @IsActive, @Permissions);
                              SELECT SCOPE_IDENTITY();";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -119,6 +180,7 @@ namespace DVLDDataAccessLayer
             command.Parameters.AddWithValue("@Password", Password);
             command.Parameters.AddWithValue("@Salt", Salt);
             command.Parameters.AddWithValue("@IsActive", IsActive);
+            command.Parameters.AddWithValue("@Permissions", Convert.ToInt16(Permissions));
 
             try
             {
@@ -126,7 +188,7 @@ namespace DVLDDataAccessLayer
 
                 object result = command.ExecuteScalar();
 
-                if(result!=null)
+                if(result != null)
                 {
                     UserID = Convert.ToInt32(result);
                 }
@@ -141,8 +203,8 @@ namespace DVLDDataAccessLayer
 
             return UserID;
         }
-
-        private static void _ResetChangedOldValues(int PersonID, string UserName, string Password, string Salt, bool IsActive, clsOldUserData OldUserData)
+ 
+        private static void _ResetChangedOldValues(int PersonID, string UserName, string Password, string Salt, bool IsActive, sbyte Permissions, clsOldUserData OldUserData)
         {
             if (PersonID != OldUserData.PersonID)
                 OldUserData.PersonID = -1;
@@ -158,32 +220,39 @@ namespace DVLDDataAccessLayer
 
             if (IsActive != OldUserData.IsActiveCase)
                 OldUserData.IsActiveCase = null;
+
+            if (Permissions != OldUserData.Permissions)
+                OldUserData.Permissions = null;
         }
 
-        private static string _GetColumnValueSetPartForUpdate(enUpdatableColumns UpdatableColumns)
+        private static string _GetColumnValueSetPartForUpdate(_enUpdatableColumns UpdatableColumns)
         {
             switch(UpdatableColumns)
             {
-                case enUpdatableColumns.PersonID:
+                case _enUpdatableColumns.PersonID:
                     return " PersonID = @PersonID";
 
-                case enUpdatableColumns.UserName:
+                case _enUpdatableColumns.UserName:
                     return " UserName = @UserName";
 
-                case enUpdatableColumns.Password:
+                case _enUpdatableColumns.Password:
                     return " Password = @Password";
 
-                case enUpdatableColumns.Salt:
+                case _enUpdatableColumns.Salt:
                     return ",Salt = @Salt";
 
-                case enUpdatableColumns.IsActive:
+                case _enUpdatableColumns.IsActive:
                     return " IsActive = @IsActive";
+
+                case _enUpdatableColumns.Permissions:
+                    return " Permissions = @Permissions";
             }
 
             return null;
         }
 
-        private static string _GetUpdateQuery(int PersonID, string UserName, string Password, string Salt, bool IsActive, clsOldUserData OldUserData, bool HasOldDataChangedFully)
+        private static string _GetUpdateQuery(int PersonID, string UserName, string Password, string Salt,
+            bool IsActive,sbyte Permissions, clsOldUserData OldUserData, bool HasOldDataChangedFully)
         {
             string query = "UPDATE Users SET";
 
@@ -191,63 +260,81 @@ namespace DVLDDataAccessLayer
             {
                 if (PersonID != OldUserData.PersonID)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.PersonID);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.PersonID);
 
                     if (UserName != OldUserData.UserName)
-                        query += ","+ _GetColumnValueSetPartForUpdate(enUpdatableColumns.UserName);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.UserName);
 
                     if (Password != OldUserData.Password)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Password)
-                               + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Salt);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Password)
+                               + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Salt);
 
                     if (IsActive != OldUserData.IsActiveCase)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.IsActive);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.IsActive);
+
+                    if (Permissions != OldUserData.Permissions)
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Permissions);
                 }
 
                 else if (UserName != OldUserData.UserName)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.UserName);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.UserName);
 
                     if (Password != OldUserData.Password)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Password)
-                               + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Salt);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Password)
+                               + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Salt);
 
                     if (IsActive != OldUserData.IsActiveCase)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.IsActive);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.IsActive);
+
+                    if (Permissions != OldUserData.Permissions)
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Permissions);
                 }
 
                 else if (Password != OldUserData.Password)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.Password)
-                           + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Salt);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Password)
+                           + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Salt);
 
                     if (IsActive != OldUserData.IsActiveCase)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.IsActive);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.IsActive);
+
+                    if (Permissions != OldUserData.Permissions)
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Permissions);
+                }
+
+                else if (IsActive != OldUserData.IsActiveCase)
+                {
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.IsActive);
+
+                    if (Permissions != OldUserData.Permissions)
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Permissions);
                 }
 
                 else
-                       if (IsActive != OldUserData.IsActiveCase)
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.IsActive);
-
+                {
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Permissions);
+                }
             }
 
             else
-                query += @" PersonID = @PersonID, UserName = @UserName, Password = @Password, Salt = @Salt, IsActive = @IsActive";
+                query += @" PersonID = @PersonID, UserName = @UserName, Password = @Password, Salt = @Salt,
+                           IsActive = @IsActive, Permissions = @Permissions";
 
             query += $" WHERE {_PrimaryKeyColumnName} = @UserID";
 
-            _ResetChangedOldValues(PersonID, UserName, Password, Salt, IsActive, OldUserData);
+            _ResetChangedOldValues(PersonID, UserName, Password, Salt, IsActive, Permissions, OldUserData);
 
             return query;
         }
 
-        public static bool UpdateUser(int UserID,int PersonID, string UserName, string Password,string Salt, bool IsActive, clsOldUserData OldUserData, bool HasOldDataChangedFully)
+        public static bool UpdateUser(int UserID,int PersonID, string UserName, string Password,string Salt, bool IsActive,sbyte Permissions, clsOldUserData OldUserData, bool HasOldDataChangedFully)
         {
             byte AffectedRows = 0;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetUpdateQuery(PersonID, UserName, Password, Salt, IsActive, OldUserData, HasOldDataChangedFully);
+            string query = _GetUpdateQuery(PersonID, UserName, Password, Salt, IsActive,Permissions, OldUserData, HasOldDataChangedFully);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserID",UserID);
@@ -266,6 +353,9 @@ namespace DVLDDataAccessLayer
                 
             if(OldUserData.IsActiveCase == null)
             command.Parameters.AddWithValue("@IsActive", IsActive);
+
+            if (OldUserData.Permissions == null)
+                command.Parameters.AddWithValue("@Permissions", Convert.ToInt16(Permissions));
 
             try
             {
@@ -365,7 +455,7 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
-        public static bool Find(int UserID, ref int PersonID, ref string UserName, ref string Password, ref string Salt, ref bool IsActive)
+        public static bool Find(int UserID, ref int PersonID, ref string UserName, ref string Password, ref string Salt, ref bool IsActive,ref sbyte Permissions)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -388,6 +478,7 @@ namespace DVLDDataAccessLayer
                     Password = (string)reader["Password"];
                     Salt = (string)reader["Salt"];
                     IsActive = (bool)reader["IsActive"];
+                    Permissions = Convert.ToSByte(reader["Permissions"]);
 
                     IsFound = true;
                 }
@@ -432,11 +523,11 @@ namespace DVLDDataAccessLayer
             }
         }
 
-        public static bool GetLoginInfo(string UserName, ref int UserID, ref string Password, ref bool IsActive, ref byte[] Salt)
+        public static bool GetLoginInfo(string UserName, ref int UserID, ref string Password, ref byte[] Salt, ref bool IsActive,ref sbyte Permissions)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = $@"SELECT {_PrimaryKeyColumnName}, Password, Salt, IsActive FROM Users WHERE UserName = @UserName";
+            string query = $@"SELECT UserID, Password, Salt, IsActive, Permissions FROM Users WHERE UserName = @UserName";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserName", UserName);
@@ -452,6 +543,7 @@ namespace DVLDDataAccessLayer
                     Password = (string)reader["Password"];
                     Salt = Convert.FromBase64String((string)reader["Salt"]);
                     IsActive = (bool)reader["IsActive"];
+                    Permissions = Convert.ToSByte(reader["Permissions"]);
 
                     return true;
                 }
@@ -577,47 +669,66 @@ namespace DVLDDataAccessLayer
         }
 
         private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy,
-            string ColumnNameToOrderBy,string SortDirection, int LastLowestbroughtUserID = -1, char? WildChar = null)
+            string ColumnNameToOrderBy, string SortDirection, int LastBroughtUserID = -1,int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = _PrimaryKeyColumnName;
+                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
 
-                string query = _query;
+            if (ColumnNameToFilterBy != "UserName" && ColumnNameToFilterBy != "Permissions")
+                ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
+
+            string query;
 
             if (string.IsNullOrEmpty(ValueToFilterBy)
                 || (ColumnNameToFilterBy == "IsActive" && ValueToFilterBy == "All"))
             {
-                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtUserID);
+                if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+                {
+                    query = _GetQueryForCursorPagination(LastBroughtUserID, ColumnNameToOrderBy, SortDirection);
+                }
+
+                else
+                {
+                    query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
+                }
             }
 
             else
             {
-                if (ColumnNameToFilterBy != "UserName")
-                    ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
-
                 if (ColumnNameToFilterBy == "IsActive")
                 {
                     if(ValueToFilterBy != "All")
                     ValueToFilterBy = clsGeneralUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
-                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+                {
+                    query = _QueryWithoutPagination;
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                    query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtUserID,true);
+                }
 
-                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtUserID);
+                else
+                {
+                    query = _QueryForOffsetPagination;
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                    query += _OffsetPaginationQueryPart;
+                }
             }
 
             return query;
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy, string ColumnNameToOrderBy,string SortDirection,
-            int LastLowestbroughtUserID = -1, char? WildChar = null)
+            int LastBroughtUserID = -1,int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilterBy, ref ValueToFilterBy,
-                            ColumnNameToOrderBy,SortDirection, LastLowestbroughtUserID, WildChar);
+                            ColumnNameToOrderBy, SortDirection, LastBroughtUserID, NumberOfRowsToOffset, WildChar);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -627,6 +738,9 @@ namespace DVLDDataAccessLayer
 
             if (WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
+
+            if (NumberOfRowsToOffset != -1)
+                command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try
             {
@@ -682,15 +796,15 @@ namespace DVLDDataAccessLayer
 
         private static string _GetDataSortingQuery(string ColumnNameToOrderBy,string SortDirection, string ColumnNameToFilterBy ,ref string ValueToFilterBy, char? WildChar = null)
         {
-            string query = _query;
+            string query = _QueryWithoutPagination;
 
-            if (ColumnNameToFilterBy != "UserName")
+            if (ColumnNameToFilterBy != "UserName" && ColumnNameToFilterBy != "Permissions")
                 ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
 
             if (string.IsNullOrEmpty(ValueToFilterBy)
                 || (ColumnNameToFilterBy == "IsActive" && ValueToFilterBy == "All"))
             {
-                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,true);
             }
 
             else
@@ -702,7 +816,7 @@ namespace DVLDDataAccessLayer
                 }
 
                 query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,true);
             }
                 
             return query;

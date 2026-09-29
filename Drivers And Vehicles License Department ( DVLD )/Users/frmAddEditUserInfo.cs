@@ -59,6 +59,7 @@ namespace DVLDPresentationLayer
 
             clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
+
         private void _SetTitles(clsUser.enMode Mode)
         {
             if (Mode == clsUser.enMode.AddNew)
@@ -72,6 +73,15 @@ namespace DVLDPresentationLayer
                 lblFormBigTitle.Text = "Update User";
             }
         }
+        
+        private void _EnableAllPermissionsCheckBoxes()
+        {
+            chkManageUsers.Checked = true;
+            chkManagePeople.Checked = true;
+            chkManageApplications.Checked = true;
+            chkViewDrivers.Checked = true;
+        }
+
         private void _ShowUserDetails()
         {
             uctrlpersonInfoByFilter.LoadPersonDetails(_User.PersonID);
@@ -81,6 +91,21 @@ namespace DVLDPresentationLayer
             txtPassword.Text = _DefaultPasswordValue;
             txtPasswordConfirmation.Text = _DefaultPasswordValue;
             chkIsActive.Checked = _User.IsActive;
+            
+            if (_User.IsAdminUser())
+                _EnableAllPermissionsCheckBoxes();
+
+            if (_User.HasUserPermission(clsUser.enUserPermissions.UsersManagement))
+                chkManageUsers.Checked = true;
+
+            if(_User.HasUserPermission(clsUser.enUserPermissions.PeopleManagement))
+                 chkManagePeople.Checked = true;
+
+            if (_User.HasUserPermission(clsUser.enUserPermissions.ApplicationsManagement))
+                chkManageApplications.Checked = true;
+
+            if(_User.HasUserPermission(clsUser.enUserPermissions.DriversView))
+                chkViewDrivers.Checked = true;
         }
         private void btnExit_Click(object sender, EventArgs e)
         {
@@ -176,13 +201,43 @@ namespace DVLDPresentationLayer
 
         private void _SetPasswordAndSalt(clsUser User)
         {
-            _SetPasswordAndSalt(User.Password,User.Salt);
+            string Password = "", Salt = "";
+            _SetPasswordAndSalt(ref Password,ref Salt);
+
+            User.Password = Password;
+            User.Salt = Salt;
         }
-        private void _SetPasswordAndSalt(string Password,string Salt)
+        private void _SetPasswordAndSalt(ref string Password,ref string Salt)
         {
             byte[] SaltArray = null;
             Password = clsGeneralUtility.HashWithSaltPassword(txtPassword.Text, ref SaltArray);
             Salt = Convert.ToBase64String(SaltArray);
+        }
+
+        private sbyte _GetNewUserPermissions()
+        {
+            if (chkManageUsers.Checked && chkManagePeople.Checked
+             && chkManageApplications.Checked && chkViewDrivers.Checked)
+                return -1;
+
+            else
+            {
+                sbyte Permissions = 0;
+
+                if (chkManageUsers.Checked)
+                    Permissions += 1;
+
+                if (chkManagePeople.Checked)
+                    Permissions += 2;
+
+                if (chkManageApplications.Checked)
+                    Permissions += 4;
+
+                if (chkViewDrivers.Checked)
+                    Permissions += 8;
+
+                return Permissions;
+            }
         }
 
         private void _SetUserInfo(out clsUser User)
@@ -196,21 +251,20 @@ namespace DVLDPresentationLayer
                     _SetPasswordAndSalt(User);
 
                 User.IsActive = chkIsActive.Checked;
+                User.UserPermissions = _GetNewUserPermissions();
             }
             else
             {
                 string _Password = "";
                 string _Salt = "";
-                _SetPasswordAndSalt(_Password, _Salt);
+                _SetPasswordAndSalt(ref _Password,ref _Salt);
 
                 User = new clsUser(
                     PersonID: _PersonID,
                     UserName: clsGeneralUtility.EncryptUserName(txtUserName.Text),
-                    Password: _Password,
-                    Salt: _Salt,
-                    IsActive: chkIsActive.Checked
+                    Password: _Password, Salt: _Salt,
+                    IsActive: chkIsActive.Checked, Permissions: _GetNewUserPermissions()
                     );
-
             }
         }
 
@@ -243,7 +297,7 @@ namespace DVLDPresentationLayer
 
                 OnAddedOrEditedUserInfo?.Invoke();
 
-                object[] NewDetails = new object[] { lblUserID.Text, _PersonID, clsPerson.GetFullName(_PersonID), txtUserName.Text, chkIsActive.Checked };
+                object[] NewDetails = new object[] { lblUserID.Text, _PersonID, clsPerson.GetFullName(_PersonID), txtUserName.Text, chkIsActive.Checked, _GetNewUserPermissions() };
                 AfterSavingNewInfo?.Invoke(NewDetails);
                 AfterSavingEditedInfo?.Invoke(NewDetails,_UsersDGVRowIndex,null);
 
@@ -290,6 +344,7 @@ namespace DVLDPresentationLayer
         private void frmAddEditUserInfo_FormClosing(object sender, FormClosingEventArgs e)
         {
             string UserFullName = clsPerson.GetFullName(_PersonID);
+            
             if (_CurrentUserFullName != UserFullName && _CurrentUserFullName != null)
             {
                 object[] ModifiedDetails = null;

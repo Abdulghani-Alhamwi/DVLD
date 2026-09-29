@@ -13,7 +13,7 @@ namespace DVLDPresentationLayer.Licenses
         public event Action<int,DateTime,int> AfterReleasingALicense;
 
         private clsLocalLicense _LocalLicenseInfo;
-        private clsDetainedLicenses _DetainInfo;
+        private clsDetainedLicense _DetainInfo;
 
         private int _DetainedLicensesDgvRowIndex;
 
@@ -49,7 +49,7 @@ namespace DVLDPresentationLayer.Licenses
 
         private bool _AddDetainInfo(int LocalLicenseID)
         {
-            _DetainInfo = clsDetainedLicenses.Find(LocalLicenseID);
+            _DetainInfo = clsDetainedLicense.Find(LocalLicenseID);
             _ShowDetainInfo();
 
             return (_DetainInfo != null);
@@ -110,14 +110,14 @@ namespace DVLDPresentationLayer.Licenses
 
         private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(clsLocalLicense LicenseInfo)
         {
-            if (!clsDetainedLicenses.IsDetainedLicense(LicenseInfo.LicenseID))
+            if (!clsDetainedLicense.IsDetainedLicense(LicenseInfo.LicenseID))
             {
                 MessageBox.Show("Selected license is not detained , choose another one.", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             else
             {
-                _DetainInfo = clsDetainedLicenses.Find(LicenseInfo.LicenseID);
+                _DetainInfo = clsDetainedLicense.Find(LicenseInfo.LicenseID);
 
                 if (_DetainInfo != null)
                 {

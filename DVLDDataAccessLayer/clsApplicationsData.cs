@@ -7,7 +7,7 @@ namespace DVLDDataAccessLayer
     {
         private static string _PrimaryKeyColumnName = "ApplicationID";
 
-        private enum enUpdatableColumns : byte { ApplicantPersonID, ApplicationStatus, LastStatusDate }
+        private enum _enUpdatableColumns : byte { ApplicantPersonID, ApplicationStatus, LastStatusDate }
 
         public class clsOldApplicationData
         {
@@ -68,17 +68,17 @@ namespace DVLDDataAccessLayer
             }
         }
 
-        private static string _GetColumnValueSetPartForUpdate(enUpdatableColumns UpdatableColumn)
+        private static string _GetColumnValueSetPartForUpdate(_enUpdatableColumns UpdatableColumn)
         {
             switch (UpdatableColumn)
             {
-                case enUpdatableColumns.ApplicantPersonID:
+                case _enUpdatableColumns.ApplicantPersonID:
                     return " ApplicantPersonID = @ApplicantPersonID";
 
-                case enUpdatableColumns.ApplicationStatus:
+                case _enUpdatableColumns.ApplicationStatus:
                     return " ApplicationStatus = @Status";
 
-                case enUpdatableColumns.LastStatusDate:
+                case _enUpdatableColumns.LastStatusDate:
                     return ",LastStatusDate = @LastStatusDate";
             }
 
@@ -91,13 +91,13 @@ namespace DVLDDataAccessLayer
 
                 if (ApplicantPersonID != OldApplicationData.ApplicantPersonID)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.ApplicantPersonID);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ApplicantPersonID);
                 }
 
                 else
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.ApplicationStatus)
-                           + _GetColumnValueSetPartForUpdate(enUpdatableColumns.LastStatusDate);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ApplicationStatus)
+                           + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.LastStatusDate);
                 }
 
             query += $" WHERE {_PrimaryKeyColumnName} = @ApplicationID";

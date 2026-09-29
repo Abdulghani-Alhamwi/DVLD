@@ -9,34 +9,53 @@ namespace DVLDDataAccessLayer
     {
         private static readonly string _PrimaryKeyColumnName = "Drivers.DriverID";
 
-        private static string _query =
-         $@"SELECT TOP (@WantedNumOfRecords) {_PrimaryKeyColumnName} AS [Driver ID] , Drivers.PersonID AS [Person ID] ,People.NationalNo AS [National No.],
+        private static readonly string _PrimaryKeyViewedColumnName = "Driver ID";
+
+        private static readonly string _FixedQueryPart =
+         $@"{_PrimaryKeyColumnName} AS [Driver ID] , Drivers.PersonID AS [Person ID] ,People.NationalNo AS [National No.],
             People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],Format(CreatedDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Date Created],
             SUM(CAST(LocalLicenses.IsActive AS TINYINT)) + (CASE WHEN InternationalLicenses.IsActive IS NULL THEN 0 ELSE 1 END) AS [Active Licenses]
             From Drivers INNER JOIN People ON Drivers.PersonID = People.PersonID INNER JOIN LocalLicenses ON {_PrimaryKeyColumnName} = LocalLicenses.DriverID
             LEFT JOIN InternationalLicenses ON {_PrimaryKeyColumnName} = InternationalLicenses.DriverID";
 
-        private static string _groupByPartOfQuery =
+        private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
+
+        private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
+
+        private static readonly string _GroupByQueryPart =
          $@" GROUP BY {_PrimaryKeyColumnName}, Drivers.PersonID, People.NationalNo,
             People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
-            Format(CreatedDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}'), InternationalLicenses.IsActive
-            ORDER BY {_PrimaryKeyColumnName} DESC";
+            Format(CreatedDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}'), InternationalLicenses.IsActive";
 
-        public static DataTable GetDriversInfo(byte WantedNumOfRecords, int LastLowestBroughtDriverID = -1)
+        private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
+
+        public static DataTable GetDriversInfo(byte WantedNumOfRecords, int LastBroughtDriverID = -1, string ColumnNameToOrderBy = null
+            , int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             DataTable dtDrivers = null;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = _query;
+            if (ColumnNameToOrderBy == null)
+                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
 
-            if (LastLowestBroughtDriverID != -1)
-                query += $" WHERE {_PrimaryKeyColumnName} < {LastLowestBroughtDriverID}" + _groupByPartOfQuery;
+            string query;
+
+            if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+            {
+                query = _GetQueryForCursorPagination(LastBroughtDriverID, ColumnNameToOrderBy, SortDirection);
+            }
 
             else
-                query += _groupByPartOfQuery;
+            {
+                query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
+            }
+
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
+
+            if (NumberOfRowsToOffset != -1)
+                command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try
             {
@@ -59,6 +78,49 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return dtDrivers;
+        }
+
+        private static string _GetQueryForCursorPagination(int LastBroughtDriverID, string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query;
+            if (LastBroughtDriverID != -1)
+            {
+                query = _QueryWithoutPagination;
+                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtDriverID, true,false);
+                query += _GroupByQueryPart;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+            }
+
+            else
+            {
+                query = _QueryWithoutPagination;
+                query += _GroupByQueryPart;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+            }
+
+            return query;
+        }
+
+        private static string _GetQueryForOffsetPagination(int NumberOfRowsToOffset, string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query;
+
+            if (NumberOfRowsToOffset == -1)
+            {
+                query = _QueryWithoutPagination;
+                query += _GroupByQueryPart;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+            }
+
+            else
+            {
+                query = _QueryForOffsetPagination;
+                query += _GroupByQueryPart;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += _OffsetPaginationQueryPart;
+            }
+
+            return query;
         }
 
         public static int AddNewDriver(int PersonID, int CreatedByUserID, DateTime CreatedDate)
@@ -221,41 +283,62 @@ namespace DVLDDataAccessLayer
             }
         }
 
-        private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy, char? WildChar = null, int LastLowestBroughtDriverID = -1)
+        private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy,
+             string ColumnNameToOrderBy, string SortDirection,int LastBroughtDriverID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
-            string query = _query;
+            string query;
+
+            if (ColumnNameToOrderBy == null)
+                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
+
+                ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-                if (LastLowestBroughtDriverID != -1)
-                    query += $" WHERE {_PrimaryKeyColumnName} < {LastLowestBroughtDriverID}" + _groupByPartOfQuery;
+                if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+                {
+                    query = _GetQueryForCursorPagination(LastBroughtDriverID, ColumnNameToOrderBy, SortDirection);
+                }
 
                 else
-                    query += _groupByPartOfQuery;
-
-                return query;
+                {
+                    query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
+                }
             }
-
-            ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
-
-            query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-
-            if (LastLowestBroughtDriverID != -1)
-                query += $" AND {_PrimaryKeyColumnName} < {LastLowestBroughtDriverID}" + _groupByPartOfQuery;
-
             else
-                query += _groupByPartOfQuery;
+            {
+                if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+                {
+                    query = _QueryWithoutPagination;
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                    query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtDriverID,true,false);
+                    query += _GroupByQueryPart;
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                }
+
+                else
+                {
+                    query = _QueryForOffsetPagination;
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                    query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtDriverID, true, false);
+                    query += _GroupByQueryPart;
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                    query += _OffsetPaginationQueryPart;
+                }
+            }
 
             return query;
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtDriverID = -1, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,string ColumnNameToOrderBy
+            , string SortDirection,int LastBroughtDriverID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, WildChar, LastLowestBroughtDriverID);
+            string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy,ColumnNameToOrderBy,SortDirection
+                , LastBroughtDriverID, NumberOfRowsToOffset, WildChar);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -265,6 +348,9 @@ namespace DVLDDataAccessLayer
 
             if (WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
+
+            if (NumberOfRowsToOffset != -1)
+                command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try
             {
@@ -374,6 +460,34 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return -1;
+        }
+
+        private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection, string ColumnNameToFilterBy, ref string ValueToFilterBy, char? WildChar = null)
+        {
+            string query = _QueryWithoutPagination;
+
+            ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
+
+            if (string.IsNullOrEmpty(ValueToFilterBy))
+            {
+                query += _GroupByQueryPart;
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+
+            else
+            {
+                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += _GroupByQueryPart;
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+            return query;
+        }
+
+        public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
+            string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
+        {
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+                WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }
 }

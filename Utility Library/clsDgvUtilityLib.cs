@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Policy;
 using System.Windows.Forms;
 
 namespace Utility_Library
@@ -11,7 +12,14 @@ namespace Utility_Library
         public enum enDataGridViewSortDirection : byte { Ascending = 0, Descending = 1 }
 
         public static byte WantedNumOfRowsFromDB = 10;
-        private int _NumberOfDgvAddedRows;
+        private int _NumberOfDGVAddedRows;
+
+        private int _NumberOfRowsToOffset;
+        public int NumberOfRowsToOffset { get { return _NumberOfRowsToOffset; } }
+
+        private bool _IsFirstTimeOffset = true;
+
+        private string _LastDGVOrderedColumn;
 
         public static void FilterDataView(DataView dataview, string ColumnName, string FilterOnValue, KeyEventArgs e)
         {
@@ -30,11 +38,53 @@ namespace Utility_Library
                 dataview.RowFilter = $"[{ColumnName}] = '{FilterOnValue}'";
         }
 
+        private void _OrderDataRowsDescending(ref DataRow[] DataRows)
+        {
+            DataRow[] DataRowAfterOrdering = new DataRow[DataRows.Count()];
+
+            for (byte i= 0;i<DataRows.Count();i++)
+            {
+                DataRowAfterOrdering[i] = DataRows[DataRows.Count() - i - 1];
+            }
+            DataRows = DataRowAfterOrdering;
+        }
+
+        private void _OrderDataRowsAscending(ref DataRow[] DataRows)
+        {
+            DataRow[] DataRowAfterOrdering = new DataRow[DataRows.Count()];
+            DataRow TempDataRow = null;
+            for (byte i = 0; i < DataRows.Count(); i++)
+            {
+                if (i < DataRows.Count() - 1)
+                {
+                    if ((int)DataRows[i][0] < (int)DataRows[i + 1][0])
+                        DataRowAfterOrdering[i] = DataRows[i];
+
+                    else
+                    {
+                        TempDataRow = DataRows[i + 1];
+                        DataRows[i + 1] = DataRows[i];
+                        DataRows[i] = TempDataRow;
+                        DataRowAfterOrdering[i] = DataRows[i];
+                    }
+                }
+                else
+                    DataRowAfterOrdering[i] = DataRows[i];
+            }
+            DataRows = DataRowAfterOrdering;
+        }
+
         /// <summary>
         /// Add new rows to data grid view.
         /// </summary>
-        public static void AddNewRowsToDgv(DataGridView dgv, DataRow[] NewDataRows, string[] ColumnsNamesInOrder)
+        public void AddNewRowsToDgv(DataGridView dgv, DataRow[] NewDataRows, string[] ColumnsNamesInOrder,enDataGridViewSortDirection SortDirection)
         {
+            if (SortDirection == enDataGridViewSortDirection.Descending)
+                _OrderDataRowsDescending(ref NewDataRows);
+
+            else
+                _OrderDataRowsAscending(ref NewDataRows);
+
             object[] RowsValues;
             for (short i = 0; i < NewDataRows.Length; i++)
             {
@@ -43,8 +93,22 @@ namespace Utility_Library
                 {
                     RowsValues[j] = NewDataRows[i][ColumnsNamesInOrder[j]];
                 }
-            ((DataTable)dgv.DataSource).Rows.Add(RowsValues);
+
+                ((DataTable)dgv.DataSource).Rows.Add(RowsValues);
             }
+        }
+
+        /// <summary>
+        /// Add new row to data grid view , the new values array length must match the number of data grid view columns and the dgv first column name is to sort that column in order to display the new row as first row when the dgv has a lot of records in order to avoid user to scroll down to reach the new row.
+        /// </summary>
+        public void AddNewRowToDGV(DataGridView dgv, object[] NewValues, string dgvPrimaryKeyColumnName)
+        {
+            DataTable DataSource = (DataTable)dgv.DataSource;
+            DataSource.Rows.Add(NewValues);
+            DataSource.AcceptChanges();
+            DataSource.DefaultView.Sort = $"{dgvPrimaryKeyColumnName} DESC";
+
+            _NumberOfDGVAddedRows++;
         }
 
         /// <summary>
@@ -76,6 +140,7 @@ namespace Utility_Library
 
             return ldgvColumnsNames;
         }
+
         public static List<string> GetDgvColumnsNames(DataGridView dgv, string[] UnWantedColumnNames)
         {
             List<string> ldgvColumnsNames = new List<string>();
@@ -110,29 +175,16 @@ namespace Utility_Library
         }
 
         /// <summary>
-        /// Add new row to data grid view , the new values array length must match the number of data grid view columns and the dgv first column name is to sort that column in order to display the new row as first row when the dgv has a lot of records in order to avoid user to scroll down to reach the new row.
-        /// </summary>
-        public void AddNewRowToDGV(DataGridView Dgv, object[] NewValues, string dgvFirstColumnName)
-        {
-            DataTable DataSource = (DataTable)Dgv.DataSource;
-            DataSource.Rows.Add(NewValues);
-            DataSource.AcceptChanges();
-            DataSource.DefaultView.Sort = $"{dgvFirstColumnName} DESC";
-
-            _NumberOfDgvAddedRows++;
-        }
-
-        /// <summary>
         /// return the the data source row index for a dgv row.
         /// </summary>
-        private int _GetActualRowIndexOfDgvRow(DataTable DataSource, int DgvRowIndex)
+        private int _GetActualRowIndexOfDgvRow(DataTable DataSource, int dgvRowIndex)
         {
             int DataSourceRowIndex;
-            if (DgvRowIndex < _NumberOfDgvAddedRows)
-                DataSourceRowIndex = (DataSource.Rows.Count - 1) - DgvRowIndex;
+            if (dgvRowIndex < _NumberOfDGVAddedRows)
+                DataSourceRowIndex = (DataSource.Rows.Count - 1) - dgvRowIndex;
 
             else
-                DataSourceRowIndex = DgvRowIndex - _NumberOfDgvAddedRows;
+                DataSourceRowIndex = dgvRowIndex - _NumberOfDGVAddedRows;
 
             return DataSourceRowIndex;
         }
@@ -143,7 +195,7 @@ namespace Utility_Library
         public void EditFullDataRowInDgv(DataGridView dgv, object[] NewValues, int RowIndex)
         {
             DataTable DataSource = (DataTable)dgv.DataSource;
-            if (_NumberOfDgvAddedRows != 0)
+            if (_NumberOfDGVAddedRows != 0)
             {
                 RowIndex = _GetActualRowIndexOfDgvRow(DataSource, RowIndex);
             }
@@ -163,7 +215,7 @@ namespace Utility_Library
         public void EditOneColumnValueInDgv<T>(DataGridView dgv, string ColumnName, T NewValue, int RowIndex)
         {
             DataTable DataSource = (DataTable)dgv.DataSource;
-            if (_NumberOfDgvAddedRows != 0)
+            if (_NumberOfDGVAddedRows != 0)
             {
                 RowIndex = _GetActualRowIndexOfDgvRow(DataSource, RowIndex);
             }
@@ -197,21 +249,25 @@ namespace Utility_Library
             return null;
         }
 
-        public void SetDataSourceAfterColumnOrdering(DataGridView Dgv, DataTable NewSortedDataSource, DataGridViewCellMouseEventArgs e, ref string LastColumnNameDgvSortedBy)
+        public static void GetLastColumnNameDGVSortedBy(DataGridView dgv, DataGridViewCellMouseEventArgs e,ref string LastColumnNameDGVSortedBy)
         {
-            _NumberOfDgvAddedRows = 0;
-
-            if (LastColumnNameDgvSortedBy != Dgv.Columns[e.ColumnIndex].HeaderText)
+            if (LastColumnNameDGVSortedBy != dgv.Columns[e.ColumnIndex].HeaderText)
             {
-                LastColumnNameDgvSortedBy = Dgv.Columns[e.ColumnIndex].HeaderText;
+                LastColumnNameDGVSortedBy = dgv.Columns[e.ColumnIndex].HeaderText;
             }
-
-            Dgv.DataSource = NewSortedDataSource;
         }
 
-        public static bool WasDgvColumnHeaderClicked(DataGridView Dgv, MouseEventArgs e)
+        public void SetDataSourceAfterColumnOrdering(DataGridView dgv, DataTable NewSortedDataSource, DataGridViewCellMouseEventArgs e, ref string LastColumnNameDGVSortedBy)
         {
-            return (e.Location.Y <= Dgv.ColumnHeadersHeight);
+            _NumberOfDGVAddedRows = 0;
+            GetLastColumnNameDGVSortedBy(dgv, e,ref LastColumnNameDGVSortedBy);
+
+            dgv.DataSource = NewSortedDataSource;
+        }
+
+        public static bool WasDgvColumnHeaderClicked(DataGridView dgv, MouseEventArgs e)
+        {
+            return (e.Location.Y <= dgv.ColumnHeadersHeight);
         }
 
 
@@ -236,6 +292,115 @@ namespace Utility_Library
 
             else
                 return false;
+        }
+
+        private static void _DecryptUserName(DataTable NewDataSource, string UserNameColumnName)
+        {
+            if (NewDataSource != null)
+            {
+                foreach (DataRow datarow in NewDataSource.Rows)
+                {
+                    datarow[UserNameColumnName] = clsGeneralUtility.DecryptUserName(datarow[UserNameColumnName].ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns DataSource and the Username is descrypted therefore it will be shown in data grid view appropriatly.
+        /// </summary
+        public static void DecryptUsersNamesForDgv(DataGridView dgv, string UserNameColumnName)
+        {
+            _DecryptUserName((DataTable)dgv.DataSource, UserNameColumnName);
+        }
+
+        /// <summary>
+        /// Decrypt the Username therefore it will be shown in data grid view appropriatly.
+        /// </summary
+        public static void DecryptUsersNamesForDgv(DataTable NewDataSource, string UserNameColumnName, out DataRow[] NewRows)
+        {
+            _DecryptUserName(NewDataSource, UserNameColumnName);
+
+            NewRows = NewDataSource?.Select();
+        }
+
+        /// <summary>
+        /// Set number of offset rows for offset pagination and the set is based on the sended columns , the primary key column is not used for offset pagination but for cusor pagination therefore you must handle cursor pagination for the primary key column and offset pagination for other columns therefore when ordering with other column than the primary key column the order be correct instead of using the unique identifier which can lead to rbing the last id and first id and by that the condition to bring more records using cursor pagination won't work correctly..
+        /// </summary
+        public void SetNumberOfRowsToOffset(string PrimaryKeyViewedColumnName, string LastColumnNameDGVSortedBy)
+        {
+            if (LastColumnNameDGVSortedBy == null)
+                _IsFirstTimeOffset = false;
+
+            else if (_LastDGVOrderedColumn != LastColumnNameDGVSortedBy)
+            {
+                _IsFirstTimeOffset = true;
+            }
+
+            if (_IsFirstTimeOffset)
+            {
+                _NumberOfRowsToOffset = 0;
+                _IsFirstTimeOffset = false;
+            }
+
+            if (LastColumnNameDGVSortedBy != null)
+                _NumberOfRowsToOffset += 10;
+
+            _LastDGVOrderedColumn = LastColumnNameDGVSortedBy;
+        }
+
+        /// <summary>
+        /// Returns lowest brought value to data grid view from the primary key column , primary key column here is one column and its type must be int.
+        /// </summary
+        private static int _GetLowestBroughtValueOfPKColumn(DataGridView dgv, string dgvPrimaryKeyColumnName)
+        {
+            int ID = -1;
+            foreach (DataRow Row in ((DataTable)dgv.DataSource).Rows)
+            {
+                if (ID == -1)
+                    ID = (int)Row[dgvPrimaryKeyColumnName];
+
+                if ((int)Row[dgvPrimaryKeyColumnName] < ID)
+                    ID = (int)Row[dgvPrimaryKeyColumnName];
+            }
+            return ID;
+        }
+
+        /// <summary>
+        /// Returns highest brought value to data grid view from the primary key column , primary key column here is one column and its type must be int.
+        /// </summary
+        private static int _GetHighestBroughtValueOfPKColumn(DataGridView dgv, string dgvPrimaryKeyColumnName)
+        {
+            int ID = -1;
+            foreach (DataRow Row in ((DataTable)dgv.DataSource).Rows)
+            {
+                if (ID == -1)
+                    ID = (int)Row[dgvPrimaryKeyColumnName];
+
+                if ((int)Row[dgvPrimaryKeyColumnName] > ID)
+                    ID = (int)Row[dgvPrimaryKeyColumnName];
+            }
+            return ID;
+        }
+
+        /// <summary>
+        /// Returns Last lowest or highest brought value of the primary key column according to current dgv sort direction.
+        /// </summary
+        public static int GetLastBroughtValueOfPKColumn(DataGridView dgv, string dgvPrimaryKeyColumnName,enDataGridViewSortDirection SortDirection)
+        {
+            if (SortDirection == enDataGridViewSortDirection.Descending)
+                return _GetLowestBroughtValueOfPKColumn(dgv, dgvPrimaryKeyColumnName);
+
+            else
+                return _GetHighestBroughtValueOfPKColumn(dgv, dgvPrimaryKeyColumnName);
+        }
+
+        /// <summary>
+        /// Reset the last column to order by to null and the sort direction to enDataGridViewSortDirection.Descending
+        /// </summary
+        public static void ResetSortPropertiesToDefault(ref string LastColumnNameDGVOrderedBy,ref enDataGridViewSortDirection SortDirection)
+        {
+            LastColumnNameDGVOrderedBy = null;
+            SortDirection = enDataGridViewSortDirection.Descending;
         }
     }
 }

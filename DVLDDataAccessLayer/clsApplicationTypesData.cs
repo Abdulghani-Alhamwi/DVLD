@@ -6,9 +6,9 @@ namespace DVLDDataAccessLayer
 {
     public class clsApplicationTypesData
     {
-        private static string _PrimaryKeyColumnName = "ApplicationTypeID";
+        private static readonly string _PrimaryKeyColumnName = "ApplicationTypeID";
 
-        private enum enUpdatableColumns : byte { ApplicationTypeTitle, ApplicationTypeFees }
+        private enum _enUpdatableColumns : byte { ApplicationTypeTitle, ApplicationTypeFees }
 
         public class clsOldApplicationTypeData
         {
@@ -63,14 +63,14 @@ namespace DVLDDataAccessLayer
                 OldApplicationTypeData.ApplicationTypeFees = -1;
         }
 
-        private static string _GetColumnValueSetPartForUpdate(enUpdatableColumns UpdatableColumn)
+        private static string _GetColumnValueSetPartForUpdate(_enUpdatableColumns UpdatableColumn)
         {
             switch (UpdatableColumn)
             {
-                case enUpdatableColumns.ApplicationTypeTitle:
+                case _enUpdatableColumns.ApplicationTypeTitle:
                     return " ApplicationTypeTitle = @Title";
 
-                case enUpdatableColumns.ApplicationTypeFees:
+                case _enUpdatableColumns.ApplicationTypeFees:
                     return " ApplicationFees = @Fees";
             }
 
@@ -85,12 +85,12 @@ namespace DVLDDataAccessLayer
             {
                 if (ApplicationTypeTitle != OldApplicationTypeData.ApplicationTypeTitle)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.ApplicationTypeTitle);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ApplicationTypeTitle);
                 }
 
                 else
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.ApplicationTypeFees);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ApplicationTypeFees);
                 }
 
             }

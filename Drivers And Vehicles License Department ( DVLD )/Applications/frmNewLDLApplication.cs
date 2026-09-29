@@ -269,11 +269,11 @@ namespace DVLDPresentationLayer.Core
                     {
                         MessageBox.Show("There is'nt any change on the information", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                }
 
-                    else if (_CanPersonApply())
-                    {
-                        _SaveApplicationData();
-                    }
+                if (_CanPersonApply())
+                {
+                    _SaveApplicationData();
                 }
             }
             else

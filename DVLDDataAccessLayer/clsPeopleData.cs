@@ -8,15 +8,22 @@ namespace DVLDDataAccessLayer
     public class clsPeopleData
     {
         private static readonly string _PrimaryKeyColumnName = "PersonID";
+        private static readonly string _PrimaryKeyViewedColumnName = "Person ID";
 
-        private static string _query =
-         $@"SELECT TOP (@WantedNumOfRecords) {_PrimaryKeyColumnName} As [Person ID], NationalNo AS [National No.],
+        private static readonly string _FixedQueryPart =
+         $@"{_PrimaryKeyColumnName} As [Person ID], NationalNo AS [National No.],
            FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
            Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
            FORMAT(DateOfBirth,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.NumericFormat)}') AS [Date Of Birth],
            Countries.CountryName AS Nationality, Phone, Email FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
 
-        private enum enUpdatableColumns : byte
+        private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
+
+        private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
+
+        private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
+
+        private enum _enUpdatableColumns : byte
         {
             NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, Gendor,
             Address, Phone, Email, NationalityCountryID, ImagePath
@@ -49,21 +56,33 @@ namespace DVLDDataAccessLayer
             }
         }
 
-        public static DataTable GetPeopleInfo(byte WantedNumOfRecords,int LastLowestbroughtPersonID = -1)
+        public static DataTable GetPeopleInfo(byte WantedNumOfRecords, int LastBroughtPersonID = -1,string ColumnNameToOrderBy = null
+            ,int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             DataTable dtPeople = null;
 
+            if (ColumnNameToOrderBy == null)
+                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
+
+            string query;
+
+            if(ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+            {
+                query = _GetQueryForCursorPagination(LastBroughtPersonID,ColumnNameToOrderBy,SortDirection);
+            }
+
+            else
+            {
+                query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
+            }
+
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-
-            string query = _query;
-            
-            if (LastLowestbroughtPersonID != -1)
-                query += $@" WHERE {_PrimaryKeyColumnName} < {LastLowestbroughtPersonID}";
-
-                query += $" ORDER BY {_PrimaryKeyColumnName} DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
+
+            if (NumberOfRowsToOffset != -1)
+            command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try
             {
@@ -76,7 +95,7 @@ namespace DVLDDataAccessLayer
                     dtPeople.Load(reader);
                 }
 
-                    reader.Close();
+                reader.Close();
             }
 
             catch { }
@@ -89,10 +108,48 @@ namespace DVLDDataAccessLayer
             return dtPeople;
         }
 
+        private static string _GetQueryForCursorPagination(int LastBroughtPersonID, string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query;
+            if (LastBroughtPersonID != -1)
+            {
+                query = _QueryWithoutPagination;
+                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtPersonID,true,true);
+            }
+
+            else
+            {
+                query = _QueryWithoutPagination;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+
+            return query;
+        }
+
+        private static string _GetQueryForOffsetPagination(int NumberOfRowsToOffset, string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query;
+
+            if (NumberOfRowsToOffset == -1)
+            {
+                query = _QueryWithoutPagination;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+            }
+
+            else
+            {
+                query = _QueryForOffsetPagination;
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += _OffsetPaginationQueryPart;
+            }
+
+            return query;
+        }
+
         public static DataTable GetColumnsNamesForView()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-            string query = _query;
+            string query = _QueryWithoutPagination;
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
@@ -214,44 +271,44 @@ namespace DVLDDataAccessLayer
                 OldPersonData.ImagePath = null;
         }
 
-        private static string _GetColumnValueSetPartForUpdate(enUpdatableColumns UpdatableColumn)
+        private static string _GetColumnValueSetPartForUpdate(_enUpdatableColumns UpdatableColumn)
         {
             switch (UpdatableColumn)
             {
-                case enUpdatableColumns.NationalNo:
+                case _enUpdatableColumns.NationalNo:
                     return " NationalNo = @NationalNo";
 
-                case enUpdatableColumns.FirstName:
+                case _enUpdatableColumns.FirstName:
                     return " FirstName = @FirstName";
 
-                case enUpdatableColumns.SecondName:
+                case _enUpdatableColumns.SecondName:
                     return " SecondName = @SecondName";
 
-                case enUpdatableColumns.ThirdName:
+                case _enUpdatableColumns.ThirdName:
                     return " ThirdName = @ThirdName";
 
-                case enUpdatableColumns.LastName:
+                case _enUpdatableColumns.LastName:
                     return " LastName = @LastName";
 
-                case enUpdatableColumns.DateOfBirth:
+                case _enUpdatableColumns.DateOfBirth:
                     return " DateOfBirth = @DateOfBirth";
 
-                case enUpdatableColumns.Gendor:
+                case _enUpdatableColumns.Gendor:
                     return " Gendor = @Gendor";
 
-                case enUpdatableColumns.Address:
+                case _enUpdatableColumns.Address:
                     return " Address = @Address";
 
-                case enUpdatableColumns.Phone:
+                case _enUpdatableColumns.Phone:
                     return " Phone = @Phone";
 
-                case enUpdatableColumns.Email:
+                case _enUpdatableColumns.Email:
                     return " Email = @Email";
 
-                case enUpdatableColumns.NationalityCountryID:
+                case _enUpdatableColumns.NationalityCountryID:
                     return " NationalityCountryID = @NationalityCountryID";
 
-                case enUpdatableColumns.ImagePath:
+                case _enUpdatableColumns.ImagePath:
                     return " ImagePath = @ImagePath";
             }
 
@@ -267,256 +324,256 @@ namespace DVLDDataAccessLayer
             {
                 if (NationalNo != OldPersonData.NationalNo)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.NationalNo);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.NationalNo);
 
                     if (FirstName != OldPersonData.FirstName)
-                        query += ","+ _GetColumnValueSetPartForUpdate(enUpdatableColumns.FirstName);
+                        query += ","+ _GetColumnValueSetPartForUpdate(_enUpdatableColumns.FirstName);
 
                     if (SecondName != OldPersonData.SecondName)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.SecondName);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.SecondName);
 
                     if (ThirdName != OldPersonData.ThirdName)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ThirdName);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ThirdName);
 
                     if (LastName != OldPersonData.LastName)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.LastName);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.LastName);
 
                     if (DateOfBirth != OldPersonData.DateOfBirth)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.DateOfBirth);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.DateOfBirth);
 
                     if (Gendor != OldPersonData.Gendor)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Gendor);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Gendor);
 
                     if (Address != OldPersonData.Address)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Address);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Address);
 
                     if (Phone != OldPersonData.Phone)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Phone);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Phone);
 
                     if (Email != OldPersonData.Email)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Email);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Email);
 
                     if (NationalityCountryID != OldPersonData.NationalityCountryID)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.NationalityCountryID);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.NationalityCountryID);
 
                     if (ImagePath != OldPersonData.ImagePath)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ImagePath);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
                 }
 
                 else if (FirstName != OldPersonData.FirstName)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.FirstName);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.FirstName);
                     if (SecondName != OldPersonData.SecondName)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.SecondName);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.SecondName);
 
                     if (ThirdName != OldPersonData.ThirdName)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ThirdName);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ThirdName);
 
                     if (LastName != OldPersonData.LastName)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.LastName);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.LastName);
 
                     if (DateOfBirth != OldPersonData.DateOfBirth)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.DateOfBirth);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.DateOfBirth);
 
                     if (Gendor != OldPersonData.Gendor)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Gendor);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Gendor);
 
                     if (Address != OldPersonData.Address)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Address);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Address);
 
                     if (Phone != OldPersonData.Phone)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Phone);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Phone);
 
                     if (Email != OldPersonData.Email)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Email);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Email);
 
                     if (NationalityCountryID != OldPersonData.NationalityCountryID)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.NationalityCountryID);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.NationalityCountryID);
 
                     if (ImagePath != OldPersonData.ImagePath)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ImagePath);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
                 }
 
                 else if (SecondName != OldPersonData.SecondName)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.SecondName);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.SecondName);
 
-                    query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ThirdName);
+                    query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ThirdName);
 
                     if (LastName != OldPersonData.LastName)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.LastName);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.LastName);
 
                     if (DateOfBirth != OldPersonData.DateOfBirth)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.DateOfBirth);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.DateOfBirth);
 
                     if (Gendor != OldPersonData.Gendor)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Gendor);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Gendor);
 
                     if (Address != OldPersonData.Address)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Address);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Address);
 
                     if (Phone != OldPersonData.Phone)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Phone);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Phone);
 
                     if (Email != OldPersonData.Email)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Email);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Email);
 
                     if (NationalityCountryID != OldPersonData.NationalityCountryID)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.NationalityCountryID);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.NationalityCountryID);
 
                     if (ImagePath != OldPersonData.ImagePath)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ImagePath);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
                 }
 
                 else if (ThirdName != OldPersonData.ThirdName)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.ThirdName);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ThirdName);
                     if (LastName != OldPersonData.LastName)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.LastName);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.LastName);
 
                     if (DateOfBirth != OldPersonData.DateOfBirth)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.DateOfBirth);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.DateOfBirth);
 
                     if (Gendor != OldPersonData.Gendor)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Gendor);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Gendor);
 
                     if (Address != OldPersonData.Address)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Address);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Address);
 
                     if (Phone != OldPersonData.Phone)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Phone);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Phone);
 
                     if (Email != OldPersonData.Email)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Email);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Email);
 
                     if (NationalityCountryID != OldPersonData.NationalityCountryID)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.NationalityCountryID);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.NationalityCountryID);
 
                     if (ImagePath != OldPersonData.ImagePath)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ImagePath);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
                 }
 
                 else if (LastName != OldPersonData.LastName)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.LastName);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.LastName);
 
                     if (DateOfBirth != OldPersonData.DateOfBirth)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.DateOfBirth);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.DateOfBirth);
 
                     if (Gendor != OldPersonData.Gendor)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Gendor);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Gendor);
 
                     if (Address != OldPersonData.Address)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Address);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Address);
 
                     if (Phone != OldPersonData.Phone)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Phone);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Phone);
 
                     if (Email != OldPersonData.Email)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Email);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Email);
 
                     if (NationalityCountryID != OldPersonData.NationalityCountryID)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.NationalityCountryID);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.NationalityCountryID);
 
                     if (ImagePath != OldPersonData.ImagePath)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ImagePath);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
                 }
 
                 else if (DateOfBirth != OldPersonData.DateOfBirth)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.DateOfBirth);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.DateOfBirth);
 
                     if (Gendor != OldPersonData.Gendor)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Gendor);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Gendor);
 
                     if (Address != OldPersonData.Address)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Address);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Address);
 
                     if (Phone != OldPersonData.Phone)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Phone);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Phone);
 
                     if (Email != OldPersonData.Email)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Email);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Email);
 
                     if (NationalityCountryID != OldPersonData.NationalityCountryID)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.NationalityCountryID);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.NationalityCountryID);
 
                     if (ImagePath != OldPersonData.ImagePath)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ImagePath);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
                 }
 
                 else if (Gendor != OldPersonData.Gendor)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.Gendor);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Gendor);
 
                     if (Address != OldPersonData.Address)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Address);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Address);
 
                     if (Phone != OldPersonData.Phone)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Phone);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Phone);
 
                     if (Email != OldPersonData.Email)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Email);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Email);
 
                     if (NationalityCountryID != OldPersonData.NationalityCountryID)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.NationalityCountryID);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.NationalityCountryID);
 
                     if (ImagePath != OldPersonData.ImagePath)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ImagePath);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
                 }
 
                 else if (Address != OldPersonData.Address)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.Address);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Address);
 
                     if (Phone != OldPersonData.Phone)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Phone);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Phone);
 
                     if (Email != OldPersonData.Email)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Email);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Email);
 
                     if (NationalityCountryID != OldPersonData.NationalityCountryID)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.NationalityCountryID);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.NationalityCountryID);
 
                     if (ImagePath != OldPersonData.ImagePath)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ImagePath);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
                 }
 
                 else if (Phone != OldPersonData.Phone)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.Phone);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Phone);
 
                     if (Email != OldPersonData.Email)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.Email);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Email);
 
                     if (NationalityCountryID != OldPersonData.NationalityCountryID)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.NationalityCountryID);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.NationalityCountryID);
 
                     if (ImagePath != OldPersonData.ImagePath)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ImagePath);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
                 }
 
                 else if (Email != OldPersonData.Email)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.Email);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Email);
 
                     if (NationalityCountryID != OldPersonData.NationalityCountryID)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.NationalityCountryID);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.NationalityCountryID);
 
                     if (ImagePath != OldPersonData.ImagePath)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ImagePath);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
                 }
 
                 else if (NationalityCountryID != OldPersonData.NationalityCountryID)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.NationalityCountryID);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.NationalityCountryID);
 
                     if (ImagePath != OldPersonData.ImagePath)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.ImagePath);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
                 }
 
                 else
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.ImagePath);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
             }
 
             else
@@ -835,6 +892,9 @@ namespace DVLDDataAccessLayer
                 case "Nationality":
                     return "Countries.CountryName";
 
+                case "Date Of Birth":
+                    return "DateOfBirth";
+
                 default:
                     return "";
             }
@@ -842,53 +902,23 @@ namespace DVLDDataAccessLayer
 
         private static string _GetValueForGendorColumn(string Value)
         {
-            switch(Value.Length)
+            switch (Value.ToUpper())
             {
-                case 1:
-                    if (Value.ToUpper() == "M")
-                        return "0";
-                    else if (Value.ToUpper() == "F")
-                        return "1";
+                case "M":
+                case "MA":
+                case "MAL":
+                case "MALE":
+                    return "0";
 
-                    break;
-
-                case 2:
-                    if (Value.ToUpper() == "MA")
-                        return "0";
-                    else if (Value.ToUpper() == "FA")
-                        return "1";
-
-                        break;
-
-                case 3:
-                    if (Value.ToUpper() == "MAL")
-                        return "0";
-                    else if (Value.ToUpper() == "FEM")
-                        return "1";
-
-                    break;
-
-                case 4:
-                    if (Value.ToUpper() == "MALE")
-                        return "0";
-                    else if (Value.ToUpper() == "FEMA")
-                        return "1";
-
-                    break;
-
-                case 5:
-                    if (Value.ToUpper() == "FEMAL")
-                        return "1";
-
-                    break;
-
-                case 7:
-                    if (Value.ToUpper() == "FEMALE")
-                        return "1";
-
-                    break;
+                case "F":
+                case "FE":
+                case "FEM":
+                case "FEMA":
+                case "FEMAL":
+                case "FEMALE":
+                    return "1";
             }
-            return "2";
+            return null;
         }
 
         private static bool _IsOriginalColumnName(string ColumnNameToFilterBy)
@@ -897,45 +927,67 @@ namespace DVLDDataAccessLayer
         }
 
         private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy
-                    , string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtPersonID = -1, char? WildChar = null)
+                    , string ColumnNameToOrderBy, string SortDirection, int LastBroughtPersonID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = _PrimaryKeyColumnName;
+                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
 
-            string query = _query;
+            string query;
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtPersonID);
-                return query;
-            }
-
-            if (!_IsOriginalColumnName(ColumnNameToFilterBy))
-                ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
-            else
-            {
-                if (ColumnNameToFilterBy == "Gendor")
+                if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
                 {
-                    ValueToFilterBy = _GetValueForGendorColumn(ValueToFilterBy);
+                    query = _GetQueryForCursorPagination(LastBroughtPersonID, ColumnNameToOrderBy, SortDirection);
+                }
+
+                else
+                {
+                    query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
                 }
             }
 
-            query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+            else
+            {
+                if (!_IsOriginalColumnName(ColumnNameToFilterBy))
+                    ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
 
-            query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection,true, LastLowestbroughtPersonID);
+                else
+                {
+                    if (ColumnNameToFilterBy == "Gendor")
+                    {
+                        ValueToFilterBy = _GetValueForGendorColumn(ValueToFilterBy);
+                    }
+                }
+
+                if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+                {
+                    query = _QueryWithoutPagination;
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                    query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtPersonID,true,true);
+                }
+
+                else
+                {
+                    query = _QueryForOffsetPagination;
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy,SortDirection,true);
+                    query += _OffsetPaginationQueryPart;
+                }
+            }
 
             return query;
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords,string ColumnNameToFilter,string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection,
-            int LastLowestbroughtPersonID = -1, char? WildChar = null)
+            int LastBroughtPersonID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = _GetDataFilteringQuery(WantedNumOfRecords,ColumnNameToFilter,ref ValueToFilterBy,
-                            ColumnNameToOrderBy,SortDirection, LastLowestbroughtPersonID, WildChar);
+                            ColumnNameToOrderBy,SortDirection, LastBroughtPersonID,NumberOfRowsToOffset, WildChar);
 
             SqlCommand command = new SqlCommand(query, connection);
              command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -945,6 +997,9 @@ namespace DVLDDataAccessLayer
 
                 if(WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
+
+            if (NumberOfRowsToOffset != -1)
+                command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try
             {
@@ -1057,7 +1112,7 @@ namespace DVLDDataAccessLayer
 
         private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection, string ColumnNameToFilterBy, ref string ValueToFilterBy, char? WildChar = null)
         {
-            string query = _query;
+            string query = _QueryWithoutPagination;
 
             if (!_IsOriginalColumnName(ColumnNameToFilterBy))
                 ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);

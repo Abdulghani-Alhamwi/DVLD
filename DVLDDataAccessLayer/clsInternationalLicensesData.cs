@@ -7,25 +7,43 @@ namespace DVLDDataAccessLayer
 {
     public class clsInternationalLicensesData
     {
-        private static string _PrimaryKeyColumnName = "InternationalLicenseID";
+        private static readonly string _PrimaryKeyColumnName = "InternationalLicenseID";
 
-        private static string _query =
-         $@"SELECT TOP (@WantedNumOfRecords) {_PrimaryKeyColumnName} AS [Int.License ID],ApplicationID AS [Application ID],DriverID AS [Driver ID],
-           IssuedUsingLocalLicenseID AS [L.License ID],Format(IssueDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],
-           Format(ExpirationDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Expiration Date],IsActive AS [Is Active]
-           FROM InternationalLicenses";
+        private static readonly string _PrimaryKeyViewedColumnName = "Int.License ID";
 
-        public static DataTable GetDriverInternationalLicenses(int DriverID, byte WantedNumOfRecords, int LowstBroughtIntLicID = -1)
+        private static readonly string _FixedQueryPart =
+         $@"{_PrimaryKeyColumnName} AS [Int.License ID],ApplicationID AS [Application ID],DriverID AS [Driver ID],
+         IssuedUsingLocalLicenseID AS [L.License ID],Format(IssueDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],
+         Format(ExpirationDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Expiration Date],IsActive AS [Is Active]
+         FROM InternationalLicenses";
+
+        private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
+
+        private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
+
+        private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
+
+        public static DataTable GetDriverInternationalLicenses(int DriverID, byte WantedNumOfRecords, int LastBroughtIntLicenseID = -1
+              , string ColumnNameToOrderBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             DataTable dtIntLicenses = null;
+
+            if (ColumnNameToOrderBy == null)
+                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
+
+            string query;
+
+            if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+            {
+                query = _GetQueryForCursorPagination(LastBroughtIntLicenseID, ColumnNameToOrderBy, SortDirection,true);
+            }
+
+            else
+            {
+                query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection,true);
+            }
+
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-
-            string query = _query + @" WHERE DriverID = @DriverID";
-
-            if (LowstBroughtIntLicID != -1)
-                query += $" AND DriverID < {LowstBroughtIntLicID}";
-
-            query += $" ORDER BY {_PrimaryKeyColumnName} DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -53,20 +71,33 @@ namespace DVLDDataAccessLayer
             return dtIntLicenses;
         }
 
-        public static DataTable GetAllInternationalLicenses(byte WantedNumOfRecords, int LowstBroughtIntLicID = -1)
+        public static DataTable GetAllInternationalLicensesData(byte WantedNumOfRecords, int LastBroughtIntLicenseID = -1
+             , string ColumnNameToOrderBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             DataTable dtIntLicenses = null;
+
+            if (ColumnNameToOrderBy == null)
+                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
+
+            string query;
+
+            if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+            {
+                query = _GetQueryForCursorPagination(LastBroughtIntLicenseID, ColumnNameToOrderBy, SortDirection);
+            }
+
+            else
+            {
+                query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
+            }
+
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
-
-            string query = _query;
-
-            if (LowstBroughtIntLicID != -1)
-                query += $" AND DriverID < {LowstBroughtIntLicID}";
-
-            query += $" ORDER BY {_PrimaryKeyColumnName} DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
+
+            if (NumberOfRowsToOffset != -1)
+                command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try
             {
@@ -90,11 +121,86 @@ namespace DVLDDataAccessLayer
             return dtIntLicenses;
         }
 
+        private static string _GetQueryForCursorPagination(int LastBroughtIntLicenseID, string ColumnNameToOrderBy, string SortDirection,bool FilterByTheDriver = false)
+        {
+            string query;
+            if (LastBroughtIntLicenseID != -1)
+            {
+                if (FilterByTheDriver)
+                {
+                    query = _QueryWithoutPagination + " WHERE DriverID = @DriverID";
+                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtIntLicenseID, true, true);
+                }
+
+                else
+                {
+                    query = _QueryWithoutPagination;
+                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtIntLicenseID, true, true);
+                }
+            }
+
+            else
+            {
+                if (FilterByTheDriver)
+                {
+                    query = _QueryWithoutPagination + " WHERE DriverID = @DriverID";
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                }
+
+                else
+                {
+                    query = _QueryWithoutPagination;
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                }
+            }
+
+            return query;
+        }
+
+        private static string _GetQueryForOffsetPagination(int NumberOfRowsToOffset, string ColumnNameToOrderBy, string SortDirection, bool FilterByTheDriver = false)
+        {
+            string query;
+
+            if (NumberOfRowsToOffset == -1)
+            {
+                if (FilterByTheDriver)
+                {
+                    query = _QueryWithoutPagination + " WHERE DriverID = @DriverID";
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                }
+
+                else
+                {
+                    query = _QueryWithoutPagination;
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                }
+            }
+
+            else
+            {
+                if (FilterByTheDriver)
+                {
+                    query = _QueryForOffsetPagination + " WHERE DriverID = @DriverID";
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                    query += _OffsetPaginationQueryPart;
+                }
+
+                else
+                {
+                    query = _QueryForOffsetPagination;
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                    query += _OffsetPaginationQueryPart;
+                }
+            }
+
+            return query;
+        }
+
         public static DataTable GetColumnsNamesForView()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            SqlCommand command = new SqlCommand(_query, connection);
+            SqlCommand command = new SqlCommand(_QueryWithoutPagination, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
 
             try
@@ -222,20 +328,29 @@ namespace DVLDDataAccessLayer
         }
 
         private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy,
-                string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtIntAppID = -1, char? WildChar = null)
+                string ColumnNameToOrderBy, string SortDirection, int LastBroughtIntLicenseID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
+            string query;
+
             if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = _PrimaryKeyColumnName;
+                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
 
             ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
-
-            string query = _query;
 
             if (string.IsNullOrEmpty(ValueToFilterBy)
                   || (ColumnNameToFilterBy == "IsActive" && ValueToFilterBy == "All"))
             {
-                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastLowestbroughtIntAppID);
+                if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+                {
+                    query = _GetQueryForCursorPagination(LastBroughtIntLicenseID, ColumnNameToOrderBy, SortDirection);
+                }
+
+                else
+                {
+                    query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
+                }
             }
+
             else
             {
                 if (ColumnNameToFilterBy == "IsActive")
@@ -244,31 +359,47 @@ namespace DVLDDataAccessLayer
                         ValueToFilterBy = clsGeneralUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
-                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastLowestbroughtIntAppID);
+
+                if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
+                {
+                    query = _QueryWithoutPagination;
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                    query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtIntLicenseID, true, true);
+                }
+
+                else
+                {
+                    query = _QueryForOffsetPagination;
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                    query += _OffsetPaginationQueryPart;
+                }
             }
 
             return query;
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection,
-                          int LastLowestbroughtLDLAppID = -1, char? WildChar = null)
+              int LastBroughtIntLicenseID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
             string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilterBy, ref ValueToFilterBy,
-                            ColumnNameToOrderBy, SortDirection, LastLowestbroughtLDLAppID, WildChar);
+                            ColumnNameToOrderBy, SortDirection, LastBroughtIntLicenseID, NumberOfRowsToOffset, WildChar);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
-            if(! string.IsNullOrEmpty(ValueToFilterBy))
+            if(!string.IsNullOrEmpty(ValueToFilterBy))
             command.Parameters.AddWithValue("@Value", ValueToFilterBy);
 
             if (WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
+
+            if (NumberOfRowsToOffset != -1)
+                command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try
             {
@@ -285,7 +416,7 @@ namespace DVLDDataAccessLayer
                 reader.Close();
             }
 
-            catch  { }
+            catch { }
 
             finally
             {
@@ -357,6 +488,69 @@ namespace DVLDDataAccessLayer
             return IsFound;
         }
 
+        public static bool HasDriverActiveInternationalLicense(int DriverID)
+        {
+            bool IsFound = false;
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"SELECT Found = 1 FROM InternationalLicenses
+                             WHERE DriverID = @DriverID AND IsActive = 1";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@DriverID", DriverID);
+
+            try
+            {
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                {
+                    IsFound = true;                }
+
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return IsFound;
+        }
+
+
+        public static bool LinkWithNewLocalLicense(int DriverID, int NewLocalLicenseID)
+        {
+            byte AffectedRows = 0;
+
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = @"UPDATE InternationalLicenses SET IssuedUsingLocalLicenseID = @NewLocalLicenseID
+                             WHERE DriverID = @DriverID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@NewLocalLicenseID", NewLocalLicenseID);
+            command.Parameters.AddWithValue("@DriverID", DriverID);
+
+            try
+            {
+                connection.Open();
+
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return (AffectedRows > 0);
+        }
+
         public static int GetLicenseID(int InternationalLicenseAppID)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -383,9 +577,37 @@ namespace DVLDDataAccessLayer
             return -1;
         }
 
-        private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection, string ColumnNameToFilterBy, ref string ValueToFilterBy, char? WildChar = null)
+
+        public static int GetLocalLicenseID(int InternationalLicenseID)
         {
-            string query = _query;
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            string query = $"SELECT IssuedUsingLocalLicenseID FROM InternationalLicenses WHERE InternationalLicenseID = @InternationalLicenseID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ApplicationID", InternationalLicenseID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return Convert.ToInt32(result);
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return -1;
+        }
+
+        private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection, string ColumnNameToFilterBy,
+            ref string ValueToFilterBy, char? WildChar = null)
+        {
+            string query = _QueryWithoutPagination;
 
             ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
 
@@ -409,11 +631,33 @@ namespace DVLDDataAccessLayer
             return query;
         }
 
+        private static string _GetDataSortingQueryByDriver(string ColumnNameToOrderBy, string SortDirection)
+        {
+            string query = _QueryWithoutPagination;
+
+            query += " WHERE DriverID = @DriverID";
+            query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+
+            return query;
+        }
+
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
             return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
+        }
+
+        public static DataTable GetSortedInfo(int DriverID,byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection)
+        {
+            SqlConnection Connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            string query = _GetDataSortingQueryByDriver(ColumnNameToOrderBy, SortDirection);
+
+            SqlCommand Command = new SqlCommand(query, Connection);
+            Command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
+            Command.Parameters.AddWithValue("@DriverID", DriverID);
+
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(Connection, Command);
         }
     }
 }

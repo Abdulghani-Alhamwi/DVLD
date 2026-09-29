@@ -179,65 +179,21 @@ namespace DVLDPresentationLayer
         {
             this.Close();
         }
+
         private DateTime _GetAppointmentDate()
         {
-            short EnteredHour = Convert.ToInt16(mtxtAppointmentTime.Text.Substring(0, 2));
-            if(mtxtAppointmentTime.Text.Substring(6, 2) == "PM")
+            byte EnteredHour = Convert.ToByte(mtxtAppointmentTime.Text.Substring(0, 2));
+            if (mtxtAppointmentTime.Text.Substring(6, 2).ToLower() == "PM".ToLower())
             {
-                switch (EnteredHour)
-                {
-                    case 1:
-                        EnteredHour = 13;
-                        break;
-
-                    case 2:
-                        EnteredHour = 14;
-                        break;
-
-                    case 3:
-                        EnteredHour = 15;
-                        break;
-
-                    case 4:
-                        EnteredHour = 16;
-                        break;
-
-                    case 5:
-                        EnteredHour = 17;
-                        break;
-
-                    case 6:
-                        EnteredHour = 18;
-                        break;
-
-                    case 7:
-                        EnteredHour = 19;
-                        break;
-
-                    case 8:
-                        EnteredHour = 20;
-                        break;
-
-                    case 9:
-                        EnteredHour = 21;
-                        break;
-
-                    case 10:
-                        EnteredHour = 22;
-                        break;
-
-                    case 11:
-                        EnteredHour = 23;
-                        break;
-                }
+                EnteredHour = clsGeneralUtility.GetAppropriatetHourNumForAmOrPm(EnteredHour, true);
             }
             else
             {
-                if (EnteredHour == 12)
-                    EnteredHour = 24;
+                EnteredHour =clsGeneralUtility.GetAppropriatetHourNumForAmOrPm(EnteredHour,false);
             }
-              DateTime AppointmentDate = new DateTime(dtpTestAppointmentDate.Value.Year, dtpTestAppointmentDate.Value.Month, dtpTestAppointmentDate.Value.Day,
-                                        EnteredHour, Convert.ToInt32(mtxtAppointmentTime.Text.Substring(3, 2)), 0, DateTimeKind.Local);
+
+            DateTime AppointmentDate = new DateTime(dtpTestAppointmentDate.Value.Year, dtpTestAppointmentDate.Value.Month, dtpTestAppointmentDate.Value.Day,
+                                  EnteredHour, Convert.ToInt32(mtxtAppointmentTime.Text.Substring(3, 2)), 0, DateTimeKind.Local);
             
             return AppointmentDate;
         }

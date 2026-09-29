@@ -39,7 +39,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.signToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msOptions = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiApplicationsManagement = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDrivingLicensesServices = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiNewDrivingLicense = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLocalLicense = new System.Windows.Forms.ToolStripMenuItem();
@@ -138,7 +138,7 @@
             this.msOptions.Font = new System.Drawing.Font("Tahoma", 15.85714F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.msOptions.ImageScalingSize = new System.Drawing.Size(35, 35);
             this.msOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
+            this.tsmiApplicationsManagement,
             this.tsmiPeopleManagement,
             this.tsmiDrivers,
             this.tsmiUsersManagement,
@@ -149,11 +149,10 @@
             this.msOptions.Padding = new System.Windows.Forms.Padding(6, 2, 0, 3);
             this.msOptions.Size = new System.Drawing.Size(1193, 73);
             this.msOptions.TabIndex = 0;
-            this.msOptions.Text = "menuStrip1";
             // 
-            // toolStripMenuItem1
+            // tsmiApplicationsManagement
             // 
-            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiApplicationsManagement.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiDrivingLicensesServices,
             this.tsSeparator2,
             this.tsmiManageApplications,
@@ -161,11 +160,13 @@
             this.tsmiDetainLicenses,
             this.tsmiManageApplicationTypes,
             this.tsmiManageTestTypes});
-            this.toolStripMenuItem1.Image = global::DVLDPresentationLayer.Properties.Resources.Applications_64;
-            this.toolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(225, 68);
-            this.toolStripMenuItem1.Text = "Applications";
+            this.tsmiApplicationsManagement.Image = global::DVLDPresentationLayer.Properties.Resources.Applications_64;
+            this.tsmiApplicationsManagement.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsmiApplicationsManagement.Name = "tsmiApplicationsManagement";
+            this.tsmiApplicationsManagement.Size = new System.Drawing.Size(225, 68);
+            this.tsmiApplicationsManagement.Text = "Applications";
+            this.tsmiApplicationsManagement.DropDownOpening += new System.EventHandler(this.tsmiApplicationsManagement_DropDownOpening);
+            this.tsmiApplicationsManagement.Paint += new System.Windows.Forms.PaintEventHandler(this.tsmiApplicationsManagement_Paint);
             // 
             // tsmiDrivingLicensesServices
             // 
@@ -466,7 +467,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem signToolStripMenuItem;
         private System.Windows.Forms.MenuStrip msOptions;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem tsmiApplicationsManagement;
         private System.Windows.Forms.ToolStripMenuItem tsmiPeopleManagement;
         private System.Windows.Forms.ToolStripMenuItem tsmiDrivers;
         private System.Windows.Forms.ToolStripMenuItem tsmiUsersManagement;

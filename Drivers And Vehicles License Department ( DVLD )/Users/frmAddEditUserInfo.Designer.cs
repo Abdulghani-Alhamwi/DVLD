@@ -53,6 +53,11 @@
             this.erTextBox = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.chkManageUsers = new System.Windows.Forms.CheckBox();
+            this.chkManagePeople = new System.Windows.Forms.CheckBox();
+            this.chkManageApplications = new System.Windows.Forms.CheckBox();
+            this.chkViewDrivers = new System.Windows.Forms.CheckBox();
+            this.lblPermissionsTitle = new System.Windows.Forms.Label();
             this.tcAddNewUser.SuspendLayout();
             this.tpPersonalInfo.SuspendLayout();
             this.tpLoginInfo.SuspendLayout();
@@ -165,6 +170,11 @@
             // tpLoginInfo
             // 
             this.tpLoginInfo.AutoScroll = true;
+            this.tpLoginInfo.Controls.Add(this.lblPermissionsTitle);
+            this.tpLoginInfo.Controls.Add(this.chkViewDrivers);
+            this.tpLoginInfo.Controls.Add(this.chkManageApplications);
+            this.tpLoginInfo.Controls.Add(this.chkManagePeople);
+            this.tpLoginInfo.Controls.Add(this.chkManageUsers);
             this.tpLoginInfo.Controls.Add(this.chkIsActive);
             this.tpLoginInfo.Controls.Add(this.pbUserID);
             this.tpLoginInfo.Controls.Add(this.pbPassword);
@@ -388,6 +398,65 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // chkManageUsers
+            // 
+            this.chkManageUsers.AutoSize = true;
+            this.chkManageUsers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkManageUsers.Font = new System.Drawing.Font("Tahoma", 20F);
+            this.chkManageUsers.Location = new System.Drawing.Point(32, 521);
+            this.chkManageUsers.Name = "chkManageUsers";
+            this.chkManageUsers.Size = new System.Drawing.Size(198, 37);
+            this.chkManageUsers.TabIndex = 54;
+            this.chkManageUsers.Text = "Manage Users";
+            this.chkManageUsers.UseVisualStyleBackColor = true;
+            // 
+            // chkManagePeople
+            // 
+            this.chkManagePeople.AutoSize = true;
+            this.chkManagePeople.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkManagePeople.Font = new System.Drawing.Font("Tahoma", 20F);
+            this.chkManagePeople.Location = new System.Drawing.Point(259, 521);
+            this.chkManagePeople.Name = "chkManagePeople";
+            this.chkManagePeople.Size = new System.Drawing.Size(211, 37);
+            this.chkManagePeople.TabIndex = 55;
+            this.chkManagePeople.Text = "Manage People";
+            this.chkManagePeople.UseVisualStyleBackColor = true;
+            // 
+            // chkManageApplications
+            // 
+            this.chkManageApplications.AutoSize = true;
+            this.chkManageApplications.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkManageApplications.Font = new System.Drawing.Font("Tahoma", 20F);
+            this.chkManageApplications.Location = new System.Drawing.Point(499, 521);
+            this.chkManageApplications.Name = "chkManageApplications";
+            this.chkManageApplications.Size = new System.Drawing.Size(273, 37);
+            this.chkManageApplications.TabIndex = 56;
+            this.chkManageApplications.Text = "Manage Applications";
+            this.chkManageApplications.UseVisualStyleBackColor = true;
+            // 
+            // chkViewDrivers
+            // 
+            this.chkViewDrivers.AutoSize = true;
+            this.chkViewDrivers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkViewDrivers.Font = new System.Drawing.Font("Tahoma", 20F);
+            this.chkViewDrivers.Location = new System.Drawing.Point(801, 521);
+            this.chkViewDrivers.Name = "chkViewDrivers";
+            this.chkViewDrivers.Size = new System.Drawing.Size(178, 37);
+            this.chkViewDrivers.TabIndex = 57;
+            this.chkViewDrivers.Text = "View Drivers";
+            this.chkViewDrivers.UseVisualStyleBackColor = true;
+            // 
+            // lblPermissionsTitle
+            // 
+            this.lblPermissionsTitle.AutoSize = true;
+            this.lblPermissionsTitle.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Bold);
+            this.lblPermissionsTitle.Location = new System.Drawing.Point(27, 476);
+            this.lblPermissionsTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblPermissionsTitle.Name = "lblPermissionsTitle";
+            this.lblPermissionsTitle.Size = new System.Drawing.Size(197, 33);
+            this.lblPermissionsTitle.TabIndex = 58;
+            this.lblPermissionsTitle.Text = "Permissions :";
+            // 
             // frmAddEditUserInfo
             // 
             this.AcceptButton = this.btnSave;
@@ -452,5 +521,10 @@
         private System.Windows.Forms.CheckBox chkIsActive;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.CheckBox chkViewDrivers;
+        private System.Windows.Forms.CheckBox chkManageApplications;
+        private System.Windows.Forms.CheckBox chkManagePeople;
+        private System.Windows.Forms.CheckBox chkManageUsers;
+        private System.Windows.Forms.Label lblPermissionsTitle;
     }
 }

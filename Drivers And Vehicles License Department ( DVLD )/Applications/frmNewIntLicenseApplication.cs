@@ -136,7 +136,7 @@ namespace DVLDPresentationLayer.Applications
 
             else if (!LocalLicense.IsActive)
             {
-                if (clsDetainedLicenses.IsDetainedLicense(LocalLicense.LicenseID))
+                if (clsDetainedLicense.IsDetainedLicense(LocalLicense.LicenseID))
                 {
                     MessageBox.Show("The entered ID is for a local license but it is not active because it has been detained,\nrelease it from detain first then re-apply for international license."
                         , "Detained Local License", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -169,7 +169,7 @@ namespace DVLDPresentationLayer.Applications
         }
         private void btnIssueLicense_Click(object sender, EventArgs e)
         {
-            if (_SelectedLocalLicenseID != -1)
+            if (_SelectedLocalLicenseID == -1)
             {
                 MessageBox.Show("Enter local license ID First in order to issue international license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;

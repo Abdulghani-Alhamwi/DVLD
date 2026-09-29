@@ -58,10 +58,13 @@ namespace DVLDBusinessLayer
             return clsLocalLicensesData.GetLocalLicenses(DriverID,WantedNumOfRecords);
         }
 
-        public static DataTable GetLocalLicenses(int DriverID,byte WantedNumOfRecords, int LastLowstBroughtLicID)
+        public static DataTable GetLocalLicenses(int DriverID, byte WantedNumOfRecords, int LastBroughtLicenseID
+                 , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
-            return clsLocalLicensesData.GetLocalLicenses(DriverID,WantedNumOfRecords, LastLowstBroughtLicID);
+            return clsLocalLicensesData.GetLocalLicenses(DriverID,WantedNumOfRecords, LastBroughtLicenseID
+                     , LastColumnNameDataOrderedBy, NumberOfRowsToOffset, SortDirection);
         }
+
         public string GetIssueReasonAsString()
         {
             if (LicenseID != -1)
@@ -121,7 +124,22 @@ namespace DVLDBusinessLayer
         }
         private bool _IssueDrivingLicense()
         {
+            bool HasIssuedInternationalLicense = false;
+
+            if (LicenseClassID == clsLicenseClass.GetLicenseClassID(clsLicenseClass.enLicenseClasses.OrdinaryDrivingClass))
+            {
+                if (clsInternationalLicense.HasDriverActiveInternationalLicense(DriverID))
+                {
+                    HasIssuedInternationalLicense = true;
+                }
+            }
+
             LicenseID = clsLocalLicensesData.IssueLocalDrivingLicense(ApplicationID, DriverID, LicenseClassID, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, _GetIssueReasonAsNumber(IssueReason), CreatedByUserID);
+
+            if(HasIssuedInternationalLicense)
+            {
+                clsInternationalLicense.LinkWithNewLocalLicense(DriverID, LicenseID);
+            }
 
             return (LicenseID != -1);
         }
@@ -185,9 +203,15 @@ namespace DVLDBusinessLayer
             RenewedLicenseID = 0;
             return clsLocalLicensesData.HasDriverRenewedLicense(DriverID, LicenseClassID,ref RenewedLicenseID);
         }
+
         public static int GetDriverID(int LocalLicenseID)
         {
             return clsLocalLicensesData.GetDriverID(LocalLicenseID);
+        }
+
+        public static DataTable GetSortedInfo(int DriverID,byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection)
+        {
+            return clsLocalLicensesData.GetSortedInfo(DriverID,WantedNumOfRecords, ColumnNameToOrderBy, SortDirection);
         }
     }
 }

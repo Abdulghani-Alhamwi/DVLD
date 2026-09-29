@@ -25,7 +25,7 @@ namespace DVLDPresentationLayer.Controls
 
         private void _DetainLicense()
         {
-            clsDetainedLicenses DetainedLicense = new clsDetainedLicenses(_LocalLicenseInfo.LicenseID, DateTime.Now, Convert.ToDecimal(txtFineFees.Text), clsGlobalSettings.CurrentUserID);
+            clsDetainedLicense DetainedLicense = new clsDetainedLicense(_LocalLicenseInfo.LicenseID, DateTime.Now, Convert.ToDecimal(txtFineFees.Text), clsGlobalSettings.CurrentUserID);
 
             DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to detain this license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (ConfirmationQuestion == DialogResult.Yes)
@@ -67,7 +67,7 @@ namespace DVLDPresentationLayer.Controls
 
         private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(clsLocalLicense LocalLicenseInfo)
         {
-            if (clsDetainedLicenses.IsDetainedLicense(LocalLicenseInfo.LicenseID))
+            if (clsDetainedLicense.IsDetainedLicense(LocalLicenseInfo.LicenseID))
             {
                 MessageBox.Show("Selected license is already detained , choose another one.", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 btnDetain.Enabled = false;

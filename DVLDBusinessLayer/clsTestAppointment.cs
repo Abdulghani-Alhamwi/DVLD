@@ -50,9 +50,11 @@ namespace DVLDBusinessLayer
             return clsTestAppointmentsData.GetTestAppointments(WantedNumOfRecords,TestTypeID,LDLAppId);
         }
 
-        public static DataTable GetTestAppointments(byte WantedNumOfRecords, byte TestTypeID, int LDLAppId, int LowestBroughtAppointmentID = -1)
+        public static DataTable GetTestAppointments(byte WantedNumOfRecords, byte TestTypeID, int LDLAppId, int _LastBroughtAppointmentID = -1
+            , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
-            return clsTestAppointmentsData.GetTestAppointments(WantedNumOfRecords, TestTypeID, LDLAppId, LowestBroughtAppointmentID);
+            return clsTestAppointmentsData.GetTestAppointments(WantedNumOfRecords, TestTypeID, LDLAppId, _LastBroughtAppointmentID
+                , LastColumnNameDataOrderedBy, NumberOfRowsToOffset, SortDirection);
         }
 
         private bool _AddNewAppointment()

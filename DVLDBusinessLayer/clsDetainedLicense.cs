@@ -4,7 +4,7 @@ using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
 {
-    public class clsDetainedLicenses
+    public class clsDetainedLicense
     {
         private enum _enMode : byte { AddNew = 0 , Update = 1};
 
@@ -19,7 +19,7 @@ namespace DVLDBusinessLayer
         public int ReleasedByUserID { get; set;}
         public int ReleaseApplicationID { get; set; }
 
-        public clsDetainedLicenses(int LocalLicenseID,DateTime DetainDate, decimal FineFees, int CreatedByUserID)
+        public clsDetainedLicense(int LocalLicenseID,DateTime DetainDate, decimal FineFees, int CreatedByUserID)
         {
             this.LocalLicenseID = LocalLicenseID;
             this.DetainDate = DetainDate;
@@ -31,7 +31,7 @@ namespace DVLDBusinessLayer
             ReleaseApplicationID = -1;
         }
 
-        private clsDetainedLicenses(int DetainID,int LocalLicenseID, DateTime DetainDate, decimal FineFees, int CreatedByUserID, bool IsReleased, DateTime ReleaseDate, int ReleasedByUserID, int ReleaseApplicationID)
+        private clsDetainedLicense(int DetainID,int LocalLicenseID, DateTime DetainDate, decimal FineFees, int CreatedByUserID, bool IsReleased, DateTime ReleaseDate, int ReleasedByUserID, int ReleaseApplicationID)
         {
             this.DetainID = DetainID;
             this.LocalLicenseID = LocalLicenseID;
@@ -84,7 +84,7 @@ namespace DVLDBusinessLayer
             return clsDetainedLicensesData.IsDetainedLicense(LocalLicenseID);
         }
 
-        public static clsDetainedLicenses Find(int LocalLicenseID)
+        public static clsDetainedLicense Find(int LocalLicenseID)
         {
             int DetainID = -1;
             DateTime DetainDate = DateTime.MinValue;
@@ -97,21 +97,22 @@ namespace DVLDBusinessLayer
 
             if (clsDetainedLicensesData.Find(LocalLicenseID,ref DetainID, ref DetainDate, ref FineFees, ref CreatedByUserID, ref IsReleased, ref ReleaseDate, ref ReleasedByUserID, ref ReleaseApplicationID))
             {
-                return new clsDetainedLicenses(DetainID,LocalLicenseID,DetainDate, FineFees, CreatedByUserID, IsReleased, ReleaseDate, ReleasedByUserID, ReleaseApplicationID);
+                return new clsDetainedLicense(DetainID,LocalLicenseID,DetainDate, FineFees, CreatedByUserID, IsReleased, ReleaseDate, ReleasedByUserID, ReleaseApplicationID);
             }
 
             else
                 return null;
         }
 
-
         public static DataTable GetDetainedLicensesInfo(byte WantedNumOfRecords)
         {
             return clsDetainedLicensesData.GetDetainedLicensesInfo(WantedNumOfRecords);
         }
-        public static DataTable GetDetainedLicensesInfo(byte WantedNumOfRecords, int LastLowestBroughtDetainID)
+        public static DataTable GetDetainedLicensesInfo(byte WantedNumOfRecords, int LastBroughtDetainID
+            , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
-            return clsDetainedLicensesData.GetDetainedLicensesInfo(WantedNumOfRecords, LastLowestBroughtDetainID);
+            return clsDetainedLicensesData.GetDetainedLicensesInfo(WantedNumOfRecords, LastBroughtDetainID
+                    , LastColumnNameDataOrderedBy, NumberOfRowsToOffset, SortDirection);
         }
 
         public static int GetTotalCount()
@@ -119,14 +120,15 @@ namespace DVLDBusinessLayer
             return clsDetainedLicensesData.GetTotalCount();
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string LastColumnNameDataOrderedBy, string SortDirection, char? WildChar = null)
         {
-            return clsDetainedLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, -1, WildChar);
+            return clsDetainedLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastColumnNameDataOrderedBy, SortDirection, -1,-1, WildChar);
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection, int LastLowestbroughtDetainID, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string LastColumnNameDataOrderedBy, string SortDirection,
+            int LastBroughtDetainID, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
-            return clsDetainedLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, LastLowestbroughtDetainID, WildChar);
+            return clsDetainedLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastColumnNameDataOrderedBy, SortDirection, LastBroughtDetainID, NumberOfRowsToOffset, WildChar);
         }
 
         public static DataTable GetColumnsNamesForView()

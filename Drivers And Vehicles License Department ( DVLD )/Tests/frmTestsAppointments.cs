@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
-using DVLDPresentationLayer.Properties;
 using DVLDBusinessLayer;
+using DVLDPresentationLayer.Properties;
 using Utility_Library;
 
 namespace DVLDPresentationLayer
@@ -15,11 +15,14 @@ namespace DVLDPresentationLayer
         private clsDgvUtilityLib.enDataGridViewSortDirection _CurrentDgvSortDirection;
         private clsDgvUtilityLib _DgvUtilityLib;
 
-       private clsTestType.enTestType _CurrentTestType;
+        private clsTestType.enTestType _CurrentTestType;
 
         private int _LDLAppId;
         private int _TestsDGVRowIndex;
         private byte _TestTypeID;
+        private int _LastBroughtAppointmentID;
+        private string _PrimaryKeyViewedColumnName;
+
         public frmTestsAppointments(int LDLApplicationID,int TestsDGVRowIndex, clsTestType.enTestType TestType)
         {
             InitializeComponent();
@@ -33,6 +36,8 @@ namespace DVLDPresentationLayer
             _TestsDGVRowIndex = TestsDGVRowIndex;
             _CurrentTestType = TestType;
             _TestTypeID = clsTestType.GetTestTypeID(_CurrentTestType);
+            _LastBroughtAppointmentID = -1;
+            _PrimaryKeyViewedColumnName = "Appointment ID";
 
             _DgvUtilityLib = new clsDgvUtilityLib();
         }
@@ -102,7 +107,7 @@ namespace DVLDPresentationLayer
                 MessageBox.Show("This person already passed this test, you can only retake failed test.", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
            
         }
-        private void frmVisionTestAppointments_Load(object sender, EventArgs e)
+        private void frmTestAppointments_Load(object sender, EventArgs e)
         {
             dgvTestAppointments.DataSource = clsTestAppointment.GetTestAppointments(clsDgvUtilityLib.WantedNumOfRowsFromDB, _TestTypeID, _LDLAppId);
             lblRecordsNumber.Text = clsTestAppointment.GetTotalAppointmentsCount(_LDLAppId, _TestTypeID).ToString();
@@ -110,10 +115,18 @@ namespace DVLDPresentationLayer
 
         private void _AppendPartOfRemainingData()
         {
-            DataRow[] NewRows = clsTestAppointment.GetTestAppointments(clsDgvUtilityLib.WantedNumOfRowsFromDB, _TestTypeID, _LDLAppId,(int)dgvTestAppointments.Rows[dgvTestAppointments.Rows.GetLastRow(DataGridViewElementStates.Displayed)].Cells["Appointment ID"].Value)?.Select();
+            if (_LastColumnNameDgvSortedBy == null || _LastColumnNameDgvSortedBy == _PrimaryKeyViewedColumnName)
+                _LastBroughtAppointmentID = clsDgvUtilityLib.GetLastBroughtValueOfPKColumn(dgvTestAppointments, _PrimaryKeyViewedColumnName, _CurrentDgvSortDirection);
+
+            _DgvUtilityLib.SetNumberOfRowsToOffset(_PrimaryKeyViewedColumnName, _LastColumnNameDgvSortedBy);
+
+            DataTable dtTestAppointments = clsTestAppointment.GetTestAppointments(clsDgvUtilityLib.WantedNumOfRowsFromDB, _TestTypeID, _LDLAppId, _LastBroughtAppointmentID
+                , _LastColumnNameDgvSortedBy, _DgvUtilityLib.NumberOfRowsToOffset, clsDgvUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection));
+
+            DataRow[] NewRows = dtTestAppointments?.Select();
 
             if (NewRows != null)
-                clsDgvUtilityLib.AddNewRowsToDgv(dgvTestAppointments, NewRows, clsDgvUtilityLib.GetDgvColumnsNames(dgvTestAppointments));
+                _DgvUtilityLib.AddNewRowsToDgv(dgvTestAppointments, NewRows, clsDgvUtilityLib.GetDgvColumnsNames(dgvTestAppointments), _CurrentDgvSortDirection);
         }
 
         private void _EditDataRowInDGV(string NewDateTime,int DgvRowIndex)
@@ -124,7 +137,7 @@ namespace DVLDPresentationLayer
         {
             if (dgvTestAppointments.SelectedRows.Count == 1)
             {
-                clsTestAppointment TestAppointment = clsTestAppointment.Find((int)dgvTestAppointments.SelectedRows[0].Cells["Appointment ID"].Value);
+                clsTestAppointment TestAppointment = clsTestAppointment.Find((int)dgvTestAppointments.SelectedRows[0].Cells[_PrimaryKeyViewedColumnName].Value);
                 frmScheduleTest frm;
                 if (clsTest.HasPassedTheTest(_LDLAppId, _TestTypeID))
                 {
@@ -180,7 +193,7 @@ namespace DVLDPresentationLayer
                         return;
                 }
 
-                clsTestAppointment TestAppointment = clsTestAppointment.Find((int)dgvTestAppointments.SelectedRows[0].Cells["Appointment ID"].Value);
+                clsTestAppointment TestAppointment = clsTestAppointment.Find((int)dgvTestAppointments.SelectedRows[0].Cells[_PrimaryKeyViewedColumnName].Value);
                 frmTakeTest frm = new frmTakeTest(TestAppointment, _CurrentTestType, (int)dgvTestAppointments.SelectedRows[0].Index);
                 frm.AfterPassingTest += _UpdateLDLAppDgv;
                 frm.AfterTestTaken += _LockTestAppointment;

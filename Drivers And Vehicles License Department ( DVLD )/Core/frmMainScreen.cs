@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using DVLDBusinessLayer;
 using DVLDPresentationLayer.Applications;
 using DVLDPresentationLayer.Controls;
 using DVLDPresentationLayer.Core;
@@ -11,9 +12,10 @@ using Utility_Library;
 namespace DVLDPresentationLayer
 {
     public partial class frmMainScreen : Form
-    {  
+    {
         private frmLoginScreen _frmLogin;
         private bool _SignOut = false;
+
         public frmMainScreen(frmLoginScreen frmLogin)
         {
             InitializeComponent();
@@ -22,20 +24,38 @@ namespace DVLDPresentationLayer
             _frmLogin = frmLogin;
         }
 
-        private Size SetFormsSize(int width = 200 , int height = 300)
+        private bool _IsAuthorizedUser(clsUser.enUserPermissions Permission)
         {
-            return new Size(this.Width - width, this.Height - height);
+            return (clsUser.IsAdminUser(clsGlobalSettings.CurrentUserPermissions) || clsUser.HasUserPermission(Permission, clsGlobalSettings.CurrentUserPermissions));
         }
+
+        private void _GetAccessDeniedMessage()
+        {
+            MessageBox.Show("You don't have permission, contact your admin for more details.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         private void tsmiPeople_Click(object sender, EventArgs e)
         {
-            frmPeopleManagement frm = new frmPeopleManagement();
-            frm.Size = SetFormsSize();
-            frm.ShowDialog();            
+            if (_IsAuthorizedUser(clsUser.enUserPermissions.PeopleManagement))
+            {
+                frmPeopleManagement frm = new frmPeopleManagement();
+                frm.Size = new Size(this.Width - 200, this.Height - 300);
+                frm.ShowDialog();
+            }
+
+            else
+                _GetAccessDeniedMessage();
         }
-        private void tsmiUsers_Click (object sender, EventArgs e)
+        private void tsmiUsers_Click(object sender, EventArgs e)
         {
-            frmUsersManagement frm = new frmUsersManagement();                
-            frm.ShowDialog();
+            if (_IsAuthorizedUser(clsUser.enUserPermissions.UsersManagement))
+            {
+                frmUsersManagement frm = new frmUsersManagement();
+                frm.ShowDialog();
+            }
+
+            else
+                _GetAccessDeniedMessage();
         }
 
         private void frmMainScreen_FormClosing(object sender, FormClosingEventArgs e)
@@ -98,8 +118,14 @@ namespace DVLDPresentationLayer
 
         private void tsmiDrivers_Click(object sender, EventArgs e)
         {
-            frmDriversManagement frm = new frmDriversManagement();
-            frm.ShowDialog();
+            if (_IsAuthorizedUser(clsUser.enUserPermissions.DriversView))
+            {
+                frmDriversList frm = new frmDriversList();
+                frm.ShowDialog();
+            }
+
+            else
+                _GetAccessDeniedMessage();
         }
 
         private void tsmiInternationalLicense_Click(object sender, EventArgs e)
@@ -154,6 +180,23 @@ namespace DVLDPresentationLayer
         {
             frmDetainedLicensesManagement frm = new frmDetainedLicensesManagement();
             frm.ShowDialog();
+        }
+
+        private void tsmiApplicationsManagement_Paint(object sender, PaintEventArgs e)
+        {
+    
+        }
+
+        private void tsmiApplicationsManagement_DropDownOpening(object sender, EventArgs e)
+        {
+            if (tsmiApplicationsManagement.DropDown.IsDisposed)
+                _GetAccessDeniedMessage();
+
+            else if (!_IsAuthorizedUser(clsUser.enUserPermissions.ApplicationsManagement))
+            {
+                _GetAccessDeniedMessage();
+                ((ToolStripDropDownItem)sender).DropDown.Dispose();
+            }
         }
     }
 }

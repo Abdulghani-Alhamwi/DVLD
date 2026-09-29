@@ -31,21 +31,21 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.tcLicensesHistory = new System.Windows.Forms.TabControl();
+            this.tcLicenseHistory = new System.Windows.Forms.TabControl();
             this.tpLocalLicenses = new System.Windows.Forms.TabPage();
             this.lblLocalLicensesNum = new System.Windows.Forms.Label();
             this.lblLocalRecordsNumTitle = new System.Windows.Forms.Label();
-            this.lblLLHistoryTitle = new System.Windows.Forms.Label();
+            this.lblLocalLicenseHistoryTitle = new System.Windows.Forms.Label();
             this.dgvLocalLicenses = new System.Windows.Forms.DataGridView();
             this.cmsLicenseHistory = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiShowLicenseInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tpInternationalLicenses = new System.Windows.Forms.TabPage();
             this.lblInternationalLicensesNum = new System.Windows.Forms.Label();
             this.lblIntRecordsNumTitle = new System.Windows.Forms.Label();
-            this.lblIntLicensesHistoryTitle = new System.Windows.Forms.Label();
+            this.lblIntLicenseHistoryTitle = new System.Windows.Forms.Label();
             this.dgvInternationalLicenses = new System.Windows.Forms.DataGridView();
             this.gbDriverLicenses = new System.Windows.Forms.GroupBox();
-            this.tcLicensesHistory.SuspendLayout();
+            this.tcLicenseHistory.SuspendLayout();
             this.tpLocalLicenses.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLocalLicenses)).BeginInit();
             this.cmsLicenseHistory.SuspendLayout();
@@ -54,21 +54,22 @@
             this.gbDriverLicenses.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tcLicensesHistory
+            // tcLicenseHistory
             // 
-            this.tcLicensesHistory.Controls.Add(this.tpLocalLicenses);
-            this.tcLicensesHistory.Controls.Add(this.tpInternationalLicenses);
-            this.tcLicensesHistory.Location = new System.Drawing.Point(18, 41);
-            this.tcLicensesHistory.Name = "tcLicensesHistory";
-            this.tcLicensesHistory.SelectedIndex = 0;
-            this.tcLicensesHistory.Size = new System.Drawing.Size(1404, 352);
-            this.tcLicensesHistory.TabIndex = 0;
+            this.tcLicenseHistory.Controls.Add(this.tpLocalLicenses);
+            this.tcLicenseHistory.Controls.Add(this.tpInternationalLicenses);
+            this.tcLicenseHistory.Location = new System.Drawing.Point(18, 41);
+            this.tcLicenseHistory.Name = "tcLicenseHistory";
+            this.tcLicenseHistory.SelectedIndex = 0;
+            this.tcLicenseHistory.Size = new System.Drawing.Size(1404, 352);
+            this.tcLicenseHistory.TabIndex = 0;
+            this.tcLicenseHistory.SelectedIndexChanged += new System.EventHandler(this.tcLicenseHistory_SelectedIndexChanged);
             // 
             // tpLocalLicenses
             // 
             this.tpLocalLicenses.Controls.Add(this.lblLocalLicensesNum);
             this.tpLocalLicenses.Controls.Add(this.lblLocalRecordsNumTitle);
-            this.tpLocalLicenses.Controls.Add(this.lblLLHistoryTitle);
+            this.tpLocalLicenses.Controls.Add(this.lblLocalLicenseHistoryTitle);
             this.tpLocalLicenses.Controls.Add(this.dgvLocalLicenses);
             this.tpLocalLicenses.Location = new System.Drawing.Point(4, 38);
             this.tpLocalLicenses.Name = "tpLocalLicenses";
@@ -100,16 +101,16 @@
             this.lblLocalRecordsNumTitle.TabIndex = 60;
             this.lblLocalRecordsNumTitle.Text = "# Records :";
             // 
-            // lblLLHistoryTitle
+            // lblLocalLicenseHistoryTitle
             // 
-            this.lblLLHistoryTitle.AutoSize = true;
-            this.lblLLHistoryTitle.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
-            this.lblLLHistoryTitle.Location = new System.Drawing.Point(29, 16);
-            this.lblLLHistoryTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblLLHistoryTitle.Name = "lblLLHistoryTitle";
-            this.lblLLHistoryTitle.Size = new System.Drawing.Size(293, 29);
-            this.lblLLHistoryTitle.TabIndex = 59;
-            this.lblLLHistoryTitle.Text = "Local Licenses History :";
+            this.lblLocalLicenseHistoryTitle.AutoSize = true;
+            this.lblLocalLicenseHistoryTitle.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
+            this.lblLocalLicenseHistoryTitle.Location = new System.Drawing.Point(29, 16);
+            this.lblLocalLicenseHistoryTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblLocalLicenseHistoryTitle.Name = "lblLocalLicenseHistoryTitle";
+            this.lblLocalLicenseHistoryTitle.Size = new System.Drawing.Size(293, 29);
+            this.lblLocalLicenseHistoryTitle.TabIndex = 59;
+            this.lblLocalLicenseHistoryTitle.Text = "Local Licenses History :";
             // 
             // dgvLocalLicenses
             // 
@@ -137,8 +138,9 @@
             this.dgvLocalLicenses.Size = new System.Drawing.Size(1355, 205);
             this.dgvLocalLicenses.StandardTab = true;
             this.dgvLocalLicenses.TabIndex = 58;
-            this.dgvLocalLicenses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvLocalLicenses_Scroll);
-            this.dgvLocalLicenses.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvLocalLicenses_KeyDown);
+            this.dgvLocalLicenses.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_ColumnHeaderMouseClick);
+            this.dgvLocalLicenses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.DataGridView_Scroll);
+            this.dgvLocalLicenses.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridView_KeyDown);
             // 
             // cmsLicenseHistory
             // 
@@ -166,7 +168,7 @@
             // 
             this.tpInternationalLicenses.Controls.Add(this.lblInternationalLicensesNum);
             this.tpInternationalLicenses.Controls.Add(this.lblIntRecordsNumTitle);
-            this.tpInternationalLicenses.Controls.Add(this.lblIntLicensesHistoryTitle);
+            this.tpInternationalLicenses.Controls.Add(this.lblIntLicenseHistoryTitle);
             this.tpInternationalLicenses.Controls.Add(this.dgvInternationalLicenses);
             this.tpInternationalLicenses.Location = new System.Drawing.Point(4, 38);
             this.tpInternationalLicenses.Name = "tpInternationalLicenses";
@@ -198,16 +200,16 @@
             this.lblIntRecordsNumTitle.TabIndex = 64;
             this.lblIntRecordsNumTitle.Text = "# Records :";
             // 
-            // lblIntLicensesHistoryTitle
+            // lblIntLicenseHistoryTitle
             // 
-            this.lblIntLicensesHistoryTitle.AutoSize = true;
-            this.lblIntLicensesHistoryTitle.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
-            this.lblIntLicensesHistoryTitle.Location = new System.Drawing.Point(29, 15);
-            this.lblIntLicensesHistoryTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblIntLicensesHistoryTitle.Name = "lblIntLicensesHistoryTitle";
-            this.lblIntLicensesHistoryTitle.Size = new System.Drawing.Size(388, 29);
-            this.lblIntLicensesHistoryTitle.TabIndex = 63;
-            this.lblIntLicensesHistoryTitle.Text = "International Licenses History :";
+            this.lblIntLicenseHistoryTitle.AutoSize = true;
+            this.lblIntLicenseHistoryTitle.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
+            this.lblIntLicenseHistoryTitle.Location = new System.Drawing.Point(29, 15);
+            this.lblIntLicenseHistoryTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblIntLicenseHistoryTitle.Name = "lblIntLicenseHistoryTitle";
+            this.lblIntLicenseHistoryTitle.Size = new System.Drawing.Size(388, 29);
+            this.lblIntLicenseHistoryTitle.TabIndex = 63;
+            this.lblIntLicenseHistoryTitle.Text = "International Licenses History :";
             // 
             // dgvInternationalLicenses
             // 
@@ -235,12 +237,13 @@
             this.dgvInternationalLicenses.Size = new System.Drawing.Size(1346, 205);
             this.dgvInternationalLicenses.StandardTab = true;
             this.dgvInternationalLicenses.TabIndex = 62;
-            this.dgvInternationalLicenses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvInternationalLicenses_Scroll);
-            this.dgvInternationalLicenses.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvInternationalLicenses_KeyDown);
+            this.dgvInternationalLicenses.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_ColumnHeaderMouseClick);
+            this.dgvInternationalLicenses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.DataGridView_Scroll);
+            this.dgvInternationalLicenses.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridView_KeyDown);
             // 
             // gbDriverLicenses
             // 
-            this.gbDriverLicenses.Controls.Add(this.tcLicensesHistory);
+            this.gbDriverLicenses.Controls.Add(this.tcLicenseHistory);
             this.gbDriverLicenses.Location = new System.Drawing.Point(7, -1);
             this.gbDriverLicenses.Name = "gbDriverLicenses";
             this.gbDriverLicenses.Size = new System.Drawing.Size(1439, 411);
@@ -259,7 +262,7 @@
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Name = "ctrlDriverLicensesHistory";
             this.Size = new System.Drawing.Size(1458, 413);
-            this.tcLicensesHistory.ResumeLayout(false);
+            this.tcLicenseHistory.ResumeLayout(false);
             this.tpLocalLicenses.ResumeLayout(false);
             this.tpLocalLicenses.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLocalLicenses)).EndInit();
@@ -274,17 +277,17 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl tcLicensesHistory;
+        private System.Windows.Forms.TabControl tcLicenseHistory;
         private System.Windows.Forms.TabPage tpLocalLicenses;
         private System.Windows.Forms.Label lblLocalLicensesNum;
         private System.Windows.Forms.Label lblLocalRecordsNumTitle;
-        private System.Windows.Forms.Label lblLLHistoryTitle;
+        private System.Windows.Forms.Label lblLocalLicenseHistoryTitle;
         private System.Windows.Forms.DataGridView dgvLocalLicenses;
         private System.Windows.Forms.TabPage tpInternationalLicenses;
         private System.Windows.Forms.GroupBox gbDriverLicenses;
         private System.Windows.Forms.Label lblInternationalLicensesNum;
         private System.Windows.Forms.Label lblIntRecordsNumTitle;
-        private System.Windows.Forms.Label lblIntLicensesHistoryTitle;
+        private System.Windows.Forms.Label lblIntLicenseHistoryTitle;
         private System.Windows.Forms.DataGridView dgvInternationalLicenses;
         private System.Windows.Forms.ContextMenuStrip cmsLicenseHistory;
         private System.Windows.Forms.ToolStripMenuItem tsmiShowLicenseInfo;

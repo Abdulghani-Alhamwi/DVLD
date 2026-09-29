@@ -9,6 +9,8 @@ namespace DVLDPresentationLayer
 
         public static string CurrentUserName = "";
 
+        public static sbyte CurrentUserPermissions;
+
         public static bool LoginInfoChanged = false;
 
         public static Color ComboBoxBackColor = Color.FromArgb(228, 228, 228);

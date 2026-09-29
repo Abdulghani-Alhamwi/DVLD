@@ -54,26 +54,33 @@ namespace DVLDBusinessLayer
         {
             return clsDriversData.GetDriverPersonID(DriverID);
         }
-        public static DataTable GetDriversInfo(byte WantedNumOfRecords, int LastLowestBroughtDriverID)
-        {
-            return clsDriversData.GetDriversInfo(WantedNumOfRecords, LastLowestBroughtDriverID);
-        }
+
         public static DataTable GetDriversInfo(byte WantedNumOfRecords)
         {
             return clsDriversData.GetDriversInfo(WantedNumOfRecords);
         }
+
+        public static DataTable GetDriversInfo(byte WantedNumOfRecords, int LastBroughtDriverID
+            , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
+        {
+            return clsDriversData.GetDriversInfo(WantedNumOfRecords, LastBroughtDriverID, LastColumnNameDataOrderedBy
+                    , NumberOfRowsToOffset, SortDirection);
+        }
+
         public static int GetTotalDriversCount()
         {
             return clsDriversData.GetTotalDriversCount();
         }
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection, char? WildChar = null)
         {
-            return clsDriversData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, -1,WildChar);
+            return clsDriversData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, -1, -1, WildChar);
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, int LastLowestBroughtDriverID = -1, char? WildChar = null)
+        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,
+            string ColumnNameToOrderBy, string SortDirection, int LastBroughtDriverID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
-            return clsDriversData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy,LastLowestBroughtDriverID,WildChar);
+            return clsDriversData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy,
+                SortDirection, LastBroughtDriverID, NumberOfRowsToOffset, WildChar);
         }
 
         public static bool HasActiveLicenseFromClass(int DriverID, int LicenseClassID,out int LicenseID)
@@ -89,6 +96,13 @@ namespace DVLDBusinessLayer
         public static short GetDriverInternationalLicensesCount(int DriverID)
         {
             return clsDriversData.GetDriverInternationalLicensesCount(DriverID);
+        }
+
+        public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection
+        , string ColumnNameToFilterBy = null, string valueToFilterBy = null, char? WildChar = null)
+        {
+            return clsDriversData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
+                ColumnNameToFilterBy, valueToFilterBy, WildChar);
         }
 
     }

@@ -1,14 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\Drivers And Vehicles License Department ( DVLD )\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{87821629-02F7-465B-A682-7D5CA154AB67}|..\\DVLDDataAccessLayer\\DVLDDataAccessLayer.csproj|d:\\office\\programming advices\\course 19 - full real project - dvld\\project dvld my solution\\dvld\\dvlddataaccesslayer\\testtypesdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{87821629-02F7-465B-A682-7D5CA154AB67}|..\\DVLDDataAccessLayer\\DVLDDataAccessLayer.csproj|d:\\office\\programming advices\\course 19 - full real project - dvld\\project dvld my solution\\dvld\\dvlddataaccesslayer\\applicationtypesdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -16,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -41,32 +34,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ApplicationTypesData.cs",
-              "DocumentMoniker": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\DVLDDataAccessLayer\\ApplicationTypesData.cs",
-              "RelativeDocumentMoniker": "..\\DVLDDataAccessLayer\\ApplicationTypesData.cs",
-              "ToolTip": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\DVLDDataAccessLayer\\ApplicationTypesData.cs",
-              "RelativeToolTip": "..\\DVLDDataAccessLayer\\ApplicationTypesData.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAQwB4AAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-21T11:05:55.904Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TestTypesData.cs",
-              "DocumentMoniker": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\DVLDDataAccessLayer\\TestTypesData.cs",
-              "RelativeDocumentMoniker": "..\\DVLDDataAccessLayer\\TestTypesData.cs",
-              "ToolTip": "D:\\Office\\Programming Advices\\Course 19 - Full Real Project - DVLD\\Project DVLD My Solution\\DVLD\\DVLDDataAccessLayer\\TestTypesData.cs*",
-              "RelativeToolTip": "..\\DVLDDataAccessLayer\\TestTypesData.cs*",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAgAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-21T11:05:28.548Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
