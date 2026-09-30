@@ -380,7 +380,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection,
-              int LastBroughtIntLicenseID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
+               int LastBroughtIntLicenseID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
@@ -520,7 +520,6 @@ namespace DVLDDataAccessLayer
             return IsFound;
         }
 
-
         public static bool LinkWithNewLocalLicense(int DriverID, int NewLocalLicenseID)
         {
             byte AffectedRows = 0;
@@ -576,7 +575,6 @@ namespace DVLDDataAccessLayer
             }
             return -1;
         }
-
 
         public static int GetLocalLicenseID(int InternationalLicenseID)
         {

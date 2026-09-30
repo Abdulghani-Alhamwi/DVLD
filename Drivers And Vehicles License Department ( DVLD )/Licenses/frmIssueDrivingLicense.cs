@@ -11,11 +11,12 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
         internal event Action<int> AfterLicenseIssuance;
 
         clsLocalLicense _LocalLicense;
-
         int _LDLAppDGVRowIndex;
+
         public frmIssueDrivingLicense(int LDLAppID,int DGVRowIndex)
         {
             InitializeComponent();
+
             uctrlDLApplicationInfo.LoadLDLAppInfo(LDLAppID);
             lblLicenseFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsLicenseClass.GetLicenseClassFees(uctrlDLApplicationInfo.LDLApplication.LicenseClass.ID),
                 enCustomNumberFormat.NoJustZerosAfterFraction);
@@ -24,18 +25,18 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
 
         private bool _SaveLicenseInfo(clsLocalDrivingLicenseApp LDLApplication ,int DriverID)
         {
-                  _LocalLicense = new clsLocalLicense(
-                  ApplicationID: LDLApplication.ApplicationID,
-                  DriverID: DriverID,
-                  LicenseClassID: LDLApplication.LicenseClass.ID,
-                  IssueDate: DateTime.Now,
-                  ExpirationDate: DateTime.Now.AddYears(clsLicenseClass.GetLicenseValidityLength(LDLApplication.LicenseClass.ID)),
-                  Notes: (txtNotes.Text != "") ? txtNotes.Text : null,
-                  PaidFees: clsLicenseClass.GetLicenseClassFees(LDLApplication.LicenseClass.ID),
-                  IsActive: true,
-                  IssueReason: clsLocalLicense.enIssueReason.FirstTime,
-                  CreatedByUserID: clsGlobalSettings.CurrentUserID
-                  );
+            _LocalLicense = new clsLocalLicense(
+            ApplicationID: LDLApplication.ApplicationID,
+            DriverID: DriverID,
+            LicenseClassID: LDLApplication.LicenseClass.ID,
+            IssueDate: DateTime.Now,
+            ExpirationDate: DateTime.Now.AddYears(clsLicenseClass.GetLicenseValidityLength(LDLApplication.LicenseClass.ID)),
+            Notes: (txtNotes.Text != "") ? txtNotes.Text : null,
+            PaidFees: clsLicenseClass.GetLicenseClassFees(LDLApplication.LicenseClass.ID),
+            IsActive: true,
+            IssueReason: clsLocalLicense.enIssueReason.FirstTime,
+            CreatedByUserID: clsGlobalSettings.CurrentUserID
+            );
 
             return _LocalLicense.Save();
         }

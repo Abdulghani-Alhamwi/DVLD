@@ -8,15 +8,16 @@ namespace DVLDPresentationLayer
 {
     public partial class ctrLDLApplicationDetails : UserControl
     {
+        private int _PersonID = -1;
+        private int _LocalLicenseID = -1;
+
+        public clsLocalDrivingLicenseApp LDLApplication;
+
         public ctrLDLApplicationDetails()
         {
             InitializeComponent();
         }
 
-        int _PersonID = -1;
-        int _LocalLicenseID = -1;
-
-        public clsLocalDrivingLicenseApp LDLApplication;
         public void LoadLDLAppInfo(int LDLAppID)
         {
             LDLApplication = clsLocalDrivingLicenseApp.Find(LDLAppID);

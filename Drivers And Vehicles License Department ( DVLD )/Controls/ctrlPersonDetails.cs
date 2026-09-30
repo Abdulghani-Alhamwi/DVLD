@@ -10,13 +10,14 @@ namespace DVLDPresentationLayer
     {
         public event Action AfterEditingPersonInfo;
      
-        clsPerson _Person;
-        bool _ShownDefaultValues = false;
+        private clsPerson _Person;
+        private bool _ShownDefaultValues = false;
 
         public ctrlPersonDetails()
         {
             InitializeComponent();
         }
+
         public clsPerson LoadPersonDetails (string NationalNo)
         {
             _Person = clsPerson.Find(NationalNo);

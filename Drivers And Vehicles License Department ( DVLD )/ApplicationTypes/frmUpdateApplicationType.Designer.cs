@@ -51,13 +51,13 @@
             // btnExit
             // 
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
-            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(588, 11);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
@@ -231,7 +231,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(633, 448);
             this.ControlBox = false;
@@ -249,7 +249,7 @@
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.lblUpdateApplicationTitle);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Name = "frmUpdateApplicationType";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

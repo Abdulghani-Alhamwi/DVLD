@@ -8,7 +8,7 @@ namespace DVLDDataAccessLayer
     {
         private static readonly string _PrimaryKeyColumnName = "TestTypeID";
 
-        private enum enUpdatableColumns : byte
+        private enum _enUpdatableColumns : byte
         {
             TestTypeTitle, TestTypeDescription, TestTypeFees
         }
@@ -72,17 +72,17 @@ namespace DVLDDataAccessLayer
                 OldTestTypeData.TestTypeFees = -1;
         }
 
-        private static string _GetColumnValueSetPartForUpdate(enUpdatableColumns UpdatableColumn)
+        private static string _GetColumnValueSetPartForUpdate(_enUpdatableColumns UpdatableColumn)
         {
             switch(UpdatableColumn)
             {
-                case enUpdatableColumns.TestTypeTitle:
+                case _enUpdatableColumns.TestTypeTitle:
                     return " TestTypeTitle = @Title";
 
-                case enUpdatableColumns.TestTypeDescription:
+                case _enUpdatableColumns.TestTypeDescription:
                     return " TestTypeDescription = @Description";
 
-                case enUpdatableColumns.TestTypeFees:
+                case _enUpdatableColumns.TestTypeFees:
                     return " TestTypeFees = @Fees";
             }
 
@@ -97,26 +97,26 @@ namespace DVLDDataAccessLayer
             {
                 if (TestTypeTitle != OldTestTypeData.TestTypeTitle)
                 {
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.TestTypeTitle);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.TestTypeTitle);
 
                     if (TestTypeDescription != OldTestTypeData.TestTypeDescription)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.TestTypeDescription);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.TestTypeDescription);
 
                     if (TestTypeFees != OldTestTypeData.TestTypeFees)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.TestTypeFees);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.TestTypeFees);
                 }
 
                 else if (TestTypeDescription != OldTestTypeData.TestTypeDescription)
                 {
                     if (TestTypeDescription != OldTestTypeData.TestTypeDescription)
-                        query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.TestTypeDescription);
+                        query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.TestTypeDescription);
 
                     if (TestTypeFees != OldTestTypeData.TestTypeFees)
-                        query += "," + _GetColumnValueSetPartForUpdate(enUpdatableColumns.TestTypeFees);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.TestTypeFees);
                 }
 
                 else
-                    query += _GetColumnValueSetPartForUpdate(enUpdatableColumns.TestTypeFees);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.TestTypeFees);
 
             }
 

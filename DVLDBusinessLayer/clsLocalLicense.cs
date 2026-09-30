@@ -86,6 +86,7 @@ namespace DVLDBusinessLayer
             }
             return null;
         }
+
         private static byte _GetIssueReasonAsNumber(enIssueReason IssueReason)
         {
             switch (IssueReason)
@@ -104,6 +105,7 @@ namespace DVLDBusinessLayer
             }
             return 0;
         }
+
         private static enIssueReason _GetIssueReasonAsEnum(byte IssueReason)
         {
             switch (IssueReason)
@@ -122,6 +124,7 @@ namespace DVLDBusinessLayer
             }
             return enIssueReason.FirstTime;
         }
+
         private bool _IssueDrivingLicense()
         {
             bool HasIssuedInternationalLicense = false;

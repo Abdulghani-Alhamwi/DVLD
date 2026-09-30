@@ -48,7 +48,7 @@
             this.btnClose.Location = new System.Drawing.Point(1003, 597);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 59;
+            this.btnClose.TabIndex = 1;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -83,17 +83,18 @@
             // 
             this.btnExit.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1144, 9);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 56;
+            this.btnExit.TabIndex = 2;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -106,14 +107,14 @@
             this.uctrlDLApplicationInfo.Location = new System.Drawing.Point(13, 131);
             this.uctrlDLApplicationInfo.Name = "uctrlDLApplicationInfo";
             this.uctrlDLApplicationInfo.Size = new System.Drawing.Size(1165, 452);
-            this.uctrlDLApplicationInfo.TabIndex = 60;
+            this.uctrlDLApplicationInfo.TabIndex = 0;
             // 
             // frmApplicationDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1194, 656);
             this.ControlBox = false;

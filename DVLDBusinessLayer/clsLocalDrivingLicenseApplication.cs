@@ -13,6 +13,7 @@ namespace DVLDBusinessLayer
         public clsLicenseClass LicenseClass;
 
         private int _OldLicenseClassID;
+
         public clsLocalDrivingLicenseApp(int ApplicantPersonID, byte LicenseClassID, string LicenseClassName, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
               : base(ApplicantPersonID, ApplicationDate, ApplicationTypeID, ApplicationStatus, LastStatusDate, PaidApplicationFees, CreatedByUserID)
         {
@@ -38,20 +39,24 @@ namespace DVLDBusinessLayer
 
             _OldLicenseClassID = LicenseClass.ID;
         }
+
         public static DataTable GetLDLApplications(byte WantedNumOfRecords)
         {
             return clsLocalDrivingLicenseAppsData.GetLDLApplications(WantedNumOfRecords);
         }
+
         public static DataTable GetLDLApplications(byte WantedNumOfRecords, int LastBroughtLDLAppID
             , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             return clsLocalDrivingLicenseAppsData.GetLDLApplications(WantedNumOfRecords, LastBroughtLDLAppID
                 , LastColumnNameDataOrderedBy, NumberOfRowsToOffset, SortDirection);
         }
+
         public static int GetTotalLDLApplicationsCount()
         {
             return clsLocalDrivingLicenseAppsData.GetTotalLDLApplicationsCount();
         }
+
         public static new clsLocalDrivingLicenseApp Find(int LDLApplicationID)
         {
             int ApplicationID = -1;
@@ -180,18 +185,18 @@ namespace DVLDBusinessLayer
             return clsLocalDrivingLicenseAppsData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastColumnNameDataOrderedBy, SortDirection, LastBroughtLDLAppID,NumberOfRowsToOffset, WildChar);
         }
 
-
         public static sbyte GetPassedTests(int LDLApplicationID)
-    {
+        {
             return clsLocalDrivingLicenseAppsData.GetPassedTests(LDLApplicationID);
-    }
-    public static DataTable GetColumnsNamesForView()
-    {
-        return clsLocalDrivingLicenseAppsData.GetColumnsNamesForView();
-    }
+        }
+
+        public static DataTable GetColumnsNamesForView()
+        {
+            return clsLocalDrivingLicenseAppsData.GetColumnsNamesForView();
+        }
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection
-     , string ColumnNameToFilterBy = null, string valueToFilterBy = null, char? WildChar = null)
+             , string ColumnNameToFilterBy = null, string valueToFilterBy = null, char? WildChar = null)
         {
             return clsLocalDrivingLicenseAppsData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
                 ColumnNameToFilterBy, valueToFilterBy, WildChar);

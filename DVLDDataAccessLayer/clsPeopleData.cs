@@ -1137,7 +1137,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
-            string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
+               string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
             return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);

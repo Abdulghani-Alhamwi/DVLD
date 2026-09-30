@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Security.Policy;
 using System.Windows.Forms;
 
 namespace Utility_Library
 {
-    public class clsDgvUtilityLib
+    public class clsDataGridViewUtilityLib
     {
         public enum enDataGridViewSortDirection : byte { Ascending = 0, Descending = 1 }
 
@@ -207,7 +206,6 @@ namespace Utility_Library
             }
             DataSource.Rows[RowIndex].AcceptChanges();
         }
-
 
         /// <summary>
         /// Edit one column value in a row in data grid view .

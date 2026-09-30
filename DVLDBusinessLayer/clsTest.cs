@@ -5,8 +5,8 @@ namespace DVLDBusinessLayer
 {
     public class clsTest
     {
-        enum _enMode : byte {AddNew = 0 , Update = 1};
-        _enMode _CurrentMode;
+        private enum _enMode : byte {AddNew = 0 , Update = 1};
+        private _enMode _CurrentMode;
         public int TestID { get; set; }
         public int TestAppointmentID { get; set; }
         public bool TestResult { get; set; }
@@ -22,6 +22,7 @@ namespace DVLDBusinessLayer
             this.Notes = Notes;
             this.CreatedByUserID = CreatedByUserID;
         }
+
         private bool _AddNewTest()
         {
             TestID = clsTestsData.AddNewTest(TestAppointmentID, TestResult, Notes, CreatedByUserID);
@@ -49,6 +50,7 @@ namespace DVLDBusinessLayer
         {
             return clsTestsData.HasPassedTheTest(LDLApplicationID, TestTypeID);
         }
+
         public static sbyte GetTotalPassedTestsCount(int LDLApplicationID)
         {
             return clsTestsData.GetTotalPassedTestsCount(LDLApplicationID);

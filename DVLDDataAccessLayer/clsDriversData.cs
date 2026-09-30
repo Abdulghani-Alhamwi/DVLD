@@ -284,7 +284,7 @@ namespace DVLDDataAccessLayer
         }
 
         private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy,
-             string ColumnNameToOrderBy, string SortDirection,int LastBroughtDriverID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
+                string ColumnNameToOrderBy, string SortDirection,int LastBroughtDriverID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             string query;
 
@@ -331,7 +331,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,string ColumnNameToOrderBy
-            , string SortDirection,int LastBroughtDriverID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
+             , string SortDirection,int LastBroughtDriverID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
@@ -484,7 +484,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
-            string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
+               string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
             return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);

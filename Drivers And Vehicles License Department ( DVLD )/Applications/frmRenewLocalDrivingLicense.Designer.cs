@@ -268,7 +268,7 @@
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.Size = new System.Drawing.Size(715, 77);
-            this.txtNotes.TabIndex = 179;
+            this.txtNotes.TabIndex = 1;
             // 
             // pbTotalFees
             // 
@@ -527,7 +527,7 @@
             this.btnRenewLicense.Location = new System.Drawing.Point(999, 969);
             this.btnRenewLicense.Name = "btnRenewLicense";
             this.btnRenewLicense.Size = new System.Drawing.Size(166, 45);
-            this.btnRenewLicense.TabIndex = 191;
+            this.btnRenewLicense.TabIndex = 2;
             this.btnRenewLicense.Text = "Renew";
             this.btnRenewLicense.UseVisualStyleBackColor = true;
             this.btnRenewLicense.Click += new System.EventHandler(this.btnRenewLicense_Click);
@@ -541,7 +541,7 @@
             this.lnlblShowLicenseHistory.Margin = new System.Windows.Forms.Padding(0);
             this.lnlblShowLicenseHistory.Name = "lnlblShowLicenseHistory";
             this.lnlblShowLicenseHistory.Size = new System.Drawing.Size(259, 31);
-            this.lnlblShowLicenseHistory.TabIndex = 193;
+            this.lnlblShowLicenseHistory.TabIndex = 3;
             this.lnlblShowLicenseHistory.TabStop = true;
             this.lnlblShowLicenseHistory.Text = "Show License History";
             this.lnlblShowLicenseHistory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseHistory_LinkClicked);
@@ -570,7 +570,7 @@
             this.btnClose.Location = new System.Drawing.Point(801, 969);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 190;
+            this.btnClose.TabIndex = 5;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -596,12 +596,12 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1138, 6);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 188;
+            this.btnExit.TabIndex = 6;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -615,7 +615,7 @@
             this.lnlblShowNewLicenseInfo.Margin = new System.Windows.Forms.Padding(0);
             this.lnlblShowNewLicenseInfo.Name = "lnlblShowNewLicenseInfo";
             this.lnlblShowNewLicenseInfo.Size = new System.Drawing.Size(283, 31);
-            this.lnlblShowNewLicenseInfo.TabIndex = 194;
+            this.lnlblShowNewLicenseInfo.TabIndex = 4;
             this.lnlblShowNewLicenseInfo.TabStop = true;
             this.lnlblShowNewLicenseInfo.Text = "Show New License Info";
             this.lnlblShowNewLicenseInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseInfo_LinkClicked);
@@ -630,15 +630,16 @@
             this.uctrlLDLDetailsByFilter.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.uctrlLDLDetailsByFilter.Name = "uctrlLDLDetailsByFilter";
             this.uctrlLDLDetailsByFilter.Size = new System.Drawing.Size(1157, 514);
-            this.uctrlLDLDetailsByFilter.TabIndex = 187;
+            this.uctrlLDLDetailsByFilter.TabIndex = 0;
             this.uctrlLDLDetailsByFilter.OnSelectedLocalLicense += new DVLDPresentationLayer.ctrlLDLicenseDetailsByFilter.SelectedLocalLicense(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
             // 
             // frmRenewLocalDrivingLicense
             // 
+            this.AcceptButton = this.btnRenewLicense;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1186, 1047);
             this.ControlBox = false;

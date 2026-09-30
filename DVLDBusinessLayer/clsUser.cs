@@ -7,7 +7,7 @@ namespace DVLDBusinessLayer
     public class clsUser
     {
         public enum enMode : byte { AddNew = 0, Update = 1 }
-        enMode _CurrentMode;
+        private enMode _CurrentMode;
 
         public enum enUserPermissions : sbyte
         {

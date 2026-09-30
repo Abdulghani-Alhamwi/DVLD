@@ -8,8 +8,8 @@ namespace DVLDPresentationLayer.Core
 {
     public partial class frmReplacementForLostOrDamaged : Form
     {
-        int _ReplacedLicenseID;
-        clsLocalLicense _SelectedLicenseInfo;
+        private int _ReplacedLicenseID;
+        private clsLocalLicense _SelectedLicenseInfo;
 
         public frmReplacementForLostOrDamaged()
         {
@@ -45,6 +45,7 @@ namespace DVLDPresentationLayer.Core
         {
             _SetFormInfo();
         }
+
         private bool _AddNewApplication(ref int NewApplicationID)
         {
             byte AppType = (rbDamagedLicense.Checked) ? clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.ReplacementForDamagedLicense) : clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.ReplacementForLostLicense);

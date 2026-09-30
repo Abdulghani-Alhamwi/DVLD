@@ -7,12 +7,14 @@ namespace DVLDPresentationLayer
 {
     public partial class frmTestTypesManagement : Form
     {
-        private clsDgvUtilityLib _DgvUtilityLib;
+        private clsDataGridViewUtilityLib _DgvUtilityLib;
+
         public frmTestTypesManagement()
         {
             InitializeComponent();
-            _DgvUtilityLib = new clsDgvUtilityLib();
+            _DgvUtilityLib = new clsDataGridViewUtilityLib();
         }
+
         private void frmManageTestTypes_Load(object sender, EventArgs e)
         {
             dgvTestTypes.DataSource = clsTestType.GetTestTypes();
@@ -48,6 +50,7 @@ namespace DVLDPresentationLayer
                 MessageBox.Show("There is'nt any test type!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -57,6 +60,5 @@ namespace DVLDPresentationLayer
         {
             this.Close();
         }
-
     }
 }

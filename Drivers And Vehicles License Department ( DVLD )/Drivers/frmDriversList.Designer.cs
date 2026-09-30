@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblRecordsNumber = new System.Windows.Forms.Label();
             this.lblRecordsTitle = new System.Windows.Forms.Label();
             this.txtFilter = new System.Windows.Forms.TextBox();
@@ -79,7 +79,7 @@
             this.txtFilter.Location = new System.Drawing.Point(444, 355);
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(344, 41);
-            this.txtFilter.TabIndex = 46;
+            this.txtFilter.TabIndex = 2;
             this.txtFilter.Visible = false;
             this.txtFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
             this.txtFilter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyUp);
@@ -95,7 +95,7 @@
             this.cbFilterBy.Location = new System.Drawing.Point(199, 354);
             this.cbFilterBy.Name = "cbFilterBy";
             this.cbFilterBy.Size = new System.Drawing.Size(226, 42);
-            this.cbFilterBy.TabIndex = 45;
+            this.cbFilterBy.TabIndex = 1;
             this.cbFilterBy.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbFilterBy_DrawItem);
             this.cbFilterBy.DropDown += new System.EventHandler(this.cbFilterBy_DropDown);
             this.cbFilterBy.SelectedIndexChanged += new System.EventHandler(this.cbFilterBy_SelectedIndexChanged);
@@ -138,7 +138,7 @@
             this.btnClose.Location = new System.Drawing.Point(1291, 709);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 47;
+            this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -150,14 +150,14 @@
             this.dgvDrivers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvDrivers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvDrivers.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 18F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDrivers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 18F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDrivers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvDrivers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDrivers.ContextMenuStrip = this.cmsDriver;
             this.dgvDrivers.Location = new System.Drawing.Point(35, 415);
@@ -169,7 +169,7 @@
             this.dgvDrivers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDrivers.Size = new System.Drawing.Size(1422, 266);
             this.dgvDrivers.StandardTab = true;
-            this.dgvDrivers.TabIndex = 44;
+            this.dgvDrivers.TabIndex = 0;
             this.dgvDrivers.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvDrivers_ColumnHeaderMouseClick);
             this.dgvDrivers.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvDrivers_Scroll);
             this.dgvDrivers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvDrivers_KeyDown);
@@ -217,12 +217,12 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1444, 8);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 48;
+            this.btnExit.TabIndex = 4;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -245,7 +245,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1496, 774);
             this.ControlBox = false;

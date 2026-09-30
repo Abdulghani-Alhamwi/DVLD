@@ -96,7 +96,7 @@
             this.uctrlLDLDetailsByFilter.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.uctrlLDLDetailsByFilter.Name = "uctrlLDLDetailsByFilter";
             this.uctrlLDLDetailsByFilter.Size = new System.Drawing.Size(1157, 514);
-            this.uctrlLDLDetailsByFilter.TabIndex = 196;
+            this.uctrlLDLDetailsByFilter.TabIndex = 0;
             this.uctrlLDLDetailsByFilter.OnSelectedLocalLicense += new DVLDPresentationLayer.ctrlLDLicenseDetailsByFilter.SelectedLocalLicense(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
             // 
             // btnDetain
@@ -112,7 +112,7 @@
             this.btnDetain.Location = new System.Drawing.Point(988, 841);
             this.btnDetain.Name = "btnDetain";
             this.btnDetain.Size = new System.Drawing.Size(166, 45);
-            this.btnDetain.TabIndex = 200;
+            this.btnDetain.TabIndex = 2;
             this.btnDetain.Text = "Detain";
             this.btnDetain.UseVisualStyleBackColor = true;
             this.btnDetain.Click += new System.EventHandler(this.btnDetain_Click);
@@ -126,7 +126,7 @@
             this.lnlblShowLicenseHistory.Margin = new System.Windows.Forms.Padding(0);
             this.lnlblShowLicenseHistory.Name = "lnlblShowLicenseHistory";
             this.lnlblShowLicenseHistory.Size = new System.Drawing.Size(259, 31);
-            this.lnlblShowLicenseHistory.TabIndex = 202;
+            this.lnlblShowLicenseHistory.TabIndex = 3;
             this.lnlblShowLicenseHistory.TabStop = true;
             this.lnlblShowLicenseHistory.Text = "Show License History";
             this.lnlblShowLicenseHistory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseHistory_LinkClicked);
@@ -155,7 +155,7 @@
             this.btnClose.Location = new System.Drawing.Point(788, 841);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 199;
+            this.btnClose.TabIndex = 5;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -175,18 +175,17 @@
             // btnExit
             // 
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
-            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1120, 7);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 197;
+            this.btnExit.TabIndex = 6;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -200,7 +199,7 @@
             this.lnlblShowLicenseInfo.Margin = new System.Windows.Forms.Padding(0);
             this.lnlblShowLicenseInfo.Name = "lnlblShowLicenseInfo";
             this.lnlblShowLicenseInfo.Size = new System.Drawing.Size(225, 31);
-            this.lnlblShowLicenseInfo.TabIndex = 203;
+            this.lnlblShowLicenseInfo.TabIndex = 4;
             this.lnlblShowLicenseInfo.TabStop = true;
             this.lnlblShowLicenseInfo.Text = "Show License Info";
             this.lnlblShowLicenseInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseInfo_LinkClicked);
@@ -284,7 +283,7 @@
             this.txtFineFees.MaxLength = 10;
             this.txtFineFees.Name = "txtFineFees";
             this.txtFineFees.Size = new System.Drawing.Size(169, 33);
-            this.txtFineFees.TabIndex = 127;
+            this.txtFineFees.TabIndex = 1;
             this.txtFineFees.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFineFees_KeyDown);
             // 
             // pbApplicationDate
@@ -387,10 +386,11 @@
             // 
             // frmDetainLocalLicense
             // 
+            this.AcceptButton = this.btnDetain;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1167, 904);
             this.ControlBox = false;

@@ -37,7 +37,7 @@ namespace DVLDDataAccessLayer
         private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
 
         public static DataTable GetLDLApplications(byte WantedNumOfRecords, int LastBroughtLDLAppID = -1, string ColumnNameToOrderBy = null
-            , int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
+             , int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             DataTable dtLDLApplications = null;
 
@@ -545,7 +545,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection,
-                  int LastBroughtLDLAppID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
+               int LastBroughtLDLAppID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 
@@ -655,7 +655,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
-            string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
+               string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
             return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);

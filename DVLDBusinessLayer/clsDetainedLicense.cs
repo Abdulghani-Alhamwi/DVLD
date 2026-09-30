@@ -108,8 +108,9 @@ namespace DVLDBusinessLayer
         {
             return clsDetainedLicensesData.GetDetainedLicensesInfo(WantedNumOfRecords);
         }
+
         public static DataTable GetDetainedLicensesInfo(byte WantedNumOfRecords, int LastBroughtDetainID
-            , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
+             , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             return clsDetainedLicensesData.GetDetainedLicensesInfo(WantedNumOfRecords, LastBroughtDetainID
                     , LastColumnNameDataOrderedBy, NumberOfRowsToOffset, SortDirection);
@@ -137,10 +138,10 @@ namespace DVLDBusinessLayer
         }
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection
-         , string ColumnNameToFilterBy = null, string valueToFilterBy = null, char? WildChar = null)
+             , string ColumnNameToFilterBy = null, string valueToFilterBy = null, char? WildChar = null)
         {
             return clsDetainedLicensesData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
-                ColumnNameToFilterBy, valueToFilterBy, WildChar);
+                   ColumnNameToFilterBy, valueToFilterBy, WildChar);
         }
 
     }

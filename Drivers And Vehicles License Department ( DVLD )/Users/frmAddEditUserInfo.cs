@@ -35,6 +35,7 @@ namespace DVLDPresentationLayer
             _InitializeInfo(null);
             _UsersDGVRowIndex = UsersDGVRowIndex;
         }
+
         public frmAddEditUserInfo(clsUser User, int UsersDGVRowIndex,string CurrentUserFullName)
         {
             InitializeComponent();
@@ -107,10 +108,12 @@ namespace DVLDPresentationLayer
             if(_User.HasUserPermission(clsUser.enUserPermissions.DriversView))
                 chkViewDrivers.Checked = true;
         }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
         private bool _MoveToNextTab()
         {
             if (_User == null)
@@ -137,12 +140,13 @@ namespace DVLDPresentationLayer
                 return true;
             }
         }
+
         private void btnNext_Click(object sender, EventArgs e)
         {
             _MoveToNextTab();
         }
 
-        private void btnClose_Click_1(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -155,6 +159,7 @@ namespace DVLDPresentationLayer
                     tcAddNewUser.SelectedTab = tpPersonalInfo;
             }
         }
+
         private void txtUserName_Validating(object sender,CancelEventArgs e)
         {
             if (_User !=null)
@@ -172,6 +177,7 @@ namespace DVLDPresentationLayer
             else
                 erTextBox.Dispose();
         }
+
         private void txtPasswordConfirmation_Validating(object sender,CancelEventArgs e)
         {
             if (txtPasswordConfirmation.Text == "" || string.IsNullOrWhiteSpace(txtPasswordConfirmation.Text)) 
@@ -207,6 +213,7 @@ namespace DVLDPresentationLayer
             User.Password = Password;
             User.Salt = Salt;
         }
+
         private void _SetPasswordAndSalt(ref string Password,ref string Salt)
         {
             byte[] SaltArray = null;

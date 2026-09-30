@@ -426,6 +426,7 @@
             // 
             // gbLDLicenseInfo
             // 
+            this.gbLDLicenseInfo.BackColor = System.Drawing.Color.WhiteSmoke;
             this.gbLDLicenseInfo.Controls.Add(this.pbIsDetained);
             this.gbLDLicenseInfo.Controls.Add(this.lblIsDetained);
             this.gbLDLicenseInfo.Controls.Add(this.lblIsDetainedTitle);
@@ -471,7 +472,7 @@
             this.gbLDLicenseInfo.Size = new System.Drawing.Size(1146, 411);
             this.gbLDLicenseInfo.TabIndex = 126;
             this.gbLDLicenseInfo.TabStop = false;
-            this.gbLDLicenseInfo.Text = "Driver Local License Info";
+            this.gbLDLicenseInfo.Text = "–";
             // 
             // pbIsDetained
             // 

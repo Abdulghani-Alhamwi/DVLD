@@ -33,8 +33,8 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.pbLicenseView = new System.Windows.Forms.PictureBox();
             this.lblFormBigTitle = new System.Windows.Forms.Label();
-            this.uctrlInternationalLicenseDetails = new DVLDPresentationLayer.ctrlInternationalLicenseDetails();
             this.pbInternational = new System.Windows.Forms.PictureBox();
+            this.uctrlInternationalLicenseDetails = new DVLDPresentationLayer.ctrlInternationalLicenseDetails();
             ((System.ComponentModel.ISupportInitialize)(this.pbLicenseView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbInternational)).BeginInit();
             this.SuspendLayout();
@@ -51,7 +51,7 @@
             this.btnClose.Location = new System.Drawing.Point(1020, 682);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 183;
+            this.btnClose.TabIndex = 1;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -77,12 +77,12 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1161, 11);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 179;
+            this.btnExit.TabIndex = 2;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -112,18 +112,6 @@
             this.lblFormBigTitle.Text = "Driver International License Info";
             this.lblFormBigTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // uctrlInternationalLicenseDetails
-            // 
-            this.uctrlInternationalLicenseDetails.AutoScroll = true;
-            this.uctrlInternationalLicenseDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.uctrlInternationalLicenseDetails.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.uctrlInternationalLicenseDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.uctrlInternationalLicenseDetails.Location = new System.Drawing.Point(20, 297);
-            this.uctrlInternationalLicenseDetails.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.uctrlInternationalLicenseDetails.Name = "uctrlInternationalLicenseDetails";
-            this.uctrlInternationalLicenseDetails.Size = new System.Drawing.Size(1171, 358);
-            this.uctrlInternationalLicenseDetails.TabIndex = 184;
-            // 
             // pbInternational
             // 
             this.pbInternational.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
@@ -135,12 +123,24 @@
             this.pbInternational.TabIndex = 185;
             this.pbInternational.TabStop = false;
             // 
+            // uctrlInternationalLicenseDetails
+            // 
+            this.uctrlInternationalLicenseDetails.AutoScroll = true;
+            this.uctrlInternationalLicenseDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlInternationalLicenseDetails.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.uctrlInternationalLicenseDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.uctrlInternationalLicenseDetails.Location = new System.Drawing.Point(20, 297);
+            this.uctrlInternationalLicenseDetails.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.uctrlInternationalLicenseDetails.Name = "uctrlInternationalLicenseDetails";
+            this.uctrlInternationalLicenseDetails.Size = new System.Drawing.Size(1171, 358);
+            this.uctrlInternationalLicenseDetails.TabIndex = 0;
+            // 
             // frmInternationalLicenseDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1214, 741);
             this.ControlBox = false;

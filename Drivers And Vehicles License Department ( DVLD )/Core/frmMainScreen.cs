@@ -46,6 +46,7 @@ namespace DVLDPresentationLayer
             else
                 _GetAccessDeniedMessage();
         }
+
         private void tsmiUsers_Click(object sender, EventArgs e)
         {
             if (_IsAuthorizedUser(clsUser.enUserPermissions.UsersManagement))
@@ -180,11 +181,6 @@ namespace DVLDPresentationLayer
         {
             frmDetainedLicensesManagement frm = new frmDetainedLicensesManagement();
             frm.ShowDialog();
-        }
-
-        private void tsmiApplicationsManagement_Paint(object sender, PaintEventArgs e)
-        {
-    
         }
 
         private void tsmiApplicationsManagement_DropDownOpening(object sender, EventArgs e)

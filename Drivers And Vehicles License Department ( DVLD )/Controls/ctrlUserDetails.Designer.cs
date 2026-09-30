@@ -119,10 +119,10 @@
             this.groupBox1.Controls.Add(this.lblUserNameTitle);
             this.groupBox1.Controls.Add(this.lblUserID);
             this.groupBox1.Controls.Add(this.lblUserIDTitle);
-            this.groupBox1.Location = new System.Drawing.Point(5, 375);
+            this.groupBox1.Location = new System.Drawing.Point(5, 323);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(1073, 83);
-            this.groupBox1.TabIndex = 47;
+            this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Login Information";
             // 
@@ -136,7 +136,7 @@
             this.uctrlPersonDetails.Location = new System.Drawing.Point(-4, 2);
             this.uctrlPersonDetails.Margin = new System.Windows.Forms.Padding(0);
             this.uctrlPersonDetails.Name = "uctrlPersonDetails";
-            this.uctrlPersonDetails.Size = new System.Drawing.Size(1086, 363);
+            this.uctrlPersonDetails.Size = new System.Drawing.Size(1086, 301);
             this.uctrlPersonDetails.TabIndex = 0;
             // 
             // ctrlUserDetails
@@ -144,14 +144,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.uctrlPersonDetails);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "ctrlUserDetails";
-            this.Size = new System.Drawing.Size(1083, 461);
+            this.Size = new System.Drawing.Size(1083, 410);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

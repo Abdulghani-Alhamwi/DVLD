@@ -302,7 +302,7 @@ namespace DVLDDataAccessLayer
         }
 
         private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy,
-                    string ColumnNameToOrderBy, string SortDirection, int LastBroughtDetainID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
+                string ColumnNameToOrderBy, string SortDirection, int LastBroughtDetainID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             string query;
 
@@ -353,7 +353,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection,
-                    int LastBroughtDetainID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
+               int LastBroughtDetainID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             DataTable dtFilteredData = null;
 

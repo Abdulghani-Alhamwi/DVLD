@@ -8,11 +8,12 @@ namespace DVLDPresentationLayer
 {
     public partial class frmUpdateApplicationType : Form
     {
-        internal event Action<object[], byte> AfterUpdatingInfo;
+        public event Action<object[], byte> AfterUpdatingInfo;
         private static CancelEventArgs _CancelArgs = new CancelEventArgs();
 
-        private byte _AppTypesDGVRowIndex;
         private clsApplicationType _ApplicationType;
+        private byte _AppTypesDGVRowIndex;
+
         public frmUpdateApplicationType(byte ApplicationTypeID, string ApplicationTitle, string ApplicationFees, byte AppTypesDGVRowIndex)
         {
             InitializeComponent();
@@ -38,6 +39,7 @@ namespace DVLDPresentationLayer
                 clsGeneralUtility.EnableErrorProvider(erControl, txtBox, "You can enter only digits!", _CancelArgs);
             }
         }
+
         private bool _ValidateData()
         {
             if (txtTitle.Text == "" || String.IsNullOrWhiteSpace(txtTitle.Text))
@@ -86,6 +88,7 @@ namespace DVLDPresentationLayer
         {
             ValidateFeesTextBox_KeyDown(ertxtBox, txtFees, e);
         }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();

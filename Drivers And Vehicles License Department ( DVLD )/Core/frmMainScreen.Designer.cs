@@ -166,7 +166,6 @@
             this.tsmiApplicationsManagement.Size = new System.Drawing.Size(225, 68);
             this.tsmiApplicationsManagement.Text = "Applications";
             this.tsmiApplicationsManagement.DropDownOpening += new System.EventHandler(this.tsmiApplicationsManagement_DropDownOpening);
-            this.tsmiApplicationsManagement.Paint += new System.Windows.Forms.PaintEventHandler(this.tsmiApplicationsManagement_Paint);
             // 
             // tsmiDrivingLicensesServices
             // 

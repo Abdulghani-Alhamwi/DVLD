@@ -204,7 +204,7 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.pbLoginImage);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmLoginScreen";
             this.ShowIcon = false;

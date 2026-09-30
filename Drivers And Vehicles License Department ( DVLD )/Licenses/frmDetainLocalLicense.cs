@@ -10,6 +10,7 @@ namespace DVLDPresentationLayer.Controls
         public event Action<object[]> AfterDetainingLicense;
 
         private clsLocalLicense _LocalLicenseInfo;
+
         public frmDetainLocalLicense()
         {
             InitializeComponent();

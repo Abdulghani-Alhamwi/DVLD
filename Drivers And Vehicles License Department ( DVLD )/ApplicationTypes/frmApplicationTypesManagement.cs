@@ -8,11 +8,12 @@ namespace DVLDPresentationLayer
 {
     public partial class frmApplicationTypesManagement : Form
     {
-        private clsDgvUtilityLib _DgvUtilityLib;
+        private clsDataGridViewUtilityLib _DgvUtilityLib;
+
         public frmApplicationTypesManagement()
         {
             InitializeComponent();
-            _DgvUtilityLib = new clsDgvUtilityLib();
+            _DgvUtilityLib = new clsDataGridViewUtilityLib();
         }
 
         private void frmManageApplicationTypes_Load(object sender, EventArgs e)
@@ -49,6 +50,7 @@ namespace DVLDPresentationLayer
                 MessageBox.Show("There is'nt any application type!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();

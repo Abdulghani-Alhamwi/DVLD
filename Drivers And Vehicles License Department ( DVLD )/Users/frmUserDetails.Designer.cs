@@ -42,7 +42,7 @@
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(930, 547);
+            this.btnClose.Location = new System.Drawing.Point(930, 503);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 1;
@@ -59,8 +59,8 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.btnExit.Location = new System.Drawing.Point(1057, 9);
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnExit.Location = new System.Drawing.Point(1071, 9);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
@@ -90,7 +90,7 @@
             this.uctrlUserDetails.Location = new System.Drawing.Point(16, 70);
             this.uctrlUserDetails.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.uctrlUserDetails.Name = "uctrlUserDetails";
-            this.uctrlUserDetails.Size = new System.Drawing.Size(1083, 464);
+            this.uctrlUserDetails.Size = new System.Drawing.Size(1083, 408);
             this.uctrlUserDetails.TabIndex = 0;
             // 
             // frmUserDetails
@@ -98,16 +98,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1119, 611);
+            this.ClientSize = new System.Drawing.Size(1119, 567);
             this.ControlBox = false;
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.lblUserDetailsTitle);
             this.Controls.Add(this.uctrlUserDetails);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.MaximumSize = new System.Drawing.Size(1135, 627);
             this.Name = "frmUserDetails";

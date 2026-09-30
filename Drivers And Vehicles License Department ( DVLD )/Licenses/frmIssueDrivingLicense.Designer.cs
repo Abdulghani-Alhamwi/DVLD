@@ -66,12 +66,12 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1153, 9);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 165;
+            this.btnExit.TabIndex = 4;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -85,7 +85,7 @@
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.Size = new System.Drawing.Size(994, 168);
-            this.txtNotes.TabIndex = 176;
+            this.txtNotes.TabIndex = 1;
             // 
             // lblNotesTitle
             // 
@@ -151,7 +151,7 @@
             this.btnIssueLicense.Location = new System.Drawing.Point(1013, 817);
             this.btnIssueLicense.Name = "btnIssueLicense";
             this.btnIssueLicense.Size = new System.Drawing.Size(166, 45);
-            this.btnIssueLicense.TabIndex = 178;
+            this.btnIssueLicense.TabIndex = 2;
             this.btnIssueLicense.Text = "Issue";
             this.btnIssueLicense.UseVisualStyleBackColor = true;
             this.btnIssueLicense.Click += new System.EventHandler(this.btnIssueLicense_Click);
@@ -169,7 +169,7 @@
             this.btnClose.Location = new System.Drawing.Point(810, 817);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 177;
+            this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -199,10 +199,11 @@
             // 
             // frmIssueDrivingLicense
             // 
+            this.AcceptButton = this.btnIssueLicense;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1206, 886);
             this.ControlBox = false;

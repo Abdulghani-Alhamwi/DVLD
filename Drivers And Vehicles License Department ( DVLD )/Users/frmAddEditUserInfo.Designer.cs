@@ -37,6 +37,11 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.uctrlpersonInfoByFilter = new DVLDPresentationLayer.ctrlPersonDetailsByFilter();
             this.tpLoginInfo = new System.Windows.Forms.TabPage();
+            this.lblPermissionsTitle = new System.Windows.Forms.Label();
+            this.chkViewDrivers = new System.Windows.Forms.CheckBox();
+            this.chkManageApplications = new System.Windows.Forms.CheckBox();
+            this.chkManagePeople = new System.Windows.Forms.CheckBox();
+            this.chkManageUsers = new System.Windows.Forms.CheckBox();
             this.chkIsActive = new System.Windows.Forms.CheckBox();
             this.pbUserID = new System.Windows.Forms.PictureBox();
             this.pbPassword = new System.Windows.Forms.PictureBox();
@@ -53,11 +58,6 @@
             this.erTextBox = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.chkManageUsers = new System.Windows.Forms.CheckBox();
-            this.chkManagePeople = new System.Windows.Forms.CheckBox();
-            this.chkManageApplications = new System.Windows.Forms.CheckBox();
-            this.chkViewDrivers = new System.Windows.Forms.CheckBox();
-            this.lblPermissionsTitle = new System.Windows.Forms.Label();
             this.tcAddNewUser.SuspendLayout();
             this.tpPersonalInfo.SuspendLayout();
             this.tpLoginInfo.SuspendLayout();
@@ -78,12 +78,12 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1119, 8);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 5;
+            this.btnExit.TabIndex = 13;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -117,12 +117,13 @@
             this.tcAddNewUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.tcAddNewUser.Controls.Add(this.tpPersonalInfo);
             this.tcAddNewUser.Controls.Add(this.tpLoginInfo);
+            this.tcAddNewUser.Font = new System.Drawing.Font("Tahoma", 18F);
             this.tcAddNewUser.Location = new System.Drawing.Point(25, 109);
             this.tcAddNewUser.Name = "tcAddNewUser";
             this.tcAddNewUser.Padding = new System.Drawing.Point(20, 3);
             this.tcAddNewUser.SelectedIndex = 0;
             this.tcAddNewUser.Size = new System.Drawing.Size(1133, 626);
-            this.tcAddNewUser.TabIndex = 0;
+            this.tcAddNewUser.TabIndex = 2;
             this.tcAddNewUser.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcAddNewUser_Selecting);
             // 
             // tpPersonalInfo
@@ -130,10 +131,10 @@
             this.tpPersonalInfo.AutoScroll = true;
             this.tpPersonalInfo.Controls.Add(this.btnNext);
             this.tpPersonalInfo.Controls.Add(this.uctrlpersonInfoByFilter);
-            this.tpPersonalInfo.Location = new System.Drawing.Point(4, 42);
+            this.tpPersonalInfo.Location = new System.Drawing.Point(4, 38);
             this.tpPersonalInfo.Name = "tpPersonalInfo";
             this.tpPersonalInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tpPersonalInfo.Size = new System.Drawing.Size(1125, 580);
+            this.tpPersonalInfo.Size = new System.Drawing.Size(1125, 584);
             this.tpPersonalInfo.TabIndex = 0;
             this.tpPersonalInfo.Text = "Personal Info";
             this.tpPersonalInfo.UseVisualStyleBackColor = true;
@@ -160,6 +161,8 @@
             // 
             this.uctrlpersonInfoByFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.uctrlpersonInfoByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlpersonInfoByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.uctrlpersonInfoByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.uctrlpersonInfoByFilter.Location = new System.Drawing.Point(17, 15);
             this.uctrlpersonInfoByFilter.Name = "uctrlpersonInfoByFilter";
             this.uctrlpersonInfoByFilter.Size = new System.Drawing.Size(1089, 487);
@@ -188,13 +191,73 @@
             this.tpLoginInfo.Controls.Add(this.lblPasswordTitle);
             this.tpLoginInfo.Controls.Add(this.lblUserNameTitle);
             this.tpLoginInfo.Controls.Add(this.lblUserIDTitle);
-            this.tpLoginInfo.Location = new System.Drawing.Point(4, 42);
+            this.tpLoginInfo.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.tpLoginInfo.Location = new System.Drawing.Point(4, 38);
             this.tpLoginInfo.Name = "tpLoginInfo";
             this.tpLoginInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLoginInfo.Size = new System.Drawing.Size(1125, 580);
+            this.tpLoginInfo.Size = new System.Drawing.Size(1125, 584);
             this.tpLoginInfo.TabIndex = 1;
             this.tpLoginInfo.Text = "Login Info";
             this.tpLoginInfo.UseVisualStyleBackColor = true;
+            // 
+            // lblPermissionsTitle
+            // 
+            this.lblPermissionsTitle.AutoSize = true;
+            this.lblPermissionsTitle.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Bold);
+            this.lblPermissionsTitle.Location = new System.Drawing.Point(27, 476);
+            this.lblPermissionsTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblPermissionsTitle.Name = "lblPermissionsTitle";
+            this.lblPermissionsTitle.Size = new System.Drawing.Size(197, 33);
+            this.lblPermissionsTitle.TabIndex = 58;
+            this.lblPermissionsTitle.Text = "Permissions :";
+            // 
+            // chkViewDrivers
+            // 
+            this.chkViewDrivers.AutoSize = true;
+            this.chkViewDrivers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkViewDrivers.Font = new System.Drawing.Font("Tahoma", 20F);
+            this.chkViewDrivers.Location = new System.Drawing.Point(801, 521);
+            this.chkViewDrivers.Name = "chkViewDrivers";
+            this.chkViewDrivers.Size = new System.Drawing.Size(178, 37);
+            this.chkViewDrivers.TabIndex = 10;
+            this.chkViewDrivers.Text = "View Drivers";
+            this.chkViewDrivers.UseVisualStyleBackColor = true;
+            // 
+            // chkManageApplications
+            // 
+            this.chkManageApplications.AutoSize = true;
+            this.chkManageApplications.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkManageApplications.Font = new System.Drawing.Font("Tahoma", 20F);
+            this.chkManageApplications.Location = new System.Drawing.Point(499, 521);
+            this.chkManageApplications.Name = "chkManageApplications";
+            this.chkManageApplications.Size = new System.Drawing.Size(273, 37);
+            this.chkManageApplications.TabIndex = 9;
+            this.chkManageApplications.Text = "Manage Applications";
+            this.chkManageApplications.UseVisualStyleBackColor = true;
+            // 
+            // chkManagePeople
+            // 
+            this.chkManagePeople.AutoSize = true;
+            this.chkManagePeople.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkManagePeople.Font = new System.Drawing.Font("Tahoma", 20F);
+            this.chkManagePeople.Location = new System.Drawing.Point(259, 521);
+            this.chkManagePeople.Name = "chkManagePeople";
+            this.chkManagePeople.Size = new System.Drawing.Size(211, 37);
+            this.chkManagePeople.TabIndex = 8;
+            this.chkManagePeople.Text = "Manage People";
+            this.chkManagePeople.UseVisualStyleBackColor = true;
+            // 
+            // chkManageUsers
+            // 
+            this.chkManageUsers.AutoSize = true;
+            this.chkManageUsers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkManageUsers.Font = new System.Drawing.Font("Tahoma", 20F);
+            this.chkManageUsers.Location = new System.Drawing.Point(32, 521);
+            this.chkManageUsers.Name = "chkManageUsers";
+            this.chkManageUsers.Size = new System.Drawing.Size(198, 37);
+            this.chkManageUsers.TabIndex = 7;
+            this.chkManageUsers.Text = "Manage Users";
+            this.chkManageUsers.UseVisualStyleBackColor = true;
             // 
             // chkIsActive
             // 
@@ -206,7 +269,7 @@
             this.chkIsActive.Location = new System.Drawing.Point(379, 354);
             this.chkIsActive.Name = "chkIsActive";
             this.chkIsActive.Size = new System.Drawing.Size(131, 37);
-            this.chkIsActive.TabIndex = 3;
+            this.chkIsActive.TabIndex = 6;
             this.chkIsActive.Text = "Is Active";
             this.chkIsActive.UseVisualStyleBackColor = true;
             // 
@@ -242,8 +305,8 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txtPassword.Size = new System.Drawing.Size(256, 40);
-            this.txtPassword.TabIndex = 1;
+            this.txtPassword.Size = new System.Drawing.Size(256, 36);
+            this.txtPassword.TabIndex = 4;
             this.txtPassword.Tag = "First Name";
             this.txtPassword.Enter += new System.EventHandler(this.txtPasswordORtxtConfirmation_Enter);
             this.txtPassword.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPasswordAndConfirmation_KeyUp);
@@ -259,8 +322,8 @@
             this.txtPasswordConfirmation.Name = "txtPasswordConfirmation";
             this.txtPasswordConfirmation.PasswordChar = '*';
             this.txtPasswordConfirmation.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txtPasswordConfirmation.Size = new System.Drawing.Size(256, 40);
-            this.txtPasswordConfirmation.TabIndex = 2;
+            this.txtPasswordConfirmation.Size = new System.Drawing.Size(256, 36);
+            this.txtPasswordConfirmation.TabIndex = 5;
             this.txtPasswordConfirmation.Tag = "First Name";
             this.txtPasswordConfirmation.Enter += new System.EventHandler(this.txtPasswordORtxtConfirmation_Enter);
             this.txtPasswordConfirmation.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPasswordAndConfirmation_KeyUp);
@@ -308,8 +371,8 @@
             this.txtUserName.MaxLength = 20;
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txtUserName.Size = new System.Drawing.Size(256, 40);
-            this.txtUserName.TabIndex = 0;
+            this.txtUserName.Size = new System.Drawing.Size(256, 36);
+            this.txtUserName.TabIndex = 3;
             this.txtUserName.Tag = "First Name";
             this.txtUserName.Validating += new System.ComponentModel.CancelEventHandler(this.txtUserName_Validating);
             // 
@@ -374,10 +437,10 @@
             this.btnClose.Location = new System.Drawing.Point(826, 758);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(152, 42);
-            this.btnClose.TabIndex = 2;
+            this.btnClose.TabIndex = 12;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click_1);
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnSave
             // 
@@ -393,69 +456,10 @@
             this.btnSave.Location = new System.Drawing.Point(1006, 758);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 42);
-            this.btnSave.TabIndex = 4;
+            this.btnSave.TabIndex = 11;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // chkManageUsers
-            // 
-            this.chkManageUsers.AutoSize = true;
-            this.chkManageUsers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chkManageUsers.Font = new System.Drawing.Font("Tahoma", 20F);
-            this.chkManageUsers.Location = new System.Drawing.Point(32, 521);
-            this.chkManageUsers.Name = "chkManageUsers";
-            this.chkManageUsers.Size = new System.Drawing.Size(198, 37);
-            this.chkManageUsers.TabIndex = 54;
-            this.chkManageUsers.Text = "Manage Users";
-            this.chkManageUsers.UseVisualStyleBackColor = true;
-            // 
-            // chkManagePeople
-            // 
-            this.chkManagePeople.AutoSize = true;
-            this.chkManagePeople.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chkManagePeople.Font = new System.Drawing.Font("Tahoma", 20F);
-            this.chkManagePeople.Location = new System.Drawing.Point(259, 521);
-            this.chkManagePeople.Name = "chkManagePeople";
-            this.chkManagePeople.Size = new System.Drawing.Size(211, 37);
-            this.chkManagePeople.TabIndex = 55;
-            this.chkManagePeople.Text = "Manage People";
-            this.chkManagePeople.UseVisualStyleBackColor = true;
-            // 
-            // chkManageApplications
-            // 
-            this.chkManageApplications.AutoSize = true;
-            this.chkManageApplications.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chkManageApplications.Font = new System.Drawing.Font("Tahoma", 20F);
-            this.chkManageApplications.Location = new System.Drawing.Point(499, 521);
-            this.chkManageApplications.Name = "chkManageApplications";
-            this.chkManageApplications.Size = new System.Drawing.Size(273, 37);
-            this.chkManageApplications.TabIndex = 56;
-            this.chkManageApplications.Text = "Manage Applications";
-            this.chkManageApplications.UseVisualStyleBackColor = true;
-            // 
-            // chkViewDrivers
-            // 
-            this.chkViewDrivers.AutoSize = true;
-            this.chkViewDrivers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chkViewDrivers.Font = new System.Drawing.Font("Tahoma", 20F);
-            this.chkViewDrivers.Location = new System.Drawing.Point(801, 521);
-            this.chkViewDrivers.Name = "chkViewDrivers";
-            this.chkViewDrivers.Size = new System.Drawing.Size(178, 37);
-            this.chkViewDrivers.TabIndex = 57;
-            this.chkViewDrivers.Text = "View Drivers";
-            this.chkViewDrivers.UseVisualStyleBackColor = true;
-            // 
-            // lblPermissionsTitle
-            // 
-            this.lblPermissionsTitle.AutoSize = true;
-            this.lblPermissionsTitle.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Bold);
-            this.lblPermissionsTitle.Location = new System.Drawing.Point(27, 476);
-            this.lblPermissionsTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblPermissionsTitle.Name = "lblPermissionsTitle";
-            this.lblPermissionsTitle.Size = new System.Drawing.Size(197, 33);
-            this.lblPermissionsTitle.TabIndex = 58;
-            this.lblPermissionsTitle.Text = "Permissions :";
             // 
             // frmAddEditUserInfo
             // 
@@ -463,7 +467,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1184, 817);
             this.ControlBox = false;
@@ -473,7 +477,7 @@
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.lblFormBigTitle);
             this.Controls.Add(this.lblFormTitle);
-            this.Font = new System.Drawing.Font("Tahoma", 20F);
+            this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(8);
             this.Name = "frmAddEditUserInfo";

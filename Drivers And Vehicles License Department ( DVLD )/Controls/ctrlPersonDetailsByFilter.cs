@@ -9,13 +9,14 @@ namespace DVLDPresentationLayer
 {
     public partial class ctrlPersonDetailsByFilter : UserControl
     {
+        private enum _enFindBy { PersonID = 1 , NationalNo = 2}
+
         public delegate void PersonSelectedEventHandler(int PersonID);
         public event PersonSelectedEventHandler OnPersonSelected;
 
         public event Action AfterEditingPerson;
 
-        string _PreviouslyFoundText = null;
-        private enum _enFindBy { PersonID = 1 , NationalNo = 2}
+        private string _PreviouslyFoundText = null;
 
         public ctrlPersonDetailsByFilter()
         {

@@ -13,11 +13,13 @@ namespace DVLDPresentationLayer
         private static string _SavedInfoFilePath = _SavedInfoDirectoryPath + "\\" + "LoginInfo.txt";
         private bool _HasSavedInfo = false;
         string _OldUserName;
+
         internal struct stSavedUserInfo
         {
             internal static string UserName = "";
             internal static string Password = "";
         }
+
         public frmLoginScreen()
         {
             InitializeComponent();
@@ -83,6 +85,7 @@ namespace DVLDPresentationLayer
                 writer.WriteLine(DataLine);
             }
         }
+
         private void _LoadLoginDataFromFile(string FilePath, string Separator = "#//#")
         {
             if (File.Exists(FilePath))
@@ -106,6 +109,7 @@ namespace DVLDPresentationLayer
                 _HasSavedInfo = false;
             }
         }
+
         private void _SaveLoginInfoInFile(string UserPassword)
         {
             if (chbRememberMe.Checked && File.Exists(_SavedInfoFilePath))

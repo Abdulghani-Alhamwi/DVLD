@@ -98,17 +98,18 @@
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(769, 8);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 49;
+            this.btnExit.TabIndex = 4;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -179,7 +180,7 @@
             this.dtpTestAppointmentDate.Location = new System.Drawing.Point(246, 512);
             this.dtpTestAppointmentDate.Name = "dtpTestAppointmentDate";
             this.dtpTestAppointmentDate.Size = new System.Drawing.Size(173, 33);
-            this.dtpTestAppointmentDate.TabIndex = 1;
+            this.dtpTestAppointmentDate.TabIndex = 0;
             this.dtpTestAppointmentDate.Value = new System.DateTime(2026, 8, 17, 0, 0, 0, 0);
             // 
             // lblReTestFeesTitle
@@ -478,7 +479,7 @@
             this.mtxtAppointmentTime.RejectInputOnFirstFailure = true;
             this.mtxtAppointmentTime.ResetOnSpace = false;
             this.mtxtAppointmentTime.Size = new System.Drawing.Size(109, 33);
-            this.mtxtAppointmentTime.TabIndex = 163;
+            this.mtxtAppointmentTime.TabIndex = 1;
             this.mtxtAppointmentTime.Text = "0900A";
             this.mtxtAppointmentTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.mtxtAppointmentTime.ValidatingType = typeof(System.DateTime);
@@ -498,7 +499,7 @@
             this.btnSave.Location = new System.Drawing.Point(586, 789);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(166, 45);
-            this.btnSave.TabIndex = 160;
+            this.btnSave.TabIndex = 2;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -604,7 +605,7 @@
             this.btnClose.Location = new System.Drawing.Point(296, 938);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 140;
+            this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -614,7 +615,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(821, 995);
             this.ControlBox = false;
@@ -623,7 +624,7 @@
             this.Controls.Add(this.lblFormTitle);
             this.Controls.Add(this.btnExit);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Name = "frmScheduleTest";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

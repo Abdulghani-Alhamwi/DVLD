@@ -10,14 +10,15 @@ namespace DVLDPresentationLayer.Licenses
 {
     public partial class frmIntLicenseApplications : Form
     {
-        string _PreviousCbFilterSelectedItem;
-        string _PreviousCbIsActiveSelectedItem;
+        private string _PreviousCbFilterSelectedItem;
+        private string _PreviousCbIsActiveSelectedItem;
         private string _LastColumnNameDgvSortedBy;
         private string _PrimaryKeyViewedColumnName;
         private int _LastBroughtIntLicenseID;
 
-        private clsDgvUtilityLib.enDataGridViewSortDirection _CurrentDgvSortDirection;
-        private clsDgvUtilityLib _DgvUtilityLib;
+        private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDgvSortDirection;
+        private clsDataGridViewUtilityLib _DgvUtilityLib;
+
         public frmIntLicenseApplications()
         {
             InitializeComponent();
@@ -25,24 +26,26 @@ namespace DVLDPresentationLayer.Licenses
             _LastBroughtIntLicenseID = -1;
             _PrimaryKeyViewedColumnName = "Int.License ID"; 
 
-            _CurrentDgvSortDirection = clsDgvUtilityLib.enDataGridViewSortDirection.Descending;
-            _DgvUtilityLib = new clsDgvUtilityLib();
+            _CurrentDgvSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
+            _DgvUtilityLib = new clsDataGridViewUtilityLib();
         }
+
         private void frmInternationalLicensesManagement_Load(object sender, EventArgs e)
         {
-            dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDgvUtilityLib.WantedNumOfRowsFromDB);
+            dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
 
             if (dgvIntLicenseApplications.DataSource != null)
                 _AddComboBoxesFilterItems();
 
             lblRecordsNumber.Text = clsInternationalLicense.GetTotalCount().ToString();
         }
+
         private void _AddComboBoxesFilterItems()
         {
             object[] Items = new object[dgvIntLicenseApplications.Columns.Count - 1];
             Items[0] = "None";
 
-            List<string> ldgvColumnsNames = clsDgvUtilityLib.GetDgvColumnsNames(dgvIntLicenseApplications, new string[] { "Issue Date", "Expiration Date" });
+            List<string> ldgvColumnsNames = clsDataGridViewUtilityLib.GetDgvColumnsNames(dgvIntLicenseApplications, new string[] { "Issue Date", "Expiration Date" });
 
             for (byte i = 0; i < ldgvColumnsNames.Count; i++)
             {
@@ -56,6 +59,7 @@ namespace DVLDPresentationLayer.Licenses
             this.cbIsActive.DataSource = cbIsActive;
             this.cbIsActive.SelectedItem = "All";
         }
+
         private void DrawComboBoxItems(object sender, DrawItemEventArgs e)
         {
             clsGeneralUtility.DrawComboBoxItems((ComboBox)sender, e);
@@ -66,15 +70,16 @@ namespace DVLDPresentationLayer.Licenses
             DataTable dtFilteredData;
 
             if (!ScrollCase)
-                dtFilteredData = clsInternationalLicense.GetFilteredData(clsDgvUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbIsActive.SelectedItem.ToString(),
-                   _LastColumnNameDgvSortedBy, clsDgvUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), null);
+                dtFilteredData = clsInternationalLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbIsActive.SelectedItem.ToString(),
+                   _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), null);
 
             else
-                dtFilteredData = clsInternationalLicense.GetFilteredData(clsDgvUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbIsActive.SelectedItem.ToString(),
-               _LastColumnNameDgvSortedBy, clsDgvUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection),_LastBroughtIntLicenseID, _DgvUtilityLib.NumberOfRowsToOffset, null);
+                dtFilteredData = clsInternationalLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbIsActive.SelectedItem.ToString(),
+               _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection),_LastBroughtIntLicenseID, _DgvUtilityLib.NumberOfRowsToOffset, null);
 
             return dtFilteredData;
         }
+
         private DataTable _GetFilteredData(bool ScrollCase = false)
         {
             DataTable dtFilteredInfo;
@@ -82,32 +87,32 @@ namespace DVLDPresentationLayer.Licenses
             {
                 if (cbFilterBy.SelectedItem.ToString() != "Is Active" && cbFilterBy.SelectedItem.ToString() != "None") 
                 {
-                    dtFilteredInfo = clsInternationalLicense.GetFilteredData(clsDgvUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
-                        _LastColumnNameDgvSortedBy, clsDgvUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), null);
+                    dtFilteredInfo = clsInternationalLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
+                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), null);
                 }
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Is Active")
                     dtFilteredInfo = _GetFilteredDataOnIsActive(false);
 
                 else
-                    dtFilteredInfo = clsInternationalLicense.GetFilteredData(clsDgvUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
-                        _LastColumnNameDgvSortedBy, clsDgvUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), '%');
+                    dtFilteredInfo = clsInternationalLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
+                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), '%');
             }
 
             else
             {
                 if (cbFilterBy.SelectedItem.ToString() != "Is Active" && cbFilterBy.SelectedItem.ToString() != "None")
                 {
-                    dtFilteredInfo = clsInternationalLicense.GetFilteredData(clsDgvUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
-                        _LastColumnNameDgvSortedBy, clsDgvUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), _LastBroughtIntLicenseID, _DgvUtilityLib.NumberOfRowsToOffset, null);
+                    dtFilteredInfo = clsInternationalLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
+                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), _LastBroughtIntLicenseID, _DgvUtilityLib.NumberOfRowsToOffset, null);
                 }
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Is Active")
                     dtFilteredInfo = _GetFilteredDataOnIsActive(true);
 
                 else
-                    dtFilteredInfo = clsInternationalLicense.GetFilteredData(clsDgvUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
-                        _LastColumnNameDgvSortedBy, clsDgvUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), _LastBroughtIntLicenseID, _DgvUtilityLib.NumberOfRowsToOffset, '%');
+                    dtFilteredInfo = clsInternationalLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
+                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), _LastBroughtIntLicenseID, _DgvUtilityLib.NumberOfRowsToOffset, '%');
             }
 
             if (dtFilteredInfo != null)
@@ -125,8 +130,8 @@ namespace DVLDPresentationLayer.Licenses
 
             else
             {
-                clsDgvUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvSortDirection);
-                dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDgvUtilityLib.WantedNumOfRowsFromDB);
+                clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvSortDirection);
+                dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
             }
         }
 
@@ -136,9 +141,9 @@ namespace DVLDPresentationLayer.Licenses
                 return;
 
             if ((_PreviousCbFilterSelectedItem == "Is Active" && cbIsActive.SelectedItem.ToString() != "All")
-                || !clsDgvUtilityLib._IsRepeatedDataLoadToDgv(txtFilter))
+                || !clsDataGridViewUtilityLib._IsRepeatedDataLoadToDgv(txtFilter))
             {
-                dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDgvUtilityLib.WantedNumOfRowsFromDB);
+                dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
             }
 
             if (_PreviousCbFilterSelectedItem == "Is Active")
@@ -167,7 +172,7 @@ namespace DVLDPresentationLayer.Licenses
             _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             txtFilter.Text = "";
 
-            clsDgvUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvSortDirection);
+            clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvSortDirection);
         }
 
         private void txtFilter_KeyDown(object sender, KeyEventArgs e)
@@ -178,6 +183,7 @@ namespace DVLDPresentationLayer.Licenses
             else
                 txtFilter.ReadOnly = true;            
         }
+
         private void _AddNewValuesToDGV(object[] NewValues)
         {
             if (dgvIntLicenseApplications.DataSource == null)
@@ -199,10 +205,11 @@ namespace DVLDPresentationLayer.Licenses
             if (dgvIntLicenseApplications.Rows.Count == 0)
                 cmsInternationalLicense.Close();
         }       
+
         private void _AppendPartOfRemainingData()
         {
             if (_LastColumnNameDgvSortedBy == null || _LastColumnNameDgvSortedBy == _PrimaryKeyViewedColumnName)
-                _LastBroughtIntLicenseID = clsDgvUtilityLib.GetLastBroughtValueOfPKColumn(dgvIntLicenseApplications, _PrimaryKeyViewedColumnName, _CurrentDgvSortDirection);
+                _LastBroughtIntLicenseID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvIntLicenseApplications, _PrimaryKeyViewedColumnName, _CurrentDgvSortDirection);
 
             _DgvUtilityLib.SetNumberOfRowsToOffset(_PrimaryKeyViewedColumnName, _LastColumnNameDgvSortedBy);
 
@@ -214,28 +221,31 @@ namespace DVLDPresentationLayer.Licenses
                 NewRows = dtFilteredData?.Select();
 
                 if (NewRows != null)
-                    _DgvUtilityLib.AddNewRowsToDgv(dgvIntLicenseApplications, NewRows, clsDgvUtilityLib.GetDgvColumnsNames(dgvIntLicenseApplications), _CurrentDgvSortDirection);
+                    _DgvUtilityLib.AddNewRowsToDgv(dgvIntLicenseApplications, NewRows, clsDataGridViewUtilityLib.GetDgvColumnsNames(dgvIntLicenseApplications), _CurrentDgvSortDirection);
             }
 
             else
             {
-                DataTable dtInternationalLicenses = clsInternationalLicense.GetAllInternationalLicensesData(clsDgvUtilityLib.WantedNumOfRowsFromDB, _LastBroughtIntLicenseID
-                    , _LastColumnNameDgvSortedBy, _DgvUtilityLib.NumberOfRowsToOffset, clsDgvUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection));
+                DataTable dtInternationalLicenses = clsInternationalLicense.GetAllInternationalLicensesData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, _LastBroughtIntLicenseID
+                    , _LastColumnNameDgvSortedBy, _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection));
 
                 NewRows = dtInternationalLicenses?.Select();
 
                 if (NewRows != null)
-                    _DgvUtilityLib.AddNewRowsToDgv(dgvIntLicenseApplications, NewRows, clsDgvUtilityLib.GetDgvColumnsNames(dgvIntLicenseApplications), _CurrentDgvSortDirection);
+                    _DgvUtilityLib.AddNewRowsToDgv(dgvIntLicenseApplications, NewRows, clsDataGridViewUtilityLib.GetDgvColumnsNames(dgvIntLicenseApplications), _CurrentDgvSortDirection);
             }
         }
+
         private void ComboBoxes_DropDown(object sender, EventArgs e)
         {
             ((ComboBox)sender).BackColor = clsGlobalSettings.ComboBoxItemsBackColor;
         }
+
         private void cbIsActive_DropDownClosed(object sender, EventArgs e)
         {
             cbIsActive.BackColor = clsGlobalSettings.ComboBoxHighlightedBackColor;
         }
+
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
         {
             if(cbFilterBy.SelectedItem.ToString() != "None")
@@ -243,6 +253,7 @@ namespace DVLDPresentationLayer.Licenses
             else
                 cbFilterBy.BackColor = clsGlobalSettings.ComboBoxBackColor;
         }
+
         private void tsmiShowLicenseDetails_Click(object sender, EventArgs e)
         {
             if (dgvIntLicenseApplications.SelectedRows.Count > 1)
@@ -271,13 +282,14 @@ namespace DVLDPresentationLayer.Licenses
         {
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
-                if (clsDgvUtilityLib.IsDgvLastRowDisplayed(dgvIntLicenseApplications))
+                if (clsDataGridViewUtilityLib.IsDgvLastRowDisplayed(dgvIntLicenseApplications))
                     _AppendPartOfRemainingData();
             }
         }
+
         private void dgvInternationalLicenses_KeyDown(object sender, KeyEventArgs e)
         {
-            if (clsDgvUtilityLib.IsDgvLastRowSelected(dgvIntLicenseApplications))
+            if (clsDataGridViewUtilityLib.IsDgvLastRowSelected(dgvIntLicenseApplications))
                 _AppendPartOfRemainingData();
         }
 
@@ -303,6 +315,7 @@ namespace DVLDPresentationLayer.Licenses
             frmPersonDetails frm = new frmPersonDetails(clsDriver.GetDriverPersonID((int)dgvIntLicenseApplications.SelectedRows[0].Cells["Driver ID"].Value));
             frm.ShowDialog();
         }
+
         private bool _IsNumericColumn(string ColumnName)
         {
             switch (ColumnName)
@@ -315,6 +328,7 @@ namespace DVLDPresentationLayer.Licenses
             }
             return false;
         }
+
         private void cbIsActive_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_PreviousCbIsActiveSelectedItem == cbIsActive.SelectedItem.ToString())
@@ -322,7 +336,7 @@ namespace DVLDPresentationLayer.Licenses
 
             if (cbFilterBy.SelectedItem.ToString() == "Is Active")
             {
-                clsDgvUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvSortDirection);
+                clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvSortDirection);
 
                 dgvIntLicenseApplications.DataSource = _GetFilteredDataOnIsActive(false);
                 _PreviousCbIsActiveSelectedItem = cbIsActive.SelectedItem.ToString();
@@ -331,29 +345,29 @@ namespace DVLDPresentationLayer.Licenses
 
         private void _SortData(DataGridViewCellMouseEventArgs e)
         {
-            _CurrentDgvSortDirection = clsDgvUtilityLib.ReverseCurrentDgvSortDirection(_CurrentDgvSortDirection);
+            _CurrentDgvSortDirection = clsDataGridViewUtilityLib.ReverseCurrentDgvSortDirection(_CurrentDgvSortDirection);
 
             DataTable dtSortedInfo = null;
 
             if (txtFilter.Text == "" && cbFilterBy.SelectedItem.ToString() != "Is Active")
             {
 
-                dtSortedInfo = clsInternationalLicense.GetSortedInfo(clsDgvUtilityLib.WantedNumOfRowsFromDB, dgvIntLicenseApplications.Columns[e.ColumnIndex].HeaderText
-                , clsDgvUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection));
+                dtSortedInfo = clsInternationalLicense.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvIntLicenseApplications.Columns[e.ColumnIndex].HeaderText
+                , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection));
             }
 
             else
             {
                 if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
                 {
-                    dtSortedInfo = clsInternationalLicense.GetSortedInfo(clsDgvUtilityLib.WantedNumOfRowsFromDB, dgvIntLicenseApplications.Columns[e.ColumnIndex].HeaderText
-                , clsDgvUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);
+                    dtSortedInfo = clsInternationalLicense.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvIntLicenseApplications.Columns[e.ColumnIndex].HeaderText
+                , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);
                 }
 
                 else
                 {
-                    dtSortedInfo = clsInternationalLicense.GetSortedInfo(clsDgvUtilityLib.WantedNumOfRowsFromDB, dgvIntLicenseApplications.Columns[e.ColumnIndex].HeaderText
-            , clsDgvUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), cbFilterBy.SelectedItem.ToString(), cbIsActive.SelectedItem.ToString(), null);
+                    dtSortedInfo = clsInternationalLicense.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvIntLicenseApplications.Columns[e.ColumnIndex].HeaderText
+            , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), cbFilterBy.SelectedItem.ToString(), cbIsActive.SelectedItem.ToString(), null);
                 }
             }
 

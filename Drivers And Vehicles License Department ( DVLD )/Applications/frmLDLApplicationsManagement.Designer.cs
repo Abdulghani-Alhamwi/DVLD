@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLDLApplicationsManagement));
             this.lblRecordsNumber = new System.Windows.Forms.Label();
             this.lblRecordsTitle = new System.Windows.Forms.Label();
@@ -100,7 +100,7 @@
             this.txtFilter.Location = new System.Drawing.Point(453, 374);
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(344, 41);
-            this.txtFilter.TabIndex = 47;
+            this.txtFilter.TabIndex = 3;
             this.txtFilter.Visible = false;
             this.txtFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
             this.txtFilter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyUp);
@@ -116,7 +116,7 @@
             this.cbFilterBy.Location = new System.Drawing.Point(208, 373);
             this.cbFilterBy.Name = "cbFilterBy";
             this.cbFilterBy.Size = new System.Drawing.Size(226, 42);
-            this.cbFilterBy.TabIndex = 46;
+            this.cbFilterBy.TabIndex = 2;
             this.cbFilterBy.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.DrawComboBoxItems);
             this.cbFilterBy.DropDown += new System.EventHandler(this.ComboBoxes_DropDown);
             this.cbFilterBy.SelectedIndexChanged += new System.EventHandler(this.cbFilterBy_SelectedIndexChanged);
@@ -167,7 +167,7 @@
             this.tsmiShowPersonLicenseHistory});
             this.cmsLDLApplication.Name = "cmsPeopleMenu";
             this.cmsLDLApplication.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsLDLApplication.Size = new System.Drawing.Size(361, 350);
+            this.cmsLDLApplication.Size = new System.Drawing.Size(361, 328);
             this.cmsLDLApplication.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLDLApplication_Opening);
             this.cmsLDLApplication.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsLDLApplication_Paint);
             // 
@@ -319,14 +319,14 @@
             this.dgvLDLApplications.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvLDLApplications.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvLDLApplications.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 18F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvLDLApplications.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 18F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvLDLApplications.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvLDLApplications.ColumnHeadersHeight = 40;
             this.dgvLDLApplications.ContextMenuStrip = this.cmsLDLApplication;
             this.dgvLDLApplications.Location = new System.Drawing.Point(39, 437);
@@ -338,7 +338,7 @@
             this.dgvLDLApplications.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvLDLApplications.Size = new System.Drawing.Size(1698, 278);
             this.dgvLDLApplications.StandardTab = true;
-            this.dgvLDLApplications.TabIndex = 44;
+            this.dgvLDLApplications.TabIndex = 0;
             this.dgvLDLApplications.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvLDLApplications_ColumnHeaderMouseClick);
             this.dgvLDLApplications.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvLDLApplications_Scroll);
             this.dgvLDLApplications.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvLDLApplications_KeyDown);
@@ -365,12 +365,12 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1723, 11);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 49;
+            this.btnExit.TabIndex = 5;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -399,7 +399,7 @@
             this.cbStatus.Location = new System.Drawing.Point(453, 373);
             this.cbStatus.Name = "cbStatus";
             this.cbStatus.Size = new System.Drawing.Size(182, 42);
-            this.cbStatus.TabIndex = 57;
+            this.cbStatus.TabIndex = 3;
             this.cbStatus.Visible = false;
             this.cbStatus.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.DrawComboBoxItems);
             this.cbStatus.DropDown += new System.EventHandler(this.ComboBoxes_DropDown);
@@ -432,7 +432,7 @@
             this.btnAddLDLApplication.Location = new System.Drawing.Point(1626, 345);
             this.btnAddLDLApplication.Name = "btnAddLDLApplication";
             this.btnAddLDLApplication.Size = new System.Drawing.Size(111, 70);
-            this.btnAddLDLApplication.TabIndex = 45;
+            this.btnAddLDLApplication.TabIndex = 1;
             this.btnAddLDLApplication.UseVisualStyleBackColor = true;
             this.btnAddLDLApplication.Click += new System.EventHandler(this.btnAddLDLApplication_Click);
             // 
@@ -464,7 +464,7 @@
             this.btnClose.Location = new System.Drawing.Point(1571, 753);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 48;
+            this.btnClose.TabIndex = 4;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -474,7 +474,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1779, 822);
             this.ControlBox = false;
@@ -493,7 +493,7 @@
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.lblFormBigTitle);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "frmLDLApplicationsManagement";
             this.ShowIcon = false;

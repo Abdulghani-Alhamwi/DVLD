@@ -81,12 +81,12 @@
             // 
             this.txtFilter.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFilter.Font = new System.Drawing.Font("Tahoma", 21F);
-            this.txtFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.txtFilter.Location = new System.Drawing.Point(536, 347);
+            this.txtFilter.Font = new System.Drawing.Font("Tahoma", 20F);
+            this.txtFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.txtFilter.Location = new System.Drawing.Point(536, 348);
             this.txtFilter.Name = "txtFilter";
-            this.txtFilter.Size = new System.Drawing.Size(344, 41);
-            this.txtFilter.TabIndex = 47;
+            this.txtFilter.Size = new System.Drawing.Size(344, 40);
+            this.txtFilter.TabIndex = 4;
             this.txtFilter.Visible = false;
             this.txtFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
             this.txtFilter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyUp);
@@ -102,7 +102,7 @@
             this.cbFilterBy.Location = new System.Drawing.Point(192, 346);
             this.cbFilterBy.Name = "cbFilterBy";
             this.cbFilterBy.Size = new System.Drawing.Size(319, 42);
-            this.cbFilterBy.TabIndex = 46;
+            this.cbFilterBy.TabIndex = 3;
             this.cbFilterBy.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.DrawComboBoxItems);
             this.cbFilterBy.DropDown += new System.EventHandler(this.ComboBoxes_DropDown);
             this.cbFilterBy.SelectedIndexChanged += new System.EventHandler(this.cbFilterBy_SelectedIndexChanged);
@@ -199,7 +199,7 @@
             this.dgvDetainedLicenses.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDetainedLicenses.Size = new System.Drawing.Size(1664, 266);
             this.dgvDetainedLicenses.StandardTab = true;
-            this.dgvDetainedLicenses.TabIndex = 44;
+            this.dgvDetainedLicenses.TabIndex = 0;
             this.dgvDetainedLicenses.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvDetainedLicenses_ColumnHeaderMouseClick);
             this.dgvDetainedLicenses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvDetainedLicenses_Scroll);
             this.dgvDetainedLicenses.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvDetainedLicenses_KeyDown);
@@ -226,12 +226,12 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1669, 12);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 49;
+            this.btnExit.TabIndex = 6;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -261,7 +261,7 @@
             this.btnReleaseDetainedLicense.Location = new System.Drawing.Point(1439, 298);
             this.btnReleaseDetainedLicense.Name = "btnReleaseDetainedLicense";
             this.btnReleaseDetainedLicense.Size = new System.Drawing.Size(113, 90);
-            this.btnReleaseDetainedLicense.TabIndex = 56;
+            this.btnReleaseDetainedLicense.TabIndex = 1;
             this.btnReleaseDetainedLicense.UseVisualStyleBackColor = true;
             this.btnReleaseDetainedLicense.Click += new System.EventHandler(this.btnReleaseDetainedLicense_Click);
             // 
@@ -277,7 +277,7 @@
             this.btnDetainLicense.Location = new System.Drawing.Point(1579, 298);
             this.btnDetainLicense.Name = "btnDetainLicense";
             this.btnDetainLicense.Size = new System.Drawing.Size(113, 90);
-            this.btnDetainLicense.TabIndex = 45;
+            this.btnDetainLicense.TabIndex = 2;
             this.btnDetainLicense.UseVisualStyleBackColor = true;
             this.btnDetainLicense.Click += new System.EventHandler(this.btnDetainLicense_Click);
             // 
@@ -307,7 +307,7 @@
             this.btnClose.Location = new System.Drawing.Point(1526, 704);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 48;
+            this.btnClose.TabIndex = 5;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -320,10 +320,10 @@
             this.cbIsReleased.Font = new System.Drawing.Font("Tahoma", 21F);
             this.cbIsReleased.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.cbIsReleased.FormattingEnabled = true;
-            this.cbIsReleased.Location = new System.Drawing.Point(536, 347);
+            this.cbIsReleased.Location = new System.Drawing.Point(536, 346);
             this.cbIsReleased.Name = "cbIsReleased";
             this.cbIsReleased.Size = new System.Drawing.Size(182, 42);
-            this.cbIsReleased.TabIndex = 58;
+            this.cbIsReleased.TabIndex = 4;
             this.cbIsReleased.Visible = false;
             this.cbIsReleased.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.DrawComboBoxItems);
             this.cbIsReleased.DropDown += new System.EventHandler(this.ComboBoxes_DropDown);
@@ -335,7 +335,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1723, 770);
             this.ControlBox = false;

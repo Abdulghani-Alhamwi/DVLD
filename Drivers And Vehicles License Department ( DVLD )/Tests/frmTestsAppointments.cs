@@ -9,11 +9,11 @@ namespace DVLDPresentationLayer
 {
     public partial class frmTestsAppointments : Form
     {
-        internal event Action<int> AfterPassingTest;
+        public event Action<int> AfterPassingTest;
 
         private string _LastColumnNameDgvSortedBy;
-        private clsDgvUtilityLib.enDataGridViewSortDirection _CurrentDgvSortDirection;
-        private clsDgvUtilityLib _DgvUtilityLib;
+        private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDgvSortDirection;
+        private clsDataGridViewUtilityLib _DgvUtilityLib;
 
         private clsTestType.enTestType _CurrentTestType;
 
@@ -30,7 +30,7 @@ namespace DVLDPresentationLayer
             uctrlDLApplicationInfo.LoadLDLAppInfo(LDLApplicationID);
             _ShowInfoByTestType(TestType);
 
-            _CurrentDgvSortDirection = clsDgvUtilityLib.enDataGridViewSortDirection.Descending;
+            _CurrentDgvSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
 
             _LDLAppId = LDLApplicationID;
             _TestsDGVRowIndex = TestsDGVRowIndex;
@@ -39,7 +39,7 @@ namespace DVLDPresentationLayer
             _LastBroughtAppointmentID = -1;
             _PrimaryKeyViewedColumnName = "Appointment ID";
 
-            _DgvUtilityLib = new clsDgvUtilityLib();
+            _DgvUtilityLib = new clsDataGridViewUtilityLib();
         }
 
         private void _ShowInfoByTestType(clsTestType.enTestType TestType)
@@ -67,14 +67,17 @@ namespace DVLDPresentationLayer
             clsGeneralUtility.CenterControlHorizontally(this,pbTestType);
             clsGeneralUtility.CenterControlHorizontally(this,lblFormBigTitle);
         }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
         private void _AddNewRowToDGV(object[] NewAppointmentDetails)
         {
             if (dgvTestAppointments.DataSource == null)
@@ -83,6 +86,7 @@ namespace DVLDPresentationLayer
             _DgvUtilityLib.AddNewRowToDGV(dgvTestAppointments,NewAppointmentDetails, dgvTestAppointments.Columns[0].HeaderText);
             lblRecordsNumber.Text = (Convert.ToInt16(lblRecordsNumber.Text) + 1).ToString();
         }
+
         private void btnScheduleTest_Click(object sender, EventArgs e)
         {
             if (!clsTest.HasPassedTheTest(_LDLAppId, _TestTypeID))
@@ -107,32 +111,34 @@ namespace DVLDPresentationLayer
                 MessageBox.Show("This person already passed this test, you can only retake failed test.", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
            
         }
+
         private void frmTestAppointments_Load(object sender, EventArgs e)
         {
-            dgvTestAppointments.DataSource = clsTestAppointment.GetTestAppointments(clsDgvUtilityLib.WantedNumOfRowsFromDB, _TestTypeID, _LDLAppId);
+            dgvTestAppointments.DataSource = clsTestAppointment.GetTestAppointments(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, _TestTypeID, _LDLAppId);
             lblRecordsNumber.Text = clsTestAppointment.GetTotalAppointmentsCount(_LDLAppId, _TestTypeID).ToString();
         }
 
         private void _AppendPartOfRemainingData()
         {
             if (_LastColumnNameDgvSortedBy == null || _LastColumnNameDgvSortedBy == _PrimaryKeyViewedColumnName)
-                _LastBroughtAppointmentID = clsDgvUtilityLib.GetLastBroughtValueOfPKColumn(dgvTestAppointments, _PrimaryKeyViewedColumnName, _CurrentDgvSortDirection);
+                _LastBroughtAppointmentID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvTestAppointments, _PrimaryKeyViewedColumnName, _CurrentDgvSortDirection);
 
             _DgvUtilityLib.SetNumberOfRowsToOffset(_PrimaryKeyViewedColumnName, _LastColumnNameDgvSortedBy);
 
-            DataTable dtTestAppointments = clsTestAppointment.GetTestAppointments(clsDgvUtilityLib.WantedNumOfRowsFromDB, _TestTypeID, _LDLAppId, _LastBroughtAppointmentID
-                , _LastColumnNameDgvSortedBy, _DgvUtilityLib.NumberOfRowsToOffset, clsDgvUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection));
+            DataTable dtTestAppointments = clsTestAppointment.GetTestAppointments(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, _TestTypeID, _LDLAppId, _LastBroughtAppointmentID
+                , _LastColumnNameDgvSortedBy, _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection));
 
             DataRow[] NewRows = dtTestAppointments?.Select();
 
             if (NewRows != null)
-                _DgvUtilityLib.AddNewRowsToDgv(dgvTestAppointments, NewRows, clsDgvUtilityLib.GetDgvColumnsNames(dgvTestAppointments), _CurrentDgvSortDirection);
+                _DgvUtilityLib.AddNewRowsToDgv(dgvTestAppointments, NewRows, clsDataGridViewUtilityLib.GetDgvColumnsNames(dgvTestAppointments), _CurrentDgvSortDirection);
         }
 
         private void _EditDataRowInDGV(string NewDateTime,int DgvRowIndex)
         {
             _DgvUtilityLib.EditOneColumnValueInDgv<string>(dgvTestAppointments, "Appointment Date", NewDateTime, DgvRowIndex);
         }
+
         private void tsmiEdit_Click(object sender, EventArgs e)
         {
             if (dgvTestAppointments.SelectedRows.Count == 1)
@@ -203,27 +209,28 @@ namespace DVLDPresentationLayer
             else
                 MessageBox.Show("You can select one appointment to take test!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
          }
+
         private void dgvVisionTestAppointments_Scroll(object sender, ScrollEventArgs e)
         {
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
-                if (clsDgvUtilityLib.IsDgvLastRowDisplayed(dgvTestAppointments))
+                if (clsDataGridViewUtilityLib.IsDgvLastRowDisplayed(dgvTestAppointments))
                     _AppendPartOfRemainingData();
             }
         }
 
         private void dgvVisionTestAppointments_KeyDown(object sender, KeyEventArgs e)
         {
-            if (clsDgvUtilityLib.IsDgvLastRowSelected(dgvTestAppointments))
+            if (clsDataGridViewUtilityLib.IsDgvLastRowSelected(dgvTestAppointments))
                 _AppendPartOfRemainingData();
         }
 
         private void _SortData(DataGridViewCellMouseEventArgs e)
         {
-            _CurrentDgvSortDirection = clsDgvUtilityLib.ReverseCurrentDgvSortDirection(_CurrentDgvSortDirection);
+            _CurrentDgvSortDirection = clsDataGridViewUtilityLib.ReverseCurrentDgvSortDirection(_CurrentDgvSortDirection);
 
-            DataTable dtSortedInfo = clsTestAppointment.GetSortedInfo(clsDgvUtilityLib.WantedNumOfRowsFromDB, dgvTestAppointments.Columns[e.ColumnIndex].HeaderText
-                , clsDgvUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection),_LDLAppId, _TestTypeID);
+            DataTable dtSortedInfo = clsTestAppointment.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvTestAppointments.Columns[e.ColumnIndex].HeaderText
+                , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection),_LDLAppId, _TestTypeID);
 
             _DgvUtilityLib.SetDataSourceAfterColumnOrdering(dgvTestAppointments, dtSortedInfo, e, ref _LastColumnNameDgvSortedBy);
         }

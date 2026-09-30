@@ -11,11 +11,13 @@ namespace DVLDPresentationLayer
         private int _UserID = -1;
         private string _Password = "";
         private byte[] _Salt = null;
+
         public frmChangePassword(int UserID)
         {
              InitializeComponent();
             _LoadInfo(UserID);
         }
+
         private void _LoadInfo(int UserID)
         {
             if (!uctrlUserDetails.LoadUserInformation(UserID))

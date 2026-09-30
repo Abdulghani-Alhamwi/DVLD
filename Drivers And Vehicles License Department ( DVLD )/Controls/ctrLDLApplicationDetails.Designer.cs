@@ -175,7 +175,7 @@
             this.gbDLAppInfo.Location = new System.Drawing.Point(12, 5);
             this.gbDLAppInfo.Name = "gbDLAppInfo";
             this.gbDLAppInfo.Size = new System.Drawing.Size(1144, 169);
-            this.gbDLAppInfo.TabIndex = 89;
+            this.gbDLAppInfo.TabIndex = 0;
             this.gbDLAppInfo.TabStop = false;
             this.gbDLAppInfo.Text = "Driving License Application Info";
             // 
@@ -189,7 +189,7 @@
             this.lnlblShowLicenseInfo.Name = "lnlblShowLicenseInfo";
             this.lnlblShowLicenseInfo.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
             this.lnlblShowLicenseInfo.Size = new System.Drawing.Size(252, 29);
-            this.lnlblShowLicenseInfo.TabIndex = 88;
+            this.lnlblShowLicenseInfo.TabIndex = 1;
             this.lnlblShowLicenseInfo.TabStop = true;
             this.lnlblShowLicenseInfo.Text = "Show License Info";
             this.lnlblShowLicenseInfo.Visible = false;
@@ -471,7 +471,7 @@
             this.gbApplicationBasicInfo.Location = new System.Drawing.Point(12, 183);
             this.gbApplicationBasicInfo.Name = "gbApplicationBasicInfo";
             this.gbApplicationBasicInfo.Size = new System.Drawing.Size(1144, 263);
-            this.gbApplicationBasicInfo.TabIndex = 114;
+            this.gbApplicationBasicInfo.TabIndex = 2;
             this.gbApplicationBasicInfo.TabStop = false;
             this.gbApplicationBasicInfo.Text = "Application Basic Info";
             // 
@@ -483,7 +483,7 @@
             this.lnlblViewPersonInfo.Location = new System.Drawing.Point(920, 209);
             this.lnlblViewPersonInfo.Name = "lnlblViewPersonInfo";
             this.lnlblViewPersonInfo.Size = new System.Drawing.Size(194, 29);
-            this.lnlblViewPersonInfo.TabIndex = 114;
+            this.lnlblViewPersonInfo.TabIndex = 2;
             this.lnlblViewPersonInfo.TabStop = true;
             this.lnlblViewPersonInfo.Text = "View Person Info";
             this.lnlblViewPersonInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblViewPersonInfo_LinkClicked);
@@ -589,9 +589,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Controls.Add(this.gbApplicationBasicInfo);
             this.Controls.Add(this.gbDLAppInfo);
+            this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Name = "ctrLDLApplicationDetails";
             this.Size = new System.Drawing.Size(1165, 452);

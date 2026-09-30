@@ -98,7 +98,7 @@
             this.dgvTestAppointments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTestAppointments.Size = new System.Drawing.Size(1154, 176);
             this.dgvTestAppointments.StandardTab = true;
-            this.dgvTestAppointments.TabIndex = 44;
+            this.dgvTestAppointments.TabIndex = 0;
             this.dgvTestAppointments.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvTestAppointments_ColumnHeaderMouseClick);
             this.dgvTestAppointments.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvVisionTestAppointments_Scroll);
             this.dgvTestAppointments.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvVisionTestAppointments_KeyDown);
@@ -156,12 +156,12 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1161, 13);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 47;
+            this.btnExit.TabIndex = 3;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -204,7 +204,7 @@
             this.btnClose.Location = new System.Drawing.Point(1021, 965);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 46;
+            this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -221,7 +221,7 @@
             this.btnScheduleTest.Location = new System.Drawing.Point(1116, 699);
             this.btnScheduleTest.Name = "btnScheduleTest";
             this.btnScheduleTest.Size = new System.Drawing.Size(69, 46);
-            this.btnScheduleTest.TabIndex = 45;
+            this.btnScheduleTest.TabIndex = 1;
             this.btnScheduleTest.UseVisualStyleBackColor = true;
             this.btnScheduleTest.Click += new System.EventHandler(this.btnScheduleTest_Click);
             // 
@@ -253,7 +253,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1217, 1028);
             this.ControlBox = false;
@@ -269,7 +269,7 @@
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.pbTestType);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "frmTestsAppointments";
             this.ShowIcon = false;

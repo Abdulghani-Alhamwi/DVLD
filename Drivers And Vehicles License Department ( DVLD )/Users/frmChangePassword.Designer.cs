@@ -72,7 +72,7 @@
             this.txtNewPassword.PasswordChar = '*';
             this.txtNewPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtNewPassword.Size = new System.Drawing.Size(256, 36);
-            this.txtNewPassword.TabIndex = 2;
+            this.txtNewPassword.TabIndex = 1;
             this.txtNewPassword.Tag = "First Name";
             this.txtNewPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtNewPassword_Validating);
             // 
@@ -87,7 +87,7 @@
             this.txtPasswordConfirmation.PasswordChar = '*';
             this.txtPasswordConfirmation.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtPasswordConfirmation.Size = new System.Drawing.Size(256, 36);
-            this.txtPasswordConfirmation.TabIndex = 3;
+            this.txtPasswordConfirmation.TabIndex = 2;
             this.txtPasswordConfirmation.Tag = "First Name";
             this.txtPasswordConfirmation.Validating += new System.ComponentModel.CancelEventHandler(this.txtPasswordConfirmation_Validating);
             // 
@@ -112,7 +112,7 @@
             this.txtCurrentPassword.Name = "txtCurrentPassword";
             this.txtCurrentPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtCurrentPassword.Size = new System.Drawing.Size(256, 36);
-            this.txtCurrentPassword.TabIndex = 1;
+            this.txtCurrentPassword.TabIndex = 0;
             this.txtCurrentPassword.Tag = "First Name";
             this.txtCurrentPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtCurrentPassword_Validating);
             // 
@@ -159,10 +159,10 @@
             this.btnSave.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnSave.Image = global::DVLDPresentationLayer.Properties.Resources.Save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(952, 824);
+            this.btnSave.Location = new System.Drawing.Point(952, 826);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 42);
-            this.btnSave.TabIndex = 4;
+            this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -177,10 +177,10 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(770, 824);
+            this.btnClose.Location = new System.Drawing.Point(770, 826);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(152, 42);
-            this.btnClose.TabIndex = 5;
+            this.btnClose.TabIndex = 4;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -218,12 +218,12 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1065, 11);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 6;
+            this.btnExit.TabIndex = 5;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -250,9 +250,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(1121, 890);
+            this.ClientSize = new System.Drawing.Size(1121, 891);
             this.ControlBox = false;
             this.Controls.Add(this.lblChangePasswordTitle);
             this.Controls.Add(this.btnExit);
@@ -269,7 +269,7 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.uctrlUserDetails);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Name = "frmChangePassword";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

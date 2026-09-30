@@ -10,17 +10,18 @@ namespace DVLDPresentationLayer.Core
 {
     public partial class frmNewLDLApplication : Form
     {
-        private int _ApplicantPersonID = -1;
-        clsLocalDrivingLicenseApp _LDLApplication;
-
         internal delegate void AddedLDLApplication(object[] NewAppDetails);
         internal event AddedLDLApplication OnAddedLDLApplication;
 
         internal delegate void EditedLDLApplication(object[] ModifiedAppDetails,int DGVRowIndex);
         internal event EditedLDLApplication OnEditedLDLApplication;
 
-        int _DGVRowIndex = -1;
-        DataView _LicenseClassesDataView;
+        private int _ApplicantPersonID = -1;
+        clsLocalDrivingLicenseApp _LDLApplication;
+
+        private int _DGVRowIndex = -1;
+        private DataView _LicenseClassesDataView;
+
         public frmNewLDLApplication()
         {
             InitializeComponent();
@@ -75,6 +76,7 @@ namespace DVLDPresentationLayer.Core
             lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(_LDLApplication.PaidApplicationFees, enCustomNumberFormat.NoJustZerosAfterFraction);
             lblUserName.Text = clsGeneralUtility.DecryptUserName(clsUser.GetUserName(_LDLApplication.CreatedByUserID));
         }
+
         private bool _MoveToNextTab()
         {
             if (_ApplicantPersonID != -1)
@@ -231,6 +233,7 @@ namespace DVLDPresentationLayer.Core
                 return false;
             }
         }
+
         private void _SaveApplicationData()
         {
             clsLocalDrivingLicenseApp LDLApplication = _SaveLDLApplication();
@@ -257,6 +260,7 @@ namespace DVLDPresentationLayer.Core
             else
                 MessageBox.Show("Saving failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (_ApplicantPersonID != -1)
@@ -279,5 +283,6 @@ namespace DVLDPresentationLayer.Core
             else
                 MessageBox.Show("Select a person or add new person first!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
     }
 }

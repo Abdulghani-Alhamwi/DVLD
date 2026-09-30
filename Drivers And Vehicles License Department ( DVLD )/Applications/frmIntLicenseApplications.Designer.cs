@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmIntLicenseApplications));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cbIsActive = new System.Windows.Forms.ComboBox();
             this.pbInternationalLicense = new System.Windows.Forms.PictureBox();
             this.btnAddInternationalLicenseApp = new System.Windows.Forms.Button();
@@ -66,7 +66,7 @@
             this.cbIsActive.Location = new System.Drawing.Point(452, 377);
             this.cbIsActive.Name = "cbIsActive";
             this.cbIsActive.Size = new System.Drawing.Size(182, 42);
-            this.cbIsActive.TabIndex = 71;
+            this.cbIsActive.TabIndex = 3;
             this.cbIsActive.Visible = false;
             this.cbIsActive.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.DrawComboBoxItems);
             this.cbIsActive.DropDown += new System.EventHandler(this.ComboBoxes_DropDown);
@@ -99,7 +99,7 @@
             this.btnAddInternationalLicenseApp.Location = new System.Drawing.Point(1332, 349);
             this.btnAddInternationalLicenseApp.Name = "btnAddInternationalLicenseApp";
             this.btnAddInternationalLicenseApp.Size = new System.Drawing.Size(111, 70);
-            this.btnAddInternationalLicenseApp.TabIndex = 59;
+            this.btnAddInternationalLicenseApp.TabIndex = 1;
             this.btnAddInternationalLicenseApp.UseVisualStyleBackColor = true;
             this.btnAddInternationalLicenseApp.Click += new System.EventHandler(this.btnAddIntLicenseApplication_Click);
             // 
@@ -113,10 +113,10 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 18F);
             this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(1218, 763);
+            this.btnClose.Location = new System.Drawing.Point(1277, 763);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 62;
+            this.btnClose.TabIndex = 4;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -128,14 +128,14 @@
             this.dgvIntLicenseApplications.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvIntLicenseApplications.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvIntLicenseApplications.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 18F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvIntLicenseApplications.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 18F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvIntLicenseApplications.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvIntLicenseApplications.ColumnHeadersHeight = 40;
             this.dgvIntLicenseApplications.ContextMenuStrip = this.cmsInternationalLicense;
             this.dgvIntLicenseApplications.Location = new System.Drawing.Point(38, 441);
@@ -147,7 +147,7 @@
             this.dgvIntLicenseApplications.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvIntLicenseApplications.Size = new System.Drawing.Size(1405, 296);
             this.dgvIntLicenseApplications.StandardTab = true;
-            this.dgvIntLicenseApplications.TabIndex = 58;
+            this.dgvIntLicenseApplications.TabIndex = 0;
             this.dgvIntLicenseApplications.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvIntLicenseApplications_ColumnHeaderMouseClick);
             this.dgvIntLicenseApplications.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvInternationalLicenses_Scroll);
             this.dgvIntLicenseApplications.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvInternationalLicenses_KeyDown);
@@ -163,7 +163,7 @@
             this.tsmiShowPersonLicenseHistory});
             this.cmsInternationalLicense.Name = "cmsPeopleMenu";
             this.cmsInternationalLicense.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsInternationalLicense.Size = new System.Drawing.Size(323, 134);
+            this.cmsInternationalLicense.Size = new System.Drawing.Size(323, 112);
             this.cmsInternationalLicense.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsInternationalLicense_Paint);
             // 
             // tsmiShowPersonDetails
@@ -219,12 +219,12 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1429, 15);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 63;
+            this.btnExit.TabIndex = 5;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -273,7 +273,7 @@
             this.txtFilter.Location = new System.Drawing.Point(452, 378);
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(344, 41);
-            this.txtFilter.TabIndex = 61;
+            this.txtFilter.TabIndex = 3;
             this.txtFilter.Visible = false;
             this.txtFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
             this.txtFilter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyUp);
@@ -289,7 +289,7 @@
             this.cbFilterBy.Location = new System.Drawing.Point(207, 377);
             this.cbFilterBy.Name = "cbFilterBy";
             this.cbFilterBy.Size = new System.Drawing.Size(226, 42);
-            this.cbFilterBy.TabIndex = 60;
+            this.cbFilterBy.TabIndex = 2;
             this.cbFilterBy.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.DrawComboBoxItems);
             this.cbFilterBy.DropDown += new System.EventHandler(this.ComboBoxes_DropDown);
             this.cbFilterBy.SelectedIndexChanged += new System.EventHandler(this.cbFilterBy_SelectedIndexChanged);
@@ -325,7 +325,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1486, 822);
             this.ControlBox = false;

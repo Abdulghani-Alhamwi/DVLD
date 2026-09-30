@@ -73,12 +73,12 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1096, 15);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 43;
+            this.btnExit.TabIndex = 5;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -116,7 +116,7 @@
             this.tcNewLDLApplication.Padding = new System.Drawing.Point(15, 3);
             this.tcNewLDLApplication.SelectedIndex = 0;
             this.tcNewLDLApplication.Size = new System.Drawing.Size(1103, 558);
-            this.tcNewLDLApplication.TabIndex = 46;
+            this.tcNewLDLApplication.TabIndex = 2;
             this.tcNewLDLApplication.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcNewLocalDrivingLicenseApplication_Selecting);
             // 
             // tpPersonalInfo
@@ -134,6 +134,8 @@
             // uctrlPersonDetailsByFilter
             // 
             this.uctrlPersonDetailsByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlPersonDetailsByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.uctrlPersonDetailsByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.uctrlPersonDetailsByFilter.Location = new System.Drawing.Point(4, 6);
             this.uctrlPersonDetailsByFilter.Name = "uctrlPersonDetailsByFilter";
             this.uctrlPersonDetailsByFilter.Size = new System.Drawing.Size(1080, 428);
@@ -153,7 +155,7 @@
             this.btnNext.Location = new System.Drawing.Point(932, 449);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(152, 42);
-            this.btnNext.TabIndex = 47;
+            this.btnNext.TabIndex = 1;
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
@@ -178,7 +180,7 @@
             this.tpApplicationInfo.Location = new System.Drawing.Point(4, 38);
             this.tpApplicationInfo.Name = "tpApplicationInfo";
             this.tpApplicationInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tpApplicationInfo.Size = new System.Drawing.Size(1095, 564);
+            this.tpApplicationInfo.Size = new System.Drawing.Size(1095, 516);
             this.tpApplicationInfo.TabIndex = 1;
             this.tpApplicationInfo.Text = "Application Info";
             this.tpApplicationInfo.UseVisualStyleBackColor = true;
@@ -389,7 +391,7 @@
             this.btnSave.Location = new System.Drawing.Point(969, 759);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 42);
-            this.btnSave.TabIndex = 49;
+            this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -407,7 +409,7 @@
             this.btnClose.Location = new System.Drawing.Point(792, 759);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(152, 42);
-            this.btnClose.TabIndex = 48;
+            this.btnClose.TabIndex = 4;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);

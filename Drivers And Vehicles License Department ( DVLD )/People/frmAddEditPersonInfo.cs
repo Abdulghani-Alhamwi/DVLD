@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using DVLDPresentationLayer.Properties;
 using Utility_Library;
@@ -22,9 +21,14 @@ namespace DVLDPresentationLayer
         internal event SavedNewInfo AfterSavingNewInfo;
         internal event SavedEditedInfo AfterSavingEditedInfo;
 
-        string _SavedPersonalImagePath;
-        clsPerson _Person;
-        int _PeopleDGVRowIndex = -1;
+        private string _NewSelectedImagePath;
+        private string _ImagesFolderPath = @"C:\DVLD-People-Images";
+        private bool _UploadedPersonalImage = false;
+        private string _SavedPersonalImagePath;
+        private bool _RemovedSavedImage = false;
+        private clsPerson _Person;
+        private int _PeopleDGVRowIndex = -1;
+
         public frmAddEditPersonInfo()
         {
             InitializeComponent();
@@ -64,6 +68,7 @@ namespace DVLDPresentationLayer
                 lblFormBigTitle.Text = "Update Person";
             }
         }
+
         private void _ShowPersonData(DataView dataview)
         {
             lblPersonID.Text = _Person.PersonID.ToString();
@@ -95,6 +100,7 @@ namespace DVLDPresentationLayer
             else
                 pbPersonalImage.Image = (_Person.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
         }
+
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
         {
             cbCountries.BackColor = Color.FromArgb(230, 230, 230);
@@ -104,176 +110,61 @@ namespace DVLDPresentationLayer
         {
             cbCountries.BackColor = Color.FromArgb(245, 245, 245);
         }
+
         private void cbFilterBy_DrawItem(object sender, DrawItemEventArgs e)
         {
             clsGeneralUtility.DrawComboBoxItems(sender, e,"CountryName");
         }
-        private bool _ValidateName(object sender, CancelEventArgs e)
-        {
-            if ((((TextBox)sender).Text == "" || string.IsNullOrWhiteSpace(((TextBox)sender).Text)) && ((TextBox)sender).Tag.ToString() != "Third Name")
-            {
-                clsGeneralUtility.EnableErrorProvider(erTextBox, (TextBox)sender, $"It is required to enter your {((TextBox)sender).Tag.ToString()}!", e);
-                return false;
-            }
 
-            else if (!(((TextBox)sender).Text.All(Char.IsLetter) || ((TextBox)sender).Text.Contains("-") || ((TextBox)sender).Text.Contains("_")))
-            {
-                clsGeneralUtility.EnableErrorProvider(erTextBox, (TextBox)sender, $"{((TextBox)sender).Tag.ToString()} must contain only letters!", e);
-                return false;
-            }
-
-            else
-                erTextBox.Dispose();
-
-            return true;
-        }
-
-        private bool _ValidateAddress(CancelEventArgs e)
-        {
-            if (txtAddress.Text == "" || string.IsNullOrWhiteSpace(txtAddress.Text))
-            {
-                clsGeneralUtility.EnableErrorProvider(erTextBox,txtAddress, $"It is required to enter your Address!", e);
-                return false;
-            }
-            else
-                erTextBox.Dispose();
-
-            return true;
-        }
         private void txtBoxName_Validating(object sender, CancelEventArgs e)
         {
-            _ValidateName(sender, e);
+           clsGeneralUtility.ValidateName((TextBox)sender,erTextBox, e);
         }
 
         private void txtBoxAddress_Validating(object sender, CancelEventArgs e)
         {
-            _ValidateAddress(e);
+            clsGeneralUtility.ValidateAddress(txtAddress, erTextBox, e);
         }
 
-        private bool _ValidateNationalNo(CancelEventArgs e)
+        private bool ValidateNationalNumber(CancelEventArgs e)
         {
-            if (txtNationalNo.Text == "" || string.IsNullOrWhiteSpace(txtNationalNo.Text))
+            bool IsNationalNoAlreadyExists;
+
+            if (_Person == null)
             {
-                clsGeneralUtility.EnableErrorProvider(erTextBox,txtNationalNo, "It is required to enter your National No!", e);
-                return false;
-            }
-
-            else if (_Person != null)
-            {
-
-                if (txtNationalNo.Text == _Person.NationalNo)
-                    return true;
-
-                else if (clsPerson.SearchForNationalNo(txtNationalNo.Text))
-                {
-                    clsGeneralUtility.EnableErrorProvider(erTextBox,txtNationalNo, $"National Number is used for another person!", e);
-                    return false;
-                }
-                else
-                    erTextBox.Dispose();
-
-                return true;
-            }
-
-            else if (clsPerson.SearchForNationalNo(txtNationalNo.Text))
-            {
-                clsGeneralUtility.EnableErrorProvider(erTextBox,txtNationalNo, $"National Number is used for another person!", e);
-                return false;
+                IsNationalNoAlreadyExists = clsPerson.SearchForNationalNo(txtNationalNo.Text);
+                return clsGeneralUtility.ValidateNationalNo(txtNationalNo, erTextBox, e, IsNationalNoAlreadyExists);
             }
 
             else
-                erTextBox.Dispose();
+            {
+                if (_Person.NationalNo == txtNationalNo.Text)
+                {
+                    return clsGeneralUtility.ValidateNationalNo(txtNationalNo, erTextBox, e, false);
+                }
 
-            return true;
+                else
+                {
+                    IsNationalNoAlreadyExists = clsPerson.SearchForNationalNo(txtNationalNo.Text);
+                    return clsGeneralUtility.ValidateNationalNo(txtNationalNo, erTextBox, e, IsNationalNoAlreadyExists);
+                }
+            }
         }
+
         private void txtBoxNationalNo_Validating(object sender, CancelEventArgs e)
         {
-            _ValidateNationalNo(e);
+            ValidateNationalNumber(e);
         }
-        private bool _ValidatePhone(CancelEventArgs e)
-        {
-            if (txtPhone.Text == "" || string.IsNullOrWhiteSpace(txtPhone.Text))
-            {
-                clsGeneralUtility.EnableErrorProvider(erTextBox,txtPhone, "It is required to enter your Phone Number!", e);
-                return false;
-            }
 
-            else if (!txtPhone.Text.All(Char.IsDigit))
-            {
-                clsGeneralUtility.EnableErrorProvider(erTextBox,txtPhone, "Phone Number must contains only digits!", e);
-                return false;
-            }
-            else
-                erTextBox.Dispose();
-
-            return true;
-        }
         private void txtBoxPhone_Validating(object sender, CancelEventArgs e)
         {
-            _ValidatePhone(e);
-        }
-        private bool _ValidateEmailStart(string Email)
-        {
-            if (!(txtEmail.Text.Contains("@") && txtEmail.Text.Contains("."))
-                || txtEmail.Text.StartsWith(".") || txtEmail.Text.StartsWith("-")
-                || txtEmail.Text.StartsWith("_") || txtEmail.Text.StartsWith("+"))
-                return false;
-            else
-                return true;
+            clsGeneralUtility.ValidatePhone(txtPhone, erTextBox, e);
         }
 
-        private bool _ValdiateEmailMiddle(string Email)
-        {
-            if (txtEmail.Text.Contains("@.") || txtEmail.Text.Contains("@-")
-               || txtEmail.Text.Contains(".@") || txtEmail.Text.Contains("-@")
-               || txtEmail.Text.Contains("@+") || txtEmail.Text.Contains("+@")
-               || txtEmail.Text.Contains("@_") || txtEmail.Text.Contains("_@")
-               || txtEmail.Text.Substring(txtEmail.Text.IndexOf("@") + 1, (txtEmail.Text.IndexOf(".")) - (txtEmail.Text.IndexOf("@") + 1)).Contains("_"))
-                return false;
-            else
-                return true;
-        }
-
-        private bool _ValidateEmailEnd(string Email)
-        {
-            if (txtEmail.Text.EndsWith(".") || txtEmail.Text.EndsWith("-")
-                || txtEmail.Text.EndsWith("_") || txtEmail.Text.EndsWith("+")
-                || txtEmail.Text.EndsWith("@"))
-                return false;
-            else
-                return true;
-        }
-
-        private bool _IsValidEmail(string Email, CancelEventArgs e)
-        {
-            if (txtEmail.Text.Contains(" ") || txtEmail.Text.Contains(",") || !(_ValidateEmailStart(Email)
-            && _ValdiateEmailMiddle(Email) && _ValidateEmailEnd(Email)))
-            {
-                clsGeneralUtility.EnableErrorProvider(erTextBox,txtEmail, "Invalid Email Address Format!", e);
-                return false;
-            }
-            else
-                erTextBox.Dispose();
-
-            return true;
-
-        }
         private void txtBoxEmail_Validating(object sender, CancelEventArgs e)
         {
             if (txtEmail.Text != "")
-                _IsValidEmail(txtEmail.Text, e);
-        }
-
-        private void _SetDateConstraint()
-        {
-            DateTime MaxdateOfBirth = DateTime.Now.AddYears(-18);
-
-            dtpDateOfBirth.Format = DateTimePickerFormat.Custom;
-            dtpDateOfBirth.CustomFormat = clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.NumericFormat);
-            dtpDateOfBirth.Value = MaxdateOfBirth;
-            dtpDateOfBirth.MaxDate = MaxdateOfBirth;
-            dtpDateOfBirth.MinDate = new DateTime(1935, 1, 1);
-
+                clsGeneralUtility.ValidateEmail(txtEmail, erTextBox, e);
         }
 
         private void frmAddEditPersonInfo_Load(object sender, EventArgs e)
@@ -281,7 +172,7 @@ namespace DVLDPresentationLayer
             btnExit.CausesValidation = false;
             btnClose.CausesValidation = false;
             
-            _SetDateConstraint();
+           clsGeneralUtility.SetDateConstraintForAge(dtpDateOfBirth,18);
 
             DataView dataview = clsCountries.GetAllCountries().DefaultView;
 
@@ -295,6 +186,7 @@ namespace DVLDPresentationLayer
             else
                 cbCountries.SelectedIndex = dataview.Find("Jordan");
         }
+
         private void rbMale_CheckedChanged(object sender, EventArgs e)
         {
             if (rbMale.Checked && !_UploadedPersonalImage)
@@ -314,9 +206,7 @@ namespace DVLDPresentationLayer
             ofdSelectImage.ShowDialog();
 
         }
-        string _NewSelectedImagePath;
-        string _ImagesFolderPath = @"C:\DVLD-People-Images";
-        bool _UploadedPersonalImage = false;
+
         private void ofdSelectImage_FileOk(object sender, CancelEventArgs e)
         {
             if (!Directory.Exists(_ImagesFolderPath))
@@ -333,7 +223,6 @@ namespace DVLDPresentationLayer
             }
         }
 
-        bool _RemovedSavedImage = false;
         private void lnlblRemove_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (pbPersonalImage.ImageLocation == _SavedPersonalImagePath && !String.IsNullOrEmpty(_SavedPersonalImagePath))
@@ -412,13 +301,14 @@ namespace DVLDPresentationLayer
         private bool _IsValidData()
         {
             CancelEventArgs cancelEventArgs = new CancelEventArgs();
-            bool IsValidEmail = (txtEmail.Text == "") ? true : _IsValidEmail(txtEmail.Text, cancelEventArgs);
+            bool IsValidEmail = (txtEmail.Text == "") ? true : clsGeneralUtility.ValidateEmail(txtEmail, erTextBox, cancelEventArgs);
 
-            return (_ValidateName(txtFirstName, cancelEventArgs)&& _ValidateName(txtSecondName, cancelEventArgs)
-             && _ValidateName(txtThirdName, cancelEventArgs) && _ValidateName(txtLastName, cancelEventArgs)
-             && _ValidateNationalNo(cancelEventArgs) && IsValidEmail
-             && _ValidatePhone(cancelEventArgs) && _ValidateAddress(cancelEventArgs));
+            return (clsGeneralUtility.ValidateName(txtFirstName, erTextBox, cancelEventArgs) && clsGeneralUtility.ValidateName(txtSecondName, erTextBox, cancelEventArgs)
+             && clsGeneralUtility.ValidateName(txtThirdName, erTextBox, cancelEventArgs) && clsGeneralUtility.ValidateName(txtLastName, erTextBox, cancelEventArgs)
+             && ValidateNationalNumber(cancelEventArgs) && IsValidEmail
+             && clsGeneralUtility.ValidatePhone(txtPhone, erTextBox, cancelEventArgs) && clsGeneralUtility.ValidateAddress(txtAddress, erTextBox, cancelEventArgs));
         }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (_IsValidData())

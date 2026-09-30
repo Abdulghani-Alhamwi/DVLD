@@ -47,7 +47,7 @@
             this.txtFindBy.Location = new System.Drawing.Point(394, 47);
             this.txtFindBy.Name = "txtFindBy";
             this.txtFindBy.Size = new System.Drawing.Size(373, 35);
-            this.txtFindBy.TabIndex = 1;
+            this.txtFindBy.TabIndex = 0;
             this.txtFindBy.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFindBy_KeyDown);
             // 
             // cbFindBy
@@ -61,7 +61,7 @@
             this.cbFindBy.Location = new System.Drawing.Point(148, 46);
             this.cbFindBy.Name = "cbFindBy";
             this.cbFindBy.Size = new System.Drawing.Size(226, 36);
-            this.cbFindBy.TabIndex = 0;
+            this.cbFindBy.TabIndex = 1;
             this.cbFindBy.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbFindBy_DrawItem);
             this.cbFindBy.DropDown += new System.EventHandler(this.cbFindBy_DropDown);
             this.cbFindBy.SelectedIndexChanged += new System.EventHandler(this.cbFindBy_SelectedIndexChanged);
@@ -89,7 +89,7 @@
             this.gbFilter.Location = new System.Drawing.Point(3, 3);
             this.gbFilter.Name = "gbFilter";
             this.gbFilter.Size = new System.Drawing.Size(1073, 108);
-            this.gbFilter.TabIndex = 40;
+            this.gbFilter.TabIndex = 0;
             this.gbFilter.TabStop = false;
             this.gbFilter.Text = "Filter";
             // 
@@ -144,9 +144,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Controls.Add(this.gbFilter);
             this.Controls.Add(this.uctrlPersonDetails);
+            this.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Name = "ctrlPersonDetailsByFilter";
             this.Size = new System.Drawing.Size(1080, 423);
             this.Load += new System.EventHandler(this.PersonInformationByFilter_Load);

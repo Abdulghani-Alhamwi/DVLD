@@ -62,7 +62,7 @@
             this.tcLicenseHistory.Name = "tcLicenseHistory";
             this.tcLicenseHistory.SelectedIndex = 0;
             this.tcLicenseHistory.Size = new System.Drawing.Size(1404, 352);
-            this.tcLicenseHistory.TabIndex = 0;
+            this.tcLicenseHistory.TabIndex = 1;
             this.tcLicenseHistory.SelectedIndexChanged += new System.EventHandler(this.tcLicenseHistory_SelectedIndexChanged);
             // 
             // tpLocalLicenses
@@ -137,7 +137,7 @@
             this.dgvLocalLicenses.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvLocalLicenses.Size = new System.Drawing.Size(1355, 205);
             this.dgvLocalLicenses.StandardTab = true;
-            this.dgvLocalLicenses.TabIndex = 58;
+            this.dgvLocalLicenses.TabIndex = 1;
             this.dgvLocalLicenses.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_ColumnHeaderMouseClick);
             this.dgvLocalLicenses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.DataGridView_Scroll);
             this.dgvLocalLicenses.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridView_KeyDown);
@@ -236,7 +236,7 @@
             this.dgvInternationalLicenses.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvInternationalLicenses.Size = new System.Drawing.Size(1346, 205);
             this.dgvInternationalLicenses.StandardTab = true;
-            this.dgvInternationalLicenses.TabIndex = 62;
+            this.dgvInternationalLicenses.TabIndex = 2;
             this.dgvInternationalLicenses.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_ColumnHeaderMouseClick);
             this.dgvInternationalLicenses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.DataGridView_Scroll);
             this.dgvInternationalLicenses.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridView_KeyDown);
@@ -256,7 +256,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Controls.Add(this.gbDriverLicenses);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));

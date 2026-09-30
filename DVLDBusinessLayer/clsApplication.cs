@@ -137,6 +137,7 @@ namespace DVLDBusinessLayer
         {
             return clsApplicationsData.DeleteApplication(ApplicationID);
         }
+
         public bool Save()
         {
             switch(_CurrentMode)

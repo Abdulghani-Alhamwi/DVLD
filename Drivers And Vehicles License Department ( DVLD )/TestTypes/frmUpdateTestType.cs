@@ -7,10 +7,9 @@ namespace DVLDPresentationLayer
 {
     public partial class frmUpdateTestType : Form
     {
-        internal event Action<object[], byte> AfterUpdatingInfo;
+        public event Action<object[], byte> AfterUpdatingInfo;
 
-        byte _TestsTypesDGVRowIndex;
-
+        private byte _TestsTypesDGVRowIndex;
         private clsTestType _TestType;
 
         public frmUpdateTestType(byte TestTypeID, string TestTypeTitle, string TestTypeDescription,decimal TestTypeFees,byte TestsTypesDGVRowIndex)
@@ -89,6 +88,5 @@ namespace DVLDPresentationLayer
         {
             this.Close();
         }
-
     }
 }

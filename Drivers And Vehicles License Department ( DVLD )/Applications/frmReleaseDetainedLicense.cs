@@ -23,6 +23,7 @@ namespace DVLDPresentationLayer.Licenses
             _InitilizeFormData();
             _DetainedLicensesDgvRowIndex = -1;
         }
+
         public frmReleaseDetainedLicense(int LocalLicenseID , int DetainedLicensesDgvRowIndex)
         {
             InitializeComponent();

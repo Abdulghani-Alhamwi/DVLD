@@ -14,9 +14,7 @@ namespace DVLDPresentationLayer.Applications
         public event IssuedLicense OnIssuedLicense;
 
         private DateTime _InternationalLicenseExpDate = DateTime.Now.AddYears(1);
-
         private int _SelectedLocalLicenseID, _DriverID;
-
         private clsInternationalLicense _NewInternationalLicense;
 
         public frmNewIntLicenseApplication()
@@ -167,6 +165,7 @@ namespace DVLDPresentationLayer.Applications
                 btnIssueLicense.Enabled = false;
                 lnlblShowLicenseHistory.Enabled = true;
         }
+
         private void btnIssueLicense_Click(object sender, EventArgs e)
         {
             if (_SelectedLocalLicenseID == -1)
@@ -207,5 +206,6 @@ namespace DVLDPresentationLayer.Applications
                         MessageBox.Show("Failed to save application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }                    
         }
+
     }
 }

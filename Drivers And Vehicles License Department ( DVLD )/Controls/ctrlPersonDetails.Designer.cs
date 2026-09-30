@@ -320,6 +320,7 @@
             // 
             // gbPersonInformation
             // 
+            this.gbPersonInformation.BackColor = System.Drawing.Color.WhiteSmoke;
             this.gbPersonInformation.Controls.Add(this.pbCountry);
             this.gbPersonInformation.Controls.Add(this.pbPhone);
             this.gbPersonInformation.Controls.Add(this.pbDate);
@@ -352,7 +353,7 @@
             this.gbPersonInformation.Location = new System.Drawing.Point(9, -1);
             this.gbPersonInformation.Name = "gbPersonInformation";
             this.gbPersonInformation.Size = new System.Drawing.Size(1073, 298);
-            this.gbPersonInformation.TabIndex = 84;
+            this.gbPersonInformation.TabIndex = 0;
             this.gbPersonInformation.TabStop = false;
             this.gbPersonInformation.Text = "Person Information";
             // 

@@ -7,12 +7,13 @@ namespace DVLDPresentationLayer
 {
     public partial class frmTakeTest : Form
     {
-        internal event Action<int> AfterTestTaken;
-        internal event Action AfterPassingTest;
+        public event Action<int> AfterTestTaken;
+        public event Action AfterPassingTest;
 
         clsTestAppointment _Appointment;
         int _AppointmentsDGVRowIndex;
         int _LDLAppID;
+
         public frmTakeTest(clsTestAppointment Appointment, clsTestType.enTestType TestType,int AppointmentsDGVRowIndex)
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace DVLDPresentationLayer
             clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, pbTestType);
             clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
         }
+
         private void _SetInfo(clsTestAppointment Appointment,clsLocalDrivingLicenseApp LDLApp)
         {
             txtNotes.MaxLength = 500;

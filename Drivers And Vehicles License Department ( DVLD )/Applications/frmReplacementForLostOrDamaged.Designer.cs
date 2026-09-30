@@ -80,7 +80,7 @@
             this.btnIssueReplacement.Location = new System.Drawing.Point(848, 838);
             this.btnIssueReplacement.Name = "btnIssueReplacement";
             this.btnIssueReplacement.Size = new System.Drawing.Size(314, 45);
-            this.btnIssueReplacement.TabIndex = 200;
+            this.btnIssueReplacement.TabIndex = 2;
             this.btnIssueReplacement.Text = "Issue Replacement";
             this.btnIssueReplacement.UseVisualStyleBackColor = true;
             this.btnIssueReplacement.Click += new System.EventHandler(this.btnIssueReplacement_Click);
@@ -94,7 +94,7 @@
             this.lnlblShowLicenseHistory.Margin = new System.Windows.Forms.Padding(0);
             this.lnlblShowLicenseHistory.Name = "lnlblShowLicenseHistory";
             this.lnlblShowLicenseHistory.Size = new System.Drawing.Size(259, 31);
-            this.lnlblShowLicenseHistory.TabIndex = 202;
+            this.lnlblShowLicenseHistory.TabIndex = 3;
             this.lnlblShowLicenseHistory.TabStop = true;
             this.lnlblShowLicenseHistory.Text = "Show License History";
             this.lnlblShowLicenseHistory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseHistory_LinkClicked);
@@ -123,7 +123,7 @@
             this.btnClose.Location = new System.Drawing.Point(653, 838);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
-            this.btnClose.TabIndex = 199;
+            this.btnClose.TabIndex = 5;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -149,7 +149,7 @@
             this.lnlblShowNewLicenseInfo.Margin = new System.Windows.Forms.Padding(0);
             this.lnlblShowNewLicenseInfo.Name = "lnlblShowNewLicenseInfo";
             this.lnlblShowNewLicenseInfo.Size = new System.Drawing.Size(283, 31);
-            this.lnlblShowNewLicenseInfo.TabIndex = 203;
+            this.lnlblShowNewLicenseInfo.TabIndex = 4;
             this.lnlblShowNewLicenseInfo.TabStop = true;
             this.lnlblShowNewLicenseInfo.Text = "Show New License Info";
             this.lnlblShowNewLicenseInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowNewLicenseInfo_LinkClicked);
@@ -401,12 +401,12 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnExit.Location = new System.Drawing.Point(1133, 9);
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 197;
+            this.btnExit.TabIndex = 6;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -419,7 +419,7 @@
             this.rbDamagedLicense.Location = new System.Drawing.Point(11, 36);
             this.rbDamagedLicense.Name = "rbDamagedLicense";
             this.rbDamagedLicense.Size = new System.Drawing.Size(202, 31);
-            this.rbDamagedLicense.TabIndex = 205;
+            this.rbDamagedLicense.TabIndex = 0;
             this.rbDamagedLicense.TabStop = true;
             this.rbDamagedLicense.Text = "Damaged License";
             this.rbDamagedLicense.UseVisualStyleBackColor = true;
@@ -432,7 +432,7 @@
             this.rbLostLicense.Location = new System.Drawing.Point(11, 68);
             this.rbLostLicense.Name = "rbLostLicense";
             this.rbLostLicense.Size = new System.Drawing.Size(149, 31);
-            this.rbLostLicense.TabIndex = 206;
+            this.rbLostLicense.TabIndex = 1;
             this.rbLostLicense.Text = "Lost License";
             this.rbLostLicense.UseVisualStyleBackColor = true;
             // 
@@ -465,7 +465,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1184, 907);
             this.ControlBox = false;

@@ -136,7 +136,6 @@ namespace DVLDDataAccessLayer
             return query;
         }
 
-
         public static DataTable GetColumnsNamesForView()
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);

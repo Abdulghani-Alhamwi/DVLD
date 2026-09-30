@@ -20,6 +20,7 @@ namespace DVLDBusinessLayer
             this.CreatedByUserID = CreatedByUserID;
             this.CreatedDate = CreatedDate;
         }
+
         private bool _AddNewDriver()
         {
             DriverID = clsDriversData.AddNewDriver(PersonID, CreatedByUserID, CreatedDate);
@@ -40,6 +41,7 @@ namespace DVLDBusinessLayer
             else
                 return false;
         }
+
         public static bool IsPersonAlreadyADriver(int PersonID)
         {
             return clsDriversData.IsPersonAlreadyADriver(PersonID);
@@ -71,13 +73,14 @@ namespace DVLDBusinessLayer
         {
             return clsDriversData.GetTotalDriversCount();
         }
+
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection, char? WildChar = null)
         {
             return clsDriversData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, -1, -1, WildChar);
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,
-            string ColumnNameToOrderBy, string SortDirection, int LastBroughtDriverID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
+               string ColumnNameToOrderBy, string SortDirection, int LastBroughtDriverID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             return clsDriversData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy,
                 SortDirection, LastBroughtDriverID, NumberOfRowsToOffset, WildChar);
@@ -99,10 +102,10 @@ namespace DVLDBusinessLayer
         }
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection
-        , string ColumnNameToFilterBy = null, string valueToFilterBy = null, char? WildChar = null)
+             , string ColumnNameToFilterBy = null, string valueToFilterBy = null, char? WildChar = null)
         {
             return clsDriversData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
-                ColumnNameToFilterBy, valueToFilterBy, WildChar);
+                   ColumnNameToFilterBy, valueToFilterBy, WildChar);
         }
 
     }

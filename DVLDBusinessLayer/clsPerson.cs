@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Runtime.Remoting.Messaging;
 using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
@@ -8,7 +7,7 @@ namespace DVLDBusinessLayer
     public class clsPerson
     {
         public enum enMode : byte { AddNew = 0, Update = 1 }
-        enMode _CurrentMode;
+        private enMode _CurrentMode;
         public enum enGendor : byte { Male = 0, Female = 1 }
         public enGendor? Gendor;
         public int PersonID { get; set; }
@@ -126,6 +125,7 @@ namespace DVLDBusinessLayer
             else
                 return null;
         }
+
         private byte? _GetGendorNumericValue()
         {
             if (Gendor == null)
@@ -133,6 +133,7 @@ namespace DVLDBusinessLayer
 
             return Convert.ToByte((Gendor == enGendor.Male) ? 0 : 1);
         }
+
         private bool _AddNewPerson()
         {
             PersonID = clsPeopleData.AddNewPerson(NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue()
@@ -162,6 +163,7 @@ namespace DVLDBusinessLayer
             return clsPeopleData.UpdatePerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue()
                 , Address, Phone, Email, NationalityCountryID, ImagePath,_OldPersonData, _HasOldDataChangedFully());
         }
+
         public static DataTable GetPeopleInfo(byte WantedNumOfRecords)
         {
             return clsPeopleData.GetPeopleInfo(WantedNumOfRecords);
@@ -173,6 +175,7 @@ namespace DVLDBusinessLayer
             return clsPeopleData.GetPeopleInfo(WantedNumOfRecords, _LastBroughtPersonID, LastColumnNameDataOrderedBy,
                    NumberOfRowsToOffset, SortDirection);
         }
+
         public bool Save()
         {
             switch(_CurrentMode)
@@ -191,6 +194,7 @@ namespace DVLDBusinessLayer
             }
             return false;
         }
+
         public static bool DeletePerson(int PersonID)
         {
             return clsPeopleData.DeletePerson(PersonID);
@@ -228,6 +232,7 @@ namespace DVLDBusinessLayer
         {
             return clsPeopleData.GetNationalNumber(PersonID);
         }
+
         public static int GetPersonID(string NationalNo)
         {
             return clsPeopleData.GetPersonID(NationalNo);
@@ -237,6 +242,7 @@ namespace DVLDBusinessLayer
         {
             return clsPeopleData.GetColumnsNamesForView();
         }
+
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {

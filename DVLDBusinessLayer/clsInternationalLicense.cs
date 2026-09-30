@@ -28,6 +28,7 @@ namespace DVLDBusinessLayer
             this.IsActive = IsActive;
             this.CreatedByUserID = CreatedByUserID;
         }
+
         private clsInternationalLicense(int InternationalLicenseID, int ApplicationID, int DriverID, int LocalLicenseID,
             DateTime IssueDate, DateTime ExpirationDate, bool IsActive, int CreatedByUserID)
         {
@@ -54,16 +55,19 @@ namespace DVLDBusinessLayer
             return clsInternationalLicensesData.GetDriverInternationalLicenses(DriverID, WantedNumOfRecords
                 , LastBroughIntLicenseID, LastColumnNameDataOrderedBy, NumberOfRowsToOffset, SortDirection);
         }
+
         public static DataTable GetAllInternationalLicensesData(byte WantedNumOfRecords)
         {
             return clsInternationalLicensesData.GetAllInternationalLicensesData(WantedNumOfRecords);
         }
+
         public static DataTable GetAllInternationalLicensesData(byte WantedNumOfRecords, int LastBroughIntLicenseID
             , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             return clsInternationalLicensesData.GetAllInternationalLicensesData(WantedNumOfRecords,LastBroughIntLicenseID
                 , LastColumnNameDataOrderedBy, NumberOfRowsToOffset, SortDirection);
         }
+
         private bool _IssueDriverLicense()
         {
             InternationalLicenseID = clsInternationalLicensesData.IssueDriverLicense(ApplicationID, DriverID, IssuedUsingLocalLicenseID, IssueDate, ExpirationDate, IsActive, CreatedByUserID);
@@ -92,6 +96,7 @@ namespace DVLDBusinessLayer
             int ApplicationID = -1, DriverID = -1, LocalLicenseID = -1, CreatedByUserID = -1;
             DateTime IssueDate = DateTime.Now, ExpirationDate = DateTime.Now;
             bool IsActive = false;
+
             if (clsInternationalLicensesData.Find(InternationalLicenseID, ref ApplicationID, ref DriverID, ref LocalLicenseID, ref IssueDate, ref ExpirationDate, ref IsActive, ref CreatedByUserID))
             {
                 return new clsInternationalLicense(InternationalLicenseID, ApplicationID, DriverID, LocalLicenseID, IssueDate, ExpirationDate, IsActive, CreatedByUserID);

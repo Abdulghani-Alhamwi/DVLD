@@ -8,8 +8,9 @@ namespace DVLDPresentationLayer.Licenses
 {
     public partial class frmRenewLocalDrivingLicense : Form
     {
-        int _RenewedLicenseID;
-        clsLocalLicense _SelectedLicenseInfo;
+        private int _RenewedLicenseID;
+        private clsLocalLicense _SelectedLicenseInfo;
+
         public frmRenewLocalDrivingLicense()
         {
             InitializeComponent();

@@ -7,7 +7,7 @@ namespace DVLDBusinessLayer
     public class clsTestAppointment
     {
         private enum _enMode : byte {AddNew = 0 , Update = 1}
-        _enMode _CurrentMode;
+        private _enMode _CurrentMode;
         public int TestAppointmentID { get; set; }
         public byte TestTypeID { get; set; }
         public int LDLApplicationID { get; set; }
@@ -30,6 +30,7 @@ namespace DVLDBusinessLayer
             this.CreatedByUserID = CreatedByUserID;
             this.RetakeTestAppID = RetakeTestAppID;
         }
+
         private clsTestAppointment(int TestAppointmentID,byte TestTypeID,int LDLApplicationID,DateTime AppointmentDate,decimal PaidFees,int CreatedByUserID,bool IsLocked,int RetakeTestAppID)
         {
             this.TestAppointmentID = TestAppointmentID;
@@ -125,6 +126,7 @@ namespace DVLDBusinessLayer
         {
             return clsTestAppointmentsData.IsAppointmentSchedulingAvailable(LocalDrivingLicenseAppID, TestTypeID);
         }
+
         public static DataTable GetColumnsNamesForView()
         {
             return clsTestAppointmentsData.GetColumnsNamesForView();

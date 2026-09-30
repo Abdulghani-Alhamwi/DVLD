@@ -6,10 +6,12 @@ namespace DVLDBusinessLayer
 {
     public class clsLicenseClass
     {
-        public enum enLicenseClasses : byte { SmallMotorcycle = 1, HeavyMotorcycleClass = 2, OrdinaryDrivingClass = 3,
-            CommercialClass = 4, AgriculturalClass = 5, SmallAndMediumBusClass = 6, TruckAndHeavyVehicleClass = 7 };
+        public enum enLicenseClasses : byte
+        { SmallMotorcycle = 1, HeavyMotorcycleClass = 2, OrdinaryDrivingClass = 3,CommercialClass = 4,
+          AgriculturalClass = 5, SmallAndMediumBusClass = 6, TruckAndHeavyVehicleClass = 7 };
         public byte ID { get; set; }
         public string ClassName { get; set; }
+
         public clsLicenseClass(byte ID,string ClassName)
         {
             this.ID = ID;
@@ -45,6 +47,7 @@ namespace DVLDBusinessLayer
                     return enLicenseClasses.SmallMotorcycle;
             }
         }
+
         public static byte GetLicenseClassID(enLicenseClasses LicenseClass)
         {
             switch (LicenseClass)

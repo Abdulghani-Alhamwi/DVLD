@@ -617,3 +617,75 @@ SELECT TOP (10) PersonID As [Person ID], NationalNo AS [National No.],
 60) The multi line string takes more string length ,more memory and more network cost but we can use it for readability when we have a long query for a better maintainability therefore even if it takes cost -> we take instead better readability and maintainability.
 string query = @"Select..
 Where..";
+
+
+61) I used in the project the pagination in its two types :
+
+Cursor Pagination and Offset Pagination ,
+
+1] Cursor Pagination :
+It depends on a unique identifier or combination of columns that shapes uniqueness to bring the data gradually from the database according to certain condition based on that unique identifier like when scrolling ew bring the data that its unique identifier is smaller or bigger than the last brought value of that unique identifier, and that unique identifier can be the ID field, if the field was date of birth then its value could be repeated many times therefore here the cursor pagination wont work correctly because it will being top 10 rows we want for example but how to bring the top 10 rows after those rows that we have already brought using cursor pagination not offset pagination -> here we have to make combination with columns with the date of birth column to shape the uniqueness in order that the cursor pagination works correctly or we can use a unique identifier.
+
+2] Offset Pagination: 
+It brings the data gradually by offsetting number of rows and bring next rows after them and next rows number and offset for how many rows -> we specify in the query.
+
+_The cursor pagination can be faster than the offset pagination and especially when we will have offset for large number of rows therefore the cursor pagination can be faster because is depends on a unique identifier and that unique identifier if it is indexed with clustered or non clustered index then it will be faster because it uses the index seek to reach the identifier value instead of offsetting large number of rows in order to bring next rows after them.
+
+_We must user order by before offset otherwise offset pagination wont work and we will have error.
+
+_In the offset pagination query -> We must not use TOP keyword to bring top number of rows we want because we are using at that query the offset pagination.
+
+-- Cursor Pagination :
+
+SELECT TOP (10) * FROM People WHERE PersonID < 10000 -- 1000 is the unique identifer value that using it we make the cursor pagination.
+
+SELECT TOP (10) * FROM People WHERE PersonID < 10000 -- 1000 is the unique identifer value that using it we make the cursor pagination.
+ORDER BY PersonID
+
+-- we should use order by with cursor pagination therefore the data we have it be easier to the developer to send the last brought Unique identifier correctly therefore the cursor pagination continue working , we can to not put it but the developer must handle sending the correct unique identifier the is the last brought one according the previous data whether it was ordered descending or ascending.
+
+-- Offset Pagination :
+
+SELECT * FROM People -- We cannot use top to bring top number of rows we want because we are using offset pagination
+ORDER BY PersonID DESC -- We must use order by before the offset
+OFFSET 10 ROWS 
+FETCH NEXT 10 ROWS ONLY 
+
+
+62) In that project we can use views to view the data , but since we are filtering and sorting with filtration the data then we cannot use the view because we have group by clause in the query and where clause with the filtration or sorting condition must be before the group by clause and we are filtering the data not the result and the view does not accept parameters therefore here we can use view to view data but to filter or sort we will have to write the query explicitly , and we can use view for cursor pagination or offset pagination but here for cursor pagination the condition will be before the group by clause therefore we can't use view because it does not accept parameters in order to send the unique identifier value and we cannot put it after using the view because there is group by clause , and for the offset pagination , we can use it  with no problems but if offset pagination for sorted filtered data or filtering data which requires where clause before the order by clause then we will not be able to use the view because it does not accept parameters , we can to use stored procedure and it is benefit because it accepts parameters, if we have just sort by it self then we can use the view but sorting filtered data then we have a where clause to be put before the group by clause and we have filtration value therefore we cannot use view because it does not accept parameters , we can to use stored procedure or write query explicitly.
+
+
+63) .NET Framework VS .NET Core :
+
+1] One of the main changes in .NET Core is change at the runtime level : .NET Framework when running the application -> the JIT Compiler do full optimization for all methods that it will use as needed as what method is getting executed while in .NET Core the Jit Compiler is optimized and redesigned with better architecture and its compilation as follow :
+when running application the Jit in .NET Core will do operation called Tiered Compilation : the tiered compilation consists of 2 tears :
+a) Tier 0 : and here it generates the machine code quickly but with out aggressive optimization and not without any optimization ,the generated code can be with no or few optimization.
+
+b) Tier 1 : generates aggressively optimized machine code.
+
+_if the method is used not many times then the generated code will be using tier 0 but if a method is frequently used (hot methods) and it is figured out as hot method then its code is generated by tier 1
+
+Therefore the Jit in .NET Core executes the method that we need in run time and if it figured that it is a hot method which means it is frequently being used then it generates using tier 1 the aggressively optimized machine code , and this way of compilation which is the tiered compilation increases the application startup speed and decreases the startup time therefore for that the .NET Core application startup can be faster than the .NET Framework application startup but the depends on some factors also like application size but the purpose of tiered compilation is to optimize startup performance to decrease startup time, therefore in .NET Core the method is executed for the first time with tier 0 and if it is figured as hot method which means it is frequently used then it request from tier 1 to recompile by generating the fully optimized code which is aggressively optimized machine code.
+
+
+2] In .NET Core there were optimization on the Garbage collector , its main components and fundamentals remain but it has been improved and optimized for performance.
+
+3] The .NET Core CLR some of its components are defined by CLI which is Common Language Infrastructure which defines the CTS Common Type System and CLS Common Language specification and meta data, and also .NET Core Components are Garbage collector and JIT Compiler,CLI is not a CLR Component.
+
+4] The CLR is also in .NET CORE The general manger of .NET environment.
+
+5] What is in .NET Core from libraries is optimized therefore for 
+that we have faster performance than .NET Framework.
+
+6] The difference between the self Contained deployment and framework dependent deployment is that if we have a dependency or dependencies and we want them to be in the deployment package then using the framework dependent deployment needs from us to manually install the runtime on the client environment or the client install it by him self but that is not the perfect user experience because it is costly for our team if it requires going to its place and install it for him or if client will install it manually by itself , we can to include batch file to download the target runtime directly when client opens that batch file or we can use the self Contained deployment and that runtime be part of the package and the client be able to directly install the app or install the runtime from one place then install setup.
+
+7] ASP.NET Core runs on modern .NET Platform and ASP.NET Framework runs on .NET Framework.
+
+8] Modern versions of .NET core are named .NET.
+.NET Core 1.0 → 3.1
+.NET 5
+.NET 6
+.NET 7
+.NET 8
+.NET 9
+.NET 10

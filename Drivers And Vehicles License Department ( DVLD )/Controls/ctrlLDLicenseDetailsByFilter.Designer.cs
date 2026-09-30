@@ -45,7 +45,7 @@
             this.gbFilter.Location = new System.Drawing.Point(10, 1);
             this.gbFilter.Name = "gbFilter";
             this.gbFilter.Size = new System.Drawing.Size(754, 92);
-            this.gbFilter.TabIndex = 43;
+            this.gbFilter.TabIndex = 0;
             this.gbFilter.TabStop = false;
             this.gbFilter.Text = "Filter";
             // 
@@ -103,10 +103,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Controls.Add(this.gbFilter);
             this.Controls.Add(this.uctrlLDLDetails);
-            this.Font = new System.Drawing.Font("Symbol", 8.25F);
+            this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "ctrlLDLicenseDetailsByFilter";

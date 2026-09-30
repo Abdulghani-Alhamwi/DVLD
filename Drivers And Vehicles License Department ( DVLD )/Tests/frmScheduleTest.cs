@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using DVLDBusinessLayer;
 using DVLDPresentationLayer.Properties;
 using Utility_Library;
+using System.ComponentModel;
 using static Utility_Library.clsGeneralUtility;
 
 namespace DVLDPresentationLayer
@@ -27,20 +28,24 @@ namespace DVLDPresentationLayer
         private int _AppointmentsDGVRowIndex = -1;
 
         private bool _IsLockedMode;
+
         public frmScheduleTest(int LDLAppID, clsTestType.enTestType TestType, enTestTrial TestTrial)
         {
             _InitializeFormData(LDLAppID, TestType, TestTrial);
         }
+
         public frmScheduleTest(int LDLAppID , clsTestType.enTestType TestType , enTestTrial TestTrial, clsTestAppointment Appointment)
         {
             _IsLockedMode = true;
             _InitializeFormData(LDLAppID, TestType, TestTrial,Appointment);
         }
+
         public frmScheduleTest(int LDLAppID, clsTestType.enTestType TestType, enTestTrial TestTrial, clsTestAppointment Appointment , int AppointmentsDGVRowIndex)
         {
             _InitializeFormData(LDLAppID, TestType, TestTrial,Appointment);
             _AppointmentsDGVRowIndex = AppointmentsDGVRowIndex;
         }
+
         public void _SetControlsForLockedAppointment(bool IsPassedTest)
         {
             if (!IsPassedTest)
@@ -171,10 +176,12 @@ namespace DVLDPresentationLayer
                     break;
             }
         }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -267,11 +274,13 @@ namespace DVLDPresentationLayer
             else
                 _SaveAppointment(Appointment);
         }
+
         private void mtxtAppointmentTime_Click(object sender, EventArgs e)
         {
           mtxtAppointmentTime.Text = "";
         }
-        private void mtxtAppointmentTime_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+
+        private void mtxtAppointmentTime_Validating(object sender, CancelEventArgs e)
         {
             if(mtxtAppointmentTime.Text.Substring(0,1) == " ")
                 clsGeneralUtility.EnableErrorProvider(erTime, mtxtAppointmentTime, "Time cannot be empty!", e);
@@ -282,6 +291,7 @@ namespace DVLDPresentationLayer
             else
                 erTime.Dispose();
         }
+
         private void frmScheduleTest_Load(object sender, EventArgs e)
         {
             btnClose.CausesValidation = false;
