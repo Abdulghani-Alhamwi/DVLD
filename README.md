@@ -8,6 +8,8 @@ A C# Windows Forms desktop application for managing people, users, driving licen
 [![Database](https://img.shields.io/badge/database-SQL%20Server-red.svg)](#)
 [![Language](https://img.shields.io/badge/language-C%23-239120.svg)](#)
 
+---
+
 ## 📌 Overview :
 
 DVLD is a C# Windows Forms application designed to model the core operations of a driver and vehicle licensing department.
@@ -69,6 +71,7 @@ The driving license management process involves several challenges that this pro
 
 The project addresses these challenges by combining a connected domain model, centralized business rules, structured data access, and controlled record loading.
 
+---
 
 ## ✨ Features :
 
@@ -93,6 +96,7 @@ The project addresses these challenges by combining a connected domain model, ce
 * Maintain user-specific session information.
 * Support remember-me login.
 * Protect user credentials through encryption and salted password hashing.
+* Control access to system areas through user permissions.
 
 </details>
 
@@ -148,6 +152,28 @@ The project addresses these challenges by combining a connected domain model, ce
 
 </details>
 
+<details>
+<summary>📄 Pagination and Data Retrieval</summary>
+
+* Data is loaded gradually from the database while the user scrolls, according to what the user actually needs.
+* Offset-based pagination fetches a specific page of records using a page number and page size.
+* Cursor-based pagination fetches the next batch of records after the last record already loaded.
+* Server-side filtering applied in SQL Server before data reaches the application.
+* Reduced data transfer and memory consumption on growing datasets.
+* Query performance supported by appropriate database indexing.
+
+</details>
+
+<details>
+<summary>🧩 Reusable Components</summary>
+
+* Reusable WinForms components for CRUD operations.
+* Reusable WinForms components for search and filtering.
+* Shared logic centralized to reduce duplication across screens.
+
+</details>
+
+---
 
 ## 🏗️ Architecture :
 
@@ -201,6 +227,24 @@ It is responsible for:
 
 The data-access layer is also the appropriate place to implement database-side filtering and progressive loading strategies.
 
+---
+
+## 📄 Pagination :
+
+Tables such as `People` can grow to a very large number of records. Loading all of them every time a screen opens wastes memory, slows the application, and transfers data the user may never look at.
+
+To solve this, DVLD uses **offset-based** and **cursor-based pagination** to retrieve data incrementally from the database, loading only the records needed as the user scrolls.
+
+---
+
+### 🔎 Server-Side Filtering :
+
+* Search and filter conditions are applied in SQL Server, not in the form.
+* Only matching records for the requested page or batch are returned.
+* Unnecessary data transfer and memory consumption are minimized.
+* Appropriate database indexing keeps filtered and ordered queries fast.
+
+---
 
 ## 🔐 Security and Credential Protection :
 
@@ -209,6 +253,18 @@ The authentication system applies protection mechanisms to user credentials befo
 * User names are encrypted before being stored in the database.
 * Passwords are hashed with a unique salt before being stored in the database.
 
+### 🛡️ Authorization :
+
+Access to system features is controlled through user permissions. Each user can be granted access to the following areas:
+
+* **Users Management**
+* **Drivers View**
+* **People Management**
+* **Applications Management**
+
+Features that a user is not permitted to access are not available to that user.
+
+---
 
 ## 🧰 Tech Stack :
 
@@ -223,6 +279,7 @@ The authentication system applies protection mechanisms to user credentials befo
 | Data Model   | Relational database     |
 | Architecture | Three-tier architecture |
 
+---
 
 ## 📁 Repository Notes :
 
@@ -234,6 +291,7 @@ For a clean Git repository, Visual Studio build and IDE artifacts such as `.vs`,
 
 Database credentials and other sensitive configuration values should not be committed to source control.
 
+---
 
 ## 🤝 Contributing :
 
@@ -254,10 +312,6 @@ A useful pull request should explain:
 ```text
 What changed?
 Why was it needed?
-Which layer changed?
-How was it tested?
-Does the database schema change?
-Does the change affect data loading or query performance?
 ```
 
 ---
