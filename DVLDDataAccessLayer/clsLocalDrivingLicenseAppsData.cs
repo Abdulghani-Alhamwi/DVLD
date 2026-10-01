@@ -526,7 +526,7 @@ namespace DVLDDataAccessLayer
                 {
                     query = _QueryWithoutPagination;
                     query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                    query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtLDLAppID, true, false);
+                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtLDLAppID, true, false);
                     query += _GroupByQueryPart;
                     query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                 }

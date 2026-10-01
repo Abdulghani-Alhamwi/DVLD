@@ -66,9 +66,6 @@ namespace DVLDDataAccessLayer
 
             command.Parameters.AddWithValue("@LocalDrivingLicenseAppID", LocalDrivingLicenseAppID);
 
-            if(_LastBroughtAppointmentID != -1)
-            command.Parameters.AddWithValue("@LastBroughtAppointmentID", _LastBroughtAppointmentID);
-
             if (NumberOfRowsToOffset != -1)
             command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
@@ -101,7 +98,7 @@ namespace DVLDDataAccessLayer
             if (_LastBroughtAppointmentID != -1)
             {
                 query = _QueryWithoutPagination;
-                query += $@" WHERE {_PrimaryKeyColumnName} < @LowestBroughtAppointmentID AND {_QueryConditionPart}";
+                query += $@" WHERE {_PrimaryKeyColumnName} < @LastBroughtAppointmentID AND {_QueryConditionPart}";
                 query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 

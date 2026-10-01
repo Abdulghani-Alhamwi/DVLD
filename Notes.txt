@@ -689,3 +689,10 @@ that we have faster performance than .NET Framework.
 .NET 8
 .NET 9
 .NET 10
+
+9) If we have a view and a select statement before it then here the view represents a query under it and it will be here a subquery , here the execution plan won't be about bringing the full number of records from the inner query then applying a filtration condition if exists in the outer query , here the optimizer determines to push down the outer where clause into the inner query if that inner query was valid semantically which means it can have that where clause or not and if yes then it will bring the filtered records only not the whole table records , for example if the outer where clause the condition was on an alias of and aggregate function in the inner query then here the database engine won't push down the outer where clause because it is invalid because for aggregate functions we have to use having clause because we cannot use aggregate function with where clause , after that if it is valid to push down -> The optimizer determines based on many things including indexing if it can do index seek , based on also statistics , I/O on the hard disk , CPU Cost and if pushing down can lower the cost and also based on joins and aggregations strategies.
+
+SELECT * FROM People_View WHERE PersonID = 1
+
+In the following query the aggregate function COUNT and the outer where clause can't be pushed down because the aggregate result is one result on whole table and we have one output therefore the where clause must be in outer query because it can be executed on the output only.
+SELECT * FROM (SELECT COUNT(PersonID) AS C FROM People) R1 WHERE C > 1000

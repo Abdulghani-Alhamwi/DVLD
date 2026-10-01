@@ -247,7 +247,12 @@ namespace Utility_Library
             return null;
         }
 
-        public static void GetLastColumnNameDGVSortedBy(DataGridView dgv, DataGridViewCellMouseEventArgs e,ref string LastColumnNameDGVSortedBy)
+        public static string GetClickedColumnNameInDGV(DataGridView dgv, DataGridViewCellMouseEventArgs e)
+        {
+            return dgv.Columns[e.ColumnIndex].HeaderText;
+        }
+
+        private static void _SetLastColumnNameDGVSortedBy(DataGridView dgv, DataGridViewCellMouseEventArgs e,ref string LastColumnNameDGVSortedBy)
         {
             if (LastColumnNameDGVSortedBy != dgv.Columns[e.ColumnIndex].HeaderText)
             {
@@ -258,7 +263,7 @@ namespace Utility_Library
         public void SetDataSourceAfterColumnOrdering(DataGridView dgv, DataTable NewSortedDataSource, DataGridViewCellMouseEventArgs e, ref string LastColumnNameDGVSortedBy)
         {
             _NumberOfDGVAddedRows = 0;
-            GetLastColumnNameDGVSortedBy(dgv, e,ref LastColumnNameDGVSortedBy);
+            _SetLastColumnNameDGVSortedBy(dgv, e,ref LastColumnNameDGVSortedBy);
 
             dgv.DataSource = NewSortedDataSource;
         }
@@ -268,17 +273,21 @@ namespace Utility_Library
             return (e.Location.Y <= dgv.ColumnHeadersHeight);
         }
 
-
         /// <summary>
         /// Returns a the new sort direction , if current sort direction was Asc then it returns Desc while if it was Desc then it returns Asc
         /// </summary
-        public static enDataGridViewSortDirection ReverseCurrentDgvSortDirection(enDataGridViewSortDirection CurrentSortDirection)
+        public static void ReverseCurrentDGVSortDirection(DataGridView dgv, ref string LastColumnNameDGVSortedBy, ref enDataGridViewSortDirection CurrentDGVColumnSortDirection, DataGridViewCellMouseEventArgs e)
         {
-            if (CurrentSortDirection == enDataGridViewSortDirection.Descending)
-                return enDataGridViewSortDirection.Ascending;
+            if (LastColumnNameDGVSortedBy != GetClickedColumnNameInDGV(dgv, e))
+            {
+                CurrentDGVColumnSortDirection = enDataGridViewSortDirection.Descending;
+            }
+
+            if (CurrentDGVColumnSortDirection == enDataGridViewSortDirection.Descending)
+                CurrentDGVColumnSortDirection = enDataGridViewSortDirection.Ascending;
 
             else
-                return enDataGridViewSortDirection.Descending;
+                CurrentDGVColumnSortDirection = enDataGridViewSortDirection.Descending;
         }
 
         public static bool _IsRepeatedDataLoadToDgv(TextBox FilterationTextBox)

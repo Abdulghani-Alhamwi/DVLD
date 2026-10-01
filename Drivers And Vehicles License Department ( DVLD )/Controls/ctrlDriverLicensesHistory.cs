@@ -20,8 +20,8 @@ namespace DVLDPresentationLayer
         private string _IntLicensesPKViewedColumnName;
         private int _LastBroughtIntLicenseID;
 
-        private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDGVLocalLicSortDirection;
-        private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDGVIntLicSortDirection;
+        private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentLLicDGVColSortDirection;
+        private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentIntLicDGVColSortDirection;
         private clsDataGridViewUtilityLib _DgvUtilityLib;
 
         public ctrlDriverLicensesHistory()
@@ -35,8 +35,8 @@ namespace DVLDPresentationLayer
             _IntLicensesPKViewedColumnName = "Int.License ID";
 
             _DgvUtilityLib = new clsDataGridViewUtilityLib();
-            _CurrentDGVLocalLicSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
-            _CurrentDGVIntLicSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
+            _CurrentLLicDGVColSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
+            _CurrentIntLicDGVColSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
         }
 
         public void LoadDriverLicenseHistory(int DriverID)
@@ -54,7 +54,7 @@ namespace DVLDPresentationLayer
             if (DGV == dgvLocalLicenses)
             {
                 if (_LastColumnDGVLocalLicSortedBy == null || _LastColumnDGVLocalLicSortedBy == _LocalLicensesPKViewedColumnName)
-                    _LastBroughtLocalLicenseID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvLocalLicenses, _LocalLicensesPKViewedColumnName, _CurrentDGVLocalLicSortDirection);
+                    _LastBroughtLocalLicenseID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvLocalLicenses, _LocalLicensesPKViewedColumnName, _CurrentLLicDGVColSortDirection);
 
                 _DgvUtilityLib.SetNumberOfRowsToOffset(_LocalLicensesPKViewedColumnName, _LastColumnDGVLocalLicSortedBy);
             }
@@ -62,7 +62,7 @@ namespace DVLDPresentationLayer
             else
             {
                 if (_LastColumnDGVIntLicSortedBy == null || _LastColumnDGVIntLicSortedBy == _IntLicensesPKViewedColumnName)
-                    _LastBroughtIntLicenseID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvInternationalLicenses, _IntLicensesPKViewedColumnName, _CurrentDGVIntLicSortDirection);
+                    _LastBroughtIntLicenseID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvInternationalLicenses, _IntLicensesPKViewedColumnName, _CurrentIntLicDGVColSortDirection);
 
                 _DgvUtilityLib.SetNumberOfRowsToOffset(_IntLicensesPKViewedColumnName, _LastColumnDGVIntLicSortedBy);
             }
@@ -73,9 +73,9 @@ namespace DVLDPresentationLayer
             clsDataGridViewUtilityLib.enDataGridViewSortDirection CurrentSortDirection;
 
             if (DGV == dgvLocalLicenses)
-                CurrentSortDirection = _CurrentDGVLocalLicSortDirection;
+                CurrentSortDirection = _CurrentLLicDGVColSortDirection;
             else
-                CurrentSortDirection = _CurrentDGVIntLicSortDirection;
+                CurrentSortDirection = _CurrentIntLicDGVColSortDirection;
 
             DataRow[] NewRows = PartOfRemainingData?.Select();
 
@@ -92,7 +92,7 @@ namespace DVLDPresentationLayer
             if (DGV == dgvLocalLicenses)
             {
                 dtPartOfRemainingData = clsLocalLicense.GetLocalLicenses(_DriverID, clsDataGridViewUtilityLib.WantedNumOfRowsFromDB,
-                    _LastBroughtLocalLicenseID, _LastColumnDGVLocalLicSortedBy, _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVLocalLicSortDirection));
+                    _LastBroughtLocalLicenseID, _LastColumnDGVLocalLicSortedBy, _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentLLicDGVColSortDirection));
 
                 _AppendPartOfRemainingData(dgvLocalLicenses, dtPartOfRemainingData);
             }
@@ -100,7 +100,7 @@ namespace DVLDPresentationLayer
             else
             {
                 dtPartOfRemainingData = clsInternationalLicense.GetDriverInternationalLicenses(_DriverID, clsDataGridViewUtilityLib.WantedNumOfRowsFromDB
-                    , _LastBroughtIntLicenseID, _LastColumnDGVIntLicSortedBy, _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVIntLicSortDirection));
+                    , _LastBroughtIntLicenseID, _LastColumnDGVIntLicSortedBy, _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentIntLicDGVColSortDirection));
 
                 _AppendPartOfRemainingData(dgvInternationalLicenses, dtPartOfRemainingData);
             }
@@ -161,24 +161,24 @@ namespace DVLDPresentationLayer
 
         private void _SortLocalLicensesDataData(DataGridViewCellMouseEventArgs e)
         {
-            _CurrentDGVLocalLicSortDirection = clsDataGridViewUtilityLib.ReverseCurrentDgvSortDirection(_CurrentDGVLocalLicSortDirection);
+            clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvLocalLicenses, ref _LastColumnDGVLocalLicSortedBy, ref _CurrentLLicDGVColSortDirection, e);
 
             DataTable dtSortedInfo = null;
 
             dtSortedInfo = clsLocalLicense.GetSortedInfo(_DriverID,clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvLocalLicenses.Columns[e.ColumnIndex].HeaderText
-            , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVLocalLicSortDirection));
+            , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentLLicDGVColSortDirection));
 
             _DgvUtilityLib.SetDataSourceAfterColumnOrdering(dgvLocalLicenses, dtSortedInfo, e, ref _LastColumnDGVLocalLicSortedBy);
         }
 
         private void _SortInternationalLicensesData(DataGridViewCellMouseEventArgs e)
         {
-            _CurrentDGVIntLicSortDirection = clsDataGridViewUtilityLib.ReverseCurrentDgvSortDirection(_CurrentDGVIntLicSortDirection);
+            clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvInternationalLicenses, ref _LastColumnDGVIntLicSortedBy, ref _CurrentIntLicDGVColSortDirection, e);
 
             DataTable dtSortedInfo = null;
 
             dtSortedInfo = clsInternationalLicense.GetSortedInfo(_DriverID,clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvInternationalLicenses.Columns[e.ColumnIndex].HeaderText
-            , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVIntLicSortDirection));
+            , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentIntLicDGVColSortDirection));
 
             _DgvUtilityLib.SetDataSourceAfterColumnOrdering(dgvInternationalLicenses, dtSortedInfo, e, ref _LastColumnDGVIntLicSortedBy);
         }
@@ -195,10 +195,10 @@ namespace DVLDPresentationLayer
         private void tcLicenseHistory_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tcLicenseHistory.SelectedTab == tpLocalLicenses)
-                _CurrentDGVLocalLicSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
+                _CurrentLLicDGVColSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
 
             else
-                _CurrentDGVIntLicSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
+                _CurrentIntLicDGVColSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
         }
     }
 }

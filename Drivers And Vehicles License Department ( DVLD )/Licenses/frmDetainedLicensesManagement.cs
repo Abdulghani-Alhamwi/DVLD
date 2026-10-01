@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Diagnostics;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using DVLDPresentationLayer.Controls;
@@ -15,8 +16,9 @@ namespace DVLDPresentationLayer.TestTypes
         private string _LastColumnNameDgvSortedBy;
         private string _PrimaryKeyViewedColumnName;
         private int _LastBroughtDetainID;
+        private string _ColumnNameToFilterBy;
 
-        private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDgvSortDirection;
+        private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDgvColumnSortDirection;
         private clsDataGridViewUtilityLib _DgvUtilityLib;
 
         public frmDetainedLicensesManagement()
@@ -26,7 +28,7 @@ namespace DVLDPresentationLayer.TestTypes
             _PrimaryKeyViewedColumnName = "D.ID";
             _LastBroughtDetainID = -1;
 
-            _CurrentDgvSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
+            _CurrentDgvColumnSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
             _DgvUtilityLib = new clsDataGridViewUtilityLib();
         }
 
@@ -58,15 +60,14 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
+            clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection);
+
             if (txtFilter.Text != "")
                 dgvDetainedLicenses.DataSource = _GetFilteredData();
 
             else
-            {
-                clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvSortDirection);
-
                 dgvDetainedLicenses.DataSource = clsDetainedLicense.GetDetainedLicensesInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
-            }
+
         }
 
         private bool _IsNumericColumn(string ColumnNameToFilterBy)
@@ -135,7 +136,7 @@ namespace DVLDPresentationLayer.TestTypes
             _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             txtFilter.Text = "";
 
-            clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvSortDirection);
+            clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection);
         }
 
         private void _ReleaseDetainedLicense(int DetainedLicenseID,DateTime ReleaseDate,int ReleaseApplicationID)
@@ -179,44 +180,68 @@ namespace DVLDPresentationLayer.TestTypes
             DataTable dtFilteredData;
             if (!ScrollCase)
                 dtFilteredData = clsDetainedLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbIsReleased.SelectedItem.ToString(),
-                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), null);
+                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), null);
 
             else
                 dtFilteredData = clsDetainedLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbIsReleased.SelectedItem.ToString(),
-                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), _LastBroughtDetainID, _DgvUtilityLib.NumberOfRowsToOffset, null);
+                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), _LastBroughtDetainID, _DgvUtilityLib.NumberOfRowsToOffset, null);
 
             return dtFilteredData;
         }
 
+        private void _SetFilterColumnNameToOriginal()
+        {
+            switch (cbFilterBy.SelectedItem.ToString())
+            {
+                case "Detain ID":
+                    _ColumnNameToFilterBy = _PrimaryKeyViewedColumnName;
+                    break;
+
+                case "National No.":
+                    _ColumnNameToFilterBy = "N.No.";
+                    break;
+
+                case "Release Application ID":
+                    _ColumnNameToFilterBy = "Release App.ID";
+                    break;
+
+                default:
+                    _ColumnNameToFilterBy = cbFilterBy.SelectedItem.ToString();
+                    break;
+            }
+        }
+
         private DataTable _GetFilteredData(bool ScrollCase = false)
         {
+            _SetFilterColumnNameToOriginal();
+
             DataTable dtDetainLicensesInfo;
             if (!ScrollCase)
             {
                 if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
-                    dtDetainLicensesInfo = clsDetainedLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text
-                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), null);
+                    dtDetainLicensesInfo = clsDetainedLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, _ColumnNameToFilterBy, txtFilter.Text
+                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), null);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Is Released")
                     dtDetainLicensesInfo = _GetFilteredDataForIsReleased(false);
 
                 else
-                    dtDetainLicensesInfo = clsDetainedLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text
-                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), '%');
+                    dtDetainLicensesInfo = clsDetainedLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, _ColumnNameToFilterBy, txtFilter.Text
+                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), '%');
             }
 
             else
             {
                 if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
-                    dtDetainLicensesInfo = clsDetainedLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
-                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), _LastBroughtDetainID, _DgvUtilityLib.NumberOfRowsToOffset, null);
+                    dtDetainLicensesInfo = clsDetainedLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, _ColumnNameToFilterBy, txtFilter.Text,
+                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), _LastBroughtDetainID, _DgvUtilityLib.NumberOfRowsToOffset, null);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Is Released")
                     dtDetainLicensesInfo = _GetFilteredDataForIsReleased(true);
 
                 else
-                    dtDetainLicensesInfo = clsDetainedLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
-                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), _LastBroughtDetainID, _DgvUtilityLib.NumberOfRowsToOffset, '%');
+                    dtDetainLicensesInfo = clsDetainedLicense.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, _ColumnNameToFilterBy, txtFilter.Text,
+                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), _LastBroughtDetainID, _DgvUtilityLib.NumberOfRowsToOffset, '%');
             }
 
             return dtDetainLicensesInfo;
@@ -225,7 +250,7 @@ namespace DVLDPresentationLayer.TestTypes
         private void _AppendPartOfRemainingData()
         {
             if (_LastColumnNameDgvSortedBy == null || _LastColumnNameDgvSortedBy == _PrimaryKeyViewedColumnName)
-                _LastBroughtDetainID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvDetainedLicenses, _PrimaryKeyViewedColumnName, _CurrentDgvSortDirection);
+                _LastBroughtDetainID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvDetainedLicenses, _PrimaryKeyViewedColumnName, _CurrentDgvColumnSortDirection);
 
             _DgvUtilityLib.SetNumberOfRowsToOffset(_PrimaryKeyViewedColumnName, _LastColumnNameDgvSortedBy);
 
@@ -237,18 +262,18 @@ namespace DVLDPresentationLayer.TestTypes
                 NewRows = dtFilteredData?.Select();
 
                 if (NewRows != null)
-                    _DgvUtilityLib.AddNewRowsToDgv(dgvDetainedLicenses, NewRows, clsDataGridViewUtilityLib.GetDgvColumnsNames(dgvDetainedLicenses), _CurrentDgvSortDirection);
+                    _DgvUtilityLib.AddNewRowsToDgv(dgvDetainedLicenses, NewRows, clsDataGridViewUtilityLib.GetDgvColumnsNames(dgvDetainedLicenses), _CurrentDgvColumnSortDirection);
             }
 
             else
             {
                 DataTable dtDetainedLicenses = clsDetainedLicense.GetDetainedLicensesInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, _LastBroughtDetainID, _LastColumnNameDgvSortedBy
-                    , _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection));
+                    , _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection));
 
                 NewRows = dtDetainedLicenses?.Select();
 
                 if (NewRows != null)
-                    _DgvUtilityLib.AddNewRowsToDgv(dgvDetainedLicenses, NewRows, clsDataGridViewUtilityLib.GetDgvColumnsNames(dgvDetainedLicenses), _CurrentDgvSortDirection);
+                    _DgvUtilityLib.AddNewRowsToDgv(dgvDetainedLicenses, NewRows, clsDataGridViewUtilityLib.GetDgvColumnsNames(dgvDetainedLicenses), _CurrentDgvColumnSortDirection);
             }
         }
 
@@ -259,7 +284,7 @@ namespace DVLDPresentationLayer.TestTypes
             
             if(cbFilterBy.Text == "Is Released")
             {
-                clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvSortDirection);
+                clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection);
 
                 dgvDetainedLicenses.DataSource = _GetFilteredDataForIsReleased(false);
                 _PreviousCbIsReleasedSelectedItem = cbIsReleased.SelectedItem.ToString();
@@ -364,7 +389,9 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void _SortData(DataGridViewCellMouseEventArgs e)
         {
-            _CurrentDgvSortDirection = clsDataGridViewUtilityLib.ReverseCurrentDgvSortDirection(_CurrentDgvSortDirection);
+            clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvDetainedLicenses, ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection, e);
+
+            _SetFilterColumnNameToOriginal();
 
             DataTable dtSortedInfo = null;
 
@@ -372,22 +399,22 @@ namespace DVLDPresentationLayer.TestTypes
             {
 
                 dtSortedInfo = clsDetainedLicense.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvDetainedLicenses.Columns[e.ColumnIndex].HeaderText
-                , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection));
+                , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection));
             }
 
             else
             {
                 if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
                     dtSortedInfo = clsDetainedLicense.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvDetainedLicenses.Columns[e.ColumnIndex].HeaderText
-                    , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);
+                    , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), _ColumnNameToFilterBy, txtFilter.Text, null);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Is Released")
                     dtSortedInfo = clsDetainedLicense.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvDetainedLicenses.Columns[e.ColumnIndex].HeaderText
-                    , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), cbFilterBy.SelectedItem.ToString(), cbIsReleased.SelectedItem.ToString(), null);
+                    , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), _ColumnNameToFilterBy, cbIsReleased.SelectedItem.ToString(), null);
 
                 else
                     dtSortedInfo = clsDetainedLicense.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvDetainedLicenses.Columns[e.ColumnIndex].HeaderText,
-                        clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvSortDirection), cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
+                        clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), _ColumnNameToFilterBy, txtFilter.Text, '%');
             }
 
             _DgvUtilityLib.SetDataSourceAfterColumnOrdering(dgvDetainedLicenses, dtSortedInfo, e, ref _LastColumnNameDgvSortedBy);

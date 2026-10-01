@@ -11,12 +11,8 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _PrimaryKeyViewedColumnName = "Int.License ID";
 
-        private static readonly string _FixedQueryPart =
-         $@"{_PrimaryKeyColumnName} AS [Int.License ID],ApplicationID AS [Application ID],DriverID AS [Driver ID],
-         IssuedUsingLocalLicenseID AS [L.License ID],Format(IssueDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],
-         Format(ExpirationDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Expiration Date],IsActive AS [Is Active]
-         FROM InternationalLicenses";
-
+        private static readonly string _FixedQueryPart = "* FROM InternationalLicenses_View";
+        
         private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
 
         private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
@@ -129,13 +125,13 @@ namespace DVLDDataAccessLayer
                 if (FilterByTheDriver)
                 {
                     query = _QueryWithoutPagination + " WHERE DriverID = @DriverID";
-                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtIntLicenseID, true, true);
+                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtIntLicenseID, true, true, true);
                 }
 
                 else
                 {
                     query = _QueryWithoutPagination;
-                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtIntLicenseID, true, true);
+                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtIntLicenseID, true, true, true);
                 }
             }
 
@@ -302,31 +298,6 @@ namespace DVLDDataAccessLayer
             return IsFound;
         }
 
-        private static string _GetOriginalColumnName(string SendedColumnName)
-        {
-            
-            switch(SendedColumnName)
-            {
-                case "Int.License ID":
-                    return _PrimaryKeyColumnName;
-
-                case "Application ID":
-                    return "ApplicationID";
-
-                case "Driver ID":
-                    return "DriverID";
-
-                case "L.License ID":
-                    return "IssuedUsingLocalLicenseID";
-
-                case "Is Active":
-                    return "IsActive";
-
-                default:
-                    return "";
-            }
-        }
-
         private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy,
                 string ColumnNameToOrderBy, string SortDirection, int LastBroughtIntLicenseID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
@@ -335,10 +306,8 @@ namespace DVLDDataAccessLayer
             if (ColumnNameToOrderBy == null)
                 ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
 
-            ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
-
             if (string.IsNullOrEmpty(ValueToFilterBy)
-                  || (ColumnNameToFilterBy == "IsActive" && ValueToFilterBy == "All"))
+                  || (ColumnNameToFilterBy == "Is Active" && ValueToFilterBy == "All"))
             {
                 if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
                 {
@@ -353,7 +322,7 @@ namespace DVLDDataAccessLayer
 
             else
             {
-                if (ColumnNameToFilterBy == "IsActive")
+                if (ColumnNameToFilterBy == "Is Active")
                 {
                     if (ValueToFilterBy != "All")
                         ValueToFilterBy = clsGeneralUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
@@ -363,14 +332,14 @@ namespace DVLDDataAccessLayer
                 if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
                 {
                     query = _QueryWithoutPagination;
-                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                    query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtIntLicenseID, true, true);
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
+                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtIntLicenseID, true, true, true);
                 }
 
                 else
                 {
                     query = _QueryForOffsetPagination;
-                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
                     query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                     query += _OffsetPaginationQueryPart;
                 }
@@ -607,23 +576,21 @@ namespace DVLDDataAccessLayer
         {
             string query = _QueryWithoutPagination;
 
-            ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
-
             if (string.IsNullOrEmpty(ValueToFilterBy)
-                || (ColumnNameToFilterBy == "IsActive" && ValueToFilterBy == "All"))
+                || (ColumnNameToFilterBy == "Is Active" && ValueToFilterBy == "All"))
             {
                 query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             else
             {
-                if (ColumnNameToFilterBy == "IsActive")
+                if (ColumnNameToFilterBy == "Is Active")
                 {
                     if(ValueToFilterBy !="All")
                     ValueToFilterBy = clsGeneralUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
-                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
                 query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
             return query;

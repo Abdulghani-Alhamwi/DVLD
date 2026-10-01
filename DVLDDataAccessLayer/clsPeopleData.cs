@@ -10,12 +10,7 @@ namespace DVLDDataAccessLayer
         private static readonly string _PrimaryKeyColumnName = "PersonID";
         private static readonly string _PrimaryKeyViewedColumnName = "Person ID";
 
-        private static readonly string _FixedQueryPart =
-         $@"{_PrimaryKeyColumnName} As [Person ID], NationalNo AS [National No.],
-           FirstName AS [First Name], SecondName AS [Second Name] , ThirdName AS [Third Name], LastName AS [Last Name],
-           Gendor = Case When Gendor = 0 Then 'Male' ELSE 'Female' END,
-           FORMAT(DateOfBirth,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.NumericFormat)}') AS [Date Of Birth],
-           Countries.CountryName AS Nationality, Phone, Email FROM People INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
+        private static readonly string _FixedQueryPart = "* FROM People_View";
 
         private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
 
@@ -114,7 +109,7 @@ namespace DVLDDataAccessLayer
             if (LastBroughtPersonID != -1)
             {
                 query = _QueryWithoutPagination;
-                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtPersonID,true,true);
+                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtPersonID,true,true,true);
             }
 
             else
@@ -571,11 +566,11 @@ namespace DVLDDataAccessLayer
                     if (ImagePath != OldPersonData.ImagePath)
                         query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
                 }
-
+                
                 else
                     query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.ImagePath);
             }
-
+            
             else
                 query += @" NationalNo = @NationalNo ,FirstName = @FirstName ,SecondName = @SecondName,
                             ThirdName = @ThirdName ,LastName = @LastName ,DateOfBirth = @DateOfBirth,
@@ -867,38 +862,6 @@ namespace DVLDDataAccessLayer
             return -1;
         }
 
-        private static string _GetOriginalColumnName(string SendedColumnName)
-        {
-            switch(SendedColumnName)
-            {
-                case "Person ID":
-                    return _PrimaryKeyColumnName;
-
-                case "National No.":
-                    return "NationalNo";
-
-                case "First Name":
-                    return "FirstName";
-
-                case "Second Name":
-                    return "SecondName";
-
-                case "Third Name":
-                    return "ThirdName";
-
-                case "Last Name":
-                    return "LastName";
-
-                case "Nationality":
-                    return "Countries.CountryName";
-
-                case "Date Of Birth":
-                    return "DateOfBirth";
-
-                default:
-                    return "";
-            }
-        }
 
         private static string _GetValueForGendorColumn(string Value)
         {
@@ -919,11 +882,6 @@ namespace DVLDDataAccessLayer
                     return "1";
             }
             return null;
-        }
-
-        private static bool _IsOriginalColumnName(string ColumnNameToFilterBy)
-        {
-            return (ColumnNameToFilterBy == "Gendor" || ColumnNameToFilterBy == "Phone" || ColumnNameToFilterBy == "Email");
         }
 
         private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy
@@ -949,28 +907,22 @@ namespace DVLDDataAccessLayer
 
             else
             {
-                if (!_IsOriginalColumnName(ColumnNameToFilterBy))
-                    ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
-
-                else
+                if (ColumnNameToFilterBy == "Gendor")
                 {
-                    if (ColumnNameToFilterBy == "Gendor")
-                    {
-                        ValueToFilterBy = _GetValueForGendorColumn(ValueToFilterBy);
-                    }
+                    ValueToFilterBy = _GetValueForGendorColumn(ValueToFilterBy);
                 }
 
                 if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
                 {
                     query = _QueryWithoutPagination;
-                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                    query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtPersonID,true,true);
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar,true);
+                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtPersonID,true,true,true);
                 }
 
                 else
                 {
                     query = _QueryForOffsetPagination;
-                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar,true);
                     query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy,SortDirection,true);
                     query += _OffsetPaginationQueryPart;
                 }
@@ -1114,9 +1066,6 @@ namespace DVLDDataAccessLayer
         {
             string query = _QueryWithoutPagination;
 
-            if (!_IsOriginalColumnName(ColumnNameToFilterBy))
-                ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
-
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
                 query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
@@ -1129,7 +1078,7 @@ namespace DVLDDataAccessLayer
                     ValueToFilterBy = _GetValueForGendorColumn(ValueToFilterBy);
                 }
 
-                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar,true);
                 query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 

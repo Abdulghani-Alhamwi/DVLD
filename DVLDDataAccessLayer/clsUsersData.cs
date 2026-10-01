@@ -10,10 +10,7 @@ namespace DVLDDataAccessLayer
         private static readonly string _PrimaryKeyColumnName = "UserID";
         private static readonly string _PrimaryKeyViewedColumnName = "User ID";
 
-        private static readonly string _FixedQueryPart =
-            $@"{_PrimaryKeyColumnName} AS [User ID],Users.PersonID AS [Person ID] ,
-           People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],
-           UserName,IsActive AS [Is Active],Permissions From Users INNER JOIN People ON Users.PersonID = People.PersonID";
+        private static readonly string _FixedQueryPart = "* FROM Users_View";
 
         private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
 
@@ -104,7 +101,7 @@ namespace DVLDDataAccessLayer
             if (LastBroughtUserID != -1)
             {
                 query = _QueryWithoutPagination;
-                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtUserID);
+                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtUserID, true, true, true);
             }
 
             else
@@ -646,40 +643,16 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        private static string _GetOriginalColumnName(string SendedColumnName)
-        {
-            switch(SendedColumnName)
-            {
-                case "User ID":
-                    return _PrimaryKeyColumnName;
-
-                case "Person ID":
-                    return "Users.PersonID";
-
-                case "Full Name":
-                    return "People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName";
-
-                case "Is Active":
-                    return "IsActive";
-
-                default:
-                    return "";
-            }
-        }
-
         private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy,
             string ColumnNameToOrderBy, string SortDirection, int LastBroughtUserID = -1,int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             if (ColumnNameToOrderBy == null)
                 ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
 
-            if (ColumnNameToFilterBy != "UserName" && ColumnNameToFilterBy != "Permissions")
-                ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
-
             string query;
 
             if (string.IsNullOrEmpty(ValueToFilterBy)
-                || (ColumnNameToFilterBy == "IsActive" && ValueToFilterBy == "All"))
+                || (ColumnNameToFilterBy == "Is Active" && ValueToFilterBy == "All"))
             {
                 if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
                 {
@@ -694,7 +667,7 @@ namespace DVLDDataAccessLayer
 
             else
             {
-                if (ColumnNameToFilterBy == "IsActive")
+                if (ColumnNameToFilterBy == "Is Active")
                 {
                     if(ValueToFilterBy != "All")
                     ValueToFilterBy = clsGeneralUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
@@ -703,14 +676,14 @@ namespace DVLDDataAccessLayer
                 if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
                 {
                     query = _QueryWithoutPagination;
-                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                    query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtUserID,true);
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
+                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtUserID, true, true, true);
                 }
 
                 else
                 {
                     query = _QueryForOffsetPagination;
-                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
                     query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                     query += _OffsetPaginationQueryPart;
                 }
@@ -797,24 +770,21 @@ namespace DVLDDataAccessLayer
         {
             string query = _QueryWithoutPagination;
 
-            if (ColumnNameToFilterBy != "UserName" && ColumnNameToFilterBy != "Permissions")
-                ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
-
             if (string.IsNullOrEmpty(ValueToFilterBy)
-                || (ColumnNameToFilterBy == "IsActive" && ValueToFilterBy == "All"))
+                || (ColumnNameToFilterBy == "Is Active" && ValueToFilterBy == "All"))
             {
                 query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,true);
             }
 
             else
             {
-                if (ColumnNameToFilterBy == "IsActive")
+                if (ColumnNameToFilterBy == "Is Active")
                 {
                     if(ValueToFilterBy != "All")
                     ValueToFilterBy = clsGeneralUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
-                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
+                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
                 query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,true);
             }
                 

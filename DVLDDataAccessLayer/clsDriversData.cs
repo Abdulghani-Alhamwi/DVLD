@@ -13,7 +13,8 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _FixedQueryPart =
          $@"{_PrimaryKeyColumnName} AS [Driver ID] , Drivers.PersonID AS [Person ID] ,People.NationalNo AS [National No.],
-            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],Format(CreatedDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Date Created],
+            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],
+            Format(CreatedDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Date Created],
             SUM(CAST(LocalLicenses.IsActive AS TINYINT)) + (CASE WHEN InternationalLicenses.IsActive IS NULL THEN 0 ELSE 1 END) AS [Active Licenses]
             From Drivers INNER JOIN People ON Drivers.PersonID = People.PersonID INNER JOIN LocalLicenses ON {_PrimaryKeyColumnName} = LocalLicenses.DriverID
             LEFT JOIN InternationalLicenses ON {_PrimaryKeyColumnName} = InternationalLicenses.DriverID";
@@ -311,7 +312,7 @@ namespace DVLDDataAccessLayer
                 {
                     query = _QueryWithoutPagination;
                     query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                    query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtDriverID,true,false);
+                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtDriverID,true,false);
                     query += _GroupByQueryPart;
                     query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                 }
@@ -320,7 +321,7 @@ namespace DVLDDataAccessLayer
                 {
                     query = _QueryForOffsetPagination;
                     query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                    query += clsGeneralUtility.GetLastFilterQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtDriverID, true, false);
+                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtDriverID, true, false);
                     query += _GroupByQueryPart;
                     query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                     query += _OffsetPaginationQueryPart;
