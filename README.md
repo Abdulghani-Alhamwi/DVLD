@@ -229,6 +229,14 @@ The data-access layer is also the appropriate place to implement database-side f
 
 ---
 
+🗄️ Database Design :
+
+The database schema follows Third Normal Form (3NF) to minimize data redundancy and maintain data consistency.
+
+The design also balances normalization and selective denormalization where appropriate, optimizing frequently executed queries by reducing unnecessary joins while maintaining data integrity.
+
+---
+
 ## 📄 Pagination :
 
 Tables such as `People` can grow to a very large number of records. Loading all of them every time a screen opens wastes memory, slows the application, and transfers data the user may never look at.
