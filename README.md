@@ -214,14 +214,6 @@ The authentication system applies protection mechanisms to user credentials befo
 
 ---
 
-## ⚡ Progressive Database Loading :
-
-The project is designed with large record sets in mind.
-
-Instead of retrieving every available row from the database and keeping the complete result set in memory, the application can load records gradually as they are needed.
-
----
-
 ## 🧰 Tech Stack :
 
 | Area         | Technology              |
