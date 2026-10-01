@@ -69,7 +69,6 @@ The driving license management process involves several challenges that this pro
 
 The project addresses these challenges by combining a connected domain model, centralized business rules, structured data access, and controlled record loading.
 
----
 
 ## ✨ Features :
 
@@ -149,7 +148,6 @@ The project addresses these challenges by combining a connected domain model, ce
 
 </details>
 
----
 
 ## 🏗️ Architecture :
 
@@ -203,7 +201,6 @@ It is responsible for:
 
 The data-access layer is also the appropriate place to implement database-side filtering and progressive loading strategies.
 
----
 
 ## 🔐 Security and Credential Protection :
 
@@ -212,7 +209,6 @@ The authentication system applies protection mechanisms to user credentials befo
 * User names are encrypted before being stored in the database.
 * Passwords are hashed with a unique salt before being stored in the database.
 
----
 
 ## 🧰 Tech Stack :
 
@@ -227,7 +223,6 @@ The authentication system applies protection mechanisms to user credentials befo
 | Data Model   | Relational database     |
 | Architecture | Three-tier architecture |
 
----
 
 ## 📁 Repository Notes :
 
@@ -239,7 +234,6 @@ For a clean Git repository, Visual Studio build and IDE artifacts such as `.vs`,
 
 Database credentials and other sensitive configuration values should not be committed to source control.
 
----
 
 ## 🤝 Contributing :
 
