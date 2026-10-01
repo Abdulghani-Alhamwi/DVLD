@@ -231,7 +231,7 @@ The data-access layer is also the appropriate place to implement database-side f
 
 ### 🗄️ Database Design :
 
-The database schema follows Third Normal Form (3NF) to minimize data redundancy and maintain data consistency.
+The database schema follows Third Normal Form (3NF) to reduce data redundancy and maintain data consistency.
 
 The design also balances normalization and selective denormalization where appropriate, optimizing frequently executed queries by reducing unnecessary joins while maintaining data integrity.
 
