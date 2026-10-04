@@ -41,7 +41,7 @@ namespace Utility_Library
         {
             DataRow[] DataRowAfterOrdering = new DataRow[DataRows.Count()];
 
-            for (byte i= 0;i<DataRows.Count();i++)
+            for (byte i = 0; i < DataRows.Count(); i++)
             {
                 DataRowAfterOrdering[i] = DataRows[DataRows.Count() - i - 1];
             }
@@ -52,6 +52,7 @@ namespace Utility_Library
         {
             DataRow[] DataRowAfterOrdering = new DataRow[DataRows.Count()];
             DataRow TempDataRow = null;
+
             for (byte i = 0; i < DataRows.Count(); i++)
             {
                 if (i < DataRows.Count() - 1)
@@ -163,11 +164,12 @@ namespace Utility_Library
         /// </summary>
         public void DeleteSelectedDgvRows(DataGridView dgv, int[] SelectedRowsIndex)
         {
+            DataTable DataSource = (DataTable)dgv.DataSource;
             for (byte i = 0; i < SelectedRowsIndex.Length; i++)
             {
                 if (SelectedRowsIndex[i] != -1)
                 {
-                    SelectedRowsIndex[i] = _GetActualRowIndexOfDgvRow((DataTable)dgv.DataSource, SelectedRowsIndex[i]);
+                    SelectedRowsIndex[i] = _GetActualRowIndexOfDgvRow(DataSource, SelectedRowsIndex[i]);
                     ((DataTable)dgv.DataSource).Rows.RemoveAt(SelectedRowsIndex[i]);
                 }
             }
@@ -301,13 +303,14 @@ namespace Utility_Library
                 return false;
         }
 
-        private static void _DecryptUserName(DataTable NewDataSource, string UserNameColumnName)
+        private static void _DecryptDGVColumnValues(byte[] EncryptionKey,Dictionary<int,string> IDWithIVPairs, DataTable NewDataSource,string IDColumnName, string EncryptedColumnName)
         {
             if (NewDataSource != null)
             {
                 foreach (DataRow datarow in NewDataSource.Rows)
                 {
-                    datarow[UserNameColumnName] = clsGeneralUtility.DecryptUserName(datarow[UserNameColumnName].ToString());
+                    IDWithIVPairs.TryGetValue((int)datarow[IDColumnName], out string IV);
+                    datarow[EncryptedColumnName] = clsGeneralUtility.DecryptString(EncryptionKey,datarow[EncryptedColumnName].ToString(),IV);
                 }
             }
         }
@@ -315,17 +318,17 @@ namespace Utility_Library
         /// <summary>
         /// Returns DataSource and the Username is descrypted therefore it will be shown in data grid view appropriatly.
         /// </summary
-        public static void DecryptUsersNamesForDgv(DataGridView dgv, string UserNameColumnName)
+        public static void DecryptDGVColumnValues(byte[] EncryptionKey, Dictionary<int, string> IDWithIVPairs, DataGridView dgv,string IDColumnName, string EncryptedColumnName)
         {
-            _DecryptUserName((DataTable)dgv.DataSource, UserNameColumnName);
+            _DecryptDGVColumnValues(EncryptionKey, IDWithIVPairs, (DataTable)dgv.DataSource, IDColumnName, EncryptedColumnName);
         }
 
         /// <summary>
         /// Decrypt the Username therefore it will be shown in data grid view appropriatly.
         /// </summary
-        public static void DecryptUsersNamesForDgv(DataTable NewDataSource, string UserNameColumnName, out DataRow[] NewRows)
+        public static void DecryptDGVColumnValues(byte[] EncryptionKey, Dictionary<int, string> IDWithIVPairs, DataTable NewDataSource, string IDColumnName, string EncryptedColumnName, out DataRow[] NewRows)
         {
-            _DecryptUserName(NewDataSource, UserNameColumnName);
+            _DecryptDGVColumnValues(EncryptionKey, IDWithIVPairs, NewDataSource, IDColumnName, EncryptedColumnName);
 
             NewRows = NewDataSource?.Select();
         }
@@ -408,6 +411,20 @@ namespace Utility_Library
         {
             LastColumnNameDGVOrderedBy = null;
             SortDirection = enDataGridViewSortDirection.Descending;
+        }
+
+        public static int GetDGVRowIndexByColumnValue(DataGridView dgv, string ColumnName, int Value)
+        {
+            DataTable DataSource = (DataTable)dgv.DataSource;
+
+            foreach (DataRow Row in DataSource.Rows)
+            {
+                if ((int)Row[ColumnName] == Value)
+                {
+                 return DataSource.Rows.IndexOf(Row);
+                }
+            }
+            return -1;
         }
     }
 }

@@ -122,7 +122,7 @@
             this.lnlblShowLicenseHistory.AutoSize = true;
             this.lnlblShowLicenseHistory.Enabled = false;
             this.lnlblShowLicenseHistory.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lnlblShowLicenseHistory.Location = new System.Drawing.Point(10, 841);
+            this.lnlblShowLicenseHistory.Location = new System.Drawing.Point(28, 841);
             this.lnlblShowLicenseHistory.Margin = new System.Windows.Forms.Padding(0);
             this.lnlblShowLicenseHistory.Name = "lnlblShowLicenseHistory";
             this.lnlblShowLicenseHistory.Size = new System.Drawing.Size(259, 31);
@@ -175,6 +175,7 @@
             // btnExit
             // 
             this.btnExit.BackColor = System.Drawing.Color.DarkRed;
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
@@ -195,7 +196,7 @@
             this.lnlblShowLicenseInfo.AutoSize = true;
             this.lnlblShowLicenseInfo.Enabled = false;
             this.lnlblShowLicenseInfo.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lnlblShowLicenseInfo.Location = new System.Drawing.Point(294, 841);
+            this.lnlblShowLicenseInfo.Location = new System.Drawing.Point(312, 841);
             this.lnlblShowLicenseInfo.Margin = new System.Windows.Forms.Padding(0);
             this.lnlblShowLicenseInfo.Name = "lnlblShowLicenseInfo";
             this.lnlblShowLicenseInfo.Size = new System.Drawing.Size(225, 31);

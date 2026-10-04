@@ -8,6 +8,8 @@ namespace DVLDPresentationLayer
 {
     public partial class ctrLDLApplicationDetails : UserControl
     {
+        public event ctrlPersonDetails.PersonEditedInfo OnPersonEditedInfo;
+
         private int _PersonID = -1;
         private int _LocalLicenseID = -1;
 
@@ -35,7 +37,12 @@ namespace DVLDPresentationLayer
                 lblApplicantFullName.Text = clsPerson.GetFullName(LDLApplication.ApplicantPersonID);
                 lblApplicationDate.Text = LDLApplication.ApplicationDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
                 lblLastStatusDate.Text = LDLApplication.LastStatusDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
-                lblUserName.Text = clsGeneralUtility.DecryptUserName(clsUser.GetUserName(LDLApplication.CreatedByUserID));
+
+                string EncryptedUsername = "", UsernameIV = "";
+                clsUser.GetUserName(LDLApplication.CreatedByUserID, ref EncryptedUsername, ref UsernameIV);
+
+                lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
+
                 _PersonID = LDLApplication.ApplicantPersonID;
             }
         }
@@ -46,11 +53,18 @@ namespace DVLDPresentationLayer
             lnlblShowLicenseInfo.Visible = true;
         }
 
+        private void _EditPersonName(clsPerson UpdatedPersonInfo)
+        {
+            lblApplicantFullName.Text = UpdatedPersonInfo.FullName;
+            OnPersonEditedInfo?.Invoke(clsPerson.Find(LDLApplication.ApplicantPersonID));
+        }
+
         private void lnlblViewPersonInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (_PersonID != -1)
             {
                 frmPersonDetails frm = new frmPersonDetails(_PersonID);
+                frm.OnUpdatedPersonName += _EditPersonName;
                 frm.ShowDialog();
             }
         }

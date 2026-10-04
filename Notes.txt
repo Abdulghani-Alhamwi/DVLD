@@ -161,7 +161,7 @@ PBKDF2.Dispose();PBKDF2// We should dispose the PBKDF2 because it implements the
 
 // Here we convert the byte array to base64 string in order to have a different textual representation that is printable , if we used the Encoding.UTF8.GetString() -> the string that we will have will contain unprintable symbols because each byte value when we convert to string -> the character may not be printable because it is not ascii value of a printable character.
 
-// The Base 64 String , the 64 is that it is : Characters from A-Z , a-z , 0-9 and + and the = is for padding and it is used used to have a string that its length is of the multiplication of 4 because the base64 string ouput is a string that its length is multiplication of 4  .
+// The Base 64 String , the 64 is that it is : Characters from A-Z , a-z , 0-9 and + and the = is for padding and it is used to have a string that its length is of the multiplication of 4 because the base64 string ouput is a string that its length is multiplication of 4  .
 
     return Convert.ToBase64String(HashWithSalt);
 }
@@ -690,9 +690,126 @@ that we have faster performance than .NET Framework.
 .NET 9
 .NET 10
 
-9) If we have a view and a select statement before it then here the view represents a query under it and it will be here a subquery , here the execution plan won't be about bringing the full number of records from the inner query then applying a filtration condition if exists in the outer query , here the optimizer determines to push down the outer where clause into the inner query if that inner query was valid semantically which means it can have that where clause or not and if yes then it will bring the filtered records only not the whole table records , for example if the outer where clause the condition was on an alias of and aggregate function in the inner query then here the database engine won't push down the outer where clause because it is invalid because for aggregate functions we have to use having clause because we cannot use aggregate function with where clause , after that if it is valid to push down -> The optimizer determines based on many things including indexing if it can do index seek , based on also statistics , I/O on the hard disk , CPU Cost and if pushing down can lower the cost and also based on joins and aggregations strategies.
+64) If we have a view and a select statement before it then here the view represents a query under it and it will be here a subquery , here the execution plan won't be about bringing the full number of records from the inner query then applying a filtration condition if exists in the outer query , here the optimizer determines to push down the outer where clause into the inner query if that inner query was valid semantically which means it can have that where clause or not and if yes then it will bring the filtered records only not the whole table records , for example if the outer where clause the condition was on an alias of and aggregate function in the inner query then here the database engine won't push down the outer where clause because it is invalid because for aggregate functions we have to use having clause because we cannot use aggregate function with where clause , after that if it is valid to push down -> The optimizer determines based on many things including indexing if it can do index seek , based on also statistics , I/O on the hard disk , CPU Cost and if pushing down can lower the cost and also based on joins and aggregations strategies.
 
 SELECT * FROM People_View WHERE PersonID = 1
 
 In the following query the aggregate function COUNT and the outer where clause can't be pushed down because the aggregate result is one result on whole table and we have one output therefore the where clause must be in outer query because it can be executed on the output only.
 SELECT * FROM (SELECT COUNT(PersonID) AS C FROM People) R1 WHERE C > 1000
+
+65) The git pull --rebase : It Puts the current commits aside and pulls the changes from remote repo to the local repo then it reapply the commits that are put aside on the local repo therefore using it we wont lose the changes we made if there was new changes on the remote repo.
+
+-> We must always before push to make sure that we are working on the last version of the remote repo therefore our changes be applied on last remote repo version and we avoid conflict with team and we avoid losing team changes therefore we pull then we push.
+
+66) We can declare a variable in SQL Server by putting the keyword declare and before variable name we put @ : DECLARE @VariableNameWeWant.
+
+
+67) The encryption key it is better for security to not be stored with in the database with the encrypted data , it is better to store it in a different place , like in windows -> we can use the Data Protection API DPAPI which is Windows Protected Storage or we can use Windows Credential Manager , we store the encrypted key one time and load it when we want it , and for the IV which is the initialization Vector -> It is better to not put one IV for the whole record but instead -> For each encrypted field , we generate new IV field for it and that is better because if we used same IV each time for the whole record or even for the same column then an attacker can realize that a cypher text for same text is the same therefore if he figured out the decryption of that one field value it will figure out all other fields value that have same cypher text like name "Car" if it is repeated then the cypher will be the same if we used the same IV each time therefore that be less secured , and we put IV field for each encrypted field , when that encrypted field is updated -> we must also create new IV value for that encrypted field value and store it in Database.
+
+68)
+        public static class CredentialManager
+        {
+//We cannot use a C# type to specify the type of the encrypted key therefore we put the type generic and the number 1 for the type represents the generic type for the Windows Credential Manager.
+            private const int Credential_GenericType = 1;
+
+//The number 2 represents the Local Storage on Local Machine and it means that the data we store we wont it to persist in the local machine.
+            private const int CredentialLocation_LocalMachine = 2;
+
+//Here we specify the structure layout to match the Windows Credential Manager API Structure.
+            [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+
+//We must to put the fields in the credential structure as they are exists in the windows CREDENTIAL structure internally even if we wont use them all and even if we modified the names of fields, otherwise we will have exception ERROR_INVALID_PARAMETER.
+
+                        private struct Credential
+            {
+                public int Flags;
+                public int Type;
+
+                public string TargetName;
+                public string Comment;
+
+                public System.Runtime.InteropServices.ComTypes.FILETIME LastWritten;
+
+                public int CredentialBlobSize;
+                public IntPtr CredentialBlob_Ptr;
+
+                public int CredentialPersistLocation;
+
+                public int AttributeCount;
+                public IntPtr Attributes;
+
+                public string TargetAlias;
+                public string UserName;
+            }
+
+
+            [DllImport("Advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+// To store the encryption key and it stores it securely not like if we used the windows register which wont be stored securly but here the Windows Credential Manager Handles The storing for the key to be securely stored.
+
+            private static extern bool CredWrite(ref Credential Credential, uint Flags);
+
+            [DllImport("Advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+//Read The encryption key from the Windows Credential Manager in order to bring it to the program and use it.
+            private static extern bool CredRead(string TargetName, int Type, int Flags, out IntPtr Credential);
+
+            [DllImport("Advapi32.dll")]
+// Free up the unmanaged memory that the pointer is referring to and the pointer is referring to the encryption key that is allocated in the unmanaged memory therefore in order to free up memory of restoring the encryption key we use this method.
+            private static extern void CredFree(IntPtr Credential);
+
+            /// <summary>
+            /// Store encryption key securly in windows credintial manager one time and re use in application using GetEncryptionKeyMethod.
+            /// </summary>
+            public static void StoreEncryptionKeySecurly(string KeyName, byte[] EncryptionKey)
+            {
+                IntPtr CredentialBlob_Ptr = Marshal.AllocCoTaskMem(EncryptionKey.Length);
+
+//Copy the encryption key to the unmanaged memory in order to make the Windows Credential Manager use it and securely stores it later when we use cred.write.
+
+                Marshal.Copy(EncryptionKey, 0, CredentialBlob_Ptr, EncryptionKey.Length);
+
+                Credential credential = new Credential
+                {
+                    Type = Credential_GenericType,
+                    TargetName = KeyName,
+                    CredentialBlobSize = EncryptionKey.Length,
+                    CredentialBlob = CredentialBlob_Ptr,
+                    CredentialPersistLocation = CredentialLocation_LocalMachine
+                };
+
+                if (!CredWrite(ref credential, 0))
+                {
+// Throw an exception if the storing of the encryption key by the credential manager failed
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
+                }
+// Free up the memory after storing the encryption key securely and that unmanaged memory is allocated for the encryption key,here we used the Marchel.FreeCoTaskMem(Pointer) because that memory we allocated it our self but if that memory is allocated internally by the Windows Credential Manager then we use The CredFree(Pointer)
+                Marshal.FreeCoTaskMem(CredentialBlob_Ptr);
+            }
+
+            public static byte[] GetEncryptionKey(string KeyName)
+            {
+                IntPtr credentialPointer;
+
+                if (!CredRead(KeyName, Credential_GenericType, 0, out credentialPointer))
+                {
+// Throw an exception if the reading the encryption key by the credential manager failed
+                    throw new Win32Exception(
+                        Marshal.GetLastWin32Error());
+                }
+the Marchel.PtrToStructure converts based on the pointer what is referring to to the Credential structure and fills the data automatically and returns structure ready to used.
+                Credential credential = Marshal.PtrToStructure<Credential>(credentialPointer);
+
+                byte[] EncryptionKey = new byte[credential.CredentialBlobSize];
+
+// Copy the Encrypted Key From the unmanaged memory the the CredentialBlob_Ptr pointer is referring to a byte array.
+                Marshal.Copy(credential.CredentialBlob_Ptr, EncryptionKey, 0, credential.CredentialBlobSize);
+
+Free up unmanaged memory allocated resource that the pointer is referring to, here we used the CredFree(Pointer) Because the memory is allocated internally by the Windows Credential Manager while if we allocate the memory in the unmanaged memory then we use the Marchel.FreeCoTaskMem(Pointer)
+                CredFree(CredentialBlob_Ptr);
+                return EncryptionKey;
+            }
+        }
+
+69) Storing encryption key in windows register is not stored securely there therefore it is better for security to store it using the Windows Credential Manager or using the Windows Data Protection API.
+
+70) We generate a new IV (Initialization Vector) value in each time the field value that is behind it is updated because if we used the same IV for the field value then when the field value is car then it is updated to school then it is updated to car then the exact plain text will generate the same cypher text and by that if an attacker has the database then he can to analyze that behavior and benefit from it later on and by that we create a leak for the information , therefore we must follow best cryptographic practices and generate new IV value for each updated field value in order to avoid information leak like here the leak of information that the IV is fixed for the field value,
+for each encrypted field value -> we must aside to put a new IV field value specified for that field value that is aside and every update to that aside field value we must to generate new IV.'

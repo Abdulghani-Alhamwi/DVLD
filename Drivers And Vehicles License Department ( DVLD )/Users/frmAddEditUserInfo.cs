@@ -11,16 +11,19 @@ namespace DVLDPresentationLayer
         public delegate void AddEditUserEventHandler();
         public event AddEditUserEventHandler OnAddedOrEditedUserInfo;
 
-        public delegate void SavedNewInfo(object[] NewUserDetails);
-        public delegate void SavedEditedInfo(object[] ModifiedUserDetails, int RowIndex,string NewUserFullName);
+        public delegate void SavedNewInfo(object[] NewUserDetails, int NewUserID, string UsernameIV);
+        public delegate void SavedEditedInfo(object[] ModifiedUserDetails, int RowIndex, int UserID, string UsernameIV, string NewUserFullName);
         public event SavedNewInfo AfterSavingNewInfo;
         public event SavedEditedInfo AfterSavingEditedInfo;
+
+        public event frmUserDetails.UserPersonalEditedInfo OnEditedUserPersonalInfo;
 
         private int _PersonID = -1;
         private clsUser _User;
         private string _DefaultPasswordValue = "Not Real Password";
         private bool _WantTochangePassword = true;
-        int _UsersDGVRowIndex = -1;
+        bool _IsUpdateDirectlyAfterAddition;
+        int _DGVRowIndex = -1;
         string _CurrentUserFullName;
 
         public frmAddEditUserInfo()
@@ -33,14 +36,14 @@ namespace DVLDPresentationLayer
         {
             InitializeComponent();
             _InitializeInfo(null);
-            _UsersDGVRowIndex = UsersDGVRowIndex;
+            _DGVRowIndex = UsersDGVRowIndex;
         }
 
         public frmAddEditUserInfo(clsUser User, int UsersDGVRowIndex,string CurrentUserFullName)
         {
             InitializeComponent();
             _InitializeInfo(User);
-            _UsersDGVRowIndex = UsersDGVRowIndex;
+            _DGVRowIndex = UsersDGVRowIndex;
             _CurrentUserFullName = CurrentUserFullName;
         }
 
@@ -88,7 +91,7 @@ namespace DVLDPresentationLayer
             uctrlpersonInfoByFilter.LoadPersonDetails(_User.PersonID);
 
             lblUserID.Text = _User.UserID.ToString();
-            txtUserName.Text = clsGeneralUtility.DecryptUserName(_User.UserName);
+            txtUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey,_User.Username,_User.UsernameIV);
             txtPassword.Text = _DefaultPasswordValue;
             txtPasswordConfirmation.Text = _DefaultPasswordValue;
             chkIsActive.Checked = _User.IsActive;
@@ -164,14 +167,14 @@ namespace DVLDPresentationLayer
         {
             if (_User !=null)
             {
-                if (txtUserName.Text == clsGeneralUtility.DecryptUserName(_User.UserName))
+                if (txtUserName.Text == clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, _User.Username, _User.UsernameIV))
                     return;
             }
 
             if (txtUserName.Text == "" || string.IsNullOrWhiteSpace(txtUserName.Text))
                 clsGeneralUtility.EnableErrorProvider(erTextBox, txtUserName, "Username cannot be blank.", e);
 
-            else if (clsUser.IsUserAlreadyExists(clsGeneralUtility.EncryptUserName(txtUserName.Text)))
+            else if (clsUser.IsUserAlreadyExists(clsGeneralUtility.EncryptString(clsGlobalSettings.EncryptionKey,txtUserName.Text)))
                 clsGeneralUtility.EnableErrorProvider(erTextBox, txtUserName, "Username is already taken by another user. Please choose another username.", e);
 
             else
@@ -253,7 +256,10 @@ namespace DVLDPresentationLayer
             {
                 User = _User;
                 User.PersonID = _PersonID;
-                User.UserName = clsGeneralUtility.EncryptUserName(txtUserName.Text);
+                User.Username = clsGeneralUtility.EncryptString(clsGlobalSettings.EncryptionKey, txtUserName.Text, out byte[] UsernameIV);
+                User.UsernameIV = Convert.ToBase64String(UsernameIV);
+                User.UsernameHash = clsGeneralUtility.HashUsernameForLookUp(txtUserName.Text);
+
                 if (txtPassword.Text != _DefaultPasswordValue)
                     _SetPasswordAndSalt(User);
 
@@ -267,18 +273,44 @@ namespace DVLDPresentationLayer
                 _SetPasswordAndSalt(ref _Password,ref _Salt);
 
                 User = new clsUser(
-                    PersonID: _PersonID,
-                    UserName: clsGeneralUtility.EncryptUserName(txtUserName.Text),
-                    Password: _Password, Salt: _Salt,
-                    IsActive: chkIsActive.Checked, Permissions: _GetNewUserPermissions()
-                    );
+                 PersonID: _PersonID,
+                 Username: clsGeneralUtility.EncryptString(clsGlobalSettings.EncryptionKey, txtUserName.Text, out byte[] UsernameIV),
+                 UsernameIV: Convert.ToBase64String(UsernameIV),
+                 UsernameHash: clsGeneralUtility.HashUsernameForLookUp(txtUserName.Text),
+                 Password: _Password, Salt: _Salt,
+                 IsActive: chkIsActive.Checked, Permissions: _GetNewUserPermissions()
+                 );
             }
+        }
+
+        private void _SetInfoAfterAddition(clsUser NewUserInfo, object[] NewDetails)
+        {
+            lblUserID.Text = NewUserInfo.UserID.ToString();
+            _SetTitles(clsUser.enMode.Update);
+
+            AfterSavingNewInfo?.Invoke(NewDetails, NewUserInfo.UserID, NewUserInfo.UsernameIV);
+            _User = NewUserInfo;
+
+            _IsUpdateDirectlyAfterAddition = true;
+        }
+
+        private void _SetInfoAfterEditingInfo(clsUser NewUserInfo, object[] NewDetails)
+        {
+            if (_IsUpdateDirectlyAfterAddition)
+                _DGVRowIndex = 0;
+
+            if (_User.HasUsernameChanged())
+            {
+                AfterSavingEditedInfo.Invoke(NewDetails, _DGVRowIndex, NewUserInfo.UserID, NewUserInfo.UsernameIV, null);
+            }
+            else
+                AfterSavingEditedInfo?.Invoke(NewDetails, _DGVRowIndex, NewUserInfo.UserID, null, null);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            clsUser User;
-            _SetUserInfo(out User);
+            clsUser NewUserInfo;
+            _SetUserInfo(out NewUserInfo);
 
             if (_User != null)
             {
@@ -289,13 +321,21 @@ namespace DVLDPresentationLayer
                 }
             }
             
-            if(User.Save())
-            {                
+            if(NewUserInfo.Save())
+            {
+                object[] NewDetails = new object[]
+                {
+                    NewUserInfo.UserID, _PersonID, clsPerson.GetFullName(_PersonID), txtUserName.Text, chkIsActive.Checked, _GetNewUserPermissions()
+                };
+
                 if (_User == null)
                 {
-                    lblUserID.Text = User.UserID.ToString();
-                    _SetTitles(clsUser.enMode.Update);
-                    _User = User;
+                    _SetInfoAfterAddition(NewUserInfo, NewDetails);
+                }
+
+                else
+                {
+                    _SetInfoAfterEditingInfo(NewUserInfo, NewDetails);
                 }
 
                 MessageBox.Show("Data Saved successfully", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -303,10 +343,6 @@ namespace DVLDPresentationLayer
                 _CurrentUserFullName = clsPerson.GetFullName(_PersonID);
 
                 OnAddedOrEditedUserInfo?.Invoke();
-
-                object[] NewDetails = new object[] { lblUserID.Text, _PersonID, clsPerson.GetFullName(_PersonID), txtUserName.Text, chkIsActive.Checked, _GetNewUserPermissions() };
-                AfterSavingNewInfo?.Invoke(NewDetails);
-                AfterSavingEditedInfo?.Invoke(NewDetails,_UsersDGVRowIndex,null);
 
                 clsGlobalSettings.LoginInfoChanged = true;
             }
@@ -331,12 +367,6 @@ namespace DVLDPresentationLayer
             _PersonID = PersonID;
         }
 
-        private void uctrlpersonInfoByFilter_AfterEditingPerson()
-        {
-            if(_User != null)
-            OnAddedOrEditedUserInfo?.Invoke();
-        }
-
         private void txtPasswordORtxtConfirmation_Enter(object sender, EventArgs e)
         {
             if (_User != null && _WantTochangePassword)
@@ -355,8 +385,13 @@ namespace DVLDPresentationLayer
             if (_CurrentUserFullName != UserFullName && _CurrentUserFullName != null)
             {
                 object[] ModifiedDetails = null;
-                AfterSavingEditedInfo?.Invoke(ModifiedDetails, _UsersDGVRowIndex,UserFullName);
+                AfterSavingEditedInfo?.Invoke(ModifiedDetails, _DGVRowIndex, _User.UserID, null, UserFullName);
             }
+        }
+
+        private void uctrlpersonInfoByFilter_OnPersonEditedInfo(clsPerson UpdatedPersonInfo)
+        {
+            OnEditedUserPersonalInfo?.Invoke(UpdatedPersonInfo, _DGVRowIndex);
         }
     }
 }

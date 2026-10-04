@@ -220,6 +220,7 @@ namespace DVLDPresentationLayer
              {
                  int[] SelectedRowsIndex = new int[dgvPeople.SelectedRows.Count];
                  byte TotalDeletedRecords = 0;
+
                 for (byte i = 0; i < dgvPeople.SelectedRows.Count; i++)
                  {
                      if (!clsPerson.DeletePerson(Convert.ToInt32(dgvPeople.SelectedRows[i].Cells[_PrimaryKeyViewedColumnName].Value)))
@@ -233,6 +234,7 @@ namespace DVLDPresentationLayer
                         TotalDeletedRecords++;
                     }
                  }
+
                 _DgvUtilityLib.DeleteSelectedDgvRows(dgvPeople,SelectedRowsIndex);
                  lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) - TotalDeletedRecords).ToString();
             }
@@ -282,7 +284,8 @@ namespace DVLDPresentationLayer
         {
             if (dgvPeople.SelectedRows.Count == 1)
             {
-                frmPersonDetails frm = new frmPersonDetails((int)dgvPeople.SelectedRows[0].Cells[0].Value);
+                frmPersonDetails frm = new frmPersonDetails((int)dgvPeople.SelectedRows[0].Cells[0].Value, dgvPeople.SelectedRows[0].Index);
+                frm.OnEditedPersonInfo += _EditDataRowInDGV;
                 frm.ShowDialog();
             }
             else

@@ -472,7 +472,7 @@
             this.gbLDLicenseInfo.Size = new System.Drawing.Size(1146, 411);
             this.gbLDLicenseInfo.TabIndex = 126;
             this.gbLDLicenseInfo.TabStop = false;
-            this.gbLDLicenseInfo.Text = "–";
+            this.gbLDLicenseInfo.Text = "Driver Local License Info";
             // 
             // pbIsDetained
             // 

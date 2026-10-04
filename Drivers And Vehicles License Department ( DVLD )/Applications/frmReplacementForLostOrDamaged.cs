@@ -17,7 +17,11 @@ namespace DVLDPresentationLayer.Core
             _SetFormInfo();
 
             lblApplicationDate.Text = DateTime.Now.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
-            lblUserName.Text = clsGeneralUtility.DecryptUserName(clsUser.GetUserName(clsGlobalSettings.CurrentUserID));
+
+            string EncryptedUsername = "", UsernameIV = "";
+            clsUser.GetUserName(clsGlobalSettings.CurrentUserID, ref EncryptedUsername, ref UsernameIV);
+
+            lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
 
             _ReplacedLicenseID = -1;
         }
@@ -162,9 +166,15 @@ namespace DVLDPresentationLayer.Core
                 lnlblShowLicenseHistory.Enabled = true;
         }
 
+        private void _EditDriverPersonalInfo(clsPerson UpdatedPersonInfo)
+        {
+            uctrlLDLDetailsByFilter.uctrlLDLDetails.EditDriverNameAndNationalNo(UpdatedPersonInfo.FullName, UpdatedPersonInfo.NationalNo);
+        }
+
         private void lnlblShowLicenseHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID(_SelectedLicenseInfo.DriverID));
+            frm.OnUpdatedDriverInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using Utility_Library;
@@ -20,25 +21,22 @@ namespace DVLDDataAccessLayer
 
         private enum _enUpdatableColumns : byte
         {
-            PersonID, UserName, Password, Salt, IsActive,Permissions
+            PersonID, Username, Password, IsActive,Permissions
         }
 
         public class clsOldUserData
         {
             public int PersonID;
-            public string UserName;
+            public string Username;
             public string Password;
-            public string OldSalt;
             public bool? IsActiveCase;
             public sbyte? Permissions;
 
-            public clsOldUserData(int OldPersonID, string OldUserName, string OldPassword,
-                string OldSalt, bool OldIsActiveCase,sbyte? OldPermissions)
+            public clsOldUserData(int OldPersonID, string OldUsername, string OldPassword, bool OldIsActiveCase,sbyte? OldPermissions)
             {
                 this.PersonID = OldPersonID;
-                this.UserName = OldUserName;
+                this.Username = OldUsername;
                 this.Password = OldPassword;
-                this.OldSalt = OldSalt;
                 this.IsActiveCase = OldIsActiveCase;
                 this.Permissions = OldPermissions;
             }
@@ -162,17 +160,19 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        public static int AddNewUser(int PersonID , string UserName,string Password ,string Salt,bool IsActive,sbyte Permissions)
+        public static int AddNewUser(int PersonID, string Username, string UsernameIV, string UsernameHash, string Password, string Salt, bool IsActive, sbyte Permissions)
         {
             int UserID = -1;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"INSERT INTO Users VALUES (@PersonID, @UserName, @Password, @Salt, @IsActive, @Permissions);
+            string query = @"INSERT INTO Users VALUES (@PersonID, @Username, @UsernameIV, @UsernameHash, @Password, @Salt, @IsActive, @Permissions);
                              SELECT SCOPE_IDENTITY();";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@PersonID", PersonID);
-            command.Parameters.AddWithValue("@UserName", UserName);
+            command.Parameters.AddWithValue("@Username", Username);
+            command.Parameters.AddWithValue("@UsernameIV", UsernameIV);
+            command.Parameters.AddWithValue("@UsernameHash", UsernameHash);
             command.Parameters.AddWithValue("@Password", Password);
             command.Parameters.AddWithValue("@Salt", Salt);
             command.Parameters.AddWithValue("@IsActive", IsActive);
@@ -184,7 +184,7 @@ namespace DVLDDataAccessLayer
 
                 object result = command.ExecuteScalar();
 
-                if(result != null)
+                if (result != null)
                 {
                     UserID = Convert.ToInt32(result);
                 }
@@ -199,20 +199,17 @@ namespace DVLDDataAccessLayer
 
             return UserID;
         }
- 
-        private static void _ResetChangedOldValues(int PersonID, string UserName, string Password, string Salt, bool IsActive, sbyte Permissions, clsOldUserData OldUserData)
+
+        private static void _ResetChangedOldValues(int PersonID, string Username, string Password, bool IsActive, sbyte Permissions, clsOldUserData OldUserData)
         {
             if (PersonID != OldUserData.PersonID)
                 OldUserData.PersonID = -1;
 
-            if (UserName != OldUserData.UserName)
-                OldUserData.UserName = null;
+            if (Username != OldUserData.Username)
+                OldUserData.Username = null;
 
             if (Password != OldUserData.Password)
-            {
                 OldUserData.Password = null;
-                OldUserData.OldSalt = null;
-            }
 
             if (IsActive != OldUserData.IsActiveCase)
                 OldUserData.IsActiveCase = null;
@@ -228,14 +225,11 @@ namespace DVLDDataAccessLayer
                 case _enUpdatableColumns.PersonID:
                     return " PersonID = @PersonID";
 
-                case _enUpdatableColumns.UserName:
-                    return " UserName = @UserName";
+                case _enUpdatableColumns.Username:
+                    return " Username = @Username, UsernameIV = @UsernameIV, UsernameHash = @UsernameHash";
 
                 case _enUpdatableColumns.Password:
-                    return " Password = @Password";
-
-                case _enUpdatableColumns.Salt:
-                    return ",Salt = @Salt";
+                    return " Password = @Password, Salt = @Salt";
 
                 case _enUpdatableColumns.IsActive:
                     return " IsActive = @IsActive";
@@ -247,7 +241,7 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        private static string _GetUpdateQuery(int PersonID, string UserName, string Password, string Salt,
+        private static string _GetUpdateQuery(int PersonID, string Username, string Password,
             bool IsActive,sbyte Permissions, clsOldUserData OldUserData, bool HasOldDataChangedFully)
         {
             string query = "UPDATE Users SET";
@@ -258,12 +252,11 @@ namespace DVLDDataAccessLayer
                 {
                     query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.PersonID);
 
-                    if (UserName != OldUserData.UserName)
-                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.UserName);
+                    if (Username != OldUserData.Username)
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Username);
 
                     if (Password != OldUserData.Password)
-                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Password)
-                               + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Salt);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Password);
 
                     if (IsActive != OldUserData.IsActiveCase)
                         query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.IsActive);
@@ -272,13 +265,12 @@ namespace DVLDDataAccessLayer
                         query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Permissions);
                 }
 
-                else if (UserName != OldUserData.UserName)
+                else if (Username != OldUserData.Username)
                 {
-                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.UserName);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Username);
 
                     if (Password != OldUserData.Password)
-                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Password)
-                               + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Salt);
+                        query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Password);
 
                     if (IsActive != OldUserData.IsActiveCase)
                         query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.IsActive);
@@ -289,8 +281,7 @@ namespace DVLDDataAccessLayer
 
                 else if (Password != OldUserData.Password)
                 {
-                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Password)
-                           + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Salt);
+                    query += _GetColumnValueSetPartForUpdate(_enUpdatableColumns.Password);
 
                     if (IsActive != OldUserData.IsActiveCase)
                         query += "," + _GetColumnValueSetPartForUpdate(_enUpdatableColumns.IsActive);
@@ -314,23 +305,23 @@ namespace DVLDDataAccessLayer
             }
 
             else
-                query += @" PersonID = @PersonID, UserName = @UserName, Password = @Password, Salt = @Salt,
-                           IsActive = @IsActive, Permissions = @Permissions";
+                query += @" PersonID = @PersonID, Username = @Username, UsernameIV = @UsernameIV, UsernameHash = @UsernameHash,
+                           Password = @Password, Salt = @Salt, IsActive = @IsActive, Permissions = @Permissions";
 
             query += $" WHERE {_PrimaryKeyColumnName} = @UserID";
 
-            _ResetChangedOldValues(PersonID, UserName, Password, Salt, IsActive, Permissions, OldUserData);
+            _ResetChangedOldValues(PersonID, Username, Password, IsActive, Permissions, OldUserData);
 
             return query;
         }
 
-        public static bool UpdateUser(int UserID,int PersonID, string UserName, string Password,string Salt, bool IsActive,sbyte Permissions, clsOldUserData OldUserData, bool HasOldDataChangedFully)
+        public static bool UpdateUser(int UserID, int PersonID, string Username, string UsernameIV, string UsernameHash, string Password, string Salt, bool IsActive, sbyte Permissions, clsOldUserData OldUserData, bool HasOldDataChangedFully)
         {
             byte AffectedRows = 0;
 
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = _GetUpdateQuery(PersonID, UserName, Password, Salt, IsActive,Permissions, OldUserData, HasOldDataChangedFully);
+            string query = _GetUpdateQuery(PersonID, Username, Password, IsActive,Permissions, OldUserData, HasOldDataChangedFully);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserID",UserID);
@@ -338,8 +329,12 @@ namespace DVLDDataAccessLayer
             if (OldUserData.PersonID == -1)
                 command.Parameters.AddWithValue("@PersonID", PersonID);
 
-            if (OldUserData.UserName == null)
-                command.Parameters.AddWithValue("@UserName", UserName);
+            if (OldUserData.Username == null)
+            {
+                command.Parameters.AddWithValue("@Username", Username);
+                command.Parameters.AddWithValue("@UsernameIV", UsernameIV);
+                command.Parameters.AddWithValue("@UsernameHash", UsernameHash);
+            }
 
             if (OldUserData.Password == null)
             {
@@ -423,14 +418,14 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
-        public static bool IsUserAlreadyExists(string UserName)
+        public static bool IsUserAlreadyExists(string Username)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Found = 1 FROM Users WHERE UserName = @UserName";
+            string query = @"SELECT Found = 1 FROM Users WHERE Username = @Username";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@UserName",UserName);
+            command.Parameters.AddWithValue("@Username",Username);
 
             try
             {
@@ -451,7 +446,8 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
-        public static bool Find(int UserID, ref int PersonID, ref string UserName, ref string Password, ref string Salt, ref bool IsActive,ref sbyte Permissions)
+        public static bool Find(int UserID, ref int PersonID, ref string Username,ref string UsernameIV,ref string UsernameHash,
+           ref string Password, ref string Salt, ref bool IsActive,ref sbyte Permissions)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
@@ -470,7 +466,9 @@ namespace DVLDDataAccessLayer
                 if(reader.Read())
                 {
                     PersonID = (int) reader["PersonID"];
-                    UserName = (string)reader["UserName"];
+                    Username = (string)reader["Username"];
+                    UsernameIV = (string)reader["UsernameIV"];
+                    UsernameHash = (string)reader["UsernameHash"];
                     Password = (string)reader["Password"];
                     Salt = (string)reader["Salt"];
                     IsActive = (bool)reader["IsActive"];
@@ -519,14 +517,14 @@ namespace DVLDDataAccessLayer
             }
         }
 
-        public static bool GetLoginInfo(string UserName, ref int UserID, ref string Password, ref byte[] Salt, ref bool IsActive,ref sbyte Permissions)
+        public static bool GetLoginInfo(string UsernameHash, ref int UserID, ref string Username, ref string UsernameIV, ref string Password, ref byte[] Salt, ref bool IsActive, ref sbyte Permissions)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = $@"SELECT UserID, Password, Salt, IsActive, Permissions FROM Users WHERE UserName = @UserName";
+            string query = $@"SELECT UserID, Username, UsernameIV, Password, Salt, IsActive, Permissions FROM Users WHERE UsernameHash = @UsernameHash";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@UserName", UserName);
+            command.Parameters.AddWithValue("@UsernameHash", UsernameHash);
 
             try
             {
@@ -536,6 +534,8 @@ namespace DVLDDataAccessLayer
                 if (reader.Read())
                 {
                     UserID = (int)reader[_PrimaryKeyColumnName];
+                    Username = (string)reader["Username"];
+                    UsernameIV = (string)reader["UsernameIV"];
                     Password = (string)reader["Password"];
                     Salt = Convert.FromBase64String((string)reader["Salt"]);
                     IsActive = (bool)reader["IsActive"];
@@ -554,11 +554,11 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
-        public static bool GetLoginInfo(int UserID, ref string UserName, ref string Password)
+        public static bool GetLoginInfo(int UserID, ref string Username, ref string UsernameIV, ref string Password)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = $@"SELECT UserName, Password FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
+            string query = $@"SELECT Username, UsernameIV, Password FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserID", UserID);
@@ -570,7 +570,8 @@ namespace DVLDDataAccessLayer
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
-                    UserName = (string)reader["UserName"];
+                    Username = (string)reader["Username"];
+                    UsernameIV = (string)reader["UsernameIV"];
                     Password = (string)reader["Password"];
 
                     return true;
@@ -614,11 +615,11 @@ namespace DVLDDataAccessLayer
             return (AffectedRows > 0);
         }
 
-        public static string GetUserName(int UserID)
+        public static bool GetUserName(int UserID, ref string Username, ref string UsernameIV)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = $"SELECT UserName FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
+            string query = $"SELECT UserName, UsernameIV FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserID", UserID);
@@ -627,10 +628,16 @@ namespace DVLDDataAccessLayer
             {
                 connection.Open();
 
-                object result = command.ExecuteScalar();
+                SqlDataReader reader = command.ExecuteReader();
 
-                if (result != null)
-                    return result.ToString();
+                if(reader.Read())
+                {
+                    Username = (string)reader["Username"];
+                    UsernameIV = (string)reader["UsernameIV"];
+
+                    return true;
+                }
+                reader.Close();
             }
 
             catch { }
@@ -640,7 +647,7 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
 
-            return null;
+            return false;
         }
 
         private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy,
@@ -796,6 +803,43 @@ namespace DVLDDataAccessLayer
         {
             return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
+        }
+
+        public static Dictionary<int, string> GetUsersIDsWithIVs()
+        {
+            Dictionary<int, string> UsersIDsWithIVs = null;
+
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+
+            string query = $@"SELECT UserID, UsernameIV FROM Users";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    UsersIDsWithIVs = new Dictionary<int, string>();
+
+                    while (reader.Read())
+                    {
+                        UsersIDsWithIVs.Add((int)reader["UserID"], (string)reader["UsernameIV"]);
+                    }
+                }
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return UsersIDsWithIVs;
         }
     }
 }

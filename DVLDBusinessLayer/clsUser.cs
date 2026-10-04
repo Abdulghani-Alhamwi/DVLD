@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using DVLDDataAccessLayer;
 
@@ -17,7 +18,9 @@ namespace DVLDBusinessLayer
 
         public int UserID { get; set; }
         public int PersonID { get; set; }
-        public string UserName { get; set; }
+        public string Username { get; set; }
+        public string UsernameIV { get; set; }
+        public string UsernameHash { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }
         public bool IsActive { get; set; }
@@ -25,30 +28,35 @@ namespace DVLDBusinessLayer
 
         private clsUsersData.clsOldUserData _OldUserData;
 
-        public clsUser(int PersonID, string UserName, string Password, string Salt, bool IsActive, sbyte Permissions)
+        public clsUser(int PersonID, string Username, string UsernameIV, string UsernameHash, string Password, string Salt, bool IsActive, sbyte Permissions)
         {
             this.UserID = -1;
             this.PersonID = PersonID;
-            this.UserName = UserName;
+            this.Username = Username;
+            this.UsernameIV = UsernameIV;
+            this.UsernameHash = UsernameHash;
             this.Password = Password;
             this.Salt = Salt;
             this.IsActive = IsActive;
             this.UserPermissions = Permissions;
+
+            _OldUserData = new clsUsersData.clsOldUserData(PersonID, Username, Password, IsActive, Permissions);
         }
 
-        private clsUser(int UserID, int PersonID, string UserName, string Password, string Salt, bool IsActive, sbyte Permissions)
+        private clsUser(int UserID, int PersonID, string Username, string UsernameIV, string UsernameHash, string Password, string Salt, bool IsActive, sbyte Permissions)
         {
             this.UserID = UserID;
             this.PersonID = PersonID;
-            this.UserName = UserName;
+            this.Username = Username;
+            this.UsernameIV = UsernameIV;
+            this.UsernameHash = UsernameHash;
             this.Password = Password;
             this.Salt = Salt;
             this.IsActive = IsActive;
             this.UserPermissions = Permissions;
             _CurrentMode = enMode.Update;
 
-            _OldUserData = new clsUsersData.clsOldUserData(PersonID, UserName, Password
-                           , Salt, IsActive, Permissions);
+            _OldUserData = new clsUsersData.clsOldUserData(PersonID, Username, Password, IsActive, Permissions);
         }
 
         public static DataTable GetUsersInfo(byte WantedNumOfRecords)
@@ -65,7 +73,7 @@ namespace DVLDBusinessLayer
 
         private bool _AddNewUser()
         {
-            UserID = clsUsersData.AddNewUser(PersonID, UserName, Password, Salt, IsActive, UserPermissions);
+            UserID = clsUsersData.AddNewUser(PersonID, Username, UsernameIV, UsernameHash, Password, Salt, IsActive, UserPermissions);
 
             return (UserID != -1);
         }
@@ -116,21 +124,26 @@ namespace DVLDBusinessLayer
 
         public bool AreAllFieldsOldValuesNotChanged()
         {
-            return (_OldUserData.PersonID == PersonID && _OldUserData.UserName == UserName &&
-                    _OldUserData.Password == Password && _OldUserData.OldSalt == Salt &&
-                    _OldUserData.IsActiveCase == IsActive && _OldUserData.Permissions == UserPermissions);
+            return (_OldUserData.PersonID == PersonID && !HasUsernameChanged() &&
+                    _OldUserData.Password == Password &&_OldUserData.IsActiveCase == IsActive
+                 && _OldUserData.Permissions == UserPermissions);
+        }
+
+        public bool HasUsernameChanged()
+        {
+            return (_OldUserData.Username != Username);
         }
 
         private bool _HasOldDataChangedFully()
         {
-            return (_OldUserData.PersonID != PersonID && _OldUserData.UserName != UserName &&
-                    _OldUserData.Password != Password && _OldUserData.OldSalt != Salt &&
-                    _OldUserData.IsActiveCase != IsActive && _OldUserData.Permissions != UserPermissions);
+            return (_OldUserData.PersonID != PersonID && HasUsernameChanged() &&
+                    _OldUserData.Password != Password && _OldUserData.IsActiveCase != IsActive
+                 && _OldUserData.Permissions != UserPermissions);
         }
 
         private bool _UpdateUser()
         {
-            return clsUsersData.UpdateUser(UserID, PersonID, UserName, Password, Salt, IsActive, UserPermissions
+            return clsUsersData.UpdateUser(UserID, PersonID, Username, UsernameIV, UsernameHash, Password, Salt, IsActive, UserPermissions
                 , _OldUserData, _HasOldDataChangedFully());
         }
 
@@ -163,21 +176,21 @@ namespace DVLDBusinessLayer
             return clsUsersData.IsUserExists(PersonID);
         }
 
-        public static bool IsUserAlreadyExists(string UserName)
+        public static bool IsUserAlreadyExists(string Username)
         {
-            return clsUsersData.IsUserAlreadyExists(UserName);
+            return clsUsersData.IsUserAlreadyExists(Username);
         }
 
         public static clsUser Find(int UserID)
         {
             int PersonID = -1;
-            string UserName = "", Password = "", Salt = "";
+            string Username = "", UsernameIV = "", UsernameHash = "", Password = "", Salt = "";
             bool IsActive = false;
             sbyte Permissions = 0;
 
-            if (clsUsersData.Find(UserID, ref PersonID, ref UserName, ref Password, ref Salt, ref IsActive, ref Permissions))
+            if (clsUsersData.Find(UserID, ref PersonID, ref Username, ref UsernameIV, ref UsernameHash, ref Password, ref Salt, ref IsActive, ref Permissions))
             {
-                return new clsUser(UserID, PersonID, UserName, Password, Salt, IsActive, Permissions);
+                return new clsUser(UserID, PersonID, Username, UsernameIV, UsernameHash, Password, Salt, IsActive, Permissions);
             }
             else
                 return null;
@@ -188,14 +201,14 @@ namespace DVLDBusinessLayer
             clsUsersData.GetUserPasswordWithSalt(UserID, ref Password, ref Salt);
         }
 
-        public static bool GetLoginInfo(string UserName, ref int UserID, ref string Password, ref byte[] Salt, ref bool IsActive, ref sbyte Permissions)
+        public static bool GetLoginInfo(string UsernameHash, ref int UserID, ref string Username, ref string UsernameIV, ref string Password, ref byte[] Salt, ref bool IsActive, ref sbyte Permissions)
         {
-            return clsUsersData.GetLoginInfo(UserName, ref UserID, ref Password, ref Salt, ref IsActive, ref Permissions);
+            return clsUsersData.GetLoginInfo(UsernameHash, ref UserID, ref Username, ref UsernameIV, ref Password, ref Salt, ref IsActive, ref Permissions);
         }
 
-        public static bool GetLoginInfo(int UserID, ref string UserName, ref string Password)
+        public static bool GetLoginInfo(int UserID, ref string Username, ref string UsernameIV, ref string Password)
         {
-            return clsUsersData.GetLoginInfo(UserID, ref UserName, ref Password);
+            return clsUsersData.GetLoginInfo(UserID, ref Username, ref UsernameIV, ref Password);
         }
 
         public static bool ChangePassword(int UserID, string Password, string Salt)
@@ -203,9 +216,9 @@ namespace DVLDBusinessLayer
             return clsUsersData.ChangePassword(UserID, Password, Salt);
         }
 
-        public static string GetUserName(int UserID)
+        public static bool GetUserName(int UserID, ref string Username, ref string UsernameIV)
         {
-            return clsUsersData.GetUserName(UserID);
+            return clsUsersData.GetUserName(UserID, ref Username, ref UsernameIV);
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string LastColumnNameDataOrderedBy, string SortDirection, char? WildChar = null)
@@ -234,6 +247,11 @@ namespace DVLDBusinessLayer
         {
             return clsUsersData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
                 ColumnNameToFilterBy, valueToFilterBy, WildChar);
+        }
+
+        public static Dictionary<int , string> GetUsersIDsWithIVs()
+        {
+            return clsUsersData.GetUsersIDsWithIVs();
         }
     }
 }

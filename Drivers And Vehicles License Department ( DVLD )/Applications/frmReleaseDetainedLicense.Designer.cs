@@ -398,7 +398,7 @@
             this.lnlblShowLicenseInfo.AutoSize = true;
             this.lnlblShowLicenseInfo.Enabled = false;
             this.lnlblShowLicenseInfo.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lnlblShowLicenseInfo.Location = new System.Drawing.Point(311, 866);
+            this.lnlblShowLicenseInfo.Location = new System.Drawing.Point(323, 866);
             this.lnlblShowLicenseInfo.Margin = new System.Windows.Forms.Padding(0);
             this.lnlblShowLicenseInfo.Name = "lnlblShowLicenseInfo";
             this.lnlblShowLicenseInfo.Size = new System.Drawing.Size(225, 31);
@@ -471,7 +471,7 @@
             this.lnlblShowLicenseHistory.AutoSize = true;
             this.lnlblShowLicenseHistory.Enabled = false;
             this.lnlblShowLicenseHistory.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lnlblShowLicenseHistory.Location = new System.Drawing.Point(27, 866);
+            this.lnlblShowLicenseHistory.Location = new System.Drawing.Point(39, 866);
             this.lnlblShowLicenseHistory.Margin = new System.Windows.Forms.Padding(0);
             this.lnlblShowLicenseHistory.Name = "lnlblShowLicenseHistory";
             this.lnlblShowLicenseHistory.Size = new System.Drawing.Size(259, 31);

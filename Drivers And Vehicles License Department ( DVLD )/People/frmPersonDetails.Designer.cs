@@ -106,6 +106,7 @@
             this.UctrlPersonDetails.Name = "UctrlPersonDetails";
             this.UctrlPersonDetails.Size = new System.Drawing.Size(1087, 304);
             this.UctrlPersonDetails.TabIndex = 0;
+            this.UctrlPersonDetails.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonDetails.PersonEditedInfo(this.UctrlPersonDetails_OnPersonEditedInfo);
             // 
             // frmPersonDetails
             // 

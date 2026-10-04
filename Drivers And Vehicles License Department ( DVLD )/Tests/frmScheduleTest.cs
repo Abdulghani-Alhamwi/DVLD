@@ -73,6 +73,7 @@ namespace DVLDPresentationLayer
         private void _InitializeFormData(int LDLAppID, clsTestType.enTestType TestType, enTestTrial TestTrial, clsTestAppointment Appointment = null)
         {
             InitializeComponent();
+
             dtpTestAppointmentDate.Format = DateTimePickerFormat.Custom;
             dtpTestAppointmentDate.CustomFormat = clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.NumericFormat);
 
@@ -89,15 +90,15 @@ namespace DVLDPresentationLayer
                 _LoadInfo(TestType, TestTrial);
             }
 
+            dtpTestAppointmentDate.MinDate = DateTime.Now;
+
             if (!_IsLockedMode && Appointment == null)
             {
-                dtpTestAppointmentDate.MinDate = DateTime.Now;
                 dtpTestAppointmentDate.MaxDate = dtpTestAppointmentDate.MinDate.AddMonths(3);
             }
 
             else if(Appointment != null)
             {
-                dtpTestAppointmentDate.MinDate =Appointment.AppointmentDate;
                 dtpTestAppointmentDate.MaxDate = dtpTestAppointmentDate.MinDate.AddMonths(3);
             }
         }

@@ -141,6 +141,7 @@
             this.uctrlPersonDetailsByFilter.Size = new System.Drawing.Size(1080, 428);
             this.uctrlPersonDetailsByFilter.TabIndex = 0;
             this.uctrlPersonDetailsByFilter.OnPersonSelected += new DVLDPresentationLayer.ctrlPersonDetailsByFilter.PersonSelectedEventHandler(this.uctrlPersonDetailsByFilter_OnPersonSelected);
+            this.uctrlPersonDetailsByFilter.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonDetails.PersonEditedInfo(this.uctrlPersonDetailsByFilter_OnPersonEditedInfo);
             // 
             // btnNext
             // 

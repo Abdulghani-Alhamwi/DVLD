@@ -8,8 +8,9 @@ namespace DVLDPresentationLayer
 {
     public partial class ctrlPersonDetails : UserControl
     {
-        public event Action AfterEditingPersonInfo;
-     
+        public delegate void PersonEditedInfo(clsPerson UpdatedPersonInfo);
+        public event PersonEditedInfo OnPersonEditedInfo;
+
         private clsPerson _Person;
         private bool _ShownDefaultValues = false;
 
@@ -119,9 +120,9 @@ namespace DVLDPresentationLayer
             _ShownDefaultValues = false;
         }
 
-        private void _RefreshView()
+        private void _RefreshViewedData(clsPerson UpdatedPersonInfo)
         {
-            AfterEditingPersonInfo?.Invoke();
+            OnPersonEditedInfo?.Invoke(UpdatedPersonInfo);
         }
 
         private void lnlblEditPersonInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -129,7 +130,7 @@ namespace DVLDPresentationLayer
             if (_Person != null)
             {
                 frmAddEditPersonInfo frm = new frmAddEditPersonInfo(_Person);
-                frm.AfterEditingPersonInfo += _RefreshView;
+                frm.AfterEditingPersonInfo += _RefreshViewedData;
                 frm.ShowDialog();
                 _ShowPersonDetails();
             }

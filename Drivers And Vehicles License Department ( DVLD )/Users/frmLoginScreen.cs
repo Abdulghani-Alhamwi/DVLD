@@ -16,7 +16,8 @@ namespace DVLDPresentationLayer
 
         internal struct stSavedUserInfo
         {
-            internal static string UserName = "";
+            internal static string Username = "";
+            internal static string UsernameIV = "";
             internal static string Password = "";
         }
 
@@ -27,7 +28,7 @@ namespace DVLDPresentationLayer
             if (File.Exists(_SavedInfoFilePath))
             {
                 _LoadLoginDataFromFile(_SavedInfoFilePath);
-                txtUserName.Text = clsGeneralUtility.DecryptUserName(stSavedUserInfo.UserName);
+                txtUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey,stSavedUserInfo.Username, stSavedUserInfo.UsernameIV);
                 txtPassword.Text = stSavedUserInfo.Password;
                 _OldUserName = txtUserName.Text;
                 chbRememberMe.Checked = true;
@@ -67,11 +68,11 @@ namespace DVLDPresentationLayer
             if (File.Exists(_SavedInfoFilePath))
                 if (EnteredPassword == UserPassword)
                     return true;
-
+            
             return (clsGeneralUtility.HashWithSaltPassword(EnteredPassword, ref Salt) == UserPassword);
         }
 
-        private void _SaveLoginDataToFile(string DirectoryPath, string FilePath, string UserName, string Password, string Separator = "#//#")
+        private void _SaveLoginDataToFile(string DirectoryPath, string FilePath, string Username,string UsernameVI, string Password, string Separator = "#//#")
         {
             if (!Directory.Exists(DirectoryPath))
                 Directory.CreateDirectory(DirectoryPath);
@@ -81,7 +82,7 @@ namespace DVLDPresentationLayer
 
             using (StreamWriter writer = new StreamWriter(FilePath))
             {
-                string DataLine = UserName + Separator + Password;
+                string DataLine = Username + Separator + UsernameVI + Separator + Password;
                 writer.WriteLine(DataLine);
             }
         }
@@ -93,8 +94,9 @@ namespace DVLDPresentationLayer
                 using (StreamReader reader = new StreamReader(FilePath))
                 {
                     string[] Data = Regex.Split(reader.ReadLine(), Separator);
-                    stSavedUserInfo.UserName = Data[0];
-                    stSavedUserInfo.Password = Data[1];
+                    stSavedUserInfo.Username = Data[0];
+                    stSavedUserInfo.UsernameIV = Data[1];
+                    stSavedUserInfo.Password = Data[2];
                 }
             }
         }
@@ -104,7 +106,7 @@ namespace DVLDPresentationLayer
             if (File.Exists(FilePath))
             {
                 File.Delete(FilePath);
-                stSavedUserInfo.UserName = "";
+                stSavedUserInfo.Username = "";
                 stSavedUserInfo.Password = "";
                 _HasSavedInfo = false;
             }
@@ -115,11 +117,11 @@ namespace DVLDPresentationLayer
             if (chbRememberMe.Checked && File.Exists(_SavedInfoFilePath))
                 return;
 
-           else if (chbRememberMe.Checked)
-                _SaveLoginDataToFile(_SavedInfoDirectoryPath,_SavedInfoFilePath, clsGeneralUtility.EncryptUserName(txtUserName.Text), UserPassword);
+            else if (chbRememberMe.Checked)
+                _SaveLoginDataToFile(_SavedInfoDirectoryPath, _SavedInfoFilePath, clsGeneralUtility.EncryptString(clsGlobalSettings.EncryptionKey, txtUserName.Text,out byte[] UsernameIV), Convert.ToBase64String(UsernameIV), UserPassword);
 
             else if (!chbRememberMe.Checked)
-               _DeleteLoginFile(_SavedInfoFilePath);
+                _DeleteLoginFile(_SavedInfoFilePath);
         }
 
         internal void UpdateSavedUserInfo()
@@ -127,24 +129,24 @@ namespace DVLDPresentationLayer
             if (_HasSavedInfo)
             {
                 _DeleteLoginFile(_SavedInfoFilePath);
-                clsUser.GetLoginInfo(clsGlobalSettings.CurrentUserID, ref stSavedUserInfo.UserName, ref stSavedUserInfo.Password);
-                _SaveLoginDataToFile(_SavedInfoDirectoryPath, _SavedInfoFilePath, stSavedUserInfo.UserName, stSavedUserInfo.Password);
+                clsUser.GetLoginInfo(clsGlobalSettings.CurrentUserID, ref stSavedUserInfo.Username, ref stSavedUserInfo.UsernameIV, ref stSavedUserInfo.Password);
+                _SaveLoginDataToFile(_SavedInfoDirectoryPath, _SavedInfoFilePath, stSavedUserInfo.Username, stSavedUserInfo.UsernameIV, stSavedUserInfo.Password);
 
-                txtUserName.Text = clsGeneralUtility.DecryptUserName(stSavedUserInfo.UserName);
+                txtUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, stSavedUserInfo.Username, stSavedUserInfo.UsernameIV);
                 txtPassword.Text = stSavedUserInfo.Password;
                 _OldUserName = txtUserName.Text;
             }
         }
 
-        private void _Login(int UserID , string UserPassword,sbyte UserPermissions)
+        private void _Login(int UserID, string Username, string UsernameIV, string UserPassword, sbyte UserPermissions)
         {
             _SaveLoginInfoInFile(UserPassword);
 
             frmMainScreen frmMain = new frmMainScreen(this);
             clsGlobalSettings.CurrentUserID = UserID;
-            clsGlobalSettings.CurrentUserName = txtUserName.Text;
+            clsGlobalSettings.CurrentUsername = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, Username, UsernameIV);
             clsGlobalSettings.CurrentUserPermissions = UserPermissions;
-            _OldUserName = clsGlobalSettings.CurrentUserName;
+            _OldUserName = clsGlobalSettings.CurrentUsername;
 
             frmMain.Show();
             this.Hide();
@@ -161,10 +163,10 @@ namespace DVLDPresentationLayer
             }
         }
 
-        private bool _HasSavedUserChanged(string OldUserName)
+        private bool _HasSavedUserChanged()
         {
             if (File.Exists(_SavedInfoFilePath))
-                return (txtUserName.Text != OldUserName);
+                return (txtUserName.Text != _OldUserName);
 
             else
                 return false;
@@ -176,17 +178,18 @@ namespace DVLDPresentationLayer
                 return;
 
             int UserID = -1;
+            string Username = "";
+            string UsernameIV = "";
             string UserPassword = "";
             bool IsActive = false;
             byte[] Salt = null;
             sbyte UserPermissions = 0;
-            
 
-            if (clsUser.GetLoginInfo(clsGeneralUtility.EncryptUserName(txtUserName.Text), ref UserID, ref UserPassword, ref Salt, ref IsActive, ref UserPermissions))
+            if (clsUser.GetLoginInfo(clsGeneralUtility.HashUsernameForLookUp(txtUserName.Text),ref UserID,ref Username, ref UsernameIV, ref UserPassword, ref Salt, ref IsActive, ref UserPermissions))
             {
                 if(chbRememberMe.Checked)
                 {
-                    if(_HasSavedUserChanged(_OldUserName))
+                    if(_HasSavedUserChanged())
                      {
                         _DeleteLoginFile(_SavedInfoFilePath);
                      }
@@ -196,7 +199,7 @@ namespace DVLDPresentationLayer
                 {
                     if (IsActive)
                     {
-                        _Login(UserID, UserPassword,UserPermissions);
+                        _Login(UserID, Username, UsernameIV, UserPassword, UserPermissions);
                     }
                     
                     else

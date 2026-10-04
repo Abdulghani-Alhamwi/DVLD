@@ -180,7 +180,7 @@
             this.btnClose.Location = new System.Drawing.Point(770, 826);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(152, 42);
-            this.btnClose.TabIndex = 4;
+            this.btnClose.TabIndex = 5;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -223,7 +223,7 @@
             this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(39, 36);
-            this.btnExit.TabIndex = 5;
+            this.btnExit.TabIndex = 6;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -242,7 +242,8 @@
             this.uctrlUserDetails.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.uctrlUserDetails.Name = "uctrlUserDetails";
             this.uctrlUserDetails.Size = new System.Drawing.Size(1083, 461);
-            this.uctrlUserDetails.TabIndex = 0;
+            this.uctrlUserDetails.TabIndex = 4;
+            this.uctrlUserDetails.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonDetails.PersonEditedInfo(this.uctrlUserDetails_OnPersonEditedInfo);
             // 
             // frmChangePassword
             // 

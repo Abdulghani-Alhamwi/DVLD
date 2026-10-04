@@ -29,7 +29,7 @@ namespace DVLDBusinessLayer
             {
                 if (PersonID != -1)
                 {
-                    if (ThirdName != null)
+                    if (ThirdName != "")
                         return FirstName + " " + SecondName + " " + ThirdName + " " + LastName;
                     else
                         return FirstName + " " + SecondName + " " + LastName;

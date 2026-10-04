@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Diagnostics;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using DVLDPresentationLayer.Controls;
@@ -17,6 +16,7 @@ namespace DVLDPresentationLayer.TestTypes
         private string _PrimaryKeyViewedColumnName;
         private int _LastBroughtDetainID;
         private string _ColumnNameToFilterBy;
+        private string _LocalLicensesViewedColumnName = "L.ID";
 
         private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDgvColumnSortDirection;
         private clsDataGridViewUtilityLib _DgvUtilityLib;
@@ -154,8 +154,9 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void btnReleaseDetainedLicense_Click(object sender, EventArgs e)
         {
-            frmReleaseDetainedLicense frm = new frmReleaseDetainedLicense();
+            frmReleaseDetainedLicense frm = new frmReleaseDetainedLicense(dgvDetainedLicenses, _LocalLicensesViewedColumnName);
             frm.AfterReleasingALicense += _ReleaseDetainedLicense;
+            frm.OnUpdatedDriverPersonalInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
         }
 
@@ -168,10 +169,17 @@ namespace DVLDPresentationLayer.TestTypes
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
 
+        private void _EditDriverPersonalInfo(clsPerson UpdatedPersonalInfo, int DGVRowIndex)
+        {
+            _DgvUtilityLib.EditOneColumnValueInDgv(dgvDetainedLicenses, "Full Name", UpdatedPersonalInfo.FullName, DGVRowIndex);
+            _DgvUtilityLib.EditOneColumnValueInDgv(dgvDetainedLicenses, "N.No.", UpdatedPersonalInfo.NationalNo, DGVRowIndex);
+        }
+
         private void btnDetainLicense_Click(object sender, EventArgs e)
         {
-            frmDetainLocalLicense frm = new frmDetainLocalLicense();
+            frmDetainLocalLicense frm = new frmDetainLocalLicense(dgvDetainedLicenses, _LocalLicensesViewedColumnName);
             frm.AfterDetainingLicense += _AddNewRowToDGV;
+            frm.OnUpdatedDriverPersonalInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
         }
 
@@ -326,19 +334,21 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void tsmiShowPersonDetails_Click(object sender, EventArgs e)
         {
-            frmPersonDetails frm = new frmPersonDetails(clsPerson.GetPersonID(dgvDetainedLicenses.SelectedRows[0].Cells["N.No."].Value.ToString()));
+            frmPersonDetails frm = new frmPersonDetails(clsPerson.GetPersonID(dgvDetainedLicenses.SelectedRows[0].Cells["N.No."].Value.ToString()), dgvDetainedLicenses.SelectedRows[0].Index);
+            frm.OnUpdatedPersonalInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
         }
 
         private void tsmiShowLicenseDetails_Click(object sender, EventArgs e)
         {
-            frmLocalLicenseDetails frm = new frmLocalLicenseDetails((int)dgvDetainedLicenses.SelectedRows[0].Cells["L.ID"].Value);
+            frmLocalLicenseDetails frm = new frmLocalLicenseDetails((int)dgvDetainedLicenses.SelectedRows[0].Cells[_LocalLicensesViewedColumnName].Value);
             frm.ShowDialog();
         }
 
         private void tsmishowPersonLicenseHistory_Click(object sender, EventArgs e)
         {
             frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsPerson.GetPersonID(dgvDetainedLicenses.SelectedRows[0].Cells["N.No."].Value.ToString()));
+            frm.OnEditedDriverPersonalInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
         }
 
@@ -351,8 +361,9 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void tsmiReleaseDetainedLicense_Click(object sender, EventArgs e)
         {
-            frmReleaseDetainedLicense frm = new frmReleaseDetainedLicense((int)dgvDetainedLicenses.SelectedRows[0].Cells["L.ID"].Value, (int)dgvDetainedLicenses.SelectedRows[0].Index);
+            frmReleaseDetainedLicense frm = new frmReleaseDetainedLicense((int)dgvDetainedLicenses.SelectedRows[0].Cells[_LocalLicensesViewedColumnName].Value, (int)dgvDetainedLicenses.SelectedRows[0].Index);
             frm.AfterReleasingSentLicense += EditRowAfterReleasingLicense;
+            frm.OnUpdatedDriverPersonalInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
         }
 

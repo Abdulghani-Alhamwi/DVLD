@@ -168,11 +168,12 @@
             // 
             // dtpTestAppointmentDate
             // 
-            this.dtpTestAppointmentDate.CalendarForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.dtpTestAppointmentDate.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.dtpTestAppointmentDate.CalendarForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.dtpTestAppointmentDate.CalendarMonthBackground = System.Drawing.Color.WhiteSmoke;
             this.dtpTestAppointmentDate.CalendarTitleBackColor = System.Drawing.Color.DodgerBlue;
-            this.dtpTestAppointmentDate.CalendarTitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.dtpTestAppointmentDate.CalendarTitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.dtpTestAppointmentDate.CalendarTrailingForeColor = System.Drawing.Color.Gray;
+            this.dtpTestAppointmentDate.Checked = false;
             this.dtpTestAppointmentDate.CustomFormat = "";
             this.dtpTestAppointmentDate.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
             this.dtpTestAppointmentDate.Font = new System.Drawing.Font("Tahoma", 16F);

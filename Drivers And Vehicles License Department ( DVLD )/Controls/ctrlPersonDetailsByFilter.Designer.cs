@@ -138,7 +138,7 @@
             this.uctrlPersonDetails.Name = "uctrlPersonDetails";
             this.uctrlPersonDetails.Size = new System.Drawing.Size(1084, 302);
             this.uctrlPersonDetails.TabIndex = 4;
-            this.uctrlPersonDetails.AfterEditingPersonInfo += new System.Action(this.uctrlPersonDetails_AfterEditingPersonInfo);
+            this.uctrlPersonDetails.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonDetails.PersonEditedInfo(this.uctrlPersonDetails_OnPersonEditedInfo);
             // 
             // ctrlPersonDetailsByFilter
             // 

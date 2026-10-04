@@ -7,6 +7,8 @@ namespace DVLDPresentationLayer
 {
     public partial class ctrlUserDetails : UserControl
     {
+        public event ctrlPersonDetails.PersonEditedInfo OnPersonEditedInfo;
+
         public ctrlUserDetails()
         {
             InitializeComponent();
@@ -15,7 +17,12 @@ namespace DVLDPresentationLayer
         private void _ShowLoginInformation(clsUser User)
         {
             lblUserID.Text = User.UserID.ToString();
-            lblUserName.Text = clsGeneralUtility.DecryptUserName(User.UserName);
+
+            string EncryptedUsername = "", UsernameIV = "";
+            clsUser.GetUserName(User.UserID, ref EncryptedUsername, ref UsernameIV);
+
+            lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, User.Username, User.UsernameIV);
+
             lblIsActive.Text = (User.IsActive) ? "Yes" : "No";
         }
 
@@ -33,6 +40,11 @@ namespace DVLDPresentationLayer
                 MessageBox.Show("User is not found!", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             return false;
+        }
+
+        private void uctrlPersonDetails_OnPersonEditedInfo(clsPerson UpdatedPersonInfo)
+        {
+            OnPersonEditedInfo?.Invoke(UpdatedPersonInfo);
         }
     }
 }

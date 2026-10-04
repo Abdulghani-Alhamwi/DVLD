@@ -137,6 +137,7 @@
             this.uctrlPersonDetailsByFilter.Name = "uctrlPersonDetailsByFilter";
             this.uctrlPersonDetailsByFilter.Size = new System.Drawing.Size(1080, 422);
             this.uctrlPersonDetailsByFilter.TabIndex = 57;
+            this.uctrlPersonDetailsByFilter.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonDetails.PersonEditedInfo(this.uctrlPersonDetailsByFilter_OnPersonEditedInfo);
             // 
             // frmDriverLicenseHistory
             // 

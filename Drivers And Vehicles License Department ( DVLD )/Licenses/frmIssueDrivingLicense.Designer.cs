@@ -191,11 +191,13 @@
             this.uctrlDLApplicationInfo.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.uctrlDLApplicationInfo.AutoScroll = true;
             this.uctrlDLApplicationInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlDLApplicationInfo.Font = new System.Drawing.Font("Tahoma", 18F);
             this.uctrlDLApplicationInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.uctrlDLApplicationInfo.Location = new System.Drawing.Point(26, 88);
             this.uctrlDLApplicationInfo.Name = "uctrlDLApplicationInfo";
             this.uctrlDLApplicationInfo.Size = new System.Drawing.Size(1153, 452);
             this.uctrlDLApplicationInfo.TabIndex = 0;
+            this.uctrlDLApplicationInfo.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonDetails.PersonEditedInfo(this.uctrlDLApplicationInfo_OnPersonEditedInfo);
             // 
             // frmIssueDrivingLicense
             // 

@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
+using DVLDPresentationLayer.Controls;
 using Utility_Library;
 
 namespace DVLDPresentationLayer.Licenses
@@ -9,11 +10,13 @@ namespace DVLDPresentationLayer.Licenses
     public partial class frmReleaseDetainedLicense : Form
     {
         public event Action<int,DateTime,int> AfterReleasingSentLicense;
-
         public event Action<int,DateTime,int> AfterReleasingALicense;
+        public event Action<clsPerson, int> OnUpdatedDriverPersonalInfo;
 
         private clsLocalLicense _LocalLicenseInfo;
         private clsDetainedLicense _DetainInfo;
+        private DataGridView _DGVDetainedLicenses;
+        private string _DGVLocalLicenesColumnName;
 
         private int _DetainedLicensesDgvRowIndex;
 
@@ -21,7 +24,14 @@ namespace DVLDPresentationLayer.Licenses
         {
             InitializeComponent();
             _InitilizeFormData();
-            _DetainedLicensesDgvRowIndex = -1;
+        }
+
+        public frmReleaseDetainedLicense(DataGridView DGVDetainedLicenses, string DGVLocalLicenesColumnName)
+        {
+            InitializeComponent();
+            _InitilizeFormData();
+            _DGVDetainedLicenses = DGVDetainedLicenses;
+            _DGVLocalLicenesColumnName = DGVLocalLicenesColumnName;
         }
 
         public frmReleaseDetainedLicense(int LocalLicenseID , int DetainedLicensesDgvRowIndex)
@@ -87,9 +97,27 @@ namespace DVLDPresentationLayer.Licenses
 
         }
 
+        private void _EditDriverPersonalInfo(clsPerson UpdatedDriverPersonalInfo)
+        {
+            uctrlLDLDetailsByFilter.uctrlLDLDetails.EditDriverNameAndNationalNo(UpdatedDriverPersonalInfo.FullName, UpdatedDriverPersonalInfo.NationalNo);
+        }
+
+        private void _EditDriverPersonalInfo(clsPerson UpdatedDriverPersonalInfo,int DGVRowIndex)
+        {
+            _EditDriverPersonalInfo(UpdatedDriverPersonalInfo);
+            OnUpdatedDriverPersonalInfo?.Invoke(UpdatedDriverPersonalInfo, DGVRowIndex);
+        }
+
         private void lnlblShowLicenseHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID(_LocalLicenseInfo.DriverID));
+            frmDriverLicenseHistory frm = frmDetainLocalLicense.GetfrmDriverLicensesHistoryObj(_DGVDetainedLicenses,_LocalLicenseInfo, _DGVLocalLicenesColumnName);
+
+            if (_DGVDetainedLicenses != null)
+                frm.OnEditedDriverPersonalInfo += _EditDriverPersonalInfo;
+
+            else
+                frm.OnUpdatedDriverInfo += _EditDriverPersonalInfo;
+
             frm.ShowDialog();
         }
 
@@ -103,7 +131,12 @@ namespace DVLDPresentationLayer.Licenses
         {
             lblDetainID.Text = _DetainInfo.DetainID.ToString();
             lblDetainedDate.Text = _DetainInfo.DetainDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
-            lblUserName.Text = clsGeneralUtility.DecryptUserName(clsUser.GetUserName(_DetainInfo.CreatedByUserID));
+
+            string EncryptedUsername = "", UsernameIV = "";
+            clsUser.GetUserName(_DetainInfo.CreatedByUserID, ref EncryptedUsername, ref UsernameIV);
+
+            lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
+
             lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReleaseDetainedLicense),clsGeneralUtility.enCustomNumberFormat.NoJustZerosAfterFraction);
             lblFineFees.Text = clsGeneralUtility.GetCustomNumberFormat(_DetainInfo.FineFees, clsGeneralUtility.enCustomNumberFormat.NoJustZerosAfterFraction);
             lblTotalFees.Text = (Convert.ToDecimal(lblApplicationFees.Text) + Convert.ToDecimal(lblFineFees.Text)).ToString();

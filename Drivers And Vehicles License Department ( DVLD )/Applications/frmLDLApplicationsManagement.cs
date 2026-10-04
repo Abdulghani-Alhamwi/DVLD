@@ -108,6 +108,8 @@ namespace DVLDPresentationLayer
             else
             {
                 txtFilter.Visible = true;
+                txtFilter.Focus();
+
                 cbStatus.Visible = false;
                 _PreviousCbStatusSelectedItem = null;
             }
@@ -169,6 +171,7 @@ namespace DVLDPresentationLayer
 
                 frmNewLDLApplication frm = new frmNewLDLApplication(LDLApplication,dgvLDLApplications.SelectedRows[0].Index);
                 frm.OnEditedLDLApplication += _EditDataRowInDGV;
+                frm.OnEditedApplicantPersonalInfo += _EditApplicantPersonalInfo;
                 frm.ShowDialog();
             }
         }
@@ -451,22 +454,31 @@ namespace DVLDPresentationLayer
             _DgvUtilityLib.EditOneColumnValueInDgv<byte>(dgvLDLApplications, "Passed Tests", PassedTests, DgvRowIndex);
         }
 
+        private void _EditApplicantPersonalInfo(clsPerson UpdatedPersonInfo, int LDLAppDGVRowIndex)
+        {
+            _DgvUtilityLib.EditOneColumnValueInDgv(dgvLDLApplications, "Full Name", UpdatedPersonInfo.FullName, LDLAppDGVRowIndex);
+
+            _DgvUtilityLib.EditOneColumnValueInDgv(dgvLDLApplications, "National No.", UpdatedPersonInfo.NationalNo, LDLAppDGVRowIndex);
+        }
+
         private void tsmiScheduleVisionTest_Click(object sender, EventArgs e)
         {
             if (_CanScheduleTest())
             {
                 frmTestsAppointments frm = new frmTestsAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index, clsTestType.enTestType.VisionTest);
                 frm.AfterPassingTest += _EditRowForPassedTest;
+                frm.OnEditingApplicantPersonalInfo += _EditApplicantPersonalInfo;
                 frm.ShowDialog();
             }
         }
-
+            
         private void tsmiScheduleWrittenTest_Click(object sender, EventArgs e)
         {
             if(_CanScheduleTest())
             {
                 frmTestsAppointments frm = new frmTestsAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index, clsTestType.enTestType.WrittenTest);
                 frm.AfterPassingTest += _EditRowForPassedTest;
+                frm.OnEditingApplicantPersonalInfo += _EditApplicantPersonalInfo;
                 frm.ShowDialog();
             }
         }
@@ -477,6 +489,7 @@ namespace DVLDPresentationLayer
             {
                 frmTestsAppointments frm = new frmTestsAppointments((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index, clsTestType.enTestType.StreetTest);
                 frm.AfterPassingTest += _EditRowForPassedTest;
+                frm.OnEditingApplicantPersonalInfo += _EditApplicantPersonalInfo;
                 frm.ShowDialog();
             }
         }
@@ -500,8 +513,9 @@ namespace DVLDPresentationLayer
                 return;
             }
 
-           frmIssueDrivingLicense frm = new frmIssueDrivingLicense((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index);
+            frmIssueDrivingLicense frm = new frmIssueDrivingLicense((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index);
             frm.AfterLicenseIssuance += _EditAppStatusToCompleted;
+            frm.OnEditedApplicantPersonalInfo += _EditApplicantPersonalInfo;
             frm.ShowDialog();
         }
 
@@ -526,6 +540,7 @@ namespace DVLDPresentationLayer
             }
 
             frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsPerson.GetPersonID(dgvLDLApplications.SelectedRows[0].Cells["National No."].Value.ToString()));
+            frm.OnEditedDriverPersonalInfo += _EditApplicantPersonalInfo;
             frm.ShowDialog();
         }
 
@@ -537,7 +552,8 @@ namespace DVLDPresentationLayer
                 return;
             }
 
-            frmApplicationDetails frm = new frmApplicationDetails((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value);
+            frmApplicationDetails frm = new frmApplicationDetails((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index);
+            frm.OnApplicantEditedIfo += _EditApplicantPersonalInfo;
             frm.ShowDialog();
         }
 

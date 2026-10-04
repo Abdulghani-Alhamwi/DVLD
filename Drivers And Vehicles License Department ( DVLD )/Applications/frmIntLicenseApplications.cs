@@ -164,6 +164,8 @@ namespace DVLDPresentationLayer.Licenses
             else
             {
                 txtFilter.Visible = true;
+                txtFilter.Focus();
+
                 cbIsActive.Visible = false;
                 _PreviousCbIsActiveSelectedItem = null;
             }

@@ -168,7 +168,7 @@
             this.uctrlpersonInfoByFilter.Size = new System.Drawing.Size(1089, 487);
             this.uctrlpersonInfoByFilter.TabIndex = 0;
             this.uctrlpersonInfoByFilter.OnPersonSelected += new DVLDPresentationLayer.ctrlPersonDetailsByFilter.PersonSelectedEventHandler(this.uctrlpersonInfoByFilter_OnPersonSelected);
-            this.uctrlpersonInfoByFilter.AfterEditingPerson += new System.Action(this.uctrlpersonInfoByFilter_AfterEditingPerson);
+            this.uctrlpersonInfoByFilter.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonDetails.PersonEditedInfo(this.uctrlpersonInfoByFilter_OnPersonEditedInfo);
             // 
             // tpLoginInfo
             // 

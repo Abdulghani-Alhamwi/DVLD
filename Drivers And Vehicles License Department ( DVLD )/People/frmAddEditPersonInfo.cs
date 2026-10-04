@@ -14,7 +14,7 @@ namespace DVLDPresentationLayer
     {
         internal delegate void AddedNewPersonEventHandler (int PersonID);
         internal event AddedNewPersonEventHandler AfterAddingNewPerson;
-        internal event Action AfterEditingPersonInfo;
+        internal event Action<clsPerson> AfterEditingPersonInfo;
 
         internal delegate void SavedNewInfo(object[] NewPersonDetails);
         internal delegate void SavedEditedInfo(object[] ModifiedPersonDetails,int PeopleDgvRowIndex);
@@ -239,7 +239,7 @@ namespace DVLDPresentationLayer
             lnlblRemove.Visible = false;
         }
 
-        private object[] _GetCurrentValuesInArray()
+        private object[] _GetEnteredValuesInArray()
         {
             object[] Values = new object[] {lblPersonID.Text,txtNationalNo.Text, txtFirstName.Text , txtSecondName.Text , txtThirdName.Text ,
             txtLastName.Text,(rbMale.Checked) ? "Male":"Female",dtpDateOfBirth.Value.ToShortDateString(),
@@ -336,15 +336,13 @@ namespace DVLDPresentationLayer
                     {
                         if (File.Exists(_SavedPersonalImagePath))
                             File.Delete(_SavedPersonalImagePath);
-
                     }    
 
-                    MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     AfterAddingNewPerson?.Invoke(Person.PersonID);                    
-                    AfterEditingPersonInfo?.Invoke();
+                    AfterEditingPersonInfo?.Invoke(Person);
 
-                    object[] NewDetails = _GetCurrentValuesInArray();
+                    object[] NewDetails = _GetEnteredValuesInArray();
                     AfterSavingNewInfo?.Invoke(NewDetails);
                     AfterSavingEditedInfo?.Invoke(NewDetails, _PeopleDGVRowIndex);
 
@@ -353,6 +351,8 @@ namespace DVLDPresentationLayer
                         _SetTitles(clsPerson.enMode.Update);
                         _Person = Person;
                     }
+
+                    MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                     MessageBox.Show("Saving Failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);

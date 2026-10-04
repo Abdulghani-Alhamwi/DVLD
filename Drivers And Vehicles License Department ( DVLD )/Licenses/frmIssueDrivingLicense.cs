@@ -9,18 +9,19 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
     public partial class frmIssueDrivingLicense : Form
     {
         internal event Action<int> AfterLicenseIssuance;
+        public event Action<clsPerson, int> OnEditedApplicantPersonalInfo;
 
         clsLocalLicense _LocalLicense;
-        int _LDLAppDGVRowIndex;
+        int _DGVRowIndex;
 
-        public frmIssueDrivingLicense(int LDLAppID,int DGVRowIndex)
+        public frmIssueDrivingLicense(int LDLAppID,int _DGVRowIndex)
         {
             InitializeComponent();
 
             uctrlDLApplicationInfo.LoadLDLAppInfo(LDLAppID);
             lblLicenseFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsLicenseClass.GetLicenseClassFees(uctrlDLApplicationInfo.LDLApplication.LicenseClass.ID),
                 enCustomNumberFormat.NoJustZerosAfterFraction);
-            _LDLAppDGVRowIndex = DGVRowIndex;
+            this._DGVRowIndex = _DGVRowIndex;
         }
 
         private bool _SaveLicenseInfo(clsLocalDrivingLicenseApp LDLApplication ,int DriverID)
@@ -64,7 +65,7 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
         {
             if (_IssueLicense())
             {
-                AfterLicenseIssuance?.Invoke(_LDLAppDGVRowIndex);
+                AfterLicenseIssuance?.Invoke(_DGVRowIndex);
                 MessageBox.Show($"License Issued Successfully With License ID = {_LocalLicense.LicenseID}", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 uctrlDLApplicationInfo.ShowLicenseInfoLabel(_LocalLicense.LicenseID);
             }
@@ -80,6 +81,11 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void uctrlDLApplicationInfo_OnPersonEditedInfo(clsPerson UpdatedPersonInfo)
+        {
+            OnEditedApplicantPersonalInfo?.Invoke(UpdatedPersonInfo, _DGVRowIndex);
         }
     }
 }

@@ -42,5 +42,11 @@ namespace DVLDPresentationLayer
                     pbPersonalImage.Image = (Person.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
             }
         }
+
+        public void EditDriverNameAndNationalNo(string NewFullName,string NewNationalNo)
+        {
+            lblPersonFullName.Text = NewFullName;
+            lblNationalNo.Text = NewNationalNo;
+        }
     }
 }

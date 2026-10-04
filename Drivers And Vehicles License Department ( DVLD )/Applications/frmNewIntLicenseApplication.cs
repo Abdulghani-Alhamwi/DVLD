@@ -34,7 +34,11 @@ namespace DVLDPresentationLayer.Applications
             lblExpirationDate.Text = _InternationalLicenseExpDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
             lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewInternationlLicense),
                 enCustomNumberFormat.NoJustZerosAfterFraction);
-            lblUserName.Text = clsGeneralUtility.DecryptUserName(clsUser.GetUserName(clsGlobalSettings.CurrentUserID));
+
+            string EncryptedUsername = "", UsernameIV = "";
+            clsUser.GetUserName(clsGlobalSettings.CurrentUserID, ref EncryptedUsername, ref UsernameIV);
+
+            lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
         }
 
         private bool _AddNewApplication(int DriverID, out int NewApplicationID)
@@ -81,9 +85,15 @@ namespace DVLDPresentationLayer.Applications
             this.Close();
         }
 
+        private void _EditDriverPersonalInfo(clsPerson UpdatedPersonInfo)
+        {
+            uctrlLDLDetailsByFilter.uctrlLDLDetails.EditDriverNameAndNationalNo(UpdatedPersonInfo.FullName, UpdatedPersonInfo.NationalNo);
+        }
+
         private void lnlblShowLicenseHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID(_DriverID));
+            frm.OnUpdatedDriverInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
         }
 

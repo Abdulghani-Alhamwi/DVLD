@@ -226,6 +226,12 @@ namespace DVLDPresentationLayer
                 }
         }
 
+        private void _EditDriverPersonalInfo(clsPerson UpdatedPersonInfo,int DGVRowIndex)
+        {
+            _DgvUtilityLib.EditOneColumnValueInDgv(dgvDrivers, "Full Name", UpdatedPersonInfo.FullName, DGVRowIndex);
+            _DgvUtilityLib.EditOneColumnValueInDgv(dgvDrivers, "National No.", UpdatedPersonInfo.NationalNo, DGVRowIndex);
+        }
+
         private void tsmiShowPersonLicenseHistory_Click(object sender, EventArgs e)
         {
             if (dgvDrivers.SelectedRows.Count > 1)
@@ -234,7 +240,8 @@ namespace DVLDPresentationLayer
                 return;
             }
 
-            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID((int)dgvDrivers.SelectedRows[0].Cells["Driver ID"].Value));
+            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID((int)dgvDrivers.SelectedRows[0].Cells["Driver ID"].Value), dgvDrivers.SelectedRows[0].Index);
+            frm.OnEditedDriverPersonalInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
         }
 

@@ -14,7 +14,7 @@ namespace DVLDPresentationLayer
         public delegate void PersonSelectedEventHandler(int PersonID);
         public event PersonSelectedEventHandler OnPersonSelected;
 
-        public event Action AfterEditingPerson;
+        public event ctrlPersonDetails.PersonEditedInfo OnPersonEditedInfo;
 
         private string _PreviouslyFoundText = null;
 
@@ -146,9 +146,9 @@ namespace DVLDPresentationLayer
           uctrlPersonDetails.LoadPersonDetails(PersonID);
         }
 
-        private void uctrlPersonDetails_AfterEditingPersonInfo()
+        private void uctrlPersonDetails_OnPersonEditedInfo(clsPerson UpdatedPersonInfo)
         {
-            AfterEditingPerson?.Invoke();
+            OnPersonEditedInfo?.Invoke(UpdatedPersonInfo);
         }
     }
 }

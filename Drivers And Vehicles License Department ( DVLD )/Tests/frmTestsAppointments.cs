@@ -10,6 +10,7 @@ namespace DVLDPresentationLayer
     public partial class frmTestsAppointments : Form
     {
         public event Action<int> AfterPassingTest;
+        public event Action<clsPerson, int> OnEditingApplicantPersonalInfo;
 
         private string _LastColumnNameDgvSortedBy;
         private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDGVColumnSortDirection;
@@ -18,12 +19,12 @@ namespace DVLDPresentationLayer
         private clsTestType.enTestType _CurrentTestType;
 
         private int _LDLAppId;
-        private int _TestsDGVRowIndex;
+        private int _DGVRowIndex;
         private byte _TestTypeID;
         private int _LastBroughtAppointmentID;
         private string _PrimaryKeyViewedColumnName;
 
-        public frmTestsAppointments(int LDLApplicationID,int TestsDGVRowIndex, clsTestType.enTestType TestType)
+        public frmTestsAppointments(int LDLApplicationID,int DGVRowIndex, clsTestType.enTestType TestType)
         {
             InitializeComponent();
 
@@ -33,7 +34,7 @@ namespace DVLDPresentationLayer
             _CurrentDGVColumnSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
 
             _LDLAppId = LDLApplicationID;
-            _TestsDGVRowIndex = TestsDGVRowIndex;
+            _DGVRowIndex = DGVRowIndex;
             _CurrentTestType = TestType;
             _TestTypeID = clsTestType.GetTestTypeID(_CurrentTestType);
             _LastBroughtAppointmentID = -1;
@@ -181,7 +182,7 @@ namespace DVLDPresentationLayer
 
         private void _UpdateLDLAppDgv()
         {
-            AfterPassingTest.Invoke(_TestsDGVRowIndex);
+            AfterPassingTest.Invoke(_DGVRowIndex);
         }
 
         private void tsmiTakeTest_Click(object sender, EventArgs e)
@@ -238,6 +239,11 @@ namespace DVLDPresentationLayer
         private void dgvTestAppointments_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             _SortData(e);
+        }
+
+        private void uctrlDLApplicationInfo_OnPersonEditedInfo(clsPerson UpdatedPersonInfo)
+        {
+            OnEditingApplicantPersonalInfo?.Invoke(UpdatedPersonInfo, _DGVRowIndex);
         }
     }
 }

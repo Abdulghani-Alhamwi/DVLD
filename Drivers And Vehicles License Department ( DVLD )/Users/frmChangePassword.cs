@@ -8,9 +8,12 @@ namespace DVLDPresentationLayer
 {
     public partial class frmChangePassword : Form
     {
+        public event frmUserDetails.UserPersonalEditedInfo OnEditedPersonInfo;
+
         private int _UserID = -1;
         private string _Password = "";
         private byte[] _Salt = null;
+        private int _DGVRowIndex;
 
         public frmChangePassword(int UserID)
         {
@@ -18,10 +21,18 @@ namespace DVLDPresentationLayer
             _LoadInfo(UserID);
         }
 
+        public frmChangePassword(int UserID,int UsersDGVRowIndex)
+        {
+            InitializeComponent();
+            _LoadInfo(UserID);
+            _DGVRowIndex = UsersDGVRowIndex;
+        }
+
         private void _LoadInfo(int UserID)
         {
             if (!uctrlUserDetails.LoadUserInformation(UserID))
                 this.Close();
+
             else
             {
                 _UserID = UserID;
@@ -41,7 +52,7 @@ namespace DVLDPresentationLayer
 
         private bool _ValidateCurrentPassword()
         {
-            if(txtCurrentPassword.Text == "" || string.IsNullOrWhiteSpace(txtPasswordConfirmation.Text))
+            if(txtCurrentPassword.Text == "" || string.IsNullOrWhiteSpace(txtCurrentPassword.Text))
                 clsGeneralUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password cannot be empty!", null);
 
             else if (clsGeneralUtility.HashWithSaltPassword(txtCurrentPassword.Text, ref _Salt) == _Password)
@@ -117,10 +128,17 @@ namespace DVLDPresentationLayer
                 {
                     MessageBox.Show("Password Changed Successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clsGlobalSettings.LoginInfoChanged = true;
+
+                    btnSave.Enabled = false;
                 }
                 else
                     MessageBox.Show("Changing password failed.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void uctrlUserDetails_OnPersonEditedInfo(clsPerson UpdatedPersonInfo)
+        {
+            OnEditedPersonInfo?.Invoke(UpdatedPersonInfo,_DGVRowIndex);
         }
     }
 }

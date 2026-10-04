@@ -16,6 +16,8 @@ namespace Utility_Library
         public enum enCustomDateFormat : byte { NumericFormat = 0, DateAppreviatedMonthName = 1, DateTimeCustomFormat = 2 }
         public enum enCustomNumberFormat : byte { With4ZerosAfterFraction = 0, NoJustZerosAfterFraction = 1 }
 
+        private static byte[] SaltForUsernameHash = new byte[16];
+
         [DllImport("user32.dll")]
         private static extern int GetWindowLong(IntPtr windowHandle, int index);
 
@@ -62,45 +64,196 @@ namespace Utility_Library
                 rn.GetBytes(Salt);
                 rn.Dispose();
             }
-            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(Password, Salt, 10000, HashAlgorithmName.SHA256);
+
+            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(Password, Salt, 50000, HashAlgorithmName.SHA256);
             byte[] HashWithSalt = PBKDF2.GetBytes(32);
+            PBKDF2.Dispose();
+
+            return Convert.ToBase64String(HashWithSalt);
+         }
+
+        /// <summary>
+        /// Hash username to search for the hashed value of it in the database to find specific user when login or when checking for an entered username if it is exists.
+        /// </summary>
+        
+        public static string HashUsernameForLookUp(string StringToHash)
+        {
+            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(StringToHash, SaltForUsernameHash, 1, HashAlgorithmName.SHA256);
+            byte[] HashWithSalt = PBKDF2.GetBytes(16);
             PBKDF2.Dispose();
 
             return Convert.ToBase64String(HashWithSalt);
         }
 
-        private static byte[] _Key = new byte[16];
-        private static byte[] _IV = new byte[16];
-        public static string EncryptUserName(string UserName)
+        private static void _GetAppriateEnKeySize(ref byte KeySize)
         {
-            byte[] UserNameInBytes = Encoding.UTF8.GetBytes(UserName);
+            if (KeySize > 32 || KeySize > 16)
+                KeySize = 32;
+
+            else if (KeySize > 8)
+                KeySize = 16;
+
+            else
+                KeySize = 8;
+        }
+
+        /// <summary>
+        /// Generate encryption key for one time and store it in credntial manager using CredentialManager class and reuse the encryption key when you want.
+        /// </summary>
+        public static byte[] GenerateEncryptionKey(byte KeySize)
+        {
+            _GetAppriateEnKeySize(ref KeySize);
+            byte[] EncryptionKey = new byte[KeySize];
+
+            RandomNumberGenerator rn = RandomNumberGenerator.Create();
+            rn.GetBytes(EncryptionKey);
+            rn.Dispose();
+
+            return EncryptionKey;
+        }
+
+        /// <summary>
+        /// Generates a new IV for each encrypted field and each time that field's value is updated, following security best practices.
+        /// </summary>
+        public static byte[] GenerateNewInitializationVector()
+        {
+            byte[] IV = new byte[16];
+
+            RandomNumberGenerator rn = RandomNumberGenerator.Create();
+            rn.GetBytes(IV);
+            rn.Dispose();
+
+            return IV;
+        }
+
+        public static class CredentialManager
+        {
+            private const int Credential_GenericType = 1;
+            private const int CredentialLocation_LocalMachine = 2;
+
+            [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+            private struct Credential
+            {
+                public int Flags;
+                public int Type;
+
+                public string TargetName;
+                public string Comment;
+
+                public System.Runtime.InteropServices.ComTypes.FILETIME LastWritten;
+
+                public int CredentialBlobSize;
+                public IntPtr CredentialBlob_Ptr;
+
+                public int CredentialPersistLocation;
+
+                public int AttributeCount;
+                public IntPtr Attributes;
+
+                public string TargetAlias;
+                public string UserName;
+            }
+
+            [DllImport("Advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+            private static extern bool CredWrite(ref Credential Credential, uint Flags);
+
+            [DllImport("Advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+            private static extern bool CredRead(string TargetName, int Type, int Flags, out IntPtr Credential);
+
+            [DllImport("Advapi32.dll")]
+
+            private static extern void CredFree(IntPtr Credential);
+
+            /// <summary>
+            /// Store encryption key securly in windows credintial manager one time and re use in application using GetEncryptionKeyMethod.
+            /// </summary>
+            public static void StoreEncryptionKeySecurly(string KeyName, byte[] EncryptionKey)
+            {
+                IntPtr CredentialBlob_Ptr = Marshal.AllocCoTaskMem(EncryptionKey.Length);
+
+                Marshal.Copy(EncryptionKey, 0, CredentialBlob_Ptr, EncryptionKey.Length);
+
+                Credential credential = new Credential
+                {
+                    Type = Credential_GenericType,
+                    TargetName = KeyName,
+                    CredentialBlobSize = EncryptionKey.Length,
+                    CredentialBlob_Ptr = CredentialBlob_Ptr,
+                    CredentialPersistLocation = CredentialLocation_LocalMachine
+                };
+
+                if (!CredWrite(ref credential, 0))
+                {
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
+                }
+
+                Marshal.FreeCoTaskMem(CredentialBlob_Ptr);
+            }
+
+            public static bool GetEncryptionKey(string KeyName, out byte[] EncryptionKey)
+            {
+                IntPtr credentialPointer;
+
+                if (!CredRead(KeyName, Credential_GenericType, 0, out credentialPointer))
+                {
+                    EncryptionKey = new byte[] { };
+                    return false;
+                }
+
+                Credential credential = Marshal.PtrToStructure<Credential>(credentialPointer);
+
+                EncryptionKey = new byte[credential.CredentialBlobSize];
+
+                Marshal.Copy(credential.CredentialBlob_Ptr, EncryptionKey, 0, credential.CredentialBlobSize);
+                
+                CredFree(credentialPointer);
+
+                return true;
+            }
+
+        }
+
+        public static string EncryptString(byte[] EncryptionKey, string StringToEncrypt, out byte[] IV)
+        {
+            byte[] SendedStringInBytes = Encoding.UTF8.GetBytes(StringToEncrypt);
 
             Aes aes = Aes.Create();
-            aes.Key = _Key;
-            aes.IV = _IV;
+            aes.Key = EncryptionKey;
+
+            IV = GenerateNewInitializationVector();
+            aes.IV = IV;
 
             ICryptoTransform Encryptor = aes.CreateEncryptor();
             aes.Dispose();
-            byte[] EncryptedUserName = Encryptor.TransformFinalBlock(UserNameInBytes, 0, UserNameInBytes.Length);
+
+            byte[] EncryptedString = Encryptor.TransformFinalBlock(SendedStringInBytes, 0, SendedStringInBytes.Length);
             Encryptor.Dispose();
 
-            return Convert.ToBase64String(EncryptedUserName);
+            return Convert.ToBase64String(EncryptedString);
         }
 
-        public static string DecryptUserName(string UserName)
+        public static string EncryptString(byte[] EncryptionKey, string StringToEncrypt)
         {
-            byte[] EncryptedUserName = Convert.FromBase64String(UserName);
+            return EncryptString(EncryptionKey, StringToEncrypt, out byte[] IV);
+        }
+
+        public static string DecryptString(byte[] EncryptionKey, string StringToDecrypt, string IV)
+        {
+            byte[] EncryptedString = Convert.FromBase64String(StringToDecrypt);
 
             Aes aes = Aes.Create();
-            aes.Key = _Key;
-            aes.IV = _IV;
+            aes.Key = EncryptionKey;
+
+            byte[] OriginalIV = Convert.FromBase64String(IV);
+            aes.IV = OriginalIV;
 
             ICryptoTransform Decryptor = aes.CreateDecryptor();
             aes.Dispose();
-            byte[] DecryptedUserName = Decryptor.TransformFinalBlock(EncryptedUserName, 0, EncryptedUserName.Length);
+
+            byte[] DecryptedString = Decryptor.TransformFinalBlock(EncryptedString, 0, EncryptedString.Length);
             Decryptor.Dispose();
 
-            return Encoding.UTF8.GetString(DecryptedUserName);
+            return Encoding.UTF8.GetString(DecryptedString);
         }
 
         public static void EnableErrorProvider(ErrorProvider erControl, Control control, string ErrorMessage, CancelEventArgs CancelArgs = null)

@@ -3,6 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
+using DVLDPresentationLayer.Controls;
 using Utility_Library;
 using static Utility_Library.clsGeneralUtility;
 
@@ -15,6 +16,8 @@ namespace DVLDPresentationLayer.Core
 
         internal delegate void EditedLDLApplication(object[] ModifiedAppDetails,int DGVRowIndex);
         internal event EditedLDLApplication OnEditedLDLApplication;
+
+        public event Action<clsPerson,int> OnEditedApplicantPersonalInfo;
 
         private int _ApplicantPersonID = -1;
         clsLocalDrivingLicenseApp _LDLApplication;
@@ -74,7 +77,11 @@ namespace DVLDPresentationLayer.Core
             cbLicenseClass.SelectedIndex = _LicenseClassesDataView.Find(_LDLApplication.LicenseClass.ClassName);
             lblApplicationDate.Text = _LDLApplication.ApplicationDate.ToShortDateString();
             lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(_LDLApplication.PaidApplicationFees, enCustomNumberFormat.NoJustZerosAfterFraction);
-            lblUserName.Text = clsGeneralUtility.DecryptUserName(clsUser.GetUserName(_LDLApplication.CreatedByUserID));
+
+            string EncryptedUsername = "", UsernameIV = "";
+            clsUser.GetUserName(_LDLApplication.CreatedByUserID, ref EncryptedUsername, ref UsernameIV);
+
+            lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
         }
 
         private bool _MoveToNextTab()
@@ -127,7 +134,7 @@ namespace DVLDPresentationLayer.Core
 
             lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewLocalDrivingLicense),
                 enCustomNumberFormat.NoJustZerosAfterFraction);
-            lblUserName.Text = clsGlobalSettings.CurrentUserName;
+            lblUserName.Text = clsGlobalSettings.CurrentUsername;
         }
 
         private void _AddLicenseClassesToComboBox()
@@ -205,30 +212,34 @@ namespace DVLDPresentationLayer.Core
             byte LicenseClassID = clsLicenseClass.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
             clsApplication.enApplicationStatus PersonApplicationStatus = 0;
 
-            if (!clsLocalDrivingLicenseApp.HasPersonApplied(_ApplicantPersonID, LicenseClassID, ref PersonApplicationStatus) && clsLocalDrivingLicenseApp.IsPersonAgeAppropriate(_ApplicantPersonID,LicenseClassID))
-                return true;
+            if (!clsLocalDrivingLicenseApp.HasPersonApplied(_ApplicantPersonID, LicenseClassID, ref PersonApplicationStatus))
+            {
+                if (clsLocalDrivingLicenseApp.IsPersonAgeAppropriate(_ApplicantPersonID, LicenseClassID))
+                    return true;
+
+                else
+                {
+                    MessageBox.Show($"Person is younger than the minimum allowed age to apply for this license class which is : {clsLicenseClass.GetMinimumAllowedAge(LicenseClassID)} years.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+            }
 
             else
             {
-                if(PersonApplicationStatus != 0)
+                switch (PersonApplicationStatus)
                 {
-                    switch(PersonApplicationStatus)
-                    {
-                        case clsApplication.enApplicationStatus.New:
-                            MessageBox.Show("Choose another license class,the selected person already has an active application of this selected class", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            break;
+                    case clsApplication.enApplicationStatus.New:
+                        MessageBox.Show("Choose another license class,the selected person already has an active application of this selected class", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
 
-                        case clsApplication.enApplicationStatus.Completed:
-                            MessageBox.Show($"Choose another license class,the selected person already has an active application for the selected class with ID : {clsLocalDrivingLicenseApp.GetLDLApplicationID(_ApplicantPersonID)}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            break;
+                    case clsApplication.enApplicationStatus.Completed:
+                        MessageBox.Show($"Choose another license class,the selected person already has an active application for the selected class with ID : {clsLocalDrivingLicenseApp.GetLDLApplicationID(_ApplicantPersonID)}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
 
-                        case clsApplication.enApplicationStatus.Canceled:
-                            return true;
-                    }
+                    case clsApplication.enApplicationStatus.Canceled:
+                        return true;
                 }
-           
-                else
-                    MessageBox.Show($"Person is younger than the minimum allowed age to apply for this license class which is : {clsLicenseClass.GetMinimumAllowedAge(LicenseClassID)} years.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return false;
             }
@@ -278,11 +289,16 @@ namespace DVLDPresentationLayer.Core
                 if (_CanPersonApply())
                 {
                     _SaveApplicationData();
+                    btnSave.Enabled = false;
                 }
             }
             else
                 MessageBox.Show("Select a person or add new person first!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private void uctrlPersonDetailsByFilter_OnPersonEditedInfo(clsPerson UpdatedPersonInfo)
+        {
+            OnEditedApplicantPersonalInfo?.Invoke(UpdatedPersonInfo, _DGVRowIndex);
+        }
     }
 }
