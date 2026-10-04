@@ -110,6 +110,7 @@
             this.txtCurrentPassword.Location = new System.Drawing.Point(367, 588);
             this.txtCurrentPassword.MaxLength = 20;
             this.txtCurrentPassword.Name = "txtCurrentPassword";
+            this.txtCurrentPassword.PasswordChar = '*';
             this.txtCurrentPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtCurrentPassword.Size = new System.Drawing.Size(256, 36);
             this.txtCurrentPassword.TabIndex = 0;
