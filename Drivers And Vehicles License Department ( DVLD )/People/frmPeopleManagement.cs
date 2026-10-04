@@ -28,6 +28,7 @@ namespace DVLDPresentationLayer
             _LastBroughtPersonID = -1;
             _PrimaryKeyViewedColumnName = "Person ID";
         }
+
         private void _AddDropDownItems()
         {
             object[] Items = new object[dgvPeople.Columns.Count];
@@ -43,6 +44,7 @@ namespace DVLDPresentationLayer
             cbFilterBy.Items.AddRange(Items);
             cbFilterBy.SelectedItem = "None";
         }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();

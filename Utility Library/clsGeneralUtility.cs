@@ -18,6 +18,13 @@ namespace Utility_Library
 
         private static byte[] SaltForUsernameHash = new byte[16];
 
+        private const int _ExtendedStyleIndex = -20;
+        private const int _ClientEdgeExtendedStyle = 0x00000200;
+        private const int _NoSizeFlag = 0x0001;
+        private const int _NoMoveFlag = 0x0002;
+        private const int _NoZOrderFlag = 0x0004;
+        private const int _FrameChangedFlag = 0x0020;
+
         [DllImport("user32.dll")]
         private static extern int GetWindowLong(IntPtr windowHandle, int index);
 
@@ -27,13 +34,6 @@ namespace Utility_Library
         [DllImport("user32.dll")]
         private static extern bool SetWindowPos(IntPtr windowHandle, IntPtr insertAfterHandle,
                               int x, int y, int width, int height, int flags);
-
-        private const int _ExtendedStyleIndex = -20;
-        private const int _ClientEdgeExtendedStyle = 0x00000200;
-        private const int _NoSizeFlag = 0x0001;
-        private const int _NoMoveFlag = 0x0002;
-        private const int _NoZOrderFlag = 0x0004;
-        private const int _FrameChangedFlag = 0x0020;
 
         /// <summary>
         /// Change Win32 style to remove the MDI client 3d border (sunken)
@@ -160,24 +160,26 @@ namespace Utility_Library
             [DllImport("Advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
             private static extern bool CredRead(string TargetName, int Type, int Flags, out IntPtr Credential);
 
-            [DllImport("Advapi32.dll")]
+            [DllImport("Advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+            private static extern bool CredDelete(string TargetName, int Type, int Flags);
 
+            [DllImport("Advapi32.dll")]
             private static extern void CredFree(IntPtr Credential);
 
             /// <summary>
             /// Store encryption key securly in windows credintial manager one time and re use in application using GetEncryptionKeyMethod.
             /// </summary>
-            public static void StoreEncryptionKeySecurly(string KeyName, byte[] EncryptionKey)
+            public static void StoreCredential(string TargetName, byte[] CredentialToStore)
             {
-                IntPtr CredentialBlob_Ptr = Marshal.AllocCoTaskMem(EncryptionKey.Length);
+                IntPtr CredentialBlob_Ptr = Marshal.AllocCoTaskMem(CredentialToStore.Length);
 
-                Marshal.Copy(EncryptionKey, 0, CredentialBlob_Ptr, EncryptionKey.Length);
+                Marshal.Copy(CredentialToStore, 0, CredentialBlob_Ptr, CredentialToStore.Length);
 
                 Credential credential = new Credential
                 {
                     Type = Credential_GenericType,
-                    TargetName = KeyName,
-                    CredentialBlobSize = EncryptionKey.Length,
+                    TargetName = TargetName,
+                    CredentialBlobSize = CredentialToStore.Length,
                     CredentialBlob_Ptr = CredentialBlob_Ptr,
                     CredentialPersistLocation = CredentialLocation_LocalMachine
                 };
@@ -190,27 +192,48 @@ namespace Utility_Library
                 Marshal.FreeCoTaskMem(CredentialBlob_Ptr);
             }
 
-            public static bool GetEncryptionKey(string KeyName, out byte[] EncryptionKey)
+            public static void StoreCredential(string TargetName,string Credential)
+            {
+                byte[] CredentialByteArray = Encoding.UTF8.GetBytes(Credential);
+                StoreCredential(TargetName, CredentialByteArray);
+            }
+
+            public static bool GetStoredCredential(string TargetName, out byte[] Credential)
             {
                 IntPtr credentialPointer;
 
-                if (!CredRead(KeyName, Credential_GenericType, 0, out credentialPointer))
+                if (!CredRead(TargetName, Credential_GenericType, 0, out credentialPointer))
                 {
-                    EncryptionKey = new byte[] { };
+                    Credential = new byte[] { };
                     return false;
                 }
 
                 Credential credential = Marshal.PtrToStructure<Credential>(credentialPointer);
 
-                EncryptionKey = new byte[credential.CredentialBlobSize];
+                Credential = new byte[credential.CredentialBlobSize];
 
-                Marshal.Copy(credential.CredentialBlob_Ptr, EncryptionKey, 0, credential.CredentialBlobSize);
+                Marshal.Copy(credential.CredentialBlob_Ptr, Credential, 0, credential.CredentialBlobSize);
                 
                 CredFree(credentialPointer);
 
                 return true;
             }
 
+            public static string GetStoredCredential(string TargetName)
+            {
+                if (GetStoredCredential(TargetName, out byte[] StoredCredential))
+                {
+                    return Encoding.UTF8.GetString(StoredCredential);
+                }
+
+                else
+                    return null;
+            }
+
+            public static bool DeleteStoredCredential(string TargetName)
+            {
+                return CredDelete(TargetName, Credential_GenericType, 0);
+            }
         }
 
         public static string EncryptString(byte[] EncryptionKey, string StringToEncrypt, out byte[] IV)

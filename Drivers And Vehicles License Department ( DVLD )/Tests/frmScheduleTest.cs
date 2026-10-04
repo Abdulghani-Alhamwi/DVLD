@@ -278,7 +278,7 @@ namespace DVLDPresentationLayer
 
         private void mtxtAppointmentTime_Click(object sender, EventArgs e)
         {
-          mtxtAppointmentTime.Text = "";
+            mtxtAppointmentTime.Text = "";
         }
 
         private void mtxtAppointmentTime_Validating(object sender, CancelEventArgs e)

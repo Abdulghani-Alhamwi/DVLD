@@ -12,6 +12,7 @@ namespace DVLDPresentationLayer
         public event Action<clsPerson,int> OnUpdatedPersonalInfo;
 
         private int _PeopleDGVRowIndex;
+
         public frmPersonDetails(int PersonID)
         {
             InitializeComponent();

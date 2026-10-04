@@ -11,8 +11,8 @@ namespace Utility_Library
         public enum enDataGridViewSortDirection : byte { Ascending = 0, Descending = 1 }
 
         public static byte WantedNumOfRowsFromDB = 10;
-        private int _NumberOfDGVAddedRows;
 
+        private int _NumberOfDGVAddedRows;
         private int _NumberOfRowsToOffset;
         public int NumberOfRowsToOffset { get { return _NumberOfRowsToOffset; } }
 
