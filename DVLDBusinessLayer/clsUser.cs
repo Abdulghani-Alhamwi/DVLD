@@ -176,9 +176,9 @@ namespace DVLDBusinessLayer
             return clsUsersData.IsUserExists(PersonID);
         }
 
-        public static bool IsUserAlreadyExists(string Username)
+        public static bool IsUserAlreadyExists(string UsernameHash)
         {
-            return clsUsersData.IsUserAlreadyExists(Username);
+            return clsUsersData.IsUserAlreadyExists(UsernameHash);
         }
 
         public static clsUser Find(int UserID)

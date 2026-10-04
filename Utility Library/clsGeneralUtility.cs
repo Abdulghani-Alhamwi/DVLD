@@ -255,11 +255,6 @@ namespace Utility_Library
             return Convert.ToBase64String(EncryptedString);
         }
 
-        public static string EncryptString(byte[] EncryptionKey, string StringToEncrypt)
-        {
-            return EncryptString(EncryptionKey, StringToEncrypt, out byte[] IV);
-        }
-
         public static string DecryptString(byte[] EncryptionKey, string StringToDecrypt, string IV)
         {
             byte[] EncryptedString = Convert.FromBase64String(StringToDecrypt);

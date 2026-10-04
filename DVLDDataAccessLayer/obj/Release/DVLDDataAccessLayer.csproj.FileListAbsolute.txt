@@ -1,0 +1,9 @@
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\bin\Release\DVLDDataAccessLayer.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\bin\Release\DVLDDataAccessLayer.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\bin\Release\Utility Library.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\bin\Release\Utility Library.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\obj\Release\DVLDDataAccessLayer.csproj.AssemblyReference.cache
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\obj\Release\DVLDDataAccessLayer.csproj.CoreCompileInputs.cache
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\obj\Release\DVLDData.BCCB9602.Up2Date
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\obj\Release\DVLDDataAccessLayer.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\obj\Release\DVLDDataAccessLayer.pdb

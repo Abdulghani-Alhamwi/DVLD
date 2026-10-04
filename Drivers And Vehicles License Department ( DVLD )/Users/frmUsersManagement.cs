@@ -350,8 +350,8 @@ namespace DVLDPresentationLayer
                     dtUsersInfo = clsUser.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
                         _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), null);
 
-                else if (cbFilterBy.SelectedItem.ToString() == "UserName")
-                    dtUsersInfo = clsUser.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), clsGeneralUtility.EncryptString(clsGlobalSettings.EncryptionKey, txtFilter.Text),
+                else if (cbFilterBy.SelectedItem.ToString() == "Username")
+                    dtUsersInfo = clsUser.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), clsGeneralUtility.HashUsernameForLookUp(txtFilter.Text),
                         _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection),null);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Is Active")
@@ -368,8 +368,8 @@ namespace DVLDPresentationLayer
                     dtUsersInfo = clsUser.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
                         _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), _LastBroughtUserID, _DgvUtilityLib.NumberOfRowsToOffset, null);
 
-                else if (cbFilterBy.SelectedItem.ToString() == "UserName")
-                    dtUsersInfo = clsUser.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), clsGeneralUtility.EncryptString(clsGlobalSettings.EncryptionKey, txtFilter.Text),
+                else if (cbFilterBy.SelectedItem.ToString() == "Username")
+                    dtUsersInfo = clsUser.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), clsGeneralUtility.HashUsernameForLookUp(txtFilter.Text),
                         _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), _LastBroughtUserID, _DgvUtilityLib.NumberOfRowsToOffset, null);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Is Active")
@@ -482,9 +482,9 @@ namespace DVLDPresentationLayer
                 {
                     switch (cbFilterBy.SelectedItem)
                     {
-                        case "UserName":
+                        case "Username":
                             dtSortedInfo = clsUser.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvUsers.Columns[e.ColumnIndex].HeaderText,
-                                clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), cbFilterBy.SelectedItem.ToString(), clsGeneralUtility.EncryptString(clsGlobalSettings.EncryptionKey, txtFilter.Text), null);
+                                clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), cbFilterBy.SelectedItem.ToString(), clsGeneralUtility.HashUsernameForLookUp(txtFilter.Text), null);
                             break;
 
                         case "Full Name":

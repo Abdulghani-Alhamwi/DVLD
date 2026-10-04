@@ -13,6 +13,8 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _FixedQueryPart = "* FROM Users_View";
 
+        private static readonly string _UsernameLookupQueryPart = "Users_View.*  FROM Users inner join Users_View ON Users.UserID = Users_View.[User ID]";
+
         private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
 
         private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
@@ -418,14 +420,14 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
-        public static bool IsUserAlreadyExists(string Username)
+        public static bool IsUserAlreadyExists(string UsernameHash)
         {
             SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
 
-            string query = @"SELECT Found = 1 FROM Users WHERE Username = @Username";
+            string query = @"SELECT Found = 1 FROM Users WHERE UsernameHash = @UsernameHash";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@Username",Username);
+            command.Parameters.AddWithValue("@UsernameHash", UsernameHash);
 
             try
             {
@@ -680,16 +682,34 @@ namespace DVLDDataAccessLayer
                     ValueToFilterBy = clsGeneralUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
+
                 if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
                 {
+
+                    if (ColumnNameToFilterBy == "Username")
+                    {
+                        ColumnNameToFilterBy = "UsernameHash";
+                        query = "SELECT TOP (@WantedNumOfRecords) " + _UsernameLookupQueryPart;
+                    }
+
+                    else
                     query = _QueryWithoutPagination;
+
                     query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
                     query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtUserID, true, true, true);
                 }
 
                 else
                 {
-                    query = _QueryForOffsetPagination;
+                    if (ColumnNameToFilterBy == "Username")
+                    {
+                        ColumnNameToFilterBy = "UsernameHash";
+                        query = "SELECT " + _UsernameLookupQueryPart;
+                    }
+
+                    else
+                        query = _QueryForOffsetPagination;
+
                     query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
                     query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                     query += _OffsetPaginationQueryPart;
@@ -736,7 +756,7 @@ namespace DVLDDataAccessLayer
                 reader.Close();
             }
 
-            catch  { }
+            catch { }
 
             finally
             {
@@ -780,11 +800,20 @@ namespace DVLDDataAccessLayer
             if (string.IsNullOrEmpty(ValueToFilterBy)
                 || (ColumnNameToFilterBy == "Is Active" && ValueToFilterBy == "All"))
             {
+                query = _QueryWithoutPagination;
                 query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,true);
             }
 
             else
             {
+                if (ColumnNameToFilterBy == "Username")
+                {
+                    ColumnNameToFilterBy = "UsernameHash";
+                    query = "SELECT TOP (@WantedNumOfRecords) " + _UsernameLookupQueryPart;
+                }
+                else
+                    query = _QueryWithoutPagination;
+
                 if (ColumnNameToFilterBy == "Is Active")
                 {
                     if(ValueToFilterBy != "All")

@@ -1,0 +1,11 @@
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Release\DVLDBusinessLayer.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Release\DVLDBusinessLayer.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Release\DVLDDataAccessLayer.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Release\Utility Library.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Release\DVLDDataAccessLayer.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Release\Utility Library.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Release\DVLDBusinessLayer.csproj.AssemblyReference.cache
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Release\DVLDBusinessLayer.csproj.CoreCompileInputs.cache
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Release\DVLDBusi.7D6D57CA.Up2Date
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Release\DVLDBusinessLayer.dll
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Release\DVLDBusinessLayer.pdb

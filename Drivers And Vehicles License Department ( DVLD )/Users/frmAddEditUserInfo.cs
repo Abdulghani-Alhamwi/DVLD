@@ -174,7 +174,7 @@ namespace DVLDPresentationLayer
             if (txtUserName.Text == "" || string.IsNullOrWhiteSpace(txtUserName.Text))
                 clsGeneralUtility.EnableErrorProvider(erTextBox, txtUserName, "Username cannot be blank.", e);
 
-            else if (clsUser.IsUserAlreadyExists(clsGeneralUtility.EncryptString(clsGlobalSettings.EncryptionKey,txtUserName.Text)))
+            else if (clsUser.IsUserAlreadyExists(clsGeneralUtility.HashUsernameForLookUp(txtUserName.Text)))
                 clsGeneralUtility.EnableErrorProvider(erTextBox, txtUserName, "Username is already taken by another user. Please choose another username.", e);
 
             else
