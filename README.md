@@ -256,10 +256,13 @@ To solve this, DVLD uses **offset-based** and **cursor-based pagination** to ret
 
 ## 🔐 Security and Credential Protection :
 
-The authentication system applies protection mechanisms to user credentials before they are stored in the database.
+The authentication system applies multiple protection mechanisms to user credentials before they are stored or processed.
 
-* User names are encrypted before being stored in the database.
+* Usernames are encrypted before being stored in the database.
+* Each encrypted username uses its own Initialization Vector (IV), which is stored alongside the encrypted value.
+* A username hash is maintained to support exact username lookup without requiring the database to decrypt every stored username.
 * Passwords are hashed with a unique salt before being stored in the database.
+* The encryption key is stored in Windows Credential Manager, which provides protected credential storage, rather than being hard-coded in the source code or stored in the database.
 
 ### 🛡️ Authorization :
 
