@@ -827,3 +827,26 @@ for each encrypted field value -> we must aside to put a new IV field value spec
 76) For each encrypted field , if we want to search by the entered decrypted field for it with out having it with its encrypted shape or without having the initialization vector that is for that encrypted field therefore we do not have the IV value nor the encrypted value therefore we have to add a Hash field and each value is hashing for the decrypt value in order to hash the decrypted value entered by the user in order to lookup for that encrypted field and also the hash needs to be with out salt therefore even if identical hash values appeared here we have to because if we put salt for each hashed field by putting a salt field -> we wont be able to restore that field from database because we do not no which salt is for it .
 
 77) Windows Credential Manager can stores only byte array therefore the value that we want to store we must to convert it to byte array in order to be able to store it -> it allow us to store byte array values only.
+
+78) In Database execution plan we have scan types and join algorithms :
+Scan types :
+1] Table scan : full table scan , the slowest type.
+
+2] Index scan : can scan a part of the table or the whole to bring required records and it can be faster than the table scan type.
+
+3] Index seek : The fastest , it scan only what it needs to bring directly.
+
+Join algorithms:
+1] Nested loops : good for small tables but it is the slowest between the join algorithms and for large tables it is slow.
+
+2] Merge join : faster than the nested loops and it is very good when we have sorting.
+
+3] Hash join : The fastest between hash algorithms and it bring the thing it wants directly because under the hood it uses the hashing principle like the hash table and hash set use.
+
+-> SQL Hints : it is good to use temporally for emergency situations where the query is not using the index we want or the join algorithm we want therefore we can using SQL hint to force query to use the join algorithm we want and the index we want but it is temporally till we solve the problem root cause and we must solve the root cause because in development environment the SQL hint can solve the problem but in the production environment it can produce un expected behavior therefore we use it temporally till solving root issue.
+
+-> Estimated execution plan is the plan that is estimated before the execution happens and the actual execution plan is the plan that has been used in execution and Live execution plan it allow us to preview the live execution plan.
+
+-> If estimated execution plan was different of the actual execution plan therefore that can be an indicator of having a problem in the query.
+
+-> After first execution of the query -> that query its execution plan is cashed in order to reuse that execution plan each time that query needs to be executed therefore optimizer uses it directly with out the need to build it from scratch each time.
