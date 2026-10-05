@@ -862,28 +862,6 @@ namespace DVLDDataAccessLayer
             return -1;
         }
 
-
-        private static string _GetValueForGendorColumn(string Value)
-        {
-            switch (Value.ToUpper())
-            {
-                case "M":
-                case "MA":
-                case "MAL":
-                case "MALE":
-                    return "0";
-
-                case "F":
-                case "FE":
-                case "FEM":
-                case "FEMA":
-                case "FEMAL":
-                case "FEMALE":
-                    return "1";
-            }
-            return null;
-        }
-
         private static string _GetDataFilteringQuery(byte WantedNumOfRecords, string ColumnNameToFilterBy, ref string ValueToFilterBy
                     , string ColumnNameToOrderBy, string SortDirection, int LastBroughtPersonID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
@@ -907,11 +885,6 @@ namespace DVLDDataAccessLayer
 
             else
             {
-                if (ColumnNameToFilterBy == "Gendor")
-                {
-                    ValueToFilterBy = _GetValueForGendorColumn(ValueToFilterBy);
-                }
-
                 if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
                 {
                     query = _QueryWithoutPagination;
@@ -1073,11 +1046,6 @@ namespace DVLDDataAccessLayer
 
             else
             {
-                if (ColumnNameToFilterBy == "Gendor")
-                {
-                    ValueToFilterBy = _GetValueForGendorColumn(ValueToFilterBy);
-                }
-
                 query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar,true);
                 query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
