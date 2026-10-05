@@ -268,6 +268,7 @@ namespace DVLDPresentationLayer
                 ImagePath: (_NewSelectedImagePath != null) ? _NewSelectedImagePath : (_NewSelectedImagePath == null && !_RemovedSavedImage) ? _SavedPersonalImagePath : null
                 );
             }
+
             else
             {
                 Person = _Person;
@@ -284,6 +285,8 @@ namespace DVLDPresentationLayer
                 Person.Email = txtEmail.Text;
 
                 Person.NationalityCountryID = clsCountries.GetCountryID(((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString());
+                Person.CountryName = clsCountries.GetCountryName(Person.NationalityCountryID);
+
                 Person.Address = txtAddress.Text;
 
                 if (_NewSelectedImagePath != null)

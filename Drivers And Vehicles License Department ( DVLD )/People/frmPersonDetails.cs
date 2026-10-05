@@ -8,8 +8,8 @@ namespace DVLDPresentationLayer
     public partial class frmPersonDetails : Form
     {
         public event Action<object[],int> OnEditedPersonInfo;
-        public event Action<clsPerson> OnUpdatedPersonName;
-        public event Action<clsPerson,int> OnUpdatedPersonalInfo;
+        public event Action<clsPerson> OnUpdatedPersonInfo;
+        public event Action<clsPerson,int> AfterUpdatingPersonalInfo;
 
         private int _PeopleDGVRowIndex;
 
@@ -52,8 +52,8 @@ namespace DVLDPresentationLayer
             UpdatedPersonInfo.CountryName,UpdatedPersonInfo.Phone,UpdatedPersonInfo.Email};
 
             OnEditedPersonInfo?.Invoke(NewPersonInfo,_PeopleDGVRowIndex);
-            OnUpdatedPersonName?.Invoke(UpdatedPersonInfo);
-            OnUpdatedPersonalInfo?.Invoke(UpdatedPersonInfo, _PeopleDGVRowIndex);
+            OnUpdatedPersonInfo?.Invoke(UpdatedPersonInfo);
+            AfterUpdatingPersonalInfo?.Invoke(UpdatedPersonInfo, _PeopleDGVRowIndex);
         }
     }
 }

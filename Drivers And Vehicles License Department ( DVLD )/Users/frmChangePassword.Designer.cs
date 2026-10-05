@@ -72,7 +72,7 @@
             this.txtNewPassword.PasswordChar = '*';
             this.txtNewPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtNewPassword.Size = new System.Drawing.Size(256, 36);
-            this.txtNewPassword.TabIndex = 1;
+            this.txtNewPassword.TabIndex = 2;
             this.txtNewPassword.Tag = "First Name";
             this.txtNewPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtNewPassword_Validating);
             // 
@@ -87,7 +87,7 @@
             this.txtPasswordConfirmation.PasswordChar = '*';
             this.txtPasswordConfirmation.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtPasswordConfirmation.Size = new System.Drawing.Size(256, 36);
-            this.txtPasswordConfirmation.TabIndex = 2;
+            this.txtPasswordConfirmation.TabIndex = 3;
             this.txtPasswordConfirmation.Tag = "First Name";
             this.txtPasswordConfirmation.Validating += new System.ComponentModel.CancelEventHandler(this.txtPasswordConfirmation_Validating);
             // 
@@ -113,7 +113,7 @@
             this.txtCurrentPassword.PasswordChar = '*';
             this.txtCurrentPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtCurrentPassword.Size = new System.Drawing.Size(256, 36);
-            this.txtCurrentPassword.TabIndex = 0;
+            this.txtCurrentPassword.TabIndex = 1;
             this.txtCurrentPassword.Tag = "First Name";
             this.txtCurrentPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtCurrentPassword_Validating);
             // 
@@ -163,7 +163,7 @@
             this.btnSave.Location = new System.Drawing.Point(952, 826);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 42);
-            this.btnSave.TabIndex = 3;
+            this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -243,7 +243,7 @@
             this.uctrlUserDetails.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.uctrlUserDetails.Name = "uctrlUserDetails";
             this.uctrlUserDetails.Size = new System.Drawing.Size(1083, 461);
-            this.uctrlUserDetails.TabIndex = 4;
+            this.uctrlUserDetails.TabIndex = 0;
             this.uctrlUserDetails.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonDetails.PersonEditedInfo(this.uctrlUserDetails_OnPersonEditedInfo);
             // 
             // frmChangePassword

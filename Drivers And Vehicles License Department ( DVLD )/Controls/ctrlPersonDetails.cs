@@ -84,8 +84,11 @@ namespace DVLDPresentationLayer
             lnlblEditPersonInfo.Enabled = false;
         }
 
-        private void _ShowPersonDetails()
+        private void _ShowPersonDetails(clsPerson UpdatedPersonInfo = null)
         {
+            if (UpdatedPersonInfo != null)
+                _Person = UpdatedPersonInfo;
+
             lblPersonID.Text = _Person.PersonID.ToString();
 
             if (_Person.ThirdName != "")
@@ -123,8 +126,9 @@ namespace DVLDPresentationLayer
         private void _RefreshViewedData(clsPerson UpdatedPersonInfo)
         {
             OnPersonEditedInfo?.Invoke(UpdatedPersonInfo);
+            _ShowPersonDetails(UpdatedPersonInfo);
         }
-
+        
         private void lnlblEditPersonInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (_Person != null)
@@ -132,7 +136,6 @@ namespace DVLDPresentationLayer
                 frmAddEditPersonInfo frm = new frmAddEditPersonInfo(_Person);
                 frm.AfterEditingPersonInfo += _RefreshViewedData;
                 frm.ShowDialog();
-                _ShowPersonDetails();
             }
             else
                 MessageBox.Show("Person is not found!", "Details", MessageBoxButtons.OK, MessageBoxIcon.Error);

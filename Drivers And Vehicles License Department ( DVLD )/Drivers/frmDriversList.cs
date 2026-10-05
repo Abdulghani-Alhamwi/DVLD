@@ -292,7 +292,7 @@ namespace DVLDPresentationLayer
             if (dgvDrivers.SelectedRows.Count == 1)
             {
                 frmPersonDetails frm = new frmPersonDetails((int)dgvDrivers.SelectedRows[0].Cells["Person ID"].Value, dgvDrivers.SelectedRows[0].Index);
-                frm.OnUpdatedPersonalInfo += _EditDriverPersonalInfo;
+                frm.AfterUpdatingPersonalInfo += _EditDriverPersonalInfo;
                 frm.ShowDialog();
             }
             else

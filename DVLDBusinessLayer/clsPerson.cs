@@ -53,8 +53,8 @@ namespace DVLDBusinessLayer
             this.Address = Address;
             this.Phone = Phone;
             this.Email = Email;
-            this.CountryName = CountryName;
             this.NationalityCountryID = NationalityCountryID;
+            this.CountryName = clsCountries.GetCountryName(NationalityCountryID);
             this.ImagePath = ImagePath;
         }
 
@@ -95,7 +95,7 @@ namespace DVLDBusinessLayer
             if (clsPeopleData.Find(PersonID, ref NationalNo, ref FirstName, ref SecondName, ref ThirdName, ref LastName,
                ref DateOfBirth, ref Gendor, ref Address, ref Phone, ref Email, ref NationalityCountryID, ref ImagePath))
             {
-                CountryName = clsCountriesData.GetCountryName(NationalityCountryID);
+                CountryName = clsCountries.GetCountryName(NationalityCountryID);
 
                 return new clsPerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName,
                                      DateOfBirth, Gendor, Address, Phone, Email, CountryName, NationalityCountryID, ImagePath);
@@ -117,7 +117,7 @@ namespace DVLDBusinessLayer
             if (clsPeopleData.Find(NationalNo,ref PersonID, ref FirstName, ref SecondName, ref ThirdName, ref LastName,
                ref DateOfBirth, ref Gendor, ref Address, ref Phone, ref Email, ref NationalityCountryID, ref ImagePath))
             {
-                CountryName = clsCountriesData.GetCountryName(NationalityCountryID);
+                CountryName = clsCountries.GetCountryName(NationalityCountryID);
 
                 return new clsPerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName,
                                      DateOfBirth, Gendor, Address, Phone, Email, CountryName, NationalityCountryID, ImagePath);

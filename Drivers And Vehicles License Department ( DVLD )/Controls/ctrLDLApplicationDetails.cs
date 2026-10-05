@@ -64,7 +64,7 @@ namespace DVLDPresentationLayer
             if (_PersonID != -1)
             {
                 frmPersonDetails frm = new frmPersonDetails(_PersonID);
-                frm.OnUpdatedPersonName += _EditPersonName;
+                frm.OnUpdatedPersonInfo += _EditPersonName;
                 frm.ShowDialog();
             }
         }

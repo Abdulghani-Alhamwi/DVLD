@@ -15,5 +15,10 @@ namespace DVLDBusinessLayer
         {
             return clsCountriesData.GetCountryID(CountryName);
         }
+
+        public static string GetCountryName(int NationalityCountryID)
+        {
+            return clsCountriesData.GetCountryName(NationalityCountryID);
+        }
     }
 }

@@ -335,7 +335,7 @@ namespace DVLDPresentationLayer.TestTypes
         private void tsmiShowPersonDetails_Click(object sender, EventArgs e)
         {
             frmPersonDetails frm = new frmPersonDetails(clsPerson.GetPersonID(dgvDetainedLicenses.SelectedRows[0].Cells["N.No."].Value.ToString()), dgvDetainedLicenses.SelectedRows[0].Index);
-            frm.OnUpdatedPersonalInfo += _EditDriverPersonalInfo;
+            frm.AfterUpdatingPersonalInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
         }
 
