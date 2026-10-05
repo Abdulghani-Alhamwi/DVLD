@@ -611,13 +611,13 @@ namespace Utility_Library
             if (ResultWithOrderByClause)
             {
                 return _GetLastQueryPartWithOrderByPart(PrimaryKeyToFilterBy, ColumnNameToOrderBy, SortDirection, PreviousConditionMayExists,
-                    LastBroughtID, HasOrderColumnNameWhiteSpaces, ComparisonOperator,HasOrderColumnNameWhiteSpaces);
+                    LastBroughtID, HasOrderColumnNameWhiteSpaces, ComparisonOperator, HasPrimaryKeyColumnWhiteSpaces);
             }
 
             else
             {
                 return _GetQueryPartWithWhereClauseOnly(PrimaryKeyToFilterBy, ColumnNameToOrderBy, SortDirection, PreviousConditionMayExists,
-                     LastBroughtID, HasOrderColumnNameWhiteSpaces, ComparisonOperator, HasOrderColumnNameWhiteSpaces);
+                     LastBroughtID, HasOrderColumnNameWhiteSpaces, ComparisonOperator, HasPrimaryKeyColumnWhiteSpaces);
             }
         }
 

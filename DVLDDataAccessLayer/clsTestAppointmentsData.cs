@@ -66,8 +66,8 @@ namespace DVLDDataAccessLayer
 
             command.Parameters.AddWithValue("@LocalDrivingLicenseAppID", LocalDrivingLicenseAppID);
 
-            if (NumberOfRowsToOffset != -1)
-            command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
+            if (NumberOfRowsToOffset != -1 && ColumnNameToOrderBy != _PrimaryKeyViewedColumnName)
+                command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try
             {

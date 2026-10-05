@@ -45,7 +45,7 @@ namespace DVLDDataAccessLayer
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
 
-            if (NumberOfRowsToOffset != -1)
+            if (NumberOfRowsToOffset != -1 && ColumnNameToOrderBy != _PrimaryKeyViewedColumnName)
                 command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try
@@ -339,7 +339,7 @@ namespace DVLDDataAccessLayer
             if (WildChar != null)
                 command.Parameters.AddWithValue("@WildChar", WildChar);
 
-            if (NumberOfRowsToOffset != -1)
+            if (NumberOfRowsToOffset != -1 && ColumnNameToOrderBy != _PrimaryKeyViewedColumnName)
                 command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
 
             try

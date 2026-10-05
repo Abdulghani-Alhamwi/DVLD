@@ -50,6 +50,9 @@ namespace DVLDDataAccessLayer
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
             command.Parameters.AddWithValue("@DriverID", DriverID);
 
+            if (NumberOfRowsToOffset != -1 && ColumnNameToOrderBy != _PrimaryKeyViewedColumnName)
+                command.Parameters.AddWithValue("@NumberOfRowsToOffset", NumberOfRowsToOffset);
+
             try
             {
                 connection.Open();
