@@ -216,5 +216,10 @@ namespace DVLDBusinessLayer
         {
             return clsLocalLicensesData.GetSortedInfo(DriverID,WantedNumOfRecords, ColumnNameToOrderBy, SortDirection);
         }
+
+        public static int GetLocalLicenseIdByLicenseClass(int DriverID,byte LicenseClassID)
+        {
+            return clsLocalLicensesData.GetLocalLicenseIdByLicenseClass(DriverID, LicenseClassID);
+        }
     }
 }

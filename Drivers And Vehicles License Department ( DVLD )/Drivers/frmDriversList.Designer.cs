@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblRecordsNumber = new System.Windows.Forms.Label();
             this.lblRecordsTitle = new System.Windows.Forms.Label();
             this.txtFilter = new System.Windows.Forms.TextBox();
@@ -43,6 +43,8 @@
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblFormBigTitle = new System.Windows.Forms.Label();
+            this.tsmiShowPersonalInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiIssueInternationalLicense = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pbDrivers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDrivers)).BeginInit();
             this.cmsDriver.SuspendLayout();
@@ -150,14 +152,14 @@
             this.dgvDrivers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvDrivers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvDrivers.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 18F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDrivers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 18F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDrivers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvDrivers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDrivers.ContextMenuStrip = this.cmsDriver;
             this.dgvDrivers.Location = new System.Drawing.Point(35, 415);
@@ -180,10 +182,12 @@
             this.cmsDriver.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.cmsDriver.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.cmsDriver.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiShowPersonalInfo,
+            this.tsmiIssueInternationalLicense,
             this.tsmiShowPersonLicenseHistory});
             this.cmsDriver.Name = "cmsPeopleMenu";
             this.cmsDriver.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsDriver.Size = new System.Drawing.Size(323, 40);
+            this.cmsDriver.Size = new System.Drawing.Size(323, 138);
             // 
             // tsmiShowPersonLicenseHistory
             // 
@@ -240,6 +244,24 @@
             this.lblFormBigTitle.TabIndex = 50;
             this.lblFormBigTitle.Text = "Drivers List";
             // 
+            // tsmiShowPersonalInfo
+            // 
+            this.tsmiShowPersonalInfo.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiShowPersonalInfo.Image = global::DVLDPresentationLayer.Properties.Resources.PersonDetails_32;
+            this.tsmiShowPersonalInfo.Name = "tsmiShowPersonalInfo";
+            this.tsmiShowPersonalInfo.Size = new System.Drawing.Size(322, 38);
+            this.tsmiShowPersonalInfo.Text = "Show Personal Info";
+            this.tsmiShowPersonalInfo.Click += new System.EventHandler(this.tsmiShowPersonalInfo_Click);
+            // 
+            // tsmiIssueInternationalLicense
+            // 
+            this.tsmiIssueInternationalLicense.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiIssueInternationalLicense.Image = global::DVLDPresentationLayer.Properties.Resources.International_32;
+            this.tsmiIssueInternationalLicense.Name = "tsmiIssueInternationalLicense";
+            this.tsmiIssueInternationalLicense.Size = new System.Drawing.Size(322, 38);
+            this.tsmiIssueInternationalLicense.Text = "Issue International License";
+            this.tsmiIssueInternationalLicense.Click += new System.EventHandler(this.tsmiIssueInternationalLicense_Click);
+            // 
             // frmDriversList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -290,5 +312,7 @@
         private System.Windows.Forms.Label lblFormBigTitle;
         private System.Windows.Forms.ContextMenuStrip cmsDriver;
         private System.Windows.Forms.ToolStripMenuItem tsmiShowPersonLicenseHistory;
+        private System.Windows.Forms.ToolStripMenuItem tsmiShowPersonalInfo;
+        private System.Windows.Forms.ToolStripMenuItem tsmiIssueInternationalLicense;
     }
 }

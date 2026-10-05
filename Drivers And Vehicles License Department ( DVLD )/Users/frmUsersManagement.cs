@@ -302,7 +302,7 @@ namespace DVLDPresentationLayer
                 frm.ShowDialog();
             }
             else
-                MessageBox.Show("You must select a user first to show their details , and you can view only one person details!"
+                MessageBox.Show("You can select only one user to show their details."
                     , "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

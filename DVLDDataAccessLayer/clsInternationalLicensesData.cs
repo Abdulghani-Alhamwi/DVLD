@@ -64,6 +64,7 @@ namespace DVLDDataAccessLayer
             {
                 connection.Close();
             }
+
             return dtIntLicenses;
         }
 
@@ -124,7 +125,7 @@ namespace DVLDDataAccessLayer
             {
                 if (FilterByTheDriver)
                 {
-                    query = _QueryWithoutPagination + " WHERE DriverID = @DriverID";
+                    query = _QueryWithoutPagination + " WHERE [Driver ID] = @DriverID";
                     query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtIntLicenseID, true, true, true);
                 }
 
@@ -139,7 +140,7 @@ namespace DVLDDataAccessLayer
             {
                 if (FilterByTheDriver)
                 {
-                    query = _QueryWithoutPagination + " WHERE DriverID = @DriverID";
+                    query = _QueryWithoutPagination + " WHERE [Driver ID] = @DriverID";
                     query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                 }
 
@@ -161,7 +162,7 @@ namespace DVLDDataAccessLayer
             {
                 if (FilterByTheDriver)
                 {
-                    query = _QueryWithoutPagination + " WHERE DriverID = @DriverID";
+                    query = _QueryWithoutPagination + " WHERE [Driver ID] = @DriverID";
                     query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                 }
 
@@ -176,7 +177,7 @@ namespace DVLDDataAccessLayer
             {
                 if (FilterByTheDriver)
                 {
-                    query = _QueryForOffsetPagination + " WHERE DriverID = @DriverID";
+                    query = _QueryForOffsetPagination + " WHERE [Driver ID] = @DriverID";
                     query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
                     query += _OffsetPaginationQueryPart;
                 }
@@ -600,7 +601,7 @@ namespace DVLDDataAccessLayer
         {
             string query = _QueryWithoutPagination;
 
-            query += " WHERE DriverID = @DriverID";
+            query += " WHERE [Driver ID] = @DriverID";
             query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
 
             return query;

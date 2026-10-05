@@ -118,7 +118,7 @@ namespace DVLDPresentationLayer.Controls
     
         private void _EditDriverPersonalInfo(clsPerson UpdatedDriverPersonalInfo)
         {
-            uctrlLDLDetailsByFilter.uctrlLDLDetails.EditDriverNameAndNationalNo(UpdatedDriverPersonalInfo.FullName, UpdatedDriverPersonalInfo.NationalNo);
+            uctrlLDLDetailsByFilter.uctrlLDLDetails.EditDriverPersonalInfo(UpdatedDriverPersonalInfo);
         }
 
         private void _EditDriverPersonalInfo(clsPerson UpdatedDriverPersonalInfo, int DGVRowIndex)

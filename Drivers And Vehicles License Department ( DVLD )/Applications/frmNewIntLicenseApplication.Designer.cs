@@ -530,6 +530,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Shown += new System.EventHandler(this.frmNewIntLicenseApplication_Shown);
             this.gbApplicationBasicInfo.ResumeLayout(false);
             this.gbApplicationBasicInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLocalLicenseID)).EndInit();

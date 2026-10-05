@@ -43,10 +43,17 @@ namespace DVLDPresentationLayer
             }
         }
 
-        public void EditDriverNameAndNationalNo(string NewFullName,string NewNationalNo)
+        public void EditDriverPersonalInfo(clsPerson UpdatedPersonalInfo)
         {
-            lblPersonFullName.Text = NewFullName;
-            lblNationalNo.Text = NewNationalNo;
+            lblPersonFullName.Text = UpdatedPersonalInfo.FullName;
+            lblNationalNo.Text = UpdatedPersonalInfo.NationalNo;
+            lblGendor.Text = (UpdatedPersonalInfo.Gendor == clsPerson.enGendor.Male) ? "Male" : "Female";
+            lblDateOfBirth.Text = UpdatedPersonalInfo.DateOfBirth.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+
+            if (File.Exists(UpdatedPersonalInfo.ImagePath))
+                pbPersonalImage.ImageLocation = UpdatedPersonalInfo.ImagePath;
+            else
+                pbPersonalImage.Image = (UpdatedPersonalInfo.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
         }
     }
 }

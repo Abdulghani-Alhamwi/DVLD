@@ -44,9 +44,9 @@ namespace DVLDPresentationLayer.Licenses
                 enCustomNumberFormat.NoJustZerosAfterFraction);
         }
 
-        private void _EditDriverPersonalInfo(clsPerson UpdatedPersonInfo)
+        private void _EditDriverPersonalInfo(clsPerson UpdatedDriverPersonalInfo)
         {
-            uctrlLDLDetailsByFilter.uctrlLDLDetails.EditDriverNameAndNationalNo(UpdatedPersonInfo.FullName, UpdatedPersonInfo.NationalNo);
+            uctrlLDLDetailsByFilter.uctrlLDLDetails.EditDriverPersonalInfo(UpdatedDriverPersonalInfo);
         }
 
         private void lnlblShowLicenseHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

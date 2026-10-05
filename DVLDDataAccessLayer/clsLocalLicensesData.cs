@@ -353,5 +353,33 @@ namespace DVLDDataAccessLayer
 
             return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(Connection, Command);
         }
+
+        public static int GetLocalLicenseIdByLicenseClass(int DriverID , byte LicenseClassID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            string query =
+             $@"SELECT LicenseID FROM LocalLicenses WHERE DriverID = @DriverID AND LicenseClassID = @LicenseClassID AND IsActive = 1";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@DriverID", DriverID);
+            command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return Convert.ToInt32(result);
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return -1;
+        }
     }
 }

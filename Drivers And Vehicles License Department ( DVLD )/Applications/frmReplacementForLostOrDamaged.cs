@@ -166,9 +166,9 @@ namespace DVLDPresentationLayer.Core
                 lnlblShowLicenseHistory.Enabled = true;
         }
 
-        private void _EditDriverPersonalInfo(clsPerson UpdatedPersonInfo)
+        private void _EditDriverPersonalInfo(clsPerson UpdatedDriverPersonalInfo)
         {
-            uctrlLDLDetailsByFilter.uctrlLDLDetails.EditDriverNameAndNationalNo(UpdatedPersonInfo.FullName, UpdatedPersonInfo.NationalNo);
+            uctrlLDLDetailsByFilter.uctrlLDLDetails.EditDriverPersonalInfo(UpdatedDriverPersonalInfo);
         }
 
         private void lnlblShowLicenseHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

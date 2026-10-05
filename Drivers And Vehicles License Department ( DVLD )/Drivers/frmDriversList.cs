@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
+using DVLDPresentationLayer.Applications;
 using Utility_Library;
 
 namespace DVLDPresentationLayer
@@ -284,6 +285,38 @@ namespace DVLDPresentationLayer
         private void dgvDrivers_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             _SortData(e);
+        }
+
+        private void tsmiShowPersonalInfo_Click(object sender, EventArgs e)
+        {
+            if (dgvDrivers.SelectedRows.Count == 1)
+            {
+                frmPersonDetails frm = new frmPersonDetails((int)dgvDrivers.SelectedRows[0].Cells["Person ID"].Value, dgvDrivers.SelectedRows[0].Index);
+                frm.OnUpdatedPersonalInfo += _EditDriverPersonalInfo;
+                frm.ShowDialog();
+            }
+            else
+                MessageBox.Show("You can select only one driver to show their personal details."
+                    , "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void _EditInfoForNewIntLicenseIssuance(int DGVRowIndex)
+        {
+            string ColumnNameToEdit = "Active Licenses";
+            _DgvUtilityLib.EditOneColumnValueInDgv(dgvDrivers, ColumnNameToEdit, (int)dgvDrivers.Rows[DGVRowIndex].Cells[ColumnNameToEdit].Value + 1, DGVRowIndex);
+        }
+
+        private void tsmiIssueInternationalLicense_Click(object sender, EventArgs e)
+        {
+            int DriverID = (int)dgvDrivers.SelectedRows[0].Cells["Driver ID"].Value;
+            clsLocalLicense LocalLicenseInfo = clsLocalLicense.Find(
+                clsLocalLicense.GetLocalLicenseIdByLicenseClass(DriverID, clsLicenseClass.GetLicenseClassID(clsLicenseClass.enLicenseClasses.OrdinaryDrivingClass)));
+
+            frmNewIntLicenseApplication frm = new frmNewIntLicenseApplication(DriverID,LocalLicenseInfo, dgvDrivers.SelectedRows[0].Index);
+            
+            frm.OnUpdatedDriverPersonalInfo += _EditDriverPersonalInfo;
+            frm.AfterIssueingLicense += _EditInfoForNewIntLicenseIssuance;
+            frm.ShowDialog();
         }
     }
 }
