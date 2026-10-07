@@ -151,7 +151,14 @@ namespace DVLDPresentationLayer.Applications
 
         private bool _CanDriverApply(clsLocalLicense LocalLicense)
         {
-            if (clsInternationalLicense.HasDriverActiveInternationalLicense(LocalLicense.LicenseID, out int InternationalLicenseID))
+            if(LocalLicense == null)
+            {
+                MessageBox.Show("Driver does not has an active local license from the ordinary license class, issue local license from the ordinary license class in order to be able to issue the internationa license.", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                btnIssueLicense.Enabled = false;
+                return false;
+            }
+
+            else if (clsInternationalLicense.HasDriverActiveInternationalLicense(LocalLicense.LicenseID, out int InternationalLicenseID))
             {
                 MessageBox.Show($"Person already has an active international license with ID : {InternationalLicenseID}"
              , "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -221,14 +228,10 @@ namespace DVLDPresentationLayer.Applications
 
         private void frmNewIntLicenseApplication_Shown(object sender, EventArgs e)
         {
-            if (_DriverOrdinaryLocalLicense != null)
+            if (_DGVRowIndex != -1)
             {
+                if(_CanDriverApply(_DriverOrdinaryLocalLicense))
                 uctrlLDLDetailsByFilter_OnSelectedLocalLicense(_DriverOrdinaryLocalLicense);
-            }
-            else
-            {
-                MessageBox.Show("Driver does not has an active local license from the ordinary license class, issue local license from the ordinary license class in order to be able to issue the internationa license.", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                btnIssueLicense.Enabled = false;
             }
         }
 
