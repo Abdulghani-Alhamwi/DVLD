@@ -68,6 +68,8 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
                 AfterLicenseIssuance?.Invoke(_DGVRowIndex);
                 MessageBox.Show($"License Issued Successfully With License ID = {_LocalLicense.LicenseID}", "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 uctrlDLApplicationInfo.ShowLicenseInfoLabel(_LocalLicense.LicenseID);
+
+                btnIssueLicense.Enabled = false;
             }
             else
                 MessageBox.Show("Failed to issue license!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

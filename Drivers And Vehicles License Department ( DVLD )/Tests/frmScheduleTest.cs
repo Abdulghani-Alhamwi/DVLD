@@ -5,6 +5,7 @@ using DVLDPresentationLayer.Properties;
 using Utility_Library;
 using System.ComponentModel;
 using static Utility_Library.clsGeneralUtility;
+using System.Diagnostics;
 
 namespace DVLDPresentationLayer
 {
@@ -18,30 +19,34 @@ namespace DVLDPresentationLayer
         public enum enTestTrial {FirstTime = 0 , ReTake = 1, Taken = 2}
 
         private clsLocalDrivingLicenseApp _LDLApp;
-
         private clsTestAppointment _Appointment;
-
         private clsTestType.enTestType _TestType;
 
         private enTestTrial _TestTrial;
-
         private int _AppointmentsDGVRowIndex = -1;
-
         private bool _IsLockedMode;
+        private DateTime _ChoosedDate;
+        private bool _IsValidDateToSave;
 
         public frmScheduleTest(int LDLAppID, clsTestType.enTestType TestType, enTestTrial TestTrial)
         {
+            InitializeComponent();
+
             _InitializeFormData(LDLAppID, TestType, TestTrial);
         }
 
         public frmScheduleTest(int LDLAppID , clsTestType.enTestType TestType , enTestTrial TestTrial, clsTestAppointment Appointment)
         {
+            InitializeComponent();
+
             _IsLockedMode = true;
             _InitializeFormData(LDLAppID, TestType, TestTrial,Appointment);
         }
 
         public frmScheduleTest(int LDLAppID, clsTestType.enTestType TestType, enTestTrial TestTrial, clsTestAppointment Appointment , int AppointmentsDGVRowIndex)
         {
+            InitializeComponent();
+
             _InitializeFormData(LDLAppID, TestType, TestTrial,Appointment);
             _AppointmentsDGVRowIndex = AppointmentsDGVRowIndex;
         }
@@ -72,8 +77,6 @@ namespace DVLDPresentationLayer
 
         private void _InitializeFormData(int LDLAppID, clsTestType.enTestType TestType, enTestTrial TestTrial, clsTestAppointment Appointment = null)
         {
-            InitializeComponent();
-
             dtpTestAppointmentDate.Format = DateTimePickerFormat.Custom;
             dtpTestAppointmentDate.CustomFormat = clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.NumericFormat);
 
@@ -84,25 +87,23 @@ namespace DVLDPresentationLayer
             if(Appointment != null)
             _Appointment = Appointment;
 
+            else
+            {
+                dtpTestAppointmentDate.MinDate = DateTime.Now;
+
+                if (!_IsLockedMode && Appointment == null || Appointment != null)
+                {
+                    dtpTestAppointmentDate.MaxDate = dtpTestAppointmentDate.MinDate.AddMonths(3);
+                }
+            }
+
             if (LDLApp != null)
             {
                 _LDLApp = LDLApp;
                 _LoadInfo(TestType, TestTrial);
             }
-
-            dtpTestAppointmentDate.MinDate = DateTime.Now;
-
-            if (!_IsLockedMode && Appointment == null)
-            {
-                dtpTestAppointmentDate.MaxDate = dtpTestAppointmentDate.MinDate.AddMonths(3);
-            }
-
-            else if(Appointment != null)
-            {
-                dtpTestAppointmentDate.MaxDate = dtpTestAppointmentDate.MinDate.AddMonths(3);
-            }
         }
-        
+
         private bool _AddReTakeTestApp(out clsApplication Application)
         {
             Application = new clsApplication(
@@ -116,6 +117,30 @@ namespace DVLDPresentationLayer
             );
 
             return Application.Save();
+        }
+
+        private bool _IsValidAppoitmentDateInEditMode()
+        {
+            return !(DateTime.Compare(_Appointment.AppointmentDate, dtpTestAppointmentDate.MinDate) < 0);
+        }
+
+        private void _SetDate()
+        {
+            if (_Appointment != null)
+            {
+                if (_IsValidAppoitmentDateInEditMode())
+                    dtpTestAppointmentDate.MinDate = _Appointment.AppointmentDate;
+
+                if (_Appointment.IsLocked)
+                {
+                    dtpTestAppointmentDate.MinDate = _Appointment.AppointmentDate;
+                }
+
+                mtxtAppointmentTime.Text = _Appointment.AppointmentDate.ToString(clsGeneralUtility.GetCustomDateFormat(enCustomDateFormat.TimeFormat));
+            }
+
+            else
+                mtxtAppointmentTime.Text = DateTime.Now.ToString(clsGeneralUtility.GetCustomDateFormat(enCustomDateFormat.TimeFormat));
         }
 
         private void _LoadInfo(clsTestType.enTestType TestType,enTestTrial TestTrial)
@@ -145,13 +170,12 @@ namespace DVLDPresentationLayer
                 lblReTestAppID.Text = "N/A";
             }
 
-            if(_Appointment != null)
-            {
-                dtpTestAppointmentDate.Value = _Appointment.AppointmentDate;    
-                mtxtAppointmentTime.Text = _Appointment.AppointmentDate.ToString("hh:mm tt");
-            }
+            _SetDate();
+
             clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
             lblTrialNumber.Text = clsTestAppointment.GetTotalAppointmentsCount(_LDLApp.LDLAppID,1).ToString();
+
+            _ChoosedDate = dtpTestAppointmentDate.Value;
         }
 
         public static void ShowInfoByTestType(GroupBox gbContentContainer, PictureBox pbTestType, Label lblFees , clsTestType.enTestType TestType)
@@ -190,8 +214,10 @@ namespace DVLDPresentationLayer
 
         private DateTime _GetAppointmentDate()
         {
-            byte EnteredHour = Convert.ToByte(mtxtAppointmentTime.Text.Substring(0, 2));
-            if (mtxtAppointmentTime.Text.Substring(6, 2).ToLower() == "PM".ToLower())
+            byte EnteredHour = clsGeneralUtility.GetHourFromInputToTextBox(mtxtAppointmentTime);
+            byte EnteredMinute = clsGeneralUtility.GetMinuteFromInputToTextBox(mtxtAppointmentTime);
+
+            if (clsGeneralUtility.IsTimeInPmInputToTextBox(mtxtAppointmentTime))
             {
                 EnteredHour = clsGeneralUtility.GetAppropriatetHourNumForAmOrPm(EnteredHour, true);
             }
@@ -201,7 +227,7 @@ namespace DVLDPresentationLayer
             }
 
             DateTime AppointmentDate = new DateTime(dtpTestAppointmentDate.Value.Year, dtpTestAppointmentDate.Value.Month, dtpTestAppointmentDate.Value.Day,
-                                  EnteredHour, Convert.ToInt32(mtxtAppointmentTime.Text.Substring(3, 2)), 0, DateTimeKind.Local);
+                                  EnteredHour, EnteredMinute, 0, DateTimeKind.Local);
             
             return AppointmentDate;
         }
@@ -231,49 +257,60 @@ namespace DVLDPresentationLayer
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            clsTestAppointment Appointment;
-            if (_Appointment == null)
+            if (_IsValidDateToSave)
             {
-                byte _TestTypeID = clsTestType.GetTestTypeID(_TestType);
-                Appointment = new clsTestAppointment(
-                TestTypeID: _TestTypeID,
-                LDLApplicationID: _LDLApp.LDLAppID,
-                AppointmentDate: _GetAppointmentDate(),
-                PaidFees: clsTestType.GetTestTypeFees(_TestTypeID),
-                CreatedByUserID: clsGlobalSettings.CurrentUserID,
-                IsLocked: false
-                );
-            }
-            else
-            {
-                Appointment = _Appointment;
-                DateTime NewAppointmentDate = _GetAppointmentDate();
+                erTime.Dispose();
 
-                if (Appointment.AppointmentDate == NewAppointmentDate)
+                clsTestAppointment Appointment;
+                if (_Appointment == null)
                 {
-                    MessageBox.Show("there is'nt any change on the appointment data", "No change", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
+                    byte _TestTypeID = clsTestType.GetTestTypeID(_TestType);
+                    Appointment = new clsTestAppointment(
+                    TestTypeID: _TestTypeID,
+                    LDLApplicationID: _LDLApp.LDLAppID,
+                    AppointmentDate: _GetAppointmentDate(),
+                    PaidFees: clsTestType.GetTestTypeFees(_TestTypeID),
+                    CreatedByUserID: clsGlobalSettings.CurrentUserID,
+                    IsLocked: false
+                    );
+                }
+                else
+                {
+                    Appointment = _Appointment;
+                    DateTime NewAppointmentDate = _GetAppointmentDate();
+
+                    if (Appointment.AppointmentDate == NewAppointmentDate)
+                    {
+                        MessageBox.Show("there is'nt any change on the appointment data", "No change", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    else
+                        Appointment.AppointmentDate = NewAppointmentDate;
                 }
 
-                else
-                    Appointment.AppointmentDate = NewAppointmentDate;
-            }
-
-            if (_TestTrial == enTestTrial.ReTake)
-            {
-                clsApplication Application;
-                if (_AddReTakeTestApp(out Application))
+                if (_TestTrial == enTestTrial.ReTake)
                 {
-                    Appointment.RetakeTestAppID = Application.ApplicationID;
-                    lblReTestAppID.Text = Application.ApplicationID.ToString();
+                    clsApplication Application;
+                    if (_AddReTakeTestApp(out Application))
+                    {
+                        Appointment.RetakeTestAppID = Application.ApplicationID;
+                        lblReTestAppID.Text = Application.ApplicationID.ToString();
 
+                        _SaveAppointment(Appointment);
+                    }
+                    else
+                        MessageBox.Show("Failed to save the retake test application", "Fail", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
                     _SaveAppointment(Appointment);
-                }
-                else
-                    MessageBox.Show("Failed to save the retake test application", "Fail", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
             else
-                _SaveAppointment(Appointment);
+            {
+                CancelEventArgs cancelEventArgs = new CancelEventArgs();
+                mtxtAppointmentTime_Validating(mtxtAppointmentTime, cancelEventArgs);
+            }
         }
 
         private void mtxtAppointmentTime_Click(object sender, EventArgs e)
@@ -283,20 +320,53 @@ namespace DVLDPresentationLayer
 
         private void mtxtAppointmentTime_Validating(object sender, CancelEventArgs e)
         {
-            if(mtxtAppointmentTime.Text.Substring(0,1) == " ")
+            if (mtxtAppointmentTime.Text.Substring(0, 1) == " ")
                 clsGeneralUtility.EnableErrorProvider(erTime, mtxtAppointmentTime, "Time cannot be empty!", e);
 
             else if (!DateTime.TryParse(mtxtAppointmentTime.Text, out DateTime dt))
                 clsGeneralUtility.EnableErrorProvider(erTime, mtxtAppointmentTime, "Invalid time format , format must be like : 10:00 AM", e);
 
+            else if (!IsValidEnteredTimeInTextBox(mtxtAppointmentTime, _ChoosedDate))
+            {
+                clsGeneralUtility.EnableErrorProvider(erTime, mtxtAppointmentTime, "Choosed time is earlier than current time!", e);
+            }
+
             else
+            {
                 erTime.Dispose();
+                _IsValidDateToSave = true;
+                return;
+            }
+
+            _IsValidDateToSave = false;
         }
 
         private void frmScheduleTest_Load(object sender, EventArgs e)
         {
             btnClose.CausesValidation = false;
             btnExit.CausesValidation = false;
+            dtpTestAppointmentDate.MinDate = DateTime.Now;
+        }
+
+        private void dtpTestAppointmentDate_ValueChanged(object sender, EventArgs e)
+        {
+            _ChoosedDate = dtpTestAppointmentDate.Value;
+
+            if (_Appointment != null)
+            {
+                CancelEventArgs cancelEventArgs = new CancelEventArgs();
+                mtxtAppointmentTime_Validating(mtxtAppointmentTime, cancelEventArgs);
+            }
+
+            else
+            {
+                if (IsValidEnteredTimeInTextBox(mtxtAppointmentTime, _ChoosedDate))
+                {
+                    _IsValidDateToSave = true;
+                }
+                else
+                    _IsValidDateToSave = false;
+            }
         }
     }
 }

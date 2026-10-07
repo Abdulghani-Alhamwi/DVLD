@@ -183,6 +183,7 @@
             this.dtpTestAppointmentDate.Size = new System.Drawing.Size(173, 33);
             this.dtpTestAppointmentDate.TabIndex = 0;
             this.dtpTestAppointmentDate.Value = new System.DateTime(2026, 8, 17, 0, 0, 0, 0);
+            this.dtpTestAppointmentDate.ValueChanged += new System.EventHandler(this.dtpTestAppointmentDate_ValueChanged);
             // 
             // lblReTestFeesTitle
             // 
@@ -613,6 +614,7 @@
             // 
             // frmScheduleTest
             // 
+            this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;

@@ -13,7 +13,7 @@ namespace Utility_Library
 {
     public class clsGeneralUtility
     {
-        public enum enCustomDateFormat : byte { NumericFormat = 0, DateAppreviatedMonthName = 1, DateTimeCustomFormat = 2 }
+        public enum enCustomDateFormat : byte { NumericFormat = 0, DateAppreviatedMonthName = 1, DateTimeCustomFormat = 2 , TimeFormat = 3 }
         public enum enCustomNumberFormat : byte { With4ZerosAfterFraction = 0, NoJustZerosAfterFraction = 1 }
 
         private static byte[] SaltForUsernameHash = new byte[16];
@@ -346,6 +346,7 @@ namespace Utility_Library
         /// The enCustomDateFormat.NumericFormat returns format "dd/MM/yyyy",
         /// The enCustomDateFormat.DateAppreviatedMonthName returns format "d/MMM/yyyy";
         /// The enCustomDateFormat.DateTimeCustomFormat returns format "dd/MM/yyyy h:mm tt";
+        /// The enCustomDateFormat.TimeFormat returns format "hh:mm tt";
         /// </summary>
         public static string GetCustomDateFormat(enCustomDateFormat CustomFormat)
         {
@@ -359,6 +360,9 @@ namespace Utility_Library
 
                 case enCustomDateFormat.DateTimeCustomFormat:
                     return "dd/MM/yyyy h:mm tt";
+
+                case enCustomDateFormat.TimeFormat:
+                    return "hh:mm tt";
             }
 
             return null;
@@ -901,5 +905,65 @@ namespace Utility_Library
             }
         }
 
+        public static byte GetHourFromInputToTextBox(Control ctrl)
+        {
+            return Convert.ToByte(ctrl.Text.Substring(0, 2));
+        }
+
+        public static byte GetMinuteFromInputToTextBox(Control ctrl)
+        {
+            return Convert.ToByte(ctrl.Text.Substring(3, 2));
+        }
+
+        public static string GetAmOrPmFromInputToTextBox(Control ctrl)
+        {
+            return ctrl.Text.Substring(6, 2);
+        }
+
+        public static bool IsTimeInAmInputToTextBox(Control ctrl)
+        {
+            return (string.Compare(clsGeneralUtility.GetAmOrPmFromInputToTextBox(ctrl), "AM", true) == 0);
+        }
+
+        public static bool IsTimeInPmInputToTextBox(Control ctrl)
+        {
+            return (string.Compare(clsGeneralUtility.GetAmOrPmFromInputToTextBox(ctrl), "PM", true)) == 0;
+        }
+
+        public static bool IsValidEnteredTimeInTextBox(Control ctrl,DateTime ChoosedDate)
+        {
+            DateTime CurrentDateTime = DateTime.Now;
+
+            if (!(CurrentDateTime.Year== ChoosedDate.Year && CurrentDateTime.Month == ChoosedDate.Month && CurrentDateTime.Day == ChoosedDate.Day))
+                return true;
+
+            byte EnteredHour = 0;
+            byte EnteredMinute = 0;
+
+            if (ctrl.Text != "")
+            {
+                EnteredHour = clsGeneralUtility.GetHourFromInputToTextBox(ctrl);
+
+                if (clsGeneralUtility.IsTimeInPmInputToTextBox(ctrl))
+                    EnteredHour = clsGeneralUtility.GetAppropriatetHourNumForAmOrPm(EnteredHour, true);
+                else
+                    EnteredHour = clsGeneralUtility.GetAppropriatetHourNumForAmOrPm(EnteredHour, false);
+
+                EnteredMinute = clsGeneralUtility.GetMinuteFromInputToTextBox(ctrl);
+            }
+            else
+                return false;
+
+            if (EnteredHour > CurrentDateTime.Hour)
+                return true;
+
+            else if (CurrentDateTime.Hour == EnteredHour)
+            {
+                return (CurrentDateTime.Minute < EnteredMinute);
+            }
+
+            else
+                return false;
+            }
     }
 }
