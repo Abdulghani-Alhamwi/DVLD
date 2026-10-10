@@ -149,7 +149,7 @@ namespace DVLDPresentationLayer
 
         private void tsmiReplacementForLostOrDamaged_Click(object sender, EventArgs e)
         {
-            frmReplacementForLostOrDamaged frm = new frmReplacementForLostOrDamaged();
+            frmReplacetLostOrDamagedLicense frm = new frmReplacetLostOrDamagedLicense();
             frm.ShowDialog();
         }
 

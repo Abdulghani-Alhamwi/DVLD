@@ -7,7 +7,7 @@ namespace DVLDDataAccessLayer
     {
         public static int AddNewTest(int TestAppointmentID,bool TestResult,string Notes,int CreatedByUserID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"INSERT INTO Tests VALUES (@TestAppointmentID, @TestResult, @Notes, @CreatedByUserID);
                              SELECT SCOPE_IDENTITY()";
@@ -43,7 +43,7 @@ namespace DVLDDataAccessLayer
 
         public static bool HasPassedTheTest(int LDLApplicationID, int TestTypeID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"SELECT PassedTest = 1 FROM LocalDrivingLicenseApplications INNER JOIN TestAppointments
                              ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID
@@ -75,7 +75,7 @@ namespace DVLDDataAccessLayer
 
         public static sbyte GetTotalPassedTestsCount(int LDLApplicationID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"SELECT (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS[Passed Tests]
                              FROM LocalDrivingLicenseApplications INNER JOIN TestAppointments ON LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = TestAppointments.LocalDrivingLicenseApplicationID

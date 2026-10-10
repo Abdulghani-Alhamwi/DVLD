@@ -11,7 +11,7 @@ namespace DVLDDataAccessLayer
         public static DataTable GetAllCountries()
         {
             DataTable dtCountries = null;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = "SELECT CountryName FROM Countries";
 
@@ -44,7 +44,7 @@ namespace DVLDDataAccessLayer
         {
             int CountryID = -1;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT {_PrimaryKeyColumnName} FROM Countries WHERE CountryName = @CountryName";
 
@@ -74,7 +74,7 @@ namespace DVLDDataAccessLayer
         {
             string CountryName = "";
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT CountryName FROM Countries WHERE {_PrimaryKeyColumnName} = @CountryID";
 

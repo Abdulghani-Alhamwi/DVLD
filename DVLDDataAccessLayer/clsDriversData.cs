@@ -50,7 +50,7 @@ namespace DVLDDataAccessLayer
                 query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
             }
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -126,7 +126,7 @@ namespace DVLDDataAccessLayer
 
         public static int AddNewDriver(int PersonID, int CreatedByUserID, DateTime CreatedDate)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"INSERT INTO Drivers VALUES (@PersonID,@CreatedByUserID,@CreationDate);
                              SELECT SCOPE_IDENTITY();";
@@ -156,7 +156,7 @@ namespace DVLDDataAccessLayer
 
         public static bool IsPersonAlreadyADriver(int PersonID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"SELECT Found = 1 FROM Drivers WHERE PersonID = @PersonID";
 
@@ -183,7 +183,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetDriverID(int PersonID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT {_PrimaryKeyColumnName} FROM Drivers WHERE PersonID = @PersonID";
 
@@ -210,7 +210,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetDriverPersonID(int DriverID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT PersonID FROM Drivers WHERE {_PrimaryKeyColumnName} = @DriverID";
 
@@ -237,7 +237,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetTotalDriversCount()
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT Count({_PrimaryKeyColumnName}) FROM Drivers";
 
@@ -336,7 +336,7 @@ namespace DVLDDataAccessLayer
         {
             DataTable dtFilteredData = null;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy,ColumnNameToOrderBy,SortDirection
                 , LastBroughtDriverID, NumberOfRowsToOffset, WildChar);
@@ -381,7 +381,7 @@ namespace DVLDDataAccessLayer
         public static bool HasActiveLicenseFromClass(int DriverID,int LicenseClassID, out int LicenseID)
         {
             LicenseID = -1;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT LicenseID FROM LocalLicenses WHERE DriverID = @DriverID
                              AND LicenseClassID = @LicenseClassID";
@@ -413,7 +413,7 @@ namespace DVLDDataAccessLayer
 
         public static short GetDriverLocalLicensesCount(int DriverID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = "SELECT Count(LicenseID) FROM LocalLicenses WHERE DriverID = @DriverID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -439,7 +439,7 @@ namespace DVLDDataAccessLayer
 
         public static short GetDriverInternationalLicensesCount(int DriverID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = "SELECT Count(InternationalLicenseID) FROM InternationalLicenses WHERE DriverID = @DriverID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -487,7 +487,7 @@ namespace DVLDDataAccessLayer
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
                string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
-            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(clsDataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }

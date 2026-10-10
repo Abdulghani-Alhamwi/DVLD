@@ -26,7 +26,7 @@ namespace DVLDDataAccessLayer
         {
             DataTable dtApplicationTypes = null;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = "SELECT * FROM ApplicationTypes_View";
 
@@ -108,7 +108,7 @@ namespace DVLDDataAccessLayer
         public static bool UpdateApplicationType(byte ApplicationTypeID, string ApplicationTypeTitle, decimal ApplicationTypeFees, clsOldApplicationTypeData OldApplicationTypeData, bool HasOldDataChangedFully)
         {
             byte AffectedRows = 0;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = _GetUpdateQuery(ApplicationTypeTitle, ApplicationTypeFees, OldApplicationTypeData, HasOldDataChangedFully);
 
@@ -140,7 +140,7 @@ namespace DVLDDataAccessLayer
         public static decimal GetApplicationTypeFees(byte ApplicationTypeID)
         {
             decimal ApplicationTypeFees = -1;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT ApplicationFees FROM ApplicationTypes
                               WHERE {_PrimaryKeyColumnName} = @ApplicationTypeID";
@@ -169,7 +169,7 @@ namespace DVLDDataAccessLayer
 
         public static string GetApplicationTypeTitle(byte ApplicationTypeID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT ApplicationTypeTitle FROM ApplicationTypes
                               WHERE {_PrimaryKeyColumnName} = @ApplicationTypeID";

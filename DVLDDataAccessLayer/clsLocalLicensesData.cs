@@ -44,7 +44,7 @@ namespace DVLDDataAccessLayer
                 query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
             }
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -115,7 +115,7 @@ namespace DVLDDataAccessLayer
 
         public static int IssueLocalDrivingLicense(int ApplicationID ,int DriverID,byte LicenseClassID,DateTime IssueDate , DateTime ExpirationDate,string Notes,decimal PaidFees,bool IsActive,byte IssueReason,int CreatedByUserID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"INSERT INTO LocalLicenses VALUES (@ApplicationID, @DriverID,@LicenseClassID,
                              @IssueDate,@ExpirationDate,@Notes,@PaidFees,@IsActive,@IssueReason,@CreatedByUserID);
@@ -160,7 +160,7 @@ namespace DVLDDataAccessLayer
                             ref DateTime IssueDate, ref DateTime ExpirationDate, ref string Notes, ref decimal PaidFees, ref bool IsActive, ref byte IssueReason, ref int CreatedByUserID)
         {
             bool IsFound = false;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT * FROM LocalLicenses WHERE {_PrimaryKeyColumnName} = @LicenseID";
 
@@ -207,7 +207,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetLicenseID(int LDLApplicationID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = $"SELECT {_PrimaryKeyColumnName} FROM LocalLicenses WHERE ApplicationID = @ApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -233,7 +233,7 @@ namespace DVLDDataAccessLayer
 
         public static string GetLicenseNotes(int LocalLicenseID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = $"SELECT Notes FROM LocalLicenses WHERE {_PrimaryKeyColumnName} = @LicenseID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -260,7 +260,7 @@ namespace DVLDDataAccessLayer
         public static bool DeactivateLicense(int LocalLicenseID)
         {
             byte AffectedRows = 0;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = $@"UPDATE LocalLicenses SET IsActive = 0 WHERE {_PrimaryKeyColumnName} = @LicenseID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -283,7 +283,7 @@ namespace DVLDDataAccessLayer
 
         public static bool HasDriverRenewedLicense(int DriverID,int LicenseClassID,ref int RenewedLicenseID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = $@"SELECT {_PrimaryKeyColumnName} FROM LocalLicenses
                              WHERE DriverID = @DriverID AND LicenseClassID = @LicenseClassID AND IsActive = 1";
 
@@ -314,7 +314,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetDriverID(int LocalLicenseID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = 
              $@"SELECT DriverID FROM LocalLicenses WHERE {_PrimaryKeyColumnName} = @LicenseID";
 
@@ -348,7 +348,7 @@ namespace DVLDDataAccessLayer
 
         public static DataTable GetSortedInfo(int DriverID,byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection)
         {
-            SqlConnection Connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             SqlCommand Command = new SqlCommand(_GetDataSortingQuery(ColumnNameToOrderBy, SortDirection), Connection);
             Command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -359,7 +359,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetLocalLicenseIdByLicenseClass(int DriverID , byte LicenseClassID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query =
              $@"SELECT LicenseID FROM LocalLicenses WHERE DriverID = @DriverID AND LicenseClassID = @LicenseClassID AND IsActive = 1";
 

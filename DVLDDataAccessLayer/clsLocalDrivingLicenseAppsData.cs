@@ -56,7 +56,7 @@ namespace DVLDDataAccessLayer
                 query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
             }
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -132,7 +132,7 @@ namespace DVLDDataAccessLayer
 
         public static DataTable GetColumnsNamesForView()
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(_QueryWithoutPagination, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
@@ -163,7 +163,7 @@ namespace DVLDDataAccessLayer
         {
             int LDLApplicationID = -1;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = @"INSERT INTO LocalDrivingLicenseApplications VALUES
                              (@ApplicationID,@LicenseClassID); SELECT SCOPE_IDENTITY();";
 
@@ -215,7 +215,7 @@ namespace DVLDDataAccessLayer
         public static bool UpdateLDLApplication(int LocalDrivingLicenseApplicationID,int LicenseClassID,int OldLicenseClassID)
         {
             byte AffectedRows = 0;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = _GetUpdateQuery(LicenseClassID,ref OldLicenseClassID);
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -243,7 +243,7 @@ namespace DVLDDataAccessLayer
         public static bool Find(int LDLApplicationID, ref int ApplicationID, ref byte LicenseClassID , ref string LicenseClassName)
         {
             bool IsFound = false;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = $@"SELECT LocalDrivingLicenseApplications.* , LicenseClasses.ClassName FROM LocalDrivingLicenseApplications
                              INNER JOIN LicenseClasses ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID
                              WHERE {_PrimaryKeyColumnName} = @LDLApplicationID";
@@ -281,7 +281,7 @@ namespace DVLDDataAccessLayer
         public static bool DeleteLDLApplication(int LDLApplicationID)
         {
             byte AffectedRows = 0;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"DELETE FROM LocalDrivingLicenseApplications
                              WHERE {_PrimaryKeyColumnName} = @LDLApplicationID";
@@ -307,7 +307,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetApplicationID(int LDLApplicationID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT ApplicationID FROM LocalDrivingLicenseApplications
                              WHERE {_PrimaryKeyColumnName} = @LDLApplicationID";
@@ -335,7 +335,7 @@ namespace DVLDDataAccessLayer
 
         public static bool HasPersonApplied(int ApplicantPersonID, byte LicenseClassID, ref byte ApplicationStatus)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"SELECT TOP (1) Applications.ApplicationStatus FROM Applications INNER JOIN LocalDrivingLicenseApplications
                              ON Applications.ApplicationID = LocalDrivingLicenseApplications.ApplicationID
@@ -369,7 +369,7 @@ namespace DVLDDataAccessLayer
 
         public static bool IsPersonAgeAppropriate(int PersonID , byte LicenseClassID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"SELECT Valid = 1 WHERE (SELECT DATEDIFF(Year,DateOfBirth,GetDate()) FROM People WHERE PersonID = @PersonID)
                              >= (SELECT MinimumAllowedAge FROM LicenseClasses WHERE LicenseClassID = @LicenseClassID)";
@@ -398,7 +398,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetLDLApplicationID(int ApplicantPersonID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = $@"SELECT {_PrimaryKeyColumnName} FROM LocalDrivingLicenseApplications INNER JOIN Applications
                              ON Applications.ApplicantPersonID = @ApplicantPersonID";
 
@@ -425,7 +425,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetTotalLDLApplicationsCount()
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT Count({_PrimaryKeyColumnName}) FROM LocalDrivingLicenseApplications";
 
@@ -549,7 +549,7 @@ namespace DVLDDataAccessLayer
         {
             DataTable dtFilteredData = null;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
              
             string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilterBy, ref ValueToFilterBy,
@@ -595,7 +595,7 @@ namespace DVLDDataAccessLayer
 
         public static sbyte GetPassedTests(int LDLApplicationID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT (CASE WHEN SUM(CAST(Tests.TestResult AS INT)) IS NOT NULL THEN SUM(CAST(Tests.TestResult AS INT)) ELSE 0 END) AS [Passed Tests]
                              FROM LocalDrivingLicenseApplications
@@ -657,7 +657,7 @@ namespace DVLDDataAccessLayer
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
                string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
-            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(clsDataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }

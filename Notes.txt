@@ -850,3 +850,68 @@ Join algorithms:
 -> If estimated execution plan was different of the actual execution plan therefore that can be an indicator of having a problem in the query.
 
 -> After first execution of the query -> that query its execution plan is cashed in order to reuse that execution plan each time that query needs to be executed therefore optimizer uses it directly with out the need to build it from scratch each time.
+
+
+79) We can create an Enum for the application types and each item of the Enum we put the id value that is associated with that application type and by that if we want to take the id we can from the Enum item call when we convert int -> it will return its value , like :
+(int) enApplicationType.NewDrivingLicense
+
+80) The method validate children that is in the form class is when we call it fires up the validating event for all controls that are on the form and if all is valid it returns true otherwise it return false.
+
+81) We can put in a query 2 inner joins after them selves but that will require to put two On clauses after them selves after these inner joins.
+
+82) For handling when a key is press in order to prevent the unwanted input like letters , in the key press event : if we put : e.Handle = !(char)e.IsDigit && !(char)e.IsControl
+if the condition returns true therefore the entered value wont appear and will be prevented from being sat as the value of the control we are using.
+
+83) In business logic we handle all the business as we can in order that outside we focus on UI.
+
+84) We can instead of bringing the Columns from the database with a specific names , we can bring them as they are and in the form we handle naming the columns headers in the data grid view in the name we want and we can to put custom width for the column or from enable resizing then choosing the column height from the data grid view properties that would work also to make the appearance of columns headers text clear.
+
+85) We can put Enum in the forms that have 2 modes Add/Edit , like Enum enMode {AddNew = 0 , Update = 1};
+
+86) We can to use a method associated with the button control in Windows forms which it is PerformClick() -> It fires the event OnClick for that button.
+
+87) We can call the method that is associated with the event any where like any other method because it is a method subscribed to an event therefore eventually it is still a method.
+
+88) For the Regex Class Pattern :
+1] The + at end means that the text can have one or more characters from the characters that are allowed at the pattern.
+
+2] The * at end means that it allows the zero or many characters from the allowed characeters in the pattern to be in the text.
+
+3] The ? at end means the text should have 0 or one character from the allowed characters that are in the pattern.
+
+89) The method IsMatch() for the object from the type Regex class allow use to compare a text with the pattern that we have specified.
+
+90) The FileInfo class allow us when we give it a file path to take info about that path like file extension.
+
+91) If we want to remove the maximize button and the minimize button from the control box in the form and keep the close button with the control box therefore we have the control box and in it the form title and the close button -> We can to set the form border style to FixedWindowsTool.
+
+92) If we want to remove the sunken (3d border) from the MDI form , we can to prevent it from being drawn or we can to put picture box with the image we want and set the dock to full.
+
+93) It is better to name classes that are in business layer and in data access layer with singular names because we are dealing with entity for the most of work like Add Edit Delete, and the presentation layer we can to choose the name according to its functionality that it does like if it is a form for listing drivers then we name it frmDriversList while if it is to add new driver we can name the form : frmAddNewDriver.
+
+94) We can to filter data view that is associated with a datatable :
+Datatable.defaultview.RowFilter = String.Format("[{0} = {1}]",ColumnToFilterBy,ValueToFilterBy); This is to filter based on numeric value for a numeric column
+
+For column of type string therefore we have to filter string value:
+Datatable.defaultview.RowFilter = String.Format("[{0} ='{1}%'",ColumnToFilterBy,ValueToFilterBy); We can to remove % if we want therefore it be without wild char and filter on exact string,
+
+95) It is better to trim the text before we store it in database and compare in conditions in order to remove any white spaces from the both sides of the string.
+
+96) It is better to make each class to do what is designed for and even if the class was general class to be used as library -> it is better to divide that library to classes and each class is related to what it has.
+
+97) It is better to organize folders in presentation layer to put the user controls we crate in separated controls folders under the folders of the forms that they are related to.
+
+98) We can to use the following pattern to validate email :
+string pattern = @"^[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$";
+_Pattern Explanation :
+
+
+We can use the following pattern to validate integer :
+string pattern = @"^[0-9]*$";
+_Pattern Explanation :
+
+
+We can use the following pattern to validate float/double/decimal number :
+string pattern = @"^[0-9]*(?:\.[0-9]*)?$";
+_Pattern Explanation :
+

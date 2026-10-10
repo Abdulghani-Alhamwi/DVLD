@@ -12,7 +12,7 @@ namespace DVLDDataAccessLayer
         {
             DataTable dtLicenseClassesNames = null;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = "SELECT ClassName FROM LicenseClasses";
             SqlCommand command = new SqlCommand(query, connection);
@@ -43,7 +43,7 @@ namespace DVLDDataAccessLayer
         public static byte GetLicenseClassID(string LicenseClassName)
         {
             byte LicenseClassID = 0;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT {_PrimaryKeyColumnName} FROM LicenseClasses WHERE ClassName = @ClassName";
 
@@ -72,7 +72,7 @@ namespace DVLDDataAccessLayer
 
         public static string GetLicenseClassName(byte LicenseClassID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT ClassName FROM LicenseClasses WHERE {_PrimaryKeyColumnName} = @LicenseClassID";
 
@@ -101,7 +101,7 @@ namespace DVLDDataAccessLayer
 
         public static byte GetLicenseValidityLength(byte LicenseClassID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT DefaultValidityLength FROM LicenseClasses WHERE {_PrimaryKeyColumnName} = @LicenseClassID";
 
@@ -130,7 +130,7 @@ namespace DVLDDataAccessLayer
 
         public static decimal GetLicenseClassFees(byte LicenseClassID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT ClassFees FROM LicenseClasses WHERE {_PrimaryKeyColumnName} = @LicenseClassID";
 
@@ -158,7 +158,7 @@ namespace DVLDDataAccessLayer
 
         public static byte GetMinimumAllowedAge(byte LicenseClassID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT MinimumAllowedAge FROM LicenseClasses WHERE {_PrimaryKeyColumnName} = @LicenseClassID";
 

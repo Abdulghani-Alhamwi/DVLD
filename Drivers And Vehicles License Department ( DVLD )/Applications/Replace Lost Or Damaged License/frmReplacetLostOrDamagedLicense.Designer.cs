@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer.Core
 {
-    partial class frmReplacementForLostOrDamaged
+    partial class frmReplacetLostOrDamagedLicense
     {
         /// <summary>
         /// Required designer variable.

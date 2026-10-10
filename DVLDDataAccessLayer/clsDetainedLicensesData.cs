@@ -40,7 +40,7 @@ namespace DVLDDataAccessLayer
             }
 
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -111,7 +111,7 @@ namespace DVLDDataAccessLayer
 
         public static DataTable GetColumnsNamesForView()
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(_QueryWithoutPagination, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
@@ -140,7 +140,7 @@ namespace DVLDDataAccessLayer
 
         public static bool IsDetainedLicense(int LocalLicenseID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = "SELECT Detained = 1 FROM DetainedLicenses WHERE LicenseID = @LicenseID AND IsReleased = 0";
 
             SqlCommand command = new SqlCommand(query,connection);
@@ -166,7 +166,7 @@ namespace DVLDDataAccessLayer
 
         public static int AddNewDetainedLicense(int LocalLicenseID,DateTime DetainDate,decimal FineFees,int CreatedByUserID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"INSERT INTO DetainedLicenses VALUES (@LicenseID,@DetainDate,@FineFees,@CreatedByUserID,0,null,null,null);
                              SELECT SCOPE_IDENTITY();";
@@ -199,7 +199,7 @@ namespace DVLDDataAccessLayer
         public static bool ReleaseDetainedLicense(int LocalLicenseID, DateTime ReleaseDate,int ReleasedByUserID,int ReleaseApplicationID)
         {
             byte AffectedRows = 0;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"UPDATE DetainedLicenses SET IsReleased = 1, ReleaseDate = @ReleaseDate,
                              ReleasedByUserID = @ReleasedByUserID, ReleaseApplicationID = @ReleaseApplicationID
@@ -229,7 +229,7 @@ namespace DVLDDataAccessLayer
         public static bool Find(int LocalLicenseID, ref int DetainID, ref DateTime DetainDate, ref decimal FineFees, ref int CreatedByUserID, ref bool IsReleased, ref DateTime ReleaseDate, ref int ReleasedByUserID, ref int ReleaseApplicationID)
         {
             bool IsFound = false;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = "SELECT * FROM DetainedLicenses WHERE LicenseID = @LicenseID AND IsReleased = 0";
 
@@ -326,7 +326,7 @@ namespace DVLDDataAccessLayer
         {
             DataTable dtFilteredData = null;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilterBy, ref ValueToFilterBy,
                 ColumnNameToOrderBy, SortDirection, LastBroughtDetainID, NumberOfRowsToOffset, WildChar);
@@ -369,7 +369,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetTotalCount()
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT Count({_PrimaryKeyColumnName}) FROM DetainedLicenses";
 
@@ -422,7 +422,7 @@ namespace DVLDDataAccessLayer
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
-            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(clsDataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }

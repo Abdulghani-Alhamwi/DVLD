@@ -2,7 +2,7 @@
 
 namespace DVLDDataAccessLayer
 {
-    internal static class DataAccessSettings
+    internal static class clsDataAccessSettings
     {
         internal static string ConnectionString = "Server =.;Database = DVLD;User ID = sa;Password=123456;";
     }

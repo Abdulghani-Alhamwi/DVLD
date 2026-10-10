@@ -24,7 +24,7 @@ namespace DVLDDataAccessLayer
         public static int AddApplication(int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, short ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
         {
             int ApplicationID = -1;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"INSERT INTO Applications VALUES (@ApplicantPersonID, @ApplicationDate, @ApplicationTypeID,
                              @ApplicationStatus,@LastStatusDate,@PaidApplicationFees,@CreatedByUserID);
@@ -110,7 +110,7 @@ namespace DVLDDataAccessLayer
         public static bool UpdateApplication(int ApplicationID, int ApplicantPersonID, short ApplicationStatus, DateTime LastStatusDate, clsOldApplicationData OldApplicationData)
         {
             byte AffectedRows = 0;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = _GetUpdateQuery(ApplicantPersonID,ApplicationStatus,LastStatusDate,OldApplicationData);
 
@@ -144,7 +144,7 @@ namespace DVLDDataAccessLayer
         public static bool Find(int ApplicationID , ref int ApplicantPersonID,ref DateTime ApplicationDate, ref byte ApplicationTypeID,ref byte ApplicationStatus ,ref DateTime LastStatusDate,ref decimal PaidApplicationFees,ref int CreatedByUserID)
         {
             bool IsFound = false;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT * FROM Applications WHERE {_PrimaryKeyColumnName} = @ApplicationID";
 
@@ -184,7 +184,7 @@ namespace DVLDDataAccessLayer
         public static bool DeleteApplication(int ApplicationID)
         {
             byte AffectedRows = 0;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"DELETE FROM Applications WHERE {_PrimaryKeyColumnName} = @ApplicationID";
 
@@ -210,7 +210,7 @@ namespace DVLDDataAccessLayer
         public static bool ChangeApplicationStatus(int ApplicationID,byte TheNewStatus)
         {
             byte AffectedRows = 0;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"UPDATE Applications SET ApplicationStatus = @TheNewStatus
                              WHERE {_PrimaryKeyColumnName} = @ApplicationID";

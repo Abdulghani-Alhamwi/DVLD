@@ -39,7 +39,7 @@ namespace DVLDDataAccessLayer
                 query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection,true);
             }
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -91,7 +91,7 @@ namespace DVLDDataAccessLayer
                 query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
             }
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -198,7 +198,7 @@ namespace DVLDDataAccessLayer
 
         public static DataTable GetColumnsNamesForView()
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(_QueryWithoutPagination, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
@@ -228,7 +228,7 @@ namespace DVLDDataAccessLayer
         public static int IssueDriverLicense(int ApplicationID ,int DriverID,int LocalLicenseID,
             DateTime IssueDate,DateTime ExpirationDate,bool IsActive,int CreatedByUserID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"INSERT INTO InternationalLicenses VALUES (@ApplicationID,@DriverID,@LocalLicenseID,
                              @IssueDate,@ExpirationDate,@IsActive,@CreatedByUserID);
@@ -265,7 +265,7 @@ namespace DVLDDataAccessLayer
            ref DateTime IssueDate, ref DateTime ExpirationDate, ref bool IsActive, ref int CreatedByUserID)
         {
             bool IsFound = false;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $"SELECT * FROM InternationalLicenses WHERE {_PrimaryKeyColumnName} = @InternationalLicenseID";
 
@@ -357,7 +357,7 @@ namespace DVLDDataAccessLayer
         {
             DataTable dtFilteredData = null;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilterBy, ref ValueToFilterBy,
                             ColumnNameToOrderBy, SortDirection, LastBroughtIntLicenseID, NumberOfRowsToOffset, WildChar);
@@ -401,7 +401,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetTotalCount()
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT Count({_PrimaryKeyColumnName}) FROM InternationalLicenses";
 
@@ -430,7 +430,7 @@ namespace DVLDDataAccessLayer
         public static bool HasDriverActiveInternationalLicense(int LocalLicenseID,ref int InternationalLicenseID)
         {
             bool IsFound = false;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT {_PrimaryKeyColumnName} FROM InternationalLicenses
                              WHERE IssuedUsingLocalLicenseID = @LocalLicenseID AND IsActive = 1";
@@ -464,7 +464,7 @@ namespace DVLDDataAccessLayer
         public static bool HasDriverActiveInternationalLicense(int DriverID)
         {
             bool IsFound = false;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"SELECT Found = 1 FROM InternationalLicenses
                              WHERE DriverID = @DriverID AND IsActive = 1";
@@ -497,7 +497,7 @@ namespace DVLDDataAccessLayer
         {
             byte AffectedRows = 0;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"UPDATE InternationalLicenses SET IssuedUsingLocalLicenseID = @NewLocalLicenseID
                              WHERE DriverID = @DriverID";
@@ -525,7 +525,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetLicenseID(int InternationalLicenseAppID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = $"SELECT {_PrimaryKeyColumnName} FROM InternationalLicenses WHERE ApplicationID = @ApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -551,7 +551,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetLocalLicenseID(int InternationalLicenseID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = $"SELECT IssuedUsingLocalLicenseID FROM InternationalLicenses WHERE InternationalLicenseID = @InternationalLicenseID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -613,13 +613,13 @@ namespace DVLDDataAccessLayer
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
-            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(clsDataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
 
         public static DataTable GetSortedInfo(int DriverID,byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection)
         {
-            SqlConnection Connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = _GetDataSortingQueryByDriver(ColumnNameToOrderBy, SortDirection);
 
             SqlCommand Command = new SqlCommand(query, Connection);

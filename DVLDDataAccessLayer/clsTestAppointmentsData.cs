@@ -57,7 +57,7 @@ namespace DVLDDataAccessLayer
                 query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
             }
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -136,7 +136,7 @@ namespace DVLDDataAccessLayer
 
         public static DataTable GetColumnsNamesForView()
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(_QueryWithoutPagination, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", 0);
@@ -165,7 +165,7 @@ namespace DVLDDataAccessLayer
 
         public static int AddNewAppointment(int TestTypeID , int LocalDrivingLicenseAppID, DateTime AppointmentDate , decimal PaidFees , int CreatedByUserID , bool IsLocked,int RetakeTestAppID = -1)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"INSERT INTO TestAppointments VALUES (@TestTypeID,@LocalDrivingLicenseAppID,
                              @AppointmentDate,@PaidFees,@CreatedByUserID,@IsLocked,@RetakeTestAppID);
@@ -257,7 +257,7 @@ namespace DVLDDataAccessLayer
         public static bool UpdateAppointment(int TestAppointmentID,DateTime AppointmentDate,bool IsLocked, clsOldAppointmentData OldAppointmentData, bool HasOldDataChangedFully)
         {
             byte AffectedRows = 0;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = _GetUpdateQuery(AppointmentDate, IsLocked, OldAppointmentData, HasOldDataChangedFully);
 
@@ -290,7 +290,7 @@ namespace DVLDDataAccessLayer
         public static bool Find(int TestAppointmentID,ref byte TestTypeID,ref int LocalDrivingLicenseAppID, ref DateTime AppointmentDate,ref decimal PaidFees,ref int CreatedByUserID,ref bool IsLocked,ref int RetakeTestAppID)
         {
             bool IsFound = false;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $"SELECT * FROM TestAppointments WHERE {_PrimaryKeyColumnName} = @TestAppointmentID";
 
@@ -332,7 +332,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetTotalAppointmentsCount(int LocalDrivingLicenseAppID, byte TestTypeID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT Count({_PrimaryKeyColumnName}) FROM TestAppointments
                              WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID AND TestTypeID = @TestTypeID";
@@ -363,7 +363,7 @@ namespace DVLDDataAccessLayer
 
         public static bool IsAppointmentSchedulingAvailable(int LocalDrivingLicenseAppID, byte TestTypeID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = @"SELECT Found = 1 FROM TestAppointments
                              WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseAppID AND TestTypeID = @TestTypeID AND IsLocked = 0";
 
@@ -404,7 +404,7 @@ namespace DVLDDataAccessLayer
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection, int LDLApplicationID, byte TestTypeID)
         {
-            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection,LDLApplicationID,TestTypeID),
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(clsDataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection,LDLApplicationID,TestTypeID),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,TestTypeID.ToString());
         }
     }

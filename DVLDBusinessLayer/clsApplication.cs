@@ -5,10 +5,9 @@ namespace DVLDBusinessLayer
 {
     public class clsApplication
     {
-        public enum enApplicationStatus : byte { New = 0 , Canceled = 1 , Completed = 2};
-
         private enum _enMode : byte { AddNew = 0 , Update = 1}
         private _enMode _CurrentMode;
+        public enum enApplicationStatus : byte { New = 0 , Canceled = 1 , Completed = 2};
 
         public int ApplicationID { get; set;}
         public int ApplicantPersonID { get; set; }

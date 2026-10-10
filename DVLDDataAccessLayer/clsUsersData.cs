@@ -64,7 +64,7 @@ namespace DVLDDataAccessLayer
                 query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
             }
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
@@ -135,7 +135,7 @@ namespace DVLDDataAccessLayer
 
         public static DataTable GetColumnsNamesForView()
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = _QueryWithoutPagination;
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -165,7 +165,7 @@ namespace DVLDDataAccessLayer
         public static int AddNewUser(int PersonID, string Username, string UsernameIV, string UsernameHash, string Password, string Salt, bool IsActive, sbyte Permissions)
         {
             int UserID = -1;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"INSERT INTO Users VALUES (@PersonID, @Username, @UsernameIV, @UsernameHash, @Password, @Salt, @IsActive, @Permissions);
                              SELECT SCOPE_IDENTITY();";
@@ -321,7 +321,7 @@ namespace DVLDDataAccessLayer
         {
             byte AffectedRows = 0;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = _GetUpdateQuery(PersonID, Username, Password, IsActive,Permissions, OldUserData, HasOldDataChangedFully);
 
@@ -370,7 +370,7 @@ namespace DVLDDataAccessLayer
         {
             byte AffectedRows = 0;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
             string query = $@"DELETE FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -394,7 +394,7 @@ namespace DVLDDataAccessLayer
 
         public static bool IsUserExists(int PersonID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"SELECT Found = 1 FROM Users WHERE PersonID = @PersonID";
 
@@ -422,7 +422,7 @@ namespace DVLDDataAccessLayer
 
         public static bool IsUserAlreadyExists(string UsernameHash)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"SELECT Found = 1 FROM Users WHERE UsernameHash = @UsernameHash";
 
@@ -452,7 +452,7 @@ namespace DVLDDataAccessLayer
            ref string Password, ref string Salt, ref bool IsActive,ref sbyte Permissions)
         {
             bool IsFound = false;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT * FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
 
@@ -492,7 +492,7 @@ namespace DVLDDataAccessLayer
 
         public static void GetUserPasswordWithSalt(int UserID , ref string Password, ref byte[] Salt)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT Password, Salt FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
 
@@ -521,7 +521,7 @@ namespace DVLDDataAccessLayer
 
         public static bool GetLoginInfo(string UsernameHash, ref int UserID, ref string Username, ref string UsernameIV, ref string Password, ref byte[] Salt, ref bool IsActive, ref sbyte Permissions)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT UserID, Username, UsernameIV, Password, Salt, IsActive, Permissions FROM Users WHERE UsernameHash = @UsernameHash";
 
@@ -558,7 +558,7 @@ namespace DVLDDataAccessLayer
 
         public static bool GetLoginInfo(int UserID, ref string Username, ref string UsernameIV, ref string Password)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT Username, UsernameIV, Password FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
 
@@ -593,7 +593,7 @@ namespace DVLDDataAccessLayer
         {
             byte AffectedRows = 0;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"UPDATE Users SET Password = @Password, Salt = @Salt WHERE {_PrimaryKeyColumnName} = @UserID";
 
@@ -619,7 +619,7 @@ namespace DVLDDataAccessLayer
 
         public static bool GetUserName(int UserID, ref string Username, ref string UsernameIV)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $"SELECT UserName, UsernameIV FROM Users WHERE {_PrimaryKeyColumnName} = @UserID";
 
@@ -724,7 +724,7 @@ namespace DVLDDataAccessLayer
         {
             DataTable dtFilteredData = null;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = _GetDataFilteringQuery(WantedNumOfRecords, ColumnNameToFilterBy, ref ValueToFilterBy,
                             ColumnNameToOrderBy, SortDirection, LastBroughtUserID, NumberOfRowsToOffset, WildChar);
@@ -768,7 +768,7 @@ namespace DVLDDataAccessLayer
 
         public static int GetTotalUsersCount()
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT Count({_PrimaryKeyColumnName}) FROM Users";
 
@@ -830,7 +830,7 @@ namespace DVLDDataAccessLayer
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
-            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(DataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(clsDataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
 
@@ -838,7 +838,7 @@ namespace DVLDDataAccessLayer
         {
             Dictionary<int, string> UsersIDsWithIVs = null;
 
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT UserID, UsernameIV FROM Users";
 

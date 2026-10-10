@@ -31,7 +31,7 @@ namespace DVLDDataAccessLayer
         public static DataTable GetTestTypes()
         {
             DataTable dtTestTypes = null;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = "SELECT * FROM TestTypes_View";
 
@@ -133,7 +133,7 @@ namespace DVLDDataAccessLayer
         public static bool UpdateTestType(int TestTypeID,string TestTypeTitle,string TestTypeDescription,decimal TestTypeFees, clsOldTestTypeData OldTestTypeData,bool HasOldDataChangedFully)
         {
             byte AffectedRows = 0;
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = _GetUpdateQuery(TestTypeTitle, TestTypeDescription, TestTypeFees, OldTestTypeData, HasOldDataChangedFully);
 
@@ -169,7 +169,7 @@ namespace DVLDDataAccessLayer
 
         public static decimal GetTestTypeFees(byte TestTypeID)
         {
-            SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT TestTypeFees FROM TestTypes WHERE {_PrimaryKeyColumnName} = @TestTypeId";
 

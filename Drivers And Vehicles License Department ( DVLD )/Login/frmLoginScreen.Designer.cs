@@ -58,11 +58,10 @@
             // chbRememberMe
             // 
             this.chbRememberMe.AutoSize = true;
-            this.chbRememberMe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.chbRememberMe.Font = new System.Drawing.Font("Tahoma", 19F);
             this.chbRememberMe.Location = new System.Drawing.Point(760, 358);
             this.chbRememberMe.Name = "chbRememberMe";
-            this.chbRememberMe.Size = new System.Drawing.Size(197, 35);
+            this.chbRememberMe.Size = new System.Drawing.Size(200, 35);
             this.chbRememberMe.TabIndex = 2;
             this.chbRememberMe.Text = "Remember Me";
             this.chbRememberMe.UseVisualStyleBackColor = true;

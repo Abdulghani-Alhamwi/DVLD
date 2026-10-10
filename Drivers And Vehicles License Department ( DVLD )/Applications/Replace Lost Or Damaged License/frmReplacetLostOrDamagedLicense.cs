@@ -6,12 +6,12 @@ using static Utility_Library.clsGeneralUtility;
 
 namespace DVLDPresentationLayer.Core
 {
-    public partial class frmReplacementForLostOrDamaged : Form
+    public partial class frmReplacetLostOrDamagedLicense : Form
     {
         private int _ReplacedLicenseID;
         private clsLocalLicense _SelectedLicenseInfo;
 
-        public frmReplacementForLostOrDamaged()
+        public frmReplacetLostOrDamagedLicense()
         {
             InitializeComponent();
             _SetFormInfo();
