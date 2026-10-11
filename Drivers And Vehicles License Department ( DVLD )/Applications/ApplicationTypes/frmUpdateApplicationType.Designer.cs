@@ -104,6 +104,7 @@
             this.txtTitle.Size = new System.Drawing.Size(423, 36);
             this.txtTitle.TabIndex = 0;
             this.txtTitle.Tag = "First Name";
+            this.txtTitle.Validating += new System.ComponentModel.CancelEventHandler(this.txtTitle_Validating);
             // 
             // txtFees
             // 
@@ -118,6 +119,7 @@
             this.txtFees.TabIndex = 1;
             this.txtFees.Tag = "First Name";
             this.txtFees.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFees_KeyDown);
+            this.txtFees.Validating += new System.ComponentModel.CancelEventHandler(this.txtFees_Validating);
             // 
             // lblFees
             // 
@@ -231,6 +233,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(633, 448);

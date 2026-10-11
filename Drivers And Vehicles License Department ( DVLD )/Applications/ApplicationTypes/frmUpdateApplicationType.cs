@@ -40,28 +40,9 @@ namespace DVLDPresentationLayer
             }
         }
 
-        private bool _ValidateData()
-        {
-            if (txtTitle.Text == "" || String.IsNullOrWhiteSpace(txtTitle.Text))
-            {
-                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtTitle, "Title cannot be empty!", null);
-                return false;
-            }
-
-            else if (txtFees.Text == "" || String.IsNullOrWhiteSpace(txtFees.Text))
-            {
-                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtFees, "Application Fees cannot be empty!", null);
-                return false;
-            }
-            else
-                ertxtBox.Dispose();
-
-            return true;
-        }
-
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (_ValidateData())
+            if (ValidateChildren())
             {
                 _ApplicationType.ApplicationTypeTitle = txtTitle.Text;
                 _ApplicationType.ApplicationTypeFees = Convert.ToDecimal(txtFees.Text);
@@ -97,6 +78,28 @@ namespace DVLDPresentationLayer
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void txtTitle_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtTitle.Text == "" || String.IsNullOrWhiteSpace(txtTitle.Text))
+            {
+                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtTitle, "Title cannot be empty!", e);
+            }
+
+            else
+                clsGeneralUtility.DisableErrorProvider(ertxtBox, txtTitle);
+        }
+
+        private void txtFees_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtFees.Text == "" || String.IsNullOrWhiteSpace(txtFees.Text))
+            {
+                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtFees, "Application Fees cannot be empty!", e);
+            }
+            else
+                clsGeneralUtility.DisableErrorProvider(ertxtBox, txtFees);
+
         }
     }
 }

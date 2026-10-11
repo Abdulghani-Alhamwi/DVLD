@@ -30,32 +30,9 @@ namespace DVLDPresentationLayer
             frmUpdateApplicationType.ValidateFeesTextBox_KeyDown(ertxtBox, txtFees, e);
         }
 
-        private bool _ValidateData()
-        {
-            bool IsValidData = false;
-
-            if (txtTitle.Text == "" || string.IsNullOrWhiteSpace(txtTitle.Text))
-                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtTitle, "Title cannot be empty!", null);
-
-            else if (txtDescription.Text == "" || string.IsNullOrWhiteSpace(txtDescription.Text))
-                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtTitle, "Description cannot be empty!", null);
-
-            else if (txtFees.Text == "")
-                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtTitle, "Fees cannot be empty!", null);
-
-            else
-            {
-                ertxtBox.Dispose();
-                IsValidData = true;
-            }
-
-            return IsValidData;
-
-        }
-
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (_ValidateData())
+            if (this.ValidateChildren())
             {
                 _TestType.TestTypeTitle = txtTitle.Text;
                 _TestType.TestTypeDescription = txtDescription.Text;
@@ -87,6 +64,34 @@ namespace DVLDPresentationLayer
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void txtTitle_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (txtTitle.Text == "" || string.IsNullOrWhiteSpace(txtTitle.Text))
+                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtTitle, "Title cannot be empty!", e);
+
+            else
+                clsGeneralUtility.DisableErrorProvider(ertxtBox, txtTitle);
+        }
+
+        private void txtDescription_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (txtDescription.Text == "" || string.IsNullOrWhiteSpace(txtDescription.Text))
+                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtDescription, "Description cannot be empty!", e);
+
+            else
+                clsGeneralUtility.DisableErrorProvider(ertxtBox, txtDescription);
+        }
+
+        private void txtFees_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (txtFees.Text == "")
+                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtFees, "Fees cannot be empty!", e);
+
+            else
+                clsGeneralUtility.DisableErrorProvider(ertxtBox, txtFees);
+
         }
     }
 }

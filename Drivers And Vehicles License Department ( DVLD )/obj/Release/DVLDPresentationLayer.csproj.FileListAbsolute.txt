@@ -19,7 +19,6 @@ D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD 
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Release\DVLDPresentationLayer.ctrlDriverLicensesHistory.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Release\DVLDPresentationLayer.ctrlInternationalLicenseDetails.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Release\DVLDPresentationLayer.ctrlLDLicenseDetailsByFilter.resources
-D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Release\DVLDPresentationLayer.Core.frmReplacementForLostOrDamaged.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Release\DVLDPresentationLayer.Controls.frmDetainLocalLicense.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Release\DVLDPresentationLayer.frmDriversList.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Release\DVLDPresentationLayer.frmDriverLicenseHistory.resources
@@ -54,3 +53,5 @@ D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD 
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Release\DVLD Presentation Layer.exe
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Release\DVLD Presentation Layer.pdb
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Release\DVLD Presentation Layer.exe.config
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Release\DVLDPresentationLayer.ctrlApplicationBasicInfo.resources
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Release\DVLDPresentationLayer.Core.frmReplacetLostOrDamagedLicense.resources
