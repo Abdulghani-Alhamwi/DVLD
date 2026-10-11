@@ -27,6 +27,7 @@ namespace DVLDBusinessLayer
             this.LastStatusDate = LastStatusDate;
             this.PaidApplicationFees = PaidApplicationFees;
             this.CreatedByUserID = CreatedByUserID;
+            _OldLicenseClassID = LicenseClassID;
         }
 
         private clsLocalDrivingLicenseApp(int LDLApplicationID,int ApplicationID,clsLicenseClass LicenseClass, int ApplicantPersonID, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
@@ -96,7 +97,13 @@ namespace DVLDBusinessLayer
 
         private bool UpdateLDLApplication()
         {
-            return clsLocalDrivingLicenseAppsData.UpdateLDLApplication(LDLAppID, LicenseClass.ID, _OldLicenseClassID);
+            if(clsLocalDrivingLicenseAppsData.UpdateLDLApplication(LDLAppID, LicenseClass.ID, _OldLicenseClassID))
+            {
+                _OldLicenseClassID = LicenseClass.ID;
+                return true;
+            }
+
+            return false;
         }
 
         public static bool DeleteLDLApplication(int LDLApplicationID,int ApplicationID)
@@ -113,7 +120,7 @@ namespace DVLDBusinessLayer
                     return true;
 
                 else
-                    return false;
+                    return base.Save();
             }
 
             else

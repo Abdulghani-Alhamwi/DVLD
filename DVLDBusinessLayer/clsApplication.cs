@@ -30,6 +30,8 @@ namespace DVLDBusinessLayer
             this.LastStatusDate = LastStatusDate;
             this.PaidApplicationFees = PaidApplicationFees;
             this.CreatedByUserID = CreatedByUserID;
+
+            OldApplicationData = new clsApplicationsData.clsOldApplicationData(ApplicantPersonID, _GetApplicationStatusNumericValue(ApplicationStatus));
         }
 
         protected clsApplication(int ApplicationID,int ApplicantPersonID,DateTime ApplicationDate,byte ApplicationTypeID,enApplicationStatus ApplicationStatus,DateTime LastStatusDate, decimal PaidApplicationFees,int CreatedByUserID)
@@ -113,7 +115,13 @@ namespace DVLDBusinessLayer
 
         private bool _UpdateApplication()
         {
-            return clsApplicationsData.UpdateApplication(ApplicationID, ApplicantPersonID, _GetApplicationStatusNumericValue(ApplicationStatus), LastStatusDate,OldApplicationData);
+            if(clsApplicationsData.UpdateApplication(ApplicationID, ApplicantPersonID, _GetApplicationStatusNumericValue(ApplicationStatus), LastStatusDate,OldApplicationData))
+            {
+                OldApplicationData = new clsApplicationsData.clsOldApplicationData(ApplicantPersonID, _GetApplicationStatusNumericValue(ApplicationStatus));
+                return true;
+            }
+
+            return false;
         }
 
         public static clsApplication Find(int ApplicationID)

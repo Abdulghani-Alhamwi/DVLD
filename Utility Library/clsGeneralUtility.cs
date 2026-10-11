@@ -869,5 +869,13 @@ namespace Utility_Library
 
             return regex.IsMatch(Name);
         }
+
+        public static string GenerateGuid()
+        {
+            Guid guid = Guid.NewGuid();
+
+            return guid.ToString();
+        }
+
     }
 }

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using DVLDPresentationLayer.Properties;
@@ -21,11 +22,9 @@ namespace DVLDPresentationLayer
         internal event SavedNewInfo AfterSavingNewInfo;
         internal event SavedEditedInfo AfterSavingEditedInfo;
 
-        private string _NewSelectedImagePath;
-        private string _ImagesFolderPath = @"C:\DVLD-People-Images";
-        private bool _UploadedPersonalImage = false;
-        private string _SavedPersonalImagePath;
-        private bool _RemovedSavedImage = false;
+        private enum _enMode { AddNew = 0, Update = 1}
+        private _enMode _CurrentMode;
+
         private clsPerson _Person;
         private int _PeopleDGVRowIndex = -1;
 
@@ -33,6 +32,7 @@ namespace DVLDPresentationLayer
         {
             InitializeComponent();
             _InitializeFormData(null);
+            _Person = new clsPerson("", "", "", "", "", DateTime.Now, 0, "", "", "", 0, "");
         }
 
         public frmAddEditPersonInfo(clsPerson PersonInfo,int PeopleDGVRowIndex = -1)
@@ -40,6 +40,7 @@ namespace DVLDPresentationLayer
             InitializeComponent();
             _InitializeFormData(PersonInfo);
             _PeopleDGVRowIndex = PeopleDGVRowIndex;
+            _CurrentMode = _enMode.Update;
         }
 
         private void _InitializeFormData(clsPerson PersonInfo)
@@ -72,13 +73,20 @@ namespace DVLDPresentationLayer
 
         private void _ShowPersonData(DataView dataview)
         {
-            lblPersonID.Text = _Person.PersonID.ToString();
             txtFirstName.Text = _Person.FirstName;
             txtSecondName.Text = _Person.SecondName;
             txtThirdName.Text = _Person.ThirdName;
             txtLastName.Text = _Person.LastName;
             txtNationalNo.Text = _Person.NationalNo;
-            dtpDateOfBirth.Value = _Person.DateOfBirth;
+
+            if (_CurrentMode != _enMode.AddNew)
+            {
+                lblPersonID.Text = _Person.PersonID.ToString();
+                dtpDateOfBirth.Value = _Person.DateOfBirth;
+                cbCountries.SelectedIndex = dataview.Find(_Person.CountryName);
+            }
+            else
+                cbCountries.SelectedIndex = dataview.Find("Jordan");
 
             if (_Person.Gendor == clsPerson.enGendor.Female)
                 rbFemale.Checked = true;
@@ -86,33 +94,29 @@ namespace DVLDPresentationLayer
             txtPhone.Text = _Person.Phone;
             txtEmail.Text = _Person.Email;
 
-            cbCountries.SelectedIndex = dataview.Find(_Person.CountryName);
 
-            txtAddress.Text = _Person.Address;
-            
-           _SavedPersonalImagePath = _Person.ImagePath;
+            txtAddress.Text = _Person.Address;           
 
             if (File.Exists(_Person.ImagePath))
             {
                 pbPersonalImage.ImageLocation = _Person.ImagePath;
                 lnlblRemove.Visible = true;
-                _UploadedPersonalImage = true;
             }
             else
                 pbPersonalImage.Image = (_Person.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
         }
 
-        private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
+        private void cbCountries_DropDownClosed(object sender, EventArgs e)
         {
             cbCountries.BackColor = Color.FromArgb(230, 230, 230);
         }
 
-        private void cbFilterBy_DropDown(object sender, EventArgs e)
+        private void cbCountries_DropDown(object sender, EventArgs e)
         {
             cbCountries.BackColor = Color.FromArgb(245, 245, 245);
         }
 
-        private void cbFilterBy_DrawItem(object sender, DrawItemEventArgs e)
+        private void cbCountries_DrawItem(object sender, DrawItemEventArgs e)
         {
             clsGeneralUtility.DrawComboBoxItems(sender, e,"CountryName");
         }
@@ -239,23 +243,18 @@ namespace DVLDPresentationLayer
             dataview.Sort = "CountryName ASC";
             cbCountries.DataSource = dataview;
 
-            if (_Person != null)
-            {
-                _ShowPersonData(dataview);
-            }
-            else
-                cbCountries.SelectedIndex = dataview.Find("Jordan");
+            _ShowPersonData(dataview);
         }
 
         private void rbMale_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbMale.Checked && !_UploadedPersonalImage)
+            if (pbPersonalImage.ImageLocation == null)
                 pbPersonalImage.Image = Resources.Male_512;
         }
 
         private void rbFemale_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbFemale.Checked && !_UploadedPersonalImage)
+            if (pbPersonalImage.ImageLocation == null)
                 pbPersonalImage.Image = Resources.Female_512;
         }
 
@@ -264,38 +263,19 @@ namespace DVLDPresentationLayer
             ofdSelectImage.InitialDirectory = @"C:\Users\User\Desktop";
             ofdSelectImage.Filter = "All Images|*.JPG;*.PNG;*.JPEG;*.GIF|.JPG|*.JPG|.PNG|*.PNG|.JPEG|*.JPEG|.GIF|*.GIF";
             ofdSelectImage.ShowDialog();
-
         }
 
         private void ofdSelectImage_FileOk(object sender, CancelEventArgs e)
         {
-            if (!Directory.Exists(_ImagesFolderPath))
-                Directory.CreateDirectory(_ImagesFolderPath);
-
-            if (ofdSelectImage.FileName != "")
-            {
-                _NewSelectedImagePath = _ImagesFolderPath + @"\" + Guid.NewGuid().ToString() + ofdSelectImage.SafeFileName;
-
-                pbPersonalImage.ImageLocation = ofdSelectImage.FileName;
-
-                _UploadedPersonalImage = true;
-                lnlblRemove.Visible = true;
-            }
+            pbPersonalImage.ImageLocation = ofdSelectImage.FileName;
+            lnlblRemove.Visible = true;
         }
 
         private void lnlblRemove_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (pbPersonalImage.ImageLocation == _SavedPersonalImagePath && !String.IsNullOrEmpty(_SavedPersonalImagePath))
-            {
-                _RemovedSavedImage = true;
-            }
-
             pbPersonalImage.Image = (rbMale.Checked) ? Resources.Male_512 : Resources.Female_512;
 
             pbPersonalImage.ImageLocation = null;
-            
-            _NewSelectedImagePath = null;
-            _UploadedPersonalImage = false;
             lnlblRemove.Visible = false;
         }
 
@@ -308,9 +288,43 @@ namespace DVLDPresentationLayer
             return Values;
         }
 
+        private bool HandlePersonImage()
+        {
+            if (_Person.ImagePath != pbPersonalImage.ImageLocation)
+            {
+                if (_Person.ImagePath != "")
+                {
+                    try
+                    {
+                        if (File.Exists(_Person.ImagePath))
+                            File.Delete(_Person.ImagePath);
+                    }
+
+                    catch (IOException e)
+                    {
+                        MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                }
+
+                if (pbPersonalImage.ImageLocation != null)
+                {
+                    string ImageSource = pbPersonalImage.ImageLocation;
+                    if (clsFileManager.CopyImageToProjectImageFolder(clsGlobalSettings.ImagesFolderPath, ref ImageSource))
+                    {
+                        pbPersonalImage.ImageLocation = ImageSource;
+                    }
+
+                    else
+                        return false;
+                }
+            }
+                return true;
+        }
+
         private void _SetPersonInfo(out clsPerson Person)
         {
-            if (_Person == null)
+            if (_CurrentMode == _enMode.AddNew)
             {
                 Person = new clsPerson
                 (
@@ -325,7 +339,7 @@ namespace DVLDPresentationLayer
                 Phone: txtPhone.Text,
                 Email: txtEmail.Text,
                 NationalityCountryID: clsCountries.Find(((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString()).CountryID,
-                ImagePath: (_NewSelectedImagePath != null) ? _NewSelectedImagePath : (_NewSelectedImagePath == null && !_RemovedSavedImage) ? _SavedPersonalImagePath : null
+                ImagePath: (pbPersonalImage.ImageLocation != null) ? pbPersonalImage.ImageLocation : null
                 );
             }
 
@@ -349,14 +363,10 @@ namespace DVLDPresentationLayer
 
                 Person.Address = txtAddress.Text;
 
-                if (_NewSelectedImagePath != null)
-                    Person.ImagePath = _NewSelectedImagePath;
-
-                else if (_NewSelectedImagePath == null && !_RemovedSavedImage)
-                    Person.ImagePath = _SavedPersonalImagePath;
-
-                else
-                    Person.ImagePath = null;
+                if(_Person.ImagePath != pbPersonalImage.ImageLocation)
+                {
+                    Person.ImagePath = (pbPersonalImage.ImageLocation != null) ? pbPersonalImage.ImageLocation : null;
+                }
             }
 
         }
@@ -368,10 +378,14 @@ namespace DVLDPresentationLayer
                 MessageBox.Show("Some fields are has invalid input, hover on the red icon beside each field to know why not valid", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            if (!HandlePersonImage())
+                return;
+
              clsPerson Person;
             _SetPersonInfo(out Person);
 
-            if (_Person != null)
+            if (_CurrentMode == _enMode.Update)
             {
                 if (_Person.AreAllFieldsOldValuesNotChanged())
                 {
@@ -380,37 +394,34 @@ namespace DVLDPresentationLayer
                 }
             }
 
-                if (Person.Save())
+            if (Person.Save())
+            {
+                lblPersonID.Text = Person.PersonID.ToString();
+
+                object[] NewDetails = _GetEnteredValuesInArray();
+
+                if (_CurrentMode != _enMode.Update)
                 {
-                    lblPersonID.Text = Person.PersonID.ToString();
-
-                    if (_NewSelectedImagePath != null)
-                        File.Copy(ofdSelectImage.FileName, _NewSelectedImagePath);
-
-                    if(_RemovedSavedImage)
-                    {
-                        if (File.Exists(_SavedPersonalImagePath))
-                            File.Delete(_SavedPersonalImagePath);
-                    }    
-
-
-                    AfterAddingNewPerson?.Invoke(Person.PersonID);                    
-                    AfterEditingPersonInfo?.Invoke(Person);
-
-                    object[] NewDetails = _GetEnteredValuesInArray();
+                    AfterAddingNewPerson?.Invoke(Person.PersonID);
                     AfterSavingNewInfo?.Invoke(NewDetails);
-                    AfterSavingEditedInfo?.Invoke(NewDetails, _PeopleDGVRowIndex);
-
-                    if (_Person == null)
-                    {
-                        _SetTitles(clsPerson.enMode.Update);
-                        _Person = Person;
-                    }
-
-                    MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else
-                    MessageBox.Show("Saving Failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                AfterEditingPersonInfo?.Invoke(Person);
+
+                AfterSavingEditedInfo?.Invoke(NewDetails, _PeopleDGVRowIndex);
+
+                if (_CurrentMode == _enMode.AddNew)
+                {
+                    _SetTitles(clsPerson.enMode.Update);
+                    _Person = Person;
+                }
+
+                MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                _CurrentMode = _enMode.Update;
+            }
+            else
+                MessageBox.Show("Saving Failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void btnClose_Click(object sender, EventArgs e)

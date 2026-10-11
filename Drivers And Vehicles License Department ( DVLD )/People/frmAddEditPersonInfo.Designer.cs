@@ -253,9 +253,9 @@
             this.cbCountries.Name = "cbCountries";
             this.cbCountries.Size = new System.Drawing.Size(177, 34);
             this.cbCountries.TabIndex = 10;
-            this.cbCountries.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbFilterBy_DrawItem);
-            this.cbCountries.DropDown += new System.EventHandler(this.cbFilterBy_DropDown);
-            this.cbCountries.DropDownClosed += new System.EventHandler(this.cbFilterBy_DropDownClosed);
+            this.cbCountries.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbCountries_DrawItem);
+            this.cbCountries.DropDown += new System.EventHandler(this.cbCountries_DropDown);
+            this.cbCountries.DropDownClosed += new System.EventHandler(this.cbCountries_DropDownClosed);
             // 
             // pbCountry
             // 

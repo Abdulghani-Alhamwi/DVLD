@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clsDataGridViewUtilityLib.cs" />
+    <Compile Include="clsFileManager.cs" />
     <Compile Include="clsGeneralUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

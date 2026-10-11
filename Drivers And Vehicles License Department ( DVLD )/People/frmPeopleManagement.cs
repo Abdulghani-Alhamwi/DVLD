@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using Utility_Library; 
@@ -205,11 +206,11 @@ namespace DVLDPresentationLayer
 
         private void tsmiDelete_Click(object sender, EventArgs e)
         {
-             if (dgvPeople.SelectedRows.Count > 5)
-             {
-                 MessageBox.Show("You Can Delete Maximum 5 People In One Time!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                 return;
-             }
+            if (dgvPeople.SelectedRows.Count > 5)
+            {
+                MessageBox.Show("You Can Delete Maximum 5 People In One Time!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
              DialogResult result;
 
@@ -218,27 +219,27 @@ namespace DVLDPresentationLayer
              else
                  result = MessageBox.Show("Are you sure you want to delete those people?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
-             if (result == DialogResult.OK)
-             {
-                 int[] SelectedRowsIndex = new int[dgvPeople.SelectedRows.Count];
-                 byte TotalDeletedRecords = 0;
+            if (result == DialogResult.OK)
+            {
+                int[] SelectedRowsIndex = new int[dgvPeople.SelectedRows.Count];
+                byte TotalDeletedRecords = 0;
 
                 for (byte i = 0; i < dgvPeople.SelectedRows.Count; i++)
-                 {
-                     if (!clsPerson.DeletePerson(Convert.ToInt32(dgvPeople.SelectedRows[i].Cells[_PrimaryKeyViewedColumnName].Value)))
-                     {
-                         MessageBox.Show($"Person who has ID : {Convert.ToInt32(dgvPeople.SelectedRows[i].Cells[_PrimaryKeyViewedColumnName].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                         SelectedRowsIndex[i] = -1;
-                     }
-                     else
+                {
+                    if (!clsPerson.DeletePerson(Convert.ToInt32(dgvPeople.SelectedRows[i].Cells[_PrimaryKeyViewedColumnName].Value)))
+                    {
+                        MessageBox.Show($"Person who has ID : {Convert.ToInt32(dgvPeople.SelectedRows[i].Cells[_PrimaryKeyViewedColumnName].Value)} is not deleted due to a data connected to it.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        SelectedRowsIndex[i] = -1;
+                    }
+                    else
                     {
                         SelectedRowsIndex[i] = dgvPeople.SelectedRows[i].Index;
                         TotalDeletedRecords++;
                     }
-                 }
+                }
 
-                _DgvUtilityLib.DeleteSelectedDgvRows(dgvPeople,SelectedRowsIndex);
-                 lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) - TotalDeletedRecords).ToString();
+                _DgvUtilityLib.DeleteSelectedDgvRows(dgvPeople, SelectedRowsIndex);
+                lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) - TotalDeletedRecords).ToString();
             }
         }
 

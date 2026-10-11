@@ -35,13 +35,21 @@ namespace DVLDBusinessLayer
 
         private bool _HasOldDataChangedFully()
         {
-            return (ApplicationTypeTitle != _OldApplicationTypeData.ApplicationTypeTitle && ApplicationTypeFees != _OldApplicationTypeData.ApplicationTypeFees);                   
+            return (ApplicationTypeTitle != _OldApplicationTypeData.ApplicationTypeTitle && ApplicationTypeFees != _OldApplicationTypeData.ApplicationTypeFees);
         }
 
         private bool _UpdateApplicationType()
         {
-            return clsApplicationTypesData.UpdateApplicationType(ApplicationTypeID, ApplicationTypeTitle, ApplicationTypeFees,
-                _OldApplicationTypeData, _HasOldDataChangedFully());
+            if (clsApplicationTypesData.UpdateApplicationType(ApplicationTypeID, ApplicationTypeTitle, ApplicationTypeFees,
+                _OldApplicationTypeData, _HasOldDataChangedFully()))
+            {
+                _OldApplicationTypeData = new clsApplicationTypesData.clsOldApplicationTypeData(
+                                    ApplicationTypeTitle, ApplicationTypeFees);
+
+                return true;
+            }
+
+            return false;
         }
 
         public static decimal GetApplicationTypeFees(enApplicationType ApplicationType)

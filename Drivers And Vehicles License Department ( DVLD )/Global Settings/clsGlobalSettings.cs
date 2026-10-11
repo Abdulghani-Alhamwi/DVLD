@@ -6,6 +6,7 @@ namespace DVLDPresentationLayer
     internal class clsGlobalSettings
     {
         public static string EncryptionKeyName = "DVLD_EncryptionKey";
+        public static string ImagesFolderPath = @"C:\DVLD-People-Images\";
 
         public static int CurrentUserID = -1;
         public static string CurrentUsername = "";

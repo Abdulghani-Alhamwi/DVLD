@@ -264,7 +264,7 @@ namespace DVLDPresentationLayer
                     _SetPasswordAndSalt(User);
 
                 User.IsActive = chkIsActive.Checked;
-                User.UserPermissions = _GetNewUserPermissions();
+                User.Permissions = _GetNewUserPermissions();
             }
             else
             {

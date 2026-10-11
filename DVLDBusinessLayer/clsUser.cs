@@ -24,7 +24,7 @@ namespace DVLDBusinessLayer
         public string Password { get; set; }
         public string Salt { get; set; }
         public bool IsActive { get; set; }
-        public sbyte UserPermissions { get; set; }
+        public sbyte Permissions { get; set; }
 
         private clsUsersData.clsOldUserData _OldUserData;
 
@@ -38,7 +38,7 @@ namespace DVLDBusinessLayer
             this.Password = Password;
             this.Salt = Salt;
             this.IsActive = IsActive;
-            this.UserPermissions = Permissions;
+            this.Permissions = Permissions;
 
             _OldUserData = new clsUsersData.clsOldUserData(PersonID, Username, Password, IsActive, Permissions);
         }
@@ -53,7 +53,7 @@ namespace DVLDBusinessLayer
             this.Password = Password;
             this.Salt = Salt;
             this.IsActive = IsActive;
-            this.UserPermissions = Permissions;
+            this.Permissions = Permissions;
             _CurrentMode = enMode.Update;
 
             _OldUserData = new clsUsersData.clsOldUserData(PersonID, Username, Password, IsActive, Permissions);
@@ -73,7 +73,7 @@ namespace DVLDBusinessLayer
 
         private bool _AddNewUser()
         {
-            UserID = clsUsersData.AddNewUser(PersonID, Username, UsernameIV, UsernameHash, Password, Salt, IsActive, UserPermissions);
+            UserID = clsUsersData.AddNewUser(PersonID, Username, UsernameIV, UsernameHash, Password, Salt, IsActive, Permissions);
 
             return (UserID != -1);
         }
@@ -109,7 +109,7 @@ namespace DVLDBusinessLayer
 
         public bool HasUserPermission(enUserPermissions RequiredPermission)
         {
-            return HasUserPermission(RequiredPermission, UserPermissions);
+            return HasUserPermission(RequiredPermission, Permissions);
         }
 
         public static bool IsAdminUser(sbyte UserPermissions)
@@ -119,14 +119,14 @@ namespace DVLDBusinessLayer
 
         public bool IsAdminUser()
         {
-            return IsAdminUser(UserPermissions);
+            return IsAdminUser(Permissions);
         }
 
         public bool AreAllFieldsOldValuesNotChanged()
         {
             return (_OldUserData.PersonID == PersonID && !HasUsernameChanged() &&
                     _OldUserData.Password == Password &&_OldUserData.IsActiveCase == IsActive
-                 && _OldUserData.Permissions == UserPermissions);
+                 && _OldUserData.Permissions == Permissions);
         }
 
         public bool HasUsernameChanged()
@@ -138,13 +138,19 @@ namespace DVLDBusinessLayer
         {
             return (_OldUserData.PersonID != PersonID && HasUsernameChanged() &&
                     _OldUserData.Password != Password && _OldUserData.IsActiveCase != IsActive
-                 && _OldUserData.Permissions != UserPermissions);
+                 && _OldUserData.Permissions != Permissions);
         }
 
         private bool _UpdateUser()
         {
-            return clsUsersData.UpdateUser(UserID, PersonID, Username, UsernameIV, UsernameHash, Password, Salt, IsActive, UserPermissions
-                , _OldUserData, _HasOldDataChangedFully());
+            if(clsUsersData.UpdateUser(UserID, PersonID, Username, UsernameIV, UsernameHash, Password, Salt, IsActive, Permissions
+                , _OldUserData, _HasOldDataChangedFully()))
+            {
+                _OldUserData = new clsUsersData.clsOldUserData(PersonID, Username, Password, IsActive, Permissions);
+                return true;
+            }
+
+            return false;
         }
 
         public bool Save()

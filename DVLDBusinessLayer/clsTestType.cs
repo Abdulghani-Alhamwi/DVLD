@@ -42,8 +42,14 @@ namespace DVLDBusinessLayer
 
         private bool _UpdateTestType()
         {
-            return clsTestTypesData.UpdateTestType(TestTypeID, TestTypeTitle, TestTypeDescription,
-                TestTypeFees, _OldTestTypeData, _HasOldDataChangedFully());
+            if(clsTestTypesData.UpdateTestType(TestTypeID, TestTypeTitle, TestTypeDescription,
+                TestTypeFees, _OldTestTypeData, _HasOldDataChangedFully()))
+            {
+                _OldTestTypeData = new clsTestTypesData.clsOldTestTypeData(TestTypeTitle, TestTypeDescription, TestTypeFees);
+                return true;
+            }
+
+            return false;
         }
 
         public static decimal GetTestTypeFees(byte TestTypeID)

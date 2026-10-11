@@ -29,6 +29,7 @@ namespace DVLDBusinessLayer
             this.IsLocked = IsLocked;
             this.CreatedByUserID = CreatedByUserID;
             this.RetakeTestAppID = RetakeTestAppID;
+            _OldAppointmentData = new clsTestAppointmentsData.clsOldAppointmentData(AppointmentDate, IsLocked);
         }
 
         private clsTestAppointment(int TestAppointmentID,byte TestTypeID,int LDLApplicationID,DateTime AppointmentDate,decimal PaidFees,int CreatedByUserID,bool IsLocked,int RetakeTestAppID)
@@ -78,7 +79,13 @@ namespace DVLDBusinessLayer
 
         private bool _UpdateAppointment()
         {
-            return clsTestAppointmentsData.UpdateAppointment(TestAppointmentID,AppointmentDate,IsLocked, _OldAppointmentData, _HasOldDataChangedFully());
+            if(clsTestAppointmentsData.UpdateAppointment(TestAppointmentID,AppointmentDate,IsLocked, _OldAppointmentData, _HasOldDataChangedFully()))
+            {
+                _OldAppointmentData = new clsTestAppointmentsData.clsOldAppointmentData(AppointmentDate, IsLocked);
+                return true;
+            }
+
+            return false;
         }
 
         public bool Save()

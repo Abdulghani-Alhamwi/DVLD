@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.IO;
 using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
@@ -7,7 +8,7 @@ namespace DVLDBusinessLayer
     public class clsPerson
     {
         public enum enMode : byte { AddNew = 0, Update = 1 }
-        private enMode _CurrentMode;
+        private enMode CurrentMode;
         public enum enGendor : byte { Male = 0, Female = 1 }
         public enGendor? Gendor;
         public int PersonID { get; set; }
@@ -54,8 +55,12 @@ namespace DVLDBusinessLayer
             this.Phone = Phone;
             this.Email = Email;
             this.NationalityCountryID = NationalityCountryID;
-            this.CountryName = clsCountries.Find(NationalityCountryID).CountryName;
+            this.CountryName = "";
             this.ImagePath = ImagePath;
+
+            _OldPersonData = new clsPeopleData.clsOldPersonData
+             (NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth,
+             _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath);
         }
 
         private clsPerson(int PersonID ,string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth,byte Gendor , string Address, string Phone, string Email,string CountryName,byte NationalityCountryID , string ImagePath)
@@ -75,7 +80,7 @@ namespace DVLDBusinessLayer
             this.NationalityCountryID = NationalityCountryID;
             this.ImagePath = ImagePath;
 
-            this._CurrentMode = enMode.Update;
+            this.CurrentMode = enMode.Update;
 
             _OldPersonData = new clsPeopleData.clsOldPersonData
             (NationalNo, FirstName, SecondName, ThirdName, LastName,DateOfBirth,
@@ -145,9 +150,9 @@ namespace DVLDBusinessLayer
         public bool AreAllFieldsOldValuesNotChanged()
         {
             return (_OldPersonData.NationalNo == NationalNo && _OldPersonData.FirstName == FirstName && _OldPersonData.SecondName == SecondName
-                 && _OldPersonData.ThirdName == ThirdName && _OldPersonData.LastName == LastName && _OldPersonData.DateOfBirth == DateOfBirth
-                 && _OldPersonData.Gendor == _GetGendorNumericValue() && _OldPersonData.Address == Address && _OldPersonData.Phone == Phone
-                 && _OldPersonData.Email == Email && _OldPersonData.NationalityCountryID == NationalityCountryID && _OldPersonData.ImagePath == ImagePath);
+               && _OldPersonData.ThirdName == ThirdName && _OldPersonData.LastName == LastName && _OldPersonData.DateOfBirth == DateOfBirth
+               && _OldPersonData.Gendor == _GetGendorNumericValue() && _OldPersonData.Address == Address && _OldPersonData.Phone == Phone
+               && _OldPersonData.Email == Email && _OldPersonData.NationalityCountryID == NationalityCountryID && _OldPersonData.ImagePath == ImagePath);
         }
 
         private bool _HasOldDataChangedFully()
@@ -160,8 +165,18 @@ namespace DVLDBusinessLayer
 
         private bool _UpdatePerson()
         {
-            return clsPeopleData.UpdatePerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue()
-                , Address, Phone, Email, NationalityCountryID, ImagePath,_OldPersonData, _HasOldDataChangedFully());
+            if (clsPeopleData.UpdatePerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue()
+                , Address, Phone, Email, NationalityCountryID, ImagePath, _OldPersonData, _HasOldDataChangedFully()))
+            {
+                _OldPersonData = new clsPeopleData.clsOldPersonData
+                 (NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth,
+                 _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath);
+
+                return true;
+            }
+
+            else
+                return false;
         }
 
         public static DataTable GetPeopleInfo(byte WantedNumOfRecords)
@@ -178,12 +193,12 @@ namespace DVLDBusinessLayer
 
         public bool Save()
         {
-            switch(_CurrentMode)
+            switch(CurrentMode)
             {
                 case enMode.AddNew:
                     if (_AddNewPerson())
                     {
-                        _CurrentMode = enMode.Update;
+                        CurrentMode = enMode.Update;
                         return true;
                     }
                     else
@@ -195,9 +210,23 @@ namespace DVLDBusinessLayer
             return false;
         }
 
+        private static void _DeletePersonImage(string PersonImagePath)
+        {
+            if (File.Exists(PersonImagePath))
+                File.Delete(PersonImagePath);
+        }
+
         public static bool DeletePerson(int PersonID)
         {
-            return clsPeopleData.DeletePerson(PersonID);
+            string PersonImagePath = clsPerson.Find(PersonID).ImagePath;
+
+            if (clsPeopleData.DeletePerson(PersonID))
+            {
+                _DeletePersonImage(PersonImagePath);
+                return true;
+            }
+
+            return false;
         }
 
         public static bool SearchForNationalNo(string NationalNo)

@@ -282,6 +282,8 @@ namespace DVLDPresentationLayer.Core
                     if (_LDLApplication.AreAllFieldsOldValuesNotChanged())
                     {
                         MessageBox.Show("There is'nt any change on the information", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        return;
                     }
                 }
 
