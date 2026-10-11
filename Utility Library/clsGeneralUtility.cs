@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Utility_Library
@@ -274,12 +275,15 @@ namespace Utility_Library
             return Encoding.UTF8.GetString(DecryptedString);
         }
 
-        public static void EnableErrorProvider(ErrorProvider erControl, Control control, string ErrorMessage, CancelEventArgs CancelArgs = null)
+        public static void EnableErrorProvider(ErrorProvider erControl, Control control, string ErrorMessage, CancelEventArgs CancelArgs)
         {
             erControl.SetError(control, ErrorMessage);
+            CancelArgs.Cancel = true;
+        }
 
-            if (CancelArgs != null)
-                CancelArgs.Cancel = true;
+        public static void DisableErrorProvider(ErrorProvider erControl, Control control)
+        {
+            erControl.SetError(control, null);
         }
 
         public static void DrawComboBoxItems(object sender, DrawItemEventArgs e, string ColumnName = null)
@@ -739,155 +743,11 @@ namespace Utility_Library
             return " OFFSET @NumberOfRowsToOffset ROWS FETCH NEXT @WantedNumOfRecords ROWS ONLY";
         }
 
-        /// <summary>
-        /// Validate text in the text box control that is for first name, second name, third name and last name.
-        /// Third name is optional.
-        /// The tag of each text box must have the role of what it, like the first name text box tag must have value : First name.
-        /// If entered value not valid then the error provider will be turned on and if you send the cancel event args argument then it will prevent changing focus of that control until user enters valid input.
-        /// </summary
-        public static bool ValidateName(TextBox txtBox,ErrorProvider errorProvider, CancelEventArgs e)
-        {
-            if ((txtBox.Text == "" || string.IsNullOrWhiteSpace(txtBox.Text)) && (txtBox.Tag.ToString().ToLower() != "third name"))
-            {
-                EnableErrorProvider(errorProvider, txtBox, $"It is required to enter your {txtBox.Tag.ToString()}!", e);
-                return false;
-            }
-
-            else if (!(txtBox.Text.All(Char.IsLetter) || txtBox.Text.Contains("-") || txtBox.Text.Contains("_")))
-            {
-                EnableErrorProvider(errorProvider, txtBox, $"{txtBox.Tag.ToString()} must contain only letters!", e);
-                return false;
-            }
-
-            else
-                errorProvider.Dispose();
-
-            return true;
-        }
-
-        /// <summary>
-        /// Validate text box that is for address.
-        /// If entered value not valid then the error provider will be turned on and if you send the cancel event args argument then it will prevent changing focus of that control until user enters valid input.
-        /// </summary
-        public static bool ValidateAddress(TextBox txtBox, ErrorProvider errorProvider,CancelEventArgs e)
-        {
-            if (txtBox.Text == "" || string.IsNullOrWhiteSpace(txtBox.Text))
-            {
-                EnableErrorProvider(errorProvider, txtBox, $"It is required to enter your Address!", e);
-                return false;
-            }
-            else
-                errorProvider.Dispose();
-
-            return true;
-        }
-
-        /// <summary>
-        /// Validate text in the text box control that is for national number.
-        /// If entered value not valid then the error provider will be turned on and if you send the cancel event args argument then it will prevent changing focus of that control until user enters valid input.
-        /// </summary
-        public static bool ValidateNationalNo(TextBox txtBox, ErrorProvider errorProvider,CancelEventArgs e,bool IsNationalNoAlreadyExists)
-        {
-            if (txtBox.Text == "" || string.IsNullOrWhiteSpace(txtBox.Text))
-            {
-                EnableErrorProvider(errorProvider, txtBox, "It is required to enter your National No!", e);
-                return false;
-            }
-
-            if (IsNationalNoAlreadyExists)
-            {
-                EnableErrorProvider(errorProvider, txtBox, $"National Number is used for another person!", e);
-                return false;
-            }
-
-            else
-                errorProvider.Dispose();
-
-            return true;
-        }
-
-        /// <summary>
-        /// Validate text in the text box control that is for phone number.
-        /// If entered value not valid then the error provider will be turned on and if you send the cancel event args argument then it will prevent changing focus of that control until user enters valid input.
-        /// </summary
-        public static bool ValidatePhone(TextBox txtBox, ErrorProvider errorProvider, CancelEventArgs e)
-        {
-            if (txtBox.Text == "" || string.IsNullOrWhiteSpace(txtBox.Text))
-            {
-                clsGeneralUtility.EnableErrorProvider(errorProvider, txtBox, "It is required to enter your Phone Number!", e);
-                return false;
-            }
-
-            else if (!txtBox.Text.All(Char.IsDigit))
-            {
-                clsGeneralUtility.EnableErrorProvider(errorProvider, txtBox, "Phone Number must contains only digits!", e);
-                return false;
-            }
-            else
-                errorProvider.Dispose();
-
-            return true;
-        }
-
-        private static bool _ValidateEmailStart(TextBox txtBox)
-        {
-            if (!(txtBox.Text.Contains("@") && txtBox.Text.Contains("."))
-                || txtBox.Text.StartsWith(".") || txtBox.Text.StartsWith("-")
-                || txtBox.Text.StartsWith("_") || txtBox.Text.StartsWith("+"))
-                return false;
-
-            else
-                return true;
-        }
-
-        private static bool _ValdiateEmailMiddle(TextBox txtBox)
-        {
-            if (txtBox.Text.Contains("@.") || txtBox.Text.Contains("@-")
-               || txtBox.Text.Contains(".@") || txtBox.Text.Contains("-@")
-               || txtBox.Text.Contains("@+") || txtBox.Text.Contains("+@")
-               || txtBox.Text.Contains("@_") || txtBox.Text.Contains("_@")
-               || txtBox.Text.Substring(txtBox.Text.IndexOf("@") + 1, (txtBox.Text.IndexOf(".")) - (txtBox.Text.IndexOf("@") + 1)).Contains("_"))
-                return false;
-
-            else
-                return true;
-        }
-
-        private static bool _ValidateEmailEnd(TextBox txtBox)
-        {
-            if (txtBox.Text.EndsWith(".") || txtBox.Text.EndsWith("-")
-                || txtBox.Text.EndsWith("_") || txtBox.Text.EndsWith("+")
-                || txtBox.Text.EndsWith("@"))
-                return false;
-
-            else
-                return true;
-        }
-
-        /// <summary>
-        /// Validate text in the text box control that is for email.
-        /// If entered value not valid then the error provider will be turned on and if you send the cancel event args argument then it will prevent changing focus of that control until user enters valid input.
-        /// </summary
-        public static bool ValidateEmail(TextBox txtBox, ErrorProvider errorProvider, CancelEventArgs e)
-        {
-            if (txtBox.Text.Contains(" ") || txtBox.Text.Contains(",") || !(_ValidateEmailStart(txtBox)
-            && _ValdiateEmailMiddle(txtBox) && _ValidateEmailEnd(txtBox)))
-            {
-                EnableErrorProvider(errorProvider, txtBox, "Invalid Email Address Format!", e);
-                return false;
-            }
-
-            else
-                errorProvider.Dispose();
-
-            return true;
-
-        }
 
         /// <summary>
         /// Set constraint on date by age, like entering the value 18 for MinAge parameter, then here the minimum age is 18 therefore the max date that the user will be allowed to choose in the DateTimePicker control is a date of a person its age at least 18.
         /// </summary
-        public static void SetDateConstraintForAge(DateTimePicker dtpControl, byte MinAge, DateTime? MinDate = null)
+        public static void SetDateConstraintForAge(DateTimePicker dtpControl, byte MinAge, byte MaxAge)
         {
             DateTime MindateOfBirth = DateTime.Now.AddYears(- MinAge);
 
@@ -896,13 +756,7 @@ namespace Utility_Library
             dtpControl.Value = MindateOfBirth;
             dtpControl.MaxDate = MindateOfBirth;
 
-            if (MinDate == null)
-                dtpControl.MinDate = DateTime.Now.AddYears(-100);
-
-            else
-            {
-                dtpControl.MinDate = Convert.ToDateTime(MinDate);
-            }
+            dtpControl.MinDate = DateTime.Now.AddYears(- MaxAge);
         }
 
         public static byte GetHourFromInputToTextBox(Control ctrl)
@@ -965,5 +819,55 @@ namespace Utility_Library
             else
                 return false;
             }
+
+        public static void ChangeMdiFormBackColor(Form frm, Color BackColor)
+        {
+            MdiClient mdiClient = frm.Controls.OfType<MdiClient>().FirstOrDefault();
+            mdiClient.BackColor = BackColor;
+        }
+
+        public static bool ValidateEmail(string EmailAddress)
+        {
+            string pattern = @"^[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$";
+
+            Regex regex = new Regex(pattern);
+
+            return regex.IsMatch(EmailAddress);
+        }
+
+        public static bool ValidateInteger(string Number)
+        {
+            string pattern = @"^[0-9]*$";
+
+            Regex regex = new Regex(pattern);
+
+            return regex.IsMatch(Number);
+        }
+
+        public static bool ValidateFloat(string Number)
+        {
+            string pattern = @"^[0-9]*(?:\.[0-9]*)?$";
+
+            Regex regex = new Regex(pattern);
+
+            return regex.IsMatch(Number);
+        }
+
+        public static bool IsNumber(string Number)
+        {
+            return (ValidateInteger(Number) || ValidateFloat(Number));
+        }
+
+        /// <summary>
+        /// Validate a part of the full name : first, second, third or last name.
+        /// </summary
+        public static bool ValidateNamePart(string Name)
+        {
+            string pattern = @"^[a-zA-Z]+$";
+
+            Regex regex = new Regex(pattern);
+
+            return regex.IsMatch(Name);
+        }
     }
 }

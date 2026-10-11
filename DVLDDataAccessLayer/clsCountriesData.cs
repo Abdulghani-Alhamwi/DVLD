@@ -40,9 +40,45 @@ namespace DVLDDataAccessLayer
             return dtCountries;
         }
 
-        public static int GetCountryID(string CountryName)
+        public static bool Find(byte CountryID,ref string CountryName)
         {
-            int CountryID = -1;
+            bool IsFound = false;
+
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query = $@"SELECT CountryName FROM Countries WHERE {_PrimaryKeyColumnName} = @CountryID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@CountryID", CountryID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                {
+                    IsFound = true;
+                    CountryName = result.ToString();
+                }
+
+            }
+
+            catch
+            {
+                IsFound = false;
+            }
+
+            finally
+            {
+                connection.Close();
+            }
+            return IsFound;
+        }
+
+        public static bool Find(string CountryName,ref byte CountryID)
+        {
+            bool IsFound = false;
 
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
@@ -56,48 +92,24 @@ namespace DVLDDataAccessLayer
                 connection.Open();
                 object result = command.ExecuteScalar();
 
-                if(result!=null)
-                CountryID = Convert.ToInt32(result);
-                
-            }
-
-            catch { }
-
-            finally
-            {
-                connection.Close();
-            }
-            return CountryID;
-        }
-
-        public static string GetCountryName(int NationalityCountryID)
-        {
-            string CountryName = "";
-
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-
-            string query = $@"SELECT CountryName FROM Countries WHERE {_PrimaryKeyColumnName} = @CountryID";
-
-            SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@CountryID", NationalityCountryID);
-
-            try
-            {
-                connection.Open();
-                object result = command.ExecuteScalar();
-
                 if (result != null)
-                    CountryName = result.ToString();
+                {
+                    IsFound = true;
+                    CountryID = Convert.ToByte(result);
+                }
 
             }
 
-            catch { }
+            catch
+            {
+                IsFound = false;
+            }
 
             finally
             {
                 connection.Close();
             }
-            return CountryName;
+            return IsFound;
         }
     }
 }

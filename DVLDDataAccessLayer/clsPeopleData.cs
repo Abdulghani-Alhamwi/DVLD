@@ -721,7 +721,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static bool Find(int PersonID,ref string NationalNo,ref string FirstName,
-                       ref string SecondName,ref string ThirdName,ref string LastName,ref DateTime DateOfBirth,ref byte Gendor,ref string Address,ref string Phone,ref string Email,ref int NationalityCountryID,ref string ImagePath)
+                       ref string SecondName,ref string ThirdName,ref string LastName,ref DateTime DateOfBirth,ref byte Gendor,ref string Address,ref string Phone,ref string Email,ref byte NationalityCountryID,ref string ImagePath)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -757,7 +757,7 @@ namespace DVLDDataAccessLayer
                     if (reader["Email"] != DBNull.Value)
                         Email = (string)reader["Email"];
 
-                        NationalityCountryID = (int)reader["NationalityCountryID"];
+                        NationalityCountryID = Convert.ToByte(reader["NationalityCountryID"]);
 
                     if (reader["ImagePath"] != DBNull.Value)
                         ImagePath = (string)reader["ImagePath"];
@@ -779,7 +779,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static bool Find(string NationalNo,ref int PersonID, ref string FirstName,
-                      ref string SecondName, ref string ThirdName, ref string LastName, ref DateTime DateOfBirth, ref byte Gendor, ref string Address, ref string Phone, ref string Email, ref int NationalityCountryID, ref string ImagePath)
+                      ref string SecondName, ref string ThirdName, ref string LastName, ref DateTime DateOfBirth, ref byte Gendor, ref string Address, ref string Phone, ref string Email, ref byte NationalityCountryID, ref string ImagePath)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -815,7 +815,7 @@ namespace DVLDDataAccessLayer
                     if (reader["Email"] != DBNull.Value)
                         Email = (string)reader["Email"];
 
-                    NationalityCountryID = (int)reader["NationalityCountryID"];
+                    NationalityCountryID = Convert.ToByte(reader["NationalityCountryID"]);
 
                     if (reader["ImagePath"] != DBNull.Value)
                         ImagePath = (string)reader["ImagePath"];

@@ -20,7 +20,7 @@ namespace DVLDBusinessLayer
         public string Address { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public int NationalityCountryID { get; set; }
+        public byte NationalityCountryID { get; set; }
         public string CountryName { get; set; }
         public string ImagePath { get; set; }
         public string FullName
@@ -40,7 +40,7 @@ namespace DVLDBusinessLayer
 
         private clsPeopleData.clsOldPersonData _OldPersonData;
 
-        public clsPerson(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, enGendor Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
+        public clsPerson(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, enGendor Gendor, string Address, string Phone, string Email, byte NationalityCountryID, string ImagePath)
         {
             this.PersonID = -1;
             this.NationalNo = NationalNo;
@@ -54,11 +54,11 @@ namespace DVLDBusinessLayer
             this.Phone = Phone;
             this.Email = Email;
             this.NationalityCountryID = NationalityCountryID;
-            this.CountryName = clsCountries.GetCountryName(NationalityCountryID);
+            this.CountryName = clsCountries.Find(NationalityCountryID).CountryName;
             this.ImagePath = ImagePath;
         }
 
-        private clsPerson(int PersonID ,string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth,byte Gendor , string Address, string Phone, string Email,string CountryName,int NationalityCountryID , string ImagePath)
+        private clsPerson(int PersonID ,string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth,byte Gendor , string Address, string Phone, string Email,string CountryName,byte NationalityCountryID , string ImagePath)
         {
             this.PersonID = PersonID;
             this.NationalNo = NationalNo;
@@ -88,14 +88,14 @@ namespace DVLDBusinessLayer
             string FirstName = "",SecondName = "",ThirdName = "",LastName = "",
             NationalNo = "";
             DateTime DateOfBirth = DateTime.Now;
-            int NationalityCountryID = -1;
+            byte NationalityCountryID = 0;
             string Address = "",Phone = "",Email = "",CountryName = "" ,
             ImagePath = "";
 
             if (clsPeopleData.Find(PersonID, ref NationalNo, ref FirstName, ref SecondName, ref ThirdName, ref LastName,
                ref DateOfBirth, ref Gendor, ref Address, ref Phone, ref Email, ref NationalityCountryID, ref ImagePath))
             {
-                CountryName = clsCountries.GetCountryName(NationalityCountryID);
+                CountryName = clsCountries.Find(NationalityCountryID).CountryName;
 
                 return new clsPerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName,
                                      DateOfBirth, Gendor, Address, Phone, Email, CountryName, NationalityCountryID, ImagePath);
@@ -110,14 +110,14 @@ namespace DVLDBusinessLayer
             byte Gendor = 0;
             string FirstName = "", SecondName = "", ThirdName = "", LastName = "";
             DateTime DateOfBirth = DateTime.Now;
-            int NationalityCountryID = -1;
+            byte NationalityCountryID = 0;
             string Address = "", Phone = "", Email = "", CountryName = "",
             ImagePath = "";
 
             if (clsPeopleData.Find(NationalNo,ref PersonID, ref FirstName, ref SecondName, ref ThirdName, ref LastName,
                ref DateOfBirth, ref Gendor, ref Address, ref Phone, ref Email, ref NationalityCountryID, ref ImagePath))
             {
-                CountryName = clsCountries.GetCountryName(NationalityCountryID);
+                CountryName = clsCountries.Find(NationalityCountryID).CountryName;
 
                 return new clsPerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName,
                                      DateOfBirth, Gendor, Address, Phone, Email, CountryName, NationalityCountryID, ImagePath);

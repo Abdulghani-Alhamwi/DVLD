@@ -6,19 +6,48 @@ namespace DVLDBusinessLayer
 {
     public class clsCountries
     {
+        public byte CountryID { get; set; }
+        public string CountryName { get; set; }
+
+        public clsCountries()
+        {
+            CountryID = 0;
+            CountryName = "";
+        }
+
+        private clsCountries(byte CountryID,string CountryName)
+        {
+            this.CountryID = CountryID;
+            this.CountryName = CountryName;
+        }
+
         public static DataTable GetAllCountries()
         {
             return clsCountriesData.GetAllCountries();
         }
 
-        public static int GetCountryID(string CountryName)
+        public static clsCountries Find(byte CountryID)
         {
-            return clsCountriesData.GetCountryID(CountryName);
+            string CountryName = "";
+
+            if (clsCountriesData.Find(CountryID, ref CountryName))
+            {
+                return new clsCountries(CountryID, CountryName);
+            }
+            else
+                return null;
         }
 
-        public static string GetCountryName(int NationalityCountryID)
+        public static clsCountries Find(string CountryName)
         {
-            return clsCountriesData.GetCountryName(NationalityCountryID);
+            byte CountryID = 0;
+
+            if (clsCountriesData.Find(CountryName, ref CountryID))
+            {
+                return new clsCountries(CountryID, CountryName);
+            }
+            else
+                return null;
         }
     }
 }

@@ -855,63 +855,77 @@ Join algorithms:
 79) We can create an Enum for the application types and each item of the Enum we put the id value that is associated with that application type and by that if we want to take the id we can from the Enum item call when we convert int -> it will return its value , like :
 (int) enApplicationType.NewDrivingLicense
 
-80) The method validate children that is in the form class is when we call it fires up the validating event for all controls that are on the form and if all is valid it returns true otherwise it return false.
+80) The method validatechildren() that is under the Form class : It fires all child controls validating events and each method associated with a validating event if CancelEventArgs object was e.cancel = true then the validate is failed therefore the ValidateChildren() Method will return false , otherwise if in all validating events the methods that are subscribed with them if no one of them has  e.Cancel = true then e.Cancel be false as its default value therefore the validation be succeeded therefore the ValidateChildren() Method returns true.
 
-81) We can put in a query 2 inner joins after them selves but that will require to put two On clauses after them selves after these inner joins.
+81) If the form auto validated property was Enable Prevent focus change then if a method that is subscribed with a validating event was fired and the e.Cancel = true then the validation be failed then here because of that the form property AutoValidate was EnablePreventFocusChange then the focus on the control will remain even when user try to go to another control it wont be able to move therefore if we want the focus to be changed by the user even if the validation failed -> we must set the Form AutoValidate Property to : EnableAllowFocusChange therefore that will allow the user to move focus to another control even if the validating failed for a control.
 
-82) For handling when a key is press in order to prevent the unwanted input like letters , in the key press event : if we put : e.Handle = !(char)e.IsDigit && !(char)e.IsControl
-if the condition returns true therefore the entered value wont appear and will be prevented from being sat as the value of the control we are using.
+82) We can put in a query 2 inner joins after them selves but that will require to put two On clauses after them selves after these inner joins in the following way :
+The Nested Inner joins -> the first On clause is for the second inner join and the  second on clause is for the first inner join, first inner join its left table of that we will put in the second on clause -> the predicate can be with the right or left table of the second inner join according to the common field is with who  therefore the second on clause belongs to the first inner join and left table can be in the on clause predicate with any table of the second inner join according to table that that left table of the first inner join has common field with it:
 
-83) In business logic we handle all the business as we can in order that outside we focus on UI.
+Example :
+SELECT People.FirstName , Countries.CountryName , Drivers.CreatedDate AS becameDriverAtDate FROM
+Countries INNER JOIN Drivers INNER JOIN  People
+ON People.PersonID = Drivers.PersonID
+ON People.NationalityCountryID = Countries.CountryID.
 
-84) We can instead of bringing the Columns from the database with a specific names , we can bring them as they are and in the form we handle naming the columns headers in the data grid view in the name we want and we can to put custom width for the column or from enable resizing then choosing the column height from the data grid view properties that would work also to make the appearance of columns headers text clear.
 
-85) We can put Enum in the forms that have 2 modes Add/Edit , like Enum enMode {AddNew = 0 , Update = 1};
+83) For handling when a key is press in order to prevent the unwanted input like letters , in the key press event : if we put : e.Handle = !(char)e.IsDigit && !(char)e.IsControl -> if thge e.handle was true then the character wont enter the textbox.
 
-86) We can to use a method associated with the button control in Windows forms which it is PerformClick() -> It fires the event OnClick for that button.
+84) In business logic we handle all the business as we can in order that outside we focus on UI.
 
-87) We can call the method that is associated with the event any where like any other method because it is a method subscribed to an event therefore eventually it is still a method.
+85) We can instead of bringing the Columns from the database with a specific names , we can bring them as they are and in the form we handle naming the columns headers in the data grid view in the name we want and we can to put custom width for the column or from enable resizing then choosing the column height from the data grid view properties that would work also to make the appearance of columns headers text clear.
 
-88) For the Regex Class Pattern :
-1] The + at end means that the text can have one or more characters from the characters that are allowed at the pattern.
+86) We can put Enum in the forms that have 2 modes Add/Edit , like Enum enMode {AddNew = 0 , Update = 1};
 
-2] The * at end means that it allows the zero or many characters from the allowed characeters in the pattern to be in the text.
+87) We can use a method associated with the button control in Windows forms which it is PerformClick() -> It fires the event OnClick for that button.
 
-3] The ? at end means the text should have 0 or one character from the allowed characters that are in the pattern.
+87) We can call the method that is subscribed with the event any where like any other method because it is a method subscribed to an event therefore eventually it is still a method.
 
-89) The method IsMatch() for the object from the type Regex class allow use to compare a text with the pattern that we have specified.
+88) If we want to remove the maximize button and the minimize button from the control box in the form and keep the close button with the control box therefore we have the control box and in it the form title and the close button -> We can to set the form border style to FixedToolWindow.
 
-90) The FileInfo class allow us when we give it a file path to take info about that path like file extension.
+89) If we want to remove the sunken (3d border) from the MDI form , we can to prevent it from being drawn or we can to put picture box with the image we want and set the dock to full.
 
-91) If we want to remove the maximize button and the minimize button from the control box in the form and keep the close button with the control box therefore we have the control box and in it the form title and the close button -> We can to set the form border style to FixedWindowsTool.
+90) It is better to name classes that are in business layer and in data access layer with singular names because we are dealing with entity for the most of work like Add Edit Delete, and the presentation layer we can to choose the name according to its functionality that it does like if it is a form for listing drivers then we name it frmDriversList while if it is to add new driver we can name the form : frmAddNewDriver.
 
-92) If we want to remove the sunken (3d border) from the MDI form , we can to prevent it from being drawn or we can to put picture box with the image we want and set the dock to full.
-
-93) It is better to name classes that are in business layer and in data access layer with singular names because we are dealing with entity for the most of work like Add Edit Delete, and the presentation layer we can to choose the name according to its functionality that it does like if it is a form for listing drivers then we name it frmDriversList while if it is to add new driver we can name the form : frmAddNewDriver.
-
-94) We can to filter data view that is associated with a datatable :
+91) We can to filter data view that is associated with a datatable :
 Datatable.defaultview.RowFilter = String.Format("[{0} = {1}]",ColumnToFilterBy,ValueToFilterBy); This is to filter based on numeric value for a numeric column
 
 For column of type string therefore we have to filter string value:
 Datatable.defaultview.RowFilter = String.Format("[{0} ='{1}%'",ColumnToFilterBy,ValueToFilterBy); We can to remove % if we want therefore it be without wild char and filter on exact string,
 
-95) It is better to trim the text before we store it in database and compare in conditions in order to remove any white spaces from the both sides of the string.
+92) It is better to trim the text before we store it in database and compare in conditions in order to remove any white spaces from the both sides of the string.
 
-96) It is better to make each class to do what is designed for and even if the class was general class to be used as library -> it is better to divide that library to classes and each class is related to what it has.
+93) It is better to make each class to do what is designed for and even if the class was general class to be used as library -> it is better to divide that library to classes and each class is related to what it has like the validation method it is better to put them in a separated class under the library.
 
-97) It is better to organize folders in presentation layer to put the user controls we crate in separated controls folders under the folders of the forms that they are related to.
+94) It is better to organize files into folders and organize folders in presentation layer to put the user controls that we create in a separated controls folders under the folders that they are related to and each folder to has under it the things that are related to from forms, classes and controls therefore by that when we organize things like that later on when we want to update or maintenance it be easier like if we want to add new person form directly we go to people folder.
 
-98) We can to use the following pattern to validate email :
+95) For the Regex (Regular Expression) Class Pattern :
+1] The + after character or character group or at end of pattern if we make it for full pattern means that the text can have one or more characters from the characters that are allowed at the pattern or group or from certain character/s that is before the + .
+
+2] The * after character or character group or at end of pattern if we make it for full pattern means that it allows the zero or many characters from the allowed characters in the pattern or group or from certain character/s that is before the * to be in the text.
+
+3] The ? after character or character group or at end of pattern if we make it for full pattern means the text can have 0 or one character from the allowed characters that are in the pattern or group or from certain character/s that is before the ? .
+
+96) We can to use the following pattern to validate email :
 string pattern = @"^[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$";
 _Pattern Explanation :
-
+@"^[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$:
+Explanation:
+the @ at beginning to allow multi line string and to ignore special characters, the ^ means the start point of the string pattern , the [ ] inside it is characters and they be ordinary characters , the + after [ ] means One or more characters of that previous pattern must be exists and only from them at that part,
+the @ before [ ] means that it is letteral at that position and if it was inside [ ] it be also a literal character like any other character and here because after ] there is + therefore that @ before the[] because there is not + or * or ? after it therefore it is required and must be one time only at that position and the things in [ ] -> here must have one or more characters of them ,the (?: makes the things that after it to be treated as one group, the \. used to deal with dot as dot, the * at end here will apply to pattern last pattern part at means zero or many times a character of that pattern allowed to be in text, the $ at end means the end of the string , the last *& applies on (?:\.[a-zA-Z0-9-]+)*.
 
 We can use the following pattern to validate integer :
 string pattern = @"^[0-9]*$";
 _Pattern Explanation :
-
+The ^ means it is the start of the string, the characters inside [] form the pattern and the * after the [] means that zero or many characters allowed to be in text of the allowed characters that are in the pattern and $ means the end of the string.
 
 We can use the following pattern to validate float/double/decimal number :
 string pattern = @"^[0-9]*(?:\.[0-9]*)?$";
 _Pattern Explanation :
+The ^ means the beginning of the string, the [0-9] form part of the pattern and * means zero or many characters of the allowed characters at that position can be exists in the text, the (?: it is for making the things after it as one group of the pattern and \. to deal with . as dot and * means zero or many characters can be of that pattern part from . or 0-9 , the ? at end is to allow zero or one from the last pattern group therefore it means that the text the represent a number is allowed to have 0 fraction parts or one fraction part and for numbers from 0-9 are allowed to be one time but because there is * after them therefore they are allowed to be one or more from them at that position.
 
+Notes: We must to be aware from the empty string because the empty string if the pattern or a pattern part ends with * therefore it match the pattern part.
+
+97) The method IsMatch() for the object from the type Regex class allow use to compare a text with the pattern that we have specified.
+
+98) The FileInfo class allow us when we create object from it and give it a file path to take info about that using that object path like file extension , we can also to use the object from the FileInfo class in order to append text to a file or encrypt or decrypt a file and of course to decrypt it we must be using same account on windows that encrypt the file and also we can use it to bring directory and a lot of other things.

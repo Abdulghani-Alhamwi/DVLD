@@ -4,9 +4,9 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using DVLDBusinessLayer;
 using DVLDPresentationLayer.Properties;
 using Utility_Library;
-using DVLDBusinessLayer;
 
 namespace DVLDPresentationLayer
 {
@@ -32,17 +32,17 @@ namespace DVLDPresentationLayer
         public frmAddEditPersonInfo()
         {
             InitializeComponent();
-            _InitializeForm(null);
+            _InitializeFormData(null);
         }
 
         public frmAddEditPersonInfo(clsPerson PersonInfo,int PeopleDGVRowIndex = -1)
         {
             InitializeComponent();
-            _InitializeForm(PersonInfo);
+            _InitializeFormData(PersonInfo);
             _PeopleDGVRowIndex = PeopleDGVRowIndex;
         }
 
-        private void _InitializeForm(clsPerson PersonInfo)
+        private void _InitializeFormData(clsPerson PersonInfo)
         {
             if (PersonInfo == null)
                 _SetTitles(clsPerson.enMode.AddNew);
@@ -52,6 +52,7 @@ namespace DVLDPresentationLayer
                 this._Person = PersonInfo;
                 _SetTitles(clsPerson.enMode.Update);
             }
+
             clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
@@ -118,37 +119,78 @@ namespace DVLDPresentationLayer
 
         private void txtBoxName_Validating(object sender, CancelEventArgs e)
         {
-           clsGeneralUtility.ValidateName((TextBox)sender,erTextBox, e);
-        }
+            TextBox txtBox = (TextBox)sender;
 
-        private void txtBoxAddress_Validating(object sender, CancelEventArgs e)
-        {
-            clsGeneralUtility.ValidateAddress(txtAddress, erTextBox, e);
-        }
-
-        private bool ValidateNationalNumber(CancelEventArgs e)
-        {
-            bool IsNationalNoAlreadyExists;
-
-            if (_Person == null)
+            if (txtBox == txtThirdName && string.IsNullOrEmpty(txtBox.Text.Trim()))
             {
-                IsNationalNoAlreadyExists = clsPerson.SearchForNationalNo(txtNationalNo.Text);
-                return clsGeneralUtility.ValidateNationalNo(txtNationalNo, erTextBox, e, IsNationalNoAlreadyExists);
+                clsGeneralUtility.DisableErrorProvider(erTextBox, txtBox);
+                return;
+            }
+
+            else if (string.IsNullOrEmpty(txtBox.Text.Trim()))
+            {
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtBox, $"It is required to enter your {txtBox.Tag.ToString()}!", e);
+            }
+
+            else if (!clsGeneralUtility.ValidateNamePart(txtBox.Text))
+            {
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtBox, $"{txtBox.Tag.ToString()} must contain only letters!", e);
             }
 
             else
             {
-                if (_Person.NationalNo == txtNationalNo.Text)
-                {
-                    return clsGeneralUtility.ValidateNationalNo(txtNationalNo, erTextBox, e, false);
-                }
+                clsGeneralUtility.DisableErrorProvider(erTextBox, txtBox);
+            }
+        }
 
-                else
+        private void txtBoxAddress_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtAddress.Text == "" || string.IsNullOrWhiteSpace(txtAddress.Text))
+            {
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtAddress, $"It is required to enter your Address!", e);
+            }
+            else
+            {
+                clsGeneralUtility.DisableErrorProvider(erTextBox, txtAddress);
+            }
+        }
+
+        private void ValidateNationalNumber(CancelEventArgs e)
+        {
+            bool IsNationalNoAlreadyExists;
+
+            if(string.IsNullOrEmpty(txtNationalNo.Text.Trim()))
+            {
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtNationalNo, "National number cannot be empty!", e);
+                return;
+            }
+
+            if (_Person == null)
+            {
+                IsNationalNoAlreadyExists = clsPerson.SearchForNationalNo(txtNationalNo.Text.Trim());
+
+                if(IsNationalNoAlreadyExists)
                 {
-                    IsNationalNoAlreadyExists = clsPerson.SearchForNationalNo(txtNationalNo.Text);
-                    return clsGeneralUtility.ValidateNationalNo(txtNationalNo, erTextBox, e, IsNationalNoAlreadyExists);
+                    clsGeneralUtility.EnableErrorProvider(erTextBox, txtNationalNo, "National number is used by another person!", e);
+                    return;
                 }
             }
+
+            else
+            {
+                if (!(_Person.NationalNo == txtNationalNo.Text))
+                {
+                    IsNationalNoAlreadyExists = clsPerson.SearchForNationalNo(txtNationalNo.Text.Trim());
+
+                    if (IsNationalNoAlreadyExists)
+                    {
+                        clsGeneralUtility.EnableErrorProvider(erTextBox, txtNationalNo, "National number is used by another person!", e);
+                        return;
+                    }
+                }
+            }
+
+            clsGeneralUtility.DisableErrorProvider(erTextBox, txtNationalNo);
         }
 
         private void txtBoxNationalNo_Validating(object sender, CancelEventArgs e)
@@ -158,21 +200,39 @@ namespace DVLDPresentationLayer
 
         private void txtBoxPhone_Validating(object sender, CancelEventArgs e)
         {
-            clsGeneralUtility.ValidatePhone(txtPhone, erTextBox, e);
+            if (txtPhone.Text == "" || string.IsNullOrWhiteSpace(txtPhone.Text))
+            {
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPhone, "It is required to enter your Phone Number!", e);
+            }
+
+            else if (!clsGeneralUtility.ValidateInteger(txtPhone.Text))
+            {
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPhone, "Phone Number must contains only digits!", e);
+            }
+
+            else
+                clsGeneralUtility.DisableErrorProvider(erTextBox, txtPhone);
         }
 
         private void txtBoxEmail_Validating(object sender, CancelEventArgs e)
         {
             if (txtEmail.Text != "")
-                clsGeneralUtility.ValidateEmail(txtEmail, erTextBox, e);
+            {
+                if (!clsGeneralUtility.ValidateEmail(txtEmail.Text.Trim()))
+                {
+                    clsGeneralUtility.EnableErrorProvider(erTextBox, txtEmail, "Invalid Email Address Format!", e);
+                    return;
+                }
+            }
+                clsGeneralUtility.DisableErrorProvider(erTextBox, txtEmail);
         }
 
         private void frmAddEditPersonInfo_Load(object sender, EventArgs e)
         {
             btnExit.CausesValidation = false;
             btnClose.CausesValidation = false;
-            
-           clsGeneralUtility.SetDateConstraintForAge(dtpDateOfBirth,18);
+
+            clsGeneralUtility.SetDateConstraintForAge(dtpDateOfBirth, 18, 100);
 
             DataView dataview = clsCountries.GetAllCountries().DefaultView;
 
@@ -264,7 +324,7 @@ namespace DVLDPresentationLayer
                 Address: txtAddress.Text,
                 Phone: txtPhone.Text,
                 Email: txtEmail.Text,
-                NationalityCountryID: clsCountries.GetCountryID(((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString()),
+                NationalityCountryID: clsCountries.Find(((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString()).CountryID,
                 ImagePath: (_NewSelectedImagePath != null) ? _NewSelectedImagePath : (_NewSelectedImagePath == null && !_RemovedSavedImage) ? _SavedPersonalImagePath : null
                 );
             }
@@ -284,8 +344,8 @@ namespace DVLDPresentationLayer
 
                 Person.Email = txtEmail.Text;
 
-                Person.NationalityCountryID = clsCountries.GetCountryID(((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString());
-                Person.CountryName = clsCountries.GetCountryName(Person.NationalityCountryID);
+                Person.NationalityCountryID = clsCountries.Find(((DataRowView)cbCountries.SelectedItem)["CountryName"].ToString()).CountryID;
+                Person.CountryName = clsCountries.Find(Person.NationalityCountryID).CountryName;
 
                 Person.Address = txtAddress.Text;
 
@@ -301,21 +361,13 @@ namespace DVLDPresentationLayer
 
         }
 
-        private bool _IsValidData()
-        {
-            CancelEventArgs cancelEventArgs = new CancelEventArgs();
-            bool IsValidEmail = (txtEmail.Text == "") ? true : clsGeneralUtility.ValidateEmail(txtEmail, erTextBox, cancelEventArgs);
-
-            return (clsGeneralUtility.ValidateName(txtFirstName, erTextBox, cancelEventArgs) && clsGeneralUtility.ValidateName(txtSecondName, erTextBox, cancelEventArgs)
-             && clsGeneralUtility.ValidateName(txtThirdName, erTextBox, cancelEventArgs) && clsGeneralUtility.ValidateName(txtLastName, erTextBox, cancelEventArgs)
-             && ValidateNationalNumber(cancelEventArgs) && IsValidEmail
-             && clsGeneralUtility.ValidatePhone(txtPhone, erTextBox, cancelEventArgs) && clsGeneralUtility.ValidateAddress(txtAddress, erTextBox, cancelEventArgs));
-        }
-
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (_IsValidData())
+            if (!this.ValidateChildren())
             {
+                MessageBox.Show("Some fields are has invalid input, hover on the red icon beside each field to know why not valid", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
              clsPerson Person;
             _SetPersonInfo(out Person);
 
@@ -359,7 +411,6 @@ namespace DVLDPresentationLayer
                 }
                 else
                     MessageBox.Show("Saving Failed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void btnClose_Click(object sender, EventArgs e)
