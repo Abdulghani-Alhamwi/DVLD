@@ -39,12 +39,12 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.dgvDrivers = new System.Windows.Forms.DataGridView();
             this.cmsDriver = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiShowPersonalInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiIssueInternationalLicense = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiShowPersonLicenseHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblFormBigTitle = new System.Windows.Forms.Label();
-            this.tsmiShowPersonalInfo = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiIssueInternationalLicense = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pbDrivers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDrivers)).BeginInit();
             this.cmsDriver.SuspendLayout();
@@ -83,7 +83,7 @@
             this.txtFilter.Size = new System.Drawing.Size(344, 41);
             this.txtFilter.TabIndex = 2;
             this.txtFilter.Visible = false;
-            this.txtFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
+            this.txtFilter.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFilter_KeyPress);
             this.txtFilter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyUp);
             // 
             // cbFilterBy
@@ -187,7 +187,25 @@
             this.tsmiShowPersonLicenseHistory});
             this.cmsDriver.Name = "cmsPeopleMenu";
             this.cmsDriver.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsDriver.Size = new System.Drawing.Size(323, 138);
+            this.cmsDriver.Size = new System.Drawing.Size(323, 116);
+            // 
+            // tsmiShowPersonalInfo
+            // 
+            this.tsmiShowPersonalInfo.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiShowPersonalInfo.Image = global::DVLDPresentationLayer.Properties.Resources.PersonDetails_32;
+            this.tsmiShowPersonalInfo.Name = "tsmiShowPersonalInfo";
+            this.tsmiShowPersonalInfo.Size = new System.Drawing.Size(322, 38);
+            this.tsmiShowPersonalInfo.Text = "Show Personal Info";
+            this.tsmiShowPersonalInfo.Click += new System.EventHandler(this.tsmiShowPersonalInfo_Click);
+            // 
+            // tsmiIssueInternationalLicense
+            // 
+            this.tsmiIssueInternationalLicense.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tsmiIssueInternationalLicense.Image = global::DVLDPresentationLayer.Properties.Resources.International_32;
+            this.tsmiIssueInternationalLicense.Name = "tsmiIssueInternationalLicense";
+            this.tsmiIssueInternationalLicense.Size = new System.Drawing.Size(322, 38);
+            this.tsmiIssueInternationalLicense.Text = "Issue International License";
+            this.tsmiIssueInternationalLicense.Click += new System.EventHandler(this.tsmiIssueInternationalLicense_Click);
             // 
             // tsmiShowPersonLicenseHistory
             // 
@@ -243,24 +261,6 @@
             this.lblFormBigTitle.Size = new System.Drawing.Size(270, 52);
             this.lblFormBigTitle.TabIndex = 50;
             this.lblFormBigTitle.Text = "Drivers List";
-            // 
-            // tsmiShowPersonalInfo
-            // 
-            this.tsmiShowPersonalInfo.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiShowPersonalInfo.Image = global::DVLDPresentationLayer.Properties.Resources.PersonDetails_32;
-            this.tsmiShowPersonalInfo.Name = "tsmiShowPersonalInfo";
-            this.tsmiShowPersonalInfo.Size = new System.Drawing.Size(322, 38);
-            this.tsmiShowPersonalInfo.Text = "Show Personal Info";
-            this.tsmiShowPersonalInfo.Click += new System.EventHandler(this.tsmiShowPersonalInfo_Click);
-            // 
-            // tsmiIssueInternationalLicense
-            // 
-            this.tsmiIssueInternationalLicense.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tsmiIssueInternationalLicense.Image = global::DVLDPresentationLayer.Properties.Resources.International_32;
-            this.tsmiIssueInternationalLicense.Name = "tsmiIssueInternationalLicense";
-            this.tsmiIssueInternationalLicense.Size = new System.Drawing.Size(322, 38);
-            this.tsmiIssueInternationalLicense.Text = "Issue International License";
-            this.tsmiIssueInternationalLicense.Click += new System.EventHandler(this.tsmiIssueInternationalLicense_Click);
             // 
             // frmDriversList
             // 

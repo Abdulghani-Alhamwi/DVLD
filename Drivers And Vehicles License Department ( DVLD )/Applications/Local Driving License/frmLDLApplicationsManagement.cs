@@ -18,6 +18,9 @@ namespace DVLDPresentationLayer
         private string _PrimaryKeyViewedColumnName;
         private int _LastBroughtLDLAppID;
 
+        private string _PreviousFilterText = "";
+        private bool _PreventedInput;
+
         private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDGVColumnSortDirection;
         private clsDataGridViewUtilityLib _DgvUtilityLib;
 
@@ -68,6 +71,9 @@ namespace DVLDPresentationLayer
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
+            if (_PreventedInput || _PreviousFilterText == txtFilter.Text)
+                return;
+
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
 
             if (txtFilter.Text != "")
@@ -76,6 +82,8 @@ namespace DVLDPresentationLayer
             else
 
                 dgvLDLApplications.DataSource = clsLocalDrivingLicenseApp.GetLDLApplications(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
+
+            _PreviousFilterText = txtFilter.Text;
         }
 
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
@@ -118,24 +126,6 @@ namespace DVLDPresentationLayer
             txtFilter.Text = "";
 
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
-        }
-
-        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(cbFilterBy.SelectedItem.ToString() == "L.D.L.AppID")
-            {
-                if (char.IsDigit((char)e.KeyData) || e.KeyData == Keys.Back)
-                    txtFilter.ReadOnly = false;
-                else
-                    txtFilter.ReadOnly = true;
-            }
-            else if (cbFilterBy.SelectedItem.ToString() == "Status")
-            {
-                if (char.IsLetter((char)e.KeyData) || e.KeyData == Keys.Back)
-                    txtFilter.ReadOnly = false;
-                else
-                    txtFilter.ReadOnly = true;
-            }
         }
 
         private void _AddNewValuesToDGV(object[] NewAppDetails)
@@ -618,5 +608,15 @@ namespace DVLDPresentationLayer
             _SortData(e);
         }
 
+        private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (cbFilterBy.SelectedItem.ToString() == "L.D.L.AppID")
+                e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+
+            else if(cbFilterBy.SelectedItem.ToString() == "Full Name")
+                e.Handled = !char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar);
+
+            _PreventedInput = e.Handled;
+        }
     }
  }

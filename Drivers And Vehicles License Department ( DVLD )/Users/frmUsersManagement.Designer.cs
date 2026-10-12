@@ -100,7 +100,7 @@
             this.txtFilter.Size = new System.Drawing.Size(262, 41);
             this.txtFilter.TabIndex = 3;
             this.txtFilter.Visible = false;
-            this.txtFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
+            this.txtFilter.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFilter_KeyPress);
             this.txtFilter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyUp);
             // 
             // cbFilterBy

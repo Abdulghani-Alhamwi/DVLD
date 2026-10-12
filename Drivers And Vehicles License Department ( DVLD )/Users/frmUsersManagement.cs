@@ -18,6 +18,8 @@ namespace DVLDPresentationLayer
         private int _LastBroughtUserID;
         private string _PrimaryKeyViewedColumnName;
         private string _UserNameColumnName;
+        private string _PreviousFilterText = "";
+        private bool _PreventedInput;
 
         private Dictionary<int, string> _dUserIDsWithIVsPairs;
 
@@ -142,27 +144,18 @@ namespace DVLDPresentationLayer
             return (ColumnNameToFilterBy == _PrimaryKeyViewedColumnName || ColumnNameToFilterBy == "Person ID");
         }
 
-        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
-            {
-                if (Char.IsDigit((Char)e.KeyData) || e.KeyData == Keys.Back)
-                    txtFilter.ReadOnly = false;
-                else
-                    txtFilter.ReadOnly = true;
-            }
-            else 
-                txtFilter.ReadOnly = false;
-        }
-
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
+            if (_PreventedInput || _PreviousFilterText == txtFilter.Text)
+                return;
+
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection);
 
             if (txtFilter.Text != "")
             {
                 dgvUsers.DataSource = _GetFilteredData();
             }
+
             else
             {
                 DataTable dtUsersInfo = clsUser.GetUsersInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
@@ -170,6 +163,8 @@ namespace DVLDPresentationLayer
             }
 
             clsDataGridViewUtilityLib.DecryptDGVColumnValues(clsGlobalSettings.EncryptionKey, _dUserIDsWithIVsPairs, dgvUsers, _PrimaryKeyViewedColumnName, _UserNameColumnName);
+
+            _PreviousFilterText = txtFilter.Text;
         }
 
         private void cbIsActive_DrawItem(object sender, DrawItemEventArgs e)
@@ -524,6 +519,18 @@ namespace DVLDPresentationLayer
         {
             if (!clsDataGridViewUtilityLib.WasDgvColumnHeaderClicked(dgvUsers,e))
                 _ShowUserDetails();
+        }
+
+        private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
+            {
+                e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+            }
+            else if(cbFilterBy.SelectedItem.ToString() == "Full Name")
+                e.Handled = !char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar);
+
+            _PreventedInput = e.Handled;
         }
     }
 }

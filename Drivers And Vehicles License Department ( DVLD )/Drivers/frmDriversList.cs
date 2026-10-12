@@ -16,6 +16,9 @@ namespace DVLDPresentationLayer
         private clsDataGridViewUtilityLib _DgvUtilityLib;
         private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDgvColumnSortDirection;
 
+        private string _PreviousFilterText = "";
+        private bool _PreventedInput;
+
         private int _LastBroughtDriverID;
         private string _PrimaryKeyViewedColumnName;
 
@@ -67,7 +70,7 @@ namespace DVLDPresentationLayer
             DataTable dtDriversInfo;
             if (!ScrollCase)
             {
-                if (cbFilterBy.SelectedItem.ToString() == _PrimaryKeyViewedColumnName || cbFilterBy.SelectedItem.ToString() == "Person ID")
+                if (_IsNumericColumn())
                     dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text
                         ,_LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), null);
 
@@ -78,7 +81,7 @@ namespace DVLDPresentationLayer
 
             else
             {
-                if (cbFilterBy.SelectedItem.ToString() == _PrimaryKeyViewedColumnName || cbFilterBy.SelectedItem.ToString() == "Person ID")
+                if (_IsNumericColumn())
                     dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
                         _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection),_LastBroughtDriverID, _DgvUtilityLib.NumberOfRowsToOffset, null);
 
@@ -97,34 +100,18 @@ namespace DVLDPresentationLayer
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
+            if (_PreventedInput || _PreviousFilterText == txtFilter.Text)
+                return;
+
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection);
 
             if (txtFilter.Text != "")
                 dgvDrivers.DataSource = _GetFilteredData();
 
             else
-
                 dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
-        }
 
-        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (cbFilterBy.SelectedItem.ToString() == _PrimaryKeyViewedColumnName || cbFilterBy.SelectedItem.ToString() == "Person ID")
-            {
-                if (Char.IsDigit((Char)e.KeyData) || e.KeyData == Keys.Back)
-                    txtFilter.ReadOnly = false;
-                else
-                    txtFilter.ReadOnly = true;
-            }
-            else if (cbFilterBy.SelectedItem.ToString() == "Full Name")
-            {
-                if (Char.IsLetter((Char)e.KeyData) || e.KeyData == Keys.Back)
-                    txtFilter.ReadOnly = false;
-                else
-                    txtFilter.ReadOnly = true;
-            }
-            else
-                txtFilter.ReadOnly = false;
+            _PreviousFilterText = txtFilter.Text;
         }
 
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
@@ -317,6 +304,25 @@ namespace DVLDPresentationLayer
             frm.OnUpdatedDriverPersonalInfo += _EditDriverPersonalInfo;
             frm.AfterIssueingLicense += _EditInfoForNewIntLicenseIssuance;
             frm.ShowDialog();
+        }
+
+        private bool _IsNumericColumn()
+        {
+            return cbFilterBy.SelectedItem.ToString() == _PrimaryKeyViewedColumnName || cbFilterBy.SelectedItem.ToString() == "Person ID";
+        }
+
+        private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (_IsNumericColumn())
+            {
+                e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+            }
+            else if (cbFilterBy.SelectedItem.ToString() == "Full Name")
+            {
+                e.Handled = !char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar);
+            }
+
+            _PreventedInput = e.Handled;
         }
     }
 }

@@ -16,6 +16,9 @@ namespace DVLDPresentationLayer.Licenses
         private string _PrimaryKeyViewedColumnName;
         private int _LastBroughtIntLicenseID;
 
+        private string _PreviousFilterText = "";
+        private bool _PreventedInput;
+
         private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDGVColumnSortDirection;
         private clsDataGridViewUtilityLib _DgvUtilityLib;
 
@@ -125,6 +128,9 @@ namespace DVLDPresentationLayer.Licenses
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
+            if (_PreventedInput || _PreviousFilterText == txtFilter.Text)
+                return;
+
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
 
             if (txtFilter.Text != "")
@@ -132,6 +138,8 @@ namespace DVLDPresentationLayer.Licenses
 
             else
                 dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
+
+            _PreviousFilterText = txtFilter.Text;
         }
 
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
@@ -174,15 +182,6 @@ namespace DVLDPresentationLayer.Licenses
             txtFilter.Text = "";
 
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
-        }
-
-        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (char.IsDigit((char)e.KeyData) || e.KeyData == Keys.Back)
-                txtFilter.ReadOnly = false;
-
-            else
-                txtFilter.ReadOnly = true;            
         }
 
         private void _AddNewValuesToDGV(object[] NewValues)
@@ -378,6 +377,14 @@ namespace DVLDPresentationLayer.Licenses
         private void dgvIntLicenseApplications_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
            _SortData(e);
+        }
+
+        private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(cbFilterBy.SelectedItem.ToString() != "Is Active")
+                e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+
+            _PreventedInput = e.Handled;
         }
     }
 }

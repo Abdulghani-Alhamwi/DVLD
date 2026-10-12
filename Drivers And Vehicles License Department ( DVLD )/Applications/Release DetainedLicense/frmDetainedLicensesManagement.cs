@@ -18,6 +18,9 @@ namespace DVLDPresentationLayer.TestTypes
         private string _ColumnNameToFilterBy;
         private string _LocalLicensesViewedColumnName = "L.ID";
 
+        private string _PreviousFilterText = "";
+        private bool _PreventedInput;
+
         private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDgvColumnSortDirection;
         private clsDataGridViewUtilityLib _DgvUtilityLib;
 
@@ -34,7 +37,7 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void _AddComboBoxesFilterItems()
         {
-            object[] Items = new object[] {"None","Detain ID","Is Released","National No.","Full Name","Release Application ID"};
+            object[] Items = new object[] { "None", "Detain ID", "Is Released", "National No.", "Full Name", "Release Application ID" };
             cbFilterBy.Items.AddRange(Items);
             cbFilterBy.SelectedItem = "None";
 
@@ -60,6 +63,9 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
+            if (_PreventedInput || _PreviousFilterText == txtFilter.Text)
+                return;
+
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection);
 
             if (txtFilter.Text != "")
@@ -68,32 +74,12 @@ namespace DVLDPresentationLayer.TestTypes
             else
                 dgvDetainedLicenses.DataSource = clsDetainedLicense.GetDetainedLicensesInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
 
+            _PreviousFilterText = txtFilter.Text;
         }
 
         private bool _IsNumericColumn(string ColumnNameToFilterBy)
         {
             return (ColumnNameToFilterBy == "Detain ID" || ColumnNameToFilterBy == "Release Application ID");
-        }
-
-        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
-            {
-                if (char.IsDigit((char)e.KeyData) || e.KeyData == Keys.Back)
-                    txtFilter.ReadOnly = false;
-                else
-                    txtFilter.ReadOnly = true;
-            }
-
-            else if (cbFilterBy.SelectedItem.ToString() == "Full Name")
-            {
-                if (char.IsLetter((char)e.KeyData) || e.KeyData == Keys.Back)
-                    txtFilter.ReadOnly = false;
-                else
-                    txtFilter.ReadOnly = true;
-            }
-            else
-                txtFilter.ReadOnly = false;
         }
 
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
@@ -129,6 +115,7 @@ namespace DVLDPresentationLayer.TestTypes
             else
             {
                 txtFilter.Visible = true;
+                txtFilter.Focus();
                 cbIsReleased.Visible = false;
                 _PreviousCbIsReleasedSelectedItem = null;
             }
@@ -139,7 +126,7 @@ namespace DVLDPresentationLayer.TestTypes
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection);
         }
 
-        private void _ReleaseDetainedLicense(int DetainedLicenseID,DateTime ReleaseDate,int ReleaseApplicationID)
+        private void _ReleaseDetainedLicense(int DetainedLicenseID, DateTime ReleaseDate, int ReleaseApplicationID)
         {
             foreach (DataGridViewRow DetainInfo in dgvDetainedLicenses.Rows)
             {
@@ -289,8 +276,8 @@ namespace DVLDPresentationLayer.TestTypes
         {
             if (_PreviousCbIsReleasedSelectedItem == cbIsReleased.SelectedItem.ToString())
                 return;
-            
-            if(cbFilterBy.Text == "Is Released")
+
+            if (cbFilterBy.Text == "Is Released")
             {
                 clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection);
 
@@ -352,7 +339,7 @@ namespace DVLDPresentationLayer.TestTypes
             frm.ShowDialog();
         }
 
-        private void EditRowAfterReleasingLicense(int ReleaseApplicationID,DateTime ReleaseDate,int DetainedLicensesDgvRowIndex)
+        private void EditRowAfterReleasingLicense(int ReleaseApplicationID, DateTime ReleaseDate, int DetainedLicensesDgvRowIndex)
         {
             _DgvUtilityLib.EditOneColumnValueInDgv<bool>(dgvDetainedLicenses, "Is Released", true, DetainedLicensesDgvRowIndex);
             _DgvUtilityLib.EditOneColumnValueInDgv<string>(dgvDetainedLicenses, "Release Date", ReleaseDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)), DetainedLicensesDgvRowIndex);
@@ -434,6 +421,21 @@ namespace DVLDPresentationLayer.TestTypes
         private void dgvDetainedLicenses_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             _SortData(e);
+        }
+
+        private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
+            {
+                e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+            }
+
+            else if (cbFilterBy.SelectedItem.ToString() == "Full Name")
+            {
+                e.Handled = !char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar);
+            }
+
+            _PreventedInput = e.Handled;
         }
     }
 }

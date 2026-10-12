@@ -15,6 +15,8 @@ namespace DVLDPresentationLayer
         string _PreviousCbFilterSelectedItem;
         private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDgvColumnSortDirection;
         private clsDataGridViewUtilityLib _DgvUtilityLib;
+        private string _PreviousFilterText = "";
+        private bool _PreventedInput;
 
         private int _LastBroughtPersonID;
         private string _PrimaryKeyViewedColumnName;
@@ -147,6 +149,9 @@ namespace DVLDPresentationLayer
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
+            if (_PreventedInput || _PreviousFilterText == txtFilter.Text)
+                return;
+
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection);
 
             if (txtFilter.Text != "")
@@ -159,28 +164,9 @@ namespace DVLDPresentationLayer
 
                 dgvPeople.DataSource = clsPerson.GetPeopleInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
             }
+
+            _PreviousFilterText = txtFilter.Text;
         }
-
-        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
-        {
-             if (cbFilterBy.SelectedItem.ToString() == "National No.")
-                txtFilter.ReadOnly = false;
-
-            else if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
-            {
-                if (Char.IsDigit((Char)e.KeyData) || e.KeyData == Keys.Back)
-                    txtFilter.ReadOnly = false;
-                else
-                    txtFilter.ReadOnly = true;
-            }
-            else
-            {
-                if (Char.IsLetter((Char)e.KeyData) || e.KeyData == Keys.Back)
-                    txtFilter.ReadOnly = false;
-                else
-                    txtFilter.ReadOnly = true;
-            }
-        }    
         
         private void _AddNewRowToDGV(object[] NewPersonDetails)
         {
@@ -397,5 +383,22 @@ namespace DVLDPresentationLayer
             _SortData(e);
         }
 
+        private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (cbFilterBy.SelectedItem.ToString() == "National No.")
+                return;
+
+            else if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
+            {
+                e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+            }
+
+            else
+            {
+                e.Handled = !char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar);
+            }
+
+            _PreventedInput = e.Handled;
+        }
     }
 }
