@@ -80,38 +80,38 @@ namespace DVLDBusinessLayer
 
         public static DataTable GetLicenseClassesNames()
         {
-            return clsLicenseClassesData.GetLicenseClassesNames();
+            return clsLicenseClasseData.GetLicenseClassesNames();
         }
 
         public static byte GetLicenseClassID(string LicenseClassName)
         {
-            return clsLicenseClassesData.GetLicenseClassID(LicenseClassName);
+            return clsLicenseClasseData.GetLicenseClassID(LicenseClassName);
         }
 
         public static string GetLicenseClassName(byte LicenseClassID)
         {
-            return clsLicenseClassesData.GetLicenseClassName(LicenseClassID);
+            return clsLicenseClasseData.GetLicenseClassName(LicenseClassID);
         }
 
         public static string GetLicenseClassName(enLicenseClasses LicenseClass)
         {
             byte LicenseClassID = GetLicenseClassID(LicenseClass);
-            return clsLicenseClassesData.GetLicenseClassName(LicenseClassID);
+            return clsLicenseClasseData.GetLicenseClassName(LicenseClassID);
         }
 
         public static byte GetLicenseValidityLength(byte LicenseClassID)
         {
-            return clsLicenseClassesData.GetLicenseValidityLength(LicenseClassID);
+            return clsLicenseClasseData.GetLicenseValidityLength(LicenseClassID);
         }
 
         public static decimal GetLicenseClassFees(byte LicenseClassID)
         {
-            return clsLicenseClassesData.GetLicenseClassFees(LicenseClassID);
+            return clsLicenseClasseData.GetLicenseClassFees(LicenseClassID);
         }
 
         public static byte GetMinimumAllowedAge(byte LicenseClassID)
         {
-            return clsLicenseClassesData.GetMinimumAllowedAge(LicenseClassID);
+            return clsLicenseClasseData.GetMinimumAllowedAge(LicenseClassID);
         }
     }
 }

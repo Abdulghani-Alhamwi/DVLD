@@ -38,7 +38,7 @@
             this.btnIssueLicense = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.pbNotes = new System.Windows.Forms.PictureBox();
-            this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrLDLApplicationDetails();
+            this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrLDLApplicationInfo();
             ((System.ComponentModel.ISupportInitialize)(this.pbFees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNotes)).BeginInit();
             this.SuspendLayout();
@@ -197,7 +197,7 @@
             this.uctrlDLApplicationInfo.Name = "uctrlDLApplicationInfo";
             this.uctrlDLApplicationInfo.Size = new System.Drawing.Size(1153, 452);
             this.uctrlDLApplicationInfo.TabIndex = 0;
-            this.uctrlDLApplicationInfo.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonDetails.PersonEditedInfo(this.uctrlDLApplicationInfo_OnPersonEditedInfo);
+            this.uctrlDLApplicationInfo.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonCard.PersonEditedInfo(this.uctrlDLApplicationInfo_OnPersonEditedInfo);
             // 
             // frmIssueDrivingLicense
             // 
@@ -236,7 +236,7 @@
 
         #endregion
 
-        private ctrLDLApplicationDetails uctrlDLApplicationInfo;
+        private ctrLDLApplicationInfo uctrlDLApplicationInfo;
         private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.TextBox txtNotes;

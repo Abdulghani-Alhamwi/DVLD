@@ -46,31 +46,31 @@ namespace DVLDBusinessLayer
 
         public static DataTable GetDriverInternationalLicenses(int DriverID, byte WantedNumOfRecords)
         {
-            return clsInternationalLicensesData.GetDriverInternationalLicenses(DriverID, WantedNumOfRecords);
+            return clsInternationalLicenseData.GetDriverInternationalLicenses(DriverID, WantedNumOfRecords);
         }
 
         public static DataTable GetDriverInternationalLicenses(int DriverID, byte WantedNumOfRecords, int LastBroughIntLicenseID
             , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
-            return clsInternationalLicensesData.GetDriverInternationalLicenses(DriverID, WantedNumOfRecords
+            return clsInternationalLicenseData.GetDriverInternationalLicenses(DriverID, WantedNumOfRecords
                 , LastBroughIntLicenseID, LastColumnNameDataOrderedBy, NumberOfRowsToOffset, SortDirection);
         }
 
         public static DataTable GetAllInternationalLicensesData(byte WantedNumOfRecords)
         {
-            return clsInternationalLicensesData.GetAllInternationalLicensesData(WantedNumOfRecords);
+            return clsInternationalLicenseData.GetAllInternationalLicensesData(WantedNumOfRecords);
         }
 
         public static DataTable GetAllInternationalLicensesData(byte WantedNumOfRecords, int LastBroughIntLicenseID
             , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
-            return clsInternationalLicensesData.GetAllInternationalLicensesData(WantedNumOfRecords,LastBroughIntLicenseID
+            return clsInternationalLicenseData.GetAllInternationalLicensesData(WantedNumOfRecords,LastBroughIntLicenseID
                 , LastColumnNameDataOrderedBy, NumberOfRowsToOffset, SortDirection);
         }
 
         private bool _IssueDriverLicense()
         {
-            InternationalLicenseID = clsInternationalLicensesData.IssueDriverLicense(ApplicationID, DriverID, IssuedUsingLocalLicenseID, IssueDate, ExpirationDate, IsActive, CreatedByUserID);
+            InternationalLicenseID = clsInternationalLicenseData.IssueDriverLicense(ApplicationID, DriverID, IssuedUsingLocalLicenseID, IssueDate, ExpirationDate, IsActive, CreatedByUserID);
 
             return InternationalLicenseID != -1;
         }
@@ -97,7 +97,7 @@ namespace DVLDBusinessLayer
             DateTime IssueDate = DateTime.Now, ExpirationDate = DateTime.Now;
             bool IsActive = false;
 
-            if (clsInternationalLicensesData.Find(InternationalLicenseID, ref ApplicationID, ref DriverID, ref LocalLicenseID, ref IssueDate, ref ExpirationDate, ref IsActive, ref CreatedByUserID))
+            if (clsInternationalLicenseData.Find(InternationalLicenseID, ref ApplicationID, ref DriverID, ref LocalLicenseID, ref IssueDate, ref ExpirationDate, ref IsActive, ref CreatedByUserID))
             {
                 return new clsInternationalLicense(InternationalLicenseID, ApplicationID, DriverID, LocalLicenseID, IssueDate, ExpirationDate, IsActive, CreatedByUserID);
             }
@@ -107,56 +107,56 @@ namespace DVLDBusinessLayer
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection, char? WildChar = null)
         {
-            return clsInternationalLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, -1, -1, WildChar);
+            return clsInternationalLicenseData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, -1, -1, WildChar);
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection,
             int LastBroughIntLicenseID, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
-            return clsInternationalLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, LastBroughIntLicenseID, NumberOfRowsToOffset, WildChar);
+            return clsInternationalLicenseData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, LastBroughIntLicenseID, NumberOfRowsToOffset, WildChar);
         }
 
         public static int GetTotalCount()
         {
-            return clsInternationalLicensesData.GetTotalCount();
+            return clsInternationalLicenseData.GetTotalCount();
         }
 
         public static bool HasDriverActiveInternationalLicense(int LocalLicenseID, out int InternationalLicenseID)
         {
             InternationalLicenseID = -1;
-            return clsInternationalLicensesData.HasDriverActiveInternationalLicense(LocalLicenseID,ref InternationalLicenseID);
+            return clsInternationalLicenseData.HasDriverActiveInternationalLicense(LocalLicenseID,ref InternationalLicenseID);
         }
 
         public static bool HasDriverActiveInternationalLicense(int DriverID)
         {
-            return clsInternationalLicensesData.HasDriverActiveInternationalLicense(DriverID);
+            return clsInternationalLicenseData.HasDriverActiveInternationalLicense(DriverID);
         }
 
         public static bool LinkWithNewLocalLicense(int DriverID, int NewLocalLicenseID)
         {
-            return clsInternationalLicensesData.LinkWithNewLocalLicense(DriverID, NewLocalLicenseID);
+            return clsInternationalLicenseData.LinkWithNewLocalLicense(DriverID, NewLocalLicenseID);
         }
 
         public static DataTable GetColumnsNamesForView()
         {
-            return clsInternationalLicensesData.GetColumnsNamesForView();
+            return clsInternationalLicenseData.GetColumnsNamesForView();
         }
 
         public static int GetLicenseID(int InternationalLicenseAppID)
         {
-            return clsInternationalLicensesData.GetLicenseID(InternationalLicenseAppID);
+            return clsInternationalLicenseData.GetLicenseID(InternationalLicenseAppID);
         }
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection
           , string ColumnNameToFilterBy = null, string valueToFilterBy = null, char? WildChar = null)
         {
-            return clsInternationalLicensesData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
+            return clsInternationalLicenseData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
                 ColumnNameToFilterBy, valueToFilterBy, WildChar);
         }
 
         public static DataTable GetSortedInfo(int DriverID, byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection)
         {
-            return clsInternationalLicensesData.GetSortedInfo(DriverID, WantedNumOfRecords, ColumnNameToOrderBy, SortDirection);
+            return clsInternationalLicenseData.GetSortedInfo(DriverID, WantedNumOfRecords, ColumnNameToOrderBy, SortDirection);
         }
     }
 }

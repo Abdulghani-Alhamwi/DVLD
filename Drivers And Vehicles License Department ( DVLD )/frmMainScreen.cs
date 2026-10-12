@@ -77,7 +77,7 @@ namespace DVLDPresentationLayer
 
         private void tsmiCurrentUserInfo_Click(object sender, EventArgs e)
         {
-            frmUserDetails frm = new frmUserDetails(clsGlobalSettings.CurrentUserID);
+            frmUserInfo frm = new frmUserInfo(clsGlobalSettings.CurrentUserID);
             frm.ShowDialog();
         }
 
@@ -95,25 +95,25 @@ namespace DVLDPresentationLayer
 
         private void tsmiManageApplicationTypes_Click(object sender, EventArgs e)
         {
-            frmApplicationTypesManagement frm = new frmApplicationTypesManagement();
+            frmListApplicationTypes frm = new frmListApplicationTypes();
             frm.ShowDialog();
         }
 
         private void tsmiManageTestTypes_Click(object sender, EventArgs e)
         {
-            frmTestTypesManagement frm = new frmTestTypesManagement();
+            frmListTestTypes frm = new frmListTestTypes();
             frm.ShowDialog();
         }
 
         private void tsmiLocalLicense_Click(object sender, EventArgs e)
         {
-            frmNewLDLApplication frm = new frmNewLDLApplication();
+            frmAddUpdateLocalDrivingLicenseApplication frm = new frmAddUpdateLocalDrivingLicenseApplication();
             frm.ShowDialog();
         }
 
         private void tsmiLocalDrivingLicenseApplications_Click(object sender, EventArgs e)
         {
-            frmLDLApplicationsManagement frm = new frmLDLApplicationsManagement();
+            frmLocalDrivingLicenseApplicationsManagement frm = new frmLocalDrivingLicenseApplicationsManagement();
             frm.ShowDialog();
         }
 
@@ -137,7 +137,7 @@ namespace DVLDPresentationLayer
 
         private void tsmiInternationalLicenseApplications_Click(object sender, EventArgs e)
         {
-            frmIntLicenseApplications frm = new frmIntLicenseApplications();
+            frmInternationalLicenseApplications frm = new frmInternationalLicenseApplications();
             frm.ShowDialog();
         }
 
@@ -161,7 +161,7 @@ namespace DVLDPresentationLayer
 
         private void tsmiRetakeTest_Click(object sender, EventArgs e)
         {
-            frmLDLApplicationsManagement frm = new frmLDLApplicationsManagement();
+            frmLocalDrivingLicenseApplicationsManagement frm = new frmLocalDrivingLicenseApplicationsManagement();
             frm.ShowDialog();
         }
 

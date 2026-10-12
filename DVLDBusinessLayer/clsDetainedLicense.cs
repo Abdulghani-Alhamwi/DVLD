@@ -48,7 +48,7 @@ namespace DVLDBusinessLayer
 
         private bool _AddNewDetainedLicense()
         {
-           DetainID = clsDetainedLicensesData.AddNewDetainedLicense(LocalLicenseID, DetainDate, FineFees, CreatedByUserID);
+           DetainID = clsDetainedLicenseData.AddNewDetainedLicense(LocalLicenseID, DetainDate, FineFees, CreatedByUserID);
 
             return (DetainID != -1);
         }
@@ -60,7 +60,7 @@ namespace DVLDBusinessLayer
             this.ReleaseApplicationID = ReleaseApplicationID;
             this.ReleasedByUserID = ReleasedByUserID;
 
-            return clsDetainedLicensesData.ReleaseDetainedLicense(this.LocalLicenseID, ReleaseDate, ReleasedByUserID, ReleaseApplicationID);
+            return clsDetainedLicenseData.ReleaseDetainedLicense(this.LocalLicenseID, ReleaseDate, ReleasedByUserID, ReleaseApplicationID);
         }
 
         public bool Save()
@@ -81,7 +81,7 @@ namespace DVLDBusinessLayer
 
         public static bool IsDetainedLicense(int LocalLicenseID)
         {
-            return clsDetainedLicensesData.IsDetainedLicense(LocalLicenseID);
+            return clsDetainedLicenseData.IsDetainedLicense(LocalLicenseID);
         }
 
         public static clsDetainedLicense Find(int LocalLicenseID)
@@ -95,7 +95,7 @@ namespace DVLDBusinessLayer
             int ReleasedByUserID = -1;
             int ReleaseApplicationID = -1;
 
-            if (clsDetainedLicensesData.Find(LocalLicenseID,ref DetainID, ref DetainDate, ref FineFees, ref CreatedByUserID, ref IsReleased, ref ReleaseDate, ref ReleasedByUserID, ref ReleaseApplicationID))
+            if (clsDetainedLicenseData.Find(LocalLicenseID,ref DetainID, ref DetainDate, ref FineFees, ref CreatedByUserID, ref IsReleased, ref ReleaseDate, ref ReleasedByUserID, ref ReleaseApplicationID))
             {
                 return new clsDetainedLicense(DetainID,LocalLicenseID,DetainDate, FineFees, CreatedByUserID, IsReleased, ReleaseDate, ReleasedByUserID, ReleaseApplicationID);
             }
@@ -106,41 +106,41 @@ namespace DVLDBusinessLayer
 
         public static DataTable GetDetainedLicensesInfo(byte WantedNumOfRecords)
         {
-            return clsDetainedLicensesData.GetDetainedLicensesInfo(WantedNumOfRecords);
+            return clsDetainedLicenseData.GetDetainedLicensesInfo(WantedNumOfRecords);
         }
 
         public static DataTable GetDetainedLicensesInfo(byte WantedNumOfRecords, int LastBroughtDetainID
              , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
-            return clsDetainedLicensesData.GetDetainedLicensesInfo(WantedNumOfRecords, LastBroughtDetainID
+            return clsDetainedLicenseData.GetDetainedLicensesInfo(WantedNumOfRecords, LastBroughtDetainID
                     , LastColumnNameDataOrderedBy, NumberOfRowsToOffset, SortDirection);
         }
 
         public static int GetTotalCount()
         {
-            return clsDetainedLicensesData.GetTotalCount();
+            return clsDetainedLicenseData.GetTotalCount();
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string LastColumnNameDataOrderedBy, string SortDirection, char? WildChar = null)
         {
-            return clsDetainedLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastColumnNameDataOrderedBy, SortDirection, -1,-1, WildChar);
+            return clsDetainedLicenseData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastColumnNameDataOrderedBy, SortDirection, -1,-1, WildChar);
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string LastColumnNameDataOrderedBy, string SortDirection,
             int LastBroughtDetainID, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
-            return clsDetainedLicensesData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastColumnNameDataOrderedBy, SortDirection, LastBroughtDetainID, NumberOfRowsToOffset, WildChar);
+            return clsDetainedLicenseData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastColumnNameDataOrderedBy, SortDirection, LastBroughtDetainID, NumberOfRowsToOffset, WildChar);
         }
 
         public static DataTable GetColumnsNamesForView()
         {
-            return clsDetainedLicensesData.GetColumnsNamesForView();
+            return clsDetainedLicenseData.GetColumnsNamesForView();
         }
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection
              , string ColumnNameToFilterBy = null, string valueToFilterBy = null, char? WildChar = null)
         {
-            return clsDetainedLicensesData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
+            return clsDetainedLicenseData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
                    ColumnNameToFilterBy, valueToFilterBy, WildChar);
         }
 

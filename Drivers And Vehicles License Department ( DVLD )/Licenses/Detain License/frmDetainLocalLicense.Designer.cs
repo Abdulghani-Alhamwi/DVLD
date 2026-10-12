@@ -285,7 +285,6 @@
             this.txtFineFees.Name = "txtFineFees";
             this.txtFineFees.Size = new System.Drawing.Size(169, 33);
             this.txtFineFees.TabIndex = 1;
-            this.txtFineFees.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFineFees_KeyDown);
             // 
             // pbApplicationDate
             // 

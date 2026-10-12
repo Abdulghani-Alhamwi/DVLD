@@ -34,7 +34,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.pbTestType = new System.Windows.Forms.PictureBox();
             this.uctrlDriverLicensesHistory = new DVLDPresentationLayer.ctrlDriverLicensesHistory();
-            this.uctrlPersonDetailsByFilter = new DVLDPresentationLayer.ctrlPersonDetailsByFilter();
+            this.uctrlPersonDetailsByFilter = new DVLDPresentationLayer.ctrlPersonCardWithFilter();
             ((System.ComponentModel.ISupportInitialize)(this.pbTestType)).BeginInit();
             this.SuspendLayout();
             // 
@@ -137,7 +137,7 @@
             this.uctrlPersonDetailsByFilter.Name = "uctrlPersonDetailsByFilter";
             this.uctrlPersonDetailsByFilter.Size = new System.Drawing.Size(1080, 422);
             this.uctrlPersonDetailsByFilter.TabIndex = 57;
-            this.uctrlPersonDetailsByFilter.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonDetails.PersonEditedInfo(this.uctrlPersonDetailsByFilter_OnPersonEditedInfo);
+            this.uctrlPersonDetailsByFilter.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonCard.PersonEditedInfo(this.uctrlPersonDetailsByFilter_OnPersonEditedInfo);
             // 
             // frmDriverLicenseHistory
             // 
@@ -174,7 +174,7 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.PictureBox pbTestType;
         private System.Windows.Forms.Button btnClose;
-        private ctrlPersonDetailsByFilter uctrlPersonDetailsByFilter;
+        private ctrlPersonCardWithFilter uctrlPersonDetailsByFilter;
         private ctrlDriverLicensesHistory uctrlDriverLicensesHistory;
     }
 }

@@ -16,27 +16,25 @@ namespace DVLDPresentationLayer
         private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDGVColumnSortDirection;
         private clsDataGridViewUtilityLib _DGVUtilityLib;
 
-        private clsTestType.enTestType _CurrentTestType;
+        private clsTestType.enTestType _TestTypeID;
 
-        private int _LDLAppId;
+        private int _LocalDrivingLicenseApplicationId;
         private int _DGVRowIndex;
-        private byte _TestTypeID;
         private int _LastBroughtAppointmentID;
         private string _PrimaryKeyViewedColumnName;
 
-        public frmTestsAppointments(int LDLApplicationID,int DGVRowIndex, clsTestType.enTestType TestType)
+        public frmTestsAppointments(int LDLApplicationID,int DGVRowIndex, clsTestType.enTestType TestTypeID)
         {
             InitializeComponent();
 
-            uctrlDLApplicationInfo.LoadLDLAppInfo(LDLApplicationID);
-            _ShowInfoByTestType(TestType);
+            uctrlDLApplicationInfo.LoadInfoByLocalDrivingLicenseAppID(LDLApplicationID);
+            _ShowInfoByTestType(TestTypeID);
 
             _CurrentDGVColumnSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
 
-            _LDLAppId = LDLApplicationID;
+            _LocalDrivingLicenseApplicationId = LDLApplicationID;
             _DGVRowIndex = DGVRowIndex;
-            _CurrentTestType = TestType;
-            _TestTypeID = clsTestType.GetTestTypeID(_CurrentTestType);
+            _TestTypeID = TestTypeID;
             _LastBroughtAppointmentID = -1;
             _PrimaryKeyViewedColumnName = "Appointment ID";
 
@@ -90,19 +88,19 @@ namespace DVLDPresentationLayer
 
         private void btnScheduleTest_Click(object sender, EventArgs e)
         {
-            if (!clsTest.HasPassedTheTest(_LDLAppId, _TestTypeID))
+            if (!clsTest.HasPassedTheTest(_LocalDrivingLicenseApplicationId,(byte) _TestTypeID))
             {
-                if (clsTestAppointment.IsAppointmentSchedulingAvailable(_LDLAppId, _TestTypeID))
+                if (clsTestAppointment.HasActiveScheduledAppointment(_LocalDrivingLicenseApplicationId, _TestTypeID))
                     MessageBox.Show("Person already has an active appointment for this test, you cannot add new appointment.", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 else
                 {
                     frmScheduleTest frm;
                     if (dgvTestAppointments.Rows.Count == 0)
-                        frm = new frmScheduleTest(_LDLAppId, _CurrentTestType, frmScheduleTest.enTestTrial.FirstTime);
+                        frm = new frmScheduleTest(_LocalDrivingLicenseApplicationId, _TestTypeID);
                     
                     else
-                        frm = new frmScheduleTest(_LDLAppId, _CurrentTestType, frmScheduleTest.enTestTrial.ReTake);
+                        frm = new frmScheduleTest(_LocalDrivingLicenseApplicationId, _TestTypeID);
 
                     frm.AfterSchedulingAppointment += _AddNewRowToDGV;
                     frm.ShowDialog();
@@ -115,8 +113,8 @@ namespace DVLDPresentationLayer
 
         private void frmTestAppointments_Load(object sender, EventArgs e)
         {
-            dgvTestAppointments.DataSource = clsTestAppointment.GetTestAppointments(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, _TestTypeID, _LDLAppId);
-            lblRecordsNumber.Text = clsTestAppointment.GetTotalAppointmentsCount(_LDLAppId, _TestTypeID).ToString();
+            dgvTestAppointments.DataSource = clsTestAppointment.GetTestAppointments(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, (byte)_TestTypeID, _LocalDrivingLicenseApplicationId);
+            lblRecordsNumber.Text = clsTestAppointment.GetTotalAppointmentsCount(_LocalDrivingLicenseApplicationId, (byte)_TestTypeID).ToString();
         }
 
         private void _AppendPartOfRemainingData()
@@ -126,7 +124,7 @@ namespace DVLDPresentationLayer
 
             _DGVUtilityLib.SetNumberOfRowsToOffset(_PrimaryKeyViewedColumnName, _LastColumnNameDgvSortedBy);
 
-            DataTable dtTestAppointments = clsTestAppointment.GetTestAppointments(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, _TestTypeID, _LDLAppId, _LastBroughtAppointmentID
+            DataTable dtTestAppointments = clsTestAppointment.GetTestAppointments(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, (byte)_TestTypeID, _LocalDrivingLicenseApplicationId, _LastBroughtAppointmentID
                 , _LastColumnNameDgvSortedBy, _DGVUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
             DataRow[] NewRows = dtTestAppointments?.Select();
@@ -144,26 +142,13 @@ namespace DVLDPresentationLayer
         {
             if (dgvTestAppointments.SelectedRows.Count == 1)
             {
-                clsTestAppointment TestAppointment = clsTestAppointment.Find((int)dgvTestAppointments.SelectedRows[0].Cells[_PrimaryKeyViewedColumnName].Value);
-                frmScheduleTest frm;
-                if (clsTest.HasPassedTheTest(_LDLAppId, _TestTypeID))
-                {
-                    frm = new frmScheduleTest(_LDLAppId, _CurrentTestType, frmScheduleTest.enTestTrial.Taken, TestAppointment);
-                    frm._SetControlsForLockedAppointment(true);
-                }
+                int TestAppointmentID = (int)dgvTestAppointments.SelectedRows[0].Cells[_PrimaryKeyViewedColumnName].Value;
 
-                else if ((bool)dgvTestAppointments.SelectedRows[0].Cells["Is Locked"].Value)
-                {
-                    frm = new frmScheduleTest(_LDLAppId, _CurrentTestType, frmScheduleTest.enTestTrial.Taken, TestAppointment);
-                    frm._SetControlsForLockedAppointment(false);
-                }
-                else
-                {
-                    frm = new frmScheduleTest(_LDLAppId, _CurrentTestType, frmScheduleTest.enTestTrial.FirstTime, TestAppointment, (int)dgvTestAppointments.SelectedRows[0].Index);
+                frmScheduleTest frm = new frmScheduleTest(_LocalDrivingLicenseApplicationId, _TestTypeID
+                    , TestAppointmentID, (int)dgvTestAppointments.SelectedRows[0].Index);
+
                     frm.AfterEditingAppointment += _EditDataRowInDGV;
-                }
                     frm.ShowDialog();
-                
             }
             else
                 MessageBox.Show("You can select one appointment to edit!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -191,7 +176,7 @@ namespace DVLDPresentationLayer
             {
                 if((bool)dgvTestAppointments.SelectedRows[0].Cells["Is Locked"].Value)
                 {
-                    if(clsTest.HasPassedTheTest(_LDLAppId, _TestTypeID))
+                    if(clsTest.HasPassedTheTest(_LocalDrivingLicenseApplicationId, (byte) _TestTypeID))
                         MessageBox.Show("This person already passed this test.", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     else
@@ -201,7 +186,7 @@ namespace DVLDPresentationLayer
                 }
 
                 clsTestAppointment TestAppointment = clsTestAppointment.Find((int)dgvTestAppointments.SelectedRows[0].Cells[_PrimaryKeyViewedColumnName].Value);
-                frmTakeTest frm = new frmTakeTest(TestAppointment, _CurrentTestType, (int)dgvTestAppointments.SelectedRows[0].Index);
+                frmTakeTest frm = new frmTakeTest(TestAppointment, _TestTypeID, (int)dgvTestAppointments.SelectedRows[0].Index);
                 frm.AfterPassingTest += _UpdateLDLAppDgv;
                 frm.AfterTestTaken += _LockTestAppointment;
                 
@@ -231,7 +216,7 @@ namespace DVLDPresentationLayer
             clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvTestAppointments, ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection, e);
             
             DataTable dtSortedInfo = clsTestAppointment.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvTestAppointments.Columns[e.ColumnIndex].HeaderText
-                , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection),_LDLAppId, _TestTypeID);
+                , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection),_LocalDrivingLicenseApplicationId, (byte) _TestTypeID);
 
             _DGVUtilityLib.SetDataSourceAfterColumnOrdering(dgvTestAppointments, dtSortedInfo, e, ref _LastColumnNameDgvSortedBy);
         }

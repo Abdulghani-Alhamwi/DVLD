@@ -43,19 +43,19 @@ namespace DVLDPresentationLayer
 
         private bool _ValidateTextBoxes()
         {
-            if (txtUserName.Text == "" && txtPassword.Text == "")
+            if (txtUserName.Text.Trim() == "" && txtPassword.Text.Trim() == "")
             {
                 MessageBox.Show("UserName And Password cannot be empty!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
-            if (txtUserName.Text == "")
+            if (txtUserName.Text.Trim() == "")
             {
                 MessageBox.Show("UserName cannot be empty!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
-            if (txtPassword.Text == "")
+            if (txtPassword.Text.Trim() == "")
             {
                 MessageBox.Show("Password cannot be empty!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -118,7 +118,7 @@ namespace DVLDPresentationLayer
                 return;
 
             else if (chbRememberMe.Checked)
-                _SaveLoginDataToFile(_SavedInfoDirectoryPath, _SavedInfoFilePath, clsGeneralUtility.EncryptString(clsGlobalSettings.EncryptionKey, txtUserName.Text,out byte[] UsernameIV), Convert.ToBase64String(UsernameIV), UserPassword);
+                _SaveLoginDataToFile(_SavedInfoDirectoryPath, _SavedInfoFilePath, clsGeneralUtility.EncryptString(clsGlobalSettings.EncryptionKey, txtUserName.Text.Trim(), out byte[] UsernameIV), Convert.ToBase64String(UsernameIV), UserPassword);
 
             else if (!chbRememberMe.Checked)
                 _DeleteLoginFile(_SavedInfoFilePath);
@@ -166,7 +166,7 @@ namespace DVLDPresentationLayer
         private bool _HasSavedUserChanged()
         {
             if (File.Exists(_SavedInfoFilePath))
-                return (txtUserName.Text != _OldUserName);
+                return (txtUserName.Text.Trim() != _OldUserName);
 
             else
                 return false;
@@ -185,7 +185,7 @@ namespace DVLDPresentationLayer
             byte[] Salt = null;
             sbyte UserPermissions = 0;
 
-            if (clsUser.GetLoginInfo(clsGeneralUtility.HashUsernameForLookUp(txtUserName.Text),ref UserID,ref Username, ref UsernameIV, ref UserPassword, ref Salt, ref IsActive, ref UserPermissions))
+            if (clsUser.GetLoginInfo(clsGeneralUtility.HashUsernameForLookUp(txtUserName.Text.Trim()),ref UserID,ref Username, ref UsernameIV, ref UserPassword, ref Salt, ref IsActive, ref UserPermissions))
             {
                 if(chbRememberMe.Checked)
                 {
@@ -195,7 +195,7 @@ namespace DVLDPresentationLayer
                      }
                 }
 
-                if (_ValidateLoginPassword(UserPassword, txtPassword.Text, Salt))
+                if (_ValidateLoginPassword(UserPassword, txtPassword.Text.Trim(), Salt))
                 {
                     if (IsActive)
                     {
@@ -211,6 +211,5 @@ namespace DVLDPresentationLayer
             else
                 MessageBox.Show("Invalid UserName!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-
     }
 }

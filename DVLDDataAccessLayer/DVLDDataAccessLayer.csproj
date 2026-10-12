@@ -42,22 +42,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsApplicationsData.cs" />
-    <Compile Include="clsApplicationTypesData.cs" />
-    <Compile Include="clsDetainedLicensesData.cs" />
-    <Compile Include="clsDriversData.cs" />
-    <Compile Include="clsInternationalLicensesData.cs" />
-    <Compile Include="clsLocalLicensesData.cs" />
-    <Compile Include="clsTestsData.cs" />
-    <Compile Include="clsCountriesData.cs" />
-    <Compile Include="clsLicenseClassesData.cs" />
-    <Compile Include="clsLocalDrivingLicenseAppsData.cs" />
-    <Compile Include="clsPeopleData.cs" />
+    <Compile Include="clsApplicationData.cs" />
+    <Compile Include="clsApplicationTypeData.cs" />
+    <Compile Include="clsDetainedLicenseData.cs" />
+    <Compile Include="clsDriverData.cs" />
+    <Compile Include="clsInternationalLicenseData.cs" />
+    <Compile Include="clsLocalLicenseData.cs" />
+    <Compile Include="clsTestData.cs" />
+    <Compile Include="clsCountryData.cs" />
+    <Compile Include="clsLicenseClasseData.cs" />
+    <Compile Include="clsLocalDrivingLicenseApplicationData.cs" />
+    <Compile Include="clsPersonData.cs" />
     <Compile Include="clsDataAccessSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="clsTestAppointmentsData.cs" />
-    <Compile Include="clsTestTypesData.cs" />
-    <Compile Include="clsUsersData.cs" />
+    <Compile Include="clsTestAppointmentData.cs" />
+    <Compile Include="clsTestTypeData.cs" />
+    <Compile Include="clsUserData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utility Library\Utility Library.csproj">

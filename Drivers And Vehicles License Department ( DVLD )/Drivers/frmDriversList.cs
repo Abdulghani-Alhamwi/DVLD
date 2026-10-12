@@ -71,23 +71,33 @@ namespace DVLDPresentationLayer
             if (!ScrollCase)
             {
                 if (_IsNumericColumn())
+<<<<<<< HEAD
                     dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text
                         ,_LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), null);
+=======
+                    dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim()
+                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), null);
+>>>>>>> 7693c1e (Improve code reusability, readability, and maintainability, fix test scheduling time issue, and enhance validation functionality using ErrorProvider)
 
                 else
-                    dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text
-                        ,_LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), '%');
+                    dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim()
+                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), '%');
             }
 
             else
             {
                 if (_IsNumericColumn())
+<<<<<<< HEAD
                     dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
                         _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection),_LastBroughtDriverID, _DgvUtilityLib.NumberOfRowsToOffset, null);
+=======
+                    dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim()
+                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection),_LastBroughtDriverID, _DgvUtilityLib.NumberOfRowsToOffset, null);
+>>>>>>> 7693c1e (Improve code reusability, readability, and maintainability, fix test scheduling time issue, and enhance validation functionality using ErrorProvider)
 
                 else
-                    dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text,
-                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection),_LastBroughtDriverID, _DgvUtilityLib.NumberOfRowsToOffset, '%');
+                    dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim()
+                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection),_LastBroughtDriverID, _DgvUtilityLib.NumberOfRowsToOffset, '%');
             }
 
             if (dtDriversInfo != null)
@@ -100,7 +110,11 @@ namespace DVLDPresentationLayer
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
+<<<<<<< HEAD
             if (_PreventedInput || _PreviousFilterText == txtFilter.Text)
+=======
+            if (_PreventedInput || _PreviousFilterText == txtFilter.Text.Trim())
+>>>>>>> 7693c1e (Improve code reusability, readability, and maintainability, fix test scheduling time issue, and enhance validation functionality using ErrorProvider)
                 return;
 
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection);
@@ -111,7 +125,11 @@ namespace DVLDPresentationLayer
             else
                 dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
 
+<<<<<<< HEAD
             _PreviousFilterText = txtFilter.Text;
+=======
+            _PreviousFilterText = txtFilter.Text.Trim();
+>>>>>>> 7693c1e (Improve code reusability, readability, and maintainability, fix test scheduling time issue, and enhance validation functionality using ErrorProvider)
         }
 
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
@@ -207,11 +225,11 @@ namespace DVLDPresentationLayer
 
         private void dgvDrivers_Scroll(object sender, ScrollEventArgs e)
         {
-                if(e.ScrollOrientation == ScrollOrientation.VerticalScroll)
-                {
-                    if (dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.None) == dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.Displayed))
-                        _AppendPartOfRemainingData();
-                }
+            if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
+            {
+                if (dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.None) == dgvDrivers.Rows.GetLastRow(DataGridViewElementStates.Displayed))
+                    _AppendPartOfRemainingData();
+            }
         }
 
         private void _EditDriverPersonalInfo(clsPerson UpdatedPersonInfo,int DGVRowIndex)
@@ -244,7 +262,7 @@ namespace DVLDPresentationLayer
 
             DataTable dtSortedInfo = null;
 
-            if (txtFilter.Text == "")
+            if (txtFilter.Text.Trim() == "")
             {
 
                 dtSortedInfo = clsDriver.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvDrivers.Columns[e.ColumnIndex].HeaderText
@@ -256,13 +274,13 @@ namespace DVLDPresentationLayer
                 if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
                 {
                     dtSortedInfo = clsDriver.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvDrivers.Columns[e.ColumnIndex].HeaderText
-                    , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), cbFilterBy.SelectedItem.ToString(), txtFilter.Text, null);
+                    , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(), null);
                 }
 
                 else
                 {
                     dtSortedInfo = clsDriver.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvDrivers.Columns[e.ColumnIndex].HeaderText
-                     , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), cbFilterBy.SelectedItem.ToString(), txtFilter.Text, '%');
+                     , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(), '%');
                 }
             }
 
@@ -278,7 +296,7 @@ namespace DVLDPresentationLayer
         {
             if (dgvDrivers.SelectedRows.Count == 1)
             {
-                frmPersonDetails frm = new frmPersonDetails((int)dgvDrivers.SelectedRows[0].Cells["Person ID"].Value, dgvDrivers.SelectedRows[0].Index);
+                frmPersonInfo frm = new frmPersonInfo((int)dgvDrivers.SelectedRows[0].Cells["Person ID"].Value, dgvDrivers.SelectedRows[0].Index);
                 frm.AfterUpdatingPersonalInfo += _EditDriverPersonalInfo;
                 frm.ShowDialog();
             }

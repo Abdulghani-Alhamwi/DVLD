@@ -139,26 +139,6 @@ namespace DVLDPresentationLayer
             }
         }
 
-        private void cmsLicenseHistory_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (tcLicenseHistory.SelectedTab == tpLocalLicenses)
-            {
-                if (dgvLocalLicenses.Rows.Count == 0)
-                    cmsLicenseHistory.Close();
-
-                else if (dgvLocalLicenses.SelectedRows.Count > 1)
-                    MessageBox.Show("You can choose only one local license to show its info");
-            }
-            else
-            {
-                if (dgvInternationalLicenses.Rows.Count == 0)
-                    cmsLicenseHistory.Close();
-
-                else if (dgvInternationalLicenses.SelectedRows.Count > 1)
-                    MessageBox.Show("You can choose only one international license to show its info");
-            }
-        }
-
         private void _SortLocalLicensesDataData(DataGridViewCellMouseEventArgs e)
         {
             clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvLocalLicenses, ref _LastColumnDGVLocalLicSortedBy, ref _CurrentLLicDGVColSortDirection, e);
@@ -199,6 +179,32 @@ namespace DVLDPresentationLayer
 
             else
                 _CurrentIntLicDGVColSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
+        }
+
+        private void cmsLicenseHistory_Paint(object sender, PaintEventArgs e)
+        {
+            if (tcLicenseHistory.SelectedTab == tpLocalLicenses)
+            {
+                if (dgvLocalLicenses.Rows.Count == 0)
+                    cmsLicenseHistory.Close();
+
+                else if (dgvLocalLicenses.SelectedRows.Count > 1)
+                {
+                    MessageBox.Show("You can choose only one local license to show its info");
+                    cmsLicenseHistory.Close();
+                }
+            }
+            else
+            {
+                if (dgvInternationalLicenses.Rows.Count == 0)
+                    cmsLicenseHistory.Close();
+
+                else if (dgvInternationalLicenses.SelectedRows.Count > 1)
+                {
+                    MessageBox.Show("You can choose only one international license to show its info");
+                    cmsLicenseHistory.Close();
+                }
+            }
         }
     }
 }

@@ -43,7 +43,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnScheduleTest = new System.Windows.Forms.Button();
             this.pbTestType = new System.Windows.Forms.PictureBox();
-            this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrLDLApplicationDetails();
+            this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrLDLApplicationInfo();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTestAppointments)).BeginInit();
             this.cmsAppointment.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbTestType)).BeginInit();
@@ -248,7 +248,7 @@
             this.uctrlDLApplicationInfo.Name = "uctrlDLApplicationInfo";
             this.uctrlDLApplicationInfo.Size = new System.Drawing.Size(1156, 452);
             this.uctrlDLApplicationInfo.TabIndex = 53;
-            this.uctrlDLApplicationInfo.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonDetails.PersonEditedInfo(this.uctrlDLApplicationInfo_OnPersonEditedInfo);
+            this.uctrlDLApplicationInfo.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonCard.PersonEditedInfo(this.uctrlDLApplicationInfo_OnPersonEditedInfo);
             // 
             // frmTestsAppointments
             // 
@@ -297,7 +297,7 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.PictureBox pbTestType;
         private System.Windows.Forms.Label lblFormBigTitle;
-        private ctrLDLApplicationDetails uctrlDLApplicationInfo;
+        private ctrLDLApplicationInfo uctrlDLApplicationInfo;
         private System.Windows.Forms.Label lblAppointmentsTitle;
         private System.Windows.Forms.ContextMenuStrip cmsAppointment;
         private System.Windows.Forms.ToolStripMenuItem tsmiEdit;

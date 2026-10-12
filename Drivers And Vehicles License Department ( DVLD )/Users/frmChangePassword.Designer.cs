@@ -43,7 +43,7 @@
             this.lblChangePasswordTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.erTextBox = new System.Windows.Forms.ErrorProvider(this.components);
-            this.uctrlUserDetails = new DVLDPresentationLayer.ctrlUserDetails();
+            this.uctrlUserDetails = new DVLDPresentationLayer.ctrlUserCard();
             ((System.ComponentModel.ISupportInitialize)(this.pbCurrentPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbConfirmPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNewPassword)).BeginInit();
@@ -113,7 +113,7 @@
             this.txtCurrentPassword.PasswordChar = '*';
             this.txtCurrentPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtCurrentPassword.Size = new System.Drawing.Size(256, 36);
-            this.txtCurrentPassword.TabIndex = 1;
+            this.txtCurrentPassword.TabIndex = 0;
             this.txtCurrentPassword.Tag = "First Name";
             this.txtCurrentPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtCurrentPassword_Validating);
             // 
@@ -163,7 +163,7 @@
             this.btnSave.Location = new System.Drawing.Point(952, 826);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(152, 42);
-            this.btnSave.TabIndex = 4;
+            this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -181,7 +181,7 @@
             this.btnClose.Location = new System.Drawing.Point(770, 826);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(152, 42);
-            this.btnClose.TabIndex = 5;
+            this.btnClose.TabIndex = 4;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -243,8 +243,8 @@
             this.uctrlUserDetails.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.uctrlUserDetails.Name = "uctrlUserDetails";
             this.uctrlUserDetails.Size = new System.Drawing.Size(1083, 461);
-            this.uctrlUserDetails.TabIndex = 0;
-            this.uctrlUserDetails.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonDetails.PersonEditedInfo(this.uctrlUserDetails_OnPersonEditedInfo);
+            this.uctrlUserDetails.TabIndex = 5;
+            this.uctrlUserDetails.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonCard.PersonEditedInfo(this.uctrlUserDetails_OnPersonEditedInfo);
             // 
             // frmChangePassword
             // 
@@ -252,6 +252,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1121, 891);
@@ -286,7 +287,7 @@
 
         #endregion
 
-        private ctrlUserDetails uctrlUserDetails;
+        private ctrlUserCard uctrlUserDetails;
         private System.Windows.Forms.PictureBox pbCurrentPassword;
         private System.Windows.Forms.TextBox txtNewPassword;
         private System.Windows.Forms.TextBox txtPasswordConfirmation;

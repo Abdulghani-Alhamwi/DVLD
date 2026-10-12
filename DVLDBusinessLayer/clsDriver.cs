@@ -23,7 +23,7 @@ namespace DVLDBusinessLayer
 
         private bool _AddNewDriver()
         {
-            DriverID = clsDriversData.AddNewDriver(PersonID, CreatedByUserID, CreatedDate);
+            DriverID = clsDriverData.AddNewDriver(PersonID, CreatedByUserID, CreatedDate);
 
             return (DriverID != -1);
         }
@@ -44,67 +44,67 @@ namespace DVLDBusinessLayer
 
         public static bool IsPersonAlreadyADriver(int PersonID)
         {
-            return clsDriversData.IsPersonAlreadyADriver(PersonID);
+            return clsDriverData.IsPersonAlreadyADriver(PersonID);
         }
 
         public static int GetDriverID(int PersonID)
         {
-            return clsDriversData.GetDriverID(PersonID);
+            return clsDriverData.GetDriverID(PersonID);
         }
 
         public static int GetDriverPersonID(int DriverID)
         {
-            return clsDriversData.GetDriverPersonID(DriverID);
+            return clsDriverData.GetDriverPersonID(DriverID);
         }
 
         public static DataTable GetDriversInfo(byte WantedNumOfRecords)
         {
-            return clsDriversData.GetDriversInfo(WantedNumOfRecords);
+            return clsDriverData.GetDriversInfo(WantedNumOfRecords);
         }
 
         public static DataTable GetDriversInfo(byte WantedNumOfRecords, int LastBroughtDriverID
             , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
-            return clsDriversData.GetDriversInfo(WantedNumOfRecords, LastBroughtDriverID, LastColumnNameDataOrderedBy
+            return clsDriverData.GetDriversInfo(WantedNumOfRecords, LastBroughtDriverID, LastColumnNameDataOrderedBy
                     , NumberOfRowsToOffset, SortDirection);
         }
 
         public static int GetTotalDriversCount()
         {
-            return clsDriversData.GetTotalDriversCount();
+            return clsDriverData.GetTotalDriversCount();
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection, char? WildChar = null)
         {
-            return clsDriversData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, -1, -1, WildChar);
+            return clsDriverData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, -1, -1, WildChar);
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,
                string ColumnNameToOrderBy, string SortDirection, int LastBroughtDriverID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
-            return clsDriversData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy,
+            return clsDriverData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy,
                 SortDirection, LastBroughtDriverID, NumberOfRowsToOffset, WildChar);
         }
 
         public static bool HasActiveLicenseFromClass(int DriverID, int LicenseClassID,out int LicenseID)
         {
-            return clsDriversData.HasActiveLicenseFromClass(DriverID, LicenseClassID,out LicenseID);
+            return clsDriverData.HasActiveLicenseFromClass(DriverID, LicenseClassID,out LicenseID);
         }
 
         public static short GetDriverLocalLicensesCount(int DriverID)
         {
-            return clsDriversData.GetDriverLocalLicensesCount(DriverID);
+            return clsDriverData.GetDriverLocalLicensesCount(DriverID);
         }
 
         public static short GetDriverInternationalLicensesCount(int DriverID)
         {
-            return clsDriversData.GetDriverInternationalLicensesCount(DriverID);
+            return clsDriverData.GetDriverInternationalLicensesCount(DriverID);
         }
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection
              , string ColumnNameToFilterBy = null, string valueToFilterBy = null, char? WildChar = null)
         {
-            return clsDriversData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
+            return clsDriverData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
                    ColumnNameToFilterBy, valueToFilterBy, WildChar);
         }
 

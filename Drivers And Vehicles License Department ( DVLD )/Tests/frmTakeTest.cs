@@ -12,16 +12,16 @@ namespace DVLDPresentationLayer
 
         clsTestAppointment _Appointment;
         int _AppointmentsDGVRowIndex;
-        int _LDLAppID;
+        int _LocalDrivingLicenseApplicationID;
 
         public frmTakeTest(clsTestAppointment Appointment, clsTestType.enTestType TestType,int AppointmentsDGVRowIndex)
         {
             InitializeComponent();
 
-            clsLocalDrivingLicenseApp LDLApp = clsLocalDrivingLicenseApp.Find(Appointment.LDLApplicationID);
+            clsLocalDrivingLicenseApplication LDLApp = clsLocalDrivingLicenseApplication.FindByLocalDrivingLicenseAppID(Appointment.LocalDrivingLicenseApplicationID);
             _SetInfo(Appointment,LDLApp);
             
-            frmScheduleTest.ShowInfoByTestType(gbTestAppointment,pbTestType,lblTestFees,TestType);
+            ctrlScheduleTest.ShowInfoByTestType(gbTestAppointment,pbTestType,lblTestFees,TestType);
 
             this._AppointmentsDGVRowIndex = AppointmentsDGVRowIndex;
 
@@ -29,25 +29,25 @@ namespace DVLDPresentationLayer
             clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
         }
 
-        private void _SetInfo(clsTestAppointment Appointment,clsLocalDrivingLicenseApp LDLApp)
+        private void _SetInfo(clsTestAppointment Appointment,clsLocalDrivingLicenseApplication LocalDrivingLicenseApplication)
         {
             txtNotes.MaxLength = 500;
 
             _Appointment = Appointment;
-            _LDLAppID = LDLApp.LDLAppID;
+            _LocalDrivingLicenseApplicationID = LocalDrivingLicenseApplication.LocalDrivingLicenseApplicationID;
 
-            lblLDLApplicationID.Text = LDLApp.LDLAppID.ToString();
+            lblLDLApplicationID.Text = LocalDrivingLicenseApplication.LocalDrivingLicenseApplicationID.ToString();
 
-            if (LDLApp != null)
+            if (LocalDrivingLicenseApplication != null)
             {
-                lblLicenseClassName.Text = LDLApp.LicenseClass.ClassName;
-                lblApplicantFullName.Text = clsPerson.GetFullName(LDLApp.ApplicantPersonID);
+                lblLicenseClassName.Text = LocalDrivingLicenseApplication.LicenseClassInfo.ClassName;
+                lblApplicantFullName.Text = clsPerson.GetFullName(LocalDrivingLicenseApplication.ApplicantPersonID);
             }
 
             lblDate.Text = Appointment.AppointmentDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.NumericFormat));
             lblTime.Text = Appointment.AppointmentDate.ToShortTimeString();
 
-            lblTrialNumber.Text = clsTestAppointment.GetTotalAppointmentsCount(_LDLAppID,1).ToString();
+            lblTrialNumber.Text = clsLocalDrivingLicenseApplication.GetTotalTrialsPerTestType(_LocalDrivingLicenseApplicationID,Appointment.TestTypeID).ToString();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -63,19 +63,17 @@ namespace DVLDPresentationLayer
             if (Test.Save())
             {
                 lblTestID.Text = Test.TestID.ToString();
-                _Appointment.IsLocked = true;
-                if (_Appointment.Save())
-                {
-                    AfterTestTaken?.Invoke(_AppointmentsDGVRowIndex);
-                    MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    if (Test.TestResult == true)
-                        AfterPassingTest?.Invoke();
-                }
-                btnSave.Enabled = false; 
+                AfterTestTaken?.Invoke(_AppointmentsDGVRowIndex);
+                MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                if (Test.TestResult == true)
+                    AfterPassingTest?.Invoke();
+
+                btnSave.Enabled = false;
             }
             else
-                MessageBox.Show("Failed To Save Data", "Fail", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Failed To Save Data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void btnClose_Click(object sender, EventArgs e)

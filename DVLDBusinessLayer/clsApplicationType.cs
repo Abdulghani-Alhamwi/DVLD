@@ -11,7 +11,7 @@ namespace DVLDBusinessLayer
         public string ApplicationTypeTitle { get; set; }
         public decimal ApplicationTypeFees { get; set; }
 
-        public clsApplicationTypesData.clsOldApplicationTypeData _OldApplicationTypeData;
+        public clsApplicationTypeData.clsOldApplicationTypeData _OldApplicationTypeData;
 
         public clsApplicationType(byte ApplicationTypeID, string ApplicationTypeTitle, decimal ApplicationTypeFees)
         {
@@ -19,13 +19,13 @@ namespace DVLDBusinessLayer
             this.ApplicationTypeTitle = ApplicationTypeTitle;
             this.ApplicationTypeFees = ApplicationTypeFees;
 
-            _OldApplicationTypeData = new clsApplicationTypesData.clsOldApplicationTypeData(
+            _OldApplicationTypeData = new clsApplicationTypeData.clsOldApplicationTypeData(
                                       ApplicationTypeTitle, ApplicationTypeFees);
         }
 
         public static DataTable GetApplicationTypes()
         {
-            return clsApplicationTypesData.GetApplicationTypes();
+            return clsApplicationTypeData.GetApplicationTypes();
         }
 
         public bool AreAllFieldsOldValuesNotChanged()
@@ -40,10 +40,10 @@ namespace DVLDBusinessLayer
 
         private bool _UpdateApplicationType()
         {
-            if (clsApplicationTypesData.UpdateApplicationType(ApplicationTypeID, ApplicationTypeTitle, ApplicationTypeFees,
+            if (clsApplicationTypeData.UpdateApplicationType(ApplicationTypeID, ApplicationTypeTitle, ApplicationTypeFees,
                 _OldApplicationTypeData, _HasOldDataChangedFully()))
             {
-                _OldApplicationTypeData = new clsApplicationTypesData.clsOldApplicationTypeData(
+                _OldApplicationTypeData = new clsApplicationTypeData.clsOldApplicationTypeData(
                                     ApplicationTypeTitle, ApplicationTypeFees);
 
                 return true;
@@ -55,12 +55,12 @@ namespace DVLDBusinessLayer
         public static decimal GetApplicationTypeFees(enApplicationType ApplicationType)
         {
             byte ApplicationTypeID = GetApplicationTypeID(ApplicationType);
-            return clsApplicationTypesData.GetApplicationTypeFees(ApplicationTypeID);
+            return clsApplicationTypeData.GetApplicationTypeFees(ApplicationTypeID);
         }
 
         public static string GetApplicationTypeTitle(byte ApplicationTypeID)
         {
-            return clsApplicationTypesData.GetApplicationTypeTitle(ApplicationTypeID);
+            return clsApplicationTypeData.GetApplicationTypeTitle(ApplicationTypeID);
         }
 
         public static byte GetApplicationTypeID(enApplicationType ApplicationType)

@@ -396,7 +396,7 @@
             this.lblFormBigTitle.AutoSize = true;
             this.lblFormBigTitle.Font = new System.Drawing.Font("Tahoma", 28F, System.Drawing.FontStyle.Bold);
             this.lblFormBigTitle.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblFormBigTitle.Location = new System.Drawing.Point(238, 224);
+            this.lblFormBigTitle.Location = new System.Drawing.Point(258, 224);
             this.lblFormBigTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormBigTitle.Name = "lblFormBigTitle";
             this.lblFormBigTitle.Size = new System.Drawing.Size(205, 46);
@@ -407,7 +407,7 @@
             // 
             this.pbTestType.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbTestType.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbTestType.Location = new System.Drawing.Point(227, 45);
+            this.pbTestType.Location = new System.Drawing.Point(247, 45);
             this.pbTestType.Margin = new System.Windows.Forms.Padding(2);
             this.pbTestType.Name = "pbTestType";
             this.pbTestType.Size = new System.Drawing.Size(226, 171);

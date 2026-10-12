@@ -55,13 +55,13 @@ namespace DVLDBusinessLayer
 
         public static DataTable GetLocalLicenses(int DriverID,byte WantedNumOfRecords)
         {
-            return clsLocalLicensesData.GetLocalLicenses(DriverID,WantedNumOfRecords);
+            return clsLocalLicenseData.GetLocalLicenses(DriverID,WantedNumOfRecords);
         }
 
         public static DataTable GetLocalLicenses(int DriverID, byte WantedNumOfRecords, int LastBroughtLicenseID
                  , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
-            return clsLocalLicensesData.GetLocalLicenses(DriverID,WantedNumOfRecords, LastBroughtLicenseID
+            return clsLocalLicenseData.GetLocalLicenses(DriverID,WantedNumOfRecords, LastBroughtLicenseID
                      , LastColumnNameDataOrderedBy, NumberOfRowsToOffset, SortDirection);
         }
 
@@ -137,7 +137,7 @@ namespace DVLDBusinessLayer
                 }
             }
 
-            LicenseID = clsLocalLicensesData.IssueLocalDrivingLicense(ApplicationID, DriverID, LicenseClassID, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, _GetIssueReasonAsNumber(IssueReason), CreatedByUserID);
+            LicenseID = clsLocalLicenseData.IssueLocalDrivingLicense(ApplicationID, DriverID, LicenseClassID, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, _GetIssueReasonAsNumber(IssueReason), CreatedByUserID);
 
             if(HasIssuedInternationalLicense)
             {
@@ -171,7 +171,7 @@ namespace DVLDBusinessLayer
             decimal PaidFees = -1;
             bool IsActive = false;
 
-            if (clsLocalLicensesData.Find(LicenseID,ref ApplicationID, ref DriverID, ref LicenseClassID, ref IssueDate,
+            if (clsLocalLicenseData.Find(LicenseID,ref ApplicationID, ref DriverID, ref LicenseClassID, ref IssueDate,
                 ref ExpirationDate, ref Notes, ref PaidFees, ref IsActive, ref IssueReason, ref CreatedByUserID))
             {
                 return new clsLocalLicense(LicenseID, ApplicationID, DriverID, LicenseClassID, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, _GetIssueReasonAsEnum(IssueReason), CreatedByUserID);
@@ -181,9 +181,9 @@ namespace DVLDBusinessLayer
                 return null;
         }
 
-        public static int GetLicenseID(int LDLApplicationID)
+        public static int GetLicenseID(int ApplicationID)
         {
-            return clsLocalLicensesData.GetLicenseID(LDLApplicationID);
+            return clsLocalLicenseData.GetLicenseID(ApplicationID);
         }
 
         public bool IsExpired()
@@ -193,33 +193,33 @@ namespace DVLDBusinessLayer
 
         public static string GetLicenseNotes(int LocalLicenseID)
         {
-            return clsLocalLicensesData.GetLicenseNotes(LocalLicenseID);
+            return clsLocalLicenseData.GetLicenseNotes(LocalLicenseID);
         }
 
         public static bool DeactivateLicense(int LocalLicenseID)
         {
-            return clsLocalLicensesData.DeactivateLicense(LocalLicenseID);
+            return clsLocalLicenseData.DeactivateLicense(LocalLicenseID);
         }
 
         public static bool HasDriverRenewedLicense(int DriverID, int LicenseClassID,out int RenewedLicenseID)
         {
             RenewedLicenseID = 0;
-            return clsLocalLicensesData.HasDriverRenewedLicense(DriverID, LicenseClassID,ref RenewedLicenseID);
+            return clsLocalLicenseData.HasDriverRenewedLicense(DriverID, LicenseClassID,ref RenewedLicenseID);
         }
 
         public static int GetDriverID(int LocalLicenseID)
         {
-            return clsLocalLicensesData.GetDriverID(LocalLicenseID);
+            return clsLocalLicenseData.GetDriverID(LocalLicenseID);
         }
 
         public static DataTable GetSortedInfo(int DriverID,byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection)
         {
-            return clsLocalLicensesData.GetSortedInfo(DriverID,WantedNumOfRecords, ColumnNameToOrderBy, SortDirection);
+            return clsLocalLicenseData.GetSortedInfo(DriverID,WantedNumOfRecords, ColumnNameToOrderBy, SortDirection);
         }
 
         public static int GetLocalLicenseIdByLicenseClass(int DriverID,byte LicenseClassID)
         {
-            return clsLocalLicensesData.GetLocalLicenseIdByLicenseClass(DriverID, LicenseClassID);
+            return clsLocalLicenseData.GetLocalLicenseIdByLicenseClass(DriverID, LicenseClassID);
         }
     }
 }

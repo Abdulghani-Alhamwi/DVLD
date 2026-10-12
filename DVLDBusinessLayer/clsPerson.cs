@@ -39,7 +39,7 @@ namespace DVLDBusinessLayer
             }
         }
 
-        private clsPeopleData.clsOldPersonData _OldPersonData;
+        private clsPersonData.clsOldPersonData _OldPersonData;
 
         public clsPerson(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, enGendor Gendor, string Address, string Phone, string Email, byte NationalityCountryID, string ImagePath)
         {
@@ -58,7 +58,7 @@ namespace DVLDBusinessLayer
             this.CountryName = "";
             this.ImagePath = ImagePath;
 
-            _OldPersonData = new clsPeopleData.clsOldPersonData
+            _OldPersonData = new clsPersonData.clsOldPersonData
              (NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth,
              _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath);
         }
@@ -82,7 +82,7 @@ namespace DVLDBusinessLayer
 
             this.CurrentMode = enMode.Update;
 
-            _OldPersonData = new clsPeopleData.clsOldPersonData
+            _OldPersonData = new clsPersonData.clsOldPersonData
             (NationalNo, FirstName, SecondName, ThirdName, LastName,DateOfBirth,
              _GetGendorNumericValue(),Address, Phone, Email, NationalityCountryID, ImagePath);
         }
@@ -97,7 +97,7 @@ namespace DVLDBusinessLayer
             string Address = "",Phone = "",Email = "",CountryName = "" ,
             ImagePath = "";
 
-            if (clsPeopleData.Find(PersonID, ref NationalNo, ref FirstName, ref SecondName, ref ThirdName, ref LastName,
+            if (clsPersonData.Find(PersonID, ref NationalNo, ref FirstName, ref SecondName, ref ThirdName, ref LastName,
                ref DateOfBirth, ref Gendor, ref Address, ref Phone, ref Email, ref NationalityCountryID, ref ImagePath))
             {
                 CountryName = clsCountries.Find(NationalityCountryID).CountryName;
@@ -119,7 +119,7 @@ namespace DVLDBusinessLayer
             string Address = "", Phone = "", Email = "", CountryName = "",
             ImagePath = "";
 
-            if (clsPeopleData.Find(NationalNo,ref PersonID, ref FirstName, ref SecondName, ref ThirdName, ref LastName,
+            if (clsPersonData.Find(NationalNo,ref PersonID, ref FirstName, ref SecondName, ref ThirdName, ref LastName,
                ref DateOfBirth, ref Gendor, ref Address, ref Phone, ref Email, ref NationalityCountryID, ref ImagePath))
             {
                 CountryName = clsCountries.Find(NationalityCountryID).CountryName;
@@ -141,7 +141,7 @@ namespace DVLDBusinessLayer
 
         private bool _AddNewPerson()
         {
-            PersonID = clsPeopleData.AddNewPerson(NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue()
+            PersonID = clsPersonData.AddNewPerson(NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue()
                 , Address, Phone, Email, NationalityCountryID, ImagePath);
 
             return (PersonID != -1);
@@ -165,10 +165,10 @@ namespace DVLDBusinessLayer
 
         private bool _UpdatePerson()
         {
-            if (clsPeopleData.UpdatePerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue()
+            if (clsPersonData.UpdatePerson(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, _GetGendorNumericValue()
                 , Address, Phone, Email, NationalityCountryID, ImagePath, _OldPersonData, _HasOldDataChangedFully()))
             {
-                _OldPersonData = new clsPeopleData.clsOldPersonData
+                _OldPersonData = new clsPersonData.clsOldPersonData
                  (NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth,
                  _GetGendorNumericValue(), Address, Phone, Email, NationalityCountryID, ImagePath);
 
@@ -181,13 +181,13 @@ namespace DVLDBusinessLayer
 
         public static DataTable GetPeopleInfo(byte WantedNumOfRecords)
         {
-            return clsPeopleData.GetPeopleInfo(WantedNumOfRecords);
+            return clsPersonData.GetPeopleInfo(WantedNumOfRecords);
         }
 
         public static DataTable GetPeopleInfo(byte WantedNumOfRecords, int _LastBroughtPersonID
             , string LastColumnNameDataOrderedBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
-            return clsPeopleData.GetPeopleInfo(WantedNumOfRecords, _LastBroughtPersonID, LastColumnNameDataOrderedBy,
+            return clsPersonData.GetPeopleInfo(WantedNumOfRecords, _LastBroughtPersonID, LastColumnNameDataOrderedBy,
                    NumberOfRowsToOffset, SortDirection);
         }
 
@@ -220,7 +220,7 @@ namespace DVLDBusinessLayer
         {
             string PersonImagePath = clsPerson.Find(PersonID).ImagePath;
 
-            if (clsPeopleData.DeletePerson(PersonID))
+            if (clsPersonData.DeletePerson(PersonID))
             {
                 _DeletePersonImage(PersonImagePath);
                 return true;
@@ -231,51 +231,51 @@ namespace DVLDBusinessLayer
 
         public static bool SearchForNationalNo(string NationalNo)
         {
-              return clsPeopleData.SearchForNationalNo(NationalNo);
+              return clsPersonData.SearchForNationalNo(NationalNo);
         }
 
         public static int GetTotalPeopleCount()
         {
-            return clsPeopleData.GetTotalPeopleCount();
+            return clsPersonData.GetTotalPeopleCount();
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,
             string LastColumnNameDataOrderedBy, string SortDirection, char? WildChar = null)
         {
-            return clsPeopleData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastColumnNameDataOrderedBy, SortDirection, -1,-1, WildChar);
+            return clsPersonData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastColumnNameDataOrderedBy, SortDirection, -1,-1, WildChar);
         }
 
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy,
             string LastColumnNameDataOrderedBy, string SortDirection, int _LastBroughtPersonID,int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
-            return clsPeopleData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastColumnNameDataOrderedBy, SortDirection
+            return clsPersonData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastColumnNameDataOrderedBy, SortDirection
                 , _LastBroughtPersonID, NumberOfRowsToOffset, WildChar);
         }
 
         public static string GetFullName(int PersonID)
         {
-            return clsPeopleData.GetPersonFullName(PersonID);
+            return clsPersonData.GetPersonFullName(PersonID);
         }
 
         public static string GetNationalNumber(int PersonID)
         {
-            return clsPeopleData.GetNationalNumber(PersonID);
+            return clsPersonData.GetNationalNumber(PersonID);
         }
 
         public static int GetPersonID(string NationalNo)
         {
-            return clsPeopleData.GetPersonID(NationalNo);
+            return clsPersonData.GetPersonID(NationalNo);
         }
 
         public static DataTable GetColumnsNamesForView()
         {
-            return clsPeopleData.GetColumnsNamesForView();
+            return clsPersonData.GetColumnsNamesForView();
         }
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
-            return clsPeopleData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
+            return clsPersonData.GetSortedInfo(WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,
                     ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }

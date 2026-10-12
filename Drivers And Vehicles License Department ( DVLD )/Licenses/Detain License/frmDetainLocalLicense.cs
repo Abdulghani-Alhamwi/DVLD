@@ -105,11 +105,6 @@ namespace DVLDPresentationLayer.Controls
             lnlblShowLicenseHistory.Enabled = true;
         }
 
-        private void txtFineFees_KeyDown(object sender, KeyEventArgs e)
-        {
-            frmUpdateApplicationType.ValidateFeesTextBox_KeyDown(ertxtFineFees, txtFineFees, e);
-        }
-
         private void lnlblShowLicenseInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             frmLocalLicenseDetails frm = new frmLocalLicenseDetails(_LocalLicenseInfo.LicenseID);

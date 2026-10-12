@@ -1,0 +1,172 @@
+﻿namespace DVLDPresentationLayer
+{
+    partial class ctrlPersonCardWithFilter
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.txtFindBy = new System.Windows.Forms.TextBox();
+            this.cbFindBy = new System.Windows.Forms.ComboBox();
+            this.lblTitleFindBy = new System.Windows.Forms.Label();
+            this.gbFilter = new System.Windows.Forms.GroupBox();
+            this.btnAddNewPerson = new System.Windows.Forms.Button();
+            this.btnFind = new System.Windows.Forms.Button();
+            this.uctrlPersonDetails = new DVLDPresentationLayer.ctrlPersonCard();
+            this.gbFilter.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // txtFindBy
+            // 
+            this.txtFindBy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.txtFindBy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtFindBy.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.txtFindBy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtFindBy.Location = new System.Drawing.Point(394, 47);
+            this.txtFindBy.Name = "txtFindBy";
+            this.txtFindBy.Size = new System.Drawing.Size(373, 35);
+            this.txtFindBy.TabIndex = 0;
+            this.txtFindBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFindBy_KeyPress);
+            this.txtFindBy.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFindBy_KeyUp);
+            // 
+            // cbFindBy
+            // 
+            this.cbFindBy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(228)))));
+            this.cbFindBy.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbFindBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFindBy.Font = new System.Drawing.Font("Tahoma", 17F);
+            this.cbFindBy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.cbFindBy.FormattingEnabled = true;
+            this.cbFindBy.Location = new System.Drawing.Point(148, 46);
+            this.cbFindBy.Name = "cbFindBy";
+            this.cbFindBy.Size = new System.Drawing.Size(226, 36);
+            this.cbFindBy.TabIndex = 1;
+            this.cbFindBy.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbFindBy_DrawItem);
+            this.cbFindBy.DropDown += new System.EventHandler(this.cbFindBy_DropDown);
+            this.cbFindBy.SelectedIndexChanged += new System.EventHandler(this.cbFindBy_SelectedIndexChanged);
+            this.cbFindBy.DropDownClosed += new System.EventHandler(this.cbFindBy_DropDownClosed);
+            // 
+            // lblTitleFindBy
+            // 
+            this.lblTitleFindBy.AutoSize = true;
+            this.lblTitleFindBy.Font = new System.Drawing.Font("Tahoma", 17F, System.Drawing.FontStyle.Bold);
+            this.lblTitleFindBy.Location = new System.Drawing.Point(23, 50);
+            this.lblTitleFindBy.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTitleFindBy.Name = "lblTitleFindBy";
+            this.lblTitleFindBy.Size = new System.Drawing.Size(112, 28);
+            this.lblTitleFindBy.TabIndex = 37;
+            this.lblTitleFindBy.Text = "Find By :";
+            // 
+            // gbFilter
+            // 
+            this.gbFilter.Controls.Add(this.btnAddNewPerson);
+            this.gbFilter.Controls.Add(this.btnFind);
+            this.gbFilter.Controls.Add(this.txtFindBy);
+            this.gbFilter.Controls.Add(this.cbFindBy);
+            this.gbFilter.Controls.Add(this.lblTitleFindBy);
+            this.gbFilter.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.gbFilter.Location = new System.Drawing.Point(3, 3);
+            this.gbFilter.Name = "gbFilter";
+            this.gbFilter.Size = new System.Drawing.Size(1073, 108);
+            this.gbFilter.TabIndex = 0;
+            this.gbFilter.TabStop = false;
+            this.gbFilter.Text = "Filter";
+            // 
+            // btnAddNewPerson
+            // 
+            this.btnAddNewPerson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddNewPerson.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnAddNewPerson.FlatAppearance.BorderSize = 2;
+            this.btnAddNewPerson.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnAddNewPerson.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnAddNewPerson.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddNewPerson.Image = global::DVLDPresentationLayer.Properties.Resources.AddPerson_32;
+            this.btnAddNewPerson.Location = new System.Drawing.Point(892, 39);
+            this.btnAddNewPerson.Name = "btnAddNewPerson";
+            this.btnAddNewPerson.Size = new System.Drawing.Size(74, 50);
+            this.btnAddNewPerson.TabIndex = 3;
+            this.btnAddNewPerson.UseVisualStyleBackColor = true;
+            this.btnAddNewPerson.Click += new System.EventHandler(this.btnAddNewPerson_Click);
+            // 
+            // btnFind
+            // 
+            this.btnFind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFind.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnFind.FlatAppearance.BorderSize = 2;
+            this.btnFind.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnFind.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnFind.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFind.Image = global::DVLDPresentationLayer.Properties.Resources.SearchPerson;
+            this.btnFind.Location = new System.Drawing.Point(794, 39);
+            this.btnFind.Name = "btnFind";
+            this.btnFind.Size = new System.Drawing.Size(74, 50);
+            this.btnFind.TabIndex = 2;
+            this.btnFind.UseVisualStyleBackColor = true;
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
+            // 
+            // uctrlPersonDetails
+            // 
+            this.uctrlPersonDetails.AllowDrop = true;
+            this.uctrlPersonDetails.AutoScroll = true;
+            this.uctrlPersonDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlPersonDetails.Font = new System.Drawing.Font("Tahoma", 16F);
+            this.uctrlPersonDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.uctrlPersonDetails.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.uctrlPersonDetails.Location = new System.Drawing.Point(-6, 122);
+            this.uctrlPersonDetails.Margin = new System.Windows.Forms.Padding(0);
+            this.uctrlPersonDetails.Name = "uctrlPersonDetails";
+            this.uctrlPersonDetails.Size = new System.Drawing.Size(1084, 302);
+            this.uctrlPersonDetails.TabIndex = 4;
+            this.uctrlPersonDetails.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonCard.PersonEditedInfo(this.uctrlPersonDetails_OnPersonEditedInfo);
+            // 
+            // ctrlPersonDetailsByFilter
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Controls.Add(this.gbFilter);
+            this.Controls.Add(this.uctrlPersonDetails);
+            this.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.Name = "ctrlPersonDetailsByFilter";
+            this.Size = new System.Drawing.Size(1080, 423);
+            this.Load += new System.EventHandler(this.PersonInformationByFilter_Load);
+            this.gbFilter.ResumeLayout(false);
+            this.gbFilter.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private ctrlPersonCard uctrlPersonDetails;
+        private System.Windows.Forms.TextBox txtFindBy;
+        private System.Windows.Forms.ComboBox cbFindBy;
+        private System.Windows.Forms.Label lblTitleFindBy;
+        private System.Windows.Forms.GroupBox gbFilter;
+        private System.Windows.Forms.Button btnAddNewPerson;
+        private System.Windows.Forms.Button btnFind;
+    }
+}

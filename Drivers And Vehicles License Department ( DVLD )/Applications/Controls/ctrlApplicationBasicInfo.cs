@@ -9,7 +9,7 @@ namespace DVLDPresentationLayer
 
     public partial class ctrlApplicationBasicInfo : UserControl
     {
-        public event ctrlPersonDetails.PersonEditedInfo OnPersonEditedInfo;
+        public event ctrlPersonCard.PersonEditedInfo OnPersonEditedInfo;
 
         private int _PersonID;
 
@@ -24,20 +24,17 @@ namespace DVLDPresentationLayer
             OnPersonEditedInfo?.Invoke(UpdatedPersonInfo);
         }
 
-        public void LoadInfo(clsLocalDrivingLicenseApp LDLApplication)
+        public void LoadInfo(clsLocalDrivingLicenseApplication LDLApplication)
         {
             lblApplicationID.Text = LDLApplication.ApplicationID.ToString();
-            lblStatus.Text = LDLApplication.GetApplicationStatus();
+            lblStatus.Text = LDLApplication.StatusText;
             lblPaidFees.Text = clsGeneralUtility.GetCustomNumberFormat(LDLApplication.PaidApplicationFees, enCustomNumberFormat.NoJustZerosAfterFraction);
             lblApplicationType.Text = clsApplicationType.GetApplicationTypeTitle(LDLApplication.ApplicationTypeID);
             lblApplicantFullName.Text = clsPerson.GetFullName(LDLApplication.ApplicantPersonID);
             lblApplicationDate.Text = LDLApplication.ApplicationDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
             lblLastStatusDate.Text = LDLApplication.LastStatusDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
 
-            string EncryptedUsername = "", UsernameIV = "";
-            clsUser.GetUserName(LDLApplication.CreatedByUserID, ref EncryptedUsername, ref UsernameIV);
-
-            lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
+            lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, LDLApplication.CreatedByUserInfo.Username, LDLApplication.CreatedByUserInfo.UsernameIV);
 
             _PersonID = LDLApplication.ApplicantPersonID;
         }
@@ -46,7 +43,7 @@ namespace DVLDPresentationLayer
         {
             if (_PersonID != -1)
             {
-                frmPersonDetails frm = new frmPersonDetails(_PersonID);
+                frmPersonInfo frm = new frmPersonInfo(_PersonID);
                 frm.OnUpdatedPersonInfo += _EditPersonName;
                 frm.ShowDialog();
             }

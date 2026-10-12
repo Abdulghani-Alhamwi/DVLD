@@ -23,14 +23,14 @@ namespace DVLDBusinessLayer
 
         public static DataTable GetAllCountries()
         {
-            return clsCountriesData.GetAllCountries();
+            return clsCountryData.GetAllCountries();
         }
 
         public static clsCountries Find(byte CountryID)
         {
             string CountryName = "";
 
-            if (clsCountriesData.Find(CountryID, ref CountryName))
+            if (clsCountryData.Find(CountryID, ref CountryName))
             {
                 return new clsCountries(CountryID, CountryName);
             }
@@ -42,7 +42,7 @@ namespace DVLDBusinessLayer
         {
             byte CountryID = 0;
 
-            if (clsCountriesData.Find(CountryName, ref CountryID))
+            if (clsCountryData.Find(CountryName, ref CountryID))
             {
                 return new clsCountries(CountryID, CountryName);
             }

@@ -277,8 +277,8 @@ namespace Utility_Library
 
         public static void EnableErrorProvider(ErrorProvider erControl, Control control, string ErrorMessage, CancelEventArgs CancelArgs)
         {
-            erControl.SetError(control, ErrorMessage);
             CancelArgs.Cancel = true;
+            erControl.SetError(control, ErrorMessage);
         }
 
         public static void DisableErrorProvider(ErrorProvider erControl, Control control)
@@ -788,7 +788,7 @@ namespace Utility_Library
         {
             DateTime CurrentDateTime = DateTime.Now;
 
-            if (!(CurrentDateTime.Year== ChoosedDate.Year && CurrentDateTime.Month == ChoosedDate.Month && CurrentDateTime.Day == ChoosedDate.Day))
+            if (!(CurrentDateTime.Year == ChoosedDate.Year && CurrentDateTime.Month == ChoosedDate.Month && CurrentDateTime.Day == ChoosedDate.Day))
                 return true;
 
             byte EnteredHour = 0;

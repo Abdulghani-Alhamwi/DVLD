@@ -18,22 +18,22 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
         {
             InitializeComponent();
 
-            uctrlDLApplicationInfo.LoadLDLAppInfo(LDLAppID);
-            lblLicenseFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsLicenseClass.GetLicenseClassFees(uctrlDLApplicationInfo.LDLApplication.LicenseClass.ID),
+            uctrlDLApplicationInfo.LoadInfoByLocalDrivingLicenseAppID(LDLAppID);
+            lblLicenseFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsLicenseClass.GetLicenseClassFees(uctrlDLApplicationInfo.LDLApplication.LicenseClassInfo.ID),
                 enCustomNumberFormat.NoJustZerosAfterFraction);
             this._DGVRowIndex = _DGVRowIndex;
         }
 
-        private bool _SaveLicenseInfo(clsLocalDrivingLicenseApp LDLApplication ,int DriverID)
+        private bool _SaveLicenseInfo(clsLocalDrivingLicenseApplication LDLApplication ,int DriverID)
         {
             _LocalLicense = new clsLocalLicense(
             ApplicationID: LDLApplication.ApplicationID,
             DriverID: DriverID,
-            LicenseClassID: LDLApplication.LicenseClass.ID,
+            LicenseClassID: LDLApplication.LicenseClassInfo.ID,
             IssueDate: DateTime.Now,
-            ExpirationDate: DateTime.Now.AddYears(clsLicenseClass.GetLicenseValidityLength(LDLApplication.LicenseClass.ID)),
+            ExpirationDate: DateTime.Now.AddYears(clsLicenseClass.GetLicenseValidityLength(LDLApplication.LicenseClassInfo.ID)),
             Notes: (txtNotes.Text != "") ? txtNotes.Text : null,
-            PaidFees: clsLicenseClass.GetLicenseClassFees(LDLApplication.LicenseClass.ID),
+            PaidFees: clsLicenseClass.GetLicenseClassFees(LDLApplication.LicenseClassInfo.ID),
             IsActive: true,
             IssueReason: clsLocalLicense.enIssueReason.FirstTime,
             CreatedByUserID: clsGlobalSettings.CurrentUserID

@@ -8,7 +8,7 @@ namespace DVLDPresentationLayer
 {
     public partial class frmChangePassword : Form
     {
-        public event frmUserDetails.UserPersonalEditedInfo OnEditedPersonInfo;
+        public event frmUserInfo.UserPersonalEditedInfo OnEditedPersonInfo;
 
         private int _UserID = -1;
         private string _Password = "";
@@ -50,77 +50,50 @@ namespace DVLDPresentationLayer
             this.Close();
         }
 
-        private bool _ValidateCurrentPassword()
+        private void txtCurrentPassword_Validating(object sender, CancelEventArgs e)
         {
-            if(txtCurrentPassword.Text == "" || string.IsNullOrWhiteSpace(txtCurrentPassword.Text))
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password cannot be empty!", null);
+            if (string.IsNullOrEmpty(txtCurrentPassword.Text.Trim()))
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password cannot be empty!", e);
 
             else if (clsGeneralUtility.HashWithSaltPassword(txtCurrentPassword.Text, ref _Salt) == _Password)
             {
-                erTextBox.Dispose();
-                return true;
+                clsGeneralUtility.DisableErrorProvider(erTextBox, txtCurrentPassword);
             }
 
             else
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password is wrong!", null);
-
-            return false;
-        }
-
-        private bool _ValidateNewPassword()
-        {
-            if (txtNewPassword.Text == "" || string.IsNullOrWhiteSpace(txtNewPassword.Text))
-            {
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtNewPassword, "New password cannot be empty!", null);
-                return false;
-            }            
-            else
-                erTextBox.Dispose();
-
-            return true;
-        }
-
-        private bool _ValidatePasswordConfirmation()
-        {
-            if (txtNewPassword.Text == "")
-                return false;
-
-            if (txtPasswordConfirmation.Text == "" || string.IsNullOrWhiteSpace(txtPasswordConfirmation.Text))
-            {
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation cannot be empty!", null);
-                return false;
-            }
-
-            else if (txtPasswordConfirmation.Text != txtNewPassword.Text)
-            {
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation does not match password!", null);
-                return false;
-            }
-            else
-                erTextBox.Dispose();
-
-            return true;
-        }
-        
-        private void txtCurrentPassword_Validating(object sender, CancelEventArgs e)
-        {
-            _ValidateCurrentPassword();
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password is wrong!", e);
         }
 
         private void txtNewPassword_Validating(object sender , CancelEventArgs e)
         {
-            _ValidateNewPassword();
+            if (string.IsNullOrEmpty(txtNewPassword.Text.Trim()))
+            {
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtNewPassword, "New password cannot be empty!", e);
+            }
+
+            else
+                clsGeneralUtility.DisableErrorProvider(erTextBox, txtNewPassword);
         }
 
         private void txtPasswordConfirmation_Validating(object sender, CancelEventArgs e)
         {
-            _ValidatePasswordConfirmation();
+            if (txtPasswordConfirmation.Text != txtNewPassword.Text)
+            {
+                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation does not match password!", e);
+            }
+
+            else
+                clsGeneralUtility.DisableErrorProvider(erTextBox, txtPasswordConfirmation);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (_ValidateCurrentPassword() && _ValidateNewPassword() && _ValidatePasswordConfirmation())
+            if (!this.ValidateChildren())
             {
+                MessageBox.Show("Some fields has invalid input, hover on the red icon beside each field to know why not valid", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
                 byte[] Salt = null;
                 string NewPassword = clsGeneralUtility.HashWithSaltPassword(txtNewPassword.Text, ref Salt);
 
@@ -134,7 +107,6 @@ namespace DVLDPresentationLayer
                 else
                     MessageBox.Show("Changing password failed.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
 
         private void uctrlUserDetails_OnPersonEditedInfo(clsPerson UpdatedPersonInfo)
         {

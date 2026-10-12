@@ -151,8 +151,8 @@
             this.tsmiShowLicenseInfo});
             this.cmsLicenseHistory.Name = "cmsPeopleMenu";
             this.cmsLicenseHistory.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsLicenseHistory.Size = new System.Drawing.Size(242, 40);
-            this.cmsLicenseHistory.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLicenseHistory_Opening);
+            this.cmsLicenseHistory.Size = new System.Drawing.Size(242, 62);
+            this.cmsLicenseHistory.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsLicenseHistory_Paint);
             // 
             // tsmiShowLicenseInfo
             // 
