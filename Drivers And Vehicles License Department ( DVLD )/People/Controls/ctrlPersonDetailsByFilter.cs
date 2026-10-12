@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -17,6 +18,31 @@ namespace DVLDPresentationLayer
         public event ctrlPersonDetails.PersonEditedInfo OnPersonEditedInfo;
 
         private string _PreviouslyFoundText = null;
+
+        private bool _EnableEditPersonLabel = false;
+        public bool EnableEditPersonLabel
+        {
+            get { return _EnableEditPersonLabel;}
+
+            set 
+            {
+                _EnableEditPersonLabel = value;
+                uctrlPersonDetails.lnlblEditPersonInfo.Enabled = _EnableEditPersonLabel;
+            }
+        }
+
+
+        private bool _EnableFilter = false;
+        public bool EnableFilter
+        {
+            get { return _EnableFilter; }
+
+            set
+            {
+                _EnableFilter = value;
+                gbFilter.Enabled = _EnableFilter;
+            }
+        }
 
         public ctrlPersonDetailsByFilter()
         {
@@ -53,19 +79,6 @@ namespace DVLDPresentationLayer
         private void cbFindBy_DropDownClosed(object sender, EventArgs e)
         {
             cbFindBy.BackColor = Color.FromArgb(228, 228, 228);
-        }
-
-        private void txtFindBy_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(GetSelectedItem() == _enFindBy.PersonID)
-            {
-                if (Char.IsDigit((Char)e.KeyData) || e.KeyData == Keys.Back)
-                    txtFindBy.ReadOnly = false;
-                else
-                    txtFindBy.ReadOnly = true;
-            }
-            else
-                txtFindBy.ReadOnly = false;
         }
 
         private void cbFindBy_DrawItem(object sender, DrawItemEventArgs e)
@@ -127,7 +140,7 @@ namespace DVLDPresentationLayer
             gbFilter.Enabled = false;           
         }
 
-        private void btnFindUser_Click(object sender, EventArgs e)
+        private void btnFind_Click(object sender, EventArgs e)
         {
             FindPerson();
         }
@@ -139,6 +152,7 @@ namespace DVLDPresentationLayer
                 if (!txtFindBy.Text.All(char.IsDigit))
                     txtFindBy.Clear();
             }
+            _PreviouslyFoundText = "";
         }
 
         public void LoadPersonDetails(int PersonID)
@@ -149,6 +163,27 @@ namespace DVLDPresentationLayer
         private void uctrlPersonDetails_OnPersonEditedInfo(clsPerson UpdatedPersonInfo)
         {
             OnPersonEditedInfo?.Invoke(UpdatedPersonInfo);
+        }
+
+        private void txtFindBy_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (GetSelectedItem() == _enFindBy.PersonID)
+            {
+                e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+            }
+        }
+
+        private void txtFindBy_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                btnFind.PerformClick();
+            }
+        }
+
+        public void FocusOnFilterTextBox()
+        {
+            txtFindBy.Focus();
         }
     }
 }

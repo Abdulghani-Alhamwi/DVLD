@@ -1,8 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Forms;
-using DVLDPresentationLayer.Properties;
 using DVLDBusinessLayer;
+using DVLDPresentationLayer.Properties;
 
 namespace DVLDPresentationLayer
 {
@@ -19,7 +18,7 @@ namespace DVLDPresentationLayer
             InitializeComponent();
         }
 
-        public clsPerson LoadPersonDetails (string NationalNo)
+        public clsPerson LoadPersonDetails(string NationalNo)
         {
             _Person = clsPerson.Find(NationalNo);
 
@@ -31,7 +30,7 @@ namespace DVLDPresentationLayer
             else
             {
                 _ShowDefaultDetails();
-                
+
                 MessageBox.Show($"No Person With National No. = {NationalNo}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
@@ -128,7 +127,7 @@ namespace DVLDPresentationLayer
             OnPersonEditedInfo?.Invoke(UpdatedPersonInfo);
             _ShowPersonDetails(UpdatedPersonInfo);
         }
-        
+
         private void lnlblEditPersonInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (_Person != null)

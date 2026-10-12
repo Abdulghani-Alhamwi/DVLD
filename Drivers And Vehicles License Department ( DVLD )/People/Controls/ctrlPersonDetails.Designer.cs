@@ -498,7 +498,6 @@
         private System.Windows.Forms.Label lblPersonID;
         private System.Windows.Forms.Label lblPersonIDTitle;
         private System.Windows.Forms.PictureBox pbPersonalImage;
-        private System.Windows.Forms.LinkLabel lnlblEditPersonInfo;
         private System.Windows.Forms.Label lblCountry;
         private System.Windows.Forms.Label lblPhone;
         private System.Windows.Forms.Label lblDateOfBirth;
@@ -524,5 +523,6 @@
         private System.Windows.Forms.PictureBox pbEmail;
         private System.Windows.Forms.PictureBox pbAddress;
         private System.Windows.Forms.GroupBox gbPersonInformation;
+        public System.Windows.Forms.LinkLabel lnlblEditPersonInfo;
     }
 }

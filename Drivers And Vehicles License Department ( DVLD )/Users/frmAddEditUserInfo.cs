@@ -16,7 +16,7 @@ namespace DVLDPresentationLayer
         public event SavedNewInfo AfterSavingNewInfo;
         public event SavedEditedInfo AfterSavingEditedInfo;
 
-        public event frmUserDetails.UserPersonalEditedInfo OnEditedUserPersonalInfo;
+        public event Action<clsPerson, int> OnEditedUserPersonalInfo;
 
         private int _PersonID = -1;
         private clsUser _User;
@@ -26,10 +26,22 @@ namespace DVLDPresentationLayer
         int _DGVRowIndex = -1;
         string _CurrentUserFullName;
 
+        private DataGridView _dgv;
+        private clsPerson _CurrentPersonInfo;
+        private string _PersonalInfoColumnName;
+
         public frmAddEditUserInfo()
         {
             InitializeComponent();
             _InitializeInfo(null);
+        }
+
+        public frmAddEditUserInfo(DataGridView dgv, string PersonalInfoColumnName)
+        {
+            InitializeComponent();
+            _InitializeInfo(null);
+            _dgv = dgv;
+            _PersonalInfoColumnName = PersonalInfoColumnName;
         }
 
         public frmAddEditUserInfo(int UsersDGVRowIndex)
@@ -117,26 +129,36 @@ namespace DVLDPresentationLayer
             this.Close();
         }
 
+        private bool _IsSelectedPersonAlreadyUser()
+        {
+            if (clsUser.IsUserExists(_PersonID))
+            {
+                MessageBox.Show("The selected person already has a user. Choose another one.", "Select Another Person", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            return false;
+
+        }
+
         private bool _MoveToNextTab()
         {
             if (_User == null)
             {
                 if (_PersonID != -1)
                 {
-                    if (!clsUser.IsUserExists(_PersonID))
+                    if (!_IsSelectedPersonAlreadyUser())
                     {
                         tcAddNewUser.SelectedTab = tpLoginInfo;
                         return true;
                     }
-
-                    else
-                        MessageBox.Show("The selected person already has a user. Choose another one.", "Select Another Person", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                     MessageBox.Show("Select a person or add new person first!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return false;
             }
+
             else
             {
                 tcAddNewUser.SelectedTab = tpLoginInfo;
@@ -365,6 +387,7 @@ namespace DVLDPresentationLayer
         private void uctrlpersonInfoByFilter_OnPersonSelected(int PersonID)
         {
             _PersonID = PersonID;
+            _CurrentPersonInfo = clsPerson.Find(_PersonID);
         }
 
         private void txtPasswordORtxtConfirmation_Enter(object sender, EventArgs e)
@@ -391,7 +414,11 @@ namespace DVLDPresentationLayer
 
         private void uctrlpersonInfoByFilter_OnPersonEditedInfo(clsPerson UpdatedPersonInfo)
         {
+            if(_DGVRowIndex != -1)
             OnEditedUserPersonalInfo?.Invoke(UpdatedPersonInfo, _DGVRowIndex);
+
+            if (_dgv != null)
+                clsDataGridViewUtilityLib.EditDGVExistedRecords<clsPerson>(OnEditedUserPersonalInfo, _dgv, _PersonalInfoColumnName, _CurrentPersonInfo.FullName, UpdatedPersonInfo, true);
         }
     }
 }

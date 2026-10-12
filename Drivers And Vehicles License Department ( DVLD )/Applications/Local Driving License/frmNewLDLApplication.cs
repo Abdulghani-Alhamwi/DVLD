@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Drawing;
+using System.Security.Authentication;
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using Utility_Library;
@@ -24,10 +25,22 @@ namespace DVLDPresentationLayer.Core
         private int _DGVRowIndex = -1;
         private DataView _LicenseClassesDataView;
 
+        private DataGridView _dgv;
+        private clsPerson _CurrentPersonInfo;
+        private string _ApplicantPersonalInfoColumnName;
+
         public frmNewLDLApplication()
         {
             InitializeComponent();
             _InitializeFormData();
+        }
+
+        public frmNewLDLApplication(DataGridView dgv,string ApplicantPersonalInfoColumnName)
+        {
+            InitializeComponent();
+            _InitializeFormData();
+            _dgv = dgv;
+            _ApplicantPersonalInfoColumnName = ApplicantPersonalInfoColumnName;
         }
 
         public frmNewLDLApplication(clsLocalDrivingLicenseApp LDLApplication ,int DGVRowIndex)
@@ -104,6 +117,8 @@ namespace DVLDPresentationLayer.Core
         private void uctrlPersonDetailsByFilter_OnPersonSelected(int PersonID)
         {
             _ApplicantPersonID = PersonID;
+
+            _CurrentPersonInfo = clsPerson.Find(PersonID);
         }
 
         private void tcNewLocalDrivingLicenseApplication_Selecting(object sender, TabControlCancelEventArgs e)
@@ -293,13 +308,15 @@ namespace DVLDPresentationLayer.Core
                     btnSave.Enabled = false;
                 }
             }
-            else
-                MessageBox.Show("Select a person or add new person first!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
+        
         private void uctrlPersonDetailsByFilter_OnPersonEditedInfo(clsPerson UpdatedPersonInfo)
         {
-            OnEditedApplicantPersonalInfo?.Invoke(UpdatedPersonInfo, _DGVRowIndex);
+            if (_DGVRowIndex != -1)
+                OnEditedApplicantPersonalInfo?.Invoke(UpdatedPersonInfo, _DGVRowIndex);
+
+            if (_dgv != null)
+                clsDataGridViewUtilityLib.EditDGVExistedRecords<clsPerson>(OnEditedApplicantPersonalInfo, _dgv, _ApplicantPersonalInfoColumnName, _CurrentPersonInfo.NationalNo, UpdatedPersonInfo);
         }
     }
 }

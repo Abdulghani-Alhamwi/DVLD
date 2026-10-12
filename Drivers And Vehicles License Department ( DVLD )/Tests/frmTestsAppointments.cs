@@ -243,7 +243,7 @@ namespace DVLDPresentationLayer
 
         private void uctrlDLApplicationInfo_OnPersonEditedInfo(clsPerson UpdatedPersonInfo)
         {
-            OnEditingApplicantPersonalInfo?.Invoke(UpdatedPersonInfo, _DGVRowIndex);
+                OnEditingApplicantPersonalInfo?.Invoke(UpdatedPersonInfo, _DGVRowIndex);
         }
     }
 }

@@ -33,7 +33,7 @@
             this.lblTitleFindBy = new System.Windows.Forms.Label();
             this.gbFilter = new System.Windows.Forms.GroupBox();
             this.btnAddNewPerson = new System.Windows.Forms.Button();
-            this.btnSearchForUser = new System.Windows.Forms.Button();
+            this.btnFind = new System.Windows.Forms.Button();
             this.uctrlPersonDetails = new DVLDPresentationLayer.ctrlPersonDetails();
             this.gbFilter.SuspendLayout();
             this.SuspendLayout();
@@ -48,7 +48,8 @@
             this.txtFindBy.Name = "txtFindBy";
             this.txtFindBy.Size = new System.Drawing.Size(373, 35);
             this.txtFindBy.TabIndex = 0;
-            this.txtFindBy.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFindBy_KeyDown);
+            this.txtFindBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFindBy_KeyPress);
+            this.txtFindBy.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFindBy_KeyUp);
             // 
             // cbFindBy
             // 
@@ -81,7 +82,7 @@
             // gbFilter
             // 
             this.gbFilter.Controls.Add(this.btnAddNewPerson);
-            this.gbFilter.Controls.Add(this.btnSearchForUser);
+            this.gbFilter.Controls.Add(this.btnFind);
             this.gbFilter.Controls.Add(this.txtFindBy);
             this.gbFilter.Controls.Add(this.cbFindBy);
             this.gbFilter.Controls.Add(this.lblTitleFindBy);
@@ -109,21 +110,21 @@
             this.btnAddNewPerson.UseVisualStyleBackColor = true;
             this.btnAddNewPerson.Click += new System.EventHandler(this.btnAddNewPerson_Click);
             // 
-            // btnSearchForUser
+            // btnFind
             // 
-            this.btnSearchForUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearchForUser.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.btnSearchForUser.FlatAppearance.BorderSize = 2;
-            this.btnSearchForUser.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnSearchForUser.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnSearchForUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearchForUser.Image = global::DVLDPresentationLayer.Properties.Resources.SearchPerson;
-            this.btnSearchForUser.Location = new System.Drawing.Point(794, 39);
-            this.btnSearchForUser.Name = "btnSearchForUser";
-            this.btnSearchForUser.Size = new System.Drawing.Size(74, 50);
-            this.btnSearchForUser.TabIndex = 2;
-            this.btnSearchForUser.UseVisualStyleBackColor = true;
-            this.btnSearchForUser.Click += new System.EventHandler(this.btnFindUser_Click);
+            this.btnFind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFind.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnFind.FlatAppearance.BorderSize = 2;
+            this.btnFind.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnFind.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnFind.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFind.Image = global::DVLDPresentationLayer.Properties.Resources.SearchPerson;
+            this.btnFind.Location = new System.Drawing.Point(794, 39);
+            this.btnFind.Name = "btnFind";
+            this.btnFind.Size = new System.Drawing.Size(74, 50);
+            this.btnFind.TabIndex = 2;
+            this.btnFind.UseVisualStyleBackColor = true;
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
             // 
             // uctrlPersonDetails
             // 
@@ -166,6 +167,6 @@
         private System.Windows.Forms.Label lblTitleFindBy;
         private System.Windows.Forms.GroupBox gbFilter;
         private System.Windows.Forms.Button btnAddNewPerson;
-        private System.Windows.Forms.Button btnSearchForUser;
+        private System.Windows.Forms.Button btnFind;
     }
 }

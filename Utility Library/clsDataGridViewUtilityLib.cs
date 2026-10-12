@@ -426,5 +426,19 @@ namespace Utility_Library
             }
             return -1;
         }
+
+        public static void EditDGVExistedRecords<T>(Action<T, int> Delegate, DataGridView dgv, string DGVColumnName, string ColumnValueToFindRow,T NewInfo,bool HasColumnUniqueConstraint = false)
+        {
+            foreach (DataGridViewRow dataRow in dgv.Rows)
+            {
+                if (dataRow.Cells[DGVColumnName].Value.ToString() == ColumnValueToFindRow)
+                {
+                    Delegate?.Invoke(NewInfo, dgv.Rows.IndexOf(dataRow));
+
+                    if (HasColumnUniqueConstraint)
+                        return;
+                }
+            }
+        }
     }
 }

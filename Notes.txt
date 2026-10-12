@@ -929,3 +929,5 @@ Notes: We must to be aware from the empty string because the empty string if the
 97) The method IsMatch() for the object from the type Regex class allow use to compare a text with the pattern that we have specified.
 
 98) The FileInfo class allow us when we create object from it and give it a file path to take info about that using that object path like file extension , we can also to use the object from the FileInfo class in order to append text to a file or encrypt or decrypt a file and of course to decrypt it we must be using same account on windows that encrypt the file and also we can use it to bring directory and a lot of other things.
+
+99) When we make in the method that is subscribed with the validating event : e.Cancel = true then the validation be failed therefore CanceleventArgs it is better to not send it as null if we called that method certain place to avoid having exception if we tried to access e.Cancel and to prevent user from leaving the control which means changing the focus -> from the form property AutoValdiate we set it to EnableAllowFocusChange.

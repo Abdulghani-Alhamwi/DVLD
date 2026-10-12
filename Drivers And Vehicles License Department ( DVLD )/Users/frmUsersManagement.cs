@@ -188,11 +188,17 @@ namespace DVLDPresentationLayer
             lblRecordsNumber.Text = (Convert.ToInt32(lblRecordsNumber.Text) + 1).ToString();
         }
 
+        private void _EditPersonalInfo(clsPerson UpdatedPersonInfo, int DGVRowIndex)
+        {
+            _DgvUtilityLib.EditOneColumnValueInDgv(dgvUsers, "Full Name", UpdatedPersonInfo.FullName, DGVRowIndex);
+        }
+
         private void _AddNewUserScreen()
         {
-            frmAddEditUserInfo frm = new frmAddEditUserInfo();
+            frmAddEditUserInfo frm = new frmAddEditUserInfo(dgvUsers,"Full Name");
             frm.AfterSavingNewInfo += _AddNewRowToDGV;
             frm.AfterSavingEditedInfo += _EditDataRowInDGV;
+            frm.OnEditedUserPersonalInfo += _EditPersonalInfo;
             frm.ShowDialog();
         }
 

@@ -149,9 +149,10 @@ namespace DVLDPresentationLayer
 
         private void btnAddLDLApplication_Click(object sender, EventArgs e)
         {
-            frmNewLDLApplication frm = new frmNewLDLApplication();
+            frmNewLDLApplication frm = new frmNewLDLApplication(dgvLDLApplications,"National No.");
             frm.OnAddedLDLApplication += _AddNewValuesToDGV;
             frm.OnEditedLDLApplication += _EditDataRowInDGV;
+            frm.OnEditedApplicantPersonalInfo += _EditApplicantPersonalInfo;
             frm.ShowDialog();
         }
 
