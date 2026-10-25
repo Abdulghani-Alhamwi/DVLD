@@ -151,11 +151,7 @@ namespace DVLDPresentationLayer
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
-<<<<<<< HEAD
-            if (_PreventedInput || _PreviousFilterText == txtFilter.Text)
-=======
             if (_PreventedInput || _PreviousFilterText == txtFilter.Text.Trim())
->>>>>>> 7693c1e (Improve code reusability, readability, and maintainability, fix test scheduling time issue, and enhance validation functionality using ErrorProvider)
                 return;
 
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection);
@@ -171,11 +167,7 @@ namespace DVLDPresentationLayer
                 dgvPeople.DataSource = clsPerson.GetPeopleInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
             }
 
-<<<<<<< HEAD
-            _PreviousFilterText = txtFilter.Text;
-=======
             _PreviousFilterText = txtFilter.Text.Trim();
->>>>>>> 7693c1e (Improve code reusability, readability, and maintainability, fix test scheduling time issue, and enhance validation functionality using ErrorProvider)
         }
         
         private void _AddNewRowToDGV(object[] NewPersonDetails)

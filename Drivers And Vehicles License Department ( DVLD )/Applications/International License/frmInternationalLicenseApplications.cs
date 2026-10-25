@@ -128,11 +128,7 @@ namespace DVLDPresentationLayer.Licenses
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
-<<<<<<< HEAD:Drivers And Vehicles License Department ( DVLD )/Applications/International License/frmIntLicenseApplications.cs
-            if (_PreventedInput || _PreviousFilterText == txtFilter.Text)
-=======
             if (_PreventedInput || _PreviousFilterText == txtFilter.Text.Trim())
->>>>>>> 7693c1e (Improve code reusability, readability, and maintainability, fix test scheduling time issue, and enhance validation functionality using ErrorProvider):Drivers And Vehicles License Department ( DVLD )/Applications/International License/frmInternationalLicenseApplications.cs
                 return;
 
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
@@ -143,11 +139,8 @@ namespace DVLDPresentationLayer.Licenses
             else
                 dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
 
-<<<<<<< HEAD:Drivers And Vehicles License Department ( DVLD )/Applications/International License/frmIntLicenseApplications.cs
-            _PreviousFilterText = txtFilter.Text;
-=======
+
             _PreviousFilterText = txtFilter.Text.Trim();
->>>>>>> 7693c1e (Improve code reusability, readability, and maintainability, fix test scheduling time issue, and enhance validation functionality using ErrorProvider):Drivers And Vehicles License Department ( DVLD )/Applications/International License/frmInternationalLicenseApplications.cs
         }
 
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)

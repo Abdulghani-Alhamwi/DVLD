@@ -71,11 +71,7 @@ namespace DVLDPresentationLayer
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
         {
-<<<<<<< HEAD:Drivers And Vehicles License Department ( DVLD )/Applications/Local Driving License/frmLDLApplicationsManagement.cs
-            if (_PreventedInput || _PreviousFilterText == txtFilter.Text)
-=======
             if (_PreventedInput || _PreviousFilterText == txtFilter.Text.Trim())
->>>>>>> 7693c1e (Improve code reusability, readability, and maintainability, fix test scheduling time issue, and enhance validation functionality using ErrorProvider):Drivers And Vehicles License Department ( DVLD )/Applications/Local Driving License/frmLocalDrivingLicenseApplicationsManagement.cs
                 return;
 
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
@@ -84,16 +80,9 @@ namespace DVLDPresentationLayer
                 dgvLDLApplications.DataSource = _GetFilteredData();
 
             else
-
-<<<<<<< HEAD:Drivers And Vehicles License Department ( DVLD )/Applications/Local Driving License/frmLDLApplicationsManagement.cs
-                dgvLDLApplications.DataSource = clsLocalDrivingLicenseApp.GetLDLApplications(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
-
-            _PreviousFilterText = txtFilter.Text;
-=======
                 dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetLDLApplications(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
 
             _PreviousFilterText = txtFilter.Text.Trim();
->>>>>>> 7693c1e (Improve code reusability, readability, and maintainability, fix test scheduling time issue, and enhance validation functionality using ErrorProvider):Drivers And Vehicles License Department ( DVLD )/Applications/Local Driving License/frmLocalDrivingLicenseApplicationsManagement.cs
         }
 
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)

@@ -29,11 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-<<<<<<< HEAD:Drivers And Vehicles License Department ( DVLD )/Applications/International License/frmIntLicenseApplications.Designer.cs
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmIntLicenseApplications));
-=======
+
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInternationalLicenseApplications));
->>>>>>> 7693c1e (Improve code reusability, readability, and maintainability, fix test scheduling time issue, and enhance validation functionality using ErrorProvider):Drivers And Vehicles License Department ( DVLD )/Applications/International License/frmInternationalLicenseApplications.Designer.cs
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cbIsActive = new System.Windows.Forms.ComboBox();
             this.pbInternationalLicense = new System.Windows.Forms.PictureBox();

@@ -81,7 +81,7 @@ namespace DVLDDataAccessLayer
 
             string query = $@"SELECT PassedTestsCount = COUNT(TestID) FROM Tests INNER JOIN TestAppointments
                               ON Tests.TestAppointmentID = TestAppointments.TestAppointmentID 
-                              WHERE TestAppointments.LocalDrivingLicenseApplicationID = @LDLAppID";
+                              WHERE TestAppointments.LocalDrivingLicenseApplicationID = @LDLAppID AND TestResult = 1";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LDLAppID", LocalDrivingLicenseApplicationID);

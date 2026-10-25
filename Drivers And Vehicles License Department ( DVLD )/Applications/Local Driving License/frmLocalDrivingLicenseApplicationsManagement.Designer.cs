@@ -30,11 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-<<<<<<< HEAD:Drivers And Vehicles License Department ( DVLD )/Applications/Local Driving License/frmLDLApplicationsManagement.Designer.cs
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLDLApplicationsManagement));
-=======
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLocalDrivingLicenseApplicationsManagement));
->>>>>>> 7693c1e (Improve code reusability, readability, and maintainability, fix test scheduling time issue, and enhance validation functionality using ErrorProvider):Drivers And Vehicles License Department ( DVLD )/Applications/Local Driving License/frmLocalDrivingLicenseApplicationsManagement.Designer.cs
+
             this.lblRecordsNumber = new System.Windows.Forms.Label();
             this.lblRecordsTitle = new System.Windows.Forms.Label();
             this.txtFilter = new System.Windows.Forms.TextBox();
