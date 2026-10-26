@@ -10,36 +10,36 @@ namespace DVLDPresentationLayer
 
         private int _LocalLicenseID = -1;
 
-        public clsLocalDrivingLicenseApplication LDLApplication;
+        public clsLocalDrivingLicenseApplication LocalDrivingLicenseApplication;
 
         public ctrLDLApplicationInfo()
         {
             InitializeComponent();
         }
 
-        public void LoadInfoByLocalDrivingLicenseAppID(int LDLApplicationID)
+        public void LoadInfoByLocalDrivingLicenseAppID(int LocalDrivingLicenseApplication)
         {
-            LDLApplication = clsLocalDrivingLicenseApplication.FindByLocalDrivingLicenseAppID(LDLApplicationID);
+            this.LocalDrivingLicenseApplication = clsLocalDrivingLicenseApplication.FindByLocalDrivingLicenseAppID(LocalDrivingLicenseApplication);
 
-            if (LDLApplication != null)
+            if (this.LocalDrivingLicenseApplication != null)
             {
-                uctrlApplicationBasicInfo.LoadInfo(LDLApplication);
-                lblLDLApplicationID.Text = LDLApplication.LocalDrivingLicenseApplicationID.ToString();
-                lblLicenseClassName.Text = LDLApplication.LicenseClassInfo.ClassName;
-                lblPassedTests.Text = clsLocalDrivingLicenseApplication.GetTotalPassedTests(LDLApplication.LocalDrivingLicenseApplicationID).ToString();
+                uctrlApplicationBasicInfo.LoadInfo(this.LocalDrivingLicenseApplication);
+                lblLDLApplicationID.Text = this.LocalDrivingLicenseApplication.LocalDrivingLicenseApplicationID.ToString();
+                lblLicenseClassName.Text = this.LocalDrivingLicenseApplication.LicenseClassInfo.ClassName;
+                lblPassedTests.Text = clsLocalDrivingLicenseApplication.GetTotalPassedTests(this.LocalDrivingLicenseApplication.LocalDrivingLicenseApplicationID).ToString();
             }
         }
 
         public void LoadInfoByApplicationID(int ApplicationID)
         {
-            LDLApplication = clsLocalDrivingLicenseApplication.FindByApplicationID(ApplicationID);
+            LocalDrivingLicenseApplication = clsLocalDrivingLicenseApplication.FindByApplicationID(ApplicationID);
 
-            if (LDLApplication != null)
+            if (LocalDrivingLicenseApplication != null)
             {
-                uctrlApplicationBasicInfo.LoadInfo(LDLApplication);
-                lblLDLApplicationID.Text = LDLApplication.LocalDrivingLicenseApplicationID.ToString();
-                lblLicenseClassName.Text = LDLApplication.LicenseClassInfo.ClassName;
-                lblPassedTests.Text = clsLocalDrivingLicenseApplication.GetTotalPassedTests(LDLApplication.LocalDrivingLicenseApplicationID).ToString();
+                uctrlApplicationBasicInfo.LoadInfo(LocalDrivingLicenseApplication);
+                lblLDLApplicationID.Text = LocalDrivingLicenseApplication.LocalDrivingLicenseApplicationID.ToString();
+                lblLicenseClassName.Text = LocalDrivingLicenseApplication.LicenseClassInfo.ClassName;
+                lblPassedTests.Text = clsLocalDrivingLicenseApplication.GetTotalPassedTests(LocalDrivingLicenseApplication.LocalDrivingLicenseApplicationID).ToString();
             }
         }
 

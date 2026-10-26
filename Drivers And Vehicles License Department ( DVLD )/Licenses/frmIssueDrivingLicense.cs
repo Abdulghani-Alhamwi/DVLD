@@ -19,46 +19,27 @@ namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
             InitializeComponent();
 
             uctrlDLApplicationInfo.LoadInfoByLocalDrivingLicenseAppID(LDLAppID);
-            lblLicenseFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsLicenseClass.GetLicenseClassFees(uctrlDLApplicationInfo.LDLApplication.LicenseClassInfo.ID),
+            lblLicenseFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsLicenseClass.GetLicenseClassFees(uctrlDLApplicationInfo.LocalDrivingLicenseApplication.LicenseClassInfo.ID),
                 enCustomNumberFormat.NoJustZerosAfterFraction);
             this._DGVRowIndex = _DGVRowIndex;
         }
 
-        private bool _SaveLicenseInfo(clsLocalDrivingLicenseApplication LDLApplication ,int DriverID)
-        {
-            _LocalLicense = new clsLocalLicense(
-            ApplicationID: LDLApplication.ApplicationID,
-            DriverID: DriverID,
-            LicenseClassID: LDLApplication.LicenseClassInfo.ID,
-            IssueDate: DateTime.Now,
-            ExpirationDate: DateTime.Now.AddYears(clsLicenseClass.GetLicenseValidityLength(LDLApplication.LicenseClassInfo.ID)),
-            Notes: (txtNotes.Text != "") ? txtNotes.Text : null,
-            PaidFees: clsLicenseClass.GetLicenseClassFees(LDLApplication.LicenseClassInfo.ID),
-            IsActive: true,
-            IssueReason: clsLocalLicense.enIssueReason.FirstTime,
-            CreatedByUserID: clsGlobalSettings.CurrentUserID
-            );
-
-            return _LocalLicense.Save();
-        }
-
         private bool _IssueLicense()
         {
-            if (!clsDriver.IsPersonAlreadyADriver(uctrlDLApplicationInfo.LDLApplication.ApplicantPersonID))
-            { 
-            clsDriver Driver = new clsDriver(uctrlDLApplicationInfo.LDLApplication.ApplicantPersonID, clsGlobalSettings.CurrentUserID, DateTime.Now);
-            if(Driver.Save())
-            {
-                    return _SaveLicenseInfo(uctrlDLApplicationInfo.LDLApplication,Driver.DriverID);
-            }
-            else
-            {
-                MessageBox.Show("Failed to add driver!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            }
-            else
-                return _SaveLicenseInfo(uctrlDLApplicationInfo.LDLApplication,clsDriver.GetDriverID(uctrlDLApplicationInfo.LDLApplication.ApplicantPersonID));
+          _LocalLicense = new clsLocalLicense(
+             ApplicationID: uctrlDLApplicationInfo.LocalDrivingLicenseApplication.ApplicationID,
+             PersonID: uctrlDLApplicationInfo.LocalDrivingLicenseApplication.ApplicantPersonID,
+             LicenseClassID: uctrlDLApplicationInfo.LocalDrivingLicenseApplication.LicenseClassInfo.ID,
+             IssueDate: DateTime.Now,
+             ExpirationDate: DateTime.Now.AddYears(clsLicenseClass.GetLicenseValidityLength(uctrlDLApplicationInfo.LocalDrivingLicenseApplication.LicenseClassInfo.ID)),
+             Notes: (txtNotes.Text != "") ? txtNotes.Text : null,
+             PaidFees: clsLicenseClass.GetLicenseClassFees(uctrlDLApplicationInfo.LocalDrivingLicenseApplication.LicenseClassInfo.ID),
+             IsActive: true,
+             IssueReason: clsLocalLicense.enIssueReason.FirstTime,
+             CreatedByUserID: clsGlobalSettings.CurrentUserID
+          );
+
+            return _LocalLicense.Save();
         }
 
         private void btnIssueLicense_Click(object sender, EventArgs e)

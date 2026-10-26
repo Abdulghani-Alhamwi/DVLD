@@ -123,7 +123,7 @@ namespace DVLDBusinessLayer
             return false;
         }
 
-        public static clsApplication Find(int ApplicationID)
+        public static clsApplication FindBaseApplication(int ApplicationID)
         {
             int ApplicantPersonID = -1, CreatedByUserID = -1;
             byte ApplicationTypeID = 0;

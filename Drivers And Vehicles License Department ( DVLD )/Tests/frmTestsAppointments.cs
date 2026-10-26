@@ -122,7 +122,7 @@ namespace DVLDPresentationLayer
             if (_LastColumnNameDgvSortedBy == null || _LastColumnNameDgvSortedBy == _PrimaryKeyViewedColumnName)
                 _LastBroughtAppointmentID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvTestAppointments, _PrimaryKeyViewedColumnName, _CurrentDGVColumnSortDirection);
 
-            _DGVUtilityLib.SetNumberOfRowsToOffset(_PrimaryKeyViewedColumnName, _LastColumnNameDgvSortedBy);
+            _DGVUtilityLib.SetNumberOfRowsToOffset(_LastColumnNameDgvSortedBy);
 
             DataTable dtTestAppointments = clsTestAppointment.GetTestAppointments(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, (byte)_TestTypeID, _LocalDrivingLicenseApplicationId, _LastBroughtAppointmentID
                 , _LastColumnNameDgvSortedBy, _DGVUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
@@ -185,8 +185,9 @@ namespace DVLDPresentationLayer
                         return;
                 }
 
-                clsTestAppointment TestAppointment = clsTestAppointment.Find((int)dgvTestAppointments.SelectedRows[0].Cells[_PrimaryKeyViewedColumnName].Value);
-                frmTakeTest frm = new frmTakeTest(TestAppointment, _TestTypeID, (int)dgvTestAppointments.SelectedRows[0].Index);
+                frmTakeTest frm = new frmTakeTest((int)dgvTestAppointments.SelectedRows[0].Cells[_PrimaryKeyViewedColumnName].Value
+                    , _TestTypeID, (int)dgvTestAppointments.SelectedRows[0].Index);
+
                 frm.AfterPassingTest += _UpdateLDLAppDgv;
                 frm.AfterTestTaken += _LockTestAppointment;
                 
@@ -213,7 +214,7 @@ namespace DVLDPresentationLayer
 
         private void _SortData(DataGridViewCellMouseEventArgs e)
         {
-            clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvTestAppointments, ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection, e);
+            clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvTestAppointments, _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection, e);
             
             DataTable dtSortedInfo = clsTestAppointment.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvTestAppointments.Columns[e.ColumnIndex].HeaderText
                 , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection),_LocalDrivingLicenseApplicationId, (byte) _TestTypeID);

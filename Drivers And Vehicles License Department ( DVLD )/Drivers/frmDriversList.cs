@@ -14,26 +14,32 @@ namespace DVLDPresentationLayer
         private string _LastColumnNameDgvSortedBy;
 
         private clsDataGridViewUtilityLib _DgvUtilityLib;
-        private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDgvColumnSortDirection;
+        private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDGVColumnSortDirection;
 
         private string _PreviousFilterText = "";
         private bool _PreventedInput;
 
         private int _LastBroughtDriverID;
         private string _PrimaryKeyViewedColumnName;
+        private bool _FirstTimeLoad = true;
 
         public frmDriversList()
         {
             InitializeComponent();
 
             _DgvUtilityLib = new clsDataGridViewUtilityLib();
-            _CurrentDgvColumnSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
+            _CurrentDGVColumnSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Ascending;
             _LastBroughtDriverID = -1;
             _PrimaryKeyViewedColumnName = "Driver ID";
         }
 
         private void frmDriversManagements_Load(object sender, EventArgs e)
         {
+            dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
+
+            if (dgvDrivers.DataSource != null)
+                _AddDropDownItems();
+
             _SetCertainControlsPosition();
             lblRecordsNumber.Text = clsDriver.GetTotalDriversCount().ToString();
         }
@@ -56,11 +62,6 @@ namespace DVLDPresentationLayer
 
         private void _SetCertainControlsPosition()
         {
-            dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
-
-            if(dgvDrivers.DataSource != null)
-            _AddDropDownItems();
-
             clsGeneralUtility.CenterControlHorizontally(this, pbDrivers);
             clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
@@ -72,11 +73,11 @@ namespace DVLDPresentationLayer
             {
                 if (_IsNumericColumn())
                     dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim()
-                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), null);
+                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), _DgvUtilityLib.NumberOfRowsToOffset, null);
 
                 else
                     dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim()
-                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), '%');
+                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), _DgvUtilityLib.NumberOfRowsToOffset, '%');
             }
 
             else
@@ -84,11 +85,11 @@ namespace DVLDPresentationLayer
                 if (_IsNumericColumn())
 
                     dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim()
-                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection),_LastBroughtDriverID, _DgvUtilityLib.NumberOfRowsToOffset, null);
+                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection),_LastBroughtDriverID, _DgvUtilityLib.NumberOfRowsToOffset, null);
 
                 else
                     dtDriversInfo = clsDriver.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim()
-                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection),_LastBroughtDriverID, _DgvUtilityLib.NumberOfRowsToOffset, '%');
+                        , _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection),_LastBroughtDriverID, _DgvUtilityLib.NumberOfRowsToOffset, '%');
             }
 
             if (dtDriversInfo != null)
@@ -104,13 +105,15 @@ namespace DVLDPresentationLayer
             if (_PreventedInput || _PreviousFilterText == txtFilter.Text.Trim())
                 return;
 
-            clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection);
+            clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection,clsDataGridViewUtilityLib.enDataGridViewSortDirection.Ascending);
 
+            _DgvUtilityLib.NumberOfRowsToOffset = 0;
+            
             if (txtFilter.Text != "")
                 dgvDrivers.DataSource = _GetFilteredData();
 
             else
-                dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
+                dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
             _PreviousFilterText = txtFilter.Text.Trim();
         }
@@ -136,9 +139,9 @@ namespace DVLDPresentationLayer
         private void _AppendPartOfRemainingData()
         {
             if (_LastColumnNameDgvSortedBy == null || _LastColumnNameDgvSortedBy == _PrimaryKeyViewedColumnName)
-                _LastBroughtDriverID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvDrivers, _PrimaryKeyViewedColumnName, _CurrentDgvColumnSortDirection);
+                _LastBroughtDriverID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvDrivers, _PrimaryKeyViewedColumnName, _CurrentDGVColumnSortDirection);
 
-            _DgvUtilityLib.SetNumberOfRowsToOffset(_PrimaryKeyViewedColumnName, _LastColumnNameDgvSortedBy);
+            _DgvUtilityLib.SetNumberOfRowsToOffset(_LastColumnNameDgvSortedBy, true);
 
             DataRow[] NewRows;
             if (cbFilterBy.SelectedItem.ToString() != "None")
@@ -147,18 +150,18 @@ namespace DVLDPresentationLayer
                 NewRows = dtFilteredData?.Select();
 
                 if (NewRows != null)
-                    _DgvUtilityLib.AddNewRowsToDgv(dgvDrivers, NewRows, clsDataGridViewUtilityLib.GetDgvColumnsNames(dgvDrivers), _CurrentDgvColumnSortDirection);
+                    _DgvUtilityLib.AddNewRowsToDgv(dgvDrivers, NewRows, clsDataGridViewUtilityLib.GetDgvColumnsNames(dgvDrivers), _CurrentDGVColumnSortDirection);
             }
 
             else
             {
                 DataTable dtDriversInfo = clsDriver.GetDriversInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, _LastBroughtDriverID, _LastColumnNameDgvSortedBy
-                    , _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection));
+                    , _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
                 NewRows = dtDriversInfo?.Select();
 
                 if (NewRows != null)
-                    _DgvUtilityLib.AddNewRowsToDgv(dgvDrivers, NewRows, clsDataGridViewUtilityLib.GetDgvColumnsNames(dgvDrivers), _CurrentDgvColumnSortDirection);
+                    _DgvUtilityLib.AddNewRowsToDgv(dgvDrivers, NewRows, clsDataGridViewUtilityLib.GetDgvColumnsNames(dgvDrivers), _CurrentDGVColumnSortDirection);
             }
         }
 
@@ -180,6 +183,12 @@ namespace DVLDPresentationLayer
 
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_FirstTimeLoad)
+            {
+                _FirstTimeLoad = false;
+                return;
+            }
+
             if (_PreviousCbFilterSelectedItem == cbFilterBy.SelectedItem.ToString())
                 return;
 
@@ -188,22 +197,22 @@ namespace DVLDPresentationLayer
                 txtFilter.Visible = true;
                 txtFilter.Focus();
 
-                if(!clsDataGridViewUtilityLib._IsRepeatedDataLoadToDgv(txtFilter))
+                if(!clsDataGridViewUtilityLib.IsRepeatedDataLoadToDgv(txtFilter))
                 {
-                    dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
+                    dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
                 }
             }
             else
             {
                 txtFilter.Visible = false;
 
-                dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
+                dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
             }
 
             _PreviousCbFilterSelectedItem = cbFilterBy.SelectedItem.ToString();
             txtFilter.Text = "";
 
-            clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection);
+            clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
         }
 
         private void dgvDrivers_Scroll(object sender, ScrollEventArgs e)
@@ -241,15 +250,14 @@ namespace DVLDPresentationLayer
 
         private void _SortData(DataGridViewCellMouseEventArgs e)
         {
-            clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvDrivers, ref _LastColumnNameDgvSortedBy, ref _CurrentDgvColumnSortDirection, e);
+            clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvDrivers, _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection, e);
 
             DataTable dtSortedInfo = null;
 
             if (txtFilter.Text.Trim() == "")
             {
-
                 dtSortedInfo = clsDriver.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvDrivers.Columns[e.ColumnIndex].HeaderText
-                , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection));
+                , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
             }
 
             else
@@ -257,13 +265,13 @@ namespace DVLDPresentationLayer
                 if (_IsNumericColumn(cbFilterBy.SelectedItem.ToString()))
                 {
                     dtSortedInfo = clsDriver.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvDrivers.Columns[e.ColumnIndex].HeaderText
-                    , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(), null);
+                    , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(), null);
                 }
 
                 else
                 {
                     dtSortedInfo = clsDriver.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvDrivers.Columns[e.ColumnIndex].HeaderText
-                     , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDgvColumnSortDirection), cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(), '%');
+                     , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(), '%');
                 }
             }
 

@@ -179,9 +179,9 @@ namespace DVLDBusinessLayer
                 return false;
         }
 
-        public static DataTable GetPeopleInfo(byte WantedNumOfRecords)
+        public static DataTable GetPeopleInfo(byte WantedNumOfRecords, string SortDirection)
         {
-            return clsPersonData.GetPeopleInfo(WantedNumOfRecords);
+            return clsPersonData.GetPeopleInfo(WantedNumOfRecords, -1, null, -1, SortDirection);
         }
 
         public static DataTable GetPeopleInfo(byte WantedNumOfRecords, int _LastBroughtPersonID

@@ -81,7 +81,7 @@ namespace DVLDPresentationLayer.Core
             clsLocalLicense NewLocalLicense = new clsLocalLicense
             (
                 ApplicationID: NewApplicationID,
-                DriverID: _SelectedLicenseInfo.DriverID,
+                PersonID: _SelectedLicenseInfo.DriverID,
                 LicenseClassID: _SelectedLicenseInfo.LicenseClassID,
                 IssueDate: DateTime.Now,
                 ExpirationDate: _SelectedLicenseInfo.ExpirationDate,

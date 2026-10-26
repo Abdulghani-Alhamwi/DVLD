@@ -110,7 +110,7 @@ namespace DVLDPresentationLayer.Licenses
             clsLocalLicense NewLocalLicense = new clsLocalLicense
             (
                 ApplicationID: NewApplicationID,
-                DriverID: _SelectedLicenseInfo.DriverID,
+                PersonID: _SelectedLicenseInfo.DriverID,
                 LicenseClassID: _SelectedLicenseInfo.LicenseClassID,
                 IssueDate: DateTime.Now,
                 ExpirationDate: DateTime.Now.AddYears(clsLicenseClass.GetLicenseValidityLength(_SelectedLicenseInfo.LicenseClassID)),

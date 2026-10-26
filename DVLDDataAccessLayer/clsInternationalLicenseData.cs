@@ -11,6 +11,8 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _PrimaryKeyViewedColumnName = "Int.License ID";
 
+        private static readonly string _DefaultExpressionToOrderBy = " ORDER BY CONVERT(DATETIME,[Expiration Date])";
+
         private static readonly string _FixedQueryPart = "* FROM InternationalLicenses_View";
         
         private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
@@ -23,9 +25,6 @@ namespace DVLDDataAccessLayer
               , string ColumnNameToOrderBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             DataTable dtIntLicenses = null;
-
-            if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
 
             string query;
 
@@ -129,14 +128,13 @@ namespace DVLDDataAccessLayer
                 if (FilterByTheDriver)
                 {
                     query = _QueryWithoutPagination + " WHERE [Driver ID] = @DriverID";
-                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtIntLicenseID, true, true, true);
                 }
 
                 else
                 {
                     query = _QueryWithoutPagination;
-                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtIntLicenseID, true, true, true);
                 }
+                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtIntLicenseID, true, true, true);
             }
 
             else
@@ -144,14 +142,13 @@ namespace DVLDDataAccessLayer
                 if (FilterByTheDriver)
                 {
                     query = _QueryWithoutPagination + " WHERE [Driver ID] = @DriverID";
-                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                 }
 
                 else
                 {
                     query = _QueryWithoutPagination;
-                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                 }
+                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
             }
 
             return query;
@@ -166,7 +163,7 @@ namespace DVLDDataAccessLayer
                 if (FilterByTheDriver)
                 {
                     query = _QueryWithoutPagination + " WHERE [Driver ID] = @DriverID";
-                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                    query += _DefaultExpressionToOrderBy;
                 }
 
                 else
@@ -181,16 +178,15 @@ namespace DVLDDataAccessLayer
                 if (FilterByTheDriver)
                 {
                     query = _QueryForOffsetPagination + " WHERE [Driver ID] = @DriverID";
-                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
-                    query += _OffsetPaginationQueryPart;
+                    query += _DefaultExpressionToOrderBy;
                 }
 
                 else
                 {
                     query = _QueryForOffsetPagination;
                     query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
-                    query += _OffsetPaginationQueryPart;
                 }
+                    query += _OffsetPaginationQueryPart;
             }
 
             return query;

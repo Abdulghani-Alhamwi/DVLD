@@ -62,9 +62,9 @@ namespace DVLDBusinessLayer
             _OldUserData = new clsUserData.clsOldUserData(PersonID, Username, Password, IsActive, Permissions);
         }
 
-        public static DataTable GetUsersInfo(byte WantedNumOfRecords)
+        public static DataTable GetUsersInfo(byte WantedNumOfRecords, string SortDirection)
         {
-            return clsUserData.GetUsersInfo(WantedNumOfRecords);
+            return clsUserData.GetUsersInfo(WantedNumOfRecords, -1, null, -1, SortDirection);
         }
 
         public static DataTable GetUsersInfo(byte WantedNumOfRecords, int LastBroughtUserID

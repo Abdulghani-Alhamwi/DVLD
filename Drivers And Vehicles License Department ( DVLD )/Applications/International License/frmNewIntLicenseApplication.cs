@@ -141,7 +141,7 @@ namespace DVLDPresentationLayer.Applications
             frm.ShowDialog();
         }
 
-        private bool _IsOrdinaryLocalDrivingLicense(int LicenseClassID)
+        private bool _IsOrdinaryLocalDrivingLicense(byte LicenseClassID)
         {
             if (clsLicenseClass.GetLicenseClassEnumMember(LicenseClassID) == clsLicenseClass.enLicenseClasses.OrdinaryDrivingClass)
                 return true;

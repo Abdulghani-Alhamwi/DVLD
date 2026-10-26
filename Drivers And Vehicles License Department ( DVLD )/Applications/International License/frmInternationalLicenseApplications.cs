@@ -35,7 +35,7 @@ namespace DVLDPresentationLayer.Licenses
 
         private void frmInternationalLicensesManagement_Load(object sender, EventArgs e)
         {
-            dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
+            dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
             if (dgvIntLicenseApplications.DataSource != null)
                 _AddComboBoxesFilterItems();
@@ -137,7 +137,7 @@ namespace DVLDPresentationLayer.Licenses
                 dgvIntLicenseApplications.DataSource = _GetFilteredData();
 
             else
-                dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
+                dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
 
             _PreviousFilterText = txtFilter.Text.Trim();
@@ -149,9 +149,9 @@ namespace DVLDPresentationLayer.Licenses
                 return;
 
             if ((_PreviousCbFilterSelectedItem == "Is Active" && cbIsActive.SelectedItem.ToString() != "All")
-                || !clsDataGridViewUtilityLib._IsRepeatedDataLoadToDgv(txtFilter))
+                || !clsDataGridViewUtilityLib.IsRepeatedDataLoadToDgv(txtFilter))
             {
-                dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB);
+                dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
             }
 
             if (_PreviousCbFilterSelectedItem == "Is Active")
@@ -212,7 +212,7 @@ namespace DVLDPresentationLayer.Licenses
             if (_LastColumnNameDgvSortedBy == null || _LastColumnNameDgvSortedBy == _PrimaryKeyViewedColumnName)
                 _LastBroughtIntLicenseID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvIntLicenseApplications, _PrimaryKeyViewedColumnName, _CurrentDGVColumnSortDirection);
 
-            _DgvUtilityLib.SetNumberOfRowsToOffset(_PrimaryKeyViewedColumnName, _LastColumnNameDgvSortedBy);
+            _DgvUtilityLib.SetNumberOfRowsToOffset(_LastColumnNameDgvSortedBy);
 
             DataRow[] NewRows;
 
@@ -346,7 +346,7 @@ namespace DVLDPresentationLayer.Licenses
 
         private void _SortData(DataGridViewCellMouseEventArgs e)
         {
-            clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvIntLicenseApplications, ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection, e);
+            clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvIntLicenseApplications, _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection, e);
 
             DataTable dtSortedInfo = null;
 

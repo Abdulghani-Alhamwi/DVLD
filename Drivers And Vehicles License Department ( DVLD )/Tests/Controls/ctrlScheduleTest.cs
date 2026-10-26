@@ -224,7 +224,7 @@ namespace DVLDPresentationLayer
             lblLDLApplicationID.Text = _LocalDrivingLicenseApplication.LocalDrivingLicenseApplicationID.ToString();
 
             lblLicenseClassName.Text = _LocalDrivingLicenseApplication.LicenseClassInfo.ClassName;
-            lblApplicantFullName.Text = clsPerson.GetFullName(_LocalDrivingLicenseApplication.ApplicantPersonID);
+            lblApplicantFullName.Text = _LocalDrivingLicenseApplication.PersonInfo.FullName;
 
             if (CreationMode != enCreationMode.FirstTime)
             {

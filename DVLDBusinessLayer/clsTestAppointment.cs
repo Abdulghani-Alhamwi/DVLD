@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Runtime.InteropServices;
 using DVLDDataAccessLayer;
 
 namespace DVLDBusinessLayer
@@ -22,6 +21,11 @@ namespace DVLDBusinessLayer
 
         private clsTestAppointmentData.clsOldAppointmentData _OldAppointmentData;
 
+        public int TestID
+        {
+            get { return GetTestID(); }
+        }
+
         public clsTestAppointment(clsTestType.enTestType TestTypeID, int LDLApplicationID, DateTime AppointmentDate, decimal PaidFees, int CreatedByUserID, bool IsLocked,int RetakeTestApplicationID = -1)
         {
             TestAppointmentID = -1;
@@ -32,7 +36,7 @@ namespace DVLDBusinessLayer
             this.IsLocked = IsLocked;
             this.CreatedByUserID = CreatedByUserID;
             this.RetakeTestApplicationID = RetakeTestApplicationID;
-            RetakeTestApplicationInfo = clsApplication.Find(RetakeTestApplicationID);
+            RetakeTestApplicationInfo = clsApplication.FindBaseApplication(RetakeTestApplicationID);
             _OldAppointmentData = new clsTestAppointmentData.clsOldAppointmentData(AppointmentDate, IsLocked);
         }
 
@@ -46,15 +50,15 @@ namespace DVLDBusinessLayer
             this.CreatedByUserID = CreatedByUserID;
             this.IsLocked = IsLocked;
             this.RetakeTestApplicationID = RetakeTestApplicationID;
-            RetakeTestApplicationInfo = clsApplication.Find(RetakeTestApplicationID);
+            RetakeTestApplicationInfo = clsApplication.FindBaseApplication(RetakeTestApplicationID);
             _CurrentMode = _enMode.Update;
 
             _OldAppointmentData = new clsTestAppointmentData.clsOldAppointmentData(AppointmentDate, IsLocked);
         }
 
-        public static DataTable GetTestAppointments(byte WantedNumOfRecords,byte TestTypeID,int LocalDrivingLicenseApplicationID)
+        public static DataTable GetTestAppointments(byte WantedNumOfRecords,byte TestTypeID,int LocalDrivingLicenseApplicationID, string SortDirection)
         {
-            return clsTestAppointmentData.GetTestAppointments(WantedNumOfRecords,TestTypeID,LocalDrivingLicenseApplicationID);
+            return clsTestAppointmentData.GetTestAppointments(WantedNumOfRecords, TestTypeID, LocalDrivingLicenseApplicationID, -1, null, -1, SortDirection);
         }
 
         public static DataTable GetTestAppointments(byte WantedNumOfRecords, byte TestTypeID, int LocalDrivingLicenseApplicationID, int _LastBroughtAppointmentID = -1
@@ -156,6 +160,11 @@ namespace DVLDBusinessLayer
         public static bool HasActiveScheduledAppointment(int LocalDrivingLicenseAppID, clsTestType.enTestType TestTypeID)
         {
             return clsTestAppointmentData.HasActiveScheduledAppointment(LocalDrivingLicenseAppID,(byte) TestTypeID);
+        }
+
+        public int GetTestID()
+        {
+            return clsTestAppointmentData.GetTestID(TestAppointmentID);
         }
 
         public static DataTable GetColumnsNamesForView()

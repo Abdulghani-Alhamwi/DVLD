@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using Utility_Library;
 
@@ -11,22 +13,13 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _PrimaryKeyViewedColumnName = "Driver ID";
 
-        private static readonly string _FixedQueryPart =
-         $@"{_PrimaryKeyColumnName} AS [Driver ID] , Drivers.PersonID AS [Person ID] ,People.NationalNo AS [National No.],
-            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName AS [Full Name],
-            Format(CreatedDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Date Created],
-            SUM(CAST(LocalLicenses.IsActive AS TINYINT)) + (CASE WHEN InternationalLicenses.IsActive IS NULL THEN 0 ELSE 1 END) AS [Active Licenses]
-            From Drivers INNER JOIN People ON Drivers.PersonID = People.PersonID INNER JOIN LocalLicenses ON {_PrimaryKeyColumnName} = LocalLicenses.DriverID
-            LEFT JOIN InternationalLicenses ON {_PrimaryKeyColumnName} = InternationalLicenses.DriverID";
+        private static readonly string _DefaultColumnNameToOrderBy = "Full Name";
+
+        private static readonly string _FixedQueryPart = "* FROM Drivers_View";
 
         private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
 
         private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
-
-        private static readonly string _GroupByQueryPart =
-         $@" GROUP BY {_PrimaryKeyColumnName}, Drivers.PersonID, People.NationalNo,
-            People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName,
-            Format(CreatedDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}'), InternationalLicenses.IsActive";
 
         private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
 
@@ -36,7 +29,7 @@ namespace DVLDDataAccessLayer
             DataTable dtDrivers = null;
 
             if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
+                ColumnNameToOrderBy = _DefaultColumnNameToOrderBy;
 
             string query;
 
@@ -87,15 +80,12 @@ namespace DVLDDataAccessLayer
             if (LastBroughtDriverID != -1)
             {
                 query = _QueryWithoutPagination;
-                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtDriverID, true,false);
-                query += _GroupByQueryPart;
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtDriverID, true,true);
             }
 
             else
             {
                 query = _QueryWithoutPagination;
-                query += _GroupByQueryPart;
                 query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
             }
 
@@ -109,22 +99,20 @@ namespace DVLDDataAccessLayer
             if (NumberOfRowsToOffset == -1)
             {
                 query = _QueryWithoutPagination;
-                query += _GroupByQueryPart;
                 query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
             }
 
             else
             {
                 query = _QueryForOffsetPagination;
-                query += _GroupByQueryPart;
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                 query += _OffsetPaginationQueryPart;
             }
 
             return query;
         }
 
-        public static int AddNewDriver(int PersonID, int CreatedByUserID, DateTime CreatedDate)
+        public static int AddNewDriver(int PersonID, int CreatedByUserID)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
@@ -134,7 +122,7 @@ namespace DVLDDataAccessLayer
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@PersonID", PersonID);
             command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
-            command.Parameters.AddWithValue("@CreationDate", CreatedDate);
+            command.Parameters.AddWithValue("@CreationDate", DateTime.Now);
 
             try
             {
@@ -152,6 +140,33 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return -1;
+        }
+
+        public static bool UpdateDriver(int DriverID, int PersonID)
+        {
+            byte AffectedRows = 0;
+
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query = "UPDATE Drivers SET PersonID = @PersonID WHERE DriverID = @DriverID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@PersonID", PersonID);
+            command.Parameters.AddWithValue("@DriverID", DriverID);
+
+            try
+            {
+                connection.Open();
+                AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return (AffectedRows != 0);
         }
 
         public static bool IsPersonAlreadyADriver(int PersonID)
@@ -263,36 +278,13 @@ namespace DVLDDataAccessLayer
             return -1;
         }
 
-        private static string _GetOriginalColumnName(string SendedColumnName)
-        {
-            switch (SendedColumnName)
-            {
-                case "Driver ID":
-                    return _PrimaryKeyColumnName;
-
-                case "Person ID":
-                    return "Drivers.PersonID";
-
-                case "National No.":
-                    return "People.NationalNo";
-
-                case "Full Name":
-                    return "People.FirstName + ' ' + People.SecondName + CASE WHEN People.ThirdName IS NULL THEN '' ELSE ' ' + People.ThirdName END + ' '+ People.LastName";
-
-                default:
-                    return "";
-            }
-        }
-
         private static string _GetDataFilteringQuery(byte WantedNumberOfRecords, string ColumnNameToFilterBy, string ValueToFilterBy,
                 string ColumnNameToOrderBy, string SortDirection,int LastBroughtDriverID = -1, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {
             string query;
 
             if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
-
-                ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
+                ColumnNameToOrderBy = _DefaultColumnNameToOrderBy;
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
@@ -306,24 +298,21 @@ namespace DVLDDataAccessLayer
                     query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
                 }
             }
+
             else
             {
                 if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
                 {
                     query = _QueryWithoutPagination;
-                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtDriverID,true,false);
-                    query += _GroupByQueryPart;
-                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar,true);
+                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtDriverID,true,true);
                 }
 
                 else
                 {
                     query = _QueryForOffsetPagination;
-                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtDriverID, true, false);
-                    query += _GroupByQueryPart;
-                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar,true);
+                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtDriverID, true, true);
                     query += _OffsetPaginationQueryPart;
                 }
             }
@@ -368,7 +357,7 @@ namespace DVLDDataAccessLayer
                 reader.Close();
             }
 
-            catch { }
+            catch (Exception e) { Console.Write(e.Message); }
 
             finally
             {
@@ -409,6 +398,74 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return false;
+        }
+
+        public static bool FindByDriverID(int DriverID, ref int PersonID, ref int CreatedByUserID, ref DateTime CreatedDate)
+        {
+            bool IsFound = false;
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query = $@"SELECT PersonID, CreatedByUserID, CreatedDate FROM Drivers WHERE DriverID = @DriverID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@DriverID", DriverID);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    PersonID = (int)reader["PersonID"];
+                    CreatedByUserID = (int)reader["CreatedByUserID"];
+                    CreatedDate = (DateTime)reader["CreatedDate"];
+
+                    IsFound = true;
+                }
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return IsFound;
+        }
+
+        public static bool FindByPersonID(int PersonID, ref int DriverID, ref int CreatedByUserID, ref DateTime CreatedDate)
+        {
+            bool IsFound = false;
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query = $@"SELECT DriverID, CreatedByUserID, CreatedDate FROM Drivers WHERE PersonID = @PersonID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@PersonID", PersonID);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    DriverID = (int)reader["DriverID"];
+                    CreatedByUserID = (int)reader["CreatedByUserID"];
+                    CreatedDate = (DateTime)reader["CreatedDate"];
+
+                    IsFound = true;
+                }
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return IsFound;
         }
 
         public static short GetDriverLocalLicensesCount(int DriverID)
@@ -467,19 +524,15 @@ namespace DVLDDataAccessLayer
         {
             string query = _QueryWithoutPagination;
 
-            ColumnNameToFilterBy = _GetOriginalColumnName(ColumnNameToFilterBy);
-
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-                query += _GroupByQueryPart;
-                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,true);
             }
 
             else
             {
-                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar);
-                query += _GroupByQueryPart;
-                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection, true);
             }
             return query;
         }

@@ -437,6 +437,34 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
+        public static int GetTestID(int TestAppointmentID)
+        {
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"SELECT TestID FROM Tests
+                             WHERE TestAppointmentID = @TestAppointmentID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@TestAppointmentID", TestAppointmentID);
+
+            try
+            {
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return Convert.ToInt32(result);
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return -1;
+        }
         private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection, int LDLApplicationID, byte TestTypeID)
         {
             string query = _QueryWithoutPagination;

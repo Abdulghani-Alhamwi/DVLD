@@ -10,64 +10,41 @@ namespace DVLDPresentationLayer
         public event Action<int> AfterTestTaken;
         public event Action AfterPassingTest;
 
-        clsTestAppointment _Appointment;
-        int _AppointmentsDGVRowIndex;
-        int _LocalDrivingLicenseApplicationID;
+        private int _AppointmentsDGVRowIndex;
+        private clsTest _Test;
 
-        public frmTakeTest(clsTestAppointment Appointment, clsTestType.enTestType TestType,int AppointmentsDGVRowIndex)
+        public frmTakeTest(int TestAppointmentID, clsTestType.enTestType TestType,int AppointmentsDGVRowIndex)
         {
             InitializeComponent();
 
-            clsLocalDrivingLicenseApplication LDLApp = clsLocalDrivingLicenseApplication.FindByLocalDrivingLicenseAppID(Appointment.LocalDrivingLicenseApplicationID);
-            _SetInfo(Appointment,LDLApp);
-            
-            ctrlScheduleTest.ShowInfoByTestType(gbTestAppointment,pbTestType,lblTestFees,TestType);
-
-            this._AppointmentsDGVRowIndex = AppointmentsDGVRowIndex;
-
-            clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, pbTestType);
-            clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
-        }
-
-        private void _SetInfo(clsTestAppointment Appointment,clsLocalDrivingLicenseApplication LocalDrivingLicenseApplication)
-        {
-            txtNotes.MaxLength = 500;
-
-            _Appointment = Appointment;
-            _LocalDrivingLicenseApplicationID = LocalDrivingLicenseApplication.LocalDrivingLicenseApplicationID;
-
-            lblLDLApplicationID.Text = LocalDrivingLicenseApplication.LocalDrivingLicenseApplicationID.ToString();
-
-            if (LocalDrivingLicenseApplication != null)
-            {
-                lblLicenseClassName.Text = LocalDrivingLicenseApplication.LicenseClassInfo.ClassName;
-                lblApplicantFullName.Text = clsPerson.GetFullName(LocalDrivingLicenseApplication.ApplicantPersonID);
-            }
-
-            lblDate.Text = Appointment.AppointmentDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.NumericFormat));
-            lblTime.Text = Appointment.AppointmentDate.ToShortTimeString();
-
-            lblTrialNumber.Text = clsLocalDrivingLicenseApplication.GetTotalTrialsPerTestType(_LocalDrivingLicenseApplicationID,Appointment.TestTypeID).ToString();
+            uctrlScheduluedTest.LoadInfo(TestAppointmentID, TestType);
+            _AppointmentsDGVRowIndex = AppointmentsDGVRowIndex;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            clsTest Test = new clsTest
+            if (_Test != null)
+                return;
+
+            if (MessageBox.Show("Are you sure you want to save?\nAfter that you cannot change the Pass/Fail result.","Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                return;
+
+            _Test = new clsTest
             (
-                TestAppointmentID : _Appointment.TestAppointmentID,
-                TestResult : (rbPass.Checked) ? true : false,
-                Notes : (txtNotes.Text == "") ? null : txtNotes.Text,
-                CreatedByUserID : clsGlobalSettings.CurrentUserID
+                TestAppointmentID: uctrlScheduluedTest.TestAppointment.TestAppointmentID,
+                TestResult: (rbPass.Checked) ? true : false,
+                Notes: (txtNotes.Text == "") ? null : txtNotes.Text.Trim(),
+                CreatedByUserID: clsGlobalSettings.CurrentUserID
             );
 
-            if (Test.Save())
+            if (_Test.Save())
             {
-                lblTestID.Text = Test.TestID.ToString();
+                uctrlScheduluedTest.TestID = _Test.TestID;
 
                 AfterTestTaken?.Invoke(_AppointmentsDGVRowIndex);
                 MessageBox.Show("Data Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                if (Test.TestResult == true)
+                if (_Test.TestResult == true)
                     AfterPassingTest?.Invoke();
 
                 btnSave.Enabled = false;
@@ -84,6 +61,29 @@ namespace DVLDPresentationLayer
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void frmTakeTest_Load(object sender, EventArgs e)
+        {
+            txtNotes.MaxLength = 500;
+
+            _Test = clsTest.Find(uctrlScheduluedTest.TestAppointment.TestID);
+
+            if (_Test != null)
+            {
+                if (_Test.TestResult)
+                    rbPass.Checked = true;
+                else
+                    rbFail.Checked = true;
+
+                txtNotes.Text = _Test.Notes;
+
+                rbPass.Enabled = false;
+                rbFail.Enabled = false;
+                txtNotes.ReadOnly = true;
+
+                btnSave.Enabled = false;
+            }
         }
     }
 }

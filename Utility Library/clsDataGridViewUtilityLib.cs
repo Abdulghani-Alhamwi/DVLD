@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,10 +14,10 @@ namespace Utility_Library
         public static byte WantedNumOfRowsFromDB = 10;
 
         private int _NumberOfDGVAddedRows;
-        private int _NumberOfRowsToOffset;
-        public int NumberOfRowsToOffset { get { return _NumberOfRowsToOffset; } }
+        public int NumberOfRowsToOffset { get; set; }
 
         private bool _IsFirstTimeOffset = true;
+        private bool _IsFirstTimeOffsetForNoSortCase = true;
 
         private string _LastDGVOrderedColumn;
 
@@ -278,21 +279,21 @@ namespace Utility_Library
         /// <summary>
         /// Returns a the new sort direction , if current sort direction was Asc then it returns Desc while if it was Desc then it returns Asc
         /// </summary
-        public static void ReverseCurrentDGVSortDirection(DataGridView dgv, ref string LastColumnNameDGVSortedBy, ref enDataGridViewSortDirection CurrentDGVColumnSortDirection, DataGridViewCellMouseEventArgs e)
+        public static void ReverseCurrentDGVSortDirection(DataGridView dgv, string LastColumnNameDGVSortedBy, ref enDataGridViewSortDirection CurrentDGVColumnSortDirection, DataGridViewCellMouseEventArgs e, enDataGridViewSortDirection DefailtSortDirectionFoNewOrderColumn = enDataGridViewSortDirection.Descending)
         {
             if (LastColumnNameDGVSortedBy != GetClickedColumnNameInDGV(dgv, e))
             {
-                CurrentDGVColumnSortDirection = enDataGridViewSortDirection.Descending;
+                CurrentDGVColumnSortDirection = DefailtSortDirectionFoNewOrderColumn;
             }
 
-            if (CurrentDGVColumnSortDirection == enDataGridViewSortDirection.Descending)
+            else if (CurrentDGVColumnSortDirection == enDataGridViewSortDirection.Descending)
                 CurrentDGVColumnSortDirection = enDataGridViewSortDirection.Ascending;
 
             else
                 CurrentDGVColumnSortDirection = enDataGridViewSortDirection.Descending;
         }
 
-        public static bool _IsRepeatedDataLoadToDgv(TextBox FilterationTextBox)
+        public static bool IsRepeatedDataLoadToDgv(TextBox FilterationTextBox)
         {
             if (FilterationTextBox.Text == "")
             {
@@ -336,7 +337,7 @@ namespace Utility_Library
         /// <summary>
         /// Set number of offset rows for offset pagination and the set is based on the sended columns , the primary key column is not used for offset pagination but for cusor pagination therefore you must handle cursor pagination for the primary key column and offset pagination for other columns therefore when ordering with other column than the primary key column the order be correct instead of using the unique identifier which can lead to rbing the last id and first id and by that the condition to bring more records using cursor pagination won't work correctly..
         /// </summary
-        public void SetNumberOfRowsToOffset(string PrimaryKeyViewedColumnName, string LastColumnNameDGVSortedBy)
+        public void SetNumberOfRowsToOffset(string LastColumnNameDGVSortedBy,bool EnableOffsetIncrementForUnSortedCase = false)
         {
             if (LastColumnNameDGVSortedBy == null)
                 _IsFirstTimeOffset = false;
@@ -348,12 +349,21 @@ namespace Utility_Library
 
             if (_IsFirstTimeOffset)
             {
-                _NumberOfRowsToOffset = 0;
+                NumberOfRowsToOffset = 0;
+                NumberOfRowsToOffset += 10;
                 _IsFirstTimeOffset = false;
             }
 
-            if (LastColumnNameDGVSortedBy != null)
-                _NumberOfRowsToOffset += 10;
+            if (EnableOffsetIncrementForUnSortedCase)
+            {
+                if (_IsFirstTimeOffsetForNoSortCase)
+                    NumberOfRowsToOffset = 0;
+
+                else
+                    NumberOfRowsToOffset += 10;
+
+                _IsFirstTimeOffsetForNoSortCase = false;
+            }
 
             _LastDGVOrderedColumn = LastColumnNameDGVSortedBy;
         }
@@ -407,10 +417,10 @@ namespace Utility_Library
         /// <summary>
         /// Reset the last column to order by to null and the sort direction to enDataGridViewSortDirection.Descending
         /// </summary
-        public static void ResetSortPropertiesToDefault(ref string LastColumnNameDGVOrderedBy,ref enDataGridViewSortDirection SortDirection)
+        public static void ResetSortPropertiesToDefault(ref string LastColumnNameDGVOrderedBy,ref enDataGridViewSortDirection SortDirection, enDataGridViewSortDirection DefaultSortDirection = enDataGridViewSortDirection.Descending)
         {
             LastColumnNameDGVOrderedBy = null;
-            SortDirection = enDataGridViewSortDirection.Descending;
+            SortDirection = DefaultSortDirection;
         }
 
         public static int GetDGVRowIndexByColumnValue(DataGridView dgv, string ColumnName, int Value)

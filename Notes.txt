@@ -933,3 +933,38 @@ Notes: We must to be aware from the empty string because the empty string if the
 99) When we make in the method that is subscribed with the validating event : e.Cancel = true then the validation be failed therefore CanceleventArgs it is better to not send it as null if we called that method certain place to avoid having exception if we tried to access e.Cancel and to prevent user from leaving the control which means changing the focus -> from the form property AutoValdiate we set it to EnableAllowFocusChange.
 
 100) When the WinForm class is being initialized -> the IDE generates the designer code and the default value for the set properties of bool type is false therefore if we wont to change that default value -> we have to modify that in the load event to assign the true value, the CLR is responsible of assigning the default values for fields in the class structure therefore is initialized the fields in the class structure not the properties, the properties values is related to the designer generate code therefore if we want to change the assigned value -> we can change it in load event, we cannot assign the value we want to the property after the initialize component in the constructor because the property will take its default value from designer code while loading therefore we have to handle it in load event or after, CLR does generate the designer code while the IDE is the one whose responsible for that.
+
+101) We can Order By more than one column in the order by clause and we can specify each column whether we want to order by it in descending or ascending order, like :
+ORDER BY IsActive DESC, ExpirationDate DESC,
+-> here it will order by those columns and will bring the active record and that its expiration date is the higher as the first records gradually from the highest active to lowest not active licenses records because here we are ordering descending both columns.
+
+
+102) The Format function in the SQL server returns a value of the type NVARCHAR therefore if we were like the following example formatting the datetime to a specific format we wont therefore if we wont to order by the date after formatting the ordering will be not by the date value but it will be by the string value which means by the characters lexicographically therefore in order to order by the date correctly we convert the string value into the date value in the order by clause:
+
+SELECT TOP (10) LicenseID AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
+            Format(IssueDate,'dd/MM/yyyy h:mm tt') AS [Issue Date],
+            FORMAT(ExpirationDate,'dd/MM/yyyy h:mm tt') AS [Expiration Date],
+            IsActive AS [Is Active] FROM LocalLicenses INNER JOIN LicenseClasses ON LocalLicenses.LicenseClassID = LicenseClasses.LicenseClassID
+            WHERE DriverID = 19 ORDER BY IsActive DESC, CONVERT(DATETIME, [Expiration Date]) DESC
+
+-> Here we convert if we were ordering by the alias which has the string value and if we do not have access to the original column name that its data type is Date Time , while we can avoid that by ordering by that original column which its type is DateTime :
+
+SELECT TOP (10) LicenseID AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
+            Format(IssueDate,'dd/MM/yyyy h:mm tt') AS [Issue Date],
+            FORMAT(ExpirationDate,'dd/MM/yyyy h:mm tt') AS [Expiration Date],
+            IsActive AS [Is Active] FROM LocalLicenses INNER JOIN LicenseClasses ON LocalLicenses.LicenseClassID = LicenseClasses.LicenseClassID
+            WHERE DriverID = 19 ORDER BY IsActive DESC, ExpirationDate DESC
+
+
+103) Here because we are using view therefore we cannot access the original column that its data type Date Time therefore we have the alias column that contains NVARCHAR values therefore to order by expiration date correctly we convert to Date Time.
+
+ SELECT * FROM InternationalLicenses_View WHERE [Driver ID]= 19 ORDER BY CONVERT(DateTime,[Expiration Date]) DESC
+
+
+104) In the following, in the Order By clause -> the ordering at first be by the IsActive column then by the expiration date therefore the records are ordered at first by the first column and secondly the ordered records by the first column are ordered by the second column and thirdly the ordered records by the second column are ordered by the third column if exists and so on.
+
+SELECT TOP (10) LicenseID AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
+            Format(IssueDate,'dd/MM/yyyy h:mm tt') AS [Issue Date],
+            FORMAT(ExpirationDate,'dd/MM/yyyy h:mm tt') AS [Expiration Date],
+            IsActive AS [Is Active] FROM LocalLicenses INNER JOIN LicenseClasses ON LocalLicenses.LicenseClassID = LicenseClasses.LicenseClassID
+            WHERE DriverID = 19 ORDER BY IsActive DESC, ExpirationDate DESC

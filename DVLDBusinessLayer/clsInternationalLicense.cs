@@ -56,9 +56,9 @@ namespace DVLDBusinessLayer
                 , LastBroughIntLicenseID, LastColumnNameDataOrderedBy, NumberOfRowsToOffset, SortDirection);
         }
 
-        public static DataTable GetAllInternationalLicensesData(byte WantedNumOfRecords)
+        public static DataTable GetAllInternationalLicensesData(byte WantedNumOfRecords, string SortDirection)
         {
-            return clsInternationalLicenseData.GetAllInternationalLicensesData(WantedNumOfRecords);
+            return clsInternationalLicenseData.GetAllInternationalLicensesData(WantedNumOfRecords, -1, null, -1, SortDirection);
         }
 
         public static DataTable GetAllInternationalLicensesData(byte WantedNumOfRecords, int LastBroughIntLicenseID

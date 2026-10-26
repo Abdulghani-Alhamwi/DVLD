@@ -316,7 +316,7 @@ namespace DVLDDataAccessLayer
             return IsFound;
         }
 
-        public static bool DeleteLDLApplication(int LDLApplicationID)
+        public static bool DeleteLocalDrivingLicenseApplication(int LocalDrivingLicenseApplicationID)
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -325,7 +325,7 @@ namespace DVLDDataAccessLayer
                              WHERE {_PrimaryKeyColumnName} = @LDLApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@LDLApplicationID", LDLApplicationID);
+            command.Parameters.AddWithValue("@LDLApplicationID", LocalDrivingLicenseApplicationID);
 
             try
             {

@@ -11,6 +11,8 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _PrimaryKeyViewedColumnName = "Lic.ID";
 
+        private static readonly string _DefaultExpressionToOrderBy = " ORDER BY IsActive DESC, ExpirationDate DESC";
+
         private static readonly string _FixedQueryPart =
           $@"{_PrimaryKeyColumnName} AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
             Format(IssueDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],
@@ -28,9 +30,6 @@ namespace DVLDDataAccessLayer
             , string ColumnNameToOrderBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             DataTable dtLicensesData = null;
-
-            if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
 
             string query;
 
@@ -100,13 +99,13 @@ namespace DVLDDataAccessLayer
             if (NumberOfRowsToOffset == -1)
             {
                 query = _QueryWithoutPagination;
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                query += _DefaultExpressionToOrderBy;
             }
 
             else
             {
                 query = _QueryForOffsetPagination;
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += _DefaultExpressionToOrderBy;
                 query += _OffsetPaginationQueryPart;
             }
 

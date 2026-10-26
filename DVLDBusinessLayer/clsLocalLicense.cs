@@ -8,11 +8,12 @@ namespace DVLDBusinessLayer
     {
         public enum enIssueReason : byte { FirstTime = 1 , Renew = 2 , ReplacementForDamaged = 3 , ReplacementForLost = 4}
         private enum _enMode : byte { AddNew = 0 , Update = 1 }
-
         private _enMode _CurrentMode;
         public int LicenseID { get; set; }
         public int ApplicationID { get; set; }
-        public int DriverID{get;set;}
+        public int PersonID{get;set; }
+        public int DriverID { get; set; }
+        public clsDriver DriverInfo;
         public byte LicenseClassID{get;set;}
         public DateTime IssueDate{get;set;}
         public DateTime ExpirationDate{get;set;}
@@ -22,11 +23,11 @@ namespace DVLDBusinessLayer
         public enIssueReason IssueReason {get;set;}
         public int CreatedByUserID{get;set;}
 
-        public clsLocalLicense(int ApplicationID, int DriverID, byte LicenseClassID, DateTime IssueDate, DateTime ExpirationDate, string Notes, decimal PaidFees, bool IsActive, enIssueReason IssueReason, int CreatedByUserID)
+        public clsLocalLicense(int ApplicationID, int PersonID, byte LicenseClassID, DateTime IssueDate, DateTime ExpirationDate, string Notes, decimal PaidFees, bool IsActive, enIssueReason IssueReason, int CreatedByUserID)
         {
             this.LicenseID = -1;
             this.ApplicationID = ApplicationID;
-            this.DriverID = DriverID;
+            this.PersonID = PersonID;
             this.LicenseClassID = LicenseClassID;
             this.IssueDate = IssueDate;
             this.ExpirationDate = ExpirationDate;
@@ -35,6 +36,9 @@ namespace DVLDBusinessLayer
             this.IsActive = IsActive;
             this.IssueReason = IssueReason;
             this.CreatedByUserID = CreatedByUserID;
+
+            DriverInfo = clsDriver.FindByPersonID(PersonID);
+            DriverID = (DriverInfo != null) ? DriverInfo.DriverID : -1;
         }
 
         private clsLocalLicense(int LicenseID, int ApplicationID, int DriverID, byte LicenseClassID, DateTime IssueDate, DateTime ExpirationDate, string Notes, decimal PaidFees, bool IsActive, enIssueReason IssueReason, int CreatedByUserID)
@@ -50,6 +54,10 @@ namespace DVLDBusinessLayer
             this.IsActive = IsActive;
             this.IssueReason = IssueReason;
             this.CreatedByUserID = CreatedByUserID;
+
+            DriverInfo = clsDriver.FindByDriverID(DriverID);
+            PersonID = (DriverInfo != null) ? DriverInfo.PersonID : -1;
+
             _CurrentMode = _enMode.Update;
         }
 
@@ -89,44 +97,32 @@ namespace DVLDBusinessLayer
 
         private static byte _GetIssueReasonAsNumber(enIssueReason IssueReason)
         {
-            switch (IssueReason)
-            {
-                case enIssueReason.FirstTime:
-                    return 1;
-
-                case enIssueReason.Renew:
-                    return 2;
-
-                case enIssueReason.ReplacementForDamaged:
-                    return 3;
-
-                case enIssueReason.ReplacementForLost:
-                    return 4;
-            }
-            return 0;
+            return (byte)IssueReason;
         }
 
         private static enIssueReason _GetIssueReasonAsEnum(byte IssueReason)
         {
-            switch (IssueReason)
-            {
-                case 1:
-                    return enIssueReason.FirstTime;
+            return (enIssueReason)IssueReason;
+        }
 
-                case 2:
-                    return enIssueReason.Renew;
-
-                case 3:
-                    return enIssueReason.ReplacementForDamaged;
-
-                case 4:
-                    return enIssueReason.ReplacementForLost;
-            }
-            return enIssueReason.FirstTime;
+        public bool IsPersonAlreadyDriver()
+        {
+            return (DriverInfo != null);
         }
 
         private bool _IssueDrivingLicense()
         {
+            if (!IsPersonAlreadyDriver())
+            {
+                clsDriver NewDriver = new clsDriver(PersonID, CreatedByUserID);
+
+                if (!NewDriver.Save())
+                    return false;
+
+                else
+                    DriverID = NewDriver.DriverID;
+            }
+
             bool HasIssuedInternationalLicense = false;
 
             if (LicenseClassID == clsLicenseClass.GetLicenseClassID(clsLicenseClass.enLicenseClasses.OrdinaryDrivingClass))

@@ -56,7 +56,7 @@ namespace DVLDPresentationLayer
                 if (_LastColumnDGVLocalLicSortedBy == null || _LastColumnDGVLocalLicSortedBy == _LocalLicensesPKViewedColumnName)
                     _LastBroughtLocalLicenseID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvLocalLicenses, _LocalLicensesPKViewedColumnName, _CurrentLLicDGVColSortDirection);
 
-                _DgvUtilityLib.SetNumberOfRowsToOffset(_LocalLicensesPKViewedColumnName, _LastColumnDGVLocalLicSortedBy);
+                _DgvUtilityLib.SetNumberOfRowsToOffset(_LastColumnDGVLocalLicSortedBy,true);
             }
 
             else
@@ -64,7 +64,7 @@ namespace DVLDPresentationLayer
                 if (_LastColumnDGVIntLicSortedBy == null || _LastColumnDGVIntLicSortedBy == _IntLicensesPKViewedColumnName)
                     _LastBroughtIntLicenseID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvInternationalLicenses, _IntLicensesPKViewedColumnName, _CurrentIntLicDGVColSortDirection);
 
-                _DgvUtilityLib.SetNumberOfRowsToOffset(_IntLicensesPKViewedColumnName, _LastColumnDGVIntLicSortedBy);
+                _DgvUtilityLib.SetNumberOfRowsToOffset(_LastColumnDGVIntLicSortedBy,true);
             }
         }
 
@@ -141,7 +141,7 @@ namespace DVLDPresentationLayer
 
         private void _SortLocalLicensesDataData(DataGridViewCellMouseEventArgs e)
         {
-            clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvLocalLicenses, ref _LastColumnDGVLocalLicSortedBy, ref _CurrentLLicDGVColSortDirection, e);
+            clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvLocalLicenses, _LastColumnDGVLocalLicSortedBy, ref _CurrentLLicDGVColSortDirection, e);
 
             DataTable dtSortedInfo = null;
 
@@ -153,7 +153,7 @@ namespace DVLDPresentationLayer
 
         private void _SortInternationalLicensesData(DataGridViewCellMouseEventArgs e)
         {
-            clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvInternationalLicenses, ref _LastColumnDGVIntLicSortedBy, ref _CurrentIntLicDGVColSortDirection, e);
+            clsDataGridViewUtilityLib.ReverseCurrentDGVSortDirection(dgvInternationalLicenses, _LastColumnDGVIntLicSortedBy, ref _CurrentIntLicDGVColSortDirection, e);
 
             DataTable dtSortedInfo = null;
 

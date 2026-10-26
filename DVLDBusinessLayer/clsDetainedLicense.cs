@@ -104,9 +104,9 @@ namespace DVLDBusinessLayer
                 return null;
         }
 
-        public static DataTable GetDetainedLicensesInfo(byte WantedNumOfRecords)
+        public static DataTable GetDetainedLicensesInfo(byte WantedNumOfRecords, string SortDirection)
         {
-            return clsDetainedLicenseData.GetDetainedLicensesInfo(WantedNumOfRecords);
+            return clsDetainedLicenseData.GetDetainedLicensesInfo(WantedNumOfRecords, -1, null, -1, SortDirection);
         }
 
         public static DataTable GetDetainedLicensesInfo(byte WantedNumOfRecords, int LastBroughtDetainID
