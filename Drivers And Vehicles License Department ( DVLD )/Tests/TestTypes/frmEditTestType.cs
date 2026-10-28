@@ -45,7 +45,7 @@ namespace DVLDPresentationLayer
             {
                 if (_TestType.Save())
                 {
-                    object[] NewValues = new object[] { _TestType.TestTypeID, _TestType.TestTypeTitle, _TestType.TestTypeDescription, clsGeneralUtility.GetCustomNumberFormat(_TestType.TestTypeFees, clsGeneralUtility.enCustomNumberFormat.With4ZerosAfterFraction) };
+                    object[] NewValues = new object[] { _TestType.TestTypeID, _TestType.TestTypeTitle, _TestType.TestTypeDescription, clsFormat.GetCustomNumberFormat(_TestType.TestTypeFees, clsFormat.enCustomNumberFormat.With4ZerosAfterFraction) };
                     AfterUpdatingInfo?.Invoke(NewValues, _TestsTypesDGVRowIndex);
 
                     MessageBox.Show("Test Type Info Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -68,33 +68,33 @@ namespace DVLDPresentationLayer
         private void txtTitle_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrEmpty(txtTitle.Text.Trim()))
-                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtTitle, "Title cannot be empty!", e);
+                clsValidation.EnableErrorProvider(ertxtBox, txtTitle, "Title cannot be empty!", e);
 
             else
-                clsGeneralUtility.DisableErrorProvider(ertxtBox, txtTitle);
+                clsValidation.DisableErrorProvider(ertxtBox, txtTitle);
         }
 
         private void txtDescription_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrEmpty(txtDescription.Text.Trim()))
-                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtDescription, "Description cannot be empty!", e);
+                clsValidation.EnableErrorProvider(ertxtBox, txtDescription, "Description cannot be empty!", e);
 
             else
-                clsGeneralUtility.DisableErrorProvider(ertxtBox, txtDescription);
+                clsValidation.DisableErrorProvider(ertxtBox, txtDescription);
         }
 
         private void txtFees_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrEmpty(txtFees.Text.Trim()))
-                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtFees, "Fees cannot be empty!", e);
+                clsValidation.EnableErrorProvider(ertxtBox, txtFees, "Fees cannot be empty!", e);
 
-            else if (!clsGeneralUtility.IsNumber(txtFees.Text.Trim()))
+            else if (!clsValidation.IsNumber(txtFees.Text.Trim()))
             {
-                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtFees, "Invalid Number!", e);
+                clsValidation.EnableErrorProvider(ertxtBox, txtFees, "Invalid Number!", e);
             }
 
             else
-                clsGeneralUtility.DisableErrorProvider(ertxtBox, txtFees);
+                clsValidation.DisableErrorProvider(ertxtBox, txtFees);
         }
 
     }

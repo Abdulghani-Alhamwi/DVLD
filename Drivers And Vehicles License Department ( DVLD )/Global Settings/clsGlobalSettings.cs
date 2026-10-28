@@ -15,6 +15,8 @@ namespace DVLDPresentationLayer
 
         public static bool LoginInfoChanged = false;
 
+        public static byte WantedNumOfRowsFromDB = 10;
+
         public static Color ComboBoxBackColor = Color.FromArgb(228, 228, 228);
         public static Color ComboBoxItemsBackColor = Color.FromArgb(245, 245, 245);
         public static Color ComboBoxHighlightedBackColor = Color.FromArgb(221, 232, 240);

@@ -69,7 +69,7 @@ namespace DVLDPresentationLayer
             lblApplicantFullName.Text = LocalDrivingLicenseApplication.PersonInfo.FullName;
             lblTrialNumber.Text = LocalDrivingLicenseApplication.GetTotalTrialsPerTestType(TestAppointment.TestTypeID).ToString();
 
-            lblDate.Text = TestAppointment.AppointmentDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.NumericFormat));
+            lblDate.Text = TestAppointment.AppointmentDate.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.NumericFormat));
             lblTime.Text = TestAppointment.AppointmentDate.ToShortTimeString();
 
             lblTestID.Text = (TestAppointment.TestID == -1) ? "No Taken Yet" : TestAppointment.TestID.ToString();
@@ -77,8 +77,8 @@ namespace DVLDPresentationLayer
 
         private void ctrlScheduluedTest_Load(object sender, EventArgs e)
         {
-            clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, pbTestType);
-            clsGeneralUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
+            clsUtility.CenterControlHorizontally(gbTestAppointment, pbTestType);
+            clsUtility.CenterControlHorizontally(gbTestAppointment, lblFormBigTitle);
         }
     }
 }

@@ -59,7 +59,7 @@ namespace DVLDPresentationLayer.Licenses
 
         private void _InitilizeFormData(int LocalLicenseID = -1)
           {
-            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
             
             if (LocalLicenseID != -1)
                {
@@ -122,15 +122,15 @@ namespace DVLDPresentationLayer.Licenses
         private void _ShowDetainInfo()
         {
             lblDetainID.Text = _SelectedLocalLicenseInfo.DetainInfo.DetainID.ToString();
-            lblDetainedDate.Text = _SelectedLocalLicenseInfo.DetainInfo.DetainDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblDetainedDate.Text = _SelectedLocalLicenseInfo.DetainInfo.DetainDate.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName));
 
             string EncryptedUsername = "", UsernameIV = "";
             clsUser.GetUserName(_SelectedLocalLicenseInfo.DetainInfo.CreatedByUserID, ref EncryptedUsername, ref UsernameIV);
 
-            lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
+            lblUserName.Text = clsCryptography.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
 
-            lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.ReleaseDetainedLicense),clsGeneralUtility.enCustomNumberFormat.NoJustZerosAfterFraction);
-            lblFineFees.Text = clsGeneralUtility.GetCustomNumberFormat(_SelectedLocalLicenseInfo.DetainInfo.FineFees, clsGeneralUtility.enCustomNumberFormat.NoJustZerosAfterFraction);
+            lblApplicationFees.Text = clsFormat.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.ReleaseDetainedLicense), clsFormat.enCustomNumberFormat.NoJustZerosAfterFraction);
+            lblFineFees.Text = clsFormat.GetCustomNumberFormat(_SelectedLocalLicenseInfo.DetainInfo.FineFees, clsFormat.enCustomNumberFormat.NoJustZerosAfterFraction);
             lblTotalFees.Text = (Convert.ToDecimal(lblApplicationFees.Text) + Convert.ToDecimal(lblFineFees.Text)).ToString();
         }
 

@@ -15,8 +15,8 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _FixedQueryPart =
           $@"{_PrimaryKeyColumnName} AS [Lic.ID],ApplicationID AS [App.ID],LicenseClasses.ClassName AS [Class Name],
-            Format(IssueDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],
-            FORMAT(ExpirationDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Expiration Date],
+            Format(IssueDate,'{clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateTimeCustomFormat)}') AS [Issue Date],
+            FORMAT(ExpirationDate,'{clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateTimeCustomFormat)}') AS [Expiration Date],
             IsActive AS [Is Active] FROM LocalLicenses INNER JOIN LicenseClasses ON LocalLicenses.LicenseClassID = LicenseClasses.LicenseClassID
             WHERE DriverID = @DriverID";
 
@@ -24,7 +24,7 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
 
-        private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
+        private static readonly string _OffsetPaginationQueryPart = clsSqlQueryBuilder.GetOffsetPaginationQueryPart();
 
         public static DataTable GetLocalLicenses(int DriverID,byte WantedNumOfRecords,int LastBroughtLicenseID = -1
             , string ColumnNameToOrderBy = null, int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
@@ -80,13 +80,13 @@ namespace DVLDDataAccessLayer
             if (LastBroughtLicenseID != -1)
             {
                 query = _QueryWithoutPagination;
-                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtLicenseID, true, true);
+                query += clsSqlQueryBuilder.GetLastQueryPart(_PrimaryKeyColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtLicenseID, true, true);
             }
 
             else
             {
                 query = _QueryWithoutPagination;
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
             }
 
             return query;
@@ -341,7 +341,7 @@ namespace DVLDDataAccessLayer
         private static string _GetDataSortingQuery(string ColumnNameToOrderBy, string SortDirection)
         {
             string query = _QueryWithoutPagination;
-            query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+            query += clsSqlQueryBuilder.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             return query;
         }
 
@@ -353,7 +353,7 @@ namespace DVLDDataAccessLayer
             Command.Parameters.AddWithValue("@WantedNumOfRecords", WantedNumOfRecords);
             Command.Parameters.AddWithValue("@DriverID", DriverID);
 
-            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(Connection, Command);
+            return clsSqlQueryBuilder.GetSortedInfoFromYourQueryAndArgs(Connection, Command);
         }
 
         public static int GetLocalLicenseIdByLicenseClass(int DriverID , byte LicenseClassID)

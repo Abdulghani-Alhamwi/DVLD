@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using Utility_Library;
-using static Utility_Library.clsGeneralUtility;
+using static Utility_Library.clsUtility;
 
 namespace DVLDPresentationLayer.Core
 {
@@ -16,12 +16,12 @@ namespace DVLDPresentationLayer.Core
             InitializeComponent();
             _SetFormInfo();
 
-            lblApplicationDate.Text = DateTime.Now.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblApplicationDate.Text = DateTime.Now.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName));
 
             string EncryptedUsername = "", UsernameIV = "";
             clsUser.GetUserName(clsGlobalSettings.CurrentUserID, ref EncryptedUsername, ref UsernameIV);
 
-            lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
+            lblUserName.Text = clsCryptography.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
 
             _ReplacedLicenseID = -1;
         }
@@ -32,17 +32,17 @@ namespace DVLDPresentationLayer.Core
             {
                 lblFormBigTitle.Text = "Replacement For Damaged License";
                 lblFormTitle.Text = lblFormBigTitle.Text;
-                lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.ReplacementForDamagedLicense),
-                    enCustomNumberFormat.NoJustZerosAfterFraction);
+                lblApplicationFees.Text = clsFormat.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.ReplacementForDamagedLicense),
+                    clsFormat.enCustomNumberFormat.NoJustZerosAfterFraction);
             }
             else
             {
                 lblFormBigTitle.Text = "Replacement For Lost License";
                 lblFormTitle.Text = lblFormBigTitle.Text;
-                lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.ReplacementForLostLicense),
-                    enCustomNumberFormat.NoJustZerosAfterFraction);
+                lblApplicationFees.Text = clsFormat.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.ReplacementForLostLicense),
+                    clsFormat.enCustomNumberFormat.NoJustZerosAfterFraction);
             }
-            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private void rbDamagedLicense_CheckedChanged(object sender, EventArgs e)

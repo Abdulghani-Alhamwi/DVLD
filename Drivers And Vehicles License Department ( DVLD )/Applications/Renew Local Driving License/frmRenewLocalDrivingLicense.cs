@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using Utility_Library;
-using static Utility_Library.clsGeneralUtility;
+using static Utility_Library.clsUtility;
 
 namespace DVLDPresentationLayer.Licenses
 {
@@ -15,33 +15,33 @@ namespace DVLDPresentationLayer.Licenses
         {
             InitializeComponent();
             _ShowBasicInfo();
-            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
 
             _RenewedLicenseID = -1;
         }
 
         private void _ShowBasicInfo()
         {
-            lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.RenewLicense),
-                enCustomNumberFormat.NoJustZerosAfterFraction);
-            lblApplicationDate.Text = DateTime.Now.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblApplicationFees.Text = clsFormat.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.RenewLicense),
+                clsFormat.enCustomNumberFormat.NoJustZerosAfterFraction);
+            lblApplicationDate.Text = DateTime.Now.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName));
             lblIssueDate.Text = lblApplicationDate.Text;
 
             string EncryptedUsername = "", UsernameIV = "";
             clsUser.GetUserName(clsGlobalSettings.CurrentUserID, ref EncryptedUsername, ref UsernameIV);
 
-            lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
+            lblUserName.Text = clsCryptography.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
         }
 
         private void _ShowApplicationInfo()
         {
             lblOldLocalLicenseID.Text = _SelectedLicenseInfo.LicenseID.ToString();
             lblExpirationDate.Text = DateTime.Now.AddYears(_SelectedLicenseInfo.LicenseClassInfo.DefaultValidityLength).ToString(
-                clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
-            lblLicenseFees.Text = clsGeneralUtility.GetCustomNumberFormat(_SelectedLicenseInfo.PaidFees, enCustomNumberFormat.NoJustZerosAfterFraction);
-            lblTotalFees.Text = clsGeneralUtility.GetCustomNumberFormat(
+                clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName));
+            lblLicenseFees.Text = clsFormat.GetCustomNumberFormat(_SelectedLicenseInfo.PaidFees, clsFormat.enCustomNumberFormat.NoJustZerosAfterFraction);
+            lblTotalFees.Text = clsFormat.GetCustomNumberFormat(
                 Convert.ToDecimal(lblApplicationFees.Text) + _SelectedLicenseInfo.PaidFees,
-                enCustomNumberFormat.NoJustZerosAfterFraction);
+                clsFormat.enCustomNumberFormat.NoJustZerosAfterFraction);
         }
 
         private void _EditDriverPersonalInfo(clsPerson UpdatedDriverPersonalInfo)
@@ -69,7 +69,7 @@ namespace DVLDPresentationLayer.Licenses
 
             if (!LicenseInfo.IsExpired())
             {
-                MessageBox.Show($"Selected license is not yet expired , it will expire on :\n{LicenseInfo.ExpirationDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName))}",
+                MessageBox.Show($"Selected license is not yet expired , it will expire on :\n{LicenseInfo.ExpirationDate.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName))}",
                     "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 btnRenewLicense.Enabled = false;

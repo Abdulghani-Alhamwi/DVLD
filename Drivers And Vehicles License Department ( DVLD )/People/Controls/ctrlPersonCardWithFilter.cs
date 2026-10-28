@@ -81,7 +81,7 @@ namespace DVLDPresentationLayer
 
         private void cbFindBy_DrawItem(object sender, DrawItemEventArgs e)
         {
-            clsGeneralUtility.DrawComboBoxItems(sender, e);
+            clsUtility.DrawComboBoxItems(sender, e);
         }
 
         private void _LoadNewPersonData(int PersonID)

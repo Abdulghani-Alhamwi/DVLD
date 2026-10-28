@@ -43,7 +43,7 @@ namespace DVLDPresentationLayer
                 if (_ApplicationType.Save())
                 {
                     object[] NewValues = new object[] { _ApplicationType.ApplicationTypeID, _ApplicationType.ApplicationTypeTitle
-                            , clsGeneralUtility.GetCustomNumberFormat(_ApplicationType.ApplicationTypeFees, clsGeneralUtility.enCustomNumberFormat.With4ZerosAfterFraction) };
+                            , clsFormat.GetCustomNumberFormat(_ApplicationType.ApplicationTypeFees, clsFormat.enCustomNumberFormat.With4ZerosAfterFraction) };
 
                     AfterUpdatingInfo?.Invoke(NewValues, _AppTypesDGVRowIndex);
 
@@ -68,25 +68,25 @@ namespace DVLDPresentationLayer
         {
             if (string.IsNullOrEmpty(txtTitle.Text.Trim()))
             {
-                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtTitle, "Title cannot be empty!", e);
+                clsValidation.EnableErrorProvider(ertxtBox, txtTitle, "Title cannot be empty!", e);
             }
 
             else
-                clsGeneralUtility.DisableErrorProvider(ertxtBox, txtTitle);
+                clsValidation.DisableErrorProvider(ertxtBox, txtTitle);
         }
 
         private void txtFees_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrEmpty(txtFees.Text.Trim()))
-                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtFees, "Application Fees cannot be empty!", e);
+                clsValidation.EnableErrorProvider(ertxtBox, txtFees, "Application Fees cannot be empty!", e);
 
-            else if (!clsGeneralUtility.IsNumber(txtFees.Text.Trim()))
+            else if (!clsValidation.IsNumber(txtFees.Text.Trim()))
             {
-                clsGeneralUtility.EnableErrorProvider(ertxtBox, txtFees, "You can enter only numbers!", e);
+                clsValidation.EnableErrorProvider(ertxtBox, txtFees, "You can enter only numbers!", e);
             }
 
             else
-                clsGeneralUtility.DisableErrorProvider(ertxtBox, txtFees);
+                clsValidation.DisableErrorProvider(ertxtBox, txtFees);
         }
     }
 }

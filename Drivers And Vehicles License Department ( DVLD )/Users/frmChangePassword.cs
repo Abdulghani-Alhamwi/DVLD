@@ -53,37 +53,37 @@ namespace DVLDPresentationLayer
         private void txtCurrentPassword_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrEmpty(txtCurrentPassword.Text.Trim()))
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password cannot be empty!", e);
+                clsValidation.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password cannot be empty!", e);
 
-            else if (clsGeneralUtility.HashWithSaltPassword(txtCurrentPassword.Text, ref _Salt) == _Password)
+            else if (clsCryptography.HashWithSaltPassword(txtCurrentPassword.Text, ref _Salt) == _Password)
             {
-                clsGeneralUtility.DisableErrorProvider(erTextBox, txtCurrentPassword);
+                clsValidation.DisableErrorProvider(erTextBox, txtCurrentPassword);
             }
 
             else
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password is wrong!", e);
+                clsValidation.EnableErrorProvider(erTextBox, txtCurrentPassword, "Current password is wrong!", e);
         }
 
         private void txtNewPassword_Validating(object sender , CancelEventArgs e)
         {
             if (string.IsNullOrEmpty(txtNewPassword.Text.Trim()))
             {
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtNewPassword, "New password cannot be empty!", e);
+                clsValidation.EnableErrorProvider(erTextBox, txtNewPassword, "New password cannot be empty!", e);
             }
 
             else
-                clsGeneralUtility.DisableErrorProvider(erTextBox, txtNewPassword);
+                clsValidation.DisableErrorProvider(erTextBox, txtNewPassword);
         }
 
         private void txtPasswordConfirmation_Validating(object sender, CancelEventArgs e)
         {
             if (txtPasswordConfirmation.Text != txtNewPassword.Text)
             {
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation does not match password!", e);
+                clsValidation.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation does not match password!", e);
             }
 
             else
-                clsGeneralUtility.DisableErrorProvider(erTextBox, txtPasswordConfirmation);
+                clsValidation.DisableErrorProvider(erTextBox, txtPasswordConfirmation);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -95,7 +95,7 @@ namespace DVLDPresentationLayer
             }
 
                 byte[] Salt = null;
-                string NewPassword = clsGeneralUtility.HashWithSaltPassword(txtNewPassword.Text, ref Salt);
+                string NewPassword = clsCryptography.HashWithSaltPassword(txtNewPassword.Text, ref Salt);
 
                 if (clsUser.ChangePassword(_UserID, NewPassword, Convert.ToBase64String(Salt)))
                 {

@@ -19,7 +19,7 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
 
-        private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
+        private static readonly string _OffsetPaginationQueryPart = clsSqlQueryBuilder.GetOffsetPaginationQueryPart();
 
         private enum _enUpdatableColumns : byte
         {
@@ -101,13 +101,13 @@ namespace DVLDDataAccessLayer
             if (LastBroughtUserID != -1)
             {
                 query = _QueryWithoutPagination;
-                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtUserID, true, true, true);
+                query += clsSqlQueryBuilder.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtUserID, true, true, true);
             }
 
             else
             {
                 query = _QueryWithoutPagination;
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             return query;
@@ -120,13 +120,13 @@ namespace DVLDDataAccessLayer
             if (NumberOfRowsToOffset == -1)
             {
                 query = _QueryWithoutPagination;
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             else
             {
                 query = _QueryForOffsetPagination;
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
                 query += _OffsetPaginationQueryPart;
             }
 
@@ -680,7 +680,7 @@ namespace DVLDDataAccessLayer
                 if (ColumnNameToFilterBy == "Is Active")
                 {
                     if(ValueToFilterBy != "All")
-                    ValueToFilterBy = clsGeneralUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
+                    ValueToFilterBy = clsSqlQueryBuilder.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
 
@@ -696,8 +696,8 @@ namespace DVLDDataAccessLayer
                     else
                     query = _QueryWithoutPagination;
 
-                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
-                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtUserID, true, true, true);
+                    query += clsSqlQueryBuilder.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
+                    query += clsSqlQueryBuilder.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtUserID, true, true, true);
                 }
 
                 else
@@ -711,8 +711,8 @@ namespace DVLDDataAccessLayer
                     else
                         query = _QueryForOffsetPagination;
 
-                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
-                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                    query += clsSqlQueryBuilder.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
+                    query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                     query += _OffsetPaginationQueryPart;
                 }
             }
@@ -802,7 +802,7 @@ namespace DVLDDataAccessLayer
                 || (ColumnNameToFilterBy == "Is Active" && ValueToFilterBy == "All"))
             {
                 query = _QueryWithoutPagination;
-                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,true);
+                query += clsSqlQueryBuilder.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,true);
             }
 
             else
@@ -818,11 +818,11 @@ namespace DVLDDataAccessLayer
                 if (ColumnNameToFilterBy == "Is Active")
                 {
                     if(ValueToFilterBy != "All")
-                    ValueToFilterBy = clsGeneralUtility.GetYesNoValueAsNumericString(ValueToFilterBy);
+                    ValueToFilterBy = clsSqlQueryBuilder.GetYesNoValueAsNumericString(ValueToFilterBy);
                 }
 
-                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
-                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,true);
+                query += clsSqlQueryBuilder.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
+                query += clsSqlQueryBuilder.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,true);
             }
                 
             return query;
@@ -831,7 +831,7 @@ namespace DVLDDataAccessLayer
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
             string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
-            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(clsDataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+            return clsSqlQueryBuilder.GetSortedInfoFromYourQueryAndArgs(clsDataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
 

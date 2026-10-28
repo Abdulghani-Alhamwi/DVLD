@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using Utility_Library;
-using static Utility_Library.clsGeneralUtility;
+using static Utility_Library.clsUtility;
 
 namespace DVLDPresentationLayer
 {
@@ -28,13 +28,13 @@ namespace DVLDPresentationLayer
         {
             lblApplicationID.Text = LDLApplication.ApplicationID.ToString();
             lblStatus.Text = LDLApplication.StatusText;
-            lblPaidFees.Text = clsGeneralUtility.GetCustomNumberFormat(LDLApplication.PaidApplicationFees, enCustomNumberFormat.NoJustZerosAfterFraction);
+            lblPaidFees.Text = clsFormat.GetCustomNumberFormat(LDLApplication.PaidApplicationFees, clsFormat.enCustomNumberFormat.NoJustZerosAfterFraction);
             lblApplicationType.Text = clsApplicationType.GetApplicationTypeTitle(LDLApplication.ApplicationTypeID);
             lblApplicantFullName.Text = clsPerson.GetFullName(LDLApplication.ApplicantPersonID);
-            lblApplicationDate.Text = LDLApplication.ApplicationDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
-            lblLastStatusDate.Text = LDLApplication.LastStatusDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblApplicationDate.Text = LDLApplication.ApplicationDate.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName));
+            lblLastStatusDate.Text = LDLApplication.LastStatusDate.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName));
 
-            lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, LDLApplication.CreatedByUserInfo.Username, LDLApplication.CreatedByUserInfo.UsernameIV);
+            lblUserName.Text = clsCryptography.DecryptString(clsGlobalSettings.EncryptionKey, LDLApplication.CreatedByUserInfo.Username, LDLApplication.CreatedByUserInfo.UsernameIV);
 
             _PersonID = LDLApplication.ApplicantPersonID;
         }

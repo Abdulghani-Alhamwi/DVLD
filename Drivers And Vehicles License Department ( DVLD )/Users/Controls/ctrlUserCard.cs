@@ -21,7 +21,7 @@ namespace DVLDPresentationLayer
             string EncryptedUsername = "", UsernameIV = "";
             clsUser.GetUserName(User.UserID, ref EncryptedUsername, ref UsernameIV);
 
-            lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, User.Username, User.UsernameIV);
+            lblUserName.Text = clsCryptography.DecryptString(clsGlobalSettings.EncryptionKey, User.Username, User.UsernameIV);
 
             lblIsActive.Text = (User.IsActive) ? "Yes" : "No";
         }

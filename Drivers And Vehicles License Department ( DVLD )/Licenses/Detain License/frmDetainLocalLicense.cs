@@ -31,13 +31,13 @@ namespace DVLDPresentationLayer.Controls
 
         private void _ShowBasicInfo()
         {
-            lblDetainedDate.Text = DateTime.Now.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblDetainedDate.Text = DateTime.Now.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName));
 
             string EncryptedUsername = "", UsernameIV = "";
             clsUser.GetUserName(clsGlobalSettings.CurrentUserID, ref EncryptedUsername, ref UsernameIV);
 
-            lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
-            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            lblUserName.Text = clsCryptography.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private void _DetainLicense()
@@ -55,8 +55,8 @@ namespace DVLDPresentationLayer.Controls
                     lblDetainID.Text = DetainID.ToString();
                     MessageBox.Show($"License Detained Successfully With ID = {DetainID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    object[] DetainedLicenseInfo = new object[] { _SelectedLocalLicenseInfo.DetainInfo.DetainID , _SelectedLocalLicenseInfo.DetainInfo.LocalLicenseID, _SelectedLocalLicenseInfo.DetainInfo.DetainDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat))
-                        , _SelectedLocalLicenseInfo.DetainInfo.IsReleased,clsGeneralUtility.GetCustomNumberFormat(_SelectedLocalLicenseInfo.DetainInfo.FineFees, clsGeneralUtility.enCustomNumberFormat.With4ZerosAfterFraction),null,_SelectedLocalLicenseInfo.DriverInfo.PersonalInfo.NationalNo
+                    object[] DetainedLicenseInfo = new object[] { _SelectedLocalLicenseInfo.DetainInfo.DetainID , _SelectedLocalLicenseInfo.DetainInfo.LocalLicenseID, _SelectedLocalLicenseInfo.DetainInfo.DetainDate.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateTimeCustomFormat))
+                        , _SelectedLocalLicenseInfo.DetainInfo.IsReleased,clsFormat.GetCustomNumberFormat(_SelectedLocalLicenseInfo.DetainInfo.FineFees, clsFormat.enCustomNumberFormat.With4ZerosAfterFraction),null,_SelectedLocalLicenseInfo.DriverInfo.PersonalInfo.NationalNo
                         ,_SelectedLocalLicenseInfo.DriverInfo.PersonalInfo.FullName, null};
 
                     AfterDetainingLicense?.Invoke(DetainedLicenseInfo);

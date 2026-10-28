@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -10,8 +9,6 @@ namespace Utility_Library
     public class clsDataGridViewUtilityLib
     {
         public enum enDataGridViewSortDirection : byte { Ascending = 0, Descending = 1 }
-
-        public static byte WantedNumOfRowsFromDB = 10;
 
         private int _NumberOfDGVAddedRows;
         public int NumberOfRowsToOffset { get; set; }
@@ -311,7 +308,7 @@ namespace Utility_Library
                 foreach (DataRow datarow in NewDataSource.Rows)
                 {
                     IDWithIVPairs.TryGetValue((int)datarow[IDColumnName], out string IV);
-                    datarow[EncryptedColumnName] = clsGeneralUtility.DecryptString(EncryptionKey,datarow[EncryptedColumnName].ToString(),IV);
+                    datarow[EncryptedColumnName] = clsCryptography.DecryptString(EncryptionKey,datarow[EncryptedColumnName].ToString(),IV);
                 }
             }
         }

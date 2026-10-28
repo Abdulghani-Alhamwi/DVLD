@@ -29,7 +29,7 @@ namespace DVLDPresentationLayer
         {
             uctrlPersonDetailsByFilter.SearchForPerson(PersonID);
             uctrlDriverLicensesHistory.LoadDriverLicenseHistory(clsDriver.GetDriverID(PersonID));
-            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private void btnExit_Click(object sender, EventArgs e)

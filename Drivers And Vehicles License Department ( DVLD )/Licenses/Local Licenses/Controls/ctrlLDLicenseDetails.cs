@@ -52,11 +52,11 @@ namespace DVLDPresentationLayer
             lblIsActive.Text = (License.IsActive) ? "Yes" : "No";
             lblIsDetained.Text = (License.IsDetained) ? "Yes" : "No";
             lblClassName.Text = License.LicenseClassInfo.ClassName;
-            lblIssueDate.Text = License.IssueDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblIssueDate.Text = clsFormat.DateToShort(License.IssueDate);
             lblIssueReason.Text = License.IssueReasonText;
-            lblDateOfBirth.Text = License.DriverInfo.PersonalInfo.DateOfBirth.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblDateOfBirth.Text = clsFormat.DateToShort(License.DriverInfo.PersonalInfo.DateOfBirth);
             lblDriverID.Text = License.DriverID.ToString();
-            lblExpDate.Text = License.ExpirationDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblExpDate.Text = clsFormat.DateToShort(License.ExpirationDate);
             lblNotes.Text = (License.Notes != "") ? License.Notes : "No Notes";
 
         }
@@ -66,7 +66,7 @@ namespace DVLDPresentationLayer
             lblPersonFullName.Text = UpdatedPersonalInfo.FullName;
             lblNationalNo.Text = UpdatedPersonalInfo.NationalNo;
             lblGendor.Text = (UpdatedPersonalInfo.Gendor == clsPerson.enGendor.Male) ? "Male" : "Female";
-            lblDateOfBirth.Text = UpdatedPersonalInfo.DateOfBirth.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblDateOfBirth.Text = UpdatedPersonalInfo.DateOfBirth.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName));
 
             LoadPersonImage(UpdatedPersonalInfo);
         }

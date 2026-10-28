@@ -28,7 +28,7 @@ namespace Utility_Library
         public static string ReplaceFileNameWithGuid(string FileName)
         {
             FileInfo fileInfo = new FileInfo(FileName);
-            return clsGeneralUtility.GenerateGuid() + fileInfo.Extension;
+            return clsUtility.GenerateGuid() + fileInfo.Extension;
         }
 
         public static bool CopyImageToProjectImageFolder(string ProjectImageFolderPath,ref string ImageSourcePath)

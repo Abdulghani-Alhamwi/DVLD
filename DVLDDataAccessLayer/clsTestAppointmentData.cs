@@ -12,7 +12,7 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _FixedQueryPart =
           $@"{_PrimaryKeyColumnName} AS [Appointment ID],
-          FORMAT(AppointmentDate,'{clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat)}') AS [Appointment Date] ,
+          FORMAT(AppointmentDate,'{clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateTimeCustomFormat)}') AS [Appointment Date] ,
           PaidFees AS [Paid Fees],IsLocked AS [Is Locked] FROM TestAppointments";
 
         private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
@@ -21,7 +21,7 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
 
-        private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
+        private static readonly string _OffsetPaginationQueryPart = clsSqlQueryBuilder.GetOffsetPaginationQueryPart();
 
         private enum _enUpdatableColumns : byte { AppointmentDate, IsLocked }
 
@@ -99,14 +99,14 @@ namespace DVLDDataAccessLayer
             {
                 query = _QueryWithoutPagination;
                 query += $@" WHERE {_PrimaryKeyColumnName} < @LastBroughtAppointmentID AND {_QueryConditionPart}";
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             else
             {
                 query = _QueryWithoutPagination;
                 query += $" WHERE {_QueryConditionPart}";
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             return query;
@@ -120,14 +120,14 @@ namespace DVLDDataAccessLayer
             {
                 query = _QueryWithoutPagination;
                 query += $" WHERE {_QueryConditionPart}";
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             else
             {
                 query = _QueryForOffsetPagination;
                 query += $" WHERE {_QueryConditionPart}";
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
                 query += _OffsetPaginationQueryPart;
             }
 
@@ -469,16 +469,16 @@ namespace DVLDDataAccessLayer
         {
             string query = _QueryWithoutPagination;
 
-            query += clsGeneralUtility.GetFilterQueryPart_ValueCondition("TestTypeID");
+            query += clsSqlQueryBuilder.GetFilterQueryPart_ValueCondition("TestTypeID");
             query += $" AND LocalDrivingLicenseApplicationID = {LDLApplicationID}";
-            query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+            query += clsSqlQueryBuilder.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
 
             return query;
         }
 
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection, int LDLApplicationID, byte TestTypeID)
         {
-            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(clsDataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection,LDLApplicationID,TestTypeID),
+            return clsSqlQueryBuilder.GetSortedInfoFromYourQueryAndArgs(clsDataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection,LDLApplicationID,TestTypeID),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection,TestTypeID.ToString());
         }
     }

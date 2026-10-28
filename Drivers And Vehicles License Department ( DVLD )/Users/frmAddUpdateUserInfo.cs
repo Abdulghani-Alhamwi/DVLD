@@ -73,7 +73,7 @@ namespace DVLDPresentationLayer
                 btnSave.Enabled = true;
             }
 
-            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private void _SetTitles(clsUser.enMode Mode)
@@ -103,7 +103,7 @@ namespace DVLDPresentationLayer
             uctrlpersonInfoByFilter.LoadPersonDetails(_User.PersonID);
 
             lblUserID.Text = _User.UserID.ToString();
-            txtUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey,_User.Username,_User.UsernameIV);
+            txtUserName.Text = clsCryptography.DecryptString(clsGlobalSettings.EncryptionKey,_User.Username,_User.UsernameIV);
             txtPassword.Text = _DefaultPasswordValue;
             txtPasswordConfirmation.Text = _DefaultPasswordValue;
             chkIsActive.Checked = _User.IsActive;
@@ -189,39 +189,39 @@ namespace DVLDPresentationLayer
         {
             if (_User !=null)
             {
-                if (txtUserName.Text == clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, _User.Username, _User.UsernameIV))
+                if (txtUserName.Text == clsCryptography.DecryptString(clsGlobalSettings.EncryptionKey, _User.Username, _User.UsernameIV))
                     return;
             }
 
             if (txtUserName.Text == "" || string.IsNullOrWhiteSpace(txtUserName.Text))
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtUserName, "Username cannot be blank.", e);
+                clsValidation.EnableErrorProvider(erTextBox, txtUserName, "Username cannot be blank.", e);
 
-            else if (clsUser.IsUserAlreadyExists(clsGeneralUtility.HashUsernameForLookUp(txtUserName.Text)))
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtUserName, "Username is already taken by another user. Please choose another username.", e);
+            else if (clsUser.IsUserAlreadyExists(clsCryptography.HashUsernameForLookUp(txtUserName.Text)))
+                clsValidation.EnableErrorProvider(erTextBox, txtUserName, "Username is already taken by another user. Please choose another username.", e);
 
             else
-                clsGeneralUtility.DisableErrorProvider(erTextBox, txtUserName);
+                clsValidation.DisableErrorProvider(erTextBox, txtUserName);
         }
 
         private void txtPasswordConfirmation_Validating(object sender,CancelEventArgs e)
         {
-            if (txtPasswordConfirmation.Text == "" || string.IsNullOrWhiteSpace(txtPasswordConfirmation.Text)) 
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation cannot be blank.", e);
+            if (txtPasswordConfirmation.Text == "" || string.IsNullOrWhiteSpace(txtPasswordConfirmation.Text))
+                clsValidation.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation cannot be blank.", e);
 
             else if (txtPasswordConfirmation.Text != txtPasswordConfirmation.Text)
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation does not match password!", e);
+                clsValidation.EnableErrorProvider(erTextBox, txtPasswordConfirmation, "Password confirmation does not match password!", e);
             
             else
-                clsGeneralUtility.DisableErrorProvider(erTextBox, txtPasswordConfirmation);
+                clsValidation.DisableErrorProvider(erTextBox, txtPasswordConfirmation);
         }
 
         private void txtPassword_Validating(object sender, CancelEventArgs e)
         {
             if (txtPassword.Text == "" || string.IsNullOrWhiteSpace(txtPassword.Text))
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPassword, "Password cannot be blank.", e);
+                clsValidation.EnableErrorProvider(erTextBox, txtPassword, "Password cannot be blank.", e);
 
             else
-                clsGeneralUtility.DisableErrorProvider(erTextBox, txtPassword);
+                clsValidation.DisableErrorProvider(erTextBox, txtPassword);
         }
 
         private void frmAddNewUser_Load(object sender, EventArgs e)
@@ -242,7 +242,7 @@ namespace DVLDPresentationLayer
         private void _SetPasswordAndSalt(ref string Password,ref string Salt)
         {
             byte[] SaltArray = null;
-            Password = clsGeneralUtility.HashWithSaltPassword(txtPassword.Text.Trim(), ref SaltArray);
+            Password = clsCryptography.HashWithSaltPassword(txtPassword.Text.Trim(), ref SaltArray);
             Salt = Convert.ToBase64String(SaltArray);
         }
 
@@ -278,9 +278,9 @@ namespace DVLDPresentationLayer
             {
                 User = _User;
                 User.PersonID = _PersonID;
-                User.Username = clsGeneralUtility.EncryptString(clsGlobalSettings.EncryptionKey, txtUserName.Text.Trim(), out byte[] UsernameIV);
+                User.Username = clsCryptography.EncryptString(clsGlobalSettings.EncryptionKey, txtUserName.Text.Trim(), out byte[] UsernameIV);
                 User.UsernameIV = Convert.ToBase64String(UsernameIV);
-                User.UsernameHash = clsGeneralUtility.HashUsernameForLookUp(txtUserName.Text.Trim());
+                User.UsernameHash = clsCryptography.HashUsernameForLookUp(txtUserName.Text.Trim());
 
                 if (txtPassword.Text.Trim() != _DefaultPasswordValue)
                     _SetPasswordAndSalt(User);
@@ -296,9 +296,9 @@ namespace DVLDPresentationLayer
 
                 User = new clsUser(
                  PersonID: _PersonID,
-                 Username: clsGeneralUtility.EncryptString(clsGlobalSettings.EncryptionKey, txtUserName.Text.Trim(), out byte[] UsernameIV),
+                 Username: clsCryptography.EncryptString(clsGlobalSettings.EncryptionKey, txtUserName.Text.Trim(), out byte[] UsernameIV),
                  UsernameIV: Convert.ToBase64String(UsernameIV),
-                 UsernameHash: clsGeneralUtility.HashUsernameForLookUp(txtUserName.Text.Trim()),
+                 UsernameHash: clsCryptography.HashUsernameForLookUp(txtUserName.Text.Trim()),
                  Password: _Password, Salt: _Salt,
                  IsActive: chkIsActive.Checked, Permissions: _GetNewUserPermissions()
                  );

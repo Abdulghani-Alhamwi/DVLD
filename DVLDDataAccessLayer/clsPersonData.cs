@@ -16,7 +16,7 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _QueryForOffsetPagination = "SELECT " + _FixedQueryPart;
 
-        private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
+        private static readonly string _OffsetPaginationQueryPart = clsSqlQueryBuilder.GetOffsetPaginationQueryPart();
 
         private enum _enUpdatableColumns : byte
         {
@@ -109,13 +109,13 @@ namespace DVLDDataAccessLayer
             if (LastBroughtPersonID != -1)
             {
                 query = _QueryWithoutPagination;
-                query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtPersonID,true,true,true);
+                query += clsSqlQueryBuilder.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, false, LastBroughtPersonID,true,true,true);
             }
 
             else
             {
                 query = _QueryWithoutPagination;
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             return query;
@@ -128,13 +128,13 @@ namespace DVLDDataAccessLayer
             if (NumberOfRowsToOffset == -1)
             {
                 query = _QueryWithoutPagination;
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             else
             {
                 query = _QueryForOffsetPagination;
-                query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
                 query += _OffsetPaginationQueryPart;
             }
 
@@ -889,15 +889,15 @@ namespace DVLDDataAccessLayer
                 if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
                 {
                     query = _QueryWithoutPagination;
-                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar,true);
-                    query += clsGeneralUtility.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtPersonID,true,true,true);
+                    query += clsSqlQueryBuilder.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar,true);
+                    query += clsSqlQueryBuilder.GetLastQueryPart(_PrimaryKeyViewedColumnName, ColumnNameToOrderBy, SortDirection, true, LastBroughtPersonID,true,true,true);
                 }
 
                 else
                 {
                     query = _QueryForOffsetPagination;
-                    query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar,true);
-                    query += clsGeneralUtility.GetOrderByQueryPart(ColumnNameToOrderBy,SortDirection,true);
+                    query += clsSqlQueryBuilder.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar,true);
+                    query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy,SortDirection,true);
                     query += _OffsetPaginationQueryPart;
                 }
             }
@@ -1042,13 +1042,13 @@ namespace DVLDDataAccessLayer
 
             if (string.IsNullOrEmpty(ValueToFilterBy))
             {
-                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsSqlQueryBuilder.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             else
             {
-                query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar,true);
-                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += clsSqlQueryBuilder.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar,true);
+                query += clsSqlQueryBuilder.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             return query;
@@ -1057,7 +1057,7 @@ namespace DVLDDataAccessLayer
         public static DataTable GetSortedInfo(byte WantedNumOfRecords, string ColumnNameToOrderBy, string SortDirection,
                string ColumnNameToFilterBy = null, string ValueToFilterBy = null, char? WildChar = null)
         {
-            return clsGeneralUtility.GetSortedInfoFromYourQueryAndArgs(clsDataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
+            return clsSqlQueryBuilder.GetSortedInfoFromYourQueryAndArgs(clsDataAccessSettings.ConnectionString, _GetDataSortingQuery(ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ref ValueToFilterBy, WildChar),
                 WantedNumOfRecords, ColumnNameToOrderBy, SortDirection, ColumnNameToFilterBy, ValueToFilterBy, WildChar);
         }
     }

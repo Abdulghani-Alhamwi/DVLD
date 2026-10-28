@@ -8,10 +8,10 @@ namespace DVLDPresentationLayer
     {
         private static void _AddEncryptionKey()
         {
-            if (!clsGeneralUtility.CredentialManager.GetStoredCredential(clsGlobalSettings.EncryptionKeyName, out byte[] SavedEncryptionKey))
+            if (!clsCryptography.CredentialManager.GetStoredCredential(clsGlobalSettings.EncryptionKeyName, out byte[] SavedEncryptionKey))
             {
-                byte[] EncryptionKey = clsGeneralUtility.GenerateEncryptionKey(16);
-                clsGeneralUtility.CredentialManager.StoreCredential(clsGlobalSettings.EncryptionKeyName, EncryptionKey);
+                byte[] EncryptionKey = clsCryptography.GenerateEncryptionKey(16);
+                clsCryptography.CredentialManager.StoreCredential(clsGlobalSettings.EncryptionKeyName, EncryptionKey);
 
                 clsGlobalSettings.EncryptionKey = EncryptionKey;
             }

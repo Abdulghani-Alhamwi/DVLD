@@ -44,9 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsCryptography.cs" />
     <Compile Include="clsDataGridViewUtilityLib.cs" />
     <Compile Include="clsFileManager.cs" />
-    <Compile Include="clsGeneralUtility.cs" />
+    <Compile Include="clsFormat.cs" />
+    <Compile Include="clsSqlQueryBuilder.cs" />
+    <Compile Include="clsUtility.cs" />
+    <Compile Include="clsValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

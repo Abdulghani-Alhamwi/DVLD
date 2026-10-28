@@ -26,12 +26,12 @@ namespace DVLDPresentationLayer
                 lblLocalLicenseID.Text = InternationalLicense.IssuedUsingLocalLicenseID.ToString();
                 lblNationalNo.Text = Person.NationalNo;
                 lblGendor.Text = (Person.Gendor == clsPerson.enGendor.Male) ? "Male" : "Female";
-                lblIssueDate.Text = InternationalLicense.IssueDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+                lblIssueDate.Text = InternationalLicense.IssueDate.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName));
                 lblApplicationID.Text = InternationalLicense.ApplicationID.ToString();
                 lblIsActive.Text = (InternationalLicense.IsActive) ? "Yes" : "No";
-                lblDateOfBirth.Text = Person.DateOfBirth.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+                lblDateOfBirth.Text = Person.DateOfBirth.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName));
                 lblDriverID.Text = InternationalLicense.DriverID.ToString();
-                lblExpDate.Text = InternationalLicense.ExpirationDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+                lblExpDate.Text = InternationalLicense.ExpirationDate.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName));
 
                 if (File.Exists(Person.ImagePath))
                     pbPersonalImage.ImageLocation = Person.ImagePath;

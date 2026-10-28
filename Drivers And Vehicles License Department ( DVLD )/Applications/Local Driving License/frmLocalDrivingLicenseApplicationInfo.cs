@@ -15,7 +15,7 @@ namespace DVLDPresentationLayer.Controls
         {
             InitializeComponent();
 
-            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
             _LocalDrivingLicenseApplicationID = LocalDrivingLicenseApplicationID;
             _DGVRowIndex = DGVRowIndex;
         }

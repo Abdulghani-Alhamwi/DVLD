@@ -54,7 +54,7 @@ namespace DVLDPresentationLayer
                 _SetTitles(clsPerson.enMode.Update);
             }
 
-            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
         }
 
         private void _SetTitles(clsPerson.enMode Mode)
@@ -118,7 +118,7 @@ namespace DVLDPresentationLayer
 
         private void cbCountries_DrawItem(object sender, DrawItemEventArgs e)
         {
-            clsGeneralUtility.DrawComboBoxItems(sender, e,"CountryName");
+            clsUtility.DrawComboBoxItems(sender, e,"CountryName");
         }
 
         private void txtBoxName_Validating(object sender, CancelEventArgs e)
@@ -127,23 +127,23 @@ namespace DVLDPresentationLayer
 
             if (txtBox == txtThirdName && string.IsNullOrEmpty(txtBox.Text.Trim()))
             {
-                clsGeneralUtility.DisableErrorProvider(erTextBox, txtBox);
+                clsValidation.DisableErrorProvider(erTextBox, txtBox);
                 return;
             }
 
             else if (string.IsNullOrEmpty(txtBox.Text.Trim()))
             {
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtBox, $"It is required to enter your {txtBox.Tag.ToString()}!", e);
+                clsValidation.EnableErrorProvider(erTextBox, txtBox, $"It is required to enter your {txtBox.Tag.ToString()}!", e);
             }
 
-            else if (!clsGeneralUtility.ValidateNamePart(txtBox.Text))
+            else if (!clsValidation.ValidateNamePart(txtBox.Text))
             {
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtBox, $"{txtBox.Tag.ToString()} must contain only letters!", e);
+                clsValidation.EnableErrorProvider(erTextBox, txtBox, $"{txtBox.Tag.ToString()} must contain only letters!", e);
             }
 
             else
             {
-                clsGeneralUtility.DisableErrorProvider(erTextBox, txtBox);
+                clsValidation.DisableErrorProvider(erTextBox, txtBox);
             }
         }
 
@@ -151,11 +151,11 @@ namespace DVLDPresentationLayer
         {
             if (txtAddress.Text == "" || string.IsNullOrWhiteSpace(txtAddress.Text))
             {
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtAddress, $"It is required to enter your Address!", e);
+                clsValidation.EnableErrorProvider(erTextBox, txtAddress, $"It is required to enter your Address!", e);
             }
             else
             {
-                clsGeneralUtility.DisableErrorProvider(erTextBox, txtAddress);
+                clsValidation.DisableErrorProvider(erTextBox, txtAddress);
             }
         }
 
@@ -165,7 +165,7 @@ namespace DVLDPresentationLayer
 
             if(string.IsNullOrEmpty(txtNationalNo.Text.Trim()))
             {
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtNationalNo, "National number cannot be empty!", e);
+                clsValidation.EnableErrorProvider(erTextBox, txtNationalNo, "National number cannot be empty!", e);
                 return;
             }
 
@@ -175,7 +175,7 @@ namespace DVLDPresentationLayer
 
                 if(IsNationalNoAlreadyExists)
                 {
-                    clsGeneralUtility.EnableErrorProvider(erTextBox, txtNationalNo, "National number is used by another person!", e);
+                    clsValidation.EnableErrorProvider(erTextBox, txtNationalNo, "National number is used by another person!", e);
                     return;
                 }
             }
@@ -188,13 +188,13 @@ namespace DVLDPresentationLayer
 
                     if (IsNationalNoAlreadyExists)
                     {
-                        clsGeneralUtility.EnableErrorProvider(erTextBox, txtNationalNo, "National number is used by another person!", e);
+                        clsValidation.EnableErrorProvider(erTextBox, txtNationalNo, "National number is used by another person!", e);
                         return;
                     }
                 }
             }
 
-            clsGeneralUtility.DisableErrorProvider(erTextBox, txtNationalNo);
+            clsValidation.DisableErrorProvider(erTextBox, txtNationalNo);
         }
 
         private void txtBoxNationalNo_Validating(object sender, CancelEventArgs e)
@@ -206,29 +206,29 @@ namespace DVLDPresentationLayer
         {
             if (txtPhone.Text == "" || string.IsNullOrWhiteSpace(txtPhone.Text))
             {
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPhone, "It is required to enter your Phone Number!", e);
+                clsValidation.EnableErrorProvider(erTextBox, txtPhone, "It is required to enter your Phone Number!", e);
             }
 
-            else if (!clsGeneralUtility.ValidateInteger(txtPhone.Text))
+            else if (!clsValidation.ValidateInteger(txtPhone.Text))
             {
-                clsGeneralUtility.EnableErrorProvider(erTextBox, txtPhone, "Phone Number must contains only digits!", e);
+                clsValidation.EnableErrorProvider(erTextBox, txtPhone, "Phone Number must contains only digits!", e);
             }
 
             else
-                clsGeneralUtility.DisableErrorProvider(erTextBox, txtPhone);
+                clsValidation.DisableErrorProvider(erTextBox, txtPhone);
         }
 
         private void txtBoxEmail_Validating(object sender, CancelEventArgs e)
         {
             if (txtEmail.Text != "")
             {
-                if (!clsGeneralUtility.ValidateEmail(txtEmail.Text.Trim()))
+                if (!clsValidation.ValidateEmail(txtEmail.Text.Trim()))
                 {
-                    clsGeneralUtility.EnableErrorProvider(erTextBox, txtEmail, "Invalid Email Address Format!", e);
+                    clsValidation.EnableErrorProvider(erTextBox, txtEmail, "Invalid Email Address Format!", e);
                     return;
                 }
             }
-                clsGeneralUtility.DisableErrorProvider(erTextBox, txtEmail);
+            clsValidation.DisableErrorProvider(erTextBox, txtEmail);
         }
 
         private void frmAddEditPersonInfo_Load(object sender, EventArgs e)
@@ -236,7 +236,7 @@ namespace DVLDPresentationLayer
             btnExit.CausesValidation = false;
             btnClose.CausesValidation = false;
 
-            clsGeneralUtility.SetDateConstraintForAge(dtpDateOfBirth, 18, 100);
+            clsFormat.SetDateConstraintForAge(dtpDateOfBirth, 18, 100);
 
             DataView dataview = clsCountries.GetAllCountries().DefaultView;
 

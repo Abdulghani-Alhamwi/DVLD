@@ -56,7 +56,7 @@ namespace DVLDPresentationLayer
 
         private void frmLocalDrivingLicenseApplications_Load(object sender, EventArgs e)
         {
-            dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetLocalDrivingLicenseApplications(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
+            dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetLocalDrivingLicenseApplications(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
             if(dgvLDLApplications.DataSource != null)
             _AddComboBoxesFilterItems();
@@ -66,7 +66,7 @@ namespace DVLDPresentationLayer
 
         private void DrawComboBoxItems(object sender, DrawItemEventArgs e)
         {
-            clsGeneralUtility.DrawComboBoxItems((ComboBox)sender, e);
+            clsUtility.DrawComboBoxItems((ComboBox)sender, e);
         }
 
         private void txtFilter_KeyUp(object sender, KeyEventArgs e)
@@ -80,7 +80,7 @@ namespace DVLDPresentationLayer
                 dgvLDLApplications.DataSource = _GetFilteredData();
 
             else
-                dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetLocalDrivingLicenseApplications(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
+                dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetLocalDrivingLicenseApplications(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
             _PreviousFilterText = txtFilter.Text.Trim();
         }
@@ -93,7 +93,7 @@ namespace DVLDPresentationLayer
             if ((_PreviousCbFilterSelectedItem == "Status" && cbStatus.SelectedItem.ToString() != "All")
                 || !clsDataGridViewUtilityLib.IsRepeatedDataLoadToDgv(txtFilter))
             {
-                dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetLocalDrivingLicenseApplications(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
+                dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetLocalDrivingLicenseApplications(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
             }
 
             if (_PreviousCbFilterSelectedItem == "Status")
@@ -243,11 +243,11 @@ namespace DVLDPresentationLayer
             DataTable dtFilteredData;
 
             if (!ScrollCase)
-                dtFilteredData = clsLocalDrivingLicenseApplication.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbStatus.SelectedItem.ToString(),
+                dtFilteredData = clsLocalDrivingLicenseApplication.GetFilteredData(clsGlobalSettings.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbStatus.SelectedItem.ToString(),
                         _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), null);
 
             else
-                dtFilteredData = clsLocalDrivingLicenseApplication.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbStatus.SelectedItem.ToString(),
+                dtFilteredData = clsLocalDrivingLicenseApplication.GetFilteredData(clsGlobalSettings.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbStatus.SelectedItem.ToString(),
                         _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), _LastBroughtLDLAppID, _DgvUtilityLib.NumberOfRowsToOffset, null);
 
             return dtFilteredData;
@@ -259,28 +259,28 @@ namespace DVLDPresentationLayer
             if (!ScrollCase)
             {
                 if (cbFilterBy.SelectedItem.ToString() == "L.D.L.AppID")
-                    dtLDLApplicationsInfo = clsLocalDrivingLicenseApplication.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(),
+                    dtLDLApplicationsInfo = clsLocalDrivingLicenseApplication.GetFilteredData(clsGlobalSettings.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(),
                         _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), null);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Status")
                     dtLDLApplicationsInfo = _GetFilteredDataForStatus(false);
 
                 else
-                    dtLDLApplicationsInfo = clsLocalDrivingLicenseApplication.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(),
+                    dtLDLApplicationsInfo = clsLocalDrivingLicenseApplication.GetFilteredData(clsGlobalSettings.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(),
                         _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), '%');
             }
 
             else
             {
                 if (cbFilterBy.SelectedItem.ToString() == "L.D.L.AppID")
-                    dtLDLApplicationsInfo = clsLocalDrivingLicenseApplication.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(),
+                    dtLDLApplicationsInfo = clsLocalDrivingLicenseApplication.GetFilteredData(clsGlobalSettings.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(),
                         _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), _LastBroughtLDLAppID, _DgvUtilityLib.NumberOfRowsToOffset, null);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Status")
                     dtLDLApplicationsInfo = _GetFilteredDataForStatus(true);
 
                 else
-                    dtLDLApplicationsInfo = clsLocalDrivingLicenseApplication.GetFilteredData(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(),
+                    dtLDLApplicationsInfo = clsLocalDrivingLicenseApplication.GetFilteredData(clsGlobalSettings.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(),
                         _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), _LastBroughtLDLAppID, _DgvUtilityLib.NumberOfRowsToOffset, '%');
             }
 
@@ -307,7 +307,7 @@ namespace DVLDPresentationLayer
 
             else
             {
-                DataTable dtLDLApplications = clsLocalDrivingLicenseApplication.GetLocalDrivingLicenseApplications(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, _LastBroughtLDLAppID, _LastColumnNameDgvSortedBy
+                DataTable dtLDLApplications = clsLocalDrivingLicenseApplication.GetLocalDrivingLicenseApplications(clsGlobalSettings.WantedNumOfRowsFromDB, _LastBroughtLDLAppID, _LastColumnNameDgvSortedBy
                     , _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
                 NewRows = dtLDLApplications?.Select();
@@ -536,22 +536,22 @@ namespace DVLDPresentationLayer
 
             if (txtFilter.Text.Trim() == "" && cbFilterBy.SelectedItem.ToString() != "Status")
             {
-                dtSortedInfo = clsLocalDrivingLicenseApplication.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvLDLApplications.Columns[e.ColumnIndex].HeaderText
+                dtSortedInfo = clsLocalDrivingLicenseApplication.GetSortedInfo(clsGlobalSettings.WantedNumOfRowsFromDB, dgvLDLApplications.Columns[e.ColumnIndex].HeaderText
                 , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
             }
 
             else
             {
                 if (cbFilterBy.SelectedItem.ToString() == "L.D.L.AppID")
-                    dtSortedInfo = clsLocalDrivingLicenseApplication.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvLDLApplications.Columns[e.ColumnIndex].HeaderText
+                    dtSortedInfo = clsLocalDrivingLicenseApplication.GetSortedInfo(clsGlobalSettings.WantedNumOfRowsFromDB, dgvLDLApplications.Columns[e.ColumnIndex].HeaderText
                             , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection),cbFilterBy.SelectedItem.ToString(),txtFilter.Text.Trim(), null);
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Status")
-                    dtSortedInfo = clsLocalDrivingLicenseApplication.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvLDLApplications.Columns[e.ColumnIndex].HeaderText
+                    dtSortedInfo = clsLocalDrivingLicenseApplication.GetSortedInfo(clsGlobalSettings.WantedNumOfRowsFromDB, dgvLDLApplications.Columns[e.ColumnIndex].HeaderText
                             , clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), cbFilterBy.SelectedItem.ToString(), cbStatus.SelectedItem.ToString(), null);
 
                 else
-                    dtSortedInfo = clsLocalDrivingLicenseApplication.GetSortedInfo(clsDataGridViewUtilityLib.WantedNumOfRowsFromDB, dgvLDLApplications.Columns[e.ColumnIndex].HeaderText,
+                    dtSortedInfo = clsLocalDrivingLicenseApplication.GetSortedInfo(clsGlobalSettings.WantedNumOfRowsFromDB, dgvLDLApplications.Columns[e.ColumnIndex].HeaderText,
                                clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(), '%');
             }
 

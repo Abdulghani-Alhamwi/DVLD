@@ -19,7 +19,6 @@ D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD 
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.frmEditApplicationType.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.ctrLDLApplicationInfo.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.Controls.frmLocalDrivingLicenseApplicationInfo.resources
-D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.ctrlLDLicenseDetails.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.ctrlDriverLicensesHistory.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.ctrlInternationalLicenseDetails.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.ctrlLDLicenseDetailsByFilter.resources
@@ -116,3 +115,4 @@ C:\Users\User\Desktop\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\
 C:\Users\User\Desktop\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLD_PresentationLayer.csproj.CopyComplete
 C:\Users\User\Desktop\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLD Presentation Layer.exe
 C:\Users\User\Desktop\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLD Presentation Layer.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.ctrlDriverLocalLicenseDetails.resources

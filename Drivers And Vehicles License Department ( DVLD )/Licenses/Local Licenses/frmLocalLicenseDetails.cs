@@ -9,8 +9,8 @@ namespace DVLDPresentationLayer
         public frmLocalLicenseDetails(int LocalLicenseID)
         {
             InitializeComponent();
-            clsGeneralUtility.CenterControlHorizontally(this, pbLicenseView);
-            clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
+            clsUtility.CenterControlHorizontally(this, pbLicenseView);
+            clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
 
             uctrlDriverLicenseInfo.LoadInfo(LocalLicenseID);
         }
