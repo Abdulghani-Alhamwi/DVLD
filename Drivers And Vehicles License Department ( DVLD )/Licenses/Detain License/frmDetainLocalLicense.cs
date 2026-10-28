@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using Utility_Library;
+using static DVLDBusinessLayer.clsTestType;
 
 namespace DVLDPresentationLayer.Controls
 {
@@ -10,7 +11,7 @@ namespace DVLDPresentationLayer.Controls
         public event Action<object[]> AfterDetainingLicense;
         public event Action<clsPerson, int> OnUpdatedDriverPersonalInfo;
 
-        private clsLocalLicense _LocalLicenseInfo;
+        private clsLocalLicense _SelectedLocalLicenseInfo;
         private DataGridView _DGVDetainedLicenses;
         private string _DGVLocalLicenesColumnName;
 
@@ -41,19 +42,22 @@ namespace DVLDPresentationLayer.Controls
 
         private void _DetainLicense()
         {
-            clsDetainedLicense DetainedLicense = new clsDetainedLicense(_LocalLicenseInfo.LicenseID, DateTime.Now, Convert.ToDecimal(txtFineFees.Text), clsGlobalSettings.CurrentUserID);
-
             DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to detain this license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (ConfirmationQuestion == DialogResult.Yes)
+            if (ConfirmationQuestion == DialogResult.No)
             {
-                if (DetainedLicense.Save())
-                {
-                    lblDetainID.Text = DetainedLicense.DetainID.ToString();
-                    MessageBox.Show($"License Detained Successfully With ID = {DetainedLicense.DetainID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-                    object[] DetainedLicenseInfo = new object[] { DetainedLicense.DetainID , DetainedLicense.LocalLicenseID, DetainedLicense.DetainDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat))
-                        , DetainedLicense.IsReleased,DetainedLicense.FineFees,null,clsPerson.GetNationalNumber(clsDriver.GetDriverPersonID(clsLocalLicense.GetDriverID(DetainedLicense.LocalLicenseID)))
-                        ,clsPerson.GetFullName(clsDriver.GetDriverPersonID(clsLocalLicense.GetDriverID(DetainedLicense.LocalLicenseID))), null};
+            int DetainID = _SelectedLocalLicenseInfo.Detain(Convert.ToDecimal(txtFineFees.Text.Trim()), clsGlobalSettings.CurrentUserID);
+
+                if (DetainID != -1)
+                {
+                    lblDetainID.Text = DetainID.ToString();
+                    MessageBox.Show($"License Detained Successfully With ID = {DetainID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    object[] DetainedLicenseInfo = new object[] { _SelectedLocalLicenseInfo.DetainInfo.DetainID , _SelectedLocalLicenseInfo.DetainInfo.LocalLicenseID, _SelectedLocalLicenseInfo.DetainInfo.DetainDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateTimeCustomFormat))
+                        , _SelectedLocalLicenseInfo.DetainInfo.IsReleased,clsGeneralUtility.GetCustomNumberFormat(_SelectedLocalLicenseInfo.DetainInfo.FineFees, clsGeneralUtility.enCustomNumberFormat.With4ZerosAfterFraction),null,_SelectedLocalLicenseInfo.DriverInfo.PersonalInfo.NationalNo
+                        ,_SelectedLocalLicenseInfo.DriverInfo.PersonalInfo.FullName, null};
 
                     AfterDetainingLicense?.Invoke(DetainedLicenseInfo);
 
@@ -61,8 +65,7 @@ namespace DVLDPresentationLayer.Controls
                     lnlblShowLicenseInfo.Enabled = true;
                 }
                 else
-                    MessageBox.Show("Failed To Save Data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                    MessageBox.Show("Failed To detaon license!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void btnDetain_Click(object sender, EventArgs e)
@@ -98,7 +101,7 @@ namespace DVLDPresentationLayer.Controls
             else
             {
                 btnDetain.Enabled = true;
-                _LocalLicenseInfo = LocalLicenseInfo;
+                _SelectedLocalLicenseInfo = LocalLicenseInfo;
             }
             lblLicenseID.Text = LocalLicenseInfo.LicenseID.ToString();
 
@@ -107,7 +110,7 @@ namespace DVLDPresentationLayer.Controls
 
         private void lnlblShowLicenseInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmLocalLicenseDetails frm = new frmLocalLicenseDetails(_LocalLicenseInfo.LicenseID);
+            frmLocalLicenseDetails frm = new frmLocalLicenseDetails(_SelectedLocalLicenseInfo.LicenseID);
             frm.ShowDialog();
         }
     
@@ -138,7 +141,7 @@ namespace DVLDPresentationLayer.Controls
 
         private void lnlblShowLicenseHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmDriverLicenseHistory frm = GetfrmDriverLicensesHistoryObj(_DGVDetainedLicenses, _LocalLicenseInfo, _DGVLocalLicenesColumnName);
+            frmDriverLicenseHistory frm = GetfrmDriverLicensesHistoryObj(_DGVDetainedLicenses, _SelectedLocalLicenseInfo, _DGVLocalLicenesColumnName);
 
             if (_DGVDetainedLicenses != null)
                 frm.OnEditedDriverPersonalInfo += _EditDriverPersonalInfo;

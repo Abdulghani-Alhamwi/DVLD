@@ -177,11 +177,11 @@
     <Compile Include="Licenses\Local Licenses\frmLocalLicenseDetails.Designer.cs">
       <DependentUpon>frmLocalLicenseDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="Licenses\frmIssueDrivingLicense.cs">
+    <Compile Include="Licenses\Local Licenses\frmIssueDrivingLicenseFirstTime.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Licenses\frmIssueDrivingLicense.Designer.cs">
-      <DependentUpon>frmIssueDrivingLicense.cs</DependentUpon>
+    <Compile Include="Licenses\Local Licenses\frmIssueDrivingLicenseFirstTime.Designer.cs">
+      <DependentUpon>frmIssueDrivingLicenseFirstTime.cs</DependentUpon>
     </Compile>
     <Compile Include="Applications\Renew Local Driving License\frmRenewLocalDrivingLicense.cs">
       <SubType>Form</SubType>
@@ -374,8 +374,8 @@
     <EmbeddedResource Include="Licenses\Local Licenses\frmLocalLicenseDetails.resx">
       <DependentUpon>frmLocalLicenseDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Licenses\frmIssueDrivingLicense.resx">
-      <DependentUpon>frmIssueDrivingLicense.cs</DependentUpon>
+    <EmbeddedResource Include="Licenses\Local Licenses\frmIssueDrivingLicenseFirstTime.resx">
+      <DependentUpon>frmIssueDrivingLicenseFirstTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\Renew Local Driving License\frmRenewLocalDrivingLicense.resx">
       <DependentUpon>frmRenewLocalDrivingLicense.cs</DependentUpon>
@@ -544,9 +544,9 @@
     <None Include="Resources\People 64.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DVLDBusinessLayer\DVLDBusinessLayer.csproj">
+    <ProjectReference Include="..\DVLDBusinessLayer\DVLD_BusinessLayer.csproj">
       <Project>{973bc8be-82ca-4f53-82ed-5adfa32cf45c}</Project>
-      <Name>DVLDBusinessLayer</Name>
+      <Name>DVLD_BusinessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utility Library\Utility Library.csproj">
       <Project>{6a90476b-aff3-44a7-8fa7-48295aabd3d7}</Project>

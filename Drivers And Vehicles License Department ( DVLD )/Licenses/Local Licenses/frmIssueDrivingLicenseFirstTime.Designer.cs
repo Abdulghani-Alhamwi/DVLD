@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer.LocalDrivingLicenseApplications
 {
-    partial class frmIssueDrivingLicense
+    partial class frmIssueDrivingLicenseFirstTime
     {
         /// <summary>
         /// Required designer variable.
@@ -199,7 +199,7 @@
             this.uctrlDLApplicationInfo.TabIndex = 0;
             this.uctrlDLApplicationInfo.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonCard.PersonEditedInfo(this.uctrlDLApplicationInfo_OnPersonEditedInfo);
             // 
-            // frmIssueDrivingLicense
+            // frmIssueDrivingLicenseFirstTime
             // 
             this.AcceptButton = this.btnIssueLicense;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -223,10 +223,11 @@
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "frmIssueDrivingLicense";
+            this.Name = "frmIssueDrivingLicenseFirstTime";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Load += new System.EventHandler(this.frmIssueDrivingLicenseFirstTime_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbFees)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNotes)).EndInit();
             this.ResumeLayout(false);

@@ -17,9 +17,9 @@ namespace DVLDPresentationLayer
             InitializeComponent();
         }
 
-        public void LoadInfoByLocalDrivingLicenseAppID(int LocalDrivingLicenseApplication)
+        public void LoadInfoByLocalDrivingLicenseAppID(int LocalDrivingLicenseApplicationID)
         {
-            this.LocalDrivingLicenseApplication = clsLocalDrivingLicenseApplication.FindByLocalDrivingLicenseAppID(LocalDrivingLicenseApplication);
+            this.LocalDrivingLicenseApplication = clsLocalDrivingLicenseApplication.FindByLocalDrivingLicenseAppID(LocalDrivingLicenseApplicationID);
 
             if (this.LocalDrivingLicenseApplication != null)
             {

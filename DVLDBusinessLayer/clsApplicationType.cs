@@ -6,7 +6,6 @@ namespace DVLDBusinessLayer
 {
     public class clsApplicationType
     {
-        public enum enApplicationType : byte { NewLocalDrivingLicense = 1,RenewLicense = 2,ReplacementForLostLicense = 3 ,ReplacementForDamagedLicense = 4 ,ReleaseDetainedLicense = 5,NewInternationlLicense = 6,ReTakeTest = 7}
         public byte ApplicationTypeID { get; set; }
         public string ApplicationTypeTitle { get; set; }
         public decimal ApplicationTypeFees { get; set; }
@@ -52,10 +51,9 @@ namespace DVLDBusinessLayer
             return false;
         }
 
-        public static decimal GetApplicationTypeFees(enApplicationType ApplicationType)
+        public static decimal GetApplicationTypeFees(clsApplication.enApplicationType ApplicationTypeID)
         {
-            byte ApplicationTypeID = GetApplicationTypeID(ApplicationType);
-            return clsApplicationTypeData.GetApplicationTypeFees(ApplicationTypeID);
+            return clsApplicationTypeData.GetApplicationTypeFees((byte) ApplicationTypeID);
         }
 
         public static string GetApplicationTypeTitle(byte ApplicationTypeID)
@@ -63,32 +61,9 @@ namespace DVLDBusinessLayer
             return clsApplicationTypeData.GetApplicationTypeTitle(ApplicationTypeID);
         }
 
-        public static byte GetApplicationTypeID(enApplicationType ApplicationType)
+        public static byte GetApplicationTypeID(clsApplication.enApplicationType ApplicationType)
         {
-            switch(ApplicationType)
-            {
-                case enApplicationType.NewLocalDrivingLicense:
-                    return 1;
-
-                case enApplicationType.RenewLicense:
-                    return 2;
-
-                case enApplicationType.ReplacementForLostLicense:
-                    return 3;
-
-                case enApplicationType.ReplacementForDamagedLicense:
-                    return 4;
-
-                case enApplicationType.ReleaseDetainedLicense:
-                    return 5;
-
-                case enApplicationType.NewInternationlLicense:
-                    return 6;
-
-                case enApplicationType.ReTakeTest:
-                    return 7;
-            }
-            return 0;
+            return (byte)ApplicationType;
         }
 
         public bool Save()

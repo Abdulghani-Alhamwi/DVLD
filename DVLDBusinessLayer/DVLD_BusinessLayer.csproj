@@ -59,9 +59,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DVLDDataAccessLayer\DVLDDataAccessLayer.csproj">
+    <ProjectReference Include="..\DVLDDataAccessLayer\DVLD_DataAccessLayer.csproj">
       <Project>{87821629-02f7-465b-a682-7d5ca154ab67}</Project>
-      <Name>DVLDDataAccessLayer</Name>
+      <Name>DVLD_DataAccessLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

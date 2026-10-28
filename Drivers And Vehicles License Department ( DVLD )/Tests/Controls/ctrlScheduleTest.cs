@@ -185,7 +185,7 @@ namespace DVLDPresentationLayer
                 ApplicationStatus: clsApplication.enApplicationStatus.New,
                 LastStatusDate: DateTime.Now,
                 PaidApplicationFees: Convert.ToDecimal(lblRAppFees.Text),
-                ApplicationTypeID: clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.ReTakeTest),
+                ApplicationTypeID: clsApplicationType.GetApplicationTypeID(clsApplication.enApplicationType.ReTakeTest),
                 CreatedByUserID: clsGlobalSettings.CurrentUserID
             );
 
@@ -230,7 +230,7 @@ namespace DVLDPresentationLayer
             {
                 lblFormBigTitle.Text = "Schedule Retake Test";
 
-                lblRAppFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReTakeTest),
+                lblRAppFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.ReTakeTest),
                     enCustomNumberFormat.NoJustZerosAfterFraction);
 
                 lblTotalFees.Text = clsGeneralUtility.GetCustomNumberFormat(Convert.ToDecimal(lblTestFees.Text) + Convert.ToDecimal(lblRAppFees.Text),

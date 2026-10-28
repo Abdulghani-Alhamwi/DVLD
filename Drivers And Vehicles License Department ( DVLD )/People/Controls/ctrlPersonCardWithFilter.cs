@@ -150,7 +150,7 @@ namespace DVLDPresentationLayer
                 if (!txtFindBy.Text.All(char.IsDigit))
                     txtFindBy.Clear();
             }
-            _PreviouslyFoundText = "";
+            _PreviouslyFoundText = null;
         }
 
         public void LoadPersonDetails(int PersonID)

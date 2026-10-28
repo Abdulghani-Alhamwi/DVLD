@@ -524,16 +524,19 @@ namespace DVLDDataAccessLayer
         {
             string query = _QueryWithoutPagination;
 
-            if (string.IsNullOrEmpty(ValueToFilterBy))
-            {
-                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection,true);
-            }
-
-            else
+            if (!string.IsNullOrEmpty(ValueToFilterBy))
             {
                 query += clsGeneralUtility.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
-                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection, true);
             }
+
+            if (ColumnNameToOrderBy == "Date Created")
+            {
+                ColumnNameToOrderBy = "CONVERT(DATETIME,[Date Created],103)";
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection, false);
+            }
+            else
+                query += clsGeneralUtility.GetLastSortQueryPart(ColumnNameToOrderBy, SortDirection, true);
+
             return query;
         }
 

@@ -22,13 +22,13 @@ namespace DVLDPresentationLayer
             {
                 clsPerson Person = clsPerson.Find(clsDriver.GetDriverPersonID(License.DriverID));
 
-                lblClassName.Text = clsLicenseClass.GetLicenseClassName(License.LicenseClassID);
+                lblClassName.Text = License.LicenseClassInfo.ClassName;
                 lblPersonFullName.Text = Person.FullName;
                 lblLicenseID.Text = License.LicenseID.ToString();
                 lblNationalNo.Text = Person.NationalNo;
                 lblGendor.Text = (Person.Gendor == clsPerson.enGendor.Male) ? "Male" : "Female";
                 lblIssueDate.Text = License.IssueDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
-                lblIssueReason.Text = License.GetIssueReasonAsString();
+                lblIssueReason.Text = License.GetIssueReasonText();
                 lblNotes.Text = (License.Notes != null) ? License.Notes : "No Notes";
                 lblIsActive.Text = (License.IsActive) ? "Yes" : "No";
                 lblDateOfBirth.Text = Person.DateOfBirth.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));

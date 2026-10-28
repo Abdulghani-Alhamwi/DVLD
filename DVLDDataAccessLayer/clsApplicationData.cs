@@ -12,9 +12,9 @@ namespace DVLDDataAccessLayer
         public class clsOldApplicationData
         {
             public int ApplicantPersonID;
-            public short ApplicationStatus;
+            public byte ApplicationStatus;
 
-            public clsOldApplicationData(int ApplicantPersonID, short ApplicationStatus)
+            public clsOldApplicationData(int ApplicantPersonID, byte ApplicationStatus)
             {
                 this.ApplicantPersonID = ApplicantPersonID;
                 this.ApplicationStatus = ApplicationStatus;
@@ -57,14 +57,14 @@ namespace DVLDDataAccessLayer
             return ApplicationID;
         }
 
-        private static void _ResetChangedOldValues(int ApplicantPersonID, short ApplicationStatus, DateTime LastStatusDate,clsOldApplicationData oldApplicationData)
+        private static void _ResetChangedOldValues(int ApplicantPersonID, byte ApplicationStatus, DateTime LastStatusDate,clsOldApplicationData oldApplicationData)
         {
             if (ApplicantPersonID != oldApplicationData.ApplicantPersonID)
                 oldApplicationData.ApplicantPersonID = -1;
 
             if (ApplicationStatus != oldApplicationData.ApplicationStatus)
             {
-                oldApplicationData.ApplicationStatus = -1;
+                oldApplicationData.ApplicationStatus = 0;
             }
         }
 
@@ -85,7 +85,7 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        private static string _GetUpdateQuery(int ApplicantPersonID, short ApplicationStatus, DateTime LastStatusDate, clsOldApplicationData OldApplicationData)
+        private static string _GetUpdateQuery(int ApplicantPersonID, byte ApplicationStatus, DateTime LastStatusDate, clsOldApplicationData OldApplicationData)
         {
             string query = "UPDATE Applications SET";
 
@@ -107,7 +107,7 @@ namespace DVLDDataAccessLayer
             return query;
         }
 
-        public static bool UpdateApplication(int ApplicationID, int ApplicantPersonID, short ApplicationStatus, DateTime LastStatusDate, clsOldApplicationData OldApplicationData)
+        public static bool UpdateApplication(int ApplicationID, int ApplicantPersonID, byte ApplicationStatus, DateTime LastStatusDate, clsOldApplicationData OldApplicationData)
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -120,7 +120,7 @@ namespace DVLDDataAccessLayer
             if(OldApplicationData.ApplicantPersonID == -1)
             command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
 
-            if (OldApplicationData.ApplicationStatus == -1)
+            if (OldApplicationData.ApplicationStatus == 0)
             {
                 command.Parameters.AddWithValue("@Status", ApplicationStatus);
                 command.Parameters.AddWithValue("@LastStatusDate", LastStatusDate);
@@ -212,12 +212,13 @@ namespace DVLDDataAccessLayer
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
-            string query = $@"UPDATE Applications SET ApplicationStatus = @TheNewStatus
+            string query = $@"UPDATE Applications SET ApplicationStatus = @TheNewStatus, LastStatusDate = @LastStatusDate
                              WHERE {_PrimaryKeyColumnName} = @ApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
             command.Parameters.AddWithValue("@TheNewStatus", TheNewStatus);
+            command.Parameters.AddWithValue("@LastStatusDate", DateTime.Now);
+            command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
 
             try
             {

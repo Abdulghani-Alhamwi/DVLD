@@ -459,7 +459,7 @@ namespace DVLDPresentationLayer
                 return;
             }
 
-            frmIssueDrivingLicense frm = new frmIssueDrivingLicense((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index);
+            frmIssueDrivingLicenseFirstTime frm = new frmIssueDrivingLicenseFirstTime((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value, dgvLDLApplications.SelectedRows[0].Index);
             frm.AfterLicenseIssuance += _EditAppStatusToCompleted;
             frm.OnEditedApplicantPersonalInfo += _EditApplicantPersonalInfo;
             frm.ShowDialog();

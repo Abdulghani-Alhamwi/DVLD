@@ -36,7 +36,7 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _OffsetPaginationQueryPart = clsGeneralUtility.GetOffsetPaginationQueryPart();
 
-        public static DataTable GetLDLApplications(byte WantedNumOfRecords, int LastBroughtLDLAppID = -1, string ColumnNameToOrderBy = null
+        public static DataTable GetLocalDrivingLicenseApplications(byte WantedNumOfRecords, int LastBroughtLDLAppID = -1, string ColumnNameToOrderBy = null
              , int NumberOfRowsToOffset = -1, string SortDirection = "DESC")
         {
             DataTable dtLDLApplications = null;
@@ -159,7 +159,7 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        public static int AddLDLApplication(int ApplicationID, int LicenseClassID)
+        public static int _AddNewLocalDrivingLicenseApplication(int ApplicationID, int LicenseClassID)
         {
             int LDLApplicationID = -1;
 
@@ -212,7 +212,7 @@ namespace DVLDDataAccessLayer
             return query;
         }
 
-        public static bool UpdateLDLApplication(int LocalDrivingLicenseApplicationID,int LicenseClassID,int OldLicenseClassID)
+        public static bool UpdateLocalDrivingLicenseApplication(int LocalDrivingLicenseApplicationID,int LicenseClassID,int OldLicenseClassID)
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -240,16 +240,15 @@ namespace DVLDDataAccessLayer
             return (AffectedRows > 0);
         }
 
-        public static bool FindByLocalDrivingLicenseAppID(int LDLApplicationID, ref int ApplicationID, ref byte LicenseClassID , ref string LicenseClassName)
+        public static bool FindByLocalDrivingLicenseAppID(int LocalDrivingLicenseApplicationID, ref int ApplicationID, ref byte LicenseClassID)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = $@"SELECT LocalDrivingLicenseApplications.* , LicenseClasses.ClassName FROM LocalDrivingLicenseApplications
-                             INNER JOIN LicenseClasses ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID
+            string query = $@"SELECT * FROM LocalDrivingLicenseApplications
                              WHERE {_PrimaryKeyColumnName} = @LDLApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@LDLApplicationID", LDLApplicationID);
+            command.Parameters.AddWithValue("@LDLApplicationID", LocalDrivingLicenseApplicationID);
 
             try
             {
@@ -261,7 +260,6 @@ namespace DVLDDataAccessLayer
                 {
                     ApplicationID = (int)reader["ApplicationID"];
                     LicenseClassID = Convert.ToByte(reader["LicenseClassID"]);
-                    LicenseClassName = (string)reader["ClassName"];
 
                     IsFound = true;
                 }
@@ -278,12 +276,11 @@ namespace DVLDDataAccessLayer
             return IsFound;
         }
 
-        public static bool FindByApplicationID(int ApplicationID, ref int LDLApplicationID, ref byte LicenseClassID, ref string LicenseClassName)
+        public static bool FindByApplicationID(int ApplicationID, ref int LocalDrivingLicenseApplicationID, ref byte LicenseClassID)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-            string query = $@"SELECT LocalDrivingLicenseApplications.* , LicenseClasses.ClassName FROM LocalDrivingLicenseApplications
-                             INNER JOIN LicenseClasses ON LocalDrivingLicenseApplications.LicenseClassID = LicenseClasses.LicenseClassID
+            string query = $@"SELECT * , LicenseClasses.ClassName FROM LocalDrivingLicenseApplications
                              WHERE ApplicationID = @ApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
@@ -297,9 +294,8 @@ namespace DVLDDataAccessLayer
 
                 if (reader.Read())
                 {
-                    LDLApplicationID = (int)reader[_PrimaryKeyColumnName];
+                    LocalDrivingLicenseApplicationID = (int)reader[_PrimaryKeyColumnName];
                     LicenseClassID = Convert.ToByte(reader["LicenseClassID"]);
-                    LicenseClassName = (string)reader["ClassName"];
 
                     IsFound = true;
                 }

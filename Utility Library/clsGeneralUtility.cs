@@ -400,27 +400,31 @@ namespace Utility_Library
             else
                 Connection = CustomConnection;
 
-                try
+            try
+            {
+                Connection.Open();
+
+                SqlDataReader reader;
+                if (CustomCommand == null)
+                    reader = Command.ExecuteReader();
+                else
+                    reader = CustomCommand.ExecuteReader();
+
+                if (reader.HasRows)
                 {
-                    Connection.Open();
-
-                    SqlDataReader reader = (CustomCommand == null) ? Command.ExecuteReader() : CustomCommand.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        dtSortedData = new DataTable();
-                        dtSortedData.Load(reader);
-                    }
-
-                    reader.Close();
+                    dtSortedData = new DataTable();
+                    dtSortedData.Load(reader);
                 }
 
-                catch { }
+                reader.Close();
+            }
 
-                finally
-                {
-                    Connection.Close();
-                }
+            catch { }
+
+            finally
+            {
+                Connection.Close();
+            }
 
             return dtSortedData;
         }

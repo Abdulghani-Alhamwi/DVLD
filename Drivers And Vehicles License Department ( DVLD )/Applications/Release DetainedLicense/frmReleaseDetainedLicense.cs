@@ -13,8 +13,7 @@ namespace DVLDPresentationLayer.Licenses
         public event Action<int,DateTime,int> AfterReleasingALicense;
         public event Action<clsPerson, int> OnUpdatedDriverPersonalInfo;
 
-        private clsLocalLicense _LocalLicenseInfo;
-        private clsDetainedLicense _DetainInfo;
+        private clsLocalLicense _SelectedLocalLicenseInfo;
         private DataGridView _DGVDetainedLicenses;
         private string _DGVLocalLicenesColumnName;
 
@@ -49,21 +48,13 @@ namespace DVLDPresentationLayer.Licenses
 
             if (LocalLicense != null)
             {
-                _LocalLicenseInfo = LocalLicense;
+                _SelectedLocalLicenseInfo = LocalLicense;
                 uctrlLDLDetailsByFilter.uctrlLDLDetails.LoadDriverLicenseInfo(LocalLicenseID);
                 return true;
             }
 
             else
                 return false;
-        }
-
-        private bool _AddDetainInfo(int LocalLicenseID)
-        {
-            _DetainInfo = clsDetainedLicense.Find(LocalLicenseID);
-            _ShowDetainInfo();
-
-            return (_DetainInfo != null);
         }
 
         private void _InitilizeFormData(int LocalLicenseID = -1)
@@ -76,8 +67,9 @@ namespace DVLDPresentationLayer.Licenses
                {
                     lnlblShowLicenseHistory.Enabled = true;
                     
-                    if (_AddDetainInfo(LocalLicenseID))
+                    if (_SelectedLocalLicenseInfo.IsDetained)
                    {
+                        _ShowDetainInfo();
                         btnRelease.Enabled = true;
                    }
                     else
@@ -110,7 +102,7 @@ namespace DVLDPresentationLayer.Licenses
 
         private void lnlblShowLicenseHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmDriverLicenseHistory frm = frmDetainLocalLicense.GetfrmDriverLicensesHistoryObj(_DGVDetainedLicenses,_LocalLicenseInfo, _DGVLocalLicenesColumnName);
+            frmDriverLicenseHistory frm = frmDetainLocalLicense.GetfrmDriverLicensesHistoryObj(_DGVDetainedLicenses,_SelectedLocalLicenseInfo, _DGVLocalLicenesColumnName);
 
             if (_DGVDetainedLicenses != null)
                 frm.OnEditedDriverPersonalInfo += _EditDriverPersonalInfo;
@@ -123,22 +115,22 @@ namespace DVLDPresentationLayer.Licenses
 
         private void lnlblShowLicenseInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmLocalLicenseDetails frm = new frmLocalLicenseDetails(_LocalLicenseInfo.LicenseID);
+            frmLocalLicenseDetails frm = new frmLocalLicenseDetails(_SelectedLocalLicenseInfo.LicenseID);
             frm.ShowDialog();
         }
 
         private void _ShowDetainInfo()
         {
-            lblDetainID.Text = _DetainInfo.DetainID.ToString();
-            lblDetainedDate.Text = _DetainInfo.DetainDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblDetainID.Text = _SelectedLocalLicenseInfo.DetainInfo.DetainID.ToString();
+            lblDetainedDate.Text = _SelectedLocalLicenseInfo.DetainInfo.DetainDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
 
             string EncryptedUsername = "", UsernameIV = "";
-            clsUser.GetUserName(_DetainInfo.CreatedByUserID, ref EncryptedUsername, ref UsernameIV);
+            clsUser.GetUserName(_SelectedLocalLicenseInfo.DetainInfo.CreatedByUserID, ref EncryptedUsername, ref UsernameIV);
 
             lblUserName.Text = clsGeneralUtility.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
 
-            lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReleaseDetainedLicense),clsGeneralUtility.enCustomNumberFormat.NoJustZerosAfterFraction);
-            lblFineFees.Text = clsGeneralUtility.GetCustomNumberFormat(_DetainInfo.FineFees, clsGeneralUtility.enCustomNumberFormat.NoJustZerosAfterFraction);
+            lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.ReleaseDetainedLicense),clsGeneralUtility.enCustomNumberFormat.NoJustZerosAfterFraction);
+            lblFineFees.Text = clsGeneralUtility.GetCustomNumberFormat(_SelectedLocalLicenseInfo.DetainInfo.FineFees, clsGeneralUtility.enCustomNumberFormat.NoJustZerosAfterFraction);
             lblTotalFees.Text = (Convert.ToDecimal(lblApplicationFees.Text) + Convert.ToDecimal(lblFineFees.Text)).ToString();
         }
 
@@ -151,12 +143,10 @@ namespace DVLDPresentationLayer.Licenses
 
             else
             {
-                _DetainInfo = clsDetainedLicense.Find(LicenseInfo.LicenseID);
-
-                if (_DetainInfo != null)
+                if (LicenseInfo.DetainInfo != null)
                 {
                     _ShowDetainInfo();
-                    _LocalLicenseInfo = LicenseInfo;
+                    _SelectedLocalLicenseInfo = LicenseInfo;
                     btnRelease.Enabled = true;
                 }
                 else
@@ -170,71 +160,38 @@ namespace DVLDPresentationLayer.Licenses
             lnlblShowLicenseHistory.Enabled = true;
         }
 
-        private bool _AddNewApplication(out int NewApplicationID)
-        {
-            clsApplication ReleaseDetainedLicense = new clsApplication
-             (
-                ApplicantPersonID: clsDriver.GetDriverPersonID(_LocalLicenseInfo.DriverID),
-                ApplicationDate: DateTime.Now,
-                ApplicationTypeID: clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.ReleaseDetainedLicense),
-                ApplicationStatus: clsApplication.enApplicationStatus.New,
-                LastStatusDate: DateTime.Now,
-                PaidApplicationFees:clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReleaseDetainedLicense),
-                CreatedByUserID:clsGlobalSettings.CurrentUserID
-             );
-
-            if (ReleaseDetainedLicense.Save())
-            {
-                NewApplicationID = ReleaseDetainedLicense.ApplicationID;
-                return true;
-            }
-            else
-            {
-                NewApplicationID = -1;
-                return false;
-            }
-        }
-
         private void _ReleaseDetainedLicense()
         {
-               DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to release this detained license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (ConfirmationQuestion == DialogResult.Yes) 
+            DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to release this detained license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (ConfirmationQuestion == DialogResult.No)
+            {
+                return;
+            }
+
+            if (_SelectedLocalLicenseInfo.ReleaseDetainedLicense(clsGlobalSettings.CurrentUserID))
+            {
+                lblReleaseApplicationID.Text = _SelectedLocalLicenseInfo.DetainInfo.ReleaseApplicationID.ToString();
+                MessageBox.Show($"Detained License Released Successfully", "Detained License Released", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                AfterReleasingSentLicense?.Invoke(_SelectedLocalLicenseInfo.DetainInfo.ReleaseApplicationID, _SelectedLocalLicenseInfo.DetainInfo.ReleaseDate, _DetainedLicensesDgvRowIndex);
+
+                if (AfterReleasingALicense != null)
                 {
-                    if (_AddNewApplication(out int NewApplicationID))
-                    {
-                    if (_DetainInfo.ReleaseDetainedLicense(DateTime.Now, clsGlobalSettings.CurrentUserID, NewApplicationID))
-                    {
-                        if (clsApplication.ChangeApplicationStatus(_DetainInfo.ReleaseApplicationID, clsApplication.enApplicationStatus.Completed))
-                        {
-                            lblReleaseApplicationID.Text = _DetainInfo.ReleaseApplicationID.ToString();
-                            MessageBox.Show($"Detained License Released Successfully", "Detained License Released", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                            AfterReleasingSentLicense?.Invoke(_DetainInfo.ReleaseApplicationID, _DetainInfo.ReleaseDate, _DetainedLicensesDgvRowIndex);
-
-                            if(AfterReleasingALicense != null)
-                            {
-                                Thread NewThread = new Thread(() => AfterReleasingALicense.Invoke(_DetainInfo.DetainID, _DetainInfo.ReleaseDate,_DetainInfo.ReleaseApplicationID));
-                                NewThread.Start();
-                            }
-
-                            uctrlLDLDetailsByFilter.gbFilter.Enabled = false;
-                            btnRelease.Enabled = false;
-                            lnlblShowLicenseInfo.Enabled = true;
-                        }
-                        else
-                            MessageBox.Show("License released successfully from detain but failed to change application status to completed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                        MessageBox.Show("Failed To Save Data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                        MessageBox.Show("Failed to save application", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Thread NewThread = new Thread(() => AfterReleasingALicense.Invoke(_SelectedLocalLicenseInfo.DetainInfo.DetainID, _SelectedLocalLicenseInfo.DetainInfo.ReleaseDate, _SelectedLocalLicenseInfo.DetainInfo.ReleaseApplicationID));
+                    NewThread.Start();
                 }
-            }         
+
+                uctrlLDLDetailsByFilter.gbFilter.Enabled = false;
+                btnRelease.Enabled = false;
+                lnlblShowLicenseInfo.Enabled = true;
+            }
+            else
+                MessageBox.Show("Failed To Save Data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
         
         private void btnRelease_Click(object sender, EventArgs e)
         {
-            if (_LocalLicenseInfo == null && _DetainedLicensesDgvRowIndex == -1)
+            if (_SelectedLocalLicenseInfo == null && _DetainedLicensesDgvRowIndex == -1)
             {
                 MessageBox.Show("Enter local license ID First in order to release detained license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;

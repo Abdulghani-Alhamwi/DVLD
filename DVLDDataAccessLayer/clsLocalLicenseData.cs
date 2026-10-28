@@ -383,5 +383,34 @@ namespace DVLDDataAccessLayer
             }
             return -1;
         }
+
+        public static int GetActiveLicenseIDByPersonID(int PersonID,byte LicenseClassID)
+        {
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query =
+             $@"SELECT LicenseID FROM LocalLicenses INNER JOIN Drivers ON LocalLicenses.DriverID = Drivers.DriverID
+                WHERE Drivers.PersonID = @PersonID AND LocalLicenses.LicenseClassID = @LicenseClassID AND IsActive = 1";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@PersonID", PersonID);
+            command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                    return Convert.ToInt32(result);
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return -1;
+        }
     }
 }

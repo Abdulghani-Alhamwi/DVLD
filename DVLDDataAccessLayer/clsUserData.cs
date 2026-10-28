@@ -26,7 +26,7 @@ namespace DVLDDataAccessLayer
             PersonID, Username, Password, IsActive,Permissions
         }
 
-        public class clsOldUserData
+        public class clsOldLicenseClassInfo
         {
             public int PersonID;
             public string Username;
@@ -34,7 +34,7 @@ namespace DVLDDataAccessLayer
             public bool? IsActiveCase;
             public sbyte? Permissions;
 
-            public clsOldUserData(int OldPersonID, string OldUsername, string OldPassword, bool OldIsActiveCase,sbyte? OldPermissions)
+            public clsOldLicenseClassInfo(int OldPersonID, string OldUsername, string OldPassword, bool OldIsActiveCase,sbyte? OldPermissions)
             {
                 this.PersonID = OldPersonID;
                 this.Username = OldUsername;
@@ -202,7 +202,7 @@ namespace DVLDDataAccessLayer
             return UserID;
         }
 
-        private static void _ResetChangedOldValues(int PersonID, string Username, string Password, bool IsActive, sbyte Permissions, clsOldUserData OldUserData)
+        private static void _ResetChangedOldValues(int PersonID, string Username, string Password, bool IsActive, sbyte Permissions, clsOldLicenseClassInfo OldUserData)
         {
             if (PersonID != OldUserData.PersonID)
                 OldUserData.PersonID = -1;
@@ -244,7 +244,7 @@ namespace DVLDDataAccessLayer
         }
 
         private static string _GetUpdateQuery(int PersonID, string Username, string Password,
-            bool IsActive,sbyte Permissions, clsOldUserData OldUserData, bool HasOldDataChangedFully)
+            bool IsActive,sbyte Permissions, clsOldLicenseClassInfo OldUserData, bool HasOldDataChangedFully)
         {
             string query = "UPDATE Users SET";
 
@@ -317,7 +317,8 @@ namespace DVLDDataAccessLayer
             return query;
         }
 
-        public static bool UpdateUser(int UserID, int PersonID, string Username, string UsernameIV, string UsernameHash, string Password, string Salt, bool IsActive, sbyte Permissions, clsOldUserData OldUserData, bool HasOldDataChangedFully)
+        public static bool UpdateUser(int UserID, int PersonID, string Username, string UsernameIV, string UsernameHash, string Password, string Salt, bool IsActive, sbyte Permissions
+            , clsOldLicenseClassInfo OldUserData, bool HasOldDataChangedFully)
         {
             byte AffectedRows = 0;
 

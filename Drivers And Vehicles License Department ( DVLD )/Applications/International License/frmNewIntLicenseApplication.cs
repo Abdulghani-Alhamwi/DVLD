@@ -60,7 +60,7 @@ namespace DVLDPresentationLayer.Applications
             lblApplicationDate.Text = DateTime.Now.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
             lblIssueDate.Text = DateTime.Now.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
             lblExpirationDate.Text = _InternationalLicenseExpDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
-            lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewInternationlLicense),
+            lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.NewInternationlLicense),
                 enCustomNumberFormat.NoJustZerosAfterFraction);
 
             string EncryptedUsername = "", UsernameIV = "";
@@ -75,10 +75,10 @@ namespace DVLDPresentationLayer.Applications
             (
                 ApplicantPersonID: clsDriver.GetDriverPersonID(DriverID),
                 ApplicationDate: DateTime.Now,
-                ApplicationTypeID: clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.NewInternationlLicense),
+                ApplicationTypeID: clsApplicationType.GetApplicationTypeID(clsApplication.enApplicationType.NewInternationlLicense),
                 ApplicationStatus: clsApplication.enApplicationStatus.New,
                 LastStatusDate: DateTime.Now,
-                PaidApplicationFees: clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewInternationlLicense),
+                PaidApplicationFees: clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.NewInternationlLicense),
                 CreatedByUserID: clsGlobalSettings.CurrentUserID
             );
 
@@ -143,7 +143,7 @@ namespace DVLDPresentationLayer.Applications
 
         private bool _IsOrdinaryLocalDrivingLicense(byte LicenseClassID)
         {
-            if (clsLicenseClass.GetLicenseClassEnumMember(LicenseClassID) == clsLicenseClass.enLicenseClasses.OrdinaryDrivingClass)
+            if (clsLicenseClass.GetLicenseClass(LicenseClassID) == clsLicenseClass.enLicenseClasses.OrdinaryDrivingClass)
                 return true;
             else
                 return false;

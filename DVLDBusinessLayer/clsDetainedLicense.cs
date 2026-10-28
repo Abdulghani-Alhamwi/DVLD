@@ -53,14 +53,14 @@ namespace DVLDBusinessLayer
             return (DetainID != -1);
         }
 
-        public bool ReleaseDetainedLicense(DateTime ReleaseDate,int ReleasedByUserID,int ReleaseApplicationID)
+        public bool ReleaseDetainedLicense(int ReleasedByUserID,int ReleaseApplicationID)
         {
             this.ReleaseApplicationID = ReleaseApplicationID;
-            this.ReleaseDate = ReleaseDate;
+            this.ReleaseDate = DateTime.Now;
             this.ReleaseApplicationID = ReleaseApplicationID;
             this.ReleasedByUserID = ReleasedByUserID;
 
-            return clsDetainedLicenseData.ReleaseDetainedLicense(this.LocalLicenseID, ReleaseDate, ReleasedByUserID, ReleaseApplicationID);
+            return clsDetainedLicenseData.ReleaseDetainedLicense(this.LocalLicenseID, ReleasedByUserID, ReleaseApplicationID);
         }
 
         public bool Save()

@@ -32,14 +32,14 @@ namespace DVLDPresentationLayer.Core
             {
                 lblFormBigTitle.Text = "Replacement For Damaged License";
                 lblFormTitle.Text = lblFormBigTitle.Text;
-                lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReplacementForDamagedLicense),
+                lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.ReplacementForDamagedLicense),
                     enCustomNumberFormat.NoJustZerosAfterFraction);
             }
             else
             {
                 lblFormBigTitle.Text = "Replacement For Lost License";
                 lblFormTitle.Text = lblFormBigTitle.Text;
-                lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReplacementForLostLicense),
+                lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.ReplacementForLostLicense),
                     enCustomNumberFormat.NoJustZerosAfterFraction);
             }
             clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
@@ -48,58 +48,6 @@ namespace DVLDPresentationLayer.Core
         private void rbDamagedLicense_CheckedChanged(object sender, EventArgs e)
         {
             _SetFormInfo();
-        }
-
-        private bool _AddNewApplication(ref int NewApplicationID)
-        {
-            byte AppType = (rbDamagedLicense.Checked) ? clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.ReplacementForDamagedLicense) : clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.ReplacementForLostLicense);
-            decimal PaidFees = (rbDamagedLicense.Checked) ? clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReplacementForDamagedLicense) : clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.ReplacementForLostLicense);
-
-            clsApplication LicenseRenewalApplication = new clsApplication
-             (
-                ApplicantPersonID: clsDriver.GetDriverPersonID(_SelectedLicenseInfo.DriverID),
-                ApplicationDate: DateTime.Now,
-                ApplicationTypeID: AppType,
-                ApplicationStatus: clsApplication.enApplicationStatus.New,
-                LastStatusDate: DateTime.Now,
-                PaidApplicationFees: PaidFees,
-                CreatedByUserID: clsGlobalSettings.CurrentUserID
-             );
-
-            if (LicenseRenewalApplication.Save())
-            {
-                NewApplicationID = LicenseRenewalApplication.ApplicationID;
-                return true;
-            }
-
-            else
-                return false;
-        }
-
-        private bool _IssueReplacement(int NewApplicationID, ref int NewLicenseID)
-        {
-            clsLocalLicense NewLocalLicense = new clsLocalLicense
-            (
-                ApplicationID: NewApplicationID,
-                PersonID: _SelectedLicenseInfo.DriverID,
-                LicenseClassID: _SelectedLicenseInfo.LicenseClassID,
-                IssueDate: DateTime.Now,
-                ExpirationDate: _SelectedLicenseInfo.ExpirationDate,
-                Notes: null,
-                PaidFees: _SelectedLicenseInfo.PaidFees,
-                IsActive: true,
-                IssueReason: (rbDamagedLicense.Checked) ? clsLocalLicense.enIssueReason.ReplacementForDamaged : clsLocalLicense.enIssueReason.ReplacementForLost,
-                CreatedByUserID: clsGlobalSettings.CurrentUserID
-            );
-
-            if (NewLocalLicense.Save())
-            {
-                NewLicenseID = NewLocalLicense.LicenseID;
-                return true;
-            }
-
-            else
-                return false;
         }
         
         private void btnIssueReplacement_Click(object sender, EventArgs e)
@@ -111,40 +59,27 @@ namespace DVLDPresentationLayer.Core
             }
 
             DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to issue a replacement for the license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (ConfirmationQuestion == DialogResult.Yes)
-                {
-                    int NewApplicationID = -1;
-                    if (_AddNewApplication(ref NewApplicationID))
-                    {
-                        int ReplacedLicenseID = -1;
-                        if (_IssueReplacement(NewApplicationID, ref ReplacedLicenseID))
-                        {
-                        if (clsLocalLicense.DeactivateLicense(_SelectedLicenseInfo.LicenseID))
-                        {
-                            if (clsApplication.ChangeApplicationStatus(NewApplicationID, clsApplication.enApplicationStatus.Completed))
-                            {
-                                lblLicenseReplacementAppID.Text = NewApplicationID.ToString();
-                                lblReplacedLicenseID.Text = ReplacedLicenseID.ToString();
-                                _ReplacedLicenseID = ReplacedLicenseID;
+            if (ConfirmationQuestion == DialogResult.No)
+            {
+                return;
+            }
 
-                                MessageBox.Show($"License Replaced Successfully With ID : {ReplacedLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            clsLocalLicense NewLicense = _SelectedLicenseInfo.Replace((rbDamagedLicense.Checked) ? clsLocalLicense.enIssueReason.ReplacementForDamaged : clsLocalLicense.enIssueReason.ReplacementForLost, clsGlobalSettings.CurrentUserID);
+            if (_SelectedLicenseInfo != null)
+            {
+                lblLicenseReplacementAppID.Text = NewLicense.ApplicationID.ToString();
+                lblReplacedLicenseID.Text = NewLicense.LicenseID.ToString();
+                _ReplacedLicenseID = NewLicense.LicenseID;
 
-                                uctrlLDLDetailsByFilter.gbFilter.Enabled = false;
-                                lnlblShowNewLicenseInfo.Enabled = true;
-                                btnIssueReplacement.Enabled = false;
-                            }
-                            else
-                                MessageBox.Show("License replaced successfully but failed to change application status to completed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else
-                            MessageBox.Show("Failed to deactivate old local license!\nLicense renewal failed", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else
-                            MessageBox.Show("Failed to renew license!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                        MessageBox.Show("Failed to save application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show($"License Replaced Successfully With ID : {_ReplacedLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                uctrlLDLDetailsByFilter.gbFilter.Enabled = false;
+                lnlblShowNewLicenseInfo.Enabled = true;
+                btnIssueReplacement.Enabled = false;
+            }
+            else
+                MessageBox.Show("Failed to replace license!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        
         }
 
         private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(clsLocalLicense LicenseInfo)

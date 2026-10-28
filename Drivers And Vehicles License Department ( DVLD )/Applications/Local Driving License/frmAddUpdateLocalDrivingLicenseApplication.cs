@@ -142,7 +142,7 @@ namespace DVLDPresentationLayer.Core
 
             cbLicenseClass.SelectedIndex = _LicenseClassesDataView.Find(clsLicenseClass.GetLicenseClassName(clsLicenseClass.enLicenseClasses.OrdinaryDrivingClass));
 
-            lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplicationType.enApplicationType.NewLocalDrivingLicense),
+            lblApplicationFees.Text = clsGeneralUtility.GetCustomNumberFormat(clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.NewLocalDrivingLicense),
                 enCustomNumberFormat.NoJustZerosAfterFraction);
             lblUserName.Text = clsGlobalSettings.CurrentUsername;
         }
@@ -182,7 +182,7 @@ namespace DVLDPresentationLayer.Core
 
         private void _UpdateLDLApplicationInfo()
         {
-            _LDLApplication.LicenseClassInfo.ID = clsLicenseClass.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
+            _LDLApplication.LicenseClassInfo.LicenseClassID = clsLicenseClass.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString());
             _LDLApplication.LicenseClassInfo.ClassName = ((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString();
             _LDLApplication.ApplicantPersonID = _ApplicantPersonID;
             _LDLApplication.ApplicationStatus = clsApplication.enApplicationStatus.New;
@@ -199,20 +199,19 @@ namespace DVLDPresentationLayer.Core
 
             else
             {
-                clsLocalDrivingLicenseApplication LDLApplication = new clsLocalDrivingLicenseApplication(
+                clsLocalDrivingLicenseApplication LocalDrivingLicenseApplication = new clsLocalDrivingLicenseApplication(
                 ApplicantPersonID: _ApplicantPersonID,
                 LicenseClassID: clsLicenseClass.GetLicenseClassID(((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString()),
-                LicenseClassName: ((DataRowView)cbLicenseClass.SelectedItem).Row["ClassName"].ToString(),
                 ApplicationDate: DateTime.Now,
-                ApplicationTypeID: clsApplicationType.GetApplicationTypeID(clsApplicationType.enApplicationType.NewLocalDrivingLicense),
+                ApplicationTypeID: clsApplicationType.GetApplicationTypeID(clsApplication.enApplicationType.NewLocalDrivingLicense),
                 ApplicationStatus: clsApplication.enApplicationStatus.New,
                 LastStatusDate: DateTime.Now,
                 PaidApplicationFees: Convert.ToDecimal(lblApplicationFees.Text),
                 CreatedByUserID: clsGlobalSettings.CurrentUserID
               );
 
-                if (LDLApplication.Save())
-                    return LDLApplication;
+                if (LocalDrivingLicenseApplication.Save())
+                    return LocalDrivingLicenseApplication;
             }
                     return null;
         }

@@ -27,7 +27,7 @@ namespace DVLDBusinessLayer
         public bool IsActive { get; set; }
         public sbyte Permissions { get; set; }
 
-        private clsUserData.clsOldUserData _OldUserData;
+        private clsUserData.clsOldLicenseClassInfo _OldUserData;
 
         public clsUser(int PersonID, string Username, string UsernameIV, string UsernameHash, string Password, string Salt, bool IsActive, sbyte Permissions)
         {
@@ -42,7 +42,7 @@ namespace DVLDBusinessLayer
             this.IsActive = IsActive;
             this.Permissions = Permissions;
 
-            _OldUserData = new clsUserData.clsOldUserData(PersonID, Username, Password, IsActive, Permissions);
+            _OldUserData = new clsUserData.clsOldLicenseClassInfo(PersonID, Username, Password, IsActive, Permissions);
         }
 
         private clsUser(int UserID, int PersonID, string Username, string UsernameIV, string UsernameHash, string Password, string Salt, bool IsActive, sbyte Permissions)
@@ -59,7 +59,7 @@ namespace DVLDBusinessLayer
             this.Permissions = Permissions;
             _CurrentMode = enMode.Update;
 
-            _OldUserData = new clsUserData.clsOldUserData(PersonID, Username, Password, IsActive, Permissions);
+            _OldUserData = new clsUserData.clsOldLicenseClassInfo(PersonID, Username, Password, IsActive, Permissions);
         }
 
         public static DataTable GetUsersInfo(byte WantedNumOfRecords, string SortDirection)
@@ -149,7 +149,7 @@ namespace DVLDBusinessLayer
             if(clsUserData.UpdateUser(UserID, PersonID, Username, UsernameIV, UsernameHash, Password, Salt, IsActive, Permissions
                 , _OldUserData, _HasOldDataChangedFully()))
             {
-                _OldUserData = new clsUserData.clsOldUserData(PersonID, Username, Password, IsActive, Permissions);
+                _OldUserData = new clsUserData.clsOldLicenseClassInfo(PersonID, Username, Password, IsActive, Permissions);
                 return true;
             }
 

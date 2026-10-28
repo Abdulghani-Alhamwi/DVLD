@@ -196,7 +196,7 @@ namespace DVLDDataAccessLayer
             return -1;
         }
 
-        public static bool ReleaseDetainedLicense(int LocalLicenseID, DateTime ReleaseDate,int ReleasedByUserID,int ReleaseApplicationID)
+        public static bool ReleaseDetainedLicense(int LocalLicenseID, int ReleasedByUserID, int ReleaseApplicationID)
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -206,7 +206,7 @@ namespace DVLDDataAccessLayer
                              WHERE LicenseID = @LicenseID";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@ReleaseDate", ReleaseDate);
+            command.Parameters.AddWithValue("@ReleaseDate", DateTime.Now);
             command.Parameters.AddWithValue("@ReleasedByUserID", ReleasedByUserID);
             command.Parameters.AddWithValue("@ReleaseApplicationID", ReleaseApplicationID);
             command.Parameters.AddWithValue("@LicenseID", LocalLicenseID);
