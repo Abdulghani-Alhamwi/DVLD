@@ -33,7 +33,7 @@
             this.lblFormBigTitle = new System.Windows.Forms.Label();
             this.pbLicenseView = new System.Windows.Forms.PictureBox();
             this.btnClose = new System.Windows.Forms.Button();
-            this.uctrlDriverLicenseInfo = new DVLDPresentationLayer.ctrlLDLicenseDetails();
+            this.uctrlDriverLicenseInfo = new DVLDPresentationLayer.ctrlDriverLocalLicenseDetails();
             ((System.ComponentModel.ISupportInitialize)(this.pbLicenseView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -159,7 +159,7 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.PictureBox pbLicenseView;
         private System.Windows.Forms.Label lblFormBigTitle;
-        private ctrlLDLicenseDetails uctrlDriverLicenseInfo;
+        private ctrlDriverLocalLicenseDetails uctrlDriverLicenseInfo;
         private System.Windows.Forms.Button btnClose;
     }
 }

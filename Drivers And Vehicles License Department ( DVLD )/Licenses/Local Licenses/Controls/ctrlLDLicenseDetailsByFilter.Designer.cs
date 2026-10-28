@@ -32,7 +32,7 @@
             this.btnSearchForLicense = new System.Windows.Forms.Button();
             this.txtLicenseID = new System.Windows.Forms.TextBox();
             this.lblTitleLocalLicenseID = new System.Windows.Forms.Label();
-            this.uctrlLDLDetails = new DVLDPresentationLayer.ctrlLDLicenseDetails();
+            this.uctrlLDLDetails = new DVLDPresentationLayer.ctrlDriverLocalLicenseDetails();
             this.gbFilter.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -121,7 +121,7 @@
         private System.Windows.Forms.Button btnSearchForLicense;
         private System.Windows.Forms.Label lblTitleLocalLicenseID;
         public System.Windows.Forms.GroupBox gbFilter;
-        public ctrlLDLicenseDetails uctrlLDLDetails;
+        public ctrlDriverLocalLicenseDetails uctrlLDLDetails;
         internal System.Windows.Forms.TextBox txtLicenseID;
     }
 }

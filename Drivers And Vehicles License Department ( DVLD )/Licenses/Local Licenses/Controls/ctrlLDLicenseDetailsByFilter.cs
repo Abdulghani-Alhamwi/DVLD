@@ -22,7 +22,7 @@ namespace DVLDPresentationLayer
 
                 if (LocalLicenseInfo != null)
                 {
-                        uctrlLDLDetails.LoadDriverLicenseInfo(LocalLicenseInfo.LicenseID);
+                        uctrlLDLDetails.LoadInfo(LocalLicenseInfo.LicenseID);
                         OnSelectedLocalLicense?.Invoke(LocalLicenseInfo);
                 }
                 else

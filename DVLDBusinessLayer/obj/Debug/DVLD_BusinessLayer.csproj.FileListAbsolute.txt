@@ -13,3 +13,14 @@ D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD 
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Debug\DVLD_Bus.693E2707.Up2Date
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.dll
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.pdb
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\bin\Debug\DVLDBusinessLayer.dll
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\bin\Debug\DVLDBusinessLayer.pdb
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\bin\Debug\DVLDDataAccessLayer.dll
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\bin\Debug\Utility Library.dll
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\bin\Debug\DVLDDataAccessLayer.pdb
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\bin\Debug\Utility Library.pdb
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLD_BusinessLayer.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLD_BusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLD_BusinessLayer.csproj.CopyComplete
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.dll
+C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.pdb

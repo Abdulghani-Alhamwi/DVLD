@@ -16,3 +16,12 @@ D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD 
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\obj\Debug\DVLD_Dat.5E8DE79F.Up2Date
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.dll
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.pdb
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\bin\Debug\DVLDDataAccessLayer.dll
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\bin\Debug\DVLDDataAccessLayer.pdb
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\bin\Debug\Utility Library.dll
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\bin\Debug\Utility Library.pdb
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\obj\Debug\DVLD_DataAccessLayer.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\obj\Debug\DVLD_DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\obj\Debug\DVLD_DataAccessLayer.csproj.CopyComplete
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.dll
+C:\Users\User\Desktop\DVLD\DVLDDataAccessLayer\obj\Debug\DVLDDataAccessLayer.pdb

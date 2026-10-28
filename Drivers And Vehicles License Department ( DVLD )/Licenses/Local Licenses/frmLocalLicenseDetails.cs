@@ -12,7 +12,7 @@ namespace DVLDPresentationLayer
             clsGeneralUtility.CenterControlHorizontally(this, pbLicenseView);
             clsGeneralUtility.CenterControlHorizontally(this, lblFormBigTitle);
 
-            uctrlDriverLicenseInfo.LoadDriverLicenseInfo(LocalLicenseID);
+            uctrlDriverLicenseInfo.LoadInfo(LocalLicenseID);
         }
 
         private void btnClose_Click(object sender, EventArgs e)

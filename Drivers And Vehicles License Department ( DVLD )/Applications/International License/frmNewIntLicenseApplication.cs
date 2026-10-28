@@ -39,7 +39,7 @@ namespace DVLDPresentationLayer.Applications
             {
                 _DriverOrdinaryLocalLicense = OrdinaryLocalLicense;
                 uctrlLDLDetailsByFilter.txtLicenseID.Text = OrdinaryLocalLicense.LicenseID.ToString();
-                uctrlLDLDetailsByFilter.uctrlLDLDetails.LoadDriverLicenseInfo(OrdinaryLocalLicense.LicenseID);                
+                uctrlLDLDetailsByFilter.uctrlLDLDetails.LoadInfo(OrdinaryLocalLicense.LicenseID);                
             }
 
             _DGVRowIndex = DGVRowIndex;

@@ -7,40 +7,58 @@ using Utility_Library;
 
 namespace DVLDPresentationLayer
 {
-    public partial class ctrlLDLicenseDetails : UserControl
+    public partial class ctrlDriverLocalLicenseDetails : UserControl
     {
-        public ctrlLDLicenseDetails()
+        public clsLocalLicense License;
+        public ctrlDriverLocalLicenseDetails()
         {
             InitializeComponent();
         }
 
-        public void LoadDriverLicenseInfo(int LicenseID)
+        private void LoadPersonImage(clsPerson UpdatedPersonInfo = null)
         {
-            clsLocalLicense License = clsLocalLicense.Find(LicenseID);
+            string ImagePath;
+            if (UpdatedPersonInfo == null)
+                ImagePath = License.DriverInfo.PersonalInfo.ImagePath;
+            else
+                ImagePath = UpdatedPersonInfo.ImagePath;
 
-            if(License != null)
-            {
-                clsPerson Person = clsPerson.Find(clsDriver.GetDriverPersonID(License.DriverID));
-
-                lblClassName.Text = License.LicenseClassInfo.ClassName;
-                lblPersonFullName.Text = Person.FullName;
-                lblLicenseID.Text = License.LicenseID.ToString();
-                lblNationalNo.Text = Person.NationalNo;
-                lblGendor.Text = (Person.Gendor == clsPerson.enGendor.Male) ? "Male" : "Female";
-                lblIssueDate.Text = License.IssueDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
-                lblIssueReason.Text = License.GetIssueReasonText();
-                lblNotes.Text = (License.Notes != null) ? License.Notes : "No Notes";
-                lblIsActive.Text = (License.IsActive) ? "Yes" : "No";
-                lblDateOfBirth.Text = Person.DateOfBirth.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
-                lblDriverID.Text = License.DriverID.ToString();
-                lblExpDate.Text =  License.ExpirationDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
-                lblIsDetained.Text = (clsDetainedLicense.IsDetainedLicense(License.LicenseID)) ? "Yes" : "No";
-
-                if (File.Exists(Person.ImagePath))
-                    pbPersonalImage.ImageLocation = Person.ImagePath;
+            if (ImagePath != "")
+                if (File.Exists(ImagePath))
+                    pbPersonalImage.Load(ImagePath);
                 else
-                    pbPersonalImage.Image = (Person.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
+                    MessageBox.Show("Could not found image with image path : " + ImagePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            else
+                pbPersonalImage.Image = (License.DriverInfo.PersonalInfo.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
+        }
+
+        public void LoadInfo(int LocalLicenseID)
+        {
+            License = clsLocalLicense.Find(LocalLicenseID);
+
+            if (License == null)
+            {
+                MessageBox.Show("Could not found license with license id : " + License.LicenseID.ToString()
+                    , "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
             }
+
+            lblLicenseID.Text = License.LicenseID.ToString();
+            lblPersonFullName.Text = License.DriverInfo.PersonalInfo.FullName;
+            lblNationalNo.Text = License.DriverInfo.PersonalInfo.NationalNo;
+            lblGendor.Text = (License.DriverInfo.PersonalInfo.Gendor == clsPerson.enGendor.Male) ? "Male" : "Female";
+            lblIsActive.Text = (License.IsActive) ? "Yes" : "No";
+            lblIsDetained.Text = (License.IsDetained) ? "Yes" : "No";
+            lblClassName.Text = License.LicenseClassInfo.ClassName;
+            lblIssueDate.Text = License.IssueDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblIssueReason.Text = License.IssueReasonText;
+            lblDateOfBirth.Text = License.DriverInfo.PersonalInfo.DateOfBirth.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblDriverID.Text = License.DriverID.ToString();
+            lblExpDate.Text = License.ExpirationDate.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
+            lblNotes.Text = (License.Notes != "") ? License.Notes : "No Notes";
+
         }
 
         public void EditDriverPersonalInfo(clsPerson UpdatedPersonalInfo)
@@ -50,10 +68,7 @@ namespace DVLDPresentationLayer
             lblGendor.Text = (UpdatedPersonalInfo.Gendor == clsPerson.enGendor.Male) ? "Male" : "Female";
             lblDateOfBirth.Text = UpdatedPersonalInfo.DateOfBirth.ToString(clsGeneralUtility.GetCustomDateFormat(clsGeneralUtility.enCustomDateFormat.DateAppreviatedMonthName));
 
-            if (File.Exists(UpdatedPersonalInfo.ImagePath))
-                pbPersonalImage.ImageLocation = UpdatedPersonalInfo.ImagePath;
-            else
-                pbPersonalImage.Image = (UpdatedPersonalInfo.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
+            LoadPersonImage(UpdatedPersonalInfo);
         }
     }
 }

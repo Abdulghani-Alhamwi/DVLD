@@ -49,7 +49,7 @@ namespace DVLDPresentationLayer.Licenses
             if (LocalLicense != null)
             {
                 _SelectedLocalLicenseInfo = LocalLicense;
-                uctrlLDLDetailsByFilter.uctrlLDLDetails.LoadDriverLicenseInfo(LocalLicenseID);
+                uctrlLDLDetailsByFilter.uctrlLDLDetails.LoadInfo(LocalLicenseID);
                 return true;
             }
 
