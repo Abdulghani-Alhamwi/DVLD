@@ -51,7 +51,7 @@ namespace DVLDPresentationLayer
 
         private void lnlblShowLicenseInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmLocalLicenseDetails frm = new frmLocalLicenseDetails(_LocalLicenseID);
+            frmShowDriverLiecnseInfo frm = new frmShowDriverLiecnseInfo(_LocalLicenseID);
             frm.ShowDialog();
         }
 

@@ -57,7 +57,7 @@
             this.rbDamagedLicense = new System.Windows.Forms.RadioButton();
             this.rbLostLicense = new System.Windows.Forms.RadioButton();
             this.gbReplacementFor = new System.Windows.Forms.GroupBox();
-            this.uctrlLDLDetailsByFilter = new DVLDPresentationLayer.ctrlLDLicenseDetailsByFilter();
+            this.uctrlLDLDetailsByFilter = new DVLDPresentationLayer.ctrlDriverLicenseInfoByFilter();
             ((System.ComponentModel.ISupportInitialize)(this.pbOldLicenseID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbReplacedLicenseID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbUser)).BeginInit();
@@ -458,7 +458,7 @@
             this.uctrlLDLDetailsByFilter.Name = "uctrlLDLDetailsByFilter";
             this.uctrlLDLDetailsByFilter.Size = new System.Drawing.Size(1157, 514);
             this.uctrlLDLDetailsByFilter.TabIndex = 196;
-            this.uctrlLDLDetailsByFilter.OnSelectedLocalLicense += new DVLDPresentationLayer.ctrlLDLicenseDetailsByFilter.SelectedLocalLicense(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
+            this.uctrlLDLDetailsByFilter.OnSelectedLicense += new System.Action<int>(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
             // 
             // frmReplacementForLostOrDamaged
             // 
@@ -516,7 +516,7 @@
         private System.Windows.Forms.Label lblReplacedLicenseID;
         private System.Windows.Forms.Label lblReplacedLicenseIDTitle;
         private System.Windows.Forms.PictureBox pbUser;
-        private ctrlLDLicenseDetailsByFilter uctrlLDLDetailsByFilter;
+        private ctrlDriverLicenseInfoByFilter uctrlLDLDetailsByFilter;
         private System.Windows.Forms.GroupBox gbNewLicenseAppInfo;
         private System.Windows.Forms.PictureBox pbApplicationDate;
         private System.Windows.Forms.PictureBox pbAppFees;

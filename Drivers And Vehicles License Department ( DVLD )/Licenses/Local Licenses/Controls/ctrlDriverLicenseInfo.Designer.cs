@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer
 {
-    partial class ctrlDriverLocalLicenseDetails
+    partial class ctrlDriverLocalLicenseInfo
     {
         /// <summary> 
         /// Required designer variable.

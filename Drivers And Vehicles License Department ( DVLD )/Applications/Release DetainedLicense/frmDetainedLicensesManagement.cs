@@ -328,7 +328,7 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void tsmiShowLicenseDetails_Click(object sender, EventArgs e)
         {
-            frmLocalLicenseDetails frm = new frmLocalLicenseDetails((int)dgvDetainedLicenses.SelectedRows[0].Cells[_LocalLicensesViewedColumnName].Value);
+            frmShowDriverLiecnseInfo frm = new frmShowDriverLiecnseInfo((int)dgvDetainedLicenses.SelectedRows[0].Cells[_LocalLicensesViewedColumnName].Value);
             frm.ShowDialog();
         }
 

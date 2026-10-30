@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.pbLicenseFees = new System.Windows.Forms.PictureBox();
             this.lblFineFeesTitle = new System.Windows.Forms.Label();
-            this.uctrlLDLDetailsByFilter = new DVLDPresentationLayer.ctrlLDLicenseDetailsByFilter();
+            this.uctrlLDLDetailsByFilter = new DVLDPresentationLayer.ctrlDriverLicenseInfoByFilter();
             this.btnDetain = new System.Windows.Forms.Button();
             this.lnlblShowLicenseHistory = new System.Windows.Forms.LinkLabel();
             this.lblFormBigTitle = new System.Windows.Forms.Label();
@@ -97,7 +97,7 @@
             this.uctrlLDLDetailsByFilter.Name = "uctrlLDLDetailsByFilter";
             this.uctrlLDLDetailsByFilter.Size = new System.Drawing.Size(1157, 514);
             this.uctrlLDLDetailsByFilter.TabIndex = 0;
-            this.uctrlLDLDetailsByFilter.OnSelectedLocalLicense += new DVLDPresentationLayer.ctrlLDLicenseDetailsByFilter.SelectedLocalLicense(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
+            this.uctrlLDLDetailsByFilter.OnSelectedLicense += new System.Action<int>(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
             // 
             // btnDetain
             // 
@@ -425,7 +425,7 @@
         #endregion
         private System.Windows.Forms.PictureBox pbLicenseFees;
         private System.Windows.Forms.Label lblFineFeesTitle;
-        private ctrlLDLicenseDetailsByFilter uctrlLDLDetailsByFilter;
+        private ctrlDriverLicenseInfoByFilter uctrlLDLDetailsByFilter;
         private System.Windows.Forms.Button btnDetain;
         private System.Windows.Forms.LinkLabel lnlblShowLicenseHistory;
         private System.Windows.Forms.Label lblFormBigTitle;

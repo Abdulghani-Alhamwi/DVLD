@@ -473,7 +473,7 @@ namespace DVLDPresentationLayer
                 return;
             }
 
-            frmLocalLicenseDetails frm = new frmLocalLicenseDetails(clsLocalLicense.GetLicenseID(clsLocalDrivingLicenseApplication.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value)));
+            frmShowDriverLiecnseInfo frm = new frmShowDriverLiecnseInfo(clsLocalLicense.GetLicenseID(clsLocalDrivingLicenseApplication.GetApplicationID((int)dgvLDLApplications.SelectedRows[0].Cells["L.D.L.AppID"].Value)));
             frm.ShowDialog();
         }
 

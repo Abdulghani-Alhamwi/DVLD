@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer
 {
-    partial class frmLocalLicenseDetails
+    partial class frmShowDriverLiecnseInfo
     {
         /// <summary>
         /// Required designer variable.
@@ -33,7 +33,7 @@
             this.lblFormBigTitle = new System.Windows.Forms.Label();
             this.pbLicenseView = new System.Windows.Forms.PictureBox();
             this.btnClose = new System.Windows.Forms.Button();
-            this.uctrlDriverLicenseInfo = new DVLDPresentationLayer.ctrlDriverLocalLicenseDetails();
+            this.uctrlDriverLicenseInfo = new DVLDPresentationLayer.ctrlDriverLocalLicenseInfo();
             ((System.ComponentModel.ISupportInitialize)(this.pbLicenseView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -125,7 +125,7 @@
             this.uctrlDriverLicenseInfo.Size = new System.Drawing.Size(1157, 420);
             this.uctrlDriverLicenseInfo.TabIndex = 0;
             // 
-            // frmLocalLicenseDetails
+            // frmShowDriverLiecnseInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -143,10 +143,11 @@
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "frmLocalLicenseDetails";
+            this.Name = "frmShowDriverLiecnseInfo";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Load += new System.EventHandler(this.frmShowDriverLiecnseInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbLicenseView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -159,7 +160,7 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.PictureBox pbLicenseView;
         private System.Windows.Forms.Label lblFormBigTitle;
-        private ctrlDriverLocalLicenseDetails uctrlDriverLicenseInfo;
+        private ctrlDriverLocalLicenseInfo uctrlDriverLicenseInfo;
         private System.Windows.Forms.Button btnClose;
     }
 }

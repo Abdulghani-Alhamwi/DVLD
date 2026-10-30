@@ -51,7 +51,7 @@ namespace Utility_Library
                     return "dd/MM/yyyy";
 
                 case enCustomDateFormat.DateAppreviatedMonthName:
-                    return "d/MMM/yyyy";
+                    return "dd/MMM/yyyy";
 
                 case enCustomDateFormat.DateTimeCustomFormat:
                     return "dd/MM/yyyy h:mm tt";
@@ -65,7 +65,7 @@ namespace Utility_Library
 
         public static string DateToShort(DateTime Date)
         {
-            return Date.ToString(GetCustomDateFormat(enCustomDateFormat.NumericFormat));
+            return Date.ToString(GetCustomDateFormat(enCustomDateFormat.DateAppreviatedMonthName));
         }
 
         /// <summary>

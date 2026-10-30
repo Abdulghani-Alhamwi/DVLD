@@ -2,15 +2,12 @@
 using System.Windows.Forms;
 using DVLDBusinessLayer;
 using Utility_Library;
-using static Utility_Library.clsUtility;
 
 namespace DVLDPresentationLayer.Core
 {
     public partial class frmReplacetLostOrDamagedLicense : Form
     {
         private int _ReplacedLicenseID;
-        private clsLocalLicense _SelectedLicenseInfo;
-
         public frmReplacetLostOrDamagedLicense()
         {
             InitializeComponent();
@@ -52,7 +49,7 @@ namespace DVLDPresentationLayer.Core
         
         private void btnIssueReplacement_Click(object sender, EventArgs e)
         {
-            if (_SelectedLicenseInfo == null)
+            if (uctrlLDLDetailsByFilter.SelectedLicenseInfo == null)
             {
                 MessageBox.Show("Enter local license ID First in order to renew license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -64,8 +61,8 @@ namespace DVLDPresentationLayer.Core
                 return;
             }
 
-            clsLocalLicense NewLicense = _SelectedLicenseInfo.Replace((rbDamagedLicense.Checked) ? clsLocalLicense.enIssueReason.ReplacementForDamaged : clsLocalLicense.enIssueReason.ReplacementForLost, clsGlobalSettings.CurrentUserID);
-            if (_SelectedLicenseInfo != null)
+            clsLocalLicense NewLicense = uctrlLDLDetailsByFilter.SelectedLicenseInfo.Replace((rbDamagedLicense.Checked) ? clsLocalLicense.enIssueReason.ReplacementForDamaged : clsLocalLicense.enIssueReason.ReplacementForLost, clsGlobalSettings.CurrentUserID);
+            if (NewLicense != null)
             {
                 lblLicenseReplacementAppID.Text = NewLicense.ApplicationID.ToString();
                 lblReplacedLicenseID.Text = NewLicense.LicenseID.ToString();
@@ -73,7 +70,7 @@ namespace DVLDPresentationLayer.Core
 
                 MessageBox.Show($"License Replaced Successfully With ID : {_ReplacedLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                uctrlLDLDetailsByFilter.gbFilter.Enabled = false;
+                uctrlLDLDetailsByFilter.FilterEnabled = false;
                 lnlblShowNewLicenseInfo.Enabled = true;
                 btnIssueReplacement.Enabled = false;
             }
@@ -82,12 +79,11 @@ namespace DVLDPresentationLayer.Core
                         
         }
 
-        private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(clsLocalLicense LicenseInfo)
+        private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(int LicenseID)
         {
-            _SelectedLicenseInfo = LicenseInfo;
-            lblOldLocalLicenseID.Text = _SelectedLicenseInfo.LicenseID.ToString();
+            lblOldLocalLicenseID.Text = LicenseID.ToString();
 
-            if (LicenseInfo.IsActive)
+            if (uctrlLDLDetailsByFilter.SelectedLicenseInfo.IsActive)
             {
                 btnIssueReplacement.Enabled = true;
             }
@@ -103,19 +99,19 @@ namespace DVLDPresentationLayer.Core
 
         private void _EditDriverPersonalInfo(clsPerson UpdatedDriverPersonalInfo)
         {
-            uctrlLDLDetailsByFilter.uctrlLDLDetails.EditDriverPersonalInfo(UpdatedDriverPersonalInfo);
+            uctrlLDLDetailsByFilter.uctrlLocalDrivingLicenseInfo.EditDriverPersonalInfo(UpdatedDriverPersonalInfo);
         }
 
         private void lnlblShowLicenseHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID(_SelectedLicenseInfo.DriverID));
+            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID(uctrlLDLDetailsByFilter.SelectedLicenseInfo.DriverID));
             frm.OnUpdatedDriverInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
         }
 
         private void lnlblShowNewLicenseInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmLocalLicenseDetails frm = new frmLocalLicenseDetails(_ReplacedLicenseID);
+            frmShowDriverLiecnseInfo frm = new frmShowDriverLiecnseInfo(_ReplacedLicenseID);
             frm.ShowDialog();
         }
 

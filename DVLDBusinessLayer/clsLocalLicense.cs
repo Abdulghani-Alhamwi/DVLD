@@ -255,7 +255,7 @@ namespace DVLDBusinessLayer
 
             clsLocalLicense NewLicense = new clsLocalLicense
               (
-                 Application.ApplicationID, this.PersonID,this.DriverID, this.LicenseClassID, this.IssueDate, this.ExpirationDate
+                 Application.ApplicationID, this.PersonID,this.DriverID, this.LicenseClassID,DateTime.Now, this.ExpirationDate
                 , this.Notes, true, (IssueReason == enIssueReason.ReplacementForDamaged) ? enIssueReason.ReplacementForDamaged : enIssueReason.ReplacementForLost, CreatedByUserID
               );
 
@@ -266,8 +266,11 @@ namespace DVLDBusinessLayer
 
             if (this.DeactivateLicense())
             {
-                if (Application.SetComplete())
-                    return NewLicense;
+                if (clsInternationalLicenseData.LinkWithNewLocalLicense(this.DriverID, NewLicense.LicenseID))
+                {
+                    if (Application.SetComplete())
+                        return NewLicense;
+                }
             }
 
             return null;

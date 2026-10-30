@@ -4,15 +4,15 @@ using Utility_Library;
 
 namespace DVLDPresentationLayer
 {
-    public partial class frmLocalLicenseDetails : Form
+    public partial class frmShowDriverLiecnseInfo : Form
     {
-        public frmLocalLicenseDetails(int LocalLicenseID)
+        private int _LocalLicenseID;
+        public frmShowDriverLiecnseInfo(int LocalLicenseID)
         {
             InitializeComponent();
             clsUtility.CenterControlHorizontally(this, pbLicenseView);
             clsUtility.CenterControlHorizontally(this, lblFormBigTitle);
-
-            uctrlDriverLicenseInfo.LoadInfo(LocalLicenseID);
+            _LocalLicenseID = LocalLicenseID;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -23,6 +23,11 @@ namespace DVLDPresentationLayer
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void frmShowDriverLiecnseInfo_Load(object sender, EventArgs e)
+        {
+            uctrlDriverLicenseInfo.LoadInfo(_LocalLicenseID);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer
 {
-    partial class ctrlLDLicenseDetailsByFilter
+    partial class ctrlDriverLicenseInfoByFilter
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,17 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.gbFilter = new System.Windows.Forms.GroupBox();
-            this.btnSearchForLicense = new System.Windows.Forms.Button();
+            this.btnFind = new System.Windows.Forms.Button();
             this.txtLicenseID = new System.Windows.Forms.TextBox();
             this.lblTitleLocalLicenseID = new System.Windows.Forms.Label();
-            this.uctrlLDLDetails = new DVLDPresentationLayer.ctrlDriverLocalLicenseDetails();
+            this.ertxtBoxInput = new System.Windows.Forms.ErrorProvider(this.components);
+            this.uctrlLocalDrivingLicenseInfo = new DVLDPresentationLayer.ctrlDriverLocalLicenseInfo();
             this.gbFilter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ertxtBoxInput)).BeginInit();
             this.SuspendLayout();
             // 
             // gbFilter
             // 
-            this.gbFilter.Controls.Add(this.btnSearchForLicense);
+            this.gbFilter.Controls.Add(this.btnFind);
             this.gbFilter.Controls.Add(this.txtLicenseID);
             this.gbFilter.Controls.Add(this.lblTitleLocalLicenseID);
             this.gbFilter.Font = new System.Drawing.Font("Tahoma", 18F);
@@ -49,20 +52,20 @@
             this.gbFilter.TabStop = false;
             this.gbFilter.Text = "Filter";
             // 
-            // btnSearchForLicense
+            // btnFind
             // 
-            this.btnSearchForLicense.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.btnSearchForLicense.FlatAppearance.BorderSize = 2;
-            this.btnSearchForLicense.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnSearchForLicense.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnSearchForLicense.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearchForLicense.Image = global::DVLDPresentationLayer.Properties.Resources.License_View_32;
-            this.btnSearchForLicense.Location = new System.Drawing.Point(643, 28);
-            this.btnSearchForLicense.Name = "btnSearchForLicense";
-            this.btnSearchForLicense.Size = new System.Drawing.Size(74, 50);
-            this.btnSearchForLicense.TabIndex = 2;
-            this.btnSearchForLicense.UseVisualStyleBackColor = true;
-            this.btnSearchForLicense.Click += new System.EventHandler(this.btnSearchForLicense_Click);
+            this.btnFind.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnFind.FlatAppearance.BorderSize = 2;
+            this.btnFind.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnFind.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnFind.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFind.Image = global::DVLDPresentationLayer.Properties.Resources.License_View_32;
+            this.btnFind.Location = new System.Drawing.Point(643, 28);
+            this.btnFind.Name = "btnFind";
+            this.btnFind.Size = new System.Drawing.Size(74, 50);
+            this.btnFind.TabIndex = 2;
+            this.btnFind.UseVisualStyleBackColor = true;
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
             // 
             // txtLicenseID
             // 
@@ -73,8 +76,9 @@
             this.txtLicenseID.Location = new System.Drawing.Point(240, 37);
             this.txtLicenseID.Name = "txtLicenseID";
             this.txtLicenseID.Size = new System.Drawing.Size(373, 33);
-            this.txtLicenseID.TabIndex = 1;
-            this.txtLicenseID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLicenseID_KeyDown);
+            this.txtLicenseID.TabIndex = 0;
+            this.txtLicenseID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLicenseID_KeyPress);
+            this.txtLicenseID.Validating += new System.ComponentModel.CancelEventHandler(this.txtLicenseID_Validating);
             // 
             // lblTitleLocalLicenseID
             // 
@@ -87,41 +91,48 @@
             this.lblTitleLocalLicenseID.TabIndex = 37;
             this.lblTitleLocalLicenseID.Text = "Local License ID :";
             // 
-            // uctrlLDLDetails
+            // ertxtBoxInput
             // 
-            this.uctrlLDLDetails.AutoScroll = true;
-            this.uctrlLDLDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.uctrlLDLDetails.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.uctrlLDLDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.uctrlLDLDetails.Location = new System.Drawing.Point(3, 100);
-            this.uctrlLDLDetails.Name = "uctrlLDLDetails";
-            this.uctrlLDLDetails.Size = new System.Drawing.Size(1154, 410);
-            this.uctrlLDLDetails.TabIndex = 44;
+            this.ertxtBoxInput.ContainerControl = this;
             // 
-            // ctrlLDLicenseDetailsByFilter
+            // uctrlLocalDrivingLicenseInfo
+            // 
+            this.uctrlLocalDrivingLicenseInfo.AutoScroll = true;
+            this.uctrlLocalDrivingLicenseInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlLocalDrivingLicenseInfo.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.uctrlLocalDrivingLicenseInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.uctrlLocalDrivingLicenseInfo.Location = new System.Drawing.Point(3, 100);
+            this.uctrlLocalDrivingLicenseInfo.Name = "uctrlLocalDrivingLicenseInfo";
+            this.uctrlLocalDrivingLicenseInfo.Size = new System.Drawing.Size(1154, 410);
+            this.uctrlLocalDrivingLicenseInfo.TabIndex = 44;
+            // 
+            // ctrlDriverLicenseInfoByFilter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Controls.Add(this.gbFilter);
-            this.Controls.Add(this.uctrlLDLDetails);
+            this.Controls.Add(this.uctrlLocalDrivingLicenseInfo);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "ctrlLDLicenseDetailsByFilter";
+            this.Name = "ctrlDriverLicenseInfoByFilter";
             this.Size = new System.Drawing.Size(1157, 510);
             this.gbFilter.ResumeLayout(false);
             this.gbFilter.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ertxtBoxInput)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.Button btnSearchForLicense;
+        private System.Windows.Forms.Button btnFind;
         private System.Windows.Forms.Label lblTitleLocalLicenseID;
-        public System.Windows.Forms.GroupBox gbFilter;
-        public ctrlDriverLocalLicenseDetails uctrlLDLDetails;
-        internal System.Windows.Forms.TextBox txtLicenseID;
+        public ctrlDriverLocalLicenseInfo uctrlLocalDrivingLicenseInfo;
+        private System.Windows.Forms.ErrorProvider ertxtBoxInput;
+        private System.Windows.Forms.GroupBox gbFilter;
+        private System.Windows.Forms.TextBox txtLicenseID;
     }
 }

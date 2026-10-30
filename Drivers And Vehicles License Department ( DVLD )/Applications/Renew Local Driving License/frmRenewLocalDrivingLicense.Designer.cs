@@ -69,7 +69,7 @@
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.lnlblShowNewLicenseInfo = new System.Windows.Forms.LinkLabel();
-            this.uctrlLDLDetailsByFilter = new DVLDPresentationLayer.ctrlLDLicenseDetailsByFilter();
+            this.uctrlLDLDetailsByFilter = new DVLDPresentationLayer.ctrlDriverLicenseInfoByFilter();
             ((System.ComponentModel.ISupportInitialize)(this.pbOldLicenseID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRenewedLicenseID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbIssueDate)).BeginInit();
@@ -631,7 +631,7 @@
             this.uctrlLDLDetailsByFilter.Name = "uctrlLDLDetailsByFilter";
             this.uctrlLDLDetailsByFilter.Size = new System.Drawing.Size(1157, 514);
             this.uctrlLDLDetailsByFilter.TabIndex = 0;
-            this.uctrlLDLDetailsByFilter.OnSelectedLocalLicense += new DVLDPresentationLayer.ctrlLDLicenseDetailsByFilter.SelectedLocalLicense(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
+            this.uctrlLDLDetailsByFilter.OnSelectedLicense += new System.Action<int>(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
             // 
             // frmRenewLocalDrivingLicense
             // 
@@ -719,6 +719,6 @@
         private System.Windows.Forms.TextBox txtNotes;
         private System.Windows.Forms.PictureBox pbNotes;
         private System.Windows.Forms.Label lblNotesTitle;
-        private ctrlLDLicenseDetailsByFilter uctrlLDLDetailsByFilter;
+        private ctrlDriverLicenseInfoByFilter uctrlLDLDetailsByFilter;
     }
 }

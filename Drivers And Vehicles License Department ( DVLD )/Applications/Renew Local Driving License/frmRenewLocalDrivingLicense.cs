@@ -9,7 +9,6 @@ namespace DVLDPresentationLayer.Licenses
     public partial class frmRenewLocalDrivingLicense : Form
     {
         private int _RenewedLicenseID;
-        private clsLocalLicense _SelectedLicenseInfo;
 
         public frmRenewLocalDrivingLicense()
         {
@@ -35,56 +34,58 @@ namespace DVLDPresentationLayer.Licenses
 
         private void _ShowApplicationInfo()
         {
-            lblOldLocalLicenseID.Text = _SelectedLicenseInfo.LicenseID.ToString();
-            lblExpirationDate.Text = DateTime.Now.AddYears(_SelectedLicenseInfo.LicenseClassInfo.DefaultValidityLength).ToString(
+            lblOldLocalLicenseID.Text = uctrlLDLDetailsByFilter.SelectedLicenseInfo.LicenseID.ToString();
+            lblExpirationDate.Text = DateTime.Now.AddYears(uctrlLDLDetailsByFilter.SelectedLicenseInfo.LicenseClassInfo.DefaultValidityLength).ToString(
                 clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName));
-            lblLicenseFees.Text = clsFormat.GetCustomNumberFormat(_SelectedLicenseInfo.PaidFees, clsFormat.enCustomNumberFormat.NoJustZerosAfterFraction);
+            lblLicenseFees.Text = clsFormat.GetCustomNumberFormat(uctrlLDLDetailsByFilter.SelectedLicenseInfo.PaidFees, clsFormat.enCustomNumberFormat.NoJustZerosAfterFraction);
             lblTotalFees.Text = clsFormat.GetCustomNumberFormat(
-                Convert.ToDecimal(lblApplicationFees.Text) + _SelectedLicenseInfo.PaidFees,
+                Convert.ToDecimal(lblApplicationFees.Text) + uctrlLDLDetailsByFilter.SelectedLicenseInfo.PaidFees,
                 clsFormat.enCustomNumberFormat.NoJustZerosAfterFraction);
         }
 
         private void _EditDriverPersonalInfo(clsPerson UpdatedDriverPersonalInfo)
         {
-            uctrlLDLDetailsByFilter.uctrlLDLDetails.EditDriverPersonalInfo(UpdatedDriverPersonalInfo);
+            uctrlLDLDetailsByFilter.uctrlLocalDrivingLicenseInfo.EditDriverPersonalInfo(UpdatedDriverPersonalInfo);
         }
 
         private void lnlblShowLicenseHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID(_SelectedLicenseInfo.DriverID));
+            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID(uctrlLDLDetailsByFilter.SelectedLicenseInfo.DriverID));
             frm.OnUpdatedDriverInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
         }
 
         private void lnlblShowLicenseInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmLocalLicenseDetails frm = new frmLocalLicenseDetails(_RenewedLicenseID);
+            frmShowDriverLiecnseInfo frm = new frmShowDriverLiecnseInfo(_RenewedLicenseID);
             frm.ShowDialog();
         }
 
-        private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(clsLocalLicense LicenseInfo)
+        private void uctrlLDLDetailsByFilter_OnSelectedLocalLicense(int LicenseID)
         {
-            _SelectedLicenseInfo = LicenseInfo;
-            _ShowApplicationInfo();
-
-            if (!LicenseInfo.IsExpired())
+            if (LicenseID != -1)
             {
-                MessageBox.Show($"Selected license is not yet expired , it will expire on :\n{LicenseInfo.ExpirationDate.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName))}",
-                    "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ShowApplicationInfo();
 
-                btnRenewLicense.Enabled = false;
-            }
-            else
-            {
-                btnRenewLicense.Enabled = true;
-            }
+                if (!uctrlLDLDetailsByFilter.SelectedLicenseInfo.IsExpired())
+                {
+                    MessageBox.Show($"Selected license is not yet expired , it will expire on :\n{uctrlLDLDetailsByFilter.SelectedLicenseInfo.ExpirationDate.ToString(clsFormat.GetCustomDateFormat(clsFormat.enCustomDateFormat.DateAppreviatedMonthName))}",
+                        "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            lnlblShowLicenseHistory.Enabled = true;
+                    btnRenewLicense.Enabled = false;
+                }
+                else
+                {
+                    btnRenewLicense.Enabled = true;
+                }
+
+                lnlblShowLicenseHistory.Enabled = true;
+            }
         }
 
         private void btnRenewLicense_Click(object sender, EventArgs e)
         {
-            if (_SelectedLicenseInfo == null)
+            if (uctrlLDLDetailsByFilter.SelectedLicenseInfo == null)
             {
                 MessageBox.Show("Enter local license ID First in order to renew license", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -96,7 +97,7 @@ namespace DVLDPresentationLayer.Licenses
                 return;
             }
 
-            clsLocalLicense NewLicense = _SelectedLicenseInfo.Renew(txtNotes.Text.Trim(), clsGlobalSettings.CurrentUserID);
+            clsLocalLicense NewLicense = uctrlLDLDetailsByFilter.SelectedLicenseInfo.Renew(txtNotes.Text.Trim(), clsGlobalSettings.CurrentUserID);
             if (NewLicense != null)
             {
                 lblRenewLicenseAppID.Text = NewLicense.ApplicationID.ToString();
@@ -105,7 +106,7 @@ namespace DVLDPresentationLayer.Licenses
 
                 MessageBox.Show($"License Renewed Successfully With ID : {_RenewedLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                uctrlLDLDetailsByFilter.gbFilter.Enabled = false;
+                uctrlLDLDetailsByFilter.FilterEnabled = false;
                 lnlblShowNewLicenseInfo.Enabled = true;
                 btnRenewLicense.Enabled = false;
             }

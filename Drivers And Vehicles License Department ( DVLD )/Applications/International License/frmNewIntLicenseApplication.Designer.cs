@@ -60,7 +60,7 @@
             this.lblInternationalLicenseAppID = new System.Windows.Forms.Label();
             this.lblApplicationFeesTitle = new System.Windows.Forms.Label();
             this.lbl_ILApplicationIDTitle = new System.Windows.Forms.Label();
-            this.uctrlLDLDetailsByFilter = new DVLDPresentationLayer.ctrlLDLicenseDetailsByFilter();
+            this.uctrlLDLDetailsByFilter = new DVLDPresentationLayer.ctrlDriverLicenseInfoByFilter();
             this.gbApplicationBasicInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLocalLicenseID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbInternationalLicenseID)).BeginInit();
@@ -494,7 +494,9 @@
             // uctrlLDLDetailsByFilter
             // 
             this.uctrlLDLDetailsByFilter.AutoScroll = true;
+            this.uctrlLDLDetailsByFilter.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.uctrlLDLDetailsByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlLDLDetailsByFilter.FilterEnabled = true;
             this.uctrlLDLDetailsByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
             this.uctrlLDLDetailsByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.uctrlLDLDetailsByFilter.Location = new System.Drawing.Point(8, 119);
@@ -502,7 +504,7 @@
             this.uctrlLDLDetailsByFilter.Name = "uctrlLDLDetailsByFilter";
             this.uctrlLDLDetailsByFilter.Size = new System.Drawing.Size(1157, 521);
             this.uctrlLDLDetailsByFilter.TabIndex = 0;
-            this.uctrlLDLDetailsByFilter.OnSelectedLocalLicense += new DVLDPresentationLayer.ctrlLDLicenseDetailsByFilter.SelectedLocalLicense(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
+            this.uctrlLDLDetailsByFilter.OnSelectedLicense += new System.Action<int> (this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
             // 
             // frmNewIntLicenseApplication
             // 
@@ -580,6 +582,6 @@
         private System.Windows.Forms.Label lblInternationalLicenseAppID;
         private System.Windows.Forms.Label lblApplicationFeesTitle;
         private System.Windows.Forms.Label lbl_ILApplicationIDTitle;
-        private ctrlLDLicenseDetailsByFilter uctrlLDLDetailsByFilter;
+        private ctrlDriverLicenseInfoByFilter uctrlLDLDetailsByFilter;
     }
 }

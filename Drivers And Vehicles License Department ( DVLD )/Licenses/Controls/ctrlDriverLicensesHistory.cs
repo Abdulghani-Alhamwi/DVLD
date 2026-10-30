@@ -129,7 +129,7 @@ namespace DVLDPresentationLayer
         {
             if(tcLicenseHistory.SelectedTab == tpLocalLicenses)
             {
-                frmLocalLicenseDetails frm = new frmLocalLicenseDetails((int)dgvLocalLicenses.SelectedRows[0].Cells[_LocalLicensesPKViewedColumnName].Value);
+                frmShowDriverLiecnseInfo frm = new frmShowDriverLiecnseInfo((int)dgvLocalLicenses.SelectedRows[0].Cells[_LocalLicensesPKViewedColumnName].Value);
                 frm.ShowDialog();
             }
             else
