@@ -12,7 +12,7 @@ namespace DVLDBusinessLayer
         public clsTestType.enTestType TestTypeID { get; set; }
         public int LocalDrivingLicenseApplicationID { get; set; }
         public DateTime AppointmentDate { get; set; }
-        public decimal PaidFees { get; set; }
+        public float PaidFees { get; set; }
         public int CreatedByUserID { get; set; }
         public bool IsLocked { get; set; }
         public int RetakeTestApplicationID { get; set; }
@@ -26,7 +26,8 @@ namespace DVLDBusinessLayer
             get { return GetTestID(); }
         }
 
-        public clsTestAppointment(clsTestType.enTestType TestTypeID, int LDLApplicationID, DateTime AppointmentDate, decimal PaidFees, int CreatedByUserID, bool IsLocked,int RetakeTestApplicationID = -1)
+        public clsTestAppointment(clsTestType.enTestType TestTypeID, int LDLApplicationID, DateTime AppointmentDate, float PaidFees
+            , int CreatedByUserID, bool IsLocked,int RetakeTestApplicationID = -1)
         {
             TestAppointmentID = -1;
             this.TestTypeID = TestTypeID;
@@ -40,7 +41,8 @@ namespace DVLDBusinessLayer
             _OldAppointmentData = new clsTestAppointmentData.clsOldAppointmentData(AppointmentDate, IsLocked);
         }
 
-        private clsTestAppointment(int TestAppointmentID, clsTestType.enTestType TestTypeID,int LDLApplicationID,DateTime AppointmentDate,decimal PaidFees,int CreatedByUserID,bool IsLocked,int RetakeTestApplicationID)
+        private clsTestAppointment(int TestAppointmentID, clsTestType.enTestType TestTypeID,int LDLApplicationID,DateTime AppointmentDate
+            , float PaidFees,int CreatedByUserID,bool IsLocked,int RetakeTestApplicationID)
         {
             this.TestAppointmentID = TestAppointmentID;
             this.TestTypeID = TestTypeID;
@@ -121,7 +123,7 @@ namespace DVLDBusinessLayer
             byte TestTypeID = 0;
             int LocalDrivingLicenseApplicationID = -1;
             DateTime AppointmentDate = DateTime.Now;
-            decimal PaidFees = -1;
+            float PaidFees = -1;
             int CreatedByUserID = -1;
             bool IsLocked = false;
             int RetakeTestAppID = -1;
@@ -137,7 +139,7 @@ namespace DVLDBusinessLayer
         {
             int TestAppointmentID = -1;
             DateTime AppointmentDate = DateTime.Now;
-            decimal PaidFees = -1;
+            float PaidFees = -1;
             int CreatedByUserID = -1;
             bool IsLocked = false;
             int RetakeTestAppID = -1;

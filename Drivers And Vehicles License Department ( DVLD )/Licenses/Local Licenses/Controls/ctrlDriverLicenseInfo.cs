@@ -32,12 +32,13 @@ namespace DVLDPresentationLayer
                 pbPersonalImage.Image = (LicenseInfo.DriverInfo.PersonalInfo.Gendor == clsPerson.enGendor.Male) ? Resources.Male_512 : Resources.Female_512;
         }
 
-        public void LoadInfo(int LocalLicenseID)
+        public void LoadInfo(int LocalLicenseID,bool ShowErrorMessage = true)
         {
             LicenseInfo = clsLocalLicense.Find(LocalLicenseID);
 
             if (LicenseInfo == null)
             {
+                if(ShowErrorMessage)
                 MessageBox.Show("Could not found license with license id : " + LocalLicenseID.ToString()
                     , "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 

@@ -13,9 +13,9 @@ namespace DVLDDataAccessLayer
         public class clsOldApplicationTypeData
         {
             public string ApplicationTypeTitle;
-            public decimal ApplicationTypeFees;
+            public float ApplicationTypeFees;
 
-            public clsOldApplicationTypeData(string ApplicationTypeTitle, decimal ApplicationTypeFees)
+            public clsOldApplicationTypeData(string ApplicationTypeTitle, float ApplicationTypeFees)
             {
                 this.ApplicationTypeTitle = ApplicationTypeTitle;
                 this.ApplicationTypeFees = ApplicationTypeFees;
@@ -54,7 +54,7 @@ namespace DVLDDataAccessLayer
             return dtApplicationTypes;
         }
 
-        private static void _ResetChangedOldValues(string ApplicationTypeTitle, decimal ApplicationTypeFees, clsOldApplicationTypeData OldApplicationTypeData)
+        private static void _ResetChangedOldValues(string ApplicationTypeTitle, float ApplicationTypeFees, clsOldApplicationTypeData OldApplicationTypeData)
         {
             if (ApplicationTypeTitle != OldApplicationTypeData.ApplicationTypeTitle)
                 OldApplicationTypeData.ApplicationTypeTitle = null;
@@ -77,7 +77,7 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        private static string _GetUpdateQuery(string ApplicationTypeTitle, decimal ApplicationTypeFees, clsOldApplicationTypeData OldApplicationTypeData, bool HasOldDataChangedFully)
+        private static string _GetUpdateQuery(string ApplicationTypeTitle, float ApplicationTypeFees, clsOldApplicationTypeData OldApplicationTypeData, bool HasOldDataChangedFully)
         {
             string query = "UPDATE ApplicationTypes SET";
 
@@ -105,7 +105,7 @@ namespace DVLDDataAccessLayer
             return query;
         }
 
-        public static bool UpdateApplicationType(byte ApplicationTypeID, string ApplicationTypeTitle, decimal ApplicationTypeFees, clsOldApplicationTypeData OldApplicationTypeData, bool HasOldDataChangedFully)
+        public static bool UpdateApplicationType(byte ApplicationTypeID, string ApplicationTypeTitle, float ApplicationTypeFees, clsOldApplicationTypeData OldApplicationTypeData, bool HasOldDataChangedFully)
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -127,7 +127,7 @@ namespace DVLDDataAccessLayer
                 AffectedRows = Convert.ToByte(command.ExecuteNonQuery());
             }
 
-            catch (Exception ex) { Console.Write(ex.Message); }
+            catch { }
 
             finally
             {
@@ -137,9 +137,9 @@ namespace DVLDDataAccessLayer
             return (AffectedRows > 0);
         }
 
-        public static decimal GetApplicationTypeFees(byte ApplicationTypeID)
+        public static float GetApplicationTypeFees(byte ApplicationTypeID)
         {
-            decimal ApplicationTypeFees = -1;
+            float ApplicationTypeFees = -1;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT ApplicationFees FROM ApplicationTypes
@@ -154,7 +154,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    ApplicationTypeFees = Convert.ToDecimal(result);
+                    ApplicationTypeFees = Convert.ToSingle(result);
 
             }
 

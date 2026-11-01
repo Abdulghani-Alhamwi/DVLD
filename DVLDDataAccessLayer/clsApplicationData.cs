@@ -21,7 +21,7 @@ namespace DVLDDataAccessLayer
         }
         }
 
-        public static int AddApplication(int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, short ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
+        public static int AddApplication(int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, short ApplicationStatus, DateTime LastStatusDate, float PaidApplicationFees, int CreatedByUserID)
         {
             int ApplicationID = -1;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -141,7 +141,7 @@ namespace DVLDDataAccessLayer
             return (AffectedRows > 0);
         }
 
-        public static bool Find(int ApplicationID , ref int ApplicantPersonID,ref DateTime ApplicationDate, ref byte ApplicationTypeID,ref byte ApplicationStatus ,ref DateTime LastStatusDate,ref decimal PaidApplicationFees,ref int CreatedByUserID)
+        public static bool Find(int ApplicationID , ref int ApplicantPersonID,ref DateTime ApplicationDate, ref byte ApplicationTypeID,ref byte ApplicationStatus ,ref DateTime LastStatusDate,ref float PaidApplicationFees,ref int CreatedByUserID)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -164,7 +164,7 @@ namespace DVLDDataAccessLayer
                     ApplicationTypeID = Convert.ToByte(reader["ApplicationTypeID"]);
                     ApplicationStatus = Convert.ToByte(reader["ApplicationStatus"]);
                     LastStatusDate = (DateTime)reader["LastStatusDate"];
-                    PaidApplicationFees = (Decimal)(reader["PaidFees"]);
+                    PaidApplicationFees = Convert.ToSingle(reader["PaidFees"]);
                     CreatedByUserID = (int)reader["CreatedByUserID"];
 
                     IsFound = true;

@@ -8,7 +8,7 @@ using Utility_Library;
 
 namespace DVLDPresentationLayer.Licenses
 {
-    public partial class frmInternationalLicenseApplications : Form
+    public partial class frmListInternationalLicenseApplications : Form
     {
         private string _PreviousCbFilterSelectedItem;
         private string _PreviousCbIsActiveSelectedItem;
@@ -22,7 +22,7 @@ namespace DVLDPresentationLayer.Licenses
         private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDGVColumnSortDirection;
         private clsDataGridViewUtilityLib _DgvUtilityLib;
 
-        public frmInternationalLicenseApplications()
+        public frmListInternationalLicenseApplications()
         {
             InitializeComponent();
 
@@ -265,7 +265,8 @@ namespace DVLDPresentationLayer.Licenses
                 return;
             }
 
-            frmInternationalLicenseDetails frm = new frmInternationalLicenseDetails(clsInternationalLicense.GetLicenseID((int)dgvIntLicenseApplications.SelectedRows[0].Cells["Application ID"].Value));
+            int InternationalLicenseApplicationID = (int)dgvIntLicenseApplications.SelectedRows[0].Cells["Application ID"].Value;
+            frmInternationalLicenseInfo frm = new frmInternationalLicenseInfo(clsInternationalLicense.GetLicenseID(InternationalLicenseApplicationID));
             frm.ShowDialog();
         }
 

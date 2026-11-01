@@ -184,7 +184,7 @@ namespace DVLDPresentationLayer
                 ApplicationDate: DateTime.Now,
                 ApplicationStatus: clsApplication.enApplicationStatus.New,
                 LastStatusDate: DateTime.Now,
-                PaidApplicationFees: Convert.ToDecimal(lblRAppFees.Text),
+                PaidApplicationFees: Convert.ToSingle(lblRAppFees.Text),
                 ApplicationTypeID: clsApplicationType.GetApplicationTypeID(clsApplication.enApplicationType.ReTakeTest),
                 CreatedByUserID: clsGlobalSettings.CurrentUserID
             );

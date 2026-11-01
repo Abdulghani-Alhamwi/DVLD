@@ -129,11 +129,11 @@
     <Compile Include="Licenses\Controls\ctrlDriverLicensesHistory.Designer.cs">
       <DependentUpon>ctrlDriverLicensesHistory.cs</DependentUpon>
     </Compile>
-    <Compile Include="Licenses\International Licenses\Controls\ctrlInternationalLicenseDetails.cs">
+    <Compile Include="Licenses\International Licenses\Controls\ctrlInternationalLicenseInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Licenses\International Licenses\Controls\ctrlInternationalLicenseDetails.Designer.cs">
-      <DependentUpon>ctrlInternationalLicenseDetails.cs</DependentUpon>
+    <Compile Include="Licenses\International Licenses\Controls\ctrlInternationalLicenseInfo.Designer.cs">
+      <DependentUpon>ctrlInternationalLicenseInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Licenses\Local Licenses\Controls\ctrlDriverLicenseInfoByFilter.cs">
       <SubType>UserControl</SubType>
@@ -159,17 +159,17 @@
     <Compile Include="Licenses\frmShowPersonLicenseHistory.Designer.cs">
       <DependentUpon>frmShowPersonLicenseHistory.cs</DependentUpon>
     </Compile>
-    <Compile Include="Licenses\International Licenses\frmInternationalLicenseDetails.cs">
+    <Compile Include="Licenses\International Licenses\frmInternationalLicenseInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Licenses\International Licenses\frmInternationalLicenseDetails.Designer.cs">
-      <DependentUpon>frmInternationalLicenseDetails.cs</DependentUpon>
+    <Compile Include="Licenses\International Licenses\frmInternationalLicenseInfo.Designer.cs">
+      <DependentUpon>frmInternationalLicenseInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Applications\International License\frmInternationalLicenseApplications.cs">
+    <Compile Include="Applications\International License\frmListInternationalLicenseApplications.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Applications\International License\frmInternationalLicenseApplications.Designer.cs">
-      <DependentUpon>frmInternationalLicenseApplications.cs</DependentUpon>
+    <Compile Include="Applications\International License\frmListInternationalLicenseApplications.Designer.cs">
+      <DependentUpon>frmListInternationalLicenseApplications.cs</DependentUpon>
     </Compile>
     <Compile Include="Licenses\Local Licenses\frmShowDriverLiecnseInfo.cs">
       <SubType>Form</SubType>
@@ -219,11 +219,11 @@
     <Compile Include="Applications\Local Driving License\frmAddUpdateLocalDrivingLicenseApplication.Designer.cs">
       <DependentUpon>frmAddUpdateLocalDrivingLicenseApplication.cs</DependentUpon>
     </Compile>
-    <Compile Include="Applications\Local Driving License\frmLocalDrivingLicenseApplicationsManagement.cs">
+    <Compile Include="Applications\Local Driving License\frmListLocalDrivingLicenseApplications.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Applications\Local Driving License\frmLocalDrivingLicenseApplicationsManagement.Designer.cs">
-      <DependentUpon>frmLocalDrivingLicenseApplicationsManagement.cs</DependentUpon>
+    <Compile Include="Applications\Local Driving License\frmListLocalDrivingLicenseApplications.Designer.cs">
+      <DependentUpon>frmListLocalDrivingLicenseApplications.cs</DependentUpon>
     </Compile>
     <Compile Include="Applications\Release Detained License\frmListDetainedLicenses.cs">
       <SubType>Form</SubType>
@@ -347,8 +347,8 @@
     <EmbeddedResource Include="Licenses\Controls\ctrlDriverLicensesHistory.resx">
       <DependentUpon>ctrlDriverLicensesHistory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Licenses\International Licenses\Controls\ctrlInternationalLicenseDetails.resx">
-      <DependentUpon>ctrlInternationalLicenseDetails.cs</DependentUpon>
+    <EmbeddedResource Include="Licenses\International Licenses\Controls\ctrlInternationalLicenseInfo.resx">
+      <DependentUpon>ctrlInternationalLicenseInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Licenses\Local Licenses\Controls\ctrlDriverLicenseInfoByFilter.resx">
       <DependentUpon>ctrlDriverLicenseInfoByFilter.cs</DependentUpon>
@@ -365,11 +365,11 @@
     <EmbeddedResource Include="Licenses\frmShowPersonLicenseHistory.resx">
       <DependentUpon>frmShowPersonLicenseHistory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Licenses\International Licenses\frmInternationalLicenseDetails.resx">
-      <DependentUpon>frmInternationalLicenseDetails.cs</DependentUpon>
+    <EmbeddedResource Include="Licenses\International Licenses\frmInternationalLicenseInfo.resx">
+      <DependentUpon>frmInternationalLicenseInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Applications\International License\frmInternationalLicenseApplications.resx">
-      <DependentUpon>frmInternationalLicenseApplications.cs</DependentUpon>
+    <EmbeddedResource Include="Applications\International License\frmListInternationalLicenseApplications.resx">
+      <DependentUpon>frmListInternationalLicenseApplications.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Licenses\Local Licenses\frmShowDriverLiecnseInfo.resx">
       <DependentUpon>frmShowDriverLiecnseInfo.cs</DependentUpon>
@@ -395,8 +395,8 @@
     <EmbeddedResource Include="Applications\Local Driving License\frmAddUpdateLocalDrivingLicenseApplication.resx">
       <DependentUpon>frmAddUpdateLocalDrivingLicenseApplication.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Applications\Local Driving License\frmLocalDrivingLicenseApplicationsManagement.resx">
-      <DependentUpon>frmLocalDrivingLicenseApplicationsManagement.cs</DependentUpon>
+    <EmbeddedResource Include="Applications\Local Driving License\frmListLocalDrivingLicenseApplications.resx">
+      <DependentUpon>frmListLocalDrivingLicenseApplications.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\Release Detained License\frmListDetainedLicenses.resx">
       <DependentUpon>frmListDetainedLicenses.cs</DependentUpon>

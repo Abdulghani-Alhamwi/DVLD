@@ -19,7 +19,7 @@ namespace DVLDBusinessLayer
         public clsInternationalLicense(int DriverID, int LocalLicenseID,
             DateTime IssueDate, DateTime ExpirationDate, bool IsActive, int CreatedByUserID,int ApplicantPersonID
             ,DateTime ApplicationDate,clsApplication.enApplicationType ApplicationTypeID
-            ,enApplicationStatus ApplicationStatus,DateTime LastStatusDate,decimal PaidApplicationFees)
+            ,enApplicationStatus ApplicationStatus,DateTime LastStatusDate, float PaidApplicationFees)
             :base(ApplicantPersonID, ApplicationDate,(byte)ApplicationTypeID, ApplicationStatus
               , LastStatusDate, PaidApplicationFees, CreatedByUserID)
         {
@@ -35,7 +35,7 @@ namespace DVLDBusinessLayer
         private clsInternationalLicense(int InternationalLicenseID, int ApplicationID, int DriverID, int LocalLicenseID,
             DateTime IssueDate, DateTime ExpirationDate, bool IsActive, int CreatedByUserID, int ApplicantPersonID
             , DateTime ApplicationDate, byte ApplicationTypeID
-            , enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees)
+            , enApplicationStatus ApplicationStatus, DateTime LastStatusDate, float PaidApplicationFees)
             : base(ApplicationID, ApplicantPersonID, ApplicationDate, ApplicationTypeID, ApplicationStatus
               , LastStatusDate, PaidApplicationFees, CreatedByUserID)
         {

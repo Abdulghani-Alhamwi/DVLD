@@ -38,13 +38,13 @@ namespace DVLDBusinessLayer
             }
         }
         public DateTime LastStatusDate { get; set; }
-        public decimal PaidApplicationFees { get; set; }
+        public float PaidApplicationFees { get; set; }
         public int CreatedByUserID { get; set; }
         public clsUser CreatedByUserInfo;
 
         protected clsApplicationData.clsOldApplicationData OldApplicationData;
 
-        public clsApplication(int ApplicantPersonID, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
+        public clsApplication(int ApplicantPersonID, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, float PaidApplicationFees, int CreatedByUserID)
         {
             this.ApplicationID = -1;
             this.ApplicantPersonID = ApplicantPersonID;
@@ -60,7 +60,7 @@ namespace DVLDBusinessLayer
             OldApplicationData = new clsApplicationData.clsOldApplicationData(ApplicantPersonID, (byte)ApplicationStatus);
         }
 
-        protected clsApplication(int ApplicationID,int ApplicantPersonID,DateTime ApplicationDate,byte ApplicationTypeID,enApplicationStatus ApplicationStatus,DateTime LastStatusDate, decimal PaidApplicationFees,int CreatedByUserID)
+        protected clsApplication(int ApplicationID,int ApplicantPersonID,DateTime ApplicationDate,byte ApplicationTypeID,enApplicationStatus ApplicationStatus,DateTime LastStatusDate, float PaidApplicationFees,int CreatedByUserID)
         {
             this.ApplicationID = ApplicationID;
             this.ApplicantPersonID = ApplicantPersonID;
@@ -107,7 +107,7 @@ namespace DVLDBusinessLayer
             byte ApplicationTypeID = 0;
             DateTime ApplicationDate = DateTime.Now, LastStatusDate = DateTime.Now;
             byte ApplicationStatus = 0;
-            decimal PaidApplicationFees = -1;
+            float PaidApplicationFees = -1;
 
             if (clsApplicationData.Find(ApplicationID, ref ApplicantPersonID, ref ApplicationDate, ref ApplicationTypeID, ref ApplicationStatus, ref LastStatusDate, ref PaidApplicationFees, ref CreatedByUserID))
             {

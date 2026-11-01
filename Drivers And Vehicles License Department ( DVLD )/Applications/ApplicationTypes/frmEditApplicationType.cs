@@ -22,7 +22,7 @@ namespace DVLDPresentationLayer
             txtTitle.Text = ApplicationTitle;
             txtFees.Text = ApplicationFees;
 
-            _ApplicationType = new clsApplicationType(ApplicationTypeID, ApplicationTitle, Convert.ToDecimal(ApplicationFees));
+            _ApplicationType = new clsApplicationType(ApplicationTypeID, ApplicationTitle, Convert.ToSingle(ApplicationFees));
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -33,7 +33,7 @@ namespace DVLDPresentationLayer
                 return;
             }
             _ApplicationType.ApplicationTypeTitle = txtTitle.Text.Trim();
-            _ApplicationType.ApplicationTypeFees = Convert.ToDecimal(txtFees.Text.Trim());
+            _ApplicationType.ApplicationTypeFees = Convert.ToSingle(txtFees.Text.Trim());
 
             if (_ApplicationType.AreAllFieldsOldValuesNotChanged())
                 MessageBox.Show("There are no changes on the application type info", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);

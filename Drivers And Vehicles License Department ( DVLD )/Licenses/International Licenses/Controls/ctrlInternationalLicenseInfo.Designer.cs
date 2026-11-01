@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer
 {
-    partial class ctrlInternationalLicenseDetails
+    partial class ctrlInternationalLicenseInfo
     {
         /// <summary> 
         /// Required designer variable.

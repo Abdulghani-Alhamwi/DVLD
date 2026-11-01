@@ -13,7 +13,7 @@ namespace DVLDPresentationLayer
         private byte _TestsTypesDGVRowIndex;
         private clsTestType _TestType;
 
-        public frmEditTestType(clsTestType.enTestType TestTypeID, string TestTypeTitle, string TestTypeDescription,decimal TestTypeFees,byte TestsTypesDGVRowIndex)
+        public frmEditTestType(clsTestType.enTestType TestTypeID, string TestTypeTitle, string TestTypeDescription,float TestTypeFees,byte TestsTypesDGVRowIndex)
         {
             InitializeComponent();
 
@@ -36,7 +36,7 @@ namespace DVLDPresentationLayer
 
             _TestType.TestTypeTitle = txtTitle.Text.Trim();
             _TestType.TestTypeDescription = txtDescription.Text.Trim();
-            _TestType.TestTypeFees = Convert.ToDecimal(txtFees.Text.Trim());
+            _TestType.TestTypeFees = Convert.ToSingle(txtFees.Text.Trim());
 
             if (_TestType.AreAllFieldsOldValuesNotChanged())
                 MessageBox.Show("There are no changes on the test type info", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);

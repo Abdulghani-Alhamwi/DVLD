@@ -113,7 +113,7 @@ namespace DVLDPresentationLayer
 
         private void tsmiLocalDrivingLicenseApplications_Click(object sender, EventArgs e)
         {
-            frmLocalDrivingLicenseApplicationsManagement frm = new frmLocalDrivingLicenseApplicationsManagement();
+            frmListLocalDrivingLicenseApplications frm = new frmListLocalDrivingLicenseApplications();
             frm.ShowDialog();
         }
 
@@ -137,7 +137,7 @@ namespace DVLDPresentationLayer
 
         private void tsmiInternationalLicenseApplications_Click(object sender, EventArgs e)
         {
-            frmInternationalLicenseApplications frm = new frmInternationalLicenseApplications();
+            frmListInternationalLicenseApplications frm = new frmListInternationalLicenseApplications();
             frm.ShowDialog();
         }
 
@@ -161,7 +161,7 @@ namespace DVLDPresentationLayer
 
         private void tsmiRetakeTest_Click(object sender, EventArgs e)
         {
-            frmLocalDrivingLicenseApplicationsManagement frm = new frmLocalDrivingLicenseApplicationsManagement();
+            frmListLocalDrivingLicenseApplications frm = new frmListLocalDrivingLicenseApplications();
             frm.ShowDialog();
         }
 

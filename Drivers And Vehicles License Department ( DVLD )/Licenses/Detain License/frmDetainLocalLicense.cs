@@ -52,7 +52,7 @@ namespace DVLDPresentationLayer.Controls
                 return;
             }
 
-            int DetainID = uctrlLocalLicenseDetailsWithFilter.SelectedLicenseInfo.Detain(Convert.ToDecimal(txtFineFees.Text.Trim()), clsGlobalSettings.CurrentUserID);
+            int DetainID = uctrlLocalLicenseDetailsWithFilter.SelectedLicenseInfo.Detain(Convert.ToSingle(txtFineFees.Text.Trim()), clsGlobalSettings.CurrentUserID);
 
             if (DetainID == -1)
             {

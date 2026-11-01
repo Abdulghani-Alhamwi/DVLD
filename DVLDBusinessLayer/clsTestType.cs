@@ -10,11 +10,11 @@ namespace DVLDBusinessLayer
         public enTestType TestTypeID { get; set; }
         public string TestTypeTitle { get; set; }
         public string TestTypeDescription { get; set; }
-        public decimal TestTypeFees { get; set; }
+        public float TestTypeFees { get; set; }
 
         public clsTestTypeData.clsOldTestTypeData _OldTestTypeData;
 
-        public clsTestType(enTestType TestTypeID, string TestTypeTitle, string TestTypeDescription, decimal TestTypeFees)
+        public clsTestType(enTestType TestTypeID, string TestTypeTitle, string TestTypeDescription, float TestTypeFees)
         {
             this.TestTypeID = TestTypeID;
             this.TestTypeTitle = TestTypeTitle;
@@ -52,7 +52,7 @@ namespace DVLDBusinessLayer
             return false;
         }
 
-        public static decimal GetTestTypeFees(byte TestTypeID)
+        public static float GetTestTypeFees(byte TestTypeID)
         {
             return clsTestTypeData.GetTestTypeFees(TestTypeID);
         }

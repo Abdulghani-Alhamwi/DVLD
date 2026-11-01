@@ -8,11 +8,11 @@ namespace DVLDBusinessLayer
     {
         public byte ApplicationTypeID { get; set; }
         public string ApplicationTypeTitle { get; set; }
-        public decimal ApplicationTypeFees { get; set; }
+        public float ApplicationTypeFees { get; set; }
 
         public clsApplicationTypeData.clsOldApplicationTypeData _OldApplicationTypeData;
 
-        public clsApplicationType(byte ApplicationTypeID, string ApplicationTypeTitle, decimal ApplicationTypeFees)
+        public clsApplicationType(byte ApplicationTypeID, string ApplicationTypeTitle, float ApplicationTypeFees)
         {
             this.ApplicationTypeID = ApplicationTypeID;
             this.ApplicationTypeTitle = ApplicationTypeTitle;
@@ -51,7 +51,7 @@ namespace DVLDBusinessLayer
             return false;
         }
 
-        public static decimal GetApplicationTypeFees(clsApplication.enApplicationType ApplicationTypeID)
+        public static float GetApplicationTypeFees(clsApplication.enApplicationType ApplicationTypeID)
         {
             return clsApplicationTypeData.GetApplicationTypeFees((byte) ApplicationTypeID);
         }

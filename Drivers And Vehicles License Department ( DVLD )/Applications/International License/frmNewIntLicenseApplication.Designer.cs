@@ -33,8 +33,8 @@
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblFormBigTitle = new System.Windows.Forms.Label();
-            this.lnlblShowLicenseHistory = new System.Windows.Forms.LinkLabel();
-            this.lnlblShowLicenseInfo = new System.Windows.Forms.LinkLabel();
+            this.llShowLicenseHistory = new System.Windows.Forms.LinkLabel();
+            this.llShowLicenseInfo = new System.Windows.Forms.LinkLabel();
             this.gbApplicationBasicInfo = new System.Windows.Forms.GroupBox();
             this.pbLocalLicenseID = new System.Windows.Forms.PictureBox();
             this.lblLocalLicenseID = new System.Windows.Forms.Label();
@@ -150,33 +150,33 @@
             this.lblFormBigTitle.TabIndex = 183;
             this.lblFormBigTitle.Text = "International License Application";
             // 
-            // lnlblShowLicenseHistory
+            // llShowLicenseHistory
             // 
-            this.lnlblShowLicenseHistory.AutoSize = true;
-            this.lnlblShowLicenseHistory.Enabled = false;
-            this.lnlblShowLicenseHistory.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lnlblShowLicenseHistory.Location = new System.Drawing.Point(17, 883);
-            this.lnlblShowLicenseHistory.Margin = new System.Windows.Forms.Padding(0);
-            this.lnlblShowLicenseHistory.Name = "lnlblShowLicenseHistory";
-            this.lnlblShowLicenseHistory.Size = new System.Drawing.Size(259, 31);
-            this.lnlblShowLicenseHistory.TabIndex = 2;
-            this.lnlblShowLicenseHistory.TabStop = true;
-            this.lnlblShowLicenseHistory.Text = "Show License History";
-            this.lnlblShowLicenseHistory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseHistory_LinkClicked);
+            this.llShowLicenseHistory.AutoSize = true;
+            this.llShowLicenseHistory.Enabled = false;
+            this.llShowLicenseHistory.Font = new System.Drawing.Font("Tahoma", 19F);
+            this.llShowLicenseHistory.Location = new System.Drawing.Point(17, 883);
+            this.llShowLicenseHistory.Margin = new System.Windows.Forms.Padding(0);
+            this.llShowLicenseHistory.Name = "llShowLicenseHistory";
+            this.llShowLicenseHistory.Size = new System.Drawing.Size(259, 31);
+            this.llShowLicenseHistory.TabIndex = 2;
+            this.llShowLicenseHistory.TabStop = true;
+            this.llShowLicenseHistory.Text = "Show License History";
+            this.llShowLicenseHistory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llShowLicenseHistory_LinkClicked);
             // 
-            // lnlblShowLicenseInfo
+            // llShowLicenseInfo
             // 
-            this.lnlblShowLicenseInfo.AutoSize = true;
-            this.lnlblShowLicenseInfo.Enabled = false;
-            this.lnlblShowLicenseInfo.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lnlblShowLicenseInfo.Location = new System.Drawing.Point(301, 883);
-            this.lnlblShowLicenseInfo.Margin = new System.Windows.Forms.Padding(0);
-            this.lnlblShowLicenseInfo.Name = "lnlblShowLicenseInfo";
-            this.lnlblShowLicenseInfo.Size = new System.Drawing.Size(225, 31);
-            this.lnlblShowLicenseInfo.TabIndex = 3;
-            this.lnlblShowLicenseInfo.TabStop = true;
-            this.lnlblShowLicenseInfo.Text = "Show License Info";
-            this.lnlblShowLicenseInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseInfo_LinkClicked);
+            this.llShowLicenseInfo.AutoSize = true;
+            this.llShowLicenseInfo.Enabled = false;
+            this.llShowLicenseInfo.Font = new System.Drawing.Font("Tahoma", 19F);
+            this.llShowLicenseInfo.Location = new System.Drawing.Point(301, 883);
+            this.llShowLicenseInfo.Margin = new System.Windows.Forms.Padding(0);
+            this.llShowLicenseInfo.Name = "llShowLicenseInfo";
+            this.llShowLicenseInfo.Size = new System.Drawing.Size(225, 31);
+            this.llShowLicenseInfo.TabIndex = 3;
+            this.llShowLicenseInfo.TabStop = true;
+            this.llShowLicenseInfo.Text = "Show License Info";
+            this.llShowLicenseInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llShowLicenseInfo_LinkClicked);
             // 
             // gbApplicationBasicInfo
             // 
@@ -505,7 +505,7 @@
             this.uctrlLocalDrivingLicenseInfoByFilter.Name = "uctrlLocalDrivingLicenseInfoByFilter";
             this.uctrlLocalDrivingLicenseInfoByFilter.Size = new System.Drawing.Size(1157, 521);
             this.uctrlLocalDrivingLicenseInfoByFilter.TabIndex = 0;
-            this.uctrlLocalDrivingLicenseInfoByFilter.OnSelectedLicense += new System.Action<int>(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
+            this.uctrlLocalDrivingLicenseInfoByFilter.OnSelectedLicense += new System.Action<int>(this.uctrlLocalDrivingLicenseInfoWithFilter_OnSelectedLocalLicense);
             // 
             // frmNewIntLicenseApplication
             // 
@@ -518,8 +518,8 @@
             this.ClientSize = new System.Drawing.Size(1181, 943);
             this.ControlBox = false;
             this.Controls.Add(this.gbApplicationBasicInfo);
-            this.Controls.Add(this.lnlblShowLicenseInfo);
-            this.Controls.Add(this.lnlblShowLicenseHistory);
+            this.Controls.Add(this.llShowLicenseInfo);
+            this.Controls.Add(this.llShowLicenseHistory);
             this.Controls.Add(this.lblFormBigTitle);
             this.Controls.Add(this.btnIssueLicense);
             this.Controls.Add(this.btnClose);
@@ -533,6 +533,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Activated += new System.EventHandler(this.frmNewIntLicenseApplication_Activated);
             this.Shown += new System.EventHandler(this.frmNewIntLicenseApplication_Shown);
             this.gbApplicationBasicInfo.ResumeLayout(false);
             this.gbApplicationBasicInfo.PerformLayout();
@@ -556,8 +557,8 @@
         private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label lblFormBigTitle;
-        private System.Windows.Forms.LinkLabel lnlblShowLicenseHistory;
-        private System.Windows.Forms.LinkLabel lnlblShowLicenseInfo;
+        private System.Windows.Forms.LinkLabel llShowLicenseHistory;
+        private System.Windows.Forms.LinkLabel llShowLicenseInfo;
         private System.Windows.Forms.GroupBox gbApplicationBasicInfo;
         private System.Windows.Forms.PictureBox pbLocalLicenseID;
         private System.Windows.Forms.Label lblLocalLicenseID;

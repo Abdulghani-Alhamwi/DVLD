@@ -206,7 +206,7 @@ namespace DVLDPresentationLayer.Core
                 ApplicationTypeID: clsApplicationType.GetApplicationTypeID(clsApplication.enApplicationType.NewLocalDrivingLicense),
                 ApplicationStatus: clsApplication.enApplicationStatus.New,
                 LastStatusDate: DateTime.Now,
-                PaidApplicationFees: Convert.ToDecimal(lblApplicationFees.Text),
+                PaidApplicationFees: Convert.ToSingle(lblApplicationFees.Text),
                 CreatedByUserID: clsGlobalSettings.CurrentUserID
               );
 

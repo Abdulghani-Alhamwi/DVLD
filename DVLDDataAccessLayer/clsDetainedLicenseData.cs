@@ -171,7 +171,7 @@ namespace DVLDDataAccessLayer
             return false;
         }
 
-        public static int AddNewDetainedLicense(int LocalLicenseID,DateTime DetainDate,decimal FineFees,int CreatedByUserID)
+        public static int AddNewDetainedLicense(int LocalLicenseID,DateTime DetainDate, float FineFees,int CreatedByUserID)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
@@ -233,7 +233,7 @@ namespace DVLDDataAccessLayer
             return (AffectedRows != 0);
         }
 
-        public static bool FindDetainInfoByDetainID(int DetainID, ref int LocalLicenseID, ref DateTime DetainDate, ref decimal FineFees, ref int CreatedByUserID, ref bool IsReleased, ref DateTime ReleaseDate, ref int ReleasedByUserID, ref int ReleaseApplicationID)
+        public static bool FindDetainInfoByDetainID(int DetainID, ref int LocalLicenseID, ref DateTime DetainDate, ref float FineFees, ref int CreatedByUserID, ref bool IsReleased, ref DateTime ReleaseDate, ref int ReleasedByUserID, ref int ReleaseApplicationID)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -252,7 +252,7 @@ namespace DVLDDataAccessLayer
                 {
                     LocalLicenseID = (int)reader["LocalLicenseID"];
                     DetainDate = (DateTime)reader["DetainDate"];
-                    FineFees = (decimal)reader["FineFees"];
+                    FineFees = Convert.ToSingle(reader["FineFees"]);
                     CreatedByUserID = (int)reader["CreatedByUserID"];
                     IsReleased = (bool)reader["IsReleased"];
 
@@ -279,7 +279,7 @@ namespace DVLDDataAccessLayer
             return IsFound;
         }
 
-        public static bool FindDetainInfoByLicenseID(int LocalLicenseID, ref int DetainID, ref DateTime DetainDate, ref decimal FineFees, ref int CreatedByUserID, ref bool IsReleased, ref DateTime ReleaseDate, ref int ReleasedByUserID, ref int ReleaseApplicationID)
+        public static bool FindDetainInfoByLicenseID(int LocalLicenseID, ref int DetainID, ref DateTime DetainDate, ref float FineFees, ref int CreatedByUserID, ref bool IsReleased, ref DateTime ReleaseDate, ref int ReleasedByUserID, ref int ReleaseApplicationID)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -298,7 +298,7 @@ namespace DVLDDataAccessLayer
                 {
                     DetainID = (int)reader["DetainID"];
                     DetainDate = (DateTime)reader["DetainDate"];
-                    FineFees = (decimal)reader["FineFees"];
+                    FineFees = Convert.ToSingle(reader["FineFees"]);
                     CreatedByUserID = (int)reader["CreatedByUserID"];
                     IsReleased = (bool)reader["IsReleased"];
 

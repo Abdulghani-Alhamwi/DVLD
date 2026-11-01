@@ -20,7 +20,7 @@ namespace DVLDBusinessLayer
         public DateTime IssueDate{get;set;}
         public DateTime ExpirationDate{get;set;}
         public string Notes{get;set;}
-        public decimal PaidFees{get;set;}
+        public float PaidFees {get;set;}
         public bool IsActive{get;set;}
         public enIssueReason IssueReason {get;set;}
         public string IssueReasonText { get { return GetIssueReasonText(); } }    
@@ -29,7 +29,8 @@ namespace DVLDBusinessLayer
 
         public bool IsDetained { get { return clsDetainedLicense.IsDetainedLicense(LicenseID); } }
 
-        public clsLocalLicense(int ApplicationID, int PersonID,int DriverID, byte LicenseClassID, DateTime IssueDate, DateTime ExpirationDate, string Notes, bool IsActive, enIssueReason IssueReason, int CreatedByUserID)
+        public clsLocalLicense(int ApplicationID, int PersonID,int DriverID, byte LicenseClassID, DateTime IssueDate, DateTime ExpirationDate
+            , string Notes, bool IsActive, enIssueReason IssueReason, int CreatedByUserID)
         {
             this.LicenseID = -1;
             this.ApplicationID = ApplicationID;
@@ -45,10 +46,11 @@ namespace DVLDBusinessLayer
 
             DriverInfo = clsDriver.FindByDriverID(DriverID);
             LicenseClassInfo = clsLicenseClass.FindByLicenseClassID(LicenseClassID);
-            this.PaidFees = Convert.ToDecimal((LicenseClassInfo != null) ? LicenseClassInfo.ClassFees : 0);
+            this.PaidFees = Convert.ToSingle((LicenseClassInfo != null) ? LicenseClassInfo.ClassFees : 0);
         }
 
-        private clsLocalLicense(int LocalLicenseID, int ApplicationID, int DriverID, byte LicenseClassID, DateTime IssueDate, DateTime ExpirationDate, string Notes, decimal PaidFees, bool IsActive, enIssueReason IssueReason, int CreatedByUserID)
+        private clsLocalLicense(int LocalLicenseID, int ApplicationID, int DriverID, byte LicenseClassID, DateTime IssueDate, DateTime ExpirationDate
+            , string Notes, float PaidFees, bool IsActive, enIssueReason IssueReason, int CreatedByUserID)
         {
             this.LicenseID = LocalLicenseID;
             this.ApplicationID = ApplicationID;
@@ -106,7 +108,8 @@ namespace DVLDBusinessLayer
 
         private bool _AddNewLocalLicense()
         {
-            LicenseID = clsLocalLicenseData.IssueLocalDrivingLicense(ApplicationID, DriverID, LicenseClassID, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, (byte)IssueReason, CreatedByUserID);
+            LicenseID = clsLocalLicenseData.IssueLocalDrivingLicense(ApplicationID, DriverID, LicenseClassID, IssueDate, ExpirationDate, Notes
+                , PaidFees, IsActive, (byte)IssueReason, CreatedByUserID);
 
             return (LicenseID != -1);
         }
@@ -132,7 +135,7 @@ namespace DVLDBusinessLayer
             string Notes = "";
             byte IssueReason =0;
             DateTime IssueDate = DateTime.Now, ExpirationDate = DateTime.Now;
-            decimal PaidFees = -1;
+            float PaidFees = -1;
             bool IsActive = false;
 
             if (clsLocalLicenseData.Find(LicenseID,ref ApplicationID, ref DriverID, ref LicenseClassID, ref IssueDate,
@@ -221,7 +224,7 @@ namespace DVLDBusinessLayer
             return null;
         }
 
-        public int Detain(decimal FineFees,int CreatedByUserID)
+        public int Detain(float FineFees,int CreatedByUserID)
         {
             DetainInfo = new clsDetainedLicense(LicenseID, DateTime.Now, FineFees, CreatedByUserID);
 

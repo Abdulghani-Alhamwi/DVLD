@@ -17,10 +17,10 @@ namespace DVLDDataAccessLayer
         {
             public string TestTypeTitle;
             public string TestTypeDescription;
-            public decimal TestTypeFees;
+            public float TestTypeFees;
 
             public clsOldTestTypeData(string OldTestTypeTitle,string OldTestTypeDescription,
-            decimal OldTestTypeFees)
+            float OldTestTypeFees)
             {
                 this.TestTypeTitle = OldTestTypeTitle;
                 this.TestTypeDescription = OldTestTypeDescription;
@@ -60,7 +60,7 @@ namespace DVLDDataAccessLayer
             return dtTestTypes;
         }
 
-        private static void _ResetChangedOldValues(string TestTypeTitle, string TestTypeDescription, decimal TestTypeFees, clsOldTestTypeData OldTestTypeData)
+        private static void _ResetChangedOldValues(string TestTypeTitle, string TestTypeDescription, float TestTypeFees, clsOldTestTypeData OldTestTypeData)
         {
             if (TestTypeTitle != OldTestTypeData.TestTypeTitle)
                 OldTestTypeData.TestTypeTitle = null;
@@ -89,7 +89,7 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        private static string _GetUpdateQuery(string TestTypeTitle, string TestTypeDescription, decimal TestTypeFees, clsOldTestTypeData OldTestTypeData,bool HasOldDataChangedFully)
+        private static string _GetUpdateQuery(string TestTypeTitle, string TestTypeDescription, float TestTypeFees, clsOldTestTypeData OldTestTypeData,bool HasOldDataChangedFully)
         {
             string query = "UPDATE TestTypes SET";
 
@@ -130,7 +130,7 @@ namespace DVLDDataAccessLayer
             return query;
         }
 
-        public static bool UpdateTestType(int TestTypeID,string TestTypeTitle,string TestTypeDescription,decimal TestTypeFees, clsOldTestTypeData OldTestTypeData,bool HasOldDataChangedFully)
+        public static bool UpdateTestType(int TestTypeID,string TestTypeTitle,string TestTypeDescription, float TestTypeFees, clsOldTestTypeData OldTestTypeData,bool HasOldDataChangedFully)
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -167,7 +167,7 @@ namespace DVLDDataAccessLayer
 
         }
 
-        public static decimal GetTestTypeFees(byte TestTypeID)
+        public static float GetTestTypeFees(byte TestTypeID)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
@@ -183,7 +183,7 @@ namespace DVLDDataAccessLayer
                 object result = command.ExecuteScalar();
 
                 if (result != null)
-                    return Convert.ToDecimal(result);
+                    return Convert.ToSingle(result);
             }
 
             catch { }

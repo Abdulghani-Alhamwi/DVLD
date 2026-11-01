@@ -163,7 +163,8 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        public static int AddNewAppointment(int TestTypeID , int LocalDrivingLicenseAppID, DateTime AppointmentDate , decimal PaidFees , int CreatedByUserID , bool IsLocked,int RetakeTestAppID = -1)
+        public static int AddNewAppointment(int TestTypeID , int LocalDrivingLicenseAppID, DateTime AppointmentDate , float PaidFees
+            , int CreatedByUserID , bool IsLocked,int RetakeTestAppID = -1)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
@@ -288,7 +289,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static bool Find(int TestAppointmentID,ref byte TestTypeID,ref int LocalDrivingLicenseAppID, ref DateTime AppointmentDate,
-            ref decimal PaidFees,ref int CreatedByUserID,ref bool IsLocked,ref int RetakeTestAppID)
+            ref float PaidFees,ref int CreatedByUserID,ref bool IsLocked,ref int RetakeTestAppID)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -309,7 +310,7 @@ namespace DVLDDataAccessLayer
                     TestTypeID = Convert.ToByte(reader["TestTypeID"]);
                     LocalDrivingLicenseAppID = (int)reader["LocalDrivingLicenseApplicationID"];
                     AppointmentDate = (DateTime)reader["AppointmentDate"];
-                    PaidFees = (decimal)reader["PaidFees"];
+                    PaidFees = Convert.ToSingle(reader["PaidFees"]);
                     CreatedByUserID = (int)reader["CreatedByUserID"];
                     IsLocked = (bool)reader["IsLocked"];
 
@@ -332,7 +333,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static bool GetLastTestAppointmentInfo(int LocalDrivingLicenseApplicationID, byte TestTypeID, ref int TestAppointmentID,
-            ref DateTime AppointmentDate, ref decimal PaidFees, ref int CreatedByUserID, ref bool IsLocked, ref int RetakeTestAppID)
+            ref DateTime AppointmentDate, ref float PaidFees, ref int CreatedByUserID, ref bool IsLocked, ref int RetakeTestAppID)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -354,7 +355,7 @@ namespace DVLDDataAccessLayer
                 {
                     TestAppointmentID = (int)reader["TestAppointmentID"];
                     AppointmentDate = (DateTime)reader["AppointmentDate"];
-                    PaidFees = (decimal)reader["PaidFees"];
+                    PaidFees = Convert.ToSingle(reader["PaidFees"]);
                     CreatedByUserID = (int)reader["CreatedByUserID"];
                     IsLocked = (bool)reader["IsLocked"];
 

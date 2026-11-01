@@ -34,12 +34,12 @@ namespace DVLDPresentationLayer
             }
         }
 
-        public void LoadInfo(int LocalLicenseID)
+        public void LoadInfo(int LocalLicenseID,bool ShowErrorMessage = true)
         {
             txtLicenseID.Text = LocalLicenseID.ToString();
             uctrlLocalDrivingLicenseInfo.LoadInfo(LocalLicenseID);
 
-            if (SelectedLicenseInfo != null && FilterEnabled)
+            if (SelectedLicenseInfo != null && !FilterEnabled)
                 OnSelectedLicense?.Invoke(LocalLicenseID);
         }
 
@@ -71,12 +71,15 @@ namespace DVLDPresentationLayer
 
         private void txtLicenseID_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtLicenseID.Text.Trim()))
+            if (FilterEnabled)
             {
-                clsValidation.EnableErrorProvider(ertxtBoxInput, txtLicenseID, "This field is required!", e);
+                if (string.IsNullOrEmpty(txtLicenseID.Text.Trim()))
+                {
+                    clsValidation.EnableErrorProvider(ertxtBoxInput, txtLicenseID, "This field is required!", e);
+                }
+                else
+                    clsValidation.DisableErrorProvider(ertxtBoxInput, txtLicenseID);
             }
-            else
-                clsValidation.DisableErrorProvider(ertxtBoxInput, txtLicenseID);
         }
 
         public void txtLicenseIDFocus()

@@ -306,10 +306,8 @@ namespace DVLDPresentationLayer
         private void tsmiIssueInternationalLicense_Click(object sender, EventArgs e)
         {
             int DriverID = (int)dgvDrivers.SelectedRows[0].Cells["Driver ID"].Value;
-            clsLocalLicense LocalLicenseInfo = clsLocalLicense.Find(
-                clsLocalLicense.GetLocalLicenseIdByLicenseClass(DriverID, clsLicenseClass.GetLicenseClassID(clsLicenseClass.enLicenseClasses.OrdinaryDrivingClass)));
-
-            frmNewIntLicenseApplication frm = new frmNewIntLicenseApplication(DriverID,LocalLicenseInfo, dgvDrivers.SelectedRows[0].Index);
+           
+            frmNewIntLicenseApplication frm = new frmNewIntLicenseApplication(DriverID, dgvDrivers.SelectedRows[0].Index);
             
             frm.OnUpdatedDriverPersonalInfo += _EditDriverPersonalInfo;
             frm.AfterIssueingLicense += _EditInfoForNewIntLicenseIssuance;

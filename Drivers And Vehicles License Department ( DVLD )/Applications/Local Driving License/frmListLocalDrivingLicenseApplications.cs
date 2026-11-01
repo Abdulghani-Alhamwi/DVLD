@@ -10,7 +10,7 @@ using Utility_Library;
 
 namespace DVLDPresentationLayer
 {
-    public partial class frmLocalDrivingLicenseApplicationsManagement : Form
+    public partial class frmListLocalDrivingLicenseApplications : Form
     {
         private string _PreviousCbFilterSelectedItem;
         private string _PreviousCbStatusSelectedItem;
@@ -24,7 +24,7 @@ namespace DVLDPresentationLayer
         private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDGVColumnSortDirection;
         private clsDataGridViewUtilityLib _DgvUtilityLib;
 
-        public frmLocalDrivingLicenseApplicationsManagement()
+        public frmListLocalDrivingLicenseApplications()
         {
             InitializeComponent();
 

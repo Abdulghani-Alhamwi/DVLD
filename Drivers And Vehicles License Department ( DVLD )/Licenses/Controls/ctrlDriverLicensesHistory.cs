@@ -155,7 +155,7 @@ namespace DVLDPresentationLayer
 
         private void tsmiShowInetrnationalLicnseInfo_Click(object sender, EventArgs e)
         {
-            frmInternationalLicenseDetails frm = new frmInternationalLicenseDetails((int)dgvInternationalLicenses.SelectedRows[0].Cells[_IntLicensesPKViewedColumnName].Value);
+            frmInternationalLicenseInfo frm = new frmInternationalLicenseInfo((int)dgvInternationalLicenses.SelectedRows[0].Cells[_IntLicensesPKViewedColumnName].Value);
             frm.ShowDialog();
         }
 

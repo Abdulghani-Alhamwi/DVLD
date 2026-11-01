@@ -15,7 +15,8 @@ namespace DVLDBusinessLayer
 
         private byte _OldLicenseClassID;
 
-        public clsLocalDrivingLicenseApplication(int ApplicantPersonID, byte LicenseClassID, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
+        public clsLocalDrivingLicenseApplication(int ApplicantPersonID, byte LicenseClassID, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus
+            , DateTime LastStatusDate, float PaidApplicationFees, int CreatedByUserID)
               : base(ApplicantPersonID, ApplicationDate, ApplicationTypeID, ApplicationStatus, LastStatusDate, PaidApplicationFees, CreatedByUserID)
         {
             this.LocalDrivingLicenseApplicationID = -1;
@@ -31,7 +32,8 @@ namespace DVLDBusinessLayer
             _OldLicenseClassID = LicenseClassID;
         }
 
-        private clsLocalDrivingLicenseApplication(int LocalDrivingLicenseApplicationID,int ApplicationID,byte LicenseClassID, int ApplicantPersonID, DateTime ApplicationDate, byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, decimal PaidApplicationFees, int CreatedByUserID)
+        private clsLocalDrivingLicenseApplication(int LocalDrivingLicenseApplicationID,int ApplicationID,byte LicenseClassID, int ApplicantPersonID, DateTime ApplicationDate
+            , byte ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime LastStatusDate, float PaidApplicationFees, int CreatedByUserID)
               :base(ApplicationID,ApplicantPersonID,ApplicationDate,ApplicationTypeID, ApplicationStatus,LastStatusDate,PaidApplicationFees,CreatedByUserID)            
         {
             this.LocalDrivingLicenseApplicationID = LocalDrivingLicenseApplicationID;

@@ -12,7 +12,7 @@ namespace DVLDBusinessLayer
         public int DetainID { get; set; }
         public int LocalLicenseID { get; set; }
         public DateTime DetainDate { get; set; }
-        public decimal FineFees { get; set; }
+        public float FineFees { get; set; }
         public int CreatedByUserID { get; set; }
         public clsUser CreatedByUserInfo;
         public bool IsReleased { get; set; }
@@ -21,7 +21,7 @@ namespace DVLDBusinessLayer
         public clsUser ReleasedByUserInfo;
         public int ReleaseApplicationID { get; set; }
 
-        public clsDetainedLicense(int LocalLicenseID,DateTime DetainDate, decimal FineFees, int CreatedByUserID)
+        public clsDetainedLicense(int LocalLicenseID,DateTime DetainDate, float FineFees, int CreatedByUserID)
         {
             this.LocalLicenseID = LocalLicenseID;
             this.DetainDate = DetainDate;
@@ -34,7 +34,7 @@ namespace DVLDBusinessLayer
             ReleaseApplicationID = -1;
         }
 
-        private clsDetainedLicense(int DetainID,int LocalLicenseID, DateTime DetainDate, decimal FineFees, int CreatedByUserID, bool IsReleased, DateTime ReleaseDate, int ReleasedByUserID, int ReleaseApplicationID)
+        private clsDetainedLicense(int DetainID,int LocalLicenseID, DateTime DetainDate, float FineFees, int CreatedByUserID, bool IsReleased, DateTime ReleaseDate, int ReleasedByUserID, int ReleaseApplicationID)
         {
             this.DetainID = DetainID;
             this.LocalLicenseID = LocalLicenseID;
@@ -93,7 +93,7 @@ namespace DVLDBusinessLayer
         {
             int LocalLicenseID = -1;
             DateTime DetainDate = DateTime.MinValue;
-            decimal FineFees = -1;
+            float FineFees = -1;
             int CreatedByUserID = -1;
             bool IsReleased = false;
             DateTime ReleaseDate = DateTime.MaxValue;
@@ -113,7 +113,7 @@ namespace DVLDBusinessLayer
         {
             int DetainID = -1;
             DateTime DetainDate = DateTime.MinValue;
-            decimal FineFees = -1;
+            float FineFees = -1;
             int CreatedByUserID = -1;
             bool IsReleased = false;
             DateTime ReleaseDate = DateTime.MaxValue;

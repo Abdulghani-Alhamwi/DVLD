@@ -35,7 +35,7 @@ namespace DVLDPresentationLayer.Licenses
             lblExpirationDate.Text = clsFormat.DateToShort(DateTime.Now.AddYears(uctrlDriverLicenseInfoByFilter.SelectedLicenseInfo.LicenseClassInfo.DefaultValidityLength));
             lblLicenseFees.Text = clsFormat.GetCustomNumberFormat(uctrlDriverLicenseInfoByFilter.SelectedLicenseInfo.LicenseClassInfo.ClassFees, clsFormat.enCustomNumberFormat.NoJustZerosAfterFraction);
             lblTotalFees.Text = clsFormat.GetCustomNumberFormat(
-                Convert.ToDecimal(lblApplicationFees.Text) + uctrlDriverLicenseInfoByFilter.SelectedLicenseInfo.LicenseClassInfo.ClassFees,
+                Convert.ToSingle(lblApplicationFees.Text) + uctrlDriverLicenseInfoByFilter.SelectedLicenseInfo.LicenseClassInfo.ClassFees,
                 clsFormat.enCustomNumberFormat.NoJustZerosAfterFraction);
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer.Licenses
 {
-    partial class frmInternationalLicenseDetails
+    partial class frmInternationalLicenseInfo
     {
         /// <summary>
         /// Required designer variable.
@@ -34,7 +34,7 @@
             this.pbLicenseView = new System.Windows.Forms.PictureBox();
             this.lblFormBigTitle = new System.Windows.Forms.Label();
             this.pbInternational = new System.Windows.Forms.PictureBox();
-            this.uctrlInternationalLicenseDetails = new DVLDPresentationLayer.ctrlInternationalLicenseDetails();
+            this.uctrlInternationalLicenseDetails = new DVLDPresentationLayer.ctrlInternationalLicenseInfo();
             ((System.ComponentModel.ISupportInitialize)(this.pbLicenseView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbInternational)).BeginInit();
             this.SuspendLayout();
@@ -135,7 +135,7 @@
             this.uctrlInternationalLicenseDetails.Size = new System.Drawing.Size(1171, 358);
             this.uctrlInternationalLicenseDetails.TabIndex = 0;
             // 
-            // frmInternationalLicenseDetails
+            // frmInternationalLicenseInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -154,10 +154,11 @@
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "frmInternationalLicenseDetails";
+            this.Name = "frmInternationalLicenseInfo";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Load += new System.EventHandler(this.frmInternationalLicenseInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbLicenseView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbInternational)).EndInit();
             this.ResumeLayout(false);
@@ -172,7 +173,7 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.PictureBox pbLicenseView;
         private System.Windows.Forms.Label lblFormBigTitle;
-        private ctrlInternationalLicenseDetails uctrlInternationalLicenseDetails;
+        private ctrlInternationalLicenseInfo uctrlInternationalLicenseDetails;
         private System.Windows.Forms.PictureBox pbInternational;
     }
 }
