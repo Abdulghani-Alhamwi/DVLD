@@ -11,7 +11,7 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _PrimaryKeyViewedColumnName = "Int.License ID";
 
-        private static readonly string _DefaultOrderByForDriverRecords = " ORDER BY CONVERT(DATETIME,[Expiration Date],103)";
+        private static readonly string _DefaultOrderByForDriverRecords = " ORDER BY CONVERT(DATETIME,[Expiration Date],103) DESC";
 
         private static readonly string _DefaultOrderByForAllDrivers = " ORDER BY [Is Active], CONVERT(DATETIME,[Expiration Date],103) DESC";
 
@@ -239,12 +239,13 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        public static int IssueDriverLicense(int ApplicationID ,int DriverID,int LocalLicenseID,
+        public static int _AddNewInternationalLicense(int ApplicationID ,int DriverID,int LocalLicenseID,
             DateTime IssueDate,DateTime ExpirationDate,bool IsActive,int CreatedByUserID)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
-            string query = @"INSERT INTO InternationalLicenses VALUES (@ApplicationID,@DriverID,@LocalLicenseID,
+            string query = @"UPDATE InternationalLicenses SET IsActive = 0 WHERE DriverID = @DriverID;
+                             INSERT INTO InternationalLicenses VALUES (@ApplicationID,@DriverID,@LocalLicenseID,
                              @IssueDate,@ExpirationDate,@IsActive,@CreatedByUserID);
                              SELECT SCOPE_IDENTITY()";
 
@@ -502,6 +503,39 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return IsFound;
+        }
+
+        public static int GetActiveInternationalLicenseID(int DriverID)
+        {
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query = @"SELECT TOP(1) InternationalLicenseID FROM InternationalLicenses
+                             WHERE DriverID = @DriverID AND GetDate() BETWEEN IssueDate AND ExpirationDate
+                              ORDER BY ExpirationDate DESC";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@DriverID", DriverID);
+
+            try
+            {
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                if (result != null)
+                {
+                    return Convert.ToInt32(result);
+                }
+
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return -1;
         }
 
         public static bool LinkWithNewLocalLicense(int DriverID, int NewLocalLicenseID)

@@ -69,35 +69,21 @@ namespace DVLDPresentationLayer.Applications
             lblUserName.Text = clsCryptography.DecryptString(clsGlobalSettings.EncryptionKey, EncryptedUsername, UsernameIV);
         }
 
-        private bool _AddNewApplication(int DriverID, out int NewApplicationID)
-        {
-            clsApplication InternationalLicenseApp = new clsApplication
-            (
-                ApplicantPersonID: clsDriver.GetDriverPersonID(DriverID),
-                ApplicationDate: DateTime.Now,
-                ApplicationTypeID: clsApplicationType.GetApplicationTypeID(clsApplication.enApplicationType.NewInternationlLicense),
-                ApplicationStatus: clsApplication.enApplicationStatus.New,
-                LastStatusDate: DateTime.Now,
-                PaidApplicationFees: clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.NewInternationlLicense),
-                CreatedByUserID: clsGlobalSettings.CurrentUserID
-            );
-
-            InternationalLicenseApp.Save();
-            NewApplicationID = InternationalLicenseApp.ApplicationID;
-
-            return (NewApplicationID != -1);
-        }
-
-        private bool _IssueInternationalLicense(int LocalLicenseID, int DriverID, int NewApplicationID)
+        private bool _IssueInternationalLicense(int LocalLicenseID, int DriverID)
         {
             _NewInternationalLicense = new clsInternationalLicense
             (
-            ApplicationID: NewApplicationID,
             DriverID: DriverID,
             LocalLicenseID: LocalLicenseID,
             IssueDate: DateTime.Now,
             ExpirationDate: _InternationalLicenseExpDate,
-            IsActive: true, CreatedByUserID: clsGlobalSettings.CurrentUserID
+            IsActive: true, CreatedByUserID: clsGlobalSettings.CurrentUserID,
+            ApplicantPersonID: clsDriver.GetDriverPersonID(DriverID),
+            ApplicationDate: DateTime.Now,
+            ApplicationTypeID: clsApplication.enApplicationType.NewInternationlLicense,
+            ApplicationStatus: clsApplication.enApplicationStatus.New,
+            LastStatusDate: DateTime.Now,
+            PaidApplicationFees: clsApplicationType.GetApplicationTypeFees(clsApplication.enApplicationType.NewInternationlLicense)
             );
 
             return (_NewInternationalLicense.Save());
@@ -237,39 +223,29 @@ namespace DVLDPresentationLayer.Applications
                 return;
             }
 
-                DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to issue license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult ConfirmationQuestion = MessageBox.Show("Are you sure you want to issue license?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (ConfirmationQuestion == DialogResult.Yes)
             {
-                if (_AddNewApplication(_DriverID, out int NewApplicationID))
+                if (_IssueInternationalLicense(_SelectedLocalLicenseID, _DriverID))
                 {
-                    if (_IssueInternationalLicense(_SelectedLocalLicenseID, _DriverID, NewApplicationID))
-                    {
-                        if (clsApplication.ChangeApplicationStatus(NewApplicationID, clsApplication.enApplicationStatus.Completed))
-                        {
-                            object[] NewInternationalLicenseInfo = new object[] { _NewInternationalLicense.InternationalLicenseID,_NewInternationalLicense.ApplicationID,_NewInternationalLicense.DriverID,
+                    object[] NewInternationalLicenseInfo = new object[] { _NewInternationalLicense.InternationalLicenseID,_NewInternationalLicense.ApplicationID,_NewInternationalLicense.DriverID,
                         _NewInternationalLicense.IssuedUsingLocalLicenseID,_NewInternationalLicense.IssueDate,_NewInternationalLicense.ExpirationDate,_NewInternationalLicense.IsActive};
 
-                            OnIssuedLicense?.Invoke(NewInternationalLicenseInfo);
-                            AfterIssueingLicense?.Invoke(_DGVRowIndex);
+                    OnIssuedLicense?.Invoke(NewInternationalLicenseInfo);
+                    AfterIssueingLicense?.Invoke(_DGVRowIndex);
 
-                            lblInternationalLicenseAppID.Text = NewApplicationID.ToString();
-                            lblInternationalLicenseID.Text = _NewInternationalLicense.InternationalLicenseID.ToString();
+                    lblInternationalLicenseAppID.Text = _NewInternationalLicense.ApplicationID.ToString();
+                    lblInternationalLicenseID.Text = _NewInternationalLicense.InternationalLicenseID.ToString();
 
-                            MessageBox.Show($"International License Issued Successfully With ID : {_NewInternationalLicense.InternationalLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"International License Issued Successfully With ID : {_NewInternationalLicense.InternationalLicenseID}", "License Issued", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                            uctrlLocalDrivingLicenseInfoByFilter.FilterEnabled = false;
-                            btnIssueLicense.Enabled = false;
-                            lnlblShowLicenseInfo.Enabled = true;
-                        }
-                        else
-                            MessageBox.Show("International license issued successfully but failed to change application status to completed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                        MessageBox.Show("Failed to issue license!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    uctrlLocalDrivingLicenseInfoByFilter.FilterEnabled = false;
+                    btnIssueLicense.Enabled = false;
+                    lnlblShowLicenseInfo.Enabled = true;
                 }
                 else
-                    MessageBox.Show("Failed to save application!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }               
+                    MessageBox.Show("Failed to issue license!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
     }
