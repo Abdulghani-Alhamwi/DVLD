@@ -485,7 +485,7 @@ namespace DVLDPresentationLayer
                 return;
             }
 
-            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsPerson.GetPersonID(dgvLDLApplications.SelectedRows[0].Cells["National No."].Value.ToString()));
+            frmShowPersonLicenseHistory frm = new frmShowPersonLicenseHistory(clsPerson.GetPersonID(dgvLDLApplications.SelectedRows[0].Cells["National No."].Value.ToString()));
             frm.OnEditedDriverPersonalInfo += _EditApplicantPersonalInfo;
             frm.ShowDialog();
         }

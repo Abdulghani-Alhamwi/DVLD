@@ -4,7 +4,7 @@ using DVLDBusinessLayer;
 
 namespace DVLDPresentationLayer
 {
-    public partial class ctrLDLApplicationInfo : UserControl
+    public partial class ctrLocalDrivingLicenseApplicationInfo : UserControl
     {
         public event ctrlPersonCard.PersonEditedInfo OnPersonEditedInfo;
 
@@ -12,7 +12,7 @@ namespace DVLDPresentationLayer
 
         public clsLocalDrivingLicenseApplication LocalDrivingLicenseApplication;
 
-        public ctrLDLApplicationInfo()
+        public ctrLocalDrivingLicenseApplicationInfo()
         {
             InitializeComponent();
         }

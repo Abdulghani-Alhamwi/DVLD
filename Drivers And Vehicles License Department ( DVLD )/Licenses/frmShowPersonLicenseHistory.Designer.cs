@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer
 {
-    partial class frmDriverLicenseHistory
+    partial class frmShowPersonLicenseHistory
     {
         /// <summary>
         /// Required designer variable.
@@ -131,15 +131,17 @@
             // 
             this.uctrlPersonDetailsByFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.uctrlPersonDetailsByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlPersonDetailsByFilter.EnableEditPersonLabel = false;
             this.uctrlPersonDetailsByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
             this.uctrlPersonDetailsByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.uctrlPersonDetailsByFilter.Location = new System.Drawing.Point(394, 86);
             this.uctrlPersonDetailsByFilter.Name = "uctrlPersonDetailsByFilter";
             this.uctrlPersonDetailsByFilter.Size = new System.Drawing.Size(1080, 422);
             this.uctrlPersonDetailsByFilter.TabIndex = 57;
+            this.uctrlPersonDetailsByFilter.OnPersonSelected += new DVLDPresentationLayer.ctrlPersonCardWithFilter.PersonSelectedEventHandler(this.uctrlPersonDetailsByFilter_OnPersonSelected);
             this.uctrlPersonDetailsByFilter.OnPersonEditedInfo += new DVLDPresentationLayer.ctrlPersonCard.PersonEditedInfo(this.uctrlPersonDetailsByFilter_OnPersonEditedInfo);
             // 
-            // frmDriverLicenseHistory
+            // frmShowPersonLicenseHistory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -157,10 +159,11 @@
             this.Controls.Add(this.uctrlPersonDetailsByFilter);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.Name = "frmDriverLicenseHistory";
+            this.Name = "frmShowPersonLicenseHistory";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Load += new System.EventHandler(this.frmDriverLicenseHistory_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbTestType)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

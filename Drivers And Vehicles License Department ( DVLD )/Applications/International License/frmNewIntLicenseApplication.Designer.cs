@@ -60,7 +60,7 @@
             this.lblInternationalLicenseAppID = new System.Windows.Forms.Label();
             this.lblApplicationFeesTitle = new System.Windows.Forms.Label();
             this.lbl_ILApplicationIDTitle = new System.Windows.Forms.Label();
-            this.uctrlLDLDetailsByFilter = new DVLDPresentationLayer.ctrlDriverLicenseInfoByFilter();
+            this.uctrlLocalDrivingLicenseInfoByFilter = new DVLDPresentationLayer.ctrlDriverLicenseInfoByFilter();
             this.gbApplicationBasicInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLocalLicenseID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbInternationalLicenseID)).BeginInit();
@@ -74,6 +74,7 @@
             // 
             // btnIssueLicense
             // 
+            this.btnIssueLicense.Enabled = false;
             this.btnIssueLicense.FlatAppearance.BorderSize = 2;
             this.btnIssueLicense.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
             this.btnIssueLicense.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -491,20 +492,20 @@
             this.lbl_ILApplicationIDTitle.TabIndex = 90;
             this.lbl_ILApplicationIDTitle.Text = "I.L.Application ID :";
             // 
-            // uctrlLDLDetailsByFilter
+            // uctrlLocalDrivingLicenseInfoByFilter
             // 
-            this.uctrlLDLDetailsByFilter.AutoScroll = true;
-            this.uctrlLDLDetailsByFilter.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-            this.uctrlLDLDetailsByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.uctrlLDLDetailsByFilter.FilterEnabled = true;
-            this.uctrlLDLDetailsByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.uctrlLDLDetailsByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.uctrlLDLDetailsByFilter.Location = new System.Drawing.Point(8, 119);
-            this.uctrlLDLDetailsByFilter.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.uctrlLDLDetailsByFilter.Name = "uctrlLDLDetailsByFilter";
-            this.uctrlLDLDetailsByFilter.Size = new System.Drawing.Size(1157, 521);
-            this.uctrlLDLDetailsByFilter.TabIndex = 0;
-            this.uctrlLDLDetailsByFilter.OnSelectedLicense += new System.Action<int> (this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
+            this.uctrlLocalDrivingLicenseInfoByFilter.AutoScroll = true;
+            this.uctrlLocalDrivingLicenseInfoByFilter.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
+            this.uctrlLocalDrivingLicenseInfoByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlLocalDrivingLicenseInfoByFilter.FilterEnabled = true;
+            this.uctrlLocalDrivingLicenseInfoByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.uctrlLocalDrivingLicenseInfoByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.uctrlLocalDrivingLicenseInfoByFilter.Location = new System.Drawing.Point(8, 119);
+            this.uctrlLocalDrivingLicenseInfoByFilter.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.uctrlLocalDrivingLicenseInfoByFilter.Name = "uctrlLocalDrivingLicenseInfoByFilter";
+            this.uctrlLocalDrivingLicenseInfoByFilter.Size = new System.Drawing.Size(1157, 521);
+            this.uctrlLocalDrivingLicenseInfoByFilter.TabIndex = 0;
+            this.uctrlLocalDrivingLicenseInfoByFilter.OnSelectedLicense += new System.Action<int>(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
             // 
             // frmNewIntLicenseApplication
             // 
@@ -524,7 +525,7 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblFormTitle);
             this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.uctrlLDLDetailsByFilter);
+            this.Controls.Add(this.uctrlLocalDrivingLicenseInfoByFilter);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
@@ -582,6 +583,6 @@
         private System.Windows.Forms.Label lblInternationalLicenseAppID;
         private System.Windows.Forms.Label lblApplicationFeesTitle;
         private System.Windows.Forms.Label lbl_ILApplicationIDTitle;
-        private ctrlDriverLicenseInfoByFilter uctrlLDLDetailsByFilter;
+        private ctrlDriverLicenseInfoByFilter uctrlLocalDrivingLicenseInfoByFilter;
     }
 }

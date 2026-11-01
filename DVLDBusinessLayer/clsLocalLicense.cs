@@ -63,7 +63,7 @@ namespace DVLDBusinessLayer
 
             LicenseClassInfo = clsLicenseClass.FindByLicenseClassID(LicenseClassID);
             DriverInfo = clsDriver.FindByDriverID(DriverID);
-            DetainInfo = clsDetainedLicense.Find(LocalLicenseID);
+            DetainInfo = clsDetainedLicense.FindByLicenseID(LocalLicenseID);
             this.PaidFees = PaidFees;
             PersonID = (DriverInfo != null) ? DriverInfo.PersonID : -1;
 
@@ -150,7 +150,7 @@ namespace DVLDBusinessLayer
             return clsLocalLicenseData.GetLicenseID(ApplicationID);
         }
 
-        public bool IsExpired()
+        public bool IsLicenseExpired()
         {
             return (ExpirationDate < DateTime.Now);
         }
@@ -170,7 +170,12 @@ namespace DVLDBusinessLayer
             return clsLocalLicenseData.DeactivateLicense(LicenseID);
         }
 
-        public clsLocalLicense Renew(string Notes, int CreatedByUserID)
+        public bool IsOrdinaryDrivingLicenseClass()
+        {
+            return (this.LicenseClassID == (byte)clsLicenseClass.enLicenseClasses.OrdinaryDrivingClass);
+        }
+
+        public clsLocalLicense RenewLicense(string Notes, int CreatedByUserID)
         {
             clsApplication Application = new clsApplication
              (
@@ -187,7 +192,7 @@ namespace DVLDBusinessLayer
 
             clsLocalLicense NewLicense = new clsLocalLicense
               (
-              Application.ApplicationID, this.PersonID,this.DriverID, this.LicenseClassID, DateTime.Now, DateTime.Now.AddYears(LicenseClassInfo.DefaultValidityLength)
+              Application.ApplicationID, this.PersonID, this.DriverID, this.LicenseClassID, DateTime.Now, DateTime.Now.AddYears(LicenseClassInfo.DefaultValidityLength)
               , Notes, true, enIssueReason.Renew, CreatedByUserID
               );
 
@@ -198,8 +203,19 @@ namespace DVLDBusinessLayer
 
             if (this.DeactivateLicense())
             {
-                if (Application.SetComplete())
-                    return NewLicense;
+                if (IsOrdinaryDrivingLicenseClass())
+                {
+                    if (clsInternationalLicense.LinkWithNewLocalLicense(this.DriverID, NewLicense.LicenseID))
+                        if (Application.SetComplete())
+                            return NewLicense;
+                }
+
+
+                else
+                {
+                    if (Application.SetComplete())
+                        return NewLicense;
+                }
             }
 
             return null;
@@ -215,7 +231,7 @@ namespace DVLDBusinessLayer
             return DetainInfo.DetainID;
         }
 
-        public bool ReleaseDetainedLicense(int ReleasedByUserID)
+        public bool ReleaseDetainedLicense(int ReleasedByUserID, ref int ApplicationID)
         {
             clsApplication ReleaseApplication = new clsApplication
              (
@@ -229,7 +245,9 @@ namespace DVLDBusinessLayer
                 return false;
             }
 
-            if(this.DetainInfo.ReleaseDetainedLicense(ReleasedByUserID, ReleaseApplication.ApplicationID))
+            ApplicationID = ReleaseApplication.ApplicationID;
+
+            if (this.DetainInfo.ReleaseDetainedLicense(ReleasedByUserID, ReleaseApplication.ApplicationID))
             {
                 return ReleaseApplication.SetComplete();
             }
@@ -266,7 +284,16 @@ namespace DVLDBusinessLayer
 
             if (this.DeactivateLicense())
             {
-                if (clsInternationalLicenseData.LinkWithNewLocalLicense(this.DriverID, NewLicense.LicenseID))
+                if (IsOrdinaryDrivingLicenseClass())
+                {
+                    if (clsInternationalLicense.LinkWithNewLocalLicense(this.DriverID, NewLicense.LicenseID))
+                    {
+                        if (Application.SetComplete())
+                            return NewLicense;
+                    }
+                }
+
+                else
                 {
                     if (Application.SetComplete())
                         return NewLicense;

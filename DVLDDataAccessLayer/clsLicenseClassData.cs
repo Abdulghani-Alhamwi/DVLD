@@ -128,7 +128,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static bool GetLicenseClassInfoByID(byte LicenseClassID, ref string ClassName, ref string ClassDescription
-            , ref byte MinimumAllowedAge, ref byte DefaultValidityLength, ref float ClassFees)
+            , ref byte MinimumAllowedAge, ref byte DefaultValidityLength, ref decimal ClassFees)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -151,7 +151,7 @@ namespace DVLDDataAccessLayer
                     ClassDescription = (string)reader["ClassDescription"];
                     MinimumAllowedAge = (byte)reader["MinimumAllowedAge"];
                     DefaultValidityLength = (byte)reader["DefaultValidityLength"];
-                    ClassFees = Convert.ToSingle(reader["ClassFees"]);
+                    ClassFees = Convert.ToDecimal(reader["ClassFees"]);
                     IsFound = true;
                 }
 
@@ -169,7 +169,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static bool GetLicenseClassInfoByClassName(string ClassName, ref byte LicenseClassID, ref string ClassDescription
-           , ref byte MinimumAllowedAge, ref byte DefaultValidityLength, ref float ClassFees)
+           , ref byte MinimumAllowedAge, ref byte DefaultValidityLength, ref decimal ClassFees)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
@@ -192,7 +192,7 @@ namespace DVLDDataAccessLayer
                     ClassDescription = (string)reader["ClassDescription"];
                     MinimumAllowedAge = (byte)reader["MinimumAllowedAge"];
                     DefaultValidityLength = (byte)reader["DefaultValidityLength"];
-                    ClassFees = Convert.ToSingle(reader["ClassFees"]);
+                    ClassFees = Convert.ToDecimal(reader["ClassFees"]);
                     IsFound = true;
                 }
 
@@ -210,7 +210,7 @@ namespace DVLDDataAccessLayer
         }
 
         public static byte AddNewLicenseClass(string ClassName, string ClassDescription
-        , byte MinimumAllowedAge, byte DefaultValidityLength, float ClassFees)
+        , byte MinimumAllowedAge, byte DefaultValidityLength, decimal ClassFees)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
@@ -257,9 +257,9 @@ namespace DVLDDataAccessLayer
             public string ClassDescription;
             public byte MinimumAllowedAge;
             public byte DefaultValidityLength;
-            public float ClassFees;
+            public decimal ClassFees;
 
-            public clsOldLicenseClassInfo(string OldClassName, string OldClassDescription, byte OldMinimumAllowedAge, byte OldDefaultValidityLength, float OldClassFees)
+            public clsOldLicenseClassInfo(string OldClassName, string OldClassDescription, byte OldMinimumAllowedAge, byte OldDefaultValidityLength, decimal OldClassFees)
             {
                 ClassName = OldClassName;
                 ClassDescription = OldClassDescription;
@@ -269,7 +269,7 @@ namespace DVLDDataAccessLayer
 
             }
         }
-        private static void _ResetChangedOldValues(string ClassName, string ClassDescription, byte MinimumAllowedAge, byte DefaultValidityLength, float ClassFees, clsOldLicenseClassInfo OldLicneseClassData)
+        private static void _ResetChangedOldValues(string ClassName, string ClassDescription, byte MinimumAllowedAge, byte DefaultValidityLength, decimal ClassFees, clsOldLicenseClassInfo OldLicneseClassData)
         {
             if (ClassName != OldLicneseClassData.ClassName)
                 OldLicneseClassData.ClassName = null;
@@ -310,7 +310,7 @@ namespace DVLDDataAccessLayer
             return null;
         }
 
-        private static string _GetUpdateQuery(string ClassName, string ClassDescription, byte MinimumAllowedAge, byte DefaultValidityLength, float ClassFees, clsOldLicenseClassInfo OldLicenseClassInfo, bool HasOldInfoChangedFully)
+        private static string _GetUpdateQuery(string ClassName, string ClassDescription, byte MinimumAllowedAge, byte DefaultValidityLength, decimal ClassFees, clsOldLicenseClassInfo OldLicenseClassInfo, bool HasOldInfoChangedFully)
         {
             string query = "UPDATE LicenseClasses SET";
 
@@ -385,7 +385,7 @@ namespace DVLDDataAccessLayer
 
 
         public static bool UpdateLicenseClassInfo(string ClassName, string ClassDescription
-               , byte MinimumAllowedAge, byte DefaultValidityLength, float ClassFees, clsOldLicenseClassInfo OldLicenseClassInfo, bool HasOldInfoChangedFully)
+               , byte MinimumAllowedAge, byte DefaultValidityLength, decimal ClassFees, clsOldLicenseClassInfo OldLicenseClassInfo, bool HasOldInfoChangedFully)
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);

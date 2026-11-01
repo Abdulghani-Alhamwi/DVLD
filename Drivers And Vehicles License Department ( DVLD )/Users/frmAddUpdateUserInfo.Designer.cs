@@ -162,7 +162,7 @@
             this.uctrlpersonInfoByFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.uctrlpersonInfoByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.uctrlpersonInfoByFilter.EnableEditPersonLabel = false;
-            this.uctrlpersonInfoByFilter.EnableFilter = false;
+            this.uctrlpersonInfoByFilter.FilterEnabled = false;
             this.uctrlpersonInfoByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
             this.uctrlpersonInfoByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.uctrlpersonInfoByFilter.Location = new System.Drawing.Point(17, 15);

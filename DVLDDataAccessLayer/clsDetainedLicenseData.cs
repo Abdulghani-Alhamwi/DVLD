@@ -196,20 +196,20 @@ namespace DVLDDataAccessLayer
             return -1;
         }
 
-        public static bool ReleaseDetainedLicense(int LocalLicenseID, int ReleasedByUserID, int ReleaseApplicationID)
+        public static bool ReleaseDetainedLicense(int DetainID, int ReleasedByUserID, int ReleaseApplicationID)
         {
             byte AffectedRows = 0;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"UPDATE DetainedLicenses SET IsReleased = 1, ReleaseDate = @ReleaseDate,
                              ReleasedByUserID = @ReleasedByUserID, ReleaseApplicationID = @ReleaseApplicationID
-                             WHERE LicenseID = @LicenseID";
+                             WHERE DetainID = @DetainID";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ReleaseDate", DateTime.Now);
             command.Parameters.AddWithValue("@ReleasedByUserID", ReleasedByUserID);
             command.Parameters.AddWithValue("@ReleaseApplicationID", ReleaseApplicationID);
-            command.Parameters.AddWithValue("@LicenseID", LocalLicenseID);
+            command.Parameters.AddWithValue("@DetainID", DetainID);
 
             try
             {
@@ -226,12 +226,58 @@ namespace DVLDDataAccessLayer
             return (AffectedRows != 0);
         }
 
-        public static bool Find(int LocalLicenseID, ref int DetainID, ref DateTime DetainDate, ref decimal FineFees, ref int CreatedByUserID, ref bool IsReleased, ref DateTime ReleaseDate, ref int ReleasedByUserID, ref int ReleaseApplicationID)
+        public static bool FindDetainInfoByDetainID(int DetainID, ref int LocalLicenseID, ref DateTime DetainDate, ref decimal FineFees, ref int CreatedByUserID, ref bool IsReleased, ref DateTime ReleaseDate, ref int ReleasedByUserID, ref int ReleaseApplicationID)
         {
             bool IsFound = false;
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
-            string query = "SELECT * FROM DetainedLicenses WHERE LicenseID = @LicenseID AND IsReleased = 0";
+            string query = "SELECT * FROM DetainedLicenses WHERE DetainID = @DetainID ORDER BY DetainID DESC";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@DetainID", DetainID);
+
+            try
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    LocalLicenseID = (int)reader["LocalLicenseID"];
+                    DetainDate = (DateTime)reader["DetainDate"];
+                    FineFees = (decimal)reader["FineFees"];
+                    CreatedByUserID = (int)reader["CreatedByUserID"];
+                    IsReleased = (bool)reader["IsReleased"];
+
+                    if (reader["ReleaseDate"] != DBNull.Value)
+                        ReleaseDate = (DateTime)reader["ReleaseDate"];
+
+                    if (reader["ReleasedByUserID"] != DBNull.Value)
+                        ReleasedByUserID = (int)reader["ReleasedByUserID"];
+
+                    if (reader["ReleaseApplicationID"] != DBNull.Value)
+                        ReleaseApplicationID = (int)reader["ReleaseApplicationID"];
+
+                    IsFound = true;
+                }
+                reader.Close();
+            }
+
+            catch { }
+
+            finally
+            {
+                connection.Close();
+            }
+            return IsFound;
+        }
+
+        public static bool FindDetainInfoByLicenseID(int LocalLicenseID, ref int DetainID, ref DateTime DetainDate, ref decimal FineFees, ref int CreatedByUserID, ref bool IsReleased, ref DateTime ReleaseDate, ref int ReleasedByUserID, ref int ReleaseApplicationID)
+        {
+            bool IsFound = false;
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query = "SELECT * FROM DetainedLicenses WHERE LicenseID = @LicenseID ORDER BY DetainID DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LicenseID", LocalLicenseID);

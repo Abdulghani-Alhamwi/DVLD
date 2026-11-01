@@ -36,10 +36,11 @@ namespace DVLDPresentationLayer
 
         public void LoadInfo(int LocalLicenseID)
         {
-            if (SelectedLicenseInfo == null)
-                txtLicenseID.Text = LocalLicenseID.ToString();
-
+            txtLicenseID.Text = LocalLicenseID.ToString();
             uctrlLocalDrivingLicenseInfo.LoadInfo(LocalLicenseID);
+
+            if (SelectedLicenseInfo != null && FilterEnabled)
+                OnSelectedLicense?.Invoke(LocalLicenseID);
         }
 
         private void btnFind_Click(object sender, EventArgs e)
@@ -81,6 +82,14 @@ namespace DVLDPresentationLayer
         public void txtLicenseIDFocus()
         {
             txtLicenseID.Focus();
+        }
+
+        private void txtLicenseID_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnFind.PerformClick();
+            }
         }
     }
 }

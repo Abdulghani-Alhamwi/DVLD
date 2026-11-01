@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer.Licenses
 {
-    partial class frmRenewLocalDrivingLicense
+    partial class frmRenewLocalDrivingLicenseApplication
     {
         /// <summary>
         /// Required designer variable.
@@ -63,13 +63,13 @@
             this.lblAppFeesTitle = new System.Windows.Forms.Label();
             this.lblRLApplicationIDTitle = new System.Windows.Forms.Label();
             this.btnRenewLicense = new System.Windows.Forms.Button();
-            this.lnlblShowLicenseHistory = new System.Windows.Forms.LinkLabel();
+            this.llShowLicenseHistory = new System.Windows.Forms.LinkLabel();
             this.lblFormBigTitle = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
-            this.lnlblShowNewLicenseInfo = new System.Windows.Forms.LinkLabel();
-            this.uctrlLDLDetailsByFilter = new DVLDPresentationLayer.ctrlDriverLicenseInfoByFilter();
+            this.llShowNewLicenseInfo = new System.Windows.Forms.LinkLabel();
+            this.uctrlDriverLicenseInfoByFilter = new DVLDPresentationLayer.ctrlDriverLicenseInfoByFilter();
             ((System.ComponentModel.ISupportInitialize)(this.pbOldLicenseID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRenewedLicenseID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbIssueDate)).BeginInit();
@@ -88,7 +88,7 @@
             // 
             this.pbOldLicenseID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbOldLicenseID.Image = global::DVLDPresentationLayer.Properties.Resources.Driver_License_48;
-            this.pbOldLicenseID.Location = new System.Drawing.Point(815, 77);
+            this.pbOldLicenseID.Location = new System.Drawing.Point(815, 81);
             this.pbOldLicenseID.Name = "pbOldLicenseID";
             this.pbOldLicenseID.Size = new System.Drawing.Size(32, 32);
             this.pbOldLicenseID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -100,7 +100,7 @@
             this.lblOldLocalLicenseID.AutoSize = true;
             this.lblOldLocalLicenseID.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblOldLocalLicenseID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblOldLocalLicenseID.Location = new System.Drawing.Point(856, 80);
+            this.lblOldLocalLicenseID.Location = new System.Drawing.Point(856, 84);
             this.lblOldLocalLicenseID.Margin = new System.Windows.Forms.Padding(0);
             this.lblOldLocalLicenseID.Name = "lblOldLocalLicenseID";
             this.lblOldLocalLicenseID.Size = new System.Drawing.Size(68, 27);
@@ -112,7 +112,7 @@
             this.lblOldLicenseIDTitle.AutoSize = true;
             this.lblOldLicenseIDTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblOldLicenseIDTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblOldLicenseIDTitle.Location = new System.Drawing.Point(553, 80);
+            this.lblOldLicenseIDTitle.Location = new System.Drawing.Point(553, 84);
             this.lblOldLicenseIDTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblOldLicenseIDTitle.Name = "lblOldLicenseIDTitle";
             this.lblOldLicenseIDTitle.Size = new System.Drawing.Size(187, 27);
@@ -123,7 +123,7 @@
             // 
             this.pbRenewedLicenseID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbRenewedLicenseID.Image = global::DVLDPresentationLayer.Properties.Resources.Renew_Driving_License_32;
-            this.pbRenewedLicenseID.Location = new System.Drawing.Point(815, 36);
+            this.pbRenewedLicenseID.Location = new System.Drawing.Point(815, 40);
             this.pbRenewedLicenseID.Name = "pbRenewedLicenseID";
             this.pbRenewedLicenseID.Size = new System.Drawing.Size(32, 32);
             this.pbRenewedLicenseID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -135,7 +135,7 @@
             this.lblRenewedLicenseID.AutoSize = true;
             this.lblRenewedLicenseID.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblRenewedLicenseID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblRenewedLicenseID.Location = new System.Drawing.Point(856, 39);
+            this.lblRenewedLicenseID.Location = new System.Drawing.Point(856, 43);
             this.lblRenewedLicenseID.Margin = new System.Windows.Forms.Padding(0);
             this.lblRenewedLicenseID.Name = "lblRenewedLicenseID";
             this.lblRenewedLicenseID.Size = new System.Drawing.Size(68, 27);
@@ -147,7 +147,7 @@
             this.lblRenewedLicenseIDTitle.AutoSize = true;
             this.lblRenewedLicenseIDTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblRenewedLicenseIDTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblRenewedLicenseIDTitle.Location = new System.Drawing.Point(553, 39);
+            this.lblRenewedLicenseIDTitle.Location = new System.Drawing.Point(553, 43);
             this.lblRenewedLicenseIDTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblRenewedLicenseIDTitle.Name = "lblRenewedLicenseIDTitle";
             this.lblRenewedLicenseIDTitle.Size = new System.Drawing.Size(252, 27);
@@ -158,7 +158,7 @@
             // 
             this.pbIssueDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbIssueDate.Image = global::DVLDPresentationLayer.Properties.Resources.Calendar_32;
-            this.pbIssueDate.Location = new System.Drawing.Point(254, 120);
+            this.pbIssueDate.Location = new System.Drawing.Point(254, 124);
             this.pbIssueDate.Name = "pbIssueDate";
             this.pbIssueDate.Size = new System.Drawing.Size(32, 32);
             this.pbIssueDate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -170,7 +170,7 @@
             this.lblIssueDate.AutoSize = true;
             this.lblIssueDate.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblIssueDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblIssueDate.Location = new System.Drawing.Point(295, 123);
+            this.lblIssueDate.Location = new System.Drawing.Point(295, 127);
             this.lblIssueDate.Margin = new System.Windows.Forms.Padding(0);
             this.lblIssueDate.Name = "lblIssueDate";
             this.lblIssueDate.Size = new System.Drawing.Size(80, 27);
@@ -182,7 +182,7 @@
             this.lblIssueDateTitle.AutoSize = true;
             this.lblIssueDateTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblIssueDateTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblIssueDateTitle.Location = new System.Drawing.Point(17, 123);
+            this.lblIssueDateTitle.Location = new System.Drawing.Point(17, 127);
             this.lblIssueDateTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblIssueDateTitle.Name = "lblIssueDateTitle";
             this.lblIssueDateTitle.Size = new System.Drawing.Size(144, 27);
@@ -225,9 +225,9 @@
             this.gbNewLicenseAppInfo.Controls.Add(this.lblAppFeesTitle);
             this.gbNewLicenseAppInfo.Controls.Add(this.lblRLApplicationIDTitle);
             this.gbNewLicenseAppInfo.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.gbNewLicenseAppInfo.Location = new System.Drawing.Point(21, 610);
+            this.gbNewLicenseAppInfo.Location = new System.Drawing.Point(21, 616);
             this.gbNewLicenseAppInfo.Name = "gbNewLicenseAppInfo";
-            this.gbNewLicenseAppInfo.Size = new System.Drawing.Size(1144, 342);
+            this.gbNewLicenseAppInfo.Size = new System.Drawing.Size(1144, 350);
             this.gbNewLicenseAppInfo.TabIndex = 195;
             this.gbNewLicenseAppInfo.TabStop = false;
             this.gbNewLicenseAppInfo.Text = "New License Application Info";
@@ -237,7 +237,7 @@
             this.pbNotes.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbNotes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbNotes.Image = global::DVLDPresentationLayer.Properties.Resources.Notes_32;
-            this.pbNotes.Location = new System.Drawing.Point(254, 249);
+            this.pbNotes.Location = new System.Drawing.Point(254, 256);
             this.pbNotes.Name = "pbNotes";
             this.pbNotes.Size = new System.Drawing.Size(32, 32);
             this.pbNotes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -250,7 +250,7 @@
             this.lblNotesTitle.AutoSize = true;
             this.lblNotesTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblNotesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblNotesTitle.Location = new System.Drawing.Point(17, 252);
+            this.lblNotesTitle.Location = new System.Drawing.Point(17, 256);
             this.lblNotesTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblNotesTitle.Name = "lblNotesTitle";
             this.lblNotesTitle.Size = new System.Drawing.Size(90, 27);
@@ -264,17 +264,17 @@
             this.txtNotes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNotes.Font = new System.Drawing.Font("Tahoma", 16F);
             this.txtNotes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.txtNotes.Location = new System.Drawing.Point(300, 249);
+            this.txtNotes.Location = new System.Drawing.Point(300, 256);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
-            this.txtNotes.Size = new System.Drawing.Size(715, 77);
+            this.txtNotes.Size = new System.Drawing.Size(715, 74);
             this.txtNotes.TabIndex = 1;
             // 
             // pbTotalFees
             // 
             this.pbTotalFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbTotalFees.Image = global::DVLDPresentationLayer.Properties.Resources.money_32;
-            this.pbTotalFees.Location = new System.Drawing.Point(815, 206);
+            this.pbTotalFees.Location = new System.Drawing.Point(815, 210);
             this.pbTotalFees.Name = "pbTotalFees";
             this.pbTotalFees.Size = new System.Drawing.Size(32, 32);
             this.pbTotalFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -286,7 +286,7 @@
             this.lblTotalFees.AutoSize = true;
             this.lblTotalFees.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblTotalFees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblTotalFees.Location = new System.Drawing.Point(856, 209);
+            this.lblTotalFees.Location = new System.Drawing.Point(856, 213);
             this.lblTotalFees.Margin = new System.Windows.Forms.Padding(0);
             this.lblTotalFees.Name = "lblTotalFees";
             this.lblTotalFees.Size = new System.Drawing.Size(74, 27);
@@ -298,7 +298,7 @@
             this.lblTotalFeesTitle.AutoSize = true;
             this.lblTotalFeesTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblTotalFeesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblTotalFeesTitle.Location = new System.Drawing.Point(553, 209);
+            this.lblTotalFeesTitle.Location = new System.Drawing.Point(553, 213);
             this.lblTotalFeesTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblTotalFeesTitle.Name = "lblTotalFeesTitle";
             this.lblTotalFeesTitle.Size = new System.Drawing.Size(138, 27);
@@ -309,7 +309,7 @@
             // 
             this.pbLicenseFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbLicenseFees.Image = global::DVLDPresentationLayer.Properties.Resources.money_32;
-            this.pbLicenseFees.Location = new System.Drawing.Point(254, 206);
+            this.pbLicenseFees.Location = new System.Drawing.Point(254, 210);
             this.pbLicenseFees.Name = "pbLicenseFees";
             this.pbLicenseFees.Size = new System.Drawing.Size(32, 32);
             this.pbLicenseFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -321,7 +321,7 @@
             this.lblLicenseFees.AutoSize = true;
             this.lblLicenseFees.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblLicenseFees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblLicenseFees.Location = new System.Drawing.Point(295, 209);
+            this.lblLicenseFees.Location = new System.Drawing.Point(295, 213);
             this.lblLicenseFees.Margin = new System.Windows.Forms.Padding(0);
             this.lblLicenseFees.Name = "lblLicenseFees";
             this.lblLicenseFees.Size = new System.Drawing.Size(74, 27);
@@ -333,7 +333,7 @@
             this.lblLicenseFeesTitle.AutoSize = true;
             this.lblLicenseFeesTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblLicenseFeesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblLicenseFeesTitle.Location = new System.Drawing.Point(17, 209);
+            this.lblLicenseFeesTitle.Location = new System.Drawing.Point(17, 213);
             this.lblLicenseFeesTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblLicenseFeesTitle.Name = "lblLicenseFeesTitle";
             this.lblLicenseFeesTitle.Size = new System.Drawing.Size(165, 27);
@@ -344,7 +344,7 @@
             // 
             this.pbUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbUser.Image = global::DVLDPresentationLayer.Properties.Resources.User_32__2;
-            this.pbUser.Location = new System.Drawing.Point(815, 163);
+            this.pbUser.Location = new System.Drawing.Point(815, 167);
             this.pbUser.Name = "pbUser";
             this.pbUser.Size = new System.Drawing.Size(32, 32);
             this.pbUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -355,7 +355,7 @@
             // 
             this.pbExpirationDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbExpirationDate.Image = global::DVLDPresentationLayer.Properties.Resources.Calendar_32;
-            this.pbExpirationDate.Location = new System.Drawing.Point(815, 120);
+            this.pbExpirationDate.Location = new System.Drawing.Point(815, 124);
             this.pbExpirationDate.Name = "pbExpirationDate";
             this.pbExpirationDate.Size = new System.Drawing.Size(32, 32);
             this.pbExpirationDate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -366,7 +366,7 @@
             // 
             this.pbApplicationDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbApplicationDate.Image = global::DVLDPresentationLayer.Properties.Resources.Calendar_32;
-            this.pbApplicationDate.Location = new System.Drawing.Point(254, 77);
+            this.pbApplicationDate.Location = new System.Drawing.Point(254, 81);
             this.pbApplicationDate.Name = "pbApplicationDate";
             this.pbApplicationDate.Size = new System.Drawing.Size(32, 32);
             this.pbApplicationDate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -377,7 +377,7 @@
             // 
             this.pbAppFees.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbAppFees.Image = global::DVLDPresentationLayer.Properties.Resources.money_32;
-            this.pbAppFees.Location = new System.Drawing.Point(254, 163);
+            this.pbAppFees.Location = new System.Drawing.Point(254, 167);
             this.pbAppFees.Name = "pbAppFees";
             this.pbAppFees.Size = new System.Drawing.Size(32, 32);
             this.pbAppFees.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -388,7 +388,7 @@
             // 
             this.pbRenewLicenseAppID.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbRenewLicenseAppID.Image = global::DVLDPresentationLayer.Properties.Resources.Number_32;
-            this.pbRenewLicenseAppID.Location = new System.Drawing.Point(254, 36);
+            this.pbRenewLicenseAppID.Location = new System.Drawing.Point(254, 40);
             this.pbRenewLicenseAppID.Name = "pbRenewLicenseAppID";
             this.pbRenewLicenseAppID.Size = new System.Drawing.Size(32, 32);
             this.pbRenewLicenseAppID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -400,7 +400,7 @@
             this.lblUserName.AutoSize = true;
             this.lblUserName.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblUserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblUserName.Location = new System.Drawing.Point(856, 166);
+            this.lblUserName.Location = new System.Drawing.Point(856, 170);
             this.lblUserName.Margin = new System.Windows.Forms.Padding(0);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(80, 27);
@@ -412,7 +412,7 @@
             this.lblExpirationDate.AutoSize = true;
             this.lblExpirationDate.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblExpirationDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblExpirationDate.Location = new System.Drawing.Point(856, 123);
+            this.lblExpirationDate.Location = new System.Drawing.Point(856, 127);
             this.lblExpirationDate.Margin = new System.Windows.Forms.Padding(0);
             this.lblExpirationDate.Name = "lblExpirationDate";
             this.lblExpirationDate.Size = new System.Drawing.Size(80, 27);
@@ -424,7 +424,7 @@
             this.lblApplicationDate.AutoSize = true;
             this.lblApplicationDate.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblApplicationDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblApplicationDate.Location = new System.Drawing.Point(295, 80);
+            this.lblApplicationDate.Location = new System.Drawing.Point(295, 84);
             this.lblApplicationDate.Margin = new System.Windows.Forms.Padding(0);
             this.lblApplicationDate.Name = "lblApplicationDate";
             this.lblApplicationDate.Size = new System.Drawing.Size(68, 27);
@@ -436,7 +436,7 @@
             this.lblCreatedBy_Title.AutoSize = true;
             this.lblCreatedBy_Title.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblCreatedBy_Title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblCreatedBy_Title.Location = new System.Drawing.Point(553, 166);
+            this.lblCreatedBy_Title.Location = new System.Drawing.Point(553, 170);
             this.lblCreatedBy_Title.Margin = new System.Windows.Forms.Padding(0);
             this.lblCreatedBy_Title.Name = "lblCreatedBy_Title";
             this.lblCreatedBy_Title.Size = new System.Drawing.Size(147, 27);
@@ -448,7 +448,7 @@
             this.lblExpirationDateTitle.AutoSize = true;
             this.lblExpirationDateTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblExpirationDateTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblExpirationDateTitle.Location = new System.Drawing.Point(553, 123);
+            this.lblExpirationDateTitle.Location = new System.Drawing.Point(553, 127);
             this.lblExpirationDateTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblExpirationDateTitle.Name = "lblExpirationDateTitle";
             this.lblExpirationDateTitle.Size = new System.Drawing.Size(199, 27);
@@ -460,7 +460,7 @@
             this.lblAppDateTitle.AutoSize = true;
             this.lblAppDateTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblAppDateTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblAppDateTitle.Location = new System.Drawing.Point(17, 80);
+            this.lblAppDateTitle.Location = new System.Drawing.Point(17, 84);
             this.lblAppDateTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblAppDateTitle.Name = "lblAppDateTitle";
             this.lblAppDateTitle.Size = new System.Drawing.Size(210, 27);
@@ -472,7 +472,7 @@
             this.lblApplicationFees.AutoSize = true;
             this.lblApplicationFees.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblApplicationFees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblApplicationFees.Location = new System.Drawing.Point(295, 166);
+            this.lblApplicationFees.Location = new System.Drawing.Point(295, 170);
             this.lblApplicationFees.Margin = new System.Windows.Forms.Padding(0);
             this.lblApplicationFees.Name = "lblApplicationFees";
             this.lblApplicationFees.Size = new System.Drawing.Size(74, 27);
@@ -484,7 +484,7 @@
             this.lblRenewLicenseAppID.AutoSize = true;
             this.lblRenewLicenseAppID.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblRenewLicenseAppID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblRenewLicenseAppID.Location = new System.Drawing.Point(295, 39);
+            this.lblRenewLicenseAppID.Location = new System.Drawing.Point(295, 43);
             this.lblRenewLicenseAppID.Margin = new System.Windows.Forms.Padding(0);
             this.lblRenewLicenseAppID.Name = "lblRenewLicenseAppID";
             this.lblRenewLicenseAppID.Size = new System.Drawing.Size(68, 27);
@@ -496,7 +496,7 @@
             this.lblAppFeesTitle.AutoSize = true;
             this.lblAppFeesTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblAppFeesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblAppFeesTitle.Location = new System.Drawing.Point(17, 166);
+            this.lblAppFeesTitle.Location = new System.Drawing.Point(17, 170);
             this.lblAppFeesTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblAppFeesTitle.Name = "lblAppFeesTitle";
             this.lblAppFeesTitle.Size = new System.Drawing.Size(208, 27);
@@ -508,7 +508,7 @@
             this.lblRLApplicationIDTitle.AutoSize = true;
             this.lblRLApplicationIDTitle.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
             this.lblRLApplicationIDTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.lblRLApplicationIDTitle.Location = new System.Drawing.Point(17, 39);
+            this.lblRLApplicationIDTitle.Location = new System.Drawing.Point(17, 43);
             this.lblRLApplicationIDTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblRLApplicationIDTitle.Name = "lblRLApplicationIDTitle";
             this.lblRLApplicationIDTitle.Size = new System.Drawing.Size(229, 27);
@@ -517,6 +517,7 @@
             // 
             // btnRenewLicense
             // 
+            this.btnRenewLicense.Enabled = false;
             this.btnRenewLicense.FlatAppearance.BorderSize = 2;
             this.btnRenewLicense.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
             this.btnRenewLicense.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -524,7 +525,7 @@
             this.btnRenewLicense.Font = new System.Drawing.Font("Tahoma", 19F);
             this.btnRenewLicense.Image = global::DVLDPresentationLayer.Properties.Resources.License_Type_32;
             this.btnRenewLicense.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRenewLicense.Location = new System.Drawing.Point(999, 969);
+            this.btnRenewLicense.Location = new System.Drawing.Point(999, 983);
             this.btnRenewLicense.Name = "btnRenewLicense";
             this.btnRenewLicense.Size = new System.Drawing.Size(166, 45);
             this.btnRenewLicense.TabIndex = 2;
@@ -532,19 +533,19 @@
             this.btnRenewLicense.UseVisualStyleBackColor = true;
             this.btnRenewLicense.Click += new System.EventHandler(this.btnRenewLicense_Click);
             // 
-            // lnlblShowLicenseHistory
+            // llShowLicenseHistory
             // 
-            this.lnlblShowLicenseHistory.AutoSize = true;
-            this.lnlblShowLicenseHistory.Enabled = false;
-            this.lnlblShowLicenseHistory.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lnlblShowLicenseHistory.Location = new System.Drawing.Point(21, 969);
-            this.lnlblShowLicenseHistory.Margin = new System.Windows.Forms.Padding(0);
-            this.lnlblShowLicenseHistory.Name = "lnlblShowLicenseHistory";
-            this.lnlblShowLicenseHistory.Size = new System.Drawing.Size(259, 31);
-            this.lnlblShowLicenseHistory.TabIndex = 3;
-            this.lnlblShowLicenseHistory.TabStop = true;
-            this.lnlblShowLicenseHistory.Text = "Show License History";
-            this.lnlblShowLicenseHistory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseHistory_LinkClicked);
+            this.llShowLicenseHistory.AutoSize = true;
+            this.llShowLicenseHistory.Enabled = false;
+            this.llShowLicenseHistory.Font = new System.Drawing.Font("Tahoma", 19F);
+            this.llShowLicenseHistory.Location = new System.Drawing.Point(21, 983);
+            this.llShowLicenseHistory.Margin = new System.Windows.Forms.Padding(0);
+            this.llShowLicenseHistory.Name = "llShowLicenseHistory";
+            this.llShowLicenseHistory.Size = new System.Drawing.Size(259, 31);
+            this.llShowLicenseHistory.TabIndex = 3;
+            this.llShowLicenseHistory.TabStop = true;
+            this.llShowLicenseHistory.Text = "Show License History";
+            this.llShowLicenseHistory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseHistory_LinkClicked);
             // 
             // lblFormBigTitle
             // 
@@ -567,7 +568,7 @@
             this.btnClose.Font = new System.Drawing.Font("Tahoma", 19F);
             this.btnClose.Image = global::DVLDPresentationLayer.Properties.Resources.Close_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(801, 969);
+            this.btnClose.Location = new System.Drawing.Point(801, 983);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(166, 45);
             this.btnClose.TabIndex = 5;
@@ -606,34 +607,36 @@
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // lnlblShowNewLicenseInfo
+            // llShowNewLicenseInfo
             // 
-            this.lnlblShowNewLicenseInfo.AutoSize = true;
-            this.lnlblShowNewLicenseInfo.Enabled = false;
-            this.lnlblShowNewLicenseInfo.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lnlblShowNewLicenseInfo.Location = new System.Drawing.Point(305, 969);
-            this.lnlblShowNewLicenseInfo.Margin = new System.Windows.Forms.Padding(0);
-            this.lnlblShowNewLicenseInfo.Name = "lnlblShowNewLicenseInfo";
-            this.lnlblShowNewLicenseInfo.Size = new System.Drawing.Size(283, 31);
-            this.lnlblShowNewLicenseInfo.TabIndex = 4;
-            this.lnlblShowNewLicenseInfo.TabStop = true;
-            this.lnlblShowNewLicenseInfo.Text = "Show New License Info";
-            this.lnlblShowNewLicenseInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseInfo_LinkClicked);
+            this.llShowNewLicenseInfo.AutoSize = true;
+            this.llShowNewLicenseInfo.Enabled = false;
+            this.llShowNewLicenseInfo.Font = new System.Drawing.Font("Tahoma", 19F);
+            this.llShowNewLicenseInfo.Location = new System.Drawing.Point(305, 983);
+            this.llShowNewLicenseInfo.Margin = new System.Windows.Forms.Padding(0);
+            this.llShowNewLicenseInfo.Name = "llShowNewLicenseInfo";
+            this.llShowNewLicenseInfo.Size = new System.Drawing.Size(283, 31);
+            this.llShowNewLicenseInfo.TabIndex = 4;
+            this.llShowNewLicenseInfo.TabStop = true;
+            this.llShowNewLicenseInfo.Text = "Show New License Info";
+            this.llShowNewLicenseInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseInfo_LinkClicked);
             // 
-            // uctrlLDLDetailsByFilter
+            // uctrlDriverLicenseInfoByFilter
             // 
-            this.uctrlLDLDetailsByFilter.AutoScroll = true;
-            this.uctrlLDLDetailsByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.uctrlLDLDetailsByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.uctrlLDLDetailsByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.uctrlLDLDetailsByFilter.Location = new System.Drawing.Point(12, 100);
-            this.uctrlLDLDetailsByFilter.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.uctrlLDLDetailsByFilter.Name = "uctrlLDLDetailsByFilter";
-            this.uctrlLDLDetailsByFilter.Size = new System.Drawing.Size(1157, 514);
-            this.uctrlLDLDetailsByFilter.TabIndex = 0;
-            this.uctrlLDLDetailsByFilter.OnSelectedLicense += new System.Action<int>(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
+            this.uctrlDriverLicenseInfoByFilter.AutoScroll = true;
+            this.uctrlDriverLicenseInfoByFilter.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
+            this.uctrlDriverLicenseInfoByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlDriverLicenseInfoByFilter.FilterEnabled = true;
+            this.uctrlDriverLicenseInfoByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.uctrlDriverLicenseInfoByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.uctrlDriverLicenseInfoByFilter.Location = new System.Drawing.Point(12, 100);
+            this.uctrlDriverLicenseInfoByFilter.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.uctrlDriverLicenseInfoByFilter.Name = "uctrlDriverLicenseInfoByFilter";
+            this.uctrlDriverLicenseInfoByFilter.Size = new System.Drawing.Size(1157, 514);
+            this.uctrlDriverLicenseInfoByFilter.TabIndex = 0;
+            this.uctrlDriverLicenseInfoByFilter.OnSelectedLicense += new System.Action<int>(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
             // 
-            // frmRenewLocalDrivingLicense
+            // frmRenewLocalDrivingLicenseApplication
             // 
             this.AcceptButton = this.btnRenewLicense;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -643,22 +646,24 @@
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1186, 1047);
             this.ControlBox = false;
-            this.Controls.Add(this.uctrlLDLDetailsByFilter);
+            this.Controls.Add(this.uctrlDriverLicenseInfoByFilter);
             this.Controls.Add(this.gbNewLicenseAppInfo);
             this.Controls.Add(this.btnRenewLicense);
-            this.Controls.Add(this.lnlblShowLicenseHistory);
+            this.Controls.Add(this.llShowLicenseHistory);
             this.Controls.Add(this.lblFormBigTitle);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblFormTitle);
             this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.lnlblShowNewLicenseInfo);
+            this.Controls.Add(this.llShowNewLicenseInfo);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "frmRenewLocalDrivingLicense";
+            this.Name = "frmRenewLocalDrivingLicenseApplication";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Activated += new System.EventHandler(this.frmRenewLocalDrivingLicenseApplication_Activated);
+            this.Load += new System.EventHandler(this.frmRenewLocalDrivingLicenseApplication_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbOldLicenseID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRenewedLicenseID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbIssueDate)).EndInit();
@@ -704,12 +709,12 @@
         private System.Windows.Forms.Label lblAppFeesTitle;
         private System.Windows.Forms.Label lblRLApplicationIDTitle;
         private System.Windows.Forms.Button btnRenewLicense;
-        private System.Windows.Forms.LinkLabel lnlblShowLicenseHistory;
+        private System.Windows.Forms.LinkLabel llShowLicenseHistory;
         private System.Windows.Forms.Label lblFormBigTitle;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.LinkLabel lnlblShowNewLicenseInfo;
+        private System.Windows.Forms.LinkLabel llShowNewLicenseInfo;
         private System.Windows.Forms.Label lblLicenseFeesTitle;
         private System.Windows.Forms.PictureBox pbLicenseFees;
         private System.Windows.Forms.Label lblLicenseFees;
@@ -719,6 +724,6 @@
         private System.Windows.Forms.TextBox txtNotes;
         private System.Windows.Forms.PictureBox pbNotes;
         private System.Windows.Forms.Label lblNotesTitle;
-        private ctrlDriverLicenseInfoByFilter uctrlLDLDetailsByFilter;
+        private ctrlDriverLicenseInfoByFilter uctrlDriverLicenseInfoByFilter;
     }
 }

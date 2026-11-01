@@ -18,11 +18,11 @@ namespace DVLDBusinessLayer
         public string ClassDescription { get; set; }
         public byte MinimumAllowedAge { get; set; }
         public byte DefaultValidityLength { get; set; }
-        public float ClassFees { get; set; }
+        public decimal ClassFees { get; set; }
 
         private clsLicenseClassData.clsOldLicenseClassInfo _OldLicenseClassInfo;
 
-        public clsLicenseClass(string ClassName, string ClassDescription, byte MinimumAllowedAge, byte DefaultValidityLength, float ClassFees)
+        public clsLicenseClass(string ClassName, string ClassDescription, byte MinimumAllowedAge, byte DefaultValidityLength, decimal ClassFees)
         {
             this.LicenseClassID = 0;
             this.ClassName = ClassName;
@@ -35,7 +35,7 @@ namespace DVLDBusinessLayer
         }
 
         private clsLicenseClass (byte LicenseClassID, string ClassName, string ClassDescription, byte MinimumAllowedAge
-            , byte DefaultValidityLength, float ClassFees)
+            , byte DefaultValidityLength, decimal ClassFees)
         {
             this.LicenseClassID = LicenseClassID;
             this.ClassName = ClassName;
@@ -62,7 +62,7 @@ namespace DVLDBusinessLayer
         {
             string ClassName = "", ClassDescription = "";
             byte MinimumAllowedAge = 0, DefaultValidityLength = 0;
-            float ClassFees = 0;
+            decimal ClassFees = 0;
 
             if (clsLicenseClassData.GetLicenseClassInfoByID(LicenseClassID, ref ClassName, ref ClassDescription
                 , ref MinimumAllowedAge, ref DefaultValidityLength, ref ClassFees))
@@ -78,7 +78,7 @@ namespace DVLDBusinessLayer
         {
             byte LicenseClassID = 0, MinimumAllowedAge = 0, DefaultValidityLength = 0;
             string ClassDescription = "";
-            float ClassFees = 0;
+            decimal ClassFees = 0;
 
             if (clsLicenseClassData.GetLicenseClassInfoByClassName(ClassName, ref LicenseClassID, ref ClassDescription
                 , ref MinimumAllowedAge, ref DefaultValidityLength, ref ClassFees))

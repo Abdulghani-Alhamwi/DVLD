@@ -275,7 +275,7 @@ namespace DVLDPresentationLayer.Licenses
                 return;
             }
 
-            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID((int)dgvIntLicenseApplications.SelectedRows[0].Cells["Driver ID"].Value));
+            frmShowPersonLicenseHistory frm = new frmShowPersonLicenseHistory(clsDriver.GetDriverPersonID((int)dgvIntLicenseApplications.SelectedRows[0].Cells["Driver ID"].Value));
             frm.ShowDialog();
         }
 

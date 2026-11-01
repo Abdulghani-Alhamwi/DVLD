@@ -43,7 +43,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnScheduleTest = new System.Windows.Forms.Button();
             this.pbTestType = new System.Windows.Forms.PictureBox();
-            this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrLDLApplicationInfo();
+            this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrLocalDrivingLicenseApplicationInfo();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTestAppointments)).BeginInit();
             this.cmsAppointment.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbTestType)).BeginInit();
@@ -297,7 +297,7 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.PictureBox pbTestType;
         private System.Windows.Forms.Label lblFormBigTitle;
-        private ctrLDLApplicationInfo uctrlDLApplicationInfo;
+        private ctrLocalDrivingLicenseApplicationInfo uctrlDLApplicationInfo;
         private System.Windows.Forms.Label lblAppointmentsTitle;
         private System.Windows.Forms.ContextMenuStrip cmsAppointment;
         private System.Windows.Forms.ToolStripMenuItem tsmiEdit;

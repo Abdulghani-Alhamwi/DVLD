@@ -30,15 +30,13 @@ namespace DVLDPresentationLayer
             }
         }
 
-        private bool _EnableFilter = false;
-        public bool EnableFilter
+        public bool FilterEnabled
         {
-            get { return _EnableFilter; }
+            get { return gbFilter.Enabled; }
 
             set
             {
-                _EnableFilter = value;
-                gbFilter.Enabled = _EnableFilter;
+                gbFilter.Enabled = value;
             }
         }
 
@@ -66,7 +64,7 @@ namespace DVLDPresentationLayer
             object[] Items = new object[] { "National No", "Person ID" };
             cbFindBy.Items.AddRange(Items);
             cbFindBy.SelectedIndex = 0;
-            EnableFilter = true;
+            FilterEnabled = true;
         }
 
         private void cbFindBy_DropDown(object sender, EventArgs e)
@@ -107,13 +105,13 @@ namespace DVLDPresentationLayer
                 return;
             }
 
-            if (_PreviouslyFoundText == txtFindBy.Text)
+            if (_PreviouslyFoundText == txtFindBy.Text.Trim())
                 return;
 
             else if (GetSelectedItem() == _enFindBy.NationalNo)
             {
-                clsPerson Person = uctrlPersonDetails.LoadPersonDetails(txtFindBy.Text);
-                _PreviouslyFoundText = txtFindBy.Text;
+                clsPerson Person = uctrlPersonDetails.LoadPersonDetails(txtFindBy.Text.Trim());
+                _PreviouslyFoundText = txtFindBy.Text.Trim();
 
                 if (Person != null)
                     OnPersonSelected?.Invoke(Person.PersonID);
@@ -121,8 +119,8 @@ namespace DVLDPresentationLayer
 
             else
             {
-                clsPerson Person = uctrlPersonDetails.LoadPersonDetails(Convert.ToInt32(txtFindBy.Text));
-                _PreviouslyFoundText = txtFindBy.Text;
+                clsPerson Person = uctrlPersonDetails.LoadPersonDetails(Convert.ToInt32(txtFindBy.Text.Trim()));
+                _PreviouslyFoundText = txtFindBy.Text.Trim();
 
                 if (Person != null)
                 OnPersonSelected?.Invoke(Person.PersonID);
@@ -130,12 +128,11 @@ namespace DVLDPresentationLayer
 
         }
 
-        public void SearchForPerson(int PersonID)
+        public void LoadPersonInfo(int PersonID)
         {
-            cbFindBy.SelectedItem = "PersonID";
+            cbFindBy.SelectedItem = "Person ID";
             txtFindBy.Text = PersonID.ToString();
             uctrlPersonDetails.LoadPersonDetails(PersonID);
-            gbFilter.Enabled = false;           
         }
 
         private void btnFind_Click(object sender, EventArgs e)

@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer.TestTypes
 {
-    partial class frmDetainedLicensesManagement
+    partial class frmListDetainedLicenses
     {
         /// <summary>
         /// Required designer variable.
@@ -88,8 +88,8 @@
             this.txtFilter.Size = new System.Drawing.Size(344, 40);
             this.txtFilter.TabIndex = 4;
             this.txtFilter.Visible = false;
+            this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
             this.txtFilter.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFilter_KeyPress);
-            this.txtFilter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyUp);
             // 
             // cbFilterBy
             // 
@@ -132,7 +132,8 @@
             this.tsmiReleaseDetainedLicense});
             this.cmsDetainedLicense.Name = "cmsPeopleMenu";
             this.cmsDetainedLicense.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsDetainedLicense.Size = new System.Drawing.Size(357, 162);
+            this.cmsDetainedLicense.Size = new System.Drawing.Size(357, 184);
+            this.cmsDetainedLicense.Opening += new System.ComponentModel.CancelEventHandler(this.cmsDetainedLicense_Opening);
             this.cmsDetainedLicense.Paint += new System.Windows.Forms.PaintEventHandler(this.cmsDetainedLicense_Paint);
             // 
             // tsmiShowPersonDetails
@@ -330,7 +331,7 @@
             this.cbIsReleased.SelectedIndexChanged += new System.EventHandler(this.cbIsReleased_SelectedIndexChanged);
             this.cbIsReleased.DropDownClosed += new System.EventHandler(this.cbIsReleased_DropDownClosed);
             // 
-            // frmDetainedLicensesManagement
+            // frmListDetainedLicenses
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -356,7 +357,7 @@
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "frmDetainedLicensesManagement";
+            this.Name = "frmListDetainedLicenses";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

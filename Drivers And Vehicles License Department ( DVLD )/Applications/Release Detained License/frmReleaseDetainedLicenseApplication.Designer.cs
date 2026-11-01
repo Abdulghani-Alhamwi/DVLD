@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer.Licenses
 {
-    partial class frmReleaseDetainedLicense
+    partial class frmReleaseDetainedLicenseApplication
     {
         /// <summary>
         /// Required designer variable.
@@ -62,7 +62,7 @@
             this.btnRelease = new System.Windows.Forms.Button();
             this.lnlblShowLicenseHistory = new System.Windows.Forms.LinkLabel();
             this.btnExit = new System.Windows.Forms.Button();
-            this.uctrlLDLDetailsByFilter = new DVLDPresentationLayer.ctrlDriverLicenseInfoByFilter();
+            this.uctrlLocalDrivingLicenseInfoWithFilter = new DVLDPresentationLayer.ctrlDriverLicenseInfoByFilter();
             ((System.ComponentModel.ISupportInitialize)(this.ertxtFineFees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFineFees)).BeginInit();
             this.gbDetainInfo.SuspendLayout();
@@ -500,20 +500,22 @@
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // uctrlLDLDetailsByFilter
+            // uctrlLocalDrivingLicenseInfoWithFilter
             // 
-            this.uctrlLDLDetailsByFilter.AutoScroll = true;
-            this.uctrlLDLDetailsByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.uctrlLDLDetailsByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.uctrlLDLDetailsByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.uctrlLDLDetailsByFilter.Location = new System.Drawing.Point(18, 111);
-            this.uctrlLDLDetailsByFilter.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.uctrlLDLDetailsByFilter.Name = "uctrlLDLDetailsByFilter";
-            this.uctrlLDLDetailsByFilter.Size = new System.Drawing.Size(1157, 514);
-            this.uctrlLDLDetailsByFilter.TabIndex = 0;
-            this.uctrlLDLDetailsByFilter.OnSelectedLicense += new System.Action<int>(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
+            this.uctrlLocalDrivingLicenseInfoWithFilter.AutoScroll = true;
+            this.uctrlLocalDrivingLicenseInfoWithFilter.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
+            this.uctrlLocalDrivingLicenseInfoWithFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlLocalDrivingLicenseInfoWithFilter.FilterEnabled = true;
+            this.uctrlLocalDrivingLicenseInfoWithFilter.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.uctrlLocalDrivingLicenseInfoWithFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.uctrlLocalDrivingLicenseInfoWithFilter.Location = new System.Drawing.Point(18, 111);
+            this.uctrlLocalDrivingLicenseInfoWithFilter.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.uctrlLocalDrivingLicenseInfoWithFilter.Name = "uctrlLocalDrivingLicenseInfoWithFilter";
+            this.uctrlLocalDrivingLicenseInfoWithFilter.Size = new System.Drawing.Size(1157, 514);
+            this.uctrlLocalDrivingLicenseInfoWithFilter.TabIndex = 0;
+            this.uctrlLocalDrivingLicenseInfoWithFilter.OnSelectedLicense += new System.Action<int>(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
             // 
-            // frmReleaseDetainedLicense
+            // frmReleaseDetainedLicenseApplication
             // 
             this.AcceptButton = this.btnRelease;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -530,15 +532,16 @@
             this.Controls.Add(this.lblFormTitle);
             this.Controls.Add(this.btnRelease);
             this.Controls.Add(this.lnlblShowLicenseHistory);
-            this.Controls.Add(this.uctrlLDLDetailsByFilter);
+            this.Controls.Add(this.uctrlLocalDrivingLicenseInfoWithFilter);
             this.Controls.Add(this.btnExit);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "frmReleaseDetainedLicense";
+            this.Name = "frmReleaseDetainedLicenseApplication";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Load += new System.EventHandler(this.frmReleaseDetainedLicenseApplication_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ertxtFineFees)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFineFees)).EndInit();
             this.gbDetainInfo.ResumeLayout(false);
@@ -579,7 +582,7 @@
         private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.Button btnRelease;
         private System.Windows.Forms.LinkLabel lnlblShowLicenseHistory;
-        private ctrlDriverLicenseInfoByFilter uctrlLDLDetailsByFilter;
+        private ctrlDriverLicenseInfoByFilter uctrlLocalDrivingLicenseInfoWithFilter;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label lblTotalFees;
         private System.Windows.Forms.PictureBox pbTotalFees;

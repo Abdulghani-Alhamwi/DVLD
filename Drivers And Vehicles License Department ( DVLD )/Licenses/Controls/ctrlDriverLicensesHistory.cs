@@ -39,14 +39,40 @@ namespace DVLDPresentationLayer
             _CurrentIntLicDGVColSortDirection = clsDataGridViewUtilityLib.enDataGridViewSortDirection.Descending;
         }
 
-        public void LoadDriverLicenseHistory(int DriverID)
+        public void LoadInfo(int DriverID)
         {
+            clsDriver Driver = clsDriver.FindByDriverID(DriverID);
+
+            if (Driver == null)
+            {
+                MessageBox.Show("There is no driver with id = " + DriverID.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             dgvLocalLicenses.DataSource = clsLocalLicense.GetLocalLicenses(DriverID, clsGlobalSettings.WantedNumOfRowsFromDB);
             lblLocalLicensesNum.Text = clsDriver.GetDriverLocalLicensesCount(DriverID).ToString();
 
             dgvInternationalLicenses.DataSource = clsInternationalLicense.GetDriverInternationalLicenses(DriverID, clsGlobalSettings.WantedNumOfRowsFromDB);
             lblInternationalLicensesNum.Text = clsDriver.GetDriverInternationalLicensesCount(DriverID).ToString();
             _DriverID = DriverID;
+        }
+
+        public void LoadInfoByPersonID(int PersonID)
+        {
+            clsDriver Driver = clsDriver.FindByPersonID(PersonID);
+
+            if (Driver == null)
+            {
+                MessageBox.Show("There is no driver linked with person id = " + PersonID.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            dgvLocalLicenses.DataSource = clsLocalLicense.GetLocalLicenses(Driver.DriverID, clsGlobalSettings.WantedNumOfRowsFromDB);
+            lblLocalLicensesNum.Text = clsDriver.GetDriverLocalLicensesCount(Driver.DriverID).ToString();
+
+            dgvInternationalLicenses.DataSource = clsInternationalLicense.GetDriverInternationalLicenses(Driver.DriverID, clsGlobalSettings.WantedNumOfRowsFromDB);
+            lblInternationalLicensesNum.Text = clsDriver.GetDriverInternationalLicensesCount(Driver.DriverID).ToString();
+            _DriverID = Driver.DriverID;
         }
 
         private void _SetPropertiesToAppendData(DataGridView DGV)
@@ -125,18 +151,16 @@ namespace DVLDPresentationLayer
             }
         }
 
-        private void tsmiShowLicenseInfo_Click(object sender, EventArgs e)
+        private void tsmiShowLocalLicenseInfo_Click(object sender, EventArgs e)
         {
-            if(tcLicenseHistory.SelectedTab == tpLocalLicenses)
-            {
-                frmShowDriverLiecnseInfo frm = new frmShowDriverLiecnseInfo((int)dgvLocalLicenses.SelectedRows[0].Cells[_LocalLicensesPKViewedColumnName].Value);
-                frm.ShowDialog();
-            }
-            else
-            {
-                frmInternationalLicenseDetails frm = new frmInternationalLicenseDetails((int)dgvInternationalLicenses.SelectedRows[0].Cells[_IntLicensesPKViewedColumnName].Value);
-                frm.ShowDialog();
-            }
+            frmShowDriverLiecnseInfo frm = new frmShowDriverLiecnseInfo((int)dgvLocalLicenses.SelectedRows[0].Cells[_LocalLicensesPKViewedColumnName].Value);
+            frm.ShowDialog();
+        }
+
+        private void tsmiShowInetrnationalLicnseInfo_Click(object sender, EventArgs e)
+        {
+            frmInternationalLicenseDetails frm = new frmInternationalLicenseDetails((int)dgvInternationalLicenses.SelectedRows[0].Cells[_IntLicensesPKViewedColumnName].Value);
+            frm.ShowDialog();
         }
 
         private void _SortLocalLicensesDataData(DataGridViewCellMouseEventArgs e)
@@ -186,25 +210,31 @@ namespace DVLDPresentationLayer
             if (tcLicenseHistory.SelectedTab == tpLocalLicenses)
             {
                 if (dgvLocalLicenses.Rows.Count == 0)
-                    cmsLicenseHistory.Close();
+                    cmsLocalLicenseHistory.Close();
 
                 else if (dgvLocalLicenses.SelectedRows.Count > 1)
                 {
                     MessageBox.Show("You can choose only one local license to show its info");
-                    cmsLicenseHistory.Close();
+                    cmsLocalLicenseHistory.Close();
                 }
             }
             else
             {
                 if (dgvInternationalLicenses.Rows.Count == 0)
-                    cmsLicenseHistory.Close();
+                    cmsLocalLicenseHistory.Close();
 
                 else if (dgvInternationalLicenses.SelectedRows.Count > 1)
                 {
                     MessageBox.Show("You can choose only one international license to show its info");
-                    cmsLicenseHistory.Close();
+                    cmsLocalLicenseHistory.Close();
                 }
             }
+        }
+
+        public void Clear()
+        {
+            dgvLocalLicenses.Rows.Clear();
+            dgvInternationalLicenses.Rows.Clear();
         }
     }
 }

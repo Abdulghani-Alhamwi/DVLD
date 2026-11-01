@@ -134,7 +134,11 @@ namespace DVLDBusinessLayer
 
         public static bool LinkWithNewLocalLicense(int DriverID, int NewLocalLicenseID)
         {
-            return clsInternationalLicenseData.LinkWithNewLocalLicense(DriverID, NewLocalLicenseID);
+            if (HasDriverActiveInternationalLicense(DriverID))
+                return clsInternationalLicenseData.LinkWithNewLocalLicense(DriverID, NewLocalLicenseID);
+
+            else
+                return true;
         }
 
         public static DataTable GetColumnsNamesForView()

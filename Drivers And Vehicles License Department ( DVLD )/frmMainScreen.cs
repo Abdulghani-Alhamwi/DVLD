@@ -143,19 +143,19 @@ namespace DVLDPresentationLayer
 
         private void tsmiRenewDrivingLicense_Click(object sender, EventArgs e)
         {
-            frmRenewLocalDrivingLicense frm = new frmRenewLocalDrivingLicense();
+            frmRenewLocalDrivingLicenseApplication frm = new frmRenewLocalDrivingLicenseApplication();
             frm.ShowDialog();
         }
 
         private void tsmiReplacementForLostOrDamaged_Click(object sender, EventArgs e)
         {
-            frmReplacetLostOrDamagedLicense frm = new frmReplacetLostOrDamagedLicense();
+            frmReplacetLostOrDamagedLicenseApplication frm = new frmReplacetLostOrDamagedLicenseApplication();
             frm.ShowDialog();
         }
 
         private void tsmiReleaseDetainedDrivingLicense_Click(object sender, EventArgs e)
         {
-            frmReleaseDetainedLicense frm = new frmReleaseDetainedLicense();
+            frmReleaseDetainedLicenseApplication frm = new frmReleaseDetainedLicenseApplication();
             frm.ShowDialog();
         }
 
@@ -173,13 +173,13 @@ namespace DVLDPresentationLayer
 
         private void tsmiReleaseDetainedLicense_Click(object sender, EventArgs e)
         {
-            frmReleaseDetainedLicense frm = new frmReleaseDetainedLicense();
+            frmReleaseDetainedLicenseApplication frm = new frmReleaseDetainedLicenseApplication();
             frm.ShowDialog();
         }
 
         private void tsmiManageDetaiendLicenses_Click(object sender, EventArgs e)
         {
-            frmDetainedLicensesManagement frm = new frmDetainedLicensesManagement();
+            frmListDetainedLicenses frm = new frmListDetainedLicenses();
             frm.ShowDialog();
         }
 

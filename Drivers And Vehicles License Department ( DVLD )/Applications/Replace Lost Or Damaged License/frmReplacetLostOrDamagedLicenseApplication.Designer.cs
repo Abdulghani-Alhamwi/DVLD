@@ -1,6 +1,6 @@
 ﻿namespace DVLDPresentationLayer.Core
 {
-    partial class frmReplacetLostOrDamagedLicense
+    partial class frmReplacetLostOrDamagedLicenseApplication
     {
         /// <summary>
         /// Required designer variable.
@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.btnIssueReplacement = new System.Windows.Forms.Button();
-            this.lnlblShowLicenseHistory = new System.Windows.Forms.LinkLabel();
+            this.llShowLicenseHistory = new System.Windows.Forms.LinkLabel();
             this.lblFormBigTitle = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.lblFormTitle = new System.Windows.Forms.Label();
-            this.lnlblShowNewLicenseInfo = new System.Windows.Forms.LinkLabel();
+            this.llShowNewLicenseInfo = new System.Windows.Forms.LinkLabel();
             this.pbOldLicenseID = new System.Windows.Forms.PictureBox();
             this.lblOldLocalLicenseID = new System.Windows.Forms.Label();
             this.lblOldLicenseIDTitle = new System.Windows.Forms.Label();
@@ -57,7 +57,7 @@
             this.rbDamagedLicense = new System.Windows.Forms.RadioButton();
             this.rbLostLicense = new System.Windows.Forms.RadioButton();
             this.gbReplacementFor = new System.Windows.Forms.GroupBox();
-            this.uctrlLDLDetailsByFilter = new DVLDPresentationLayer.ctrlDriverLicenseInfoByFilter();
+            this.uctrlLocalDrivingLicenseInfoByFilter = new DVLDPresentationLayer.ctrlDriverLicenseInfoByFilter();
             ((System.ComponentModel.ISupportInitialize)(this.pbOldLicenseID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbReplacedLicenseID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbUser)).BeginInit();
@@ -70,6 +70,7 @@
             // 
             // btnIssueReplacement
             // 
+            this.btnIssueReplacement.Enabled = false;
             this.btnIssueReplacement.FlatAppearance.BorderSize = 2;
             this.btnIssueReplacement.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray;
             this.btnIssueReplacement.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -85,19 +86,19 @@
             this.btnIssueReplacement.UseVisualStyleBackColor = true;
             this.btnIssueReplacement.Click += new System.EventHandler(this.btnIssueReplacement_Click);
             // 
-            // lnlblShowLicenseHistory
+            // llShowLicenseHistory
             // 
-            this.lnlblShowLicenseHistory.AutoSize = true;
-            this.lnlblShowLicenseHistory.Enabled = false;
-            this.lnlblShowLicenseHistory.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lnlblShowLicenseHistory.Location = new System.Drawing.Point(18, 838);
-            this.lnlblShowLicenseHistory.Margin = new System.Windows.Forms.Padding(0);
-            this.lnlblShowLicenseHistory.Name = "lnlblShowLicenseHistory";
-            this.lnlblShowLicenseHistory.Size = new System.Drawing.Size(259, 31);
-            this.lnlblShowLicenseHistory.TabIndex = 3;
-            this.lnlblShowLicenseHistory.TabStop = true;
-            this.lnlblShowLicenseHistory.Text = "Show License History";
-            this.lnlblShowLicenseHistory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseHistory_LinkClicked);
+            this.llShowLicenseHistory.AutoSize = true;
+            this.llShowLicenseHistory.Enabled = false;
+            this.llShowLicenseHistory.Font = new System.Drawing.Font("Tahoma", 19F);
+            this.llShowLicenseHistory.Location = new System.Drawing.Point(18, 838);
+            this.llShowLicenseHistory.Margin = new System.Windows.Forms.Padding(0);
+            this.llShowLicenseHistory.Name = "llShowLicenseHistory";
+            this.llShowLicenseHistory.Size = new System.Drawing.Size(259, 31);
+            this.llShowLicenseHistory.TabIndex = 3;
+            this.llShowLicenseHistory.TabStop = true;
+            this.llShowLicenseHistory.Text = "Show License History";
+            this.llShowLicenseHistory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowLicenseHistory_LinkClicked);
             // 
             // lblFormBigTitle
             // 
@@ -140,19 +141,19 @@
             this.lblFormTitle.TabIndex = 198;
             this.lblFormTitle.Text = "frm Title";
             // 
-            // lnlblShowNewLicenseInfo
+            // llShowNewLicenseInfo
             // 
-            this.lnlblShowNewLicenseInfo.AutoSize = true;
-            this.lnlblShowNewLicenseInfo.Enabled = false;
-            this.lnlblShowNewLicenseInfo.Font = new System.Drawing.Font("Tahoma", 19F);
-            this.lnlblShowNewLicenseInfo.Location = new System.Drawing.Point(302, 838);
-            this.lnlblShowNewLicenseInfo.Margin = new System.Windows.Forms.Padding(0);
-            this.lnlblShowNewLicenseInfo.Name = "lnlblShowNewLicenseInfo";
-            this.lnlblShowNewLicenseInfo.Size = new System.Drawing.Size(283, 31);
-            this.lnlblShowNewLicenseInfo.TabIndex = 4;
-            this.lnlblShowNewLicenseInfo.TabStop = true;
-            this.lnlblShowNewLicenseInfo.Text = "Show New License Info";
-            this.lnlblShowNewLicenseInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowNewLicenseInfo_LinkClicked);
+            this.llShowNewLicenseInfo.AutoSize = true;
+            this.llShowNewLicenseInfo.Enabled = false;
+            this.llShowNewLicenseInfo.Font = new System.Drawing.Font("Tahoma", 19F);
+            this.llShowNewLicenseInfo.Location = new System.Drawing.Point(302, 838);
+            this.llShowNewLicenseInfo.Margin = new System.Windows.Forms.Padding(0);
+            this.llShowNewLicenseInfo.Name = "llShowNewLicenseInfo";
+            this.llShowNewLicenseInfo.Size = new System.Drawing.Size(283, 31);
+            this.llShowNewLicenseInfo.TabIndex = 4;
+            this.llShowNewLicenseInfo.TabStop = true;
+            this.llShowNewLicenseInfo.Text = "Show New License Info";
+            this.llShowNewLicenseInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnlblShowNewLicenseInfo_LinkClicked);
             // 
             // pbOldLicenseID
             // 
@@ -414,13 +415,11 @@
             // rbDamagedLicense
             // 
             this.rbDamagedLicense.AutoSize = true;
-            this.rbDamagedLicense.Checked = true;
             this.rbDamagedLicense.Font = new System.Drawing.Font("Tahoma", 16F);
             this.rbDamagedLicense.Location = new System.Drawing.Point(11, 36);
             this.rbDamagedLicense.Name = "rbDamagedLicense";
             this.rbDamagedLicense.Size = new System.Drawing.Size(202, 31);
             this.rbDamagedLicense.TabIndex = 0;
-            this.rbDamagedLicense.TabStop = true;
             this.rbDamagedLicense.Text = "Damaged License";
             this.rbDamagedLicense.UseVisualStyleBackColor = true;
             this.rbDamagedLicense.CheckedChanged += new System.EventHandler(this.rbDamagedLicense_CheckedChanged);
@@ -435,6 +434,7 @@
             this.rbLostLicense.TabIndex = 1;
             this.rbLostLicense.Text = "Lost License";
             this.rbLostLicense.UseVisualStyleBackColor = true;
+            this.rbLostLicense.CheckedChanged += new System.EventHandler(this.rbLostLicense_CheckedChanged);
             // 
             // gbReplacementFor
             // 
@@ -449,18 +449,20 @@
             // 
             // uctrlLDLDetailsByFilter
             // 
-            this.uctrlLDLDetailsByFilter.AutoScroll = true;
-            this.uctrlLDLDetailsByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
-            this.uctrlLDLDetailsByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
-            this.uctrlLDLDetailsByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.uctrlLDLDetailsByFilter.Location = new System.Drawing.Point(9, 114);
-            this.uctrlLDLDetailsByFilter.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.uctrlLDLDetailsByFilter.Name = "uctrlLDLDetailsByFilter";
-            this.uctrlLDLDetailsByFilter.Size = new System.Drawing.Size(1157, 514);
-            this.uctrlLDLDetailsByFilter.TabIndex = 196;
-            this.uctrlLDLDetailsByFilter.OnSelectedLicense += new System.Action<int>(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
+            this.uctrlLocalDrivingLicenseInfoByFilter.AutoScroll = true;
+            this.uctrlLocalDrivingLicenseInfoByFilter.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
+            this.uctrlLocalDrivingLicenseInfoByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
+            this.uctrlLocalDrivingLicenseInfoByFilter.FilterEnabled = true;
+            this.uctrlLocalDrivingLicenseInfoByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.uctrlLocalDrivingLicenseInfoByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.uctrlLocalDrivingLicenseInfoByFilter.Location = new System.Drawing.Point(9, 114);
+            this.uctrlLocalDrivingLicenseInfoByFilter.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.uctrlLocalDrivingLicenseInfoByFilter.Name = "uctrlLDLDetailsByFilter";
+            this.uctrlLocalDrivingLicenseInfoByFilter.Size = new System.Drawing.Size(1157, 514);
+            this.uctrlLocalDrivingLicenseInfoByFilter.TabIndex = 196;
+            this.uctrlLocalDrivingLicenseInfoByFilter.OnSelectedLicense += new System.Action<int>(this.uctrlLDLDetailsByFilter_OnSelectedLocalLicense);
             // 
-            // frmReplacementForLostOrDamaged
+            // frmReplacetLostOrDamagedLicenseApplication
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -471,21 +473,23 @@
             this.ControlBox = false;
             this.Controls.Add(this.gbReplacementFor);
             this.Controls.Add(this.btnIssueReplacement);
-            this.Controls.Add(this.lnlblShowLicenseHistory);
+            this.Controls.Add(this.llShowLicenseHistory);
             this.Controls.Add(this.lblFormBigTitle);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblFormTitle);
-            this.Controls.Add(this.lnlblShowNewLicenseInfo);
-            this.Controls.Add(this.uctrlLDLDetailsByFilter);
+            this.Controls.Add(this.llShowNewLicenseInfo);
+            this.Controls.Add(this.uctrlLocalDrivingLicenseInfoByFilter);
             this.Controls.Add(this.gbNewLicenseAppInfo);
             this.Controls.Add(this.btnExit);
             this.Font = new System.Drawing.Font("Tahoma", 18F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "frmReplacementForLostOrDamaged";
+            this.Name = "frmReplacetLostOrDamagedLicenseApplication";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Activated += new System.EventHandler(this.frmReplacetLostOrDamagedLicenseApplication_Activated);
+            this.Load += new System.EventHandler(this.frmReplacetLostOrDamagedLicenseApplication_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbOldLicenseID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbReplacedLicenseID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbUser)).EndInit();
@@ -504,11 +508,11 @@
         #endregion
 
         private System.Windows.Forms.Button btnIssueReplacement;
-        private System.Windows.Forms.LinkLabel lnlblShowLicenseHistory;
+        private System.Windows.Forms.LinkLabel llShowLicenseHistory;
         private System.Windows.Forms.Label lblFormBigTitle;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblFormTitle;
-        private System.Windows.Forms.LinkLabel lnlblShowNewLicenseInfo;
+        private System.Windows.Forms.LinkLabel llShowNewLicenseInfo;
         private System.Windows.Forms.PictureBox pbOldLicenseID;
         private System.Windows.Forms.Label lblOldLocalLicenseID;
         private System.Windows.Forms.Label lblOldLicenseIDTitle;
@@ -516,7 +520,7 @@
         private System.Windows.Forms.Label lblReplacedLicenseID;
         private System.Windows.Forms.Label lblReplacedLicenseIDTitle;
         private System.Windows.Forms.PictureBox pbUser;
-        private ctrlDriverLicenseInfoByFilter uctrlLDLDetailsByFilter;
+        private ctrlDriverLicenseInfoByFilter uctrlLocalDrivingLicenseInfoByFilter;
         private System.Windows.Forms.GroupBox gbNewLicenseAppInfo;
         private System.Windows.Forms.PictureBox pbApplicationDate;
         private System.Windows.Forms.PictureBox pbAppFees;

@@ -135,7 +135,7 @@
             // 
             this.uctrlPersonDetailsByFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.uctrlPersonDetailsByFilter.EnableEditPersonLabel = false;
-            this.uctrlPersonDetailsByFilter.EnableFilter = false;
+            this.uctrlPersonDetailsByFilter.FilterEnabled = false;
             this.uctrlPersonDetailsByFilter.Font = new System.Drawing.Font("Tahoma", 18F);
             this.uctrlPersonDetailsByFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.uctrlPersonDetailsByFilter.Location = new System.Drawing.Point(4, 6);

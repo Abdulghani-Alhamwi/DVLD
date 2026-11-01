@@ -38,7 +38,7 @@
             this.btnIssueLicense = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.pbNotes = new System.Windows.Forms.PictureBox();
-            this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrLDLApplicationInfo();
+            this.uctrlDLApplicationInfo = new DVLDPresentationLayer.ctrLocalDrivingLicenseApplicationInfo();
             ((System.ComponentModel.ISupportInitialize)(this.pbFees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNotes)).BeginInit();
             this.SuspendLayout();
@@ -237,7 +237,7 @@
 
         #endregion
 
-        private ctrLDLApplicationInfo uctrlDLApplicationInfo;
+        private ctrLocalDrivingLicenseApplicationInfo uctrlDLApplicationInfo;
         private System.Windows.Forms.Label lblFormTitle;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.TextBox txtNotes;

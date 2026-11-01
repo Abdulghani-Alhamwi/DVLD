@@ -8,7 +8,7 @@ using Utility_Library;
 
 namespace DVLDPresentationLayer.TestTypes
 {
-    public partial class frmDetainedLicensesManagement : Form
+    public partial class frmListDetainedLicenses : Form
     {
         private string _PreviousCbFilterSelectedItem;
         private string _PreviousCbIsReleasedSelectedItem;
@@ -24,7 +24,7 @@ namespace DVLDPresentationLayer.TestTypes
         private clsDataGridViewUtilityLib.enDataGridViewSortDirection _CurrentDGVColumnSortDirection;
         private clsDataGridViewUtilityLib _DgvUtilityLib;
 
-        public frmDetainedLicensesManagement()
+        public frmListDetainedLicenses()
         {
             InitializeComponent();
 
@@ -59,22 +59,6 @@ namespace DVLDPresentationLayer.TestTypes
         private void DrawComboBoxItems(object sender, DrawItemEventArgs e)
         {
             clsUtility.DrawComboBoxItems((ComboBox)sender, e);
-        }
-
-        private void txtFilter_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (_PreventedInput || _PreviousFilterText == txtFilter.Text.Trim())
-                return;
-
-            clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
-
-            if (txtFilter.Text != "")
-                dgvDetainedLicenses.DataSource = _GetFilteredData();
-
-            else
-                dgvDetainedLicenses.DataSource = clsDetainedLicense.GetDetainedLicensesInfo(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
-
-            _PreviousFilterText = txtFilter.Text.Trim();
         }
 
         private bool _IsNumericColumn(string ColumnNameToFilterBy)
@@ -141,7 +125,7 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void btnReleaseDetainedLicense_Click(object sender, EventArgs e)
         {
-            frmReleaseDetainedLicense frm = new frmReleaseDetainedLicense(dgvDetainedLicenses, _LocalLicensesViewedColumnName);
+            frmReleaseDetainedLicenseApplication frm = new frmReleaseDetainedLicenseApplication(dgvDetainedLicenses, _LocalLicensesViewedColumnName);
             frm.AfterReleasingALicense += _ReleaseDetainedLicense;
             frm.OnUpdatedDriverPersonalInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
@@ -334,7 +318,7 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void tsmishowPersonLicenseHistory_Click(object sender, EventArgs e)
         {
-            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsPerson.GetPersonID(dgvDetainedLicenses.SelectedRows[0].Cells["N.No."].Value.ToString()));
+            frmShowPersonLicenseHistory frm = new frmShowPersonLicenseHistory(clsPerson.GetPersonID(dgvDetainedLicenses.SelectedRows[0].Cells["N.No."].Value.ToString()));
             frm.OnEditedDriverPersonalInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
         }
@@ -348,7 +332,7 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void tsmiReleaseDetainedLicense_Click(object sender, EventArgs e)
         {
-            frmReleaseDetainedLicense frm = new frmReleaseDetainedLicense((int)dgvDetainedLicenses.SelectedRows[0].Cells[_LocalLicensesViewedColumnName].Value, (int)dgvDetainedLicenses.SelectedRows[0].Index);
+            frmReleaseDetainedLicenseApplication frm = new frmReleaseDetainedLicenseApplication((int)dgvDetainedLicenses.SelectedRows[0].Cells[_LocalLicensesViewedColumnName].Value, (int)dgvDetainedLicenses.SelectedRows[0].Index);
             frm.AfterReleasingSentLicense += EditRowAfterReleasingLicense;
             frm.OnUpdatedDriverPersonalInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
@@ -373,15 +357,6 @@ namespace DVLDPresentationLayer.TestTypes
             {
                 MessageBox.Show("You can select only one row!", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 cmsDetainedLicense.Close();
-            }
-            else
-            {
-                if ((bool)dgvDetainedLicenses.SelectedRows[0].Cells["Is Released"].Value == true)
-                {
-                    tsmiReleaseDetainedLicense.Enabled = false;
-                }
-                else
-                    tsmiReleaseDetainedLicense.Enabled = true;
             }
         }
 
@@ -436,6 +411,27 @@ namespace DVLDPresentationLayer.TestTypes
             }
 
             _PreventedInput = e.Handled;
+        }
+
+        private void txtFilter_TextChanged(object sender, EventArgs e)
+        {
+            if (_PreventedInput || _PreviousFilterText == txtFilter.Text.Trim())
+                return;
+
+            clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
+
+            if (txtFilter.Text != "")
+                dgvDetainedLicenses.DataSource = _GetFilteredData();
+
+            else
+                dgvDetainedLicenses.DataSource = clsDetainedLicense.GetDetainedLicensesInfo(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
+
+            _PreviousFilterText = txtFilter.Text.Trim();
+        }
+
+        private void cmsDetainedLicense_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            tsmiReleaseDetainedLicense.Enabled = !(bool)dgvDetainedLicenses.CurrentRow.Cells["Is Released"].Value;
         }
     }
 }

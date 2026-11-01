@@ -11,7 +11,7 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _PrimaryKeyViewedColumnName = "Int.License ID";
 
-        private static readonly string _DefaultExpressionToOrderBy = " ORDER BY CONVERT(DATETIME,[Expiration Date])";
+        private static readonly string _DefaultExpressionToOrderBy = " ORDER BY CONVERT(DATETIME,[Expiration Date],103)";
 
         private static readonly string _FixedQueryPart = "* FROM InternationalLicenses_View";
         

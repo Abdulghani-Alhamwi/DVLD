@@ -22,7 +22,7 @@ namespace DVLDPresentationLayer
             else
                 ImagePath = UpdatedPersonInfo.ImagePath;
 
-            if (ImagePath != "")
+            if (!string.IsNullOrEmpty(ImagePath))
                 if (File.Exists(ImagePath))
                     pbPersonalImage.Load(ImagePath);
                 else

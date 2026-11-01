@@ -238,7 +238,7 @@ namespace DVLDPresentationLayer
                 return;
             }
 
-            frmDriverLicenseHistory frm = new frmDriverLicenseHistory(clsDriver.GetDriverPersonID((int)dgvDrivers.SelectedRows[0].Cells["Driver ID"].Value), dgvDrivers.SelectedRows[0].Index);
+            frmShowPersonLicenseHistory frm = new frmShowPersonLicenseHistory((int)dgvDrivers.SelectedRows[0].Cells["Person ID"].Value, dgvDrivers.SelectedRows[0].Index);
             frm.OnEditedDriverPersonalInfo += _EditDriverPersonalInfo;
             frm.ShowDialog();
         }

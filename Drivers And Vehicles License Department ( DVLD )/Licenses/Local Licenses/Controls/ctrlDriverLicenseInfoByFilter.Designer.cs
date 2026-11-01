@@ -78,6 +78,7 @@
             this.txtLicenseID.Size = new System.Drawing.Size(373, 33);
             this.txtLicenseID.TabIndex = 0;
             this.txtLicenseID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLicenseID_KeyPress);
+            this.txtLicenseID.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtLicenseID_KeyUp);
             this.txtLicenseID.Validating += new System.ComponentModel.CancelEventHandler(this.txtLicenseID_Validating);
             // 
             // lblTitleLocalLicenseID
