@@ -71,7 +71,7 @@ namespace DVLDPresentationLayer
         {
             _DgvUtilityLib.SetPropertiesForOffsetDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvDrivers
                 , ref _LastBroughtDriverID, _CurrentDGVColumnSortDirection, ScrollCase);
-
+            
             DataTable dtDriversInfo;
             if (!ScrollCase)
             {
@@ -119,7 +119,6 @@ namespace DVLDPresentationLayer
                 dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
             _PreviousFilterText = txtFilter.Text.Trim();
-
         }
 
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)

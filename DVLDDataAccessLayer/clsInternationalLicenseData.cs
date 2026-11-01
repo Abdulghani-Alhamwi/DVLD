@@ -11,7 +11,9 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _PrimaryKeyViewedColumnName = "Int.License ID";
 
-        private static readonly string _DefaultExpressionToOrderBy = " ORDER BY CONVERT(DATETIME,[Expiration Date],103)";
+        private static readonly string _DefaultOrderByForDriverRecords = " ORDER BY CONVERT(DATETIME,[Expiration Date],103)";
+
+        private static readonly string _DefaultOrderByForAllDrivers = " ORDER BY [Is Active], CONVERT(DATETIME,[Expiration Date],103) DESC";
 
         private static readonly string _FixedQueryPart = "* FROM InternationalLicenses_View";
         
@@ -75,9 +77,6 @@ namespace DVLDDataAccessLayer
         {
             DataTable dtIntLicenses = null;
 
-            if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
-
             string query;
 
             if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
@@ -118,6 +117,24 @@ namespace DVLDDataAccessLayer
                 connection.Close();
             }
             return dtIntLicenses;
+        }
+
+        private static string _GetOrderByPartForDriverRecords(string ColumnNameToOrderBy, string SortDirection)
+        {
+            if (ColumnNameToOrderBy == null)
+                return _DefaultOrderByForDriverRecords;
+
+            else
+                return clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+        }
+
+        private static string _GetOrderByPartForAllDrivers(string ColumnNameToOrderBy, string SortDirection)
+        {
+            if (ColumnNameToOrderBy == null)
+                return _DefaultOrderByForAllDrivers;
+
+            else
+                return clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
         }
 
         private static string _GetQueryForCursorPagination(int LastBroughtIntLicenseID, string ColumnNameToOrderBy, string SortDirection,bool FilterByTheDriver = false)
@@ -163,18 +180,13 @@ namespace DVLDDataAccessLayer
                 if (FilterByTheDriver)
                 {
                     query = _QueryWithoutPagination + " WHERE [Driver ID] = @DriverID";
-
-                    if (ColumnNameToOrderBy == null)
-                        query += _DefaultExpressionToOrderBy;
-
-                    else
-                        query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                    query += _GetOrderByPartForDriverRecords(ColumnNameToOrderBy, SortDirection);
                 }
 
                 else
                 {
                     query = _QueryWithoutPagination;
-                    query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                    query += _GetOrderByPartForAllDrivers(ColumnNameToOrderBy, SortDirection);
                 }
             }
 
@@ -183,20 +195,16 @@ namespace DVLDDataAccessLayer
                 if (FilterByTheDriver)
                 {
                     query = _QueryForOffsetPagination + " WHERE [Driver ID] = @DriverID";
-
-                    if (ColumnNameToOrderBy == null)
-                        query += _DefaultExpressionToOrderBy;
-
-                    else
-                        query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                    query += _GetOrderByPartForDriverRecords(ColumnNameToOrderBy, SortDirection);
                 }
 
                 else
                 {
                     query = _QueryForOffsetPagination;
-                    query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+
+                    query += _GetOrderByPartForAllDrivers(ColumnNameToOrderBy, SortDirection);
                 }
-                    query += _OffsetPaginationQueryPart;
+                query += _OffsetPaginationQueryPart;
             }
 
             return query;
@@ -313,9 +321,6 @@ namespace DVLDDataAccessLayer
         {
             string query;
 
-            if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
-
             if (string.IsNullOrEmpty(ValueToFilterBy)
                   || (ColumnNameToFilterBy == "Is Active" && ValueToFilterBy == "All"))
             {
@@ -350,7 +355,7 @@ namespace DVLDDataAccessLayer
                 {
                     query = _QueryForOffsetPagination;
                     query += clsSqlQueryBuilder.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
-                    query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                    query += _GetOrderByPartForAllDrivers(ColumnNameToOrderBy, SortDirection);
                     query += _OffsetPaginationQueryPart;
                 }
             }

@@ -348,7 +348,7 @@ namespace Utility_Library
             ,ref int LastBroughtID, enDataGridViewSortDirection CurrentDGVColumnSortDirection, bool ScrollCase)
         {
             if (LastColumnNameDGVSortedBy == PrimaryKeyViewedColumnName)
-                LastBroughtID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(DGV, PrimaryKeyViewedColumnName, CurrentDGVColumnSortDirection);
+                LastBroughtID = GetLastBroughtValueOfPKColumn(DGV, PrimaryKeyViewedColumnName, CurrentDGVColumnSortDirection);
 
             else
             {

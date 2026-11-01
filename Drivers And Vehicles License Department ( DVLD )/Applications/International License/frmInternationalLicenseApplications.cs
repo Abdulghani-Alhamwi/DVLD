@@ -75,7 +75,7 @@ namespace DVLDPresentationLayer.Licenses
 
             if (!ScrollCase)
                 dtFilteredData = clsInternationalLicense.GetFilteredData(clsGlobalSettings.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbIsActive.SelectedItem.ToString(),
-                   _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), null);
+                   _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection),_LastBroughtIntLicenseID,_DgvUtilityLib.NumberOfRowsToOffset, null);
 
             else
                 dtFilteredData = clsInternationalLicense.GetFilteredData(clsGlobalSettings.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), cbIsActive.SelectedItem.ToString(),
@@ -86,8 +86,8 @@ namespace DVLDPresentationLayer.Licenses
 
         private DataTable _GetFilteredData(bool ScrollCase = false)
         {
-            _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvIntLicenseApplications
-                , ref _LastBroughtIntLicenseID, _CurrentDGVColumnSortDirection, ScrollCase);
+            _DgvUtilityLib.SetPropertiesForOffsetDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvIntLicenseApplications
+            , ref _LastBroughtIntLicenseID, _CurrentDGVColumnSortDirection, ScrollCase);
 
             DataTable dtFilteredInfo;
             if (!ScrollCase)
@@ -95,7 +95,7 @@ namespace DVLDPresentationLayer.Licenses
                 if (cbFilterBy.SelectedItem.ToString() != "Is Active" && cbFilterBy.SelectedItem.ToString() != "None") 
                 {
                     dtFilteredInfo = clsInternationalLicense.GetFilteredData(clsGlobalSettings.WantedNumOfRowsFromDB, cbFilterBy.SelectedItem.ToString(), txtFilter.Text.Trim(),
-                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), null);
+                        _LastColumnNameDgvSortedBy, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection), _LastBroughtIntLicenseID, _DgvUtilityLib.NumberOfRowsToOffset, null);
                 }
 
                 else if (cbFilterBy.SelectedItem.ToString() == "Is Active")
@@ -143,7 +143,6 @@ namespace DVLDPresentationLayer.Licenses
 
             else
                 dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
-
 
             _PreviousFilterText = txtFilter.Text.Trim();
         }
@@ -214,7 +213,6 @@ namespace DVLDPresentationLayer.Licenses
 
         private void _AppendPartOfRemainingData()
         {
-     
             DataRow[] NewRows;
 
             if (cbFilterBy.SelectedItem.ToString() != "None")
@@ -228,8 +226,8 @@ namespace DVLDPresentationLayer.Licenses
 
             else
             {
-                _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvIntLicenseApplications
-                    , ref _LastBroughtIntLicenseID, _CurrentDGVColumnSortDirection, true);
+                _DgvUtilityLib.SetPropertiesForOffsetDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvIntLicenseApplications
+                , ref _LastBroughtIntLicenseID, _CurrentDGVColumnSortDirection, true);
 
                 DataTable dtInternationalLicenses = clsInternationalLicense.GetAllInternationalLicensesData(clsGlobalSettings.WantedNumOfRowsFromDB, _LastBroughtIntLicenseID
                     , _LastColumnNameDgvSortedBy, _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
@@ -344,8 +342,8 @@ namespace DVLDPresentationLayer.Licenses
                 clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
                 _DgvUtilityLib.NumberOfRowsToOffset = -1;
 
-                _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvIntLicenseApplications
-                    , ref _LastBroughtIntLicenseID, _CurrentDGVColumnSortDirection, false);
+                _DgvUtilityLib.SetPropertiesForOffsetDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvIntLicenseApplications
+                , ref _LastBroughtIntLicenseID, _CurrentDGVColumnSortDirection, false);
 
                 dgvIntLicenseApplications.DataSource = _GetFilteredDataOnIsActive(false);
                 _PreviousCbIsActiveSelectedItem = cbIsActive.SelectedItem.ToString();

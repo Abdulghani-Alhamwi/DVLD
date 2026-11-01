@@ -105,13 +105,8 @@ namespace DVLDBusinessLayer
                 return null;
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection, char? WildChar = null)
-        {
-            return clsInternationalLicenseData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, -1, -1, WildChar);
-        }
-
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string ColumnNameToOrderBy, string SortDirection,
-            int LastBroughIntLicenseID, int NumberOfRowsToOffset = -1, char? WildChar = null)
+            int LastBroughIntLicenseID, int NumberOfRowsToOffset, char? WildChar = null)
         {
             return clsInternationalLicenseData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, ColumnNameToOrderBy, SortDirection, LastBroughIntLicenseID, NumberOfRowsToOffset, WildChar);
         }
