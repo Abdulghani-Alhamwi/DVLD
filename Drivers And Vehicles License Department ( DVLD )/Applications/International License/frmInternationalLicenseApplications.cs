@@ -35,6 +35,7 @@ namespace DVLDPresentationLayer.Licenses
 
         private void frmInternationalLicensesManagement_Load(object sender, EventArgs e)
         {
+            dgvIntLicenseApplications.AllowUserToOrderColumns = false;
             dgvIntLicenseApplications.DataSource = clsInternationalLicense.GetAllInternationalLicensesData(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
             if (dgvIntLicenseApplications.DataSource != null)

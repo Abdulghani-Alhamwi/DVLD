@@ -64,6 +64,7 @@ namespace DVLDPresentationLayer
 
         private void frmUsersManagement_Load(object sender, EventArgs e)
         {
+            dgvUsers.AllowUserToOrderColumns = false;
             dgvUsers.DataSource = clsUser.GetUsersInfo(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
             clsDataGridViewUtilityLib.DecryptDGVColumnValues(clsGlobalSettings.EncryptionKey, _dUserIDsWithIVsPairs, dgvUsers, _PrimaryKeyViewedColumnName, _UserNameColumnName);
 

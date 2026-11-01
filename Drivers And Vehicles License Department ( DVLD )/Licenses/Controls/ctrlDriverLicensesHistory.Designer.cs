@@ -44,17 +44,17 @@
             this.lblIntRecordsNumTitle = new System.Windows.Forms.Label();
             this.lblIntLicenseHistoryTitle = new System.Windows.Forms.Label();
             this.dgvInternationalLicenses = new System.Windows.Forms.DataGridView();
-            this.gbDriverLicenses = new System.Windows.Forms.GroupBox();
             this.cmsInternationalLicenseHistory = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiShowInetrnationalLicnseInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.gbDriverLicenses = new System.Windows.Forms.GroupBox();
             this.tcLicenseHistory.SuspendLayout();
             this.tpLocalLicenses.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLocalLicenses)).BeginInit();
             this.cmsLocalLicenseHistory.SuspendLayout();
             this.tpInternationalLicenses.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInternationalLicenses)).BeginInit();
-            this.gbDriverLicenses.SuspendLayout();
             this.cmsInternationalLicenseHistory.SuspendLayout();
+            this.gbDriverLicenses.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcLicenseHistory
@@ -244,16 +244,6 @@
             this.dgvInternationalLicenses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.DataGridView_Scroll);
             this.dgvInternationalLicenses.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridView_KeyDown);
             // 
-            // gbDriverLicenses
-            // 
-            this.gbDriverLicenses.Controls.Add(this.tcLicenseHistory);
-            this.gbDriverLicenses.Location = new System.Drawing.Point(7, -1);
-            this.gbDriverLicenses.Name = "gbDriverLicenses";
-            this.gbDriverLicenses.Size = new System.Drawing.Size(1439, 411);
-            this.gbDriverLicenses.TabIndex = 1;
-            this.gbDriverLicenses.TabStop = false;
-            this.gbDriverLicenses.Text = "Driver Licenses";
-            // 
             // cmsInternationalLicenseHistory
             // 
             this.cmsInternationalLicenseHistory.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -275,6 +265,16 @@
             this.tsmiShowInetrnationalLicnseInfo.Text = "Show License Info";
             this.tsmiShowInetrnationalLicnseInfo.Click += new System.EventHandler(this.tsmiShowInetrnationalLicnseInfo_Click);
             // 
+            // gbDriverLicenses
+            // 
+            this.gbDriverLicenses.Controls.Add(this.tcLicenseHistory);
+            this.gbDriverLicenses.Location = new System.Drawing.Point(7, -1);
+            this.gbDriverLicenses.Name = "gbDriverLicenses";
+            this.gbDriverLicenses.Size = new System.Drawing.Size(1439, 411);
+            this.gbDriverLicenses.TabIndex = 1;
+            this.gbDriverLicenses.TabStop = false;
+            this.gbDriverLicenses.Text = "Driver Licenses";
+            // 
             // ctrlDriverLicensesHistory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -286,6 +286,7 @@
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.Name = "ctrlDriverLicensesHistory";
             this.Size = new System.Drawing.Size(1458, 413);
+            this.Load += new System.EventHandler(this.ctrlDriverLicensesHistory_Load);
             this.tcLicenseHistory.ResumeLayout(false);
             this.tpLocalLicenses.ResumeLayout(false);
             this.tpLocalLicenses.PerformLayout();
@@ -294,8 +295,8 @@
             this.tpInternationalLicenses.ResumeLayout(false);
             this.tpInternationalLicenses.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInternationalLicenses)).EndInit();
-            this.gbDriverLicenses.ResumeLayout(false);
             this.cmsInternationalLicenseHistory.ResumeLayout(false);
+            this.gbDriverLicenses.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

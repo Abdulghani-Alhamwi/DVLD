@@ -56,6 +56,7 @@ namespace DVLDPresentationLayer
 
         private void frmLocalDrivingLicenseApplications_Load(object sender, EventArgs e)
         {
+            dgvLDLApplications.AllowUserToOrderColumns = false;
             dgvLDLApplications.DataSource = clsLocalDrivingLicenseApplication.GetLocalDrivingLicenseApplications(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
             if(dgvLDLApplications.DataSource != null)

@@ -35,6 +35,7 @@ namespace DVLDPresentationLayer
 
         private void frmDriversManagements_Load(object sender, EventArgs e)
         {
+            dgvDrivers.AllowUserToOrderColumns = false;
             dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
             if (dgvDrivers.DataSource != null)

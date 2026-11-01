@@ -113,6 +113,7 @@ namespace DVLDPresentationLayer
 
         private void frmTestAppointments_Load(object sender, EventArgs e)
         {
+            dgvTestAppointments.AllowUserToOrderColumns = false;
             dgvTestAppointments.DataSource = clsTestAppointment.GetTestAppointments(clsGlobalSettings.WantedNumOfRowsFromDB, (byte)_TestTypeID, _LocalDrivingLicenseApplicationId);
             lblRecordsNumber.Text = clsTestAppointment.GetTotalAppointmentsCount(_LocalDrivingLicenseApplicationId, (byte)_TestTypeID).ToString();
         }

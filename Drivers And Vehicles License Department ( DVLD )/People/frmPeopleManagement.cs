@@ -55,6 +55,7 @@ namespace DVLDPresentationLayer
 
         private void frmPeopleManagement_Load(object sender, EventArgs e)
         {
+            dgvPeople.AllowUserToOrderColumns = false;
             dgvPeople.DataSource = clsPerson.GetPeopleInfo(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
             
             if (dgvPeople.DataSource != null)

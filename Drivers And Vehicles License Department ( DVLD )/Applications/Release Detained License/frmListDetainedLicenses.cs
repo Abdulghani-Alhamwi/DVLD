@@ -48,6 +48,7 @@ namespace DVLDPresentationLayer.TestTypes
 
         private void frmDetainedLicensesManagement_Load(object sender, EventArgs e)
         {
+            dgvDetainedLicenses.AllowUserToOrderColumns = false;
             dgvDetainedLicenses.DataSource = clsDetainedLicense.GetDetainedLicensesInfo(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
             if (dgvDetainedLicenses.DataSource != null)

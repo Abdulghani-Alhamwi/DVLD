@@ -236,5 +236,11 @@ namespace DVLDPresentationLayer
             dgvLocalLicenses.Rows.Clear();
             dgvInternationalLicenses.Rows.Clear();
         }
+
+        private void ctrlDriverLicensesHistory_Load(object sender, EventArgs e)
+        {
+            dgvLocalLicenses.AllowUserToOrderColumns = false;
+            dgvInternationalLicenses.AllowUserToOrderColumns = false;
+        }
     }
 }
