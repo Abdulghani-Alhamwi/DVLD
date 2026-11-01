@@ -76,6 +76,7 @@ namespace DVLDPresentationLayer
                 return;
 
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
+            _DgvUtilityLib.NumberOfRowsToOffset = -1;
 
             if (txtFilter.Text != "")
                 dgvLDLApplications.DataSource = _GetFilteredData();
@@ -256,7 +257,10 @@ namespace DVLDPresentationLayer
 
         private DataTable _GetFilteredData(bool ScrollCase = false)
         {
-            DataTable dtLDLApplicationsInfo;
+            _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvLDLApplications
+                , ref _LastBroughtLDLAppID, _CurrentDGVColumnSortDirection, ScrollCase);
+
+                DataTable dtLDLApplicationsInfo;
             if (!ScrollCase)
             {
                 if (cbFilterBy.SelectedItem.ToString() == "L.D.L.AppID")
@@ -290,11 +294,6 @@ namespace DVLDPresentationLayer
 
         private void _AppendPartOfRemainingData()
         {
-            if (_LastColumnNameDgvSortedBy == null || _LastColumnNameDgvSortedBy == _PrimaryKeyViewedColumnName)
-                _LastBroughtLDLAppID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvLDLApplications, _PrimaryKeyViewedColumnName, _CurrentDGVColumnSortDirection);
-
-            _DgvUtilityLib.SetNumberOfRowsToOffset(_LastColumnNameDgvSortedBy);
-
             DataRow[] NewRows = null;
 
             if (cbFilterBy.SelectedItem.ToString() != "None")
@@ -308,6 +307,9 @@ namespace DVLDPresentationLayer
 
             else
             {
+                _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvLDLApplications
+                    , ref _LastBroughtLDLAppID, _CurrentDGVColumnSortDirection, true);
+
                 DataTable dtLDLApplications = clsLocalDrivingLicenseApplication.GetLocalDrivingLicenseApplications(clsGlobalSettings.WantedNumOfRowsFromDB, _LastBroughtLDLAppID, _LastColumnNameDgvSortedBy
                     , _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
@@ -327,6 +329,10 @@ namespace DVLDPresentationLayer
             if (cbFilterBy.SelectedItem.ToString() == "Status")
             {
                 clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
+                _DgvUtilityLib.NumberOfRowsToOffset = -1;
+
+                _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvLDLApplications
+                    , ref _LastBroughtLDLAppID, _CurrentDGVColumnSortDirection, false);
 
                 dgvLDLApplications.DataSource = _GetFilteredDataForStatus(false);
                 _PreviousCbStatusSelectedItem = cbStatus.SelectedItem.ToString();

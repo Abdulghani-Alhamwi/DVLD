@@ -79,18 +79,14 @@ namespace DVLDPresentationLayer
         {
             if (DGV == dgvLocalLicenses)
             {
-                if (_LastColumnDGVLocalLicSortedBy == null || _LastColumnDGVLocalLicSortedBy == _LocalLicensesPKViewedColumnName)
-                    _LastBroughtLocalLicenseID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvLocalLicenses, _LocalLicensesPKViewedColumnName, _CurrentLLicDGVColSortDirection);
-
-                _DgvUtilityLib.SetNumberOfRowsToOffset(_LastColumnDGVLocalLicSortedBy,true);
+                _DgvUtilityLib.SetPropertiesForOffsetDefaultPagination(_LastColumnDGVLocalLicSortedBy, _LocalLicensesPKViewedColumnName, dgvLocalLicenses
+                    , ref _LastBroughtLocalLicenseID, _CurrentLLicDGVColSortDirection, true);          
             }
 
             else
             {
-                if (_LastColumnDGVIntLicSortedBy == null || _LastColumnDGVIntLicSortedBy == _IntLicensesPKViewedColumnName)
-                    _LastBroughtIntLicenseID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvInternationalLicenses, _IntLicensesPKViewedColumnName, _CurrentIntLicDGVColSortDirection);
-
-                _DgvUtilityLib.SetNumberOfRowsToOffset(_LastColumnDGVIntLicSortedBy,true);
+                _DgvUtilityLib.SetPropertiesForOffsetDefaultPagination(_LastColumnDGVIntLicSortedBy, _IntLicensesPKViewedColumnName, dgvInternationalLicenses
+                    , ref _LastBroughtIntLicenseID, _CurrentIntLicDGVColSortDirection, true);
             }
         }
 

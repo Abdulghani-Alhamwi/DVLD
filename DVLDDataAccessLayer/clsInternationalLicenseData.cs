@@ -163,7 +163,12 @@ namespace DVLDDataAccessLayer
                 if (FilterByTheDriver)
                 {
                     query = _QueryWithoutPagination + " WHERE [Driver ID] = @DriverID";
-                    query += _DefaultExpressionToOrderBy;
+
+                    if (ColumnNameToOrderBy == null)
+                        query += _DefaultExpressionToOrderBy;
+
+                    else
+                        query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                 }
 
                 else
@@ -178,7 +183,12 @@ namespace DVLDDataAccessLayer
                 if (FilterByTheDriver)
                 {
                     query = _QueryForOffsetPagination + " WHERE [Driver ID] = @DriverID";
-                    query += _DefaultExpressionToOrderBy;
+
+                    if (ColumnNameToOrderBy == null)
+                        query += _DefaultExpressionToOrderBy;
+
+                    else
+                        query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
                 }
 
                 else

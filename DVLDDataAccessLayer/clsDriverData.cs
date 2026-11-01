@@ -357,7 +357,7 @@ namespace DVLDDataAccessLayer
                 reader.Close();
             }
 
-            catch (Exception e) { Console.Write(e.Message); }
+            catch { }
 
             finally
             {

@@ -11,6 +11,8 @@ namespace DVLDDataAccessLayer
 
         private static readonly string _PrimaryKeyViewedColumnName = "D.ID";
 
+        private static readonly string _DefaultExpressionToOrderBy = " ORDER BY [Is Released], [D.ID]";
+
         private static readonly string _FixedQueryPart = "* FROM DetainedLicenses_View";
         
         private static readonly string _QueryWithoutPagination = "SELECT TOP (@WantedNumOfRecords) " + _FixedQueryPart;
@@ -24,9 +26,6 @@ namespace DVLDDataAccessLayer
         {
             DataTable dtDetainedLicenses = null;
 
-            if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
-
             string query;
 
             if (ColumnNameToOrderBy == _PrimaryKeyViewedColumnName)
@@ -38,7 +37,6 @@ namespace DVLDDataAccessLayer
             {
                 query = _GetQueryForOffsetPagination(NumberOfRowsToOffset, ColumnNameToOrderBy, SortDirection);
             }
-
 
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
@@ -89,6 +87,15 @@ namespace DVLDDataAccessLayer
             return query;
         }
 
+        private static string _GetOrderByQueryPart(string ColumnNameToOrderBy,string SortDirection)
+        {
+            if (ColumnNameToOrderBy == null)
+                return _DefaultExpressionToOrderBy;
+
+            else
+                return clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+        }
+
         private static string _GetQueryForOffsetPagination(int NumberOfRowsToOffset, string ColumnNameToOrderBy, string SortDirection)
         {
             string query;
@@ -96,13 +103,13 @@ namespace DVLDDataAccessLayer
             if (NumberOfRowsToOffset == -1)
             {
                 query = _QueryWithoutPagination;
-                query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+                query += _GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             else
             {
                 query = _QueryForOffsetPagination;
-                query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+                query += _GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
                 query += _OffsetPaginationQueryPart;
             }
 
@@ -323,9 +330,6 @@ namespace DVLDDataAccessLayer
         {
             string query;
 
-            if (ColumnNameToOrderBy == null)
-                ColumnNameToOrderBy = _PrimaryKeyViewedColumnName;
-
             if (string.IsNullOrEmpty(ValueToFilterBy)
                 || (ColumnNameToFilterBy == "Is Released" && ValueToFilterBy == "All"))
             {
@@ -359,7 +363,9 @@ namespace DVLDDataAccessLayer
                 {
                     query = _QueryForOffsetPagination;
                     query += clsSqlQueryBuilder.GetFilterQueryPart_ValueCondition(ColumnNameToFilterBy, WildChar, true);
-                    query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection, true);
+
+                    query += _GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+
                     query += _OffsetPaginationQueryPart;
                 }
             }

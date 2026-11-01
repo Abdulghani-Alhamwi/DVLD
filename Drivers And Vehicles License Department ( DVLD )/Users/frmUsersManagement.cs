@@ -151,6 +151,7 @@ namespace DVLDPresentationLayer
                 return;
 
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
+            _DgvUtilityLib.NumberOfRowsToOffset = -1;
 
             if (txtFilter.Text != "")
             {
@@ -344,6 +345,9 @@ namespace DVLDPresentationLayer
 
         private DataTable _GetFilteredData(bool ScrollCase = false)
         {
+            _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvUsers
+                , ref _LastBroughtUserID, _CurrentDGVColumnSortDirection, ScrollCase);
+
             DataTable dtUsersInfo;
             
             if (!ScrollCase)
@@ -393,11 +397,6 @@ namespace DVLDPresentationLayer
 
         private void _AppendPartOfRemainingData()
         {
-            if (_LastColumnNameDgvSortedBy == null || _LastColumnNameDgvSortedBy == _PrimaryKeyViewedColumnName)
-                _LastBroughtUserID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvUsers, _PrimaryKeyViewedColumnName, _CurrentDGVColumnSortDirection);
-
-            _DgvUtilityLib.SetNumberOfRowsToOffset(_LastColumnNameDgvSortedBy);
-
             DataRow[] NewRows;
 
             if (cbFilterBy.SelectedItem.ToString() != "None")
@@ -412,6 +411,9 @@ namespace DVLDPresentationLayer
 
             else
             {
+                _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvUsers
+                    , ref _LastBroughtUserID, _CurrentDGVColumnSortDirection, true);
+
                 DataTable dtUsersInfo = clsUser.GetUsersInfo(clsGlobalSettings.WantedNumOfRowsFromDB, _LastBroughtUserID, _LastColumnNameDgvSortedBy
                     , _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
@@ -447,6 +449,10 @@ namespace DVLDPresentationLayer
             if (cbFilterBy.SelectedItem.ToString() == "Is Active")
             {
                 clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
+                _DgvUtilityLib.NumberOfRowsToOffset = -1;
+                _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvUsers
+                    , ref _LastBroughtUserID, _CurrentDGVColumnSortDirection, false);
+
                 dgvUsers.DataSource = _GetFilteredDataOnIsActive();
 
                 clsDataGridViewUtilityLib.DecryptDGVColumnValues(clsGlobalSettings.EncryptionKey, _dUserIDsWithIVsPairs, dgvUsers, _PrimaryKeyViewedColumnName, _UserNameColumnName);

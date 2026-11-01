@@ -117,6 +117,9 @@ namespace DVLDPresentationLayer
 
         private DataTable _GetFilteredData(bool ScrollCase = false)
         {
+            _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvPeople
+                  , ref _LastBroughtPersonID, _CurrentDGVColumnSortDirection, ScrollCase);
+
             DataTable dtPeopleInfo;
 
             if (!ScrollCase)
@@ -156,6 +159,7 @@ namespace DVLDPresentationLayer
                 return;
 
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
+            _DgvUtilityLib.NumberOfRowsToOffset = -1;
 
             if (txtFilter.Text != "")
                 dgvPeople.DataSource = _GetFilteredData();
@@ -295,12 +299,7 @@ namespace DVLDPresentationLayer
         }
 
         private void _AppendPartOfRemainingData()
-        { 
-            if(_LastColumnNameDgvSortedBy == null || _LastColumnNameDgvSortedBy == _PrimaryKeyViewedColumnName)
-            _LastBroughtPersonID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvPeople, _PrimaryKeyViewedColumnName, _CurrentDGVColumnSortDirection);
-
-            _DgvUtilityLib.SetNumberOfRowsToOffset(_LastColumnNameDgvSortedBy);
-
+        {
             DataRow[] NewRows;
             if (cbFilterBy.SelectedItem.ToString() != "None")
             {
@@ -313,6 +312,9 @@ namespace DVLDPresentationLayer
 
             else
             {
+                _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvPeople
+                  , ref _LastBroughtPersonID, _CurrentDGVColumnSortDirection, true);
+
                 DataTable dtPeopleInfo = clsPerson.GetPeopleInfo(clsGlobalSettings.WantedNumOfRowsFromDB, _LastBroughtPersonID, _LastColumnNameDgvSortedBy
                     , _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 

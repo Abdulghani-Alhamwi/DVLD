@@ -146,11 +146,6 @@ namespace DVLDBusinessLayer
             return clsDetainedLicenseData.GetTotalCount();
         }
 
-        public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string LastColumnNameDataOrderedBy, string SortDirection, char? WildChar = null)
-        {
-            return clsDetainedLicenseData.GetFilteredData(WantedNumOfRecords, ColumnNameToFilter, ValueToFilterBy, LastColumnNameDataOrderedBy, SortDirection, -1,-1, WildChar);
-        }
-
         public static DataTable GetFilteredData(byte WantedNumOfRecords, string ColumnNameToFilter, string ValueToFilterBy, string LastColumnNameDataOrderedBy, string SortDirection,
             int LastBroughtDetainID, int NumberOfRowsToOffset = -1, char? WildChar = null)
         {

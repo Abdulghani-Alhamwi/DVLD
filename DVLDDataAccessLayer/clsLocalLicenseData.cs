@@ -99,13 +99,24 @@ namespace DVLDDataAccessLayer
             if (NumberOfRowsToOffset == -1)
             {
                 query = _QueryWithoutPagination;
-                query += _DefaultExpressionToOrderBy;
+
+                if (ColumnNameToOrderBy == null)
+                    query += _DefaultExpressionToOrderBy;
+
+                else
+                    query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
             }
 
             else
             {
                 query = _QueryForOffsetPagination;
-                query += _DefaultExpressionToOrderBy;
+
+                if (ColumnNameToOrderBy == null)
+                    query += _DefaultExpressionToOrderBy;
+
+                else
+                    query += clsSqlQueryBuilder.GetOrderByQueryPart(ColumnNameToOrderBy, SortDirection);
+
                 query += _OffsetPaginationQueryPart;
             }
 
@@ -146,7 +157,7 @@ namespace DVLDDataAccessLayer
                     return Convert.ToInt32(result);
             }
 
-            catch (Exception ex){ Console.Write(ex.Message); }
+            catch { }
 
             finally
             {

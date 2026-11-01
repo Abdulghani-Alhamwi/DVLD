@@ -86,6 +86,9 @@ namespace DVLDPresentationLayer.Licenses
 
         private DataTable _GetFilteredData(bool ScrollCase = false)
         {
+            _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvIntLicenseApplications
+                , ref _LastBroughtIntLicenseID, _CurrentDGVColumnSortDirection, ScrollCase);
+
             DataTable dtFilteredInfo;
             if (!ScrollCase)
             {
@@ -133,6 +136,7 @@ namespace DVLDPresentationLayer.Licenses
                 return;
 
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
+            _DgvUtilityLib.NumberOfRowsToOffset = -1;
 
             if (txtFilter.Text != "")
                 dgvIntLicenseApplications.DataSource = _GetFilteredData();
@@ -210,11 +214,7 @@ namespace DVLDPresentationLayer.Licenses
 
         private void _AppendPartOfRemainingData()
         {
-            if (_LastColumnNameDgvSortedBy == null || _LastColumnNameDgvSortedBy == _PrimaryKeyViewedColumnName)
-                _LastBroughtIntLicenseID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvIntLicenseApplications, _PrimaryKeyViewedColumnName, _CurrentDGVColumnSortDirection);
-
-            _DgvUtilityLib.SetNumberOfRowsToOffset(_LastColumnNameDgvSortedBy);
-
+     
             DataRow[] NewRows;
 
             if (cbFilterBy.SelectedItem.ToString() != "None")
@@ -228,6 +228,9 @@ namespace DVLDPresentationLayer.Licenses
 
             else
             {
+                _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvIntLicenseApplications
+                    , ref _LastBroughtIntLicenseID, _CurrentDGVColumnSortDirection, true);
+
                 DataTable dtInternationalLicenses = clsInternationalLicense.GetAllInternationalLicensesData(clsGlobalSettings.WantedNumOfRowsFromDB, _LastBroughtIntLicenseID
                     , _LastColumnNameDgvSortedBy, _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
@@ -339,6 +342,10 @@ namespace DVLDPresentationLayer.Licenses
             if (cbFilterBy.SelectedItem.ToString() == "Is Active")
             {
                 clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection);
+                _DgvUtilityLib.NumberOfRowsToOffset = -1;
+
+                _DgvUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvIntLicenseApplications
+                    , ref _LastBroughtIntLicenseID, _CurrentDGVColumnSortDirection, false);
 
                 dgvIntLicenseApplications.DataSource = _GetFilteredDataOnIsActive(false);
                 _PreviousCbIsActiveSelectedItem = cbIsActive.SelectedItem.ToString();

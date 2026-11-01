@@ -120,10 +120,8 @@ namespace DVLDPresentationLayer
 
         private void _AppendPartOfRemainingData()
         {
-            if (_LastColumnNameDgvSortedBy == null || _LastColumnNameDgvSortedBy == _PrimaryKeyViewedColumnName)
-                _LastBroughtAppointmentID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvTestAppointments, _PrimaryKeyViewedColumnName, _CurrentDGVColumnSortDirection);
-
-            _DGVUtilityLib.SetNumberOfRowsToOffset(_LastColumnNameDgvSortedBy);
+            _DGVUtilityLib.SetPropertiesForCursorDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvTestAppointments
+                , ref _LastBroughtAppointmentID, _CurrentDGVColumnSortDirection, true);
 
             DataTable dtTestAppointments = clsTestAppointment.GetTestAppointments(clsGlobalSettings.WantedNumOfRowsFromDB, (byte)_TestTypeID, _LocalDrivingLicenseApplicationId, _LastBroughtAppointmentID
                 , _LastColumnNameDgvSortedBy, _DGVUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));

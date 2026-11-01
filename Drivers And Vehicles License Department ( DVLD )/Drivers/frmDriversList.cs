@@ -69,6 +69,9 @@ namespace DVLDPresentationLayer
 
         private DataTable _GetFilteredData(bool ScrollCase = false)
         {
+            _DgvUtilityLib.SetPropertiesForOffsetDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvDrivers
+                , ref _LastBroughtDriverID, _CurrentDGVColumnSortDirection, ScrollCase);
+
             DataTable dtDriversInfo;
             if (!ScrollCase)
             {
@@ -107,9 +110,8 @@ namespace DVLDPresentationLayer
                 return;
 
             clsDataGridViewUtilityLib.ResetSortPropertiesToDefault(ref _LastColumnNameDgvSortedBy, ref _CurrentDGVColumnSortDirection,clsDataGridViewUtilityLib.enDataGridViewSortDirection.Ascending);
+            _DgvUtilityLib.NumberOfRowsToOffset = -1;
 
-            _DgvUtilityLib.NumberOfRowsToOffset = 0;
-            
             if (txtFilter.Text != "")
                 dgvDrivers.DataSource = _GetFilteredData();
 
@@ -117,6 +119,7 @@ namespace DVLDPresentationLayer
                 dgvDrivers.DataSource = clsDriver.GetDriversInfo(clsGlobalSettings.WantedNumOfRowsFromDB, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 
             _PreviousFilterText = txtFilter.Text.Trim();
+
         }
 
         private void cbFilterBy_DropDownClosed(object sender, EventArgs e)
@@ -139,11 +142,6 @@ namespace DVLDPresentationLayer
 
         private void _AppendPartOfRemainingData()
         {
-            if (_LastColumnNameDgvSortedBy == null || _LastColumnNameDgvSortedBy == _PrimaryKeyViewedColumnName)
-                _LastBroughtDriverID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(dgvDrivers, _PrimaryKeyViewedColumnName, _CurrentDGVColumnSortDirection);
-
-            _DgvUtilityLib.SetNumberOfRowsToOffset(_LastColumnNameDgvSortedBy, true);
-
             DataRow[] NewRows;
             if (cbFilterBy.SelectedItem.ToString() != "None")
             {
@@ -156,6 +154,9 @@ namespace DVLDPresentationLayer
 
             else
             {
+                _DgvUtilityLib.SetPropertiesForOffsetDefaultPagination(_LastColumnNameDgvSortedBy, _PrimaryKeyViewedColumnName, dgvDrivers
+                , ref _LastBroughtDriverID, _CurrentDGVColumnSortDirection, true);
+
                 DataTable dtDriversInfo = clsDriver.GetDriversInfo(clsGlobalSettings.WantedNumOfRowsFromDB, _LastBroughtDriverID, _LastColumnNameDgvSortedBy
                     , _DgvUtilityLib.NumberOfRowsToOffset, clsDataGridViewUtilityLib.GetDataGridViewSortDirection(_CurrentDGVColumnSortDirection));
 

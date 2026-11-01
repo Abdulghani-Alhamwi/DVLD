@@ -13,9 +13,6 @@ namespace Utility_Library
         private int _NumberOfDGVAddedRows;
         public int NumberOfRowsToOffset { get; set; }
 
-        private bool _IsFirstTimeOffset = true;
-        private bool _IsFirstTimeOffsetForNoSortCase = true;
-
         private string _LastDGVOrderedColumn;
 
         public static void FilterDataView(DataView dataview, string ColumnName, string FilterOnValue, KeyEventArgs e)
@@ -334,35 +331,45 @@ namespace Utility_Library
         /// <summary>
         /// Set number of offset rows for offset pagination and the set is based on the sended columns , the primary key column is not used for offset pagination but for cusor pagination therefore you must handle cursor pagination for the primary key column and offset pagination for other columns therefore when ordering with other column than the primary key column the order be correct instead of using the unique identifier which can lead to rbing the last id and first id and by that the condition to bring more records using cursor pagination won't work correctly..
         /// </summary
-        public void SetNumberOfRowsToOffset(string LastColumnNameDGVSortedBy,bool EnableOffsetIncrementForUnSortedCase = false)
+        public void SetNumberOfRowsToOffset(string LastColumnNameDGVSortedBy,bool ScrollCase)
         {
-            if (LastColumnNameDGVSortedBy == null)
-                _IsFirstTimeOffset = false;
-
-            else if (_LastDGVOrderedColumn != LastColumnNameDGVSortedBy)
-            {
-                _IsFirstTimeOffset = true;
-            }
-
-            if (_IsFirstTimeOffset)
-            {
+            if (!ScrollCase || _LastDGVOrderedColumn != LastColumnNameDGVSortedBy)
                 NumberOfRowsToOffset = 0;
+            else
                 NumberOfRowsToOffset += 10;
-                _IsFirstTimeOffset = false;
-            }
-
-            if (EnableOffsetIncrementForUnSortedCase)
-            {
-                if (_IsFirstTimeOffsetForNoSortCase)
-                    NumberOfRowsToOffset = 0;
-
-                else
-                    NumberOfRowsToOffset += 10;
-
-                _IsFirstTimeOffsetForNoSortCase = false;
-            }
 
             _LastDGVOrderedColumn = LastColumnNameDGVSortedBy;
+        }
+
+        /// <summary>
+        /// Set properties to bring data when the default pagination is offset and to bring data using cursor or offset pagination in correct way.
+        /// </summary
+        public void SetPropertiesForOffsetDefaultPagination(string LastColumnNameDGVSortedBy, string PrimaryKeyViewedColumnName, DataGridView DGV
+            ,ref int LastBroughtID, enDataGridViewSortDirection CurrentDGVColumnSortDirection, bool ScrollCase)
+        {
+            if (LastColumnNameDGVSortedBy == PrimaryKeyViewedColumnName)
+                LastBroughtID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(DGV, PrimaryKeyViewedColumnName, CurrentDGVColumnSortDirection);
+
+            else
+            {
+                if (LastColumnNameDGVSortedBy == null)
+                    SetNumberOfRowsToOffset("", ScrollCase);
+                else
+                    SetNumberOfRowsToOffset(LastColumnNameDGVSortedBy, ScrollCase);
+            }
+        }
+
+        /// <summary>
+        /// Set properties to bring data when the default pagination is cursor and to bring data using cursor or offset pagination in correct way.
+        /// </summary
+        public void SetPropertiesForCursorDefaultPagination(string LastColumnNameDGVSortedBy, string PrimaryKeyViewedColumnName, DataGridView DGV
+            , ref int LastBroughtID, enDataGridViewSortDirection CurrentDGVColumnSortDirection, bool ScrollCase)
+        {
+                if (LastColumnNameDGVSortedBy == null || LastColumnNameDGVSortedBy == PrimaryKeyViewedColumnName)
+                LastBroughtID = clsDataGridViewUtilityLib.GetLastBroughtValueOfPKColumn(DGV, PrimaryKeyViewedColumnName, CurrentDGVColumnSortDirection);
+
+            else if (LastColumnNameDGVSortedBy != null && LastColumnNameDGVSortedBy != PrimaryKeyViewedColumnName)
+                SetNumberOfRowsToOffset(LastColumnNameDGVSortedBy,ScrollCase);
         }
 
         /// <summary>
@@ -371,6 +378,8 @@ namespace Utility_Library
         private static int _GetLowestBroughtValueOfPKColumn(DataGridView dgv, string dgvPrimaryKeyColumnName)
         {
             int ID = -1;
+
+            if (dgv.DataSource != null)
             foreach (DataRow Row in ((DataTable)dgv.DataSource).Rows)
             {
                 if (ID == -1)
@@ -379,6 +388,7 @@ namespace Utility_Library
                 if ((int)Row[dgvPrimaryKeyColumnName] < ID)
                     ID = (int)Row[dgvPrimaryKeyColumnName];
             }
+
             return ID;
         }
 
@@ -417,7 +427,7 @@ namespace Utility_Library
         public static void ResetSortPropertiesToDefault(ref string LastColumnNameDGVOrderedBy,ref enDataGridViewSortDirection SortDirection, enDataGridViewSortDirection DefaultSortDirection = enDataGridViewSortDirection.Descending)
         {
             LastColumnNameDGVOrderedBy = null;
-            SortDirection = DefaultSortDirection;
+            SortDirection = DefaultSortDirection;        
         }
 
         public static int GetDGVRowIndexByColumnValue(DataGridView dgv, string ColumnName, int Value)
