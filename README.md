@@ -4,13 +4,13 @@ A C# Windows Forms desktop application for managing the complete driving license
 
 The project emphasizes separation of concerns, business-rule enforcement, database integrity, security, reusable components, and efficient data retrieval.
 
-| Platform | Framework | UI | Database | Language |
-|---|---|---|---|---|
-| Desktop | .NET Framework 4.8 | Windows Forms | Microsoft SQL Server | C# |
+| Platform | Framework | UI | Data Access | Database | Language |
+|---|---|---|---|---|---|
+| Desktop | .NET Framework 4.8 | Windows Forms | ADO.NET | Microsoft SQL Server | C# |
 
 ---
 
-## 📌 Overview:
+## 📌 Overview :
 
 DVLD is a desktop application developed to represent the core administrative and operational activities of a driving license department.
 
@@ -26,7 +26,7 @@ Another important aspect of the application is its approach to database performa
 
 Together, these design decisions provide an organized foundation for managing interconnected licensing operations while maintaining control over application complexity, database communication, and resource consumption.
 
-## 🎯 The Problem This Project Solves:
+## 🎯 The Problem This Project Solves :
 
 A driving license department manages a sequence of administrative operations in which each operation depends on the information and outcomes of previous operations.
 
@@ -36,7 +36,7 @@ Each stage must remain connected to the original applicant and application to pr
 
 DVLD represents this workflow through connected business entities and controlled state transitions.
 
-### Licensing Workflow:
+### Licensing Workflow :
 
 ```text
              👤 Person
@@ -83,7 +83,7 @@ The solution combines a structured domain model, centralized business rules, rel
 
 ---
 
-## 🗄️ Database Design:
+## 🗄️ Database Design :
 
 The database follows a relational model designed to represent the relationships between people, users, applications, drivers, licenses, and other licensing entities.
 
@@ -106,13 +106,13 @@ The database design supports the application's main business operations, includi
 
 The repository includes the DVLD Entity Relationship Diagram (ERD) and relational database schema as part of its database design assets.
 
-## 🏗️ Architecture:
+## 🏗️ Architecture :
 
 The solution follows a three-tier architecture to separate user interaction, business processing, and database communication.
 
 Each layer is responsible for a specific part of the application, allowing changes to one area to have fewer dependencies on the others.
 
-### Architecture Overview:
+### Architecture Overview :
 
 ```text
           🖥️ Presentation Layer
@@ -124,7 +124,7 @@ Each layer is responsible for a specific part of the application, allowing chang
            💾 SQL Server Database
 ```
 
-### 🖥️ Presentation Layer:
+### 🖥️ Presentation Layer :
 
 The Presentation Layer contains the Windows Forms interface through which users interact with the application.
 
@@ -143,7 +143,7 @@ Its responsibilities include:
 
 The presentation layer focuses on user interaction. Business rules and SQL operations are handled by the appropriate layers.
 
-### 🧠 Business Layer:
+### 🧠 Business Layer :
 
 The Business Layer contains the domain objects and business rules that govern the licensing workflow.
 
@@ -163,7 +163,7 @@ Centralizing business logic prevents the same rules from being independently imp
 
 It also provides a consistent location for maintaining and extending the application's operational requirements.
 
-### 🗄️ Data Access Layer:
+### 🗄️ Data Access Layer :
 
 The Data Access Layer handles communication with Microsoft SQL Server.
 
@@ -184,19 +184,19 @@ Keeping persistence operations within this layer separates database concerns fro
 
 ---
 
-## ✨ Services:
+## ✨ Services :
 
 The application is organized into several services, each responsible for a specific area of the licensing management process.
 
 These services work together through shared business entities and database relationships. This organization allows each administrative operation to maintain its own responsibilities while participating in the overall licensing workflow.
 
-### 👤 People Management:
+### 👤 People Management :
 
 The People Management service provides centralized management of personal information used throughout the application.
 
 People records act as a common source of personal information for applicants, users, and other entities that require identification details.
 
-Supported operations:
+Supported operations :
 
 - Create, update, delete, and search for people records.
 - Maintain personal information and contact details.
@@ -205,13 +205,13 @@ Supported operations:
 
 Centralizing personal information reduces duplication and allows other application modules to reference the same person record.
 
-### 🔑 User and Access Management:
+### 🔑 User and Access Management :
 
 The User Management service handles application accounts and their relationships with existing people records.
 
 It also provides the mechanisms required to manage account status, credentials, and access permissions.
 
-Supported operations:
+Supported operations :
 
 - Create and manage user accounts.
 - Associate user accounts with existing people records.
@@ -221,13 +221,13 @@ Supported operations:
 
 Separating user accounts from personal records allows the application to maintain account-related information independently while preserving the relationship between each account and its corresponding person.
 
-### 📝 Driving License Applications:
+### 📝 Driving License Applications :
 
 The Driving License Applications service manages the initial stage of the licensing process.
 
 It connects an applicant with a selected license class and maintains the application status throughout the examination and issuance workflow.
 
-Supported operations:
+Supported operations :
 
 - Create local driving license applications.
 - Associate applicants with specific license classes.
@@ -240,7 +240,7 @@ Supported operations:
 
 Business validations ensure that applications satisfy the required conditions before proceeding to subsequent stages.
 
-### 🧪 Test Management:
+### 🧪 Test Management :
 
 The Test Management service handles the examinations required to qualify an applicant for a driving license.
 
@@ -252,7 +252,7 @@ The application supports three examination categories:
 
 Each examination is associated with its corresponding driving license application, allowing the system to maintain the applicant's examination history and progress.
 
-Supported operations:
+Supported operations :
 
 - Manage vision, written, and street tests.
 - Schedule test appointments for eligible applications.
@@ -265,41 +265,41 @@ Supported operations:
 
 Maintaining examination history allows the system to track the applicant's progress and determine whether the required tests have been completed before license issuance.
 
-### 🪪 Driver and License Management:
+### 🪪 Driver and License Management :
 
 This service manages the transition from an eligible applicant to a registered driver and handles the operations associated with issued driving licenses.
 
 It also maintains the relationships between drivers, license classes, original applications, and subsequent license operations.
 
-#### 🚘 Drivers List:
+#### 🚘 Drivers List :
 
 Provides access to registered driver records and their associated information.
 
-Supported operations:
+Supported operations :
 
 - View registered drivers.
 - Search and filter driver records.
 - View driver details and associated personal information.
 - Access driving licenses associated with each driver.
 
-#### 🪪 Local Driving License Issuance:
+#### 🪪 Local Driving License Issuance :
 
 Handles the creation of local driving licenses after the applicant has successfully completed the required examinations.
 
-Supported operations:
+Supported operations :
 
 - Issue local driving licenses after successful completion of all required tests.
 - Associate licenses with their corresponding drivers and license classes.
 - Record license issue dates and expiration dates.
 - Maintain the relationship between issued licenses and their original applications.
 
-#### 🔄 Local Driving License Renewal:
+#### 🔄 Local Driving License Renewal :
 
 Manages the renewal of existing local driving licenses when their validity needs to be extended.
 
 The renewal process maintains the connection between the original license, the renewal application, and the newly issued license.
 
-Supported operations:
+Supported operations :
 
 - Identify licenses eligible for renewal.
 - Validate renewal requirements.
@@ -309,13 +309,13 @@ Supported operations:
 - Deactivate previous licenses after successful renewal.
 - Maintain the relationships between original licenses, renewal applications, and renewed licenses.
 
-#### ♻️ Local Driving License Replacement:
+#### ♻️ Local Driving License Replacement :
 
 Handles replacement operations for licenses that have been lost or damaged.
 
 The replacement process preserves the relationship between the original license and its replacement while recording the application and associated fees.
 
-Supported operations:
+Supported operations :
 
 - Replace lost or damaged local driving licenses.
 - Support different replacement application types.
@@ -326,11 +326,11 @@ Supported operations:
 - Deactivate previous licenses after successful replacement.
 - Maintain the relationships between original and replacement licenses.
 
-#### 🌍 International Driving License Issuance:
+#### 🌍 International Driving License Issuance :
 
 Provides functionality for issuing international driving licenses to eligible drivers based on their existing local license records.
 
-Supported operations:
+Supported operations :
 
 - Validate the driver's existing local driving license.
 - Verify eligibility for international license issuance.
@@ -338,11 +338,11 @@ Supported operations:
 - Associate international licenses with their corresponding drivers and local licenses.
 - Record license information and validity dates.
 
-#### 🌍 International Driving License Management:
+#### 🌍 International Driving License Management :
 
 Provides administrative access to issued international driving licenses and their associated information.
 
-Supported operations:
+Supported operations :
 
 - View issued international driving licenses.
 - Search and filter international license records.
@@ -350,11 +350,11 @@ Supported operations:
 - Access associated driver and local license information.
 - Track issued international license records.
 
-#### 🚔 License Detention Management:
+#### 🚔 License Detention Management :
 
 Manages the detention of active local driving licenses and maintains the records associated with each detention operation.
 
-Supported operations:
+Supported operations :
 
 - Detain active local driving licenses.
 - Record detention dates and applicable fines.
@@ -363,13 +363,13 @@ Supported operations:
 - Track detention status and identify licenses that have not been released.
 - Access detention details and associated license information.
 
-#### 🔓 Detained License Release:
+#### 🔓 Detained License Release :
 
 Handles the release of previously detained driving licenses.
 
 Each release operation is connected to its original detention record to preserve the complete history of the detention and release process.
 
-Supported operations:
+Supported operations :
 
 - Release previously detained driving licenses.
 - Create release applications.
@@ -379,16 +379,16 @@ Supported operations:
 - Maintain the relationship between detention records and release applications.
 - Preserve detention and release history.
 
-### ⚙️ Application and Reference Data:
+### ⚙️ Application and Reference Data :
 
 The Application and Reference Data service manages the configuration data used by different licensing operations.
 
 Instead of duplicating configuration values across application modules, the system maintains reference information that can be shared by related business processes.
 
-Supported operations:
+Supported operations :
 
 - Manage license classes and their associated requirements.
-- Manage application types and their fees.
+- Manage application types and their associated fees.
 - Manage test types and their associated fees.
 - Configure license validity periods.
 - Maintain minimum age requirements.
@@ -398,13 +398,13 @@ Centralizing reference data helps maintain consistency when application rules an
 
 ---
 
-## 📄 Pagination and Data Retrieval:
+## 📄 Pagination and Data Retrieval :
 
 The application uses database-side pagination to manage large result sets without retrieving unnecessary records.
 
 Instead of loading all available records into memory, the system retrieves a limited number of records for each request and loads additional records when required.
 
-### Offset-Based Pagination:
+### Offset-Based Pagination :
 
 Offset-based pagination retrieves records from a specified position in an ordered result set.
 
@@ -412,7 +412,7 @@ It uses SQL Server's `OFFSET ... FETCH NEXT` functionality to skip previously re
 
 This approach supports navigation through different positions in a result set and is useful when implementing page-based navigation.
 
-### Cursor-Based Pagination:
+### Cursor-Based Pagination :
 
 Cursor-based pagination uses the primary-key value of the last retrieved record to determine where the next batch should begin.
 
@@ -420,7 +420,7 @@ Instead of relying on the number of previously skipped records, the next query r
 
 This approach supports progressive loading and avoids relying on increasingly large offsets.
 
-### Progressive Loading:
+### Progressive Loading :
 
 The application uses pagination state to determine when and how to request additional records.
 
@@ -435,7 +435,7 @@ The general process is:
 
 This allows users to work with large database tables without requiring the application to load every record at once.
 
-## 🔎 Server-Side Filtering:
+## 🔎 Server-Side Filtering :
 
 Searching and filtering large database tables directly within the Windows Forms application can require transferring more data than necessary.
 
@@ -453,13 +453,13 @@ The process provides several benefits:
 
 The Utility Library also provides DataView filtering functionality for operations involving records that are already available in memory. This complements database-side filtering rather than replacing it for large database result sets.
 
-## 🔐 Security and Credential Protection:
+## 🔐 Security and Credential Protection :
 
 The application provides dedicated mechanisms for handling usernames, passwords, and encryption keys.
 
 These operations are centralized through `clsCryptography` to avoid spreading credential-processing logic across different application classes.
 
-### Username Protection:
+### Username Protection :
 
 Usernames are encrypted before being stored in the database.
 
@@ -469,7 +469,7 @@ The IV is stored alongside the corresponding encrypted username so that the orig
 
 A username hash is also maintained to support exact username lookup without requiring the system to decrypt every stored username during the lookup process.
 
-### Password Protection:
+### Password Protection :
 
 Passwords are hashed before being stored.
 
@@ -483,7 +483,7 @@ The configured implementation uses:
 
 This allows password verification without storing the original password.
 
-### Encryption Key Management:
+### Encryption Key Management :
 
 The encryption key is managed through Windows Credential Manager.
 
@@ -491,7 +491,7 @@ Instead of placing the key directly in the source code or storing it in the appl
 
 Keeping encryption and key-management operations centralized makes credential handling easier to maintain and keeps the corresponding implementation separate from business workflows.
 
-## 🛡️ Authorization:
+## 🛡️ Authorization :
 
 The application uses user permissions to control access to different areas of the system.
 
@@ -510,7 +510,7 @@ This provides a structured approach to managing application access rather than g
 
 ---
 
-## 🧰 Utility Library:
+## 🧰 Utility Library :
 
 The repository includes a separate class-library project named `Utility Library`, targeting .NET Framework 4.8.
 
@@ -522,7 +522,7 @@ The Utility Library groups these operations into dedicated classes, each respons
 
 This separation allows the main application to focus on licensing workflows and business operations while delegating shared technical tasks to reusable helper classes.
 
-### Library Components:
+### Library Components :
 
 | Class | Responsibilities |
 |---|---|
@@ -534,7 +534,7 @@ This separation allows the main application to focus on licensing workflows and 
 | `clsFileManager` | Handles directory creation, GUID-based file naming, extension preservation, and image copying into the project image directory. |
 | `clsUtility` | Provides general-purpose helpers for GUID generation, ComboBox drawing customization, control positioning, and MDI form customization. |
 
-### 🔐 `clsCryptography` — Cryptographic Operations:
+### 🔐 `clsCryptography` — Cryptographic Operations :
 
 `clsCryptography` centralizes the cryptographic operations required by the application.
 
@@ -542,7 +542,7 @@ Its main purpose is to separate encryption, hashing, and encryption-key manageme
 
 The class provides different approaches depending on the type of information being protected.
 
-**Password Hashing:**
+**Password Hashing :**
 
 Passwords are not stored as plaintext. Instead, the application derives a hash using PBKDF2 with SHA-256 and a generated salt.
 
@@ -555,7 +555,7 @@ The implementation uses:
 
 The salt allows identical passwords to produce different stored hash values, while the derivation process supports password verification without storing the original password.
 
-**Username Encryption:**
+**Username Encryption :**
 
 Unlike passwords, usernames need to be recovered during certain authentication operations.
 
@@ -565,7 +565,7 @@ Each encrypted username uses its own generated Initialization Vector (IV), which
 
 The implementation also supports generating a username hash for exact lookup without requiring the database to decrypt every stored username.
 
-**Encryption Key Management:**
+**Encryption Key Management :**
 
 The class provides functionality to:
 
@@ -579,7 +579,7 @@ The class provides functionality to:
 
 Keeping these operations in one dedicated class avoids spreading cryptographic implementation details across the application.
 
-### 📊 `clsDataGridViewUtilityLib` — DataGridView Management:
+### 📊 `clsDataGridViewUtilityLib` — DataGridView Management :
 
 `clsDataGridViewUtilityLib` groups common operations used when displaying and managing tabular data in Windows Forms.
 
@@ -589,7 +589,7 @@ It also supports the application's progressive loading approach by maintaining i
 
 Its responsibilities include:
 
-**Data Management:**
+**Data Management :**
 
 - Add new rows.
 - Update existing rows.
@@ -597,14 +597,14 @@ Its responsibilities include:
 - Retrieve column names.
 - Work with selected column values.
 
-**Filtering and Sorting:**
+**Filtering and Sorting :**
 
 - Filter records through DataView.
 - Manage column sorting.
 - Track sorting information.
 - Support consistent table interactions.
 
-**Pagination Management:**
+**Pagination Management :**
 
 - Track offset pagination values.
 - Maintain cursor pagination state.
@@ -614,7 +614,7 @@ Its responsibilities include:
 
 By centralizing these operations, the class provides shared functionality for forms that display and progressively retrieve database records.
 
-### 🗄️ `clsSqlQueryBuilder` — SQL Query Construction:
+### 🗄️ `clsSqlQueryBuilder` — SQL Query Construction :
 
 `clsSqlQueryBuilder` provides reusable methods for constructing SQL query fragments used by the application's data-access operations.
 
@@ -634,7 +634,7 @@ This component is particularly useful when implementing searchable and paginated
 
 The data-access layer remains responsible for defining and organizing the database operations used by the main application. The query builder serves as a supporting component for constructing and executing supplied SQL statements.
 
-### ✅ `clsValidation` — Input Validation:
+### ✅ `clsValidation` — Input Validation :
 
 `clsValidation` centralizes common validation operations used throughout the Windows Forms application.
 
@@ -652,7 +652,7 @@ The class provides functionality for:
 
 Centralizing these methods makes validation easier to reuse and maintain while keeping individual forms focused on their interaction responsibilities.
 
-### 📅 `clsFormat` — Data Formatting:
+### 📅 `clsFormat` — Data Formatting :
 
 `clsFormat` provides common formatting methods for values displayed or processed by the application.
 
@@ -671,7 +671,7 @@ Its responsibilities include:
 
 This helps maintain consistent data presentation and date-selection behavior throughout the application.
 
-### 📁 `clsFileManager` — File and Image Management:
+### 📁 `clsFileManager` — File and Image Management :
 
 `clsFileManager` groups the file-system operations required by the application, particularly those related to image storage.
 
@@ -686,7 +686,7 @@ Its responsibilities include:
 
 Using GUID-based names helps avoid file-name collisions when multiple images are stored.
 
-### 🖥️ `clsUtility` — General Windows Forms Utilities:
+### 🖥️ `clsUtility` — General Windows Forms Utilities :
 
 `clsUtility` contains general-purpose helper methods for operations that do not belong to a specific business module.
 
@@ -702,7 +702,7 @@ Its responsibilities include:
 
 Keeping these operations in a shared class avoids repeating low-level interface customization code throughout the application.
 
-### Benefits of the Utility Library:
+### Benefits of the Utility Library :
 
 The separation of common operations into a dedicated class library provides several benefits:
 
@@ -715,7 +715,7 @@ The separation of common operations into a dedicated class library provides seve
 
 The Utility Library complements the three-tier architecture. It acts as a supporting component and does not replace the responsibilities of the presentation, business, or data-access layers.
 
-## 🧩 Supporting Utility Library:
+## 🧩 Supporting Utility Library :
 
 The Utility Library is a supporting component of the overall application architecture. It is developed as a separate class library and referenced by the main DVLD application wherever shared functionality is required.
 
@@ -735,7 +735,7 @@ The separation also makes it easier to maintain common operations independently 
 
 ---
 
-## 🧰 Tech Stack:
+## 🧰 Tech Stack :
 
 | Area | Technology |
 |---|---|
@@ -744,7 +744,8 @@ The separation also makes it easier to maintain common operations independently 
 | Runtime | .NET Framework 4.8 |
 | IDE | Visual Studio |
 | Database | Microsoft SQL Server |
-| Database API | System.Data.SqlClient |
+| Data Access Technology | ADO.NET |
+| SQL Server Provider | System.Data.SqlClient |
 | Data Model | Relational Database |
 | Architecture | Three-Tier Architecture |
 | Shared Components | C# Class Library |
@@ -753,7 +754,7 @@ The separation also makes it easier to maintain common operations independently 
 
 ---
 
-## 📁 Repository Notes:
+## 📁 Repository Notes :
 
 The repository contains the source code, project files, database design assets, and Visual Studio project structure required to develop and maintain the application.
 
@@ -769,25 +770,9 @@ The main project components include:
 - Relational database schema.
 - Visual Studio solution and project files.
 
-### Source Control:
-
-Generated development and build artifacts should be excluded from source control.
-
-Examples include:
-
-```gitignore
-.vs/
-bin/
-obj/
-```
-
-The source files, solution files, and project files should remain under version control.
-
-Database credentials, encryption keys, and other sensitive configuration values should not be committed to the repository.
-
 ---
 
-## 🤝 Contributing:
+## 🤝 Contributing :
 
 Contributions should preserve the existing architectural organization and business rules of the application.
 
@@ -804,7 +789,7 @@ The following practices should be maintained when extending or modifying the sys
 - Test modifications across the affected licensing workflows.
 - Keep shared functionality reusable and independent of individual forms.
 
-### Pull Request Guidelines:
+### Pull Request Guidelines :
 
 A useful contribution should clearly describe:
 
@@ -818,7 +803,7 @@ Contributions should maintain consistency with the existing architecture and avo
 
 ---
 
-## 🎯 Project Objectives:
+## 🎯 Project Objectives :
 
 DVLD demonstrates the development of a business-oriented desktop application using C#, Windows Forms, and Microsoft SQL Server.
 
@@ -828,6 +813,7 @@ The project brings together several software engineering concepts within one int
 - Three-tier architecture.
 - Relational database design.
 - Third Normal Form (3NF).
+- ADO.NET database access.
 - Business-rule enforcement.
 - Authentication and authorization.
 - Cryptographic operations and credential management.
