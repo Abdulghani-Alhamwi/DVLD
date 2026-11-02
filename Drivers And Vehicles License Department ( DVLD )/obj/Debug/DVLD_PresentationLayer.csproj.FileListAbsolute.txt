@@ -21,12 +21,10 @@ D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD 
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.ctrlDriverLicensesHistory.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.Controls.frmDetainLocalLicense.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.frmDriversList.resources
-D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.Licenses.frmInternationalLicenseApplications.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.frmScheduleTest.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.frmTakeTest.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.frmTestsAppointments.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.Core.frmAddUpdateLocalDrivingLicenseApplication.resources
-D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.frmLocalDrivingLicenseApplicationsManagement.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.frmListTestTypes.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.frmEditTestType.resources
 D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.frmLoginScreen.resources
@@ -175,3 +173,5 @@ D:\My Projects\DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License D
 D:\My Projects\DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLD_Pre.52F785B3.Up2Date
 D:\My Projects\DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLD Presentation Layer.exe
 D:\My Projects\DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLD Presentation Layer.pdb
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.Licenses.frmListInternationalLicenseApplications.resources
+D:\Office\Programming Advices\Course 19 - Full Real Project - DVLD\Project DVLD My Solution\DVLD\Drivers And Vehicles License Department ( DVLD )\obj\Debug\DVLDPresentationLayer.frmListLocalDrivingLicenseApplications.resources
