@@ -63,7 +63,8 @@ namespace DVLDPresentationLayer
 
             if (Driver == null)
             {
-                MessageBox.Show("There is no driver linked with person id = " + PersonID.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("There is no driver linked with person with id = " + PersonID.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return;
             }
 

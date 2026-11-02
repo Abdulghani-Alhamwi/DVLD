@@ -511,7 +511,7 @@ namespace DVLDDataAccessLayer
 
             string query = @"SELECT TOP(1) InternationalLicenseID FROM InternationalLicenses
                              WHERE DriverID = @DriverID AND GetDate() BETWEEN IssueDate AND ExpirationDate
-                              ORDER BY ExpirationDate DESC";
+                             ORDER BY ExpirationDate DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@DriverID", DriverID);

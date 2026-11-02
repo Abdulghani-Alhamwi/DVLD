@@ -109,7 +109,8 @@ namespace DVLDBusinessLayer
             byte ApplicationStatus = 0;
             float PaidApplicationFees = -1;
 
-            if (clsApplicationData.Find(ApplicationID, ref ApplicantPersonID, ref ApplicationDate, ref ApplicationTypeID, ref ApplicationStatus, ref LastStatusDate, ref PaidApplicationFees, ref CreatedByUserID))
+            if (clsApplicationData.Find(ApplicationID, ref ApplicantPersonID, ref ApplicationDate, ref ApplicationTypeID
+                , ref ApplicationStatus, ref LastStatusDate, ref PaidApplicationFees, ref CreatedByUserID))
             {
                 return new clsApplication(ApplicationID, ApplicantPersonID, ApplicationDate, ApplicationTypeID, (enApplicationStatus) ApplicationStatus, LastStatusDate, PaidApplicationFees, CreatedByUserID);
             }

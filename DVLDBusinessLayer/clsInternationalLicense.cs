@@ -6,7 +6,7 @@ namespace DVLDBusinessLayer
 {
     public class clsInternationalLicense : clsApplication
     {
-        private enum _enMode : byte { AddNew = 0 , Update = 1 }
+        public enum _enMode : byte { AddNew = 0 , Update = 1 }
         private _enMode _CurrentMode;   
         public int InternationalLicenseID { get; set; }
         public int DriverID { get; set; }
@@ -117,7 +117,8 @@ namespace DVLDBusinessLayer
             DateTime IssueDate = DateTime.Now, ExpirationDate = DateTime.Now;
             bool IsActive = false;
 
-            if (clsInternationalLicenseData.Find(InternationalLicenseID, ref ApplicationID, ref DriverID, ref LocalLicenseID, ref IssueDate, ref ExpirationDate, ref IsActive, ref CreatedByUserID))
+            if (clsInternationalLicenseData.Find(InternationalLicenseID, ref ApplicationID, ref DriverID, ref LocalLicenseID
+                , ref IssueDate, ref ExpirationDate, ref IsActive, ref CreatedByUserID))
             {
                 clsApplication ApplicationInfo = clsApplication.FindBaseApplication(ApplicationID);
 

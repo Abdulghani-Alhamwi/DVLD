@@ -33,8 +33,8 @@ namespace DVLDPresentationLayer.Licenses
         public frmReleaseDetainedLicenseApplication(int LocalLicenseID , int DetainedLicensesDgvRowIndex)
         {
             InitializeComponent();
-            uctrlLocalDrivingLicenseInfoWithFilter.LoadInfo(LocalLicenseID);
             uctrlLocalDrivingLicenseInfoWithFilter.FilterEnabled = false;
+            uctrlLocalDrivingLicenseInfoWithFilter.LoadInfo(LocalLicenseID);
             _DetainedLicensesDgvRowIndex = DetainedLicensesDgvRowIndex;
         }
 

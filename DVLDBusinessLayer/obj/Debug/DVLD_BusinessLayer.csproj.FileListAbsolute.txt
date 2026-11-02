@@ -24,3 +24,14 @@ C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLD_BusinessLayer.csproj
 C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLD_BusinessLayer.csproj.CopyComplete
 C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.dll
 C:\Users\User\Desktop\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.pdb
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Debug\DVLDBusinessLayer.dll
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Debug\DVLDBusinessLayer.pdb
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Debug\DVLDDataAccessLayer.dll
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Debug\Utility Library.dll
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Debug\DVLDDataAccessLayer.pdb
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\bin\Debug\Utility Library.pdb
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Debug\DVLD_BusinessLayer.csproj.AssemblyReference.cache
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Debug\DVLD_BusinessLayer.csproj.CoreCompileInputs.cache
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Debug\DVLD_Bus.693E2707.Up2Date
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.dll
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\DVLDBusinessLayer\obj\Debug\DVLDBusinessLayer.pdb

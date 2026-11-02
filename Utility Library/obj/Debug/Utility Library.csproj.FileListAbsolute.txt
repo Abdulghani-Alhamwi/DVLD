@@ -10,3 +10,9 @@ C:\Users\User\Desktop\DVLD\Utility Library\obj\Debug\Utility Library.csproj.Asse
 C:\Users\User\Desktop\DVLD\Utility Library\obj\Debug\Utility Library.csproj.CoreCompileInputs.cache
 C:\Users\User\Desktop\DVLD\Utility Library\obj\Debug\Utility Library.dll
 C:\Users\User\Desktop\DVLD\Utility Library\obj\Debug\Utility Library.pdb
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\Utility Library\bin\Debug\Utility Library.dll
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\Utility Library\bin\Debug\Utility Library.pdb
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\Utility Library\obj\Debug\Utility Library.csproj.AssemblyReference.cache
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\Utility Library\obj\Debug\Utility Library.csproj.CoreCompileInputs.cache
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\Utility Library\obj\Debug\Utility Library.dll
+D:\My Projects\DVLD\Project DVLD My Solution\DVLD\Utility Library\obj\Debug\Utility Library.pdb

@@ -373,7 +373,7 @@ namespace DVLDDataAccessLayer
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = $@"SELECT LicenseID FROM LocalLicenses WHERE DriverID = @DriverID
-                             AND LicenseClassID = @LicenseClassID";
+                             AND LicenseClassID = @LicenseClassID AND IsActive = 1";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@DriverID", DriverID);

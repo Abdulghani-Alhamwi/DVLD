@@ -79,18 +79,21 @@ namespace DVLDPresentationLayer.Controls
             if (LocalLicenseID == -1)
             {
                 btnDetain.Enabled = false;
+                llShowLicenseInfo.Enabled = false;
                 return;
             }
 
             if (uctrlLocalLicenseDetailsWithFilter.SelectedLicenseInfo.IsDetained)
             {
                 MessageBox.Show("Selected license is already detained , choose another one.", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                llShowLicenseInfo.Enabled = true;
                 btnDetain.Enabled = false;
             }
 
             else if (!uctrlLocalLicenseDetailsWithFilter.SelectedLicenseInfo.IsActive)
             {
                 MessageBox.Show("Selected license is not active , choose an active local license.", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                llShowLicenseInfo.Enabled = true;
                 btnDetain.Enabled = false;
             }
 

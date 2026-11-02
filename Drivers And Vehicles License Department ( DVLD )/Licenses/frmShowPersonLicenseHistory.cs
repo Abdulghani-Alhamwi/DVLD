@@ -13,12 +13,6 @@ namespace DVLDPresentationLayer
         int _PersonID;
         int _DGVRowIndex;
 
-        public  frmShowPersonLicenseHistory()
-        {
-            InitializeComponent();
-            _PersonID = -1;
-        }
-
         public frmShowPersonLicenseHistory(int PersonID)
         {
             InitializeComponent();
