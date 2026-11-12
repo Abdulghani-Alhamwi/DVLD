@@ -839,35 +839,33 @@ namespace DVLDDataAccessLayer
         {
             Dictionary<int, string> UsersIDsWithIVs = null;
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-
-            string query = $@"SELECT UserID, UsernameIV FROM Users";
-
-            SqlCommand command = new SqlCommand(query, connection);
-
             try
             {
-                connection.Open();
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
                 {
-                    UsersIDsWithIVs = new Dictionary<int, string>();
+                    string query = $@"SELECT UserID, UsernameIV FROM Users";
 
-                    while (reader.Read())
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        UsersIDsWithIVs.Add((int)reader["UserID"], (string)reader["UsernameIV"]);
+                        connection.Open();
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                UsersIDsWithIVs = new Dictionary<int, string>();
+
+                                while (reader.Read())
+                                {
+                                    UsersIDsWithIVs.Add((int)reader["UserID"], (string)reader["UsernameIV"]);
+                                }
+                            }
+                        }
                     }
                 }
             }
 
             catch { }
-
-            finally
-            {
-                connection.Close();
-            }
 
             return UsersIDsWithIVs;
         }
